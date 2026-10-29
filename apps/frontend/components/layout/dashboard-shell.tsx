@@ -16,7 +16,7 @@ const DashboardLayoutInner = ({ children }: DashboardShellProps) => {
   const { isCollapsed, mobileOpen, setMobileOpen } = useSidebar();
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 text-slate-900 transition-colors dark:bg-[#0E0E10] dark:text-zinc-100">
       {/* Pinned Desktop Sidebar with dynamic collapsible width */}
       <AppSidebar className="fixed inset-y-0 left-0 z-30 hidden lg:flex" />
 

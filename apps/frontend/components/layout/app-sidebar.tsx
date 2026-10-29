@@ -82,7 +82,7 @@ export const AppSidebar = ({ onClose, className }: AppSidebarProps) => {
   return (
     <aside
       className={cn(
-        'flex h-full shrink-0 flex-col border-r border-slate-800 bg-slate-950 text-slate-300 transition-[width] duration-300 ease-in-out',
+        'flex h-full shrink-0 flex-col border-r border-slate-800 bg-slate-950 text-slate-300 transition-[width] duration-300 ease-in-out dark:border-white/10 dark:bg-[#121215]',
         isCollapsed ? 'w-[76px]' : 'w-[272px]',
         className,
       )}
@@ -141,7 +141,7 @@ export const AppSidebar = ({ onClose, className }: AppSidebarProps) => {
                         'group relative flex items-center rounded-lg text-sm font-medium transition-all duration-200',
                         isCollapsed ? 'mx-auto h-10 w-10 justify-center p-0' : 'h-10 gap-3 px-3',
                         isCurrent
-                          ? 'bg-[#00509d] font-semibold text-white shadow-sm'
+                          ? 'bg-[#00509d] font-semibold text-white shadow-none'
                           : 'text-slate-400 hover:bg-white/5 hover:text-white',
                       )}
                       href={item.href}
@@ -186,7 +186,7 @@ export const AppSidebar = ({ onClose, className }: AppSidebarProps) => {
                   className={cn(
                     'group relative flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium transition-all duration-200',
                     isGroupActive
-                      ? 'bg-[#00509d] font-semibold text-white shadow-sm'
+                      ? 'bg-[#00509d] font-semibold text-white shadow-none'
                       : 'text-slate-400 hover:bg-white/5 hover:text-white',
                   )}
                 >
@@ -270,7 +270,7 @@ export const AppSidebar = ({ onClose, className }: AppSidebarProps) => {
                         className={cn(
                           'group flex items-center gap-2.5 rounded-md px-2.5 py-1.5 text-xs leading-5 font-medium transition-all duration-150',
                           isCurrent
-                            ? 'bg-[#00509d] font-semibold text-white shadow-sm'
+                            ? 'bg-[#00509d] font-semibold text-white shadow-none'
                             : 'text-slate-400 hover:bg-white/5 hover:text-white',
                         )}
                         href={item.href}
