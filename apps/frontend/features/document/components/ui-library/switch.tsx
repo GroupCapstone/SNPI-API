@@ -39,21 +39,19 @@ export function LibrarySwitch({
         className,
       )}
     >
-      {/* Track: 48px wide, 28px high */}
+      {/* Track */}
       <span
         className={cn(
-          'inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:ring-2 focus-visible:ring-emerald-500/50',
-          checked
-            ? 'bg-emerald-500'
-            : 'bg-[#27272A]',
+          'inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:ring-2 focus-visible:ring-blue-500/50',
+          checked ? 'bg-[#023e8a]' : 'bg-slate-300',
           disabled && 'cursor-not-allowed opacity-50',
         )}
       >
-        {/* Thumb: 22px circle */}
+        {/* Thumb */}
         <span
           className={cn(
-            'pointer-events-none inline-block h-5.5 w-5.5 rounded-full bg-[#F4F4F5] shadow-none transition-transform duration-200 ease-in-out',
-            checked ? 'translate-x-5' : 'translate-x-0.5',
+            'pointer-events-none inline-block size-5 transform rounded-full bg-white shadow-xs transition duration-200 ease-in-out',
+            checked ? 'translate-x-5' : 'translate-x-0',
           )}
         />
       </span>

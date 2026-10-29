@@ -28,7 +28,7 @@ export function LibraryBottomNav({
     <nav
       aria-label="Bottom Navigation Demo"
       className={cn(
-        'flex h-16 w-full items-center justify-around rounded-xl border border-white/10 bg-[#161619] px-2 text-zinc-100 shadow-none',
+        'flex h-16 w-full items-center justify-around rounded-xl border border-slate-200 bg-white px-2 text-slate-800 shadow-xs',
         className,
       )}
     >
@@ -42,16 +42,16 @@ export function LibraryBottomNav({
             type="button"
             onClick={() => onSelect(item.id)}
             className={cn(
-              'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-lg px-2 text-xs font-normal transition-colors focus-visible:outline-none',
+              'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-lg px-3 py-1 text-xs font-normal transition-colors focus-visible:outline-none',
               isActive
-                ? 'font-medium text-emerald-400'
-                : 'text-zinc-400 hover:text-zinc-200',
+                ? 'font-bold text-[#023e8a] bg-blue-50/70'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
             )}
           >
             <div className="relative">
               <Icon className="size-5 shrink-0" />
               {item.badge !== undefined && (
-                <span className="absolute -top-1 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">
+                <span className="absolute -top-1 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">
                   {item.badge}
                 </span>
               )}
