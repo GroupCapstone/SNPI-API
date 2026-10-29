@@ -78,6 +78,37 @@ const normalizeError = (error: unknown): AppError => {
   return new AppError('Internal server error', 500, 'INTERNAL_SERVER_ERROR');
 };
 
+const getRfcTitle = (statusCode: number): string => {
+  switch (statusCode) {
+    case 400:
+      return 'Bad Request';
+    case 401:
+      return 'Unauthorized';
+    case 402:
+      return 'Payment Required';
+    case 403:
+      return 'Forbidden';
+    case 404:
+      return 'Not Found';
+    case 409:
+      return 'Conflict';
+    case 413:
+      return 'Payload Too Large';
+    case 422:
+      return 'Unprocessable Entity';
+    case 429:
+      return 'Too Many Requests';
+    case 500:
+      return 'Internal Server Error';
+    case 502:
+      return 'Bad Gateway';
+    case 503:
+      return 'Service Unavailable';
+    default:
+      return 'HTTP Error';
+  }
+};
+
 export const notFoundHandler: RequestHandler = (request, _response, next) => {
   next(new NotFoundError(`Route ${request.method} ${request.originalUrl} not found`));
 };
@@ -100,6 +131,52 @@ export const errorHandler: ErrorRequestHandler = (error, request, response, _nex
     );
   } else {
     logger.warn(logContext, 'API request rejected');
+  }
+
+  // Response header for programmatic error classification
+  response.setHeader('X-Error-Code', normalizedError.code);
+
+  // Check if caller explicitly requested RFC 7807 / RFC 9457 Problem Details
+  const isRfcProblemDetails =
+    Boolean(request.headers['accept']?.includes('application/problem+json')) ||
+    request.query.rfc7807 === 'true' ||
+    request.query.format === 'rfc7807' ||
+    request.query.format === 'problem';
+
+  if (isRfcProblemDetails) {
+    response.setHeader('Content-Type', 'application/problem+json; charset=utf-8');
+    const rfcPayload: {
+      type: string;
+      title: string;
+      status: number;
+      detail: string;
+      instance: string;
+      code: string;
+      success: false;
+      invalidParams?: typeof normalizedError.errors;
+      errors?: typeof normalizedError.errors;
+      stack?: string;
+    } = {
+      type: `https://api.snpis.kesararamwithdigital.tech/errors/${normalizedError.code.toLowerCase()}`,
+      title: getRfcTitle(normalizedError.statusCode),
+      status: normalizedError.statusCode,
+      detail: normalizedError.message,
+      instance: (request.originalUrl || '').split('?')[0] || '/',
+      code: normalizedError.code,
+      success: false,
+    };
+
+    if (normalizedError.errors) {
+      rfcPayload.invalidParams = normalizedError.errors;
+      rfcPayload.errors = normalizedError.errors;
+    }
+
+    if (env.NODE_ENV === 'development' && error instanceof Error) {
+      rfcPayload.stack = error.stack;
+    }
+
+    response.status(normalizedError.statusCode).json(rfcPayload);
+    return;
   }
 
   const payload: {
