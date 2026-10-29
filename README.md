@@ -1,5 +1,12 @@
 # SNP-SMS Monorepo
 
+[![Monorepo CI](https://github.com/shiliaiwei/SNP-SMS/actions/workflows/ci.yml/badge.svg)](https://github.com/shiliaiwei/SNP-SMS/actions/workflows/ci.yml)
+[![CodeQL Analysis](https://github.com/shiliaiwei/SNP-SMS/actions/workflows/codeql.yml/badge.svg)](https://github.com/shiliaiwei/SNP-SMS/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Node: >=22.13.0](https://img.shields.io/badge/Node-%3E%3D22.13.0-green.svg)](package.json)
+[![UI: Strict Light Mode](https://img.shields.io/badge/UI-Strict_Light_Mode-white.svg)](#)
+[![Security: Audited](https://img.shields.io/badge/Security-Audited-brightgreen.svg)](SECURITY.md)
+
 Integrated Multi-Branch School Management System (SNP-SMS) monorepo powered by npm workspaces, an Express 5 modular monolith backend, a Next.js 16 App Router frontend, and a hybrid container/serverless deployment model.
 
 ---

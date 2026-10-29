@@ -10,3 +10,8 @@ LICENSE
 .agents
 CHANGELOG.md
 apps/frontend/features/document/changelog-data.ts
+.gitattributes
+.env.example
+.nvmrc
+.node-version
+CITATION.cff

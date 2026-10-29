@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: 'If you use or reference SNP-SMS in academic, institutional, or enterprise settings, please cite it as below.'
+title: 'SNP-SMS: Integrated Multi-Branch School Management System Monorepo'
+version: 0.1.4
+date-released: 2026-10-29
+url: 'https://github.com/shiliaiwei/SNP-SMS'
+license: MIT
+authors:
+  - name: 'SNP-SMS Contributors'
+keywords:
+  - 'school management system'
+  - 'modular monolith'
+  - 'multi-branch'
+  - 'express'
+  - 'nextjs'
+  - 'mongodb'
+  - 'rbac'
+  - 'cambodia'
