@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import { authenticate, requireAuth } from '../../middleware/authenticate';
 import { authorize } from '../../middleware/authorize';
+import { publicVerificationRateLimiter } from '../../middleware/security';
 import { validate } from '../../middleware/validate';
 import { ReportController } from './report.controller';
 import {
@@ -16,6 +17,7 @@ const controller = new ReportController();
 
 reportRouter.get(
   '/certificates/verify/:code',
+  publicVerificationRateLimiter,
   validate(certificateVerificationValidationSchema),
   controller.verifyCertificate,
 );

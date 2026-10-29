@@ -62,6 +62,29 @@ export interface CertificateVerification {
   valid: boolean;
   documentNumber: string;
   generatedAt: string;
+  contentHash?: string;
+  ledger?: {
+    network: string;
+    channel: string;
+    chaincode: string;
+    status: string;
+    contentHash: string;
+    computedHash: string;
+    hashAlgorithm: string;
+    verifiedAt: string;
+    ledgerRecord: {
+      blockHeight: number;
+      transactionId: string;
+      merkleRoot: string;
+    };
+  };
+  fabricCredentials?: {
+    mspId: string;
+    signingIdentity: string;
+    peerNode: string;
+    ordererEndpoint: string;
+    caCertFingerprint: string;
+  };
   student: Record<string, unknown>;
   academic: Record<string, unknown>;
   completionDate?: string;

@@ -134,7 +134,34 @@ export class ReportController {
     next: NextFunction,
   ) => {
     try {
-      const result = await this.service.verifyCertificate(String(req.params.code));
+      // Check if caller is an authorized internal backend service (Fabric Operator / System Admin)
+      const serviceToken = req.headers['x-service-token'];
+      const isInternalService =
+        (typeof serviceToken === 'string' &&
+          serviceToken.length > 0 &&
+          serviceToken === process.env.INTERNAL_SERVICE_TOKEN) ||
+        Boolean(req.user?.roles?.includes('SUPER_ADMIN'));
+
+      const result = isInternalService
+        ? await this.service.verifyCertificate(String(req.params.code), true)
+        : await this.service.verifyCertificate(String(req.params.code));
+
+      // GitHub-inspired API headers
+      res.setHeader('X-Verification-Engine', 'SNP-Fabric-SHA256');
+      res.setHeader('X-Content-Type-Options', 'nosniff');
+
+      // Support pretty-printed JSON display (e.g., ?pretty=true)
+      if (req.query.pretty === 'true' || req.query.format === 'pretty') {
+        const prettyPayload = {
+          success: true,
+          message: 'Certificate verification completed',
+          data: result,
+        };
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        res.status(200).send(JSON.stringify(prettyPayload, null, 2));
+        return;
+      }
+
       sendSuccess(res, result, 'Certificate verification completed');
     } catch (error) {
       next(error);

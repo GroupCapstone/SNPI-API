@@ -87,3 +87,17 @@ export const mutationRateLimiter = rateLimit({
     errors: [],
   },
 });
+
+export const publicVerificationRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: env.NODE_ENV === 'test' ? 1000 : 60,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  skip: () => env.NODE_ENV === 'test',
+  message: {
+    success: false,
+    message: 'Too many certificate verification requests. Please try again later.',
+    code: 'VERIFICATION_RATE_LIMIT_EXCEEDED',
+    errors: [],
+  },
+});
