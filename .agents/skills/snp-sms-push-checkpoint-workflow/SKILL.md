@@ -15,6 +15,7 @@ This skill defines the mandatory protocol that every agent and contributor must 
 
 ## 1. Core Rule & Execution Gate
 
+* **Mandatory Local-Only Commits & Zero Remote Push Without Explicit Command**: In every conversation, session, and task, AI agents and contributors are strictly permitted to make local git commits only. Remote `git push` is strictly prohibited under all circumstances unless the user gives an explicit, direct command.
 * **Never Push Blindly**: A push command must NEVER execute a raw `git push` without first running the standard verification pipeline and synchronizing the changelog.
 * **Mandatory Pre-Push CI & Deploy Quality Gate**: If any GitHub deployment or CI workflow is failed on `main`, pushing new commits, tags, or checkpoints is STRICTLY FORBIDDEN. All 17 GitHub checks must be green or verified clean prior to pushing.
 * **Explicit User Command Required**: Pushes are only triggered when the user explicitly commands `push`, `push now`, `publish`, or creates a release checkpoint.
