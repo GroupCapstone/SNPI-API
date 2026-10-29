@@ -67,3 +67,13 @@ npm run build
 # Synchronize real-time changelog to live document portal and CHANGELOG.md
 npm run changelog:sync
 ```
+
+---
+
+## 5. Repository Ownership & Future Transfer Protocol
+
+- **Planned Ownership Transfer**: The current GitHub repository owner (`shiliaiwei`) is provisional. Repository ownership will be transferred in the future to an institutional organization or designated enterprise owner.
+- **Portable & Decoupled Configuration**:
+  - Never hardcode personal GitHub usernames or user paths into CI/CD workflows, automation secrets, or package metadata.
+  - Maintainer verification relies on immutable numeric GitHub account IDs in `.github/maintainers.json`, which must be updated upon ownership migration.
+  - Remote repository URLs in git remotes, documentation (`README.md`, `CONTRIBUTING.md`), and container registries must remain easily re-targetable via `git remote set-url origin <new-url>`.
