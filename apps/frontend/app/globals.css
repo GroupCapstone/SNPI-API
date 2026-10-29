@@ -19,15 +19,41 @@
   --brand-primary: #023e8a;
   --brand-secondary: #00509d;
   --focus-ring: rgb(0 80 157 / 18%);
+  --surface-canvas: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-panel: #ffffff;
+  --surface-active: #f1f5f9;
+  --border-subtle: #e2e8f0;
+}
+
+[data-theme='dark'],
+.dark {
+  --background: #0e0e10;
+  --foreground: #e4e4e7;
+  --brand-primary: #0077b6;
+  --brand-secondary: #0096c7;
+  --focus-ring: rgb(0 150 199 / 24%);
+  --surface-canvas: #0e0e10;
+  --surface-card: #161619;
+  --surface-panel: #202024;
+  --surface-active: #2e2e33;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  color-scheme: dark;
 }
 
 * {
-  border-color: #e2e8f0;
+  border-color: var(--border-subtle, #e2e8f0);
 }
 
 html {
   background: var(--background);
   color-scheme: light;
+}
+
+html[data-theme='dark'],
+html.dark {
+  background: var(--surface-canvas);
+  color-scheme: dark;
 }
 
 body {

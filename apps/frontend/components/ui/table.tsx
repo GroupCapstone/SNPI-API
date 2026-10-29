@@ -17,7 +17,7 @@ export const TableHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn('border-slate-200 bg-slate-50/80 [&_tr]:border-b', className)}
+    className={cn('border-slate-200 bg-slate-50/80 dark:border-white/10 dark:bg-[#161619] [&_tr]:border-b', className)}
     {...props}
   />
 ));
@@ -37,7 +37,7 @@ export const TableFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tfoot
     ref={ref}
-    className={cn('border-t bg-slate-50/50 font-medium [&>tr]:last:border-b-0', className)}
+    className={cn('border-t bg-slate-50/50 font-medium dark:border-white/10 dark:bg-[#161619]/50 [&>tr]:last:border-b-0', className)}
     {...props}
   />
 ));
@@ -50,7 +50,7 @@ export const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      'border-b border-slate-100 transition-colors hover:bg-slate-50/70 data-[state=selected]:bg-slate-100',
+      'border-b border-slate-100 transition-colors hover:bg-slate-50/70 dark:border-white/5 dark:hover:bg-[#202024]/60 data-[state=selected]:bg-slate-100 dark:data-[state=selected]:bg-[#2E2E33]',
       className,
     )}
     {...props}
@@ -65,7 +65,7 @@ export const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-11 px-4 text-left align-middle text-xs font-semibold tracking-normal whitespace-nowrap text-slate-500 uppercase [&:has([role=checkbox])]:pr-0',
+      'h-11 px-4 text-left align-middle text-xs font-semibold tracking-normal whitespace-nowrap text-slate-500 uppercase dark:text-zinc-400 [&:has([role=checkbox])]:pr-0',
       className,
     )}
     {...props}
@@ -80,7 +80,7 @@ export const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'p-4 align-middle whitespace-nowrap text-slate-700 [&:has([role=checkbox])]:pr-0',
+      'p-4 align-middle whitespace-nowrap text-slate-700 dark:text-zinc-200 [&:has([role=checkbox])]:pr-0',
       className,
     )}
     {...props}
