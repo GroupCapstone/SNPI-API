@@ -9,11 +9,12 @@ These rules apply to every AI coding agent and human contributor working in the 
 Before modifying code, packages, or repository structure, read:
 
 1. `.agents/skills/snp-sms-monorepo-architecture/SKILL.md`: The authoritative monorepo and modular monolith architectural specification.
-2. `.agents/skills/snp-sms-changelog-workflow/SKILL.md`: Mandatory real-time changelog recording protocol.
-3. `.agents/skills/snp-sms-push-checkpoint-workflow/SKILL.md`: Mandatory GitHub push and checkpoint quality gate protocol.
-4. `packages/shared/src/index.ts`: The single source of truth for permissions, core roles, implied scopes, and shared DTO contracts.
-5. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
-6. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
+2. `.agents/skills/snp-sms-code-security-quality-policy/SKILL.md`: Mandatory code security, software quality, and autonomous AI agents policy.
+3. `.agents/skills/snp-sms-changelog-workflow/SKILL.md`: Mandatory real-time changelog recording protocol.
+4. `.agents/skills/snp-sms-push-checkpoint-workflow/SKILL.md`: Mandatory GitHub push and checkpoint quality gate protocol.
+5. `packages/shared/src/index.ts`: The single source of truth for permissions, core roles, implied scopes, and shared DTO contracts.
+6. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
+7. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
 
 ---
 
@@ -41,6 +42,8 @@ Before modifying code, packages, or repository structure, read:
   `route -> controller -> service -> repository -> model -> validation -> types`
 - **Single Source of Truth**: All permission codes (`SYSTEM_PERMISSIONS`), role definitions (`DEFAULT_CORE_ROLES`), and implied scope checks must be imported from `@snp/shared`. Do not duplicate permission strings or role enums.
 - **Multi-Tenant & Data Scoping**: Every query and write must strictly enforce `schoolId`, `branchId`, and user RBAC permissions server-side. Never trust client-supplied scopes.
+- **Cryptographic Security**: All signature checks, webhook verifications, and token hash comparisons must execute via constant-time `crypto.timingSafeEqual`. Plaintext credentials and placeholder secrets are strictly forbidden.
+- **Input Sanitization & Injection Defense**: Every HTTP endpoint must validate inputs using strict Zod schemas. Mongoose queries must run with `strictQuery: true`, rejecting raw unescaped regex and operator injections.
 - **Zero Direct Git Pushes**: Never run `git push` or remote publishing commands under any circumstances unless explicitly commanded by the user.
 
 ---
@@ -80,7 +83,19 @@ npm run changelog:sync
 
 ---
 
-## 6. Repository Ownership & Future Transfer Protocol
+## 6. Autonomous AI Agents Policy
+
+All AI coding assistants (including Antigravity, Claude, Copilot, Codex, and subagents) operating in this repository must strictly comply with the following operational rules:
+
+- **Verification-First Mandate**: AI agents must never claim a task, bug fix, or feature is complete without executing live verification commands (`npm run typecheck`, `npm run test`, `npm run smoke`, `npm run deploy:verify`). Verification outputs must be presented in compact, structured Markdown tables with actual exit codes.
+- **Zero Hallucination of Credentials & Endpoints**: AI agents must never invent fictional API keys, imaginary environment variables, mock endpoints, or unregistered packages. Always retrieve authentic contracts from `@snp/shared` and authentic configuration from `apps/backend/src/config/`.
+- **Non-Destructive Operations Guard**: AI agents must NEVER execute destructive shell commands (`rm -rf /`, `git reset --hard` on uncommitted user work, unseeded database drops, or dropping git stashes). Preserve existing comments, docstrings, and architectural decision records (ADRs).
+- **Contract Preservation Mandate**: AI agents must never modify existing API routes, query params, HTTP status codes, or payload schemas without explicit user direction.
+- **Real-Time Technical Documentation Sync**: AI agents must execute `npm run changelog:sync` whenever architectural changes, skills, or features are implemented to keep `CHANGELOG.md` and the live developer document portal in real-time alignment.
+
+---
+
+## 7. Repository Ownership & Future Transfer Protocol
 
 - **Planned Ownership Transfer**: The current GitHub repository owner (`shiliaiwei`) is provisional. Repository ownership will be transferred in the future to an institutional organization or designated enterprise owner.
 - **Portable & Decoupled Configuration**:
