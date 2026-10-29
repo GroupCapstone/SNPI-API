@@ -6,5 +6,7 @@ coverage
 package-lock.json
 next-env.d.ts
 *.log
+LICENSE
 .agents
 CHANGELOG.md
+apps/frontend/features/document/changelog-data.ts
