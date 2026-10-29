@@ -9,3 +9,17 @@ coverage/
 .env
 .env.local
 .env.*.local
+
+# Heavy media, archives, and database binary exclusions
+*.mov
+*.mp4
+*.pptx
+*.ppt
+*.zip
+*.pdf
+*.docx
+*.wav
+*.mp3
+*.ogg
+*.aac
+*.db
