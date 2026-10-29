@@ -12,10 +12,10 @@ export default function DesignSystemPage() {
       <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
-            <BrandMark size={32} />
+            <BrandMark compact size={32} />
             <div className="flex items-center gap-2">
               <span className="font-mono text-base font-extrabold tracking-tight text-slate-950">
-                SNP-SMS Open API
+                Open API
               </span>
               <span className="text-slate-300">|</span>
               <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-[#023e8a]">
@@ -43,7 +43,7 @@ export default function DesignSystemPage() {
       {/* Footer */}
       <footer className="mt-auto border-t border-slate-200 bg-slate-50 py-8 text-center font-mono text-xs text-slate-500">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>SNP-SMS UI Design System & Component Library · 10 Core UI Components Standard</div>
+          <div>UI Design System & Component Library · 10 Core UI Components Standard</div>
           <div className="flex items-center gap-4">
             <Link href="/document" className="hover:text-slate-900">
               API Docs
