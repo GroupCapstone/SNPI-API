@@ -1,8 +1,4 @@
-import { z } from 'zod';
+import { loginPayloadSchema, type LoginPayload } from '@snp/shared';
 
-export const loginFormSchema = z.object({
-  identifier: z.string().trim().min(1, 'Username or email is required'),
-  password: z.string().min(1, 'Password is required'),
-});
-
-export type LoginFormData = z.infer<typeof loginFormSchema>;
+export const loginFormSchema = loginPayloadSchema;
+export type LoginFormData = LoginPayload;

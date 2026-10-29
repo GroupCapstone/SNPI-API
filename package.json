@@ -15,10 +15,12 @@
     "lint": "npm run lint --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "format:check": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "smoke": "tsx scripts/monorepo-smoke.ts"
   },
   "devDependencies": {
     "prettier": "^3.9.10",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   },
   "engines": {

@@ -1,12 +1,10 @@
 import { z } from 'zod';
+import { loginPayloadSchema } from '@snp/shared';
 
 import { PasswordUtil } from '../../utils/password';
 
 export const loginSchema = z.object({
-  body: z.object({
-    identifier: z.string().trim().min(1, 'Username or email is required'),
-    password: z.string().min(1, 'Password is required'),
-  }),
+  body: loginPayloadSchema,
   params: z.object({}).passthrough(),
   query: z.object({}).passthrough(),
 });
