@@ -33,6 +33,9 @@ const startServer = async (): Promise<void> => {
     logger.info({ port: env.PORT }, 'SNP-SMS API started');
   });
 
+  server.keepAliveTimeout = 65_000;
+  server.headersTimeout = 66_000;
+
   for (const signal of ['SIGINT', 'SIGTERM'] as const) {
     process.once(signal, () => {
       void shutdown(signal).then(() => process.exit(0));

@@ -56,3 +56,11 @@ export const getReadiness: RequestHandler = (_request, response) => {
     timestamp: new Date().toISOString(),
   });
 };
+
+export const getLiveness: RequestHandler = (_request, response) => {
+  response.status(200).json({
+    success: true,
+    live: true,
+    timestamp: new Date().toISOString(),
+  });
+};
