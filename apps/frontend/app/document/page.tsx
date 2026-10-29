@@ -502,7 +502,7 @@ console.log(payload.data);`;
             </span>
             <Link
               href="/document/design-system"
-              className="inline-flex h-8 items-center rounded-lg border border-emerald-300 bg-emerald-50 px-3 font-mono text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors"
+              className="inline-flex h-8 items-center rounded-lg border border-emerald-300 bg-emerald-50 px-3 font-mono text-xs font-semibold text-emerald-800 transition-colors hover:bg-emerald-100"
             >
               UI Design Library
             </Link>
@@ -530,7 +530,7 @@ console.log(payload.data);`;
             <nav className="space-y-1 text-slate-600">
               <Link
                 href="/document/design-system"
-                className="block py-1 font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
+                className="block py-1 font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
               >
                 UI Component Library &rarr;
               </Link>
@@ -694,7 +694,10 @@ console.log(payload.data);`;
             <div className="rounded-lg border border-slate-200 bg-slate-50/60 p-4 font-mono text-xs text-slate-700">
               <ol className="list-inside list-decimal space-y-1.5">
                 <li>
-                  <Link href="/document/design-system" className="font-semibold text-emerald-700 hover:underline">
+                  <Link
+                    href="/document/design-system"
+                    className="font-semibold text-emerald-700 hover:underline"
+                  >
                     UI Component Library & Design System Showcase &rarr;
                   </Link>
                 </li>

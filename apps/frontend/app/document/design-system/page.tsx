@@ -27,7 +27,7 @@ export default function DesignSystemPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/document"
-              className="inline-flex h-8 items-center rounded-lg border border-slate-200 bg-slate-50 px-3 font-mono text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors"
+              className="inline-flex h-8 items-center rounded-lg border border-slate-200 bg-slate-50 px-3 font-mono text-xs font-medium text-slate-700 transition-colors hover:bg-slate-100"
             >
               &larr; API Documentation
             </Link>
@@ -42,7 +42,7 @@ export default function DesignSystemPage() {
 
       {/* Footer */}
       <footer className="mt-auto border-t border-slate-200 bg-slate-50 py-8 text-center font-mono text-xs text-slate-500">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
           <div>UI Design System & Component Library</div>
           <div className="flex items-center gap-4">
             <Link href="/document" className="hover:text-slate-900">

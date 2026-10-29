@@ -60,11 +60,7 @@ export function LibraryBottomSheet({
 
         {/* Header */}
         <div className="mb-4 flex items-center justify-between">
-          {title && (
-            <h3 className="text-base font-bold tracking-tight text-slate-950">
-              {title}
-            </h3>
-          )}
+          {title && <h3 className="text-base font-bold tracking-tight text-slate-950">{title}</h3>}
           <button
             type="button"
             onClick={onClose}

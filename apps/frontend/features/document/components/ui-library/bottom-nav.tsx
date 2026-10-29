@@ -18,12 +18,7 @@ export interface LibraryBottomNavProps {
   className?: string;
 }
 
-export function LibraryBottomNav({
-  items,
-  activeId,
-  onSelect,
-  className,
-}: LibraryBottomNavProps) {
+export function LibraryBottomNav({ items, activeId, onSelect, className }: LibraryBottomNavProps) {
   return (
     <nav
       aria-label="Bottom Navigation Demo"
@@ -44,8 +39,8 @@ export function LibraryBottomNav({
             className={cn(
               'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-lg px-3 py-1 text-xs font-normal transition-colors focus-visible:outline-none',
               isActive
-                ? 'font-bold text-[#023e8a] bg-blue-50/70'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
+                ? 'bg-blue-50/70 font-bold text-[#023e8a]'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900',
             )}
           >
             <div className="relative">
@@ -56,7 +51,7 @@ export function LibraryBottomNav({
                 </span>
               )}
             </div>
-            <span className="truncate max-w-[64px] text-[11px] leading-tight">{item.label}</span>
+            <span className="max-w-[64px] truncate text-[11px] leading-tight">{item.label}</span>
           </button>
         );
       })}

@@ -74,14 +74,14 @@ export function LibraryTooltip({
         <div
           role="tooltip"
           className={cn(
-            'pointer-events-none absolute z-50 flex items-center gap-1.5 whitespace-nowrap rounded-md border border-slate-700 bg-slate-900 px-2.5 py-1 text-xs font-normal text-white shadow-md animate-in fade-in zoom-in-95 duration-100',
+            'animate-in fade-in zoom-in-95 pointer-events-none absolute z-50 flex items-center gap-1.5 rounded-md border border-slate-700 bg-slate-900 px-2.5 py-1 text-xs font-normal whitespace-nowrap text-white shadow-md duration-100',
             positionStyles[position],
             className,
           )}
         >
           <span>{content}</span>
           {shortcut && (
-            <kbd className="rounded border border-slate-600 bg-slate-800 px-1 py-0.5 text-[10px] font-mono uppercase text-slate-300">
+            <kbd className="rounded border border-slate-600 bg-slate-800 px-1 py-0.5 font-mono text-[10px] text-slate-300 uppercase">
               {shortcut}
             </kbd>
           )}

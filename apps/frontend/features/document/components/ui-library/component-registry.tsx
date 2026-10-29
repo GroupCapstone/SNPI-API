@@ -55,12 +55,42 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls visibility of the snackbar.' },
-      { name: 'message', type: 'string', default: '—', description: 'Main text notification displayed.' },
-      { name: 'actionLabel', type: 'string', default: '—', description: 'Optional label for the actionable button (e.g. Undo).' },
-      { name: 'onAction', type: '() => void', default: '—', description: 'Callback invoked when the action button is pressed.' },
-      { name: 'onClose', type: '() => void', default: '—', description: 'Callback invoked when dismissed or timer elapses.' },
-      { name: 'duration', type: 'number', default: '5000', description: 'Milliseconds before automatic dismissal.' },
+      {
+        name: 'open',
+        type: 'boolean',
+        default: 'false',
+        description: 'Controls visibility of the snackbar.',
+      },
+      {
+        name: 'message',
+        type: 'string',
+        default: '—',
+        description: 'Main text notification displayed.',
+      },
+      {
+        name: 'actionLabel',
+        type: 'string',
+        default: '—',
+        description: 'Optional label for the actionable button (e.g. Undo).',
+      },
+      {
+        name: 'onAction',
+        type: '() => void',
+        default: '—',
+        description: 'Callback invoked when the action button is pressed.',
+      },
+      {
+        name: 'onClose',
+        type: '() => void',
+        default: '—',
+        description: 'Callback invoked when dismissed or timer elapses.',
+      },
+      {
+        name: 'duration',
+        type: 'number',
+        default: '5000',
+        description: 'Milliseconds before automatic dismissal.',
+      },
     ],
   },
   {
@@ -89,10 +119,30 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls whether the sheet panel is visible.' },
-      { name: 'onClose', type: '() => void', default: '—', description: 'Callback invoked when backdrop or close button is clicked.' },
-      { name: 'title', type: 'string', default: '—', description: 'Header title text displayed at top of sheet.' },
-      { name: 'children', type: 'React.ReactNode', default: '—', description: 'Sheet body content and interactive elements.' },
+      {
+        name: 'open',
+        type: 'boolean',
+        default: 'false',
+        description: 'Controls whether the sheet panel is visible.',
+      },
+      {
+        name: 'onClose',
+        type: '() => void',
+        default: '—',
+        description: 'Callback invoked when backdrop or close button is clicked.',
+      },
+      {
+        name: 'title',
+        type: 'string',
+        default: '—',
+        description: 'Header title text displayed at top of sheet.',
+      },
+      {
+        name: 'children',
+        type: 'React.ReactNode',
+        default: '—',
+        description: 'Sheet body content and interactive elements.',
+      },
     ],
   },
   {
@@ -124,14 +174,49 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'open', type: 'boolean', default: 'false', description: 'Controls modal visibility.' },
-      { name: 'onOpenChange', type: '(open: boolean) => void', default: '—', description: 'State change handler for open/closed states.' },
+      {
+        name: 'open',
+        type: 'boolean',
+        default: 'false',
+        description: 'Controls modal visibility.',
+      },
+      {
+        name: 'onOpenChange',
+        type: '(open: boolean) => void',
+        default: '—',
+        description: 'State change handler for open/closed states.',
+      },
       { name: 'title', type: 'string', default: '—', description: 'Dialog header title.' },
-      { name: 'description', type: 'string', default: '—', description: 'Supporting explanatory text.' },
-      { name: 'confirmLabel', type: 'string', default: "'Confirm'", description: 'Label for the primary affirmation button.' },
-      { name: 'cancelLabel', type: 'string', default: "'Cancel'", description: 'Label for the dismissal button.' },
-      { name: 'isDestructive', type: 'boolean', default: 'false', description: 'Styles the primary action in danger red.' },
-      { name: 'onConfirm', type: '() => void', default: '—', description: 'Callback invoked when confirmation button is pressed.' },
+      {
+        name: 'description',
+        type: 'string',
+        default: '—',
+        description: 'Supporting explanatory text.',
+      },
+      {
+        name: 'confirmLabel',
+        type: 'string',
+        default: "'Confirm'",
+        description: 'Label for the primary affirmation button.',
+      },
+      {
+        name: 'cancelLabel',
+        type: 'string',
+        default: "'Cancel'",
+        description: 'Label for the dismissal button.',
+      },
+      {
+        name: 'isDestructive',
+        type: 'boolean',
+        default: 'false',
+        description: 'Styles the primary action in danger red.',
+      },
+      {
+        name: 'onConfirm',
+        type: '() => void',
+        default: '—',
+        description: 'Callback invoked when confirmation button is pressed.',
+      },
     ],
   },
   {
@@ -151,11 +236,36 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'content', type: 'React.ReactNode', default: '—', description: 'Label text or node displayed inside tooltip.' },
-      { name: 'shortcut', type: 'string', default: '—', description: 'Optional keyboard shortcut rendered in kbd badge.' },
-      { name: 'position', type: "'top' | 'bottom' | 'left' | 'right'", default: "'top'", description: 'Orientation relative to target element.' },
-      { name: 'delayMs', type: 'number', default: '200', description: 'Hover delay in milliseconds before appearance.' },
-      { name: 'children', type: 'React.ReactElement', default: '—', description: 'Target element wrapped by tooltip.' },
+      {
+        name: 'content',
+        type: 'React.ReactNode',
+        default: '—',
+        description: 'Label text or node displayed inside tooltip.',
+      },
+      {
+        name: 'shortcut',
+        type: 'string',
+        default: '—',
+        description: 'Optional keyboard shortcut rendered in kbd badge.',
+      },
+      {
+        name: 'position',
+        type: "'top' | 'bottom' | 'left' | 'right'",
+        default: "'top'",
+        description: 'Orientation relative to target element.',
+      },
+      {
+        name: 'delayMs',
+        type: 'number',
+        default: '200',
+        description: 'Hover delay in milliseconds before appearance.',
+      },
+      {
+        name: 'children',
+        type: 'React.ReactElement',
+        default: '—',
+        description: 'Target element wrapped by tooltip.',
+      },
     ],
   },
   {
@@ -177,10 +287,30 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'icon', type: 'React.ReactNode', default: '<Plus />', description: 'Center icon element.' },
-      { name: 'label', type: 'string', default: '—', description: 'Optional label making it an Extended FAB pill.' },
-      { name: 'variant', type: "'primary' | 'secondary' | 'surface'", default: "'primary'", description: 'Visual appearance variant.' },
-      { name: 'size', type: "'default' | 'small'", default: "'default'", description: 'Standard 48px or compact 40px dimensions.' },
+      {
+        name: 'icon',
+        type: 'React.ReactNode',
+        default: '<Plus />',
+        description: 'Center icon element.',
+      },
+      {
+        name: 'label',
+        type: 'string',
+        default: '—',
+        description: 'Optional label making it an Extended FAB pill.',
+      },
+      {
+        name: 'variant',
+        type: "'primary' | 'secondary' | 'surface'",
+        default: "'primary'",
+        description: 'Visual appearance variant.',
+      },
+      {
+        name: 'size',
+        type: "'default' | 'small'",
+        default: "'default'",
+        description: 'Standard 48px or compact 40px dimensions.',
+      },
     ],
   },
   {
@@ -206,10 +336,30 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'active', type: 'boolean', default: 'false', description: 'Whether the chip is currently selected/active.' },
-      { name: 'icon', type: 'React.ReactNode', default: '—', description: 'Leading icon displayed before the label.' },
-      { name: 'onDismiss', type: '() => void', default: '—', description: 'When provided, renders a dismiss (X) button.' },
-      { name: 'children', type: 'React.ReactNode', default: '—', description: 'Chip text or node content.' },
+      {
+        name: 'active',
+        type: 'boolean',
+        default: 'false',
+        description: 'Whether the chip is currently selected/active.',
+      },
+      {
+        name: 'icon',
+        type: 'React.ReactNode',
+        default: '—',
+        description: 'Leading icon displayed before the label.',
+      },
+      {
+        name: 'onDismiss',
+        type: '() => void',
+        default: '—',
+        description: 'When provided, renders a dismiss (X) button.',
+      },
+      {
+        name: 'children',
+        type: 'React.ReactNode',
+        default: '—',
+        description: 'Chip text or node content.',
+      },
     ],
   },
   {
@@ -232,9 +382,24 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'checked', type: 'boolean', default: 'false', description: 'The binary state (true = on, false = off).' },
-      { name: 'onCheckedChange', type: '(checked: boolean) => void', default: '—', description: 'Callback invoked upon toggling.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Prevents user interaction when true.' },
+      {
+        name: 'checked',
+        type: 'boolean',
+        default: 'false',
+        description: 'The binary state (true = on, false = off).',
+      },
+      {
+        name: 'onCheckedChange',
+        type: '(checked: boolean) => void',
+        default: '—',
+        description: 'Callback invoked upon toggling.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: 'false',
+        description: 'Prevents user interaction when true.',
+      },
     ],
   },
   {
@@ -263,11 +428,36 @@ export function Example() {
 }`,
     props: [
       { name: 'label', type: 'string', default: '—', description: 'Top descriptive label.' },
-      { name: 'placeholder', type: 'string', default: "'Select an option...'", description: 'Placeholder when no value is selected.' },
-      { name: 'options', type: 'LibraryDropdownOption[]', default: '[]', description: 'Array of selectable option objects.' },
-      { name: 'value', type: 'string', default: '—', description: 'Currently selected option value.' },
-      { name: 'onChange', type: '(value: string) => void', default: '—', description: 'Selection handler callback.' },
-      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables the dropdown trigger when true.' },
+      {
+        name: 'placeholder',
+        type: 'string',
+        default: "'Select an option...'",
+        description: 'Placeholder when no value is selected.',
+      },
+      {
+        name: 'options',
+        type: 'LibraryDropdownOption[]',
+        default: '[]',
+        description: 'Array of selectable option objects.',
+      },
+      {
+        name: 'value',
+        type: 'string',
+        default: '—',
+        description: 'Currently selected option value.',
+      },
+      {
+        name: 'onChange',
+        type: '(value: string) => void',
+        default: '—',
+        description: 'Selection handler callback.',
+      },
+      {
+        name: 'disabled',
+        type: 'boolean',
+        default: 'false',
+        description: 'Disables the dropdown trigger when true.',
+      },
     ],
   },
   {
@@ -296,9 +486,24 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'items', type: 'LibraryBottomNavItem[]', default: '[]', description: 'Destination items (up to 5).' },
-      { name: 'activeId', type: 'string', default: '—', description: 'Active destination identifier.' },
-      { name: 'onSelect', type: '(id: string) => void', default: '—', description: 'Destination switch callback.' },
+      {
+        name: 'items',
+        type: 'LibraryBottomNavItem[]',
+        default: '[]',
+        description: 'Destination items (up to 5).',
+      },
+      {
+        name: 'activeId',
+        type: 'string',
+        default: '—',
+        description: 'Active destination identifier.',
+      },
+      {
+        name: 'onSelect',
+        type: '(id: string) => void',
+        default: '—',
+        description: 'Destination switch callback.',
+      },
     ],
   },
   {
@@ -333,8 +538,18 @@ export function Example() {
   );
 }`,
     props: [
-      { name: 'interactive', type: 'boolean', default: 'false', description: 'Applies interactive hover states and pointer cursor.' },
-      { name: 'children', type: 'React.ReactNode', default: '—', description: 'Card body and sub-components.' },
+      {
+        name: 'interactive',
+        type: 'boolean',
+        default: 'false',
+        description: 'Applies interactive hover states and pointer cursor.',
+      },
+      {
+        name: 'children',
+        type: 'React.ReactNode',
+        default: '—',
+        description: 'Card body and sub-components.',
+      },
     ],
   },
 ];

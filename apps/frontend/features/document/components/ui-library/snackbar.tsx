@@ -38,13 +38,11 @@ export function LibrarySnackbar({
       role="status"
       aria-live="polite"
       className={cn(
-        'fixed bottom-6 left-1/2 z-50 flex w-full max-w-md -translate-x-1/2 items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-lg transition-all sm:left-auto sm:right-6 sm:translate-x-0',
+        'fixed bottom-6 left-1/2 z-50 flex w-full max-w-md -translate-x-1/2 items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-lg transition-all sm:right-6 sm:left-auto sm:translate-x-0',
         className,
       )}
     >
-      <span className="flex-1 truncate text-sm font-medium text-slate-800">
-        {message}
-      </span>
+      <span className="flex-1 truncate text-sm font-medium text-slate-800">{message}</span>
       {actionLabel && (
         <button
           type="button"
@@ -52,7 +50,7 @@ export function LibrarySnackbar({
             onAction?.();
             onClose();
           }}
-          className="min-h-[44px] min-w-[44px] px-2 text-xs font-bold uppercase tracking-wider text-[#023e8a] hover:text-[#00509d] focus-visible:outline-none focus-visible:underline"
+          className="min-h-[44px] min-w-[44px] px-2 text-xs font-bold tracking-wider text-[#023e8a] uppercase hover:text-[#00509d] focus-visible:underline focus-visible:outline-none"
         >
           {actionLabel}
         </button>
