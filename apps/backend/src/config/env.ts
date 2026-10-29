@@ -18,7 +18,7 @@ export const environmentSchema = z
       .min(1)
       .default(
         process.env.NODE_ENV === 'production'
-          ? 'https://snp-sms.vercel.app,https://api.kesararamwithdigital.tech'
+          ? 'https://snp-sms.vercel.app,https://snpis.kesararamwithdigital.tech'
           : 'http://localhost:3000',
       ),
     LOG_LEVEL: z

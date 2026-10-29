@@ -6,7 +6,7 @@ const requiresHttpsBackend =
 const defaultBackendUrl =
   process.env.NEXT_PUBLIC_API_URL ||
   (requiresHttpsBackend
-    ? 'https://api.kesararamwithdigital.tech/api/v1'
+    ? 'https://snpis.kesararamwithdigital.tech/api/v1'
     : 'http://localhost:4000/api/v1');
 const backendUrl = process.env.BACKEND_INTERNAL_URL ?? defaultBackendUrl;
 
