@@ -50,6 +50,15 @@ jobs:
             sleep 1
           done
           echo "Backend API is online and responding."
+        env:
+          NODE_ENV: development
+          PORT: 4000
+          MONGODB_URI: 'mongodb://127.0.0.1:27017/snp_sms?replicaSet=rs0&directConnection=true'
+          SUPER_ADMIN_USERNAME: admin_local
+          SUPER_ADMIN_PASSWORD: ***REMOVED***
 
       - name: Execute Comprehensive E2E API Test Suite
         run: npm run test:api
+        env:
+          SUPER_ADMIN_USERNAME: admin_local
+          SUPER_ADMIN_PASSWORD: ***REMOVED***
