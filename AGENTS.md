@@ -16,6 +16,7 @@ Before modifying code, packages, or repository structure, read:
 6. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
 7. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
 8. `.agents/skills/snp-sms-frontend-dark-ui-standards/SKILL.md`: Mandatory frontend folder architecture and Dark UI design standards (flat style, zero shadows, luminance depth, mathematical tokens).
+9. `.agents/skills/snp-sms-ui-components-guide/SKILL.md`: Mandatory 10 core UI components reference guide (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip).
 
 ---
 
