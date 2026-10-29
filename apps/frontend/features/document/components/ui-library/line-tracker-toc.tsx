@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { GeometricAsterisk } from './geometric-tag-primitives';
 
 export interface TocHeadingItem {
   id: string;
@@ -30,10 +29,10 @@ export function LineTrackerToc({
         {title}
       </p>
 
-      {/* Cloudflare-inspired Track & Line Marker (Light Mode) */}
+      {/* Apple-refined Line Tracker */}
       <div className="relative pl-3">
         {/* Continuous Background Vertical Line */}
-        <div className="absolute top-1 bottom-1 left-0 w-[2px] rounded-full bg-slate-200" />
+        <div className="absolute top-1 bottom-1 left-0 w-[2px] rounded-full bg-slate-200/80" />
 
         {/* Navigation list */}
         <nav className="space-y-2">
@@ -45,20 +44,19 @@ export function LineTrackerToc({
               <div key={item.id} className="group relative">
                 {/* Active Highlight Marker on the line */}
                 {isActive && (
-                  <span className="absolute top-0 bottom-0 -left-3 w-[3px] bg-[#0056FF]" />
+                  <span className="absolute top-0.5 bottom-0.5 -left-3 w-[2.5px] rounded-full bg-[#0056FF]" />
                 )}
 
                 <button
                   type="button"
                   onClick={() => onSelect(item.id)}
                   className={cn(
-                    'flex w-full items-center justify-between text-left transition-colors duration-150',
+                    'flex w-full items-center justify-between text-left transition-colors duration-150 select-none',
                     isSubItem ? 'pl-2 text-[11px]' : 'text-xs',
                     isActive ? 'font-bold text-[#0056FF]' : 'text-slate-600 hover:text-slate-950',
                   )}
                 >
                   <span className="truncate">{item.title}</span>
-                  {isActive && <GeometricAsterisk className="h-3 w-3 shrink-0 text-[#0056FF]" />}
                 </button>
               </div>
             );

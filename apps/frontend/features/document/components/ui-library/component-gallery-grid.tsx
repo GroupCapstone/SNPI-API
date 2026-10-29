@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronRight, Home, User, Zap, AlertTriangle, ArrowRight } from '@/components/icons';
-import { GeometricAsterisk } from './geometric-tag-primitives';
 
 export interface GalleryComponentItem {
   id: string;
@@ -204,16 +203,16 @@ export function ComponentGalleryGrid({ onSelectComponent, selectedId }: Componen
             type="button"
             onClick={() => onSelectComponent(item.id)}
             className={cn(
-              'group flex flex-col overflow-hidden border-2 text-left transition-all duration-300 ease-out',
-              'hover:-translate-y-1.5 hover:border-[#0056FF] hover:shadow-xl',
-              '[clip-path:polygon(0_0,calc(100%-14px)_0,100%_14px,100%_100%,0_100%)]',
+              'group flex flex-col overflow-hidden rounded-2xl border text-left transition-all duration-300 ease-out',
+              'bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md',
+              'hover:-translate-y-1 hover:border-[#0056FF]/40 hover:shadow-[0_12px_28px_rgba(0,86,255,0.08)]',
               isSelected
-                ? 'border-[#0056FF] bg-white shadow-md ring-2 ring-[#0056FF]/30'
-                : 'border-slate-200 bg-white hover:bg-white',
+                ? 'border-[#0056FF] shadow-md ring-2 ring-[#0056FF]/20'
+                : 'border-slate-200/80',
             )}
           >
-            {/* Schematic Illustration Canvas - Clean Light Theme matching Image 1 */}
-            <div className="relative flex h-48 w-full items-center justify-center overflow-hidden bg-[#F6F8FA] p-6 transition-all duration-300 group-hover:bg-[#F0F4FF]">
+            {/* Schematic Illustration Canvas - Apple Liquid Glass Style */}
+            <div className="relative flex h-48 w-full items-center justify-center overflow-hidden bg-[#F6F8FA] p-6 transition-all duration-300 group-hover:bg-[#F0F4FF]/70">
               {/* Subtle Dot Grid */}
               <div
                 className="absolute inset-0 opacity-40 transition-opacity group-hover:opacity-60"
@@ -229,15 +228,12 @@ export function ComponentGalleryGrid({ onSelectComponent, selectedId }: Componen
               </div>
             </div>
 
-            {/* Card Content - Clean Typography with Geometric Asterisk and Divider */}
+            {/* Card Content - Clean Typography without symbols or underscores */}
             <div className="flex flex-1 flex-col justify-between p-5">
               <div>
-                <div className="flex items-center justify-between">
-                  <h3 className="font-sans text-base font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
-                    {item.name}
-                  </h3>
-                  <GeometricAsterisk className="h-4 w-4 text-slate-400 transition-transform group-hover:rotate-45 group-hover:text-[#0056FF]" />
-                </div>
+                <h3 className="font-sans text-base font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  {item.name}
+                </h3>
                 <div className="mt-1 flex items-center gap-2 font-mono text-xs text-slate-500">
                   <span className="font-bold text-slate-700">{item.variantsCount}</span>
                   <span className="h-3 w-[1.5px] bg-[#0056FF]" />

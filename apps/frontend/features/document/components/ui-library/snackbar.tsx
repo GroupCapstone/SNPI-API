@@ -50,7 +50,7 @@ export function LibrarySnackbar({
             onAction?.();
             onClose();
           }}
-          className="min-h-[44px] min-w-[44px] px-2 text-xs font-bold tracking-wider text-[#0056FF] uppercase hover:text-[#0040C0] focus-visible:underline focus-visible:outline-none"
+          className="min-h-[44px] min-w-[44px] px-2 text-xs font-bold tracking-wider text-[#0056FF] uppercase hover:text-[#0040C0] focus-visible:ring-2 focus-visible:ring-[#0056FF]/30 focus-visible:outline-none"
         >
           {actionLabel}
         </button>

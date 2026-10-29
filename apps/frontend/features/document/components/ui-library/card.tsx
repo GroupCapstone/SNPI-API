@@ -16,9 +16,9 @@ export function LibraryCard({
   return (
     <div
       className={cn(
-        'rounded-xl border-2 border-slate-200 bg-white p-5 text-slate-900 shadow-xs transition-all duration-200',
+        'rounded-2xl border border-slate-200/80 bg-white/90 p-5 text-slate-900 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-200',
         interactive &&
-          'cursor-pointer [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)] hover:-translate-y-1 hover:border-[#0056FF] hover:bg-white hover:shadow-lg',
+          'cursor-pointer hover:-translate-y-1 hover:border-[#0056FF]/40 hover:bg-white hover:shadow-[0_12px_28px_rgba(0,86,255,0.08)]',
         className,
       )}
       {...props}
@@ -70,13 +70,7 @@ export function LibraryCardMedia({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={cn(
-        'relative mb-3 aspect-video w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100',
-        className,
-      )}
-      {...props}
-    >
+    <div className={cn('mb-4 overflow-hidden rounded-xl', className)} {...props}>
       {children}
     </div>
   );
@@ -88,13 +82,7 @@ export function LibraryCardFooter({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={cn(
-        'mt-4 flex items-center justify-between border-t border-slate-100 pt-3',
-        className,
-      )}
-      {...props}
-    >
+    <div className={cn('mt-4 flex items-center justify-between gap-3', className)} {...props}>
       {children}
     </div>
   );
