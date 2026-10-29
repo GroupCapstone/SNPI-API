@@ -23,23 +23,23 @@ export function LibraryFab({
 
   const variantStyles = {
     primary:
-      'bg-emerald-600 text-white hover:bg-emerald-500 border border-emerald-400/30 active:scale-95',
+      'bg-[#023e8a] text-white hover:bg-[#00509d] border border-blue-900 shadow-sm active:scale-95',
     secondary:
-      'bg-blue-600 text-white hover:bg-blue-500 border border-blue-400/30 active:scale-95',
+      'bg-emerald-600 text-white hover:bg-emerald-700 border border-emerald-700 shadow-sm active:scale-95',
     surface:
-      'bg-[#28282D] text-zinc-100 hover:bg-[#323238] border border-white/10 active:scale-95',
+      'bg-white text-slate-800 hover:bg-slate-50 border border-slate-200 shadow-sm active:scale-95',
   };
 
   const sizeStyles = {
-    default: isExtended ? 'h-14 px-5 text-sm font-medium gap-2.5 rounded-full' : 'h-14 w-14 rounded-full',
-    small: isExtended ? 'h-11 px-4 text-xs font-medium gap-2 rounded-full' : 'h-11 w-11 rounded-full',
+    default: isExtended ? 'h-12 px-5 text-sm font-semibold gap-2.5 rounded-full' : 'h-12 w-12 rounded-full',
+    small: isExtended ? 'h-10 px-4 text-xs font-semibold gap-2 rounded-full' : 'h-10 w-10 rounded-full',
   };
 
   return (
     <button
       type="button"
       className={cn(
-        'inline-flex items-center justify-center transition-all duration-150 shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/50 select-none',
+        'inline-flex items-center justify-center transition-all duration-150 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 select-none',
         variantStyles[variant],
         sizeStyles[size],
         className,

@@ -26,10 +26,10 @@ export function LibraryChip({
         type="button"
         onClick={onClick}
         className={cn(
-          'inline-flex h-8 min-h-[44px] items-center gap-1.5 rounded-full border px-3 text-xs font-normal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/50',
+          'inline-flex h-8 min-h-[44px] items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50',
           active
-            ? 'border-zinc-500 bg-[#2E2E33] font-medium text-zinc-100'
-            : 'border-white/5 bg-[#202024] text-zinc-300 hover:bg-[#2E2E33]',
+            ? 'border-blue-300 bg-blue-50 text-[#023e8a]'
+            : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200',
           className,
         )}
         {...props}
@@ -45,7 +45,7 @@ export function LibraryChip({
             onDismiss();
           }}
           aria-label="Remove filter"
-          className="ml-1 flex min-h-[44px] min-w-[28px] items-center justify-center text-zinc-400 hover:text-zinc-100"
+          className="ml-1 flex min-h-[44px] min-w-[28px] items-center justify-center text-slate-400 hover:text-slate-700"
         >
           <X className="size-3.5" />
         </button>

@@ -18,7 +18,7 @@ export default function DesignSystemPage() {
                 SNP-SMS Open API
               </span>
               <span className="text-slate-300">|</span>
-              <span className="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-800">
+              <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-[#023e8a]">
                 UI Design System & Component Library
               </span>
             </div>

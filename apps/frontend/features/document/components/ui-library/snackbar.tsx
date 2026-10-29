@@ -38,11 +38,11 @@ export function LibrarySnackbar({
       role="status"
       aria-live="polite"
       className={cn(
-        'fixed bottom-6 left-1/2 z-50 flex w-full max-w-md -translate-x-1/2 items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#202024] px-4 py-3 text-sm text-zinc-100 shadow-none transition-all sm:left-auto sm:right-6 sm:translate-x-0',
+        'fixed bottom-6 left-1/2 z-50 flex w-full max-w-md -translate-x-1/2 items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-lg transition-all sm:left-auto sm:right-6 sm:translate-x-0',
         className,
       )}
     >
-      <span className="flex-1 truncate text-sm font-normal text-zinc-200">
+      <span className="flex-1 truncate text-sm font-medium text-slate-800">
         {message}
       </span>
       {actionLabel && (
@@ -52,7 +52,7 @@ export function LibrarySnackbar({
             onAction?.();
             onClose();
           }}
-          className="min-h-[44px] min-w-[44px] px-2 text-xs font-semibold uppercase tracking-wider text-emerald-400 hover:text-emerald-300 focus-visible:outline-none focus-visible:underline"
+          className="min-h-[44px] min-w-[44px] px-2 text-xs font-bold uppercase tracking-wider text-[#023e8a] hover:text-[#00509d] focus-visible:outline-none focus-visible:underline"
         >
           {actionLabel}
         </button>
@@ -61,7 +61,7 @@ export function LibrarySnackbar({
         type="button"
         onClick={onClose}
         aria-label="Dismiss message"
-        className="flex min-h-[44px] min-w-[44px] items-center justify-center text-zinc-400 hover:text-zinc-100"
+        className="flex min-h-[44px] min-w-[44px] items-center justify-center text-slate-400 hover:text-slate-700"
       >
         <X className="size-4" />
       </button>

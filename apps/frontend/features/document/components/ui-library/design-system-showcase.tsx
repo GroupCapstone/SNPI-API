@@ -37,9 +37,6 @@ import {
 import { cn } from '@/lib/utils';
 
 export function DesignSystemShowcase() {
-  // Theme toggle state for the playground canvas
-  const [canvasTheme, setCanvasTheme] = React.useState<'dark' | 'light'>('dark');
-
   // 1. Snackbar state
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('Thread #1042 archived.');
@@ -82,100 +79,72 @@ export function DesignSystemShowcase() {
     { value: 'georgia', label: 'Georgia', description: 'Classic editorial serif for long-form reading' },
   ];
 
-  const isDark = canvasTheme === 'dark';
-
   return (
-    <div className="space-y-12">
-      {/* Top Banner & Control Ribbon */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800 dark:bg-zinc-900/50">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-semibold text-emerald-600 uppercase tracking-wider dark:text-emerald-400">
-              [PUBLIC DESIGN LIBRARY]
-            </span>
-            <span className="text-zinc-300 dark:text-zinc-700">·</span>
-            <span className="font-mono text-xs text-zinc-500">10 UI Components Standard</span>
-          </div>
-          <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900 dark:text-zinc-100">
-            Interactive Component Showcase & Mathematical Tokens
-          </h2>
-          <p className="mt-1 text-sm text-slate-600 dark:text-zinc-400">
-            Flat component design, zero drop-shadows, surface luminance depth hierarchy, and strict touch target compliance.
-          </p>
+    <div className="space-y-10 text-slate-900">
+      {/* Top Header / Document Introduction */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <span className="rounded-md border border-blue-200 bg-blue-50 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#023e8a]">
+            Developer Documentation · UI Component Library
+          </span>
+          <span className="text-slate-300">·</span>
+          <span className="font-mono text-xs text-slate-500">10 Core UI Components Standard</span>
         </div>
 
-        {/* Playground Theme Selector */}
-        <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white p-1 dark:border-zinc-700 dark:bg-zinc-800">
-          <button
-            type="button"
-            onClick={() => setCanvasTheme('dark')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-mono text-xs font-medium transition-colors',
-              canvasTheme === 'dark'
-                ? 'bg-zinc-900 text-emerald-400 dark:bg-zinc-950 dark:text-emerald-400'
-                : 'text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark UI Canvas (#121214)
-          </button>
-          <button
-            type="button"
-            onClick={() => setCanvasTheme('light')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-mono text-xs font-medium transition-colors',
-              canvasTheme === 'light'
-                ? 'bg-blue-50 text-[#023e8a] font-semibold'
-                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400',
-            )}
-          >
-            Light Canvas Preview
-          </button>
+        <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+          10 Core UI Components & Design System
+        </h1>
+        <p className="max-w-4xl text-sm text-slate-600 sm:text-base leading-relaxed">
+          Authoritative interactive specifications, mental models, and real-world paradigms for the 10 foundational UI components in the SNP-SMS platform. Styled using the default clean white document standard.
+        </p>
+
+        {/* Quick Jump Bar */}
+        <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3.5 font-mono text-xs text-slate-700">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="font-bold text-slate-900">COMPONENTS:</span>
+            <a href="#comp-snackbar" className="text-[#023e8a] hover:underline">1. Snackbar</a>
+            <a href="#comp-bottom-sheet" className="text-[#023e8a] hover:underline">2. Bottom Sheet</a>
+            <a href="#comp-dialog" className="text-[#023e8a] hover:underline">3. Dialog</a>
+            <a href="#comp-bottom-nav" className="text-[#023e8a] hover:underline">4. Bottom Nav</a>
+            <a href="#comp-switch" className="text-[#023e8a] hover:underline">5. Toggle Switch</a>
+            <a href="#comp-chip" className="text-[#023e8a] hover:underline">6. Chips</a>
+            <a href="#comp-fab" className="text-[#023e8a] hover:underline">7. FAB</a>
+            <a href="#comp-card" className="text-[#023e8a] hover:underline">8. Card</a>
+            <a href="#comp-dropdown" className="text-[#023e8a] hover:underline">9. Dropdown</a>
+            <a href="#comp-tooltip" className="text-[#023e8a] hover:underline">10. Tooltip</a>
+          </div>
         </div>
       </div>
 
-      {/* Main Interactive Playground Box */}
-      <div
-        className={cn(
-          'relative rounded-3xl border p-6 transition-colors duration-200 sm:p-10 shadow-none',
-          isDark
-            ? 'border-white/10 bg-[#121214] text-zinc-100'
-            : 'border-slate-300 bg-[#F8F9FA] text-slate-900',
-        )}
-      >
-        <div className="mb-8 flex items-center justify-between border-b border-white/10 pb-4">
-          <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
-            <span className="size-2 rounded-full bg-emerald-500" />
-            <span>PLAYGROUND CANVAS ACTIVE: {isDark ? 'OBSIDIAN DARK (#121214)' : 'CLEAN LIGHT (#F8F9FA)'}</span>
-          </div>
-          <span className="font-mono text-xs text-zinc-400">10 / 10 COMPONENTS LOADED</span>
-        </div>
-
-        {/* 10 Components Grid */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {/* COMPONENT 1: SNACKBAR */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">01. SNACKBAR</span>
-                <h3 className="text-base font-semibold">Quick Action Confirmation</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                Gmail Paradigm
-              </span>
+      {/* 10 Components Interactive Grid */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        {/* COMPONENT 1: SNACKBAR */}
+        <div id="comp-snackbar" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">01. SNACKBAR</span>
+              <h3 className="text-base font-bold text-slate-950">Quick Action Confirmation</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              A temporary bar at the bottom to confirm what you just did, disappearing after a few seconds. Includes an instant Undo action.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              Gmail Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A small bar that pops up at the bottom to confirm what you just did, then fades away after a few seconds. Includes an instant Undo action.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <div className="flex flex-wrap gap-2.5">
               <button
                 type="button"
                 onClick={() => {
                   setSnackbarMessage('Student profile archived.');
                   setSnackbarOpen(true);
                 }}
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/10 bg-[#202024] px-4 text-xs font-medium text-zinc-200 hover:bg-[#28282D] active:scale-95 transition-all"
+                className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 text-xs font-medium text-slate-800 shadow-xs hover:bg-slate-50 transition-colors"
               >
-                <Mail className="h-4 w-4" />
+                <Mail className="h-4 w-4 text-slate-600" />
                 <span>Simulate Archive Student</span>
               </button>
               <button
@@ -184,147 +153,161 @@ export function DesignSystemShowcase() {
                   setSnackbarMessage('Grade batch saved successfully.');
                   setSnackbarOpen(true);
                 }}
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/10 bg-[#202024] px-4 text-xs font-medium text-zinc-200 hover:bg-[#28282D] active:scale-95 transition-all"
+                className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-3.5 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
               >
-                <Check className="h-4 w-4 text-emerald-400" />
+                <Check className="h-4 w-4" />
                 <span>Simulate Batch Save</span>
               </button>
             </div>
           </div>
+        </div>
 
-          {/* COMPONENT 2: BOTTOM SHEET */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">02. BOTTOM SHEET</span>
-                <h3 className="text-base font-semibold">Contextual Action Panel</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                Google Maps Paradigm
-              </span>
+        {/* COMPONENT 2: BOTTOM SHEET */}
+        <div id="comp-bottom-sheet" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">02. BOTTOM SHEET</span>
+              <h3 className="text-base font-bold text-slate-950">Contextual Action Panel</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              A panel sliding from the bottom edge to show options or item details without leaving the current screen.
-            </p>
-            <div className="mt-4">
-              <button
-                type="button"
-                onClick={() => setSheetOpen(true)}
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-white/10 bg-[#202024] px-4 text-xs font-medium text-zinc-200 hover:bg-[#28282D] active:scale-95 transition-all"
-              >
-                <MapPin className="h-4 w-4 text-emerald-400" />
-                <span>Open Campus Details Sheet</span>
-              </button>
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              Google Maps Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A panel sliding up from the bottom edge to reveal more options, details, or maps without forcing the user to leave the current screen.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <button
+              type="button"
+              onClick={() => setSheetOpen(true)}
+              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-3.5 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
+            >
+              <MapPin className="h-4 w-4" />
+              <span>Open Campus Details Sheet</span>
+            </button>
+          </div>
+        </div>
+
+        {/* COMPONENT 3: DIALOG */}
+        <div id="comp-dialog" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">03. DIALOG</span>
+              <h3 className="text-base font-bold text-slate-950">Critical Confirmation Interrupt</h3>
+            </div>
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              WhatsApp Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A modal dialogue interrupting the user flow to confirm high-risk, irreversible operations like permanent deletions.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <button
+              type="button"
+              onClick={() => setDialogOpen(true)}
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3.5 text-xs font-semibold text-red-700 shadow-xs hover:bg-red-100 transition-colors"
+            >
+              <span>Trigger Delete Dialog</span>
+            </button>
+            <LibraryDialog
+              open={dialogOpen}
+              onOpenChange={setDialogOpen}
+              title="Delete enrollment record?"
+              description="This will permanently revoke academic course registration for Student ID #2049. This action cannot be reversed."
+              confirmLabel="Delete Record"
+              cancelLabel="Cancel"
+              isDestructive
+              onConfirm={() => setDialogOpen(false)}
+            />
+          </div>
+        </div>
+
+        {/* COMPONENT 4: BOTTOM NAV */}
+        <div id="comp-bottom-nav" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">04. BOTTOM NAV</span>
+              <h3 className="text-base font-bold text-slate-950">Thumb Navigation Bar</h3>
+            </div>
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              Spotify Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A persistent bar at the bottom for jumping between 3 to 5 core application areas, right where the thumb naturally rests.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-3">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <LibraryBottomNav
+              items={navItems}
+              activeId={activeTab}
+              onSelect={setActiveTab}
+            />
+            <div className="mt-2 text-center font-mono text-xs text-slate-500">
+              Active Screen: <span className="font-bold text-[#023e8a] uppercase">{activeTab}</span>
             </div>
           </div>
+        </div>
 
-          {/* COMPONENT 3: DIALOG */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">03. DIALOG</span>
-                <h3 className="text-base font-semibold">Critical Confirmation Interrupt</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                WhatsApp Paradigm
-              </span>
+        {/* COMPONENT 5: TOGGLE SWITCH */}
+        <div id="comp-switch" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">05. TOGGLE SWITCH</span>
+              <h3 className="text-base font-bold text-slate-950">Instant Binary State Control</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              A modal box that pauses flow to confirm high-risk or irreversible operations.
-            </p>
-            <div className="mt-4">
-              <button
-                type="button"
-                onClick={() => setDialogOpen(true)}
-                className="inline-flex h-11 items-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 px-4 text-xs font-medium text-red-400 hover:bg-red-500/20 active:scale-95 transition-all"
-              >
-                <span>Trigger Delete Dialog</span>
-              </button>
-              <LibraryDialog
-                open={dialogOpen}
-                onOpenChange={setDialogOpen}
-                title="Delete enrollment record?"
-                description="This will permanently revoke academic course registration for Student ID #2049. This action cannot be reversed."
-                confirmLabel="Delete Record"
-                cancelLabel="Cancel"
-                isDestructive
-                onConfirm={() => setDialogOpen(false)}
-              />
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              iPhone Settings Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            An on or off control for a setting that applies instantly without requiring an extra "Save" click, like a wall light switch.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4 space-y-2.5">
+            <span className="block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2 shadow-xs">
+              <span className="text-xs font-medium text-slate-800">Airplane Mode</span>
+              <LibrarySwitch checked={airplaneMode} onCheckedChange={setAirplaneMode} />
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2 shadow-xs">
+              <div className="flex items-center gap-2">
+                <Wifi className="h-4 w-4 text-slate-600" />
+                <span className="text-xs font-medium text-slate-800">Campus Wi-Fi Sync</span>
+              </div>
+              <LibrarySwitch checked={wifiEnabled} onCheckedChange={setWifiEnabled} />
+            </div>
+            <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2 shadow-xs">
+              <span className="text-xs font-medium text-slate-800">Push Notifications</span>
+              <LibrarySwitch checked={notifications} onCheckedChange={setNotifications} />
             </div>
           </div>
+        </div>
 
-          {/* COMPONENT 4: BOTTOM NAV */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">04. BOTTOM NAV</span>
-                <h3 className="text-base font-semibold">Thumb Navigation Bar</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                Spotify Paradigm
-              </span>
+        {/* COMPONENT 6: CHIPS */}
+        <div id="comp-chip" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">06. CHIPS</span>
+              <h3 className="text-base font-bold text-slate-950">Tappable Filter Tokens</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              Fixed bar anchored where the thumb rests, switching between 3 to 5 core app destinations.
-            </p>
-            <div className="mt-4 overflow-hidden rounded-xl border border-white/10 bg-[#121214] p-2">
-              <LibraryBottomNav
-                items={navItems}
-                activeId={activeTab}
-                onSelect={setActiveTab}
-                className="relative border-none bg-transparent"
-              />
-            </div>
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              YouTube Paradigm
+            </span>
           </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            Small, rounded, easy-to-tap tags used to filter lists or select from a compact set of options, shaped like poker chips.
+          </p>
 
-          {/* COMPONENT 5: TOGGLE SWITCH */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">05. TOGGLE SWITCH</span>
-                <h3 className="text-base font-semibold">Instant Binary State Control</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                iPhone Settings Paradigm
-              </span>
-            </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              Flip between on/off states instantly like a light switch with 44px touch targets.
-            </p>
-            <div className="mt-4 space-y-3">
-              <div className="flex items-center justify-between rounded-xl border border-white/5 bg-[#202024] px-4 py-2.5">
-                <span className="text-xs font-medium text-zinc-200">Airplane Mode</span>
-                <LibrarySwitch checked={airplaneMode} onCheckedChange={setAirplaneMode} />
-              </div>
-              <div className="flex items-center justify-between rounded-xl border border-white/5 bg-[#202024] px-4 py-2.5">
-                <div className="flex items-center gap-2">
-                  <Wifi className="h-4 w-4 text-zinc-400" />
-                  <span className="text-xs font-medium text-zinc-200">Campus Wi-Fi Sync</span>
-                </div>
-                <LibrarySwitch checked={wifiEnabled} onCheckedChange={setWifiEnabled} />
-              </div>
-              <div className="flex items-center justify-between rounded-xl border border-white/5 bg-[#202024] px-4 py-2.5">
-                <span className="text-xs font-medium text-zinc-200">Push Notifications</span>
-                <LibrarySwitch checked={notifications} onCheckedChange={setNotifications} />
-              </div>
-            </div>
-          </div>
-
-          {/* COMPONENT 6: CHIPS */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">06. CHIPS</span>
-                <h3 className="text-base font-semibold">Tappable Filter Tokens</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                YouTube Paradigm
-              </span>
-            </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              Small rounded tags used to filter feeds or pick options, easy to tap like poker chips.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <div className="flex flex-wrap gap-2">
               {chipOptions.map((opt) => (
                 <LibraryChip
                   key={opt}
@@ -336,159 +319,171 @@ export function DesignSystemShowcase() {
                 </LibraryChip>
               ))}
             </div>
-            <div className="mt-3 font-mono text-[11px] text-zinc-500">
-              Active Category: <span className="text-emerald-400">{selectedChip}</span>
+            <div className="mt-3 font-mono text-xs text-slate-500">
+              Selected: <span className="font-semibold text-[#023e8a]">{selectedChip}</span>
             </div>
           </div>
+        </div>
 
-          {/* COMPONENT 7: FAB */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">07. FAB</span>
-                <h3 className="text-base font-semibold">Floating Action Button</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                Google Calendar Paradigm
-              </span>
+        {/* COMPONENT 7: FAB */}
+        <div id="comp-fab" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">07. FAB (FLOATING ACTION BUTTON)</span>
+              <h3 className="text-base font-bold text-slate-950">Primary Screen Action</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              Circular button floating above content for the one primary action, always in thumb reach.
-            </p>
-            <div className="mt-4 flex flex-wrap items-center gap-4">
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              Google Calendar Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A round button for the one main action on a screen, floating above content like a lifebuoy within comfortable thumb reach.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <div className="flex flex-wrap items-center gap-4">
               <LibraryFab
                 onClick={() => setFabCount((c) => c + 1)}
-                icon={<Plus className="h-6 w-6" />}
+                icon={<Plus className="h-5 w-5" />}
               />
               <LibraryFab
                 variant="secondary"
                 label="New Event"
                 onClick={() => setFabCount((c) => c + 1)}
-                icon={<Calendar className="h-5 w-5" />}
+                icon={<Calendar className="h-4 w-4" />}
               />
-              <div className="font-mono text-xs text-zinc-400">
-                Actions Triggered: <span className="font-bold text-emerald-400">{fabCount}</span>
+              <div className="font-mono text-xs text-slate-600">
+                Actions Clicked: <span className="font-bold text-[#023e8a]">{fabCount}</span>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* COMPONENT 8: CARD */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">08. CARD</span>
-                <h3 className="text-base font-semibold">Self-Contained Content Unit</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                Airbnb Paradigm
-              </span>
+        {/* COMPONENT 8: CARD */}
+        <div id="comp-card" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">08. CARD</span>
+              <h3 className="text-base font-bold text-slate-950">Self-Contained Content Unit</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              A box grouping photo, title, meta details, and price into one tappable rectangle.
-            </p>
-            <div className="mt-4">
-              <LibraryCard interactive onClick={() => setCardLiked((l) => !l)}>
-                <LibraryCardMedia>
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#1C1C20] to-[#28282D]">
-                    <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
-                      <Sparkles className="h-4 w-4 text-emerald-400" />
-                      <span>Classroom Block A · Lab 4</span>
-                    </div>
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              Airbnb Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A clean rectangular box grouping related information—such as a visual graphic, title, meta details, and price—into one tappable item.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <LibraryCard interactive onClick={() => setCardLiked((l) => !l)}>
+              <LibraryCardMedia>
+                <div className="flex h-full w-full items-center justify-center bg-slate-100">
+                  <div className="flex items-center gap-2 font-mono text-xs text-slate-600">
+                    <Sparkles className="h-4 w-4 text-[#023e8a]" />
+                    <span>Academic Science Block B · Lab 4</span>
                   </div>
-                </LibraryCardMedia>
-                <LibraryCardHeader>
-                  <div>
-                    <LibraryCardTitle>Robotics & Autonomous Systems</LibraryCardTitle>
-                    <LibraryCardDescription>Grade 11 · Term 1 Curricular Track</LibraryCardDescription>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCardLiked((l) => !l);
-                    }}
-                    className="p-1 text-zinc-400 hover:text-amber-400"
-                  >
-                    <Star className={cn('h-4 w-4', cardLiked && 'fill-amber-400 text-amber-400')} />
-                  </button>
-                </LibraryCardHeader>
-                <LibraryCardFooter>
-                  <span className="font-mono text-xs text-zinc-400">32 Seats Enrolled</span>
-                  <span className="font-mono text-xs font-semibold text-emerald-400">$350 / Term</span>
-                </LibraryCardFooter>
-              </LibraryCard>
-            </div>
+                </div>
+              </LibraryCardMedia>
+              <LibraryCardHeader>
+                <div>
+                  <LibraryCardTitle>Robotics & Autonomous Systems</LibraryCardTitle>
+                  <LibraryCardDescription>Grade 11 · Term 1 Curricular Track</LibraryCardDescription>
+                </div>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCardLiked((l) => !l);
+                  }}
+                  className="p-1 text-slate-400 hover:text-amber-500"
+                >
+                  <Star className={cn('h-4 w-4', cardLiked && 'fill-amber-400 text-amber-500')} />
+                </button>
+              </LibraryCardHeader>
+              <LibraryCardFooter>
+                <span className="font-mono text-xs text-slate-500">32 Seats Enrolled</span>
+                <span className="font-mono text-xs font-bold text-[#023e8a]">$350 / Term</span>
+              </LibraryCardFooter>
+            </LibraryCard>
           </div>
+        </div>
 
-          {/* COMPONENT 9: DROPDOWN */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">09. DROPDOWN</span>
-                <h3 className="text-base font-semibold">Roller Blind Choice Menu</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                Google Docs Paradigm
-              </span>
+        {/* COMPONENT 9: DROPDOWN */}
+        <div id="comp-dropdown" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">09. DROPDOWN</span>
+              <h3 className="text-base font-bold text-slate-950">Roller Blind Choice Menu</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              A button opening a clean list of choices, tucking away without cluttering the screen.
-            </p>
-            <div className="mt-4">
-              <LibraryDropdown
-                label="Typography Family"
-                options={fontOptions}
-                value={selectedFont}
-                onChange={setSelectedFont}
-              />
-            </div>
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              Google Docs Paradigm
+            </span>
           </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A button opening a clean list of choices like a roller blind, letting users pick an option and tucking away without cluttering the screen.
+          </p>
 
-          {/* COMPONENT 10: TOOLTIP */}
-          <div className={cn('rounded-2xl border p-5', isDark ? 'border-white/10 bg-[#161619]' : 'border-slate-200 bg-white')}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-xs font-medium text-emerald-400">10. TOOLTIP</span>
-                <h3 className="text-base font-semibold">Hover Action Label & Shortcut</h3>
-              </div>
-              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 font-mono text-[11px] text-zinc-400">
-                Figma Paradigm
-              </span>
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <LibraryDropdown
+              label="Typography Family"
+              options={fontOptions}
+              value={selectedFont}
+              onChange={setSelectedFont}
+            />
+          </div>
+        </div>
+
+        {/* COMPONENT 10: TOOLTIP */}
+        <div id="comp-tooltip" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-mono text-xs font-bold text-[#023e8a]">10. TOOLTIP</span>
+              <h3 className="text-base font-bold text-slate-950">Hover Action Label & Shortcut</h3>
             </div>
-            <p className="mt-2 text-xs text-zinc-400">
-              A tiny label appearing on hover or focus explaining what a tool does with keyboard shortcuts.
-            </p>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+              Figma Paradigm
+            </span>
+          </div>
+          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+            A tiny label appearing when you hover or focus, explaining what a tool does and providing its keyboard shortcut.
+          </p>
+
+          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
+            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+            <div className="flex flex-wrap items-center gap-3">
               <LibraryTooltip content="Move tool" shortcut="V">
                 <button
                   type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#202024] text-zinc-300 hover:bg-[#28282D] hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
                 >
-                  <span className="font-mono text-sm font-semibold">V</span>
+                  <span className="font-mono text-xs font-bold">V</span>
                 </button>
               </LibraryTooltip>
-              <LibraryTooltip content="Hand / Pan viewport" shortcut="H">
+              <LibraryTooltip content="Hand tool" shortcut="H">
                 <button
                   type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#202024] text-zinc-300 hover:bg-[#28282D] hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
                 >
-                  <span className="font-mono text-sm font-semibold">H</span>
+                  <span className="font-mono text-xs font-bold">H</span>
                 </button>
               </LibraryTooltip>
-              <LibraryTooltip content="Rectangle vector" shortcut="R">
+              <LibraryTooltip content="Rectangle tool" shortcut="R">
                 <button
                   type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#202024] text-zinc-300 hover:bg-[#28282D] hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
                 >
-                  <span className="font-mono text-sm font-semibold">R</span>
+                  <span className="font-mono text-xs font-bold">R</span>
                 </button>
               </LibraryTooltip>
-              <LibraryTooltip content="Text frame tool" shortcut="T">
+              <LibraryTooltip content="Text tool" shortcut="T">
                 <button
                   type="button"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#202024] text-zinc-300 hover:bg-[#28282D] hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
                 >
-                  <span className="font-mono text-sm font-semibold">T</span>
+                  <span className="font-mono text-xs font-bold">T</span>
                 </button>
               </LibraryTooltip>
             </div>
@@ -496,53 +491,54 @@ export function DesignSystemShowcase() {
         </div>
       </div>
 
-      {/* Mathematical Tokens & Dark UI Rules Spec Card */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 dark:border-zinc-800 dark:bg-zinc-900/60">
-        <h3 className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase dark:text-zinc-500">
-          MATHEMATICAL DESIGN SPECIFICATIONS & TOKENS
-        </h3>
-        <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-            <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">01. INNER RADIUS</span>
-            <div className="mt-1 font-mono text-sm font-semibold text-slate-900 dark:text-zinc-100">
+      {/* Mathematical Tokens & Specifications Card */}
+      <section className="border-t border-slate-200 pt-8 space-y-4">
+        <h2 className="text-base font-bold tracking-tight text-slate-950">
+          Design Specifications & Mathematical Tokens
+        </h2>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <span className="font-mono text-xs font-bold text-[#023e8a]">01. INNER RADIUS</span>
+            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
               R_inner = R_outer - Padding
             </div>
-            <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
-              Ensures concentric geometric curves (e.g. 16px outer - 4px padding = 12px inner).
+            <p className="mt-1 text-xs text-slate-600">
+              Ensures concentric curves between cards and internal buttons.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-            <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">02. LINE HEIGHT</span>
-            <div className="mt-1 font-mono text-sm font-semibold text-slate-900 dark:text-zinc-100">
-              Line Height = Font Size × 1.4 – 1.6
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <span className="font-mono text-xs font-bold text-[#023e8a]">02. LINE HEIGHT</span>
+            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
+              Font Size × 1.4 – 1.6
             </div>
-            <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
-              Optimal optical cadence preventing visual line collision across dark themes.
+            <p className="mt-1 text-xs text-slate-600">
+              Optimal reading rhythm and line density across documentation.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-            <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">03. TOUCH TARGET</span>
-            <div className="mt-1 font-mono text-sm font-semibold text-slate-900 dark:text-zinc-100">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <span className="font-mono text-xs font-bold text-[#023e8a]">03. TOUCH TARGET</span>
+            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
               Minimum 44 × 44px
             </div>
-            <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
-              Thumb ergonomic accessibility standard across buttons, toggles, chips, and nav items.
+            <p className="mt-1 text-xs text-slate-600">
+              Meets WCAG AA accessibility standards across all interactive controls.
             </p>
           </div>
 
-          <div className="rounded-xl border border-slate-100 bg-slate-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-            <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">04. ELEVATION DEPTH</span>
-            <div className="mt-1 font-mono text-sm font-semibold text-slate-900 dark:text-zinc-100">
-              Zero Shadows · Surface Luminance
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
+            <span className="font-mono text-xs font-bold text-[#023e8a]">04. COLOR CONTRAST</span>
+            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
+              (L1 + 0.05) / (L2 + 0.05) ≥ 4.5:1
             </div>
-            <p className="mt-1 text-xs text-slate-500 dark:text-zinc-400">
-              L0 (#121214) &rarr; L1 (#161619) &rarr; L2 (#202024) &rarr; L3 (#28282D).
+            <p className="mt-1 text-xs text-slate-600">
+              Strict WCAG AA contrast ratio between text and white background.
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Global Overlays for active component interaction */}
       <LibrarySnackbar
@@ -559,23 +555,23 @@ export function DesignSystemShowcase() {
         title="Siem Reap Central Campus · Science Lab"
       >
         <div className="space-y-4">
-          <p className="text-sm text-zinc-300">
+          <p className="text-sm text-slate-600 leading-relaxed">
             Located in Academic Building B, 2nd Floor. Fully equipped with dual robotic testbenches and high-speed telemetry terminals.
           </p>
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl border border-white/5 bg-[#202024] p-3 text-center">
-              <span className="font-mono text-xs text-zinc-400">CAPACITY</span>
-              <div className="mt-0.5 text-base font-semibold text-zinc-100">45 Students</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-center">
+              <span className="font-mono text-xs text-slate-500">CAPACITY</span>
+              <div className="mt-0.5 text-base font-bold text-slate-900">45 Students</div>
             </div>
-            <div className="rounded-xl border border-white/5 bg-[#202024] p-3 text-center">
-              <span className="font-mono text-xs text-zinc-400">STATUS</span>
-              <div className="mt-0.5 text-base font-semibold text-emerald-400">Active Session</div>
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-center">
+              <span className="font-mono text-xs text-slate-500">STATUS</span>
+              <div className="mt-0.5 text-base font-bold text-emerald-700">Active Session</div>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setSheetOpen(false)}
-            className="flex h-11 w-full items-center justify-center rounded-xl bg-emerald-600 text-xs font-medium text-white hover:bg-emerald-500 transition-colors"
+            className="flex h-10 w-full items-center justify-center rounded-lg bg-[#023e8a] text-xs font-medium text-white hover:bg-[#00509d] transition-colors"
           >
             Close Sheet
           </button>
