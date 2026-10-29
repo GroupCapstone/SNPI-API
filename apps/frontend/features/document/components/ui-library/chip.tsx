@@ -26,10 +26,10 @@ export function LibraryChip({
         type="button"
         onClick={onClick}
         className={cn(
-          'inline-flex h-8 min-h-[44px] items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:outline-none',
+          'inline-flex h-8 min-h-[44px] items-center gap-1.5 rounded-lg border-2 px-3 text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:outline-none',
           active
-            ? 'border-blue-300 bg-blue-50 text-[#023e8a]'
-            : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200',
+            ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]'
+            : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF]',
           className,
         )}
         {...props}

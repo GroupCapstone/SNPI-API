@@ -23,6 +23,9 @@ import {
   LibraryCardMedia,
   LibraryCardFooter,
   COMPONENT_LIBRARY_REGISTRY,
+  GeometricButton,
+  GeometricAsterisk,
+  GeometricHeaderStamp,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -135,14 +138,14 @@ export default function DesignSystemPage() {
                   placeholder="Filter components..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-9 w-full rounded-xl border border-slate-200 bg-slate-50 pr-4 pl-9 font-sans text-xs text-slate-900 placeholder-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-none"
+                  className="h-9 w-full rounded-lg border-2 border-slate-200 bg-white pr-4 pl-9 font-sans text-xs text-slate-900 placeholder-slate-400 focus:border-[#0056FF] focus:outline-none"
                 />
               </div>
 
               {/* Navigation Links */}
               <div className="space-y-4 font-sans text-xs">
                 <div>
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     <button
                       type="button"
                       onClick={() => {
@@ -150,16 +153,28 @@ export default function DesignSystemPage() {
                         setActiveSectionId('component-gallery');
                       }}
                       className={cn(
-                        'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left font-medium transition-colors',
+                        'flex w-full items-center justify-between rounded-lg border-2 px-3 py-2 text-left font-medium transition-all select-none',
                         activeTab === 'catalog'
-                          ? 'bg-slate-100 font-bold text-[#0056FF]'
-                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
+                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)]'
+                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
                       )}
                     >
-                      <div className="flex items-center gap-2.5">
-                        <Layers className="h-4 w-4 text-slate-500" />
-                        <span>Component Gallery</span>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            'px-1.5 py-0.5 font-mono text-[10px] font-black',
+                            activeTab === 'catalog'
+                              ? 'bg-[#000B26] text-white'
+                              : 'bg-slate-100 text-slate-600',
+                          )}
+                        >
+                          01
+                        </span>
+                        <span className="tracking-wider uppercase">Catalog</span>
                       </div>
+                      {activeTab === 'catalog' && (
+                        <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
+                      )}
                     </button>
 
                     <button
@@ -169,16 +184,28 @@ export default function DesignSystemPage() {
                         setActiveSectionId('interactive-stage');
                       }}
                       className={cn(
-                        'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left font-medium transition-colors',
+                        'flex w-full items-center justify-between rounded-lg border-2 px-3 py-2 text-left font-medium transition-all select-none',
                         activeTab === 'playground'
-                          ? 'bg-slate-100 font-bold text-[#0056FF]'
-                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
+                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)]'
+                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
                       )}
                     >
-                      <div className="flex items-center gap-2.5">
-                        <Sparkles className="h-4 w-4 text-slate-500" />
-                        <span>Interactive Playground</span>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            'px-1.5 py-0.5 font-mono text-[10px] font-black',
+                            activeTab === 'playground'
+                              ? 'bg-[#000B26] text-white'
+                              : 'bg-slate-100 text-slate-600',
+                          )}
+                        >
+                          02
+                        </span>
+                        <span className="tracking-wider uppercase">Playground</span>
                       </div>
+                      {activeTab === 'playground' && (
+                        <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
+                      )}
                     </button>
 
                     <button
@@ -188,23 +215,35 @@ export default function DesignSystemPage() {
                         setActiveSectionId('brand-blueprint');
                       }}
                       className={cn(
-                        'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left font-medium transition-colors',
+                        'flex w-full items-center justify-between rounded-lg border-2 px-3 py-2 text-left font-medium transition-all select-none',
                         activeTab === 'blueprint'
-                          ? 'bg-slate-100 font-bold text-[#0056FF]'
-                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
+                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)]'
+                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
                       )}
                     >
-                      <div className="flex items-center gap-2.5">
-                        <Palette className="h-4 w-4 text-slate-500" />
-                        <span>Brand Colors</span>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            'px-1.5 py-0.5 font-mono text-[10px] font-black',
+                            activeTab === 'blueprint'
+                              ? 'bg-[#000B26] text-white'
+                              : 'bg-slate-100 text-slate-600',
+                          )}
+                        >
+                          03
+                        </span>
+                        <span className="tracking-wider uppercase">Brand Colors</span>
                       </div>
+                      {activeTab === 'blueprint' && (
+                        <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
+                      )}
                     </button>
                   </div>
                 </div>
 
                 {/* 10 Core UI Components List */}
-                <div className="border-t border-slate-200 pt-4">
-                  <div className="space-y-0.5">
+                <div className="border-t-2 border-slate-200 pt-4">
+                  <div className="space-y-1">
                     {COMPONENT_LIBRARY_REGISTRY.map((comp) => {
                       const isSelected =
                         activeTab === 'playground' && selectedComponentId === comp.id;
@@ -218,13 +257,14 @@ export default function DesignSystemPage() {
                             setActiveSectionId('interactive-stage');
                           }}
                           className={cn(
-                            'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors',
+                            'flex w-full items-center justify-between rounded-md border-2 px-2.5 py-1.5 text-left text-xs transition-all select-none',
                             isSelected
-                              ? 'bg-blue-50 font-bold text-[#0056FF]'
-                              : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
+                              ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]'
+                              : 'border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
                           <span className="truncate">{comp.name}</span>
+                          {isSelected && <GeometricAsterisk className="h-3 w-3 text-white" />}
                         </button>
                       );
                     })}
@@ -238,17 +278,20 @@ export default function DesignSystemPage() {
           <main className="space-y-10 lg:col-span-6">
             {/* Header Anchor Section (Matching Image 2: "🔗 Access on Workers: how it works") */}
             <div id="how-it-works" className="space-y-4">
-              <div className="flex items-center gap-2">
-                <a
-                  href="#how-it-works"
-                  className="font-mono text-xl text-[#0056FF] hover:underline"
-                  title="Direct Section Link"
-                >
-                  🔗
-                </a>
-                <h1 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                  SNP-SMS Design System: how it works
-                </h1>
+              <div className="flex flex-col gap-4 border-b-2 border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-2">
+                  <a
+                    href="#how-it-works"
+                    className="font-mono text-xl text-[#0056FF] hover:underline"
+                    title="Direct Section Link"
+                  >
+                    🔗
+                  </a>
+                  <h1 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                    SNP-SMS Design System: how it works
+                  </h1>
+                </div>
+                <GeometricHeaderStamp codeA="20" titleA="SYSTEM" codeB="26" titleB="DOCS" />
               </div>
 
               <p className="font-sans text-sm leading-relaxed text-slate-600">
@@ -259,49 +302,52 @@ export default function DesignSystemPage() {
                 the Royal Blue and Sora standards.
               </p>
 
-              {/* Architectural Token Flow Diagram Card (Matching Image 2 Diagram) */}
+              {/* Architectural Token Flow Diagram Card (Matching Image 2 Diagram with 2px lines & chamfer cut) */}
               <div
                 id="architecture-flow"
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs"
+                className="overflow-hidden border-2 border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 [clip-path:polygon(0_0,calc(100%-16px)_0,100%_16px,100%_100%,0_100%)] hover:border-[#0056FF]"
               >
                 <div className="flex flex-col items-center justify-around gap-4 sm:flex-row">
                   {/* Node 1: Developer */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-800">
+                    <div className="flex h-14 w-14 items-center justify-center border-2 border-slate-300 bg-slate-50 text-slate-800 [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
                       <span className="font-mono text-base font-bold">DEV</span>
                     </div>
-                    <span className="font-sans text-xs font-semibold text-slate-800">
+                    <span className="font-sans text-xs font-semibold tracking-wider text-slate-800 uppercase">
                       Developer
                     </span>
                   </div>
 
                   {/* Arrow 1 */}
                   <div className="flex items-center gap-1 font-mono text-slate-400">
-                    <span className="h-0.5 w-8 bg-slate-300" />
-                    <span>&rarr;</span>
+                    <span className="h-0.5 w-8 bg-[#0056FF]" />
+                    <span className="font-bold text-[#0056FF]">&rarr;</span>
                   </div>
 
                   {/* Node 2: Royal Blue Tokens */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0056FF] text-white shadow-sm">
-                      <span className="font-mono text-xs font-bold">#0056FF</span>
+                    <div className="relative flex h-14 w-14 items-center justify-center border-2 border-[#0056FF] bg-[#0056FF] text-white shadow-md [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
+                      <span className="font-mono text-[11px] font-bold">#0056FF</span>
+                      <GeometricAsterisk className="absolute -top-1 -right-1 h-3.5 w-3.5 text-white" />
                     </div>
-                    <span className="font-sans text-xs font-bold text-[#0056FF]">Royal Blue</span>
+                    <span className="font-sans text-xs font-black tracking-wider text-[#0056FF] uppercase">
+                      Royal Blue
+                    </span>
                   </div>
 
                   {/* Arrow 2 */}
                   <div className="flex items-center gap-1 font-mono text-slate-400">
-                    <span className="h-0.5 w-8 bg-slate-300" />
-                    <span>&rarr;</span>
+                    <span className="h-0.5 w-8 bg-[#0056FF]" />
+                    <span className="font-bold text-[#0056FF]">&rarr;</span>
                   </div>
 
                   {/* Node 3: Flat Component */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-800">
+                    <div className="flex h-14 w-14 items-center justify-center border-2 border-slate-300 bg-slate-50 text-slate-800 [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
                       <span className="font-mono text-base font-bold">UI 10</span>
                     </div>
-                    <span className="font-sans text-xs font-semibold text-slate-800">
-                      Flat Component
+                    <span className="font-sans text-xs font-semibold tracking-wider text-slate-800 uppercase">
+                      Component
                     </span>
                   </div>
                 </div>
@@ -321,7 +367,7 @@ export default function DesignSystemPage() {
             {/* TAB CONTENT 2: Interactive Component Playground */}
             {activeTab === 'playground' && (
               <section id="interactive-stage" className="space-y-6">
-                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                <div className="flex items-center justify-between border-b-2 border-slate-200 pb-3">
                   <div>
                     <h2 className="font-sans text-2xl font-black text-slate-950">
                       {activeDoc.name}
@@ -329,17 +375,17 @@ export default function DesignSystemPage() {
                     <p className="mt-1 text-sm text-slate-600">{activeDoc.description}</p>
                   </div>
 
-                  <button
-                    type="button"
+                  <GeometricButton
+                    variant="outline"
+                    size="sm"
                     onClick={() => setActiveTab('catalog')}
-                    className="font-sans text-xs font-semibold text-[#0056FF] hover:underline"
                   >
-                    &larr; Back to Catalog
-                  </button>
+                    <span>&larr; Catalog</span>
+                  </GeometricButton>
                 </div>
 
-                {/* Interactive Stage Card */}
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
+                {/* Interactive Stage Card (Geometric 2px lines & chamfer cut) */}
+                <div className="overflow-hidden border-2 border-slate-200 bg-white shadow-xs transition-all duration-300 [clip-path:polygon(0_0,calc(100%-16px)_0,100%_16px,100%_100%,0_100%)] hover:border-[#0056FF]">
                   {/* Stage Body */}
                   <div className="flex min-h-[220px] items-center justify-center bg-slate-50/70 p-8">
                     {renderActivePlaygroundComponent({
@@ -366,22 +412,24 @@ export default function DesignSystemPage() {
                     })}
                   </div>
 
-                  {/* Action Ribbon: Code Toggle & Copy */}
-                  <div className="flex items-center justify-between border-t border-slate-200 bg-white px-4 py-2.5">
-                    <button
-                      type="button"
+                  {/* Action Ribbon: Code Toggle & Copy (Geometric Buttons) */}
+                  <div className="flex items-center justify-between border-t-2 border-slate-200 bg-white px-4 py-2.5">
+                    <GeometricButton
+                      size="sm"
+                      variant={showCode ? 'primary' : 'outline'}
+                      isActive={showCode}
+                      showAsterisk
                       onClick={() => setShowCode(!showCode)}
-                      className="inline-flex items-center gap-1.5 font-sans text-xs font-bold text-[#0056FF] hover:text-[#0040C0]"
                     >
-                      <Code className="h-4 w-4" />
+                      <Code className="h-3.5 w-3.5" />
                       <span>{showCode ? 'Hide Code' : 'View Code'}</span>
-                    </button>
+                    </GeometricButton>
 
                     {showCode && (
-                      <button
-                        type="button"
+                      <GeometricButton
+                        size="sm"
+                        variant="outline"
                         onClick={() => handleCopy(activeDoc.codeSnippet)}
-                        className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-700 hover:bg-slate-100"
                       >
                         {copiedCode ? (
                           <Check className="h-3.5 w-3.5 text-emerald-600" />
@@ -389,13 +437,13 @@ export default function DesignSystemPage() {
                           <Copy className="h-3.5 w-3.5" />
                         )}
                         <span>{copiedCode ? 'Copied' : 'Copy'}</span>
-                      </button>
+                      </GeometricButton>
                     )}
                   </div>
 
                   {/* Collapsible Source Code View */}
                   {showCode && (
-                    <div className="border-t border-slate-200 bg-slate-900 p-4">
+                    <div className="border-t-2 border-slate-200 bg-slate-900 p-4">
                       <pre className="overflow-x-auto font-mono text-xs text-slate-100">
                         <code>{activeDoc.codeSnippet}</code>
                       </pre>
@@ -403,17 +451,23 @@ export default function DesignSystemPage() {
                   )}
                 </div>
 
-                {/* Component Props Table */}
+                {/* Component Props Table (Geometric 2px lines & chamfer cut) */}
                 <div className="space-y-2">
-                  <h3 className="font-sans text-sm font-bold text-slate-900">Props Interface</h3>
-                  <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                  <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                    Props Interface
+                  </h3>
+                  <div className="overflow-x-auto border-2 border-slate-200 bg-white [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
                     <table className="w-full text-left font-sans text-xs">
-                      <thead className="border-b border-slate-200 bg-slate-50 text-slate-600">
+                      <thead className="border-b-2 border-slate-200 bg-slate-50 text-slate-600">
                         <tr>
-                          <th className="px-4 py-2.5 font-semibold">Prop</th>
-                          <th className="px-4 py-2.5 font-semibold">Type</th>
-                          <th className="px-4 py-2.5 font-semibold">Default</th>
-                          <th className="px-4 py-2.5 font-semibold">Description</th>
+                          <th className="px-4 py-2.5 font-bold tracking-wider uppercase">Prop</th>
+                          <th className="px-4 py-2.5 font-bold tracking-wider uppercase">Type</th>
+                          <th className="px-4 py-2.5 font-bold tracking-wider uppercase">
+                            Default
+                          </th>
+                          <th className="px-4 py-2.5 font-bold tracking-wider uppercase">
+                            Description
+                          </th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -592,51 +646,43 @@ function renderActivePlaygroundComponent(props: {
     case 'snackbar':
       return (
         <div className="flex flex-wrap items-center justify-center gap-3 py-6">
-          <button
-            type="button"
+          <GeometricButton
+            variant="primary"
+            showAsterisk
             onClick={() => {
               props.setSnackbarMsg('Student profile updated.');
               props.setSnackbarOpen(true);
             }}
-            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#0040C0]"
           >
             <Check className="h-4 w-4" />
             <span>Trigger Confirmation Snackbar</span>
-          </button>
+          </GeometricButton>
         </div>
       );
 
     case 'bottom-sheet':
       return (
         <div className="flex items-center justify-center py-6">
-          <button
-            type="button"
-            onClick={() => props.setSheetOpen(true)}
-            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#0040C0]"
-          >
+          <GeometricButton variant="outline" showAsterisk onClick={() => props.setSheetOpen(true)}>
             <MapPin className="h-4 w-4" />
             <span>Open Bottom Sheet</span>
-          </button>
+          </GeometricButton>
         </div>
       );
 
     case 'dialog':
       return (
         <div className="flex items-center justify-center py-6">
-          <button
-            type="button"
-            onClick={() => props.setDialogOpen(true)}
-            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#0040C0]"
-          >
+          <GeometricButton variant="outline" showAsterisk onClick={() => props.setDialogOpen(true)}>
             <span>Trigger Decision Dialog</span>
-          </button>
+          </GeometricButton>
         </div>
       );
 
     case 'bottom-nav':
       return (
         <div className="w-full max-w-sm py-4">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-xs">
+          <div className="overflow-hidden border-2 border-slate-200 bg-white p-2 shadow-xs [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
             <div className="flex items-center justify-around">
               {props.bottomNavItems.map((item) => {
                 const isActive = props.bottomNavTab === item.id;
@@ -647,12 +693,16 @@ function renderActivePlaygroundComponent(props: {
                     type="button"
                     onClick={() => props.setBottomNavTab(item.id)}
                     className={cn(
-                      'flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-colors',
-                      isActive ? 'bg-[#0056FF] font-bold text-white' : 'text-slate-600',
+                      'flex flex-col items-center gap-1 rounded-md border-2 px-4 py-2 transition-all select-none',
+                      isActive
+                        ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]'
+                        : 'border-transparent text-slate-600 hover:border-slate-200 hover:text-slate-950',
                     )}
                   >
                     <Icon className="h-4 w-4" />
-                    <span className="font-sans text-[11px]">{item.label}</span>
+                    <span className="font-sans text-[11px] tracking-wider uppercase">
+                      {item.label}
+                    </span>
                   </button>
                 );
               })}
@@ -700,9 +750,9 @@ function renderActivePlaygroundComponent(props: {
     case 'card':
       return (
         <div className="w-full max-w-xs py-4">
-          <LibraryCard className="border border-slate-200 bg-white shadow-xs">
+          <LibraryCard className="border-2 border-slate-200 bg-white shadow-xs [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
             <LibraryCardMedia className="relative flex h-24 w-full items-start justify-between rounded-lg bg-gradient-to-r from-blue-100 to-[#0056FF] p-3">
-              <span className="rounded-md bg-[#0056FF] px-2 py-0.5 font-sans text-[10px] font-bold text-white">
+              <span className="border-2 border-[#0056FF] bg-[#0056FF] px-2 py-0.5 font-sans text-[10px] font-bold text-white [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]">
                 STEM
               </span>
             </LibraryCardMedia>
@@ -714,21 +764,17 @@ function renderActivePlaygroundComponent(props: {
                 Sensors, telemetry & embedded systems.
               </LibraryCardDescription>
             </LibraryCardHeader>
-            <LibraryCardFooter className="flex items-center justify-between border-t border-slate-100 pt-3">
-              <span className="font-sans text-xs text-slate-600">3 Credits</span>
-              <button
-                type="button"
+            <LibraryCardFooter className="flex items-center justify-between border-t-2 border-slate-100 pt-3">
+              <span className="font-sans text-xs font-bold text-slate-600">3 CREDITS</span>
+              <GeometricButton
+                size="sm"
+                variant={props.cardEnrolled ? 'primary' : 'outline'}
+                isActive={props.cardEnrolled}
                 onClick={() => props.setCardEnrolled(!props.cardEnrolled)}
-                className={cn(
-                  'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold',
-                  props.cardEnrolled
-                    ? 'bg-[#0056FF] text-white'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
-                )}
               >
                 <Star className="h-3.5 w-3.5" />
                 <span>{props.cardEnrolled ? 'Enrolled' : 'Enroll'}</span>
-              </button>
+              </GeometricButton>
             </LibraryCardFooter>
           </LibraryCard>
         </div>
@@ -737,7 +783,7 @@ function renderActivePlaygroundComponent(props: {
     case 'dropdown':
       return (
         <div className="w-full max-w-xs py-6">
-          <select className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 font-sans text-xs text-slate-800 focus:border-[#0056FF] focus:outline-none">
+          <select className="h-10 w-full border-2 border-slate-200 bg-white px-3 font-sans text-xs text-slate-800 [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)] focus:border-[#0056FF] focus:outline-none">
             <option value="sora">Sora — Primary Brand Typography</option>
             <option value="inter">Inter — UI Sans</option>
             <option value="roboto">Roboto — M3 Material</option>
@@ -747,17 +793,17 @@ function renderActivePlaygroundComponent(props: {
 
     case 'tooltip':
       return (
-        <div className="flex items-center justify-center gap-2 py-6">
+        <div className="flex items-center justify-center gap-3 py-6">
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 hover:border-[#0056FF] hover:text-[#0056FF]"
+            className="flex h-11 w-11 items-center justify-center border-2 border-slate-300 bg-white text-sm font-bold text-slate-800 shadow-xs transition-all [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)] hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
             title="Move Tool (Shortcut: V)"
           >
             V
           </button>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 hover:border-[#0056FF] hover:text-[#0056FF]"
+            className="flex h-11 w-11 items-center justify-center border-2 border-slate-300 bg-white text-sm font-bold text-slate-800 shadow-xs transition-all [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)] hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
             title="Hand Tool (Shortcut: H)"
           >
             H

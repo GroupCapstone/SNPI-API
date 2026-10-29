@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronRight, Home, User, Zap, AlertTriangle, ArrowRight } from '@/components/icons';
+import { GeometricAsterisk } from './geometric-tag-primitives';
 
 export interface GalleryComponentItem {
   id: string;
@@ -203,8 +204,9 @@ export function ComponentGalleryGrid({ onSelectComponent, selectedId }: Componen
             type="button"
             onClick={() => onSelectComponent(item.id)}
             className={cn(
-              'group flex flex-col overflow-hidden rounded-2xl border text-left transition-all duration-300 ease-out',
+              'group flex flex-col overflow-hidden border-2 text-left transition-all duration-300 ease-out',
               'hover:-translate-y-1.5 hover:border-[#0056FF] hover:shadow-xl',
+              '[clip-path:polygon(0_0,calc(100%-14px)_0,100%_14px,100%_100%,0_100%)]',
               isSelected
                 ? 'border-[#0056FF] bg-white shadow-md ring-2 ring-[#0056FF]/30'
                 : 'border-slate-200 bg-white hover:bg-white',
@@ -227,15 +229,20 @@ export function ComponentGalleryGrid({ onSelectComponent, selectedId }: Componen
               </div>
             </div>
 
-            {/* Card Content - Clean Typography matching Image 1 (No chip/box labels) */}
+            {/* Card Content - Clean Typography with Geometric Asterisk and Divider */}
             <div className="flex flex-1 flex-col justify-between p-5">
               <div>
-                <h3 className="font-sans text-base font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
-                  {item.name}
-                </h3>
-                <p className="mt-1 font-sans text-xs text-slate-500">
-                  {item.variantsCount} variants
-                </p>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-sans text-base font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                    {item.name}
+                  </h3>
+                  <GeometricAsterisk className="h-4 w-4 text-slate-400 transition-transform group-hover:rotate-45 group-hover:text-[#0056FF]" />
+                </div>
+                <div className="mt-1 flex items-center gap-2 font-mono text-xs text-slate-500">
+                  <span className="font-bold text-slate-700">{item.variantsCount}</span>
+                  <span className="h-3 w-[1.5px] bg-[#0056FF]" />
+                  <span className="tracking-wider uppercase">VARIANTS</span>
+                </div>
               </div>
             </div>
           </button>

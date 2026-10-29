@@ -93,7 +93,7 @@ export function LibraryDialog({
             }}
             className={cn(
               'min-h-[44px] rounded-lg px-4 text-xs font-semibold text-white transition-colors',
-              isDestructive ? 'bg-red-600 hover:bg-red-700' : 'bg-[#023e8a] hover:bg-[#00509d]',
+              isDestructive ? 'bg-red-600 hover:bg-red-700' : 'bg-[#0056FF] hover:bg-[#0040C0]',
             )}
           >
             {confirmLabel}
