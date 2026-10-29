@@ -485,16 +485,16 @@ console.log(payload.data);`;
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
               <span className="size-2 rounded-full bg-emerald-500" />
-              v0.1.0 · 193 Endpoints · 100% Online
+              v0.1.0 · 193 Endpoints · Online
             </span>
-            <Link href="/dashboard">
+            <a href="#who-can-access">
               <Button
                 size="sm"
                 className="text-xs h-8 px-3.5 bg-[#023e8a] text-white hover:bg-[#00509d] font-medium"
               >
-                Dashboard
+                Get Started
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </header>
@@ -512,47 +512,58 @@ console.log(payload.data);`;
               <a href="#changelogs" className="block py-1 hover:text-[#023e8a] transition-colors">
                 Change Logs
               </a>
-              <a href="#introduction" className="block py-1 hover:text-[#023e8a] transition-colors">
-                Introduction
+              <a href="#table-of-contents" className="block py-1 hover:text-[#023e8a] transition-colors">
+                Table of contents
               </a>
-              <div className="pl-2 space-y-0.5 text-slate-500">
-                <a href="#purpose" className="block py-0.5 hover:text-slate-900">
-                  1. Purpose
+
+              <div className="pt-1">
+                <a href="#introduction" className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]">
+                  * Introduction
                 </a>
-                <a href="#scope" className="block py-0.5 hover:text-slate-900">
-                  2. Scope
-                </a>
-                <a href="#overall-api" className="block py-0.5 hover:text-slate-900">
-                  3. Overall API
+                <div className="pl-3 space-y-0.5 text-slate-500">
+                  <a href="#purpose" className="block py-0.5 hover:text-slate-900">
+                    1. Purpose
+                  </a>
+                  <a href="#scope" className="block py-0.5 hover:text-slate-900">
+                    2. Scope
+                  </a>
+                  <a href="#overall-api" className="block py-0.5 hover:text-slate-900">
+                    3. Overall API
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <a
+                  href="#who-can-access"
+                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a] transition-colors"
+                >
+                  * Who Can Access
                 </a>
               </div>
 
-              <a
-                href="#who-can-access"
-                className="block py-1 hover:text-[#023e8a] transition-colors font-semibold text-slate-800"
-              >
-                Who Can Access The API
-              </a>
-
-              <a
-                href="#endpoints-available"
-                className="block py-1 hover:text-[#023e8a] transition-colors font-semibold text-slate-800"
-              >
-                What Other Devs Can Get
-              </a>
-
-              <a
-                href="#protected-endpoints"
-                className="block py-1 hover:text-[#023e8a] transition-colors font-semibold text-slate-800"
-              >
-                What Endpoints Are Protected
-              </a>
-
-              <div className="pt-2">
-                <a href="#api-doc" className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]">
-                  Interactive API Explorer
+              <div className="pt-1">
+                <a
+                  href="#endpoints-available"
+                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a] transition-colors"
+                >
+                  * Endpoints Catalog
                 </a>
-                <div className="pl-2 space-y-0.5 text-slate-500">
+                <div className="pl-3 space-y-0.5 text-slate-500">
+                  <a href="#endpoints-available" className="block py-0.5 hover:text-slate-900">
+                    Available For Devs
+                  </a>
+                  <a href="#protected-endpoints" className="block py-0.5 hover:text-slate-900">
+                    Protected Endpoints
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <a href="#api-doc" className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]">
+                  * API Documentation
+                </a>
+                <div className="pl-3 space-y-0.5 text-slate-500">
                   <a href="#status-codes" className="block py-0.5 hover:text-slate-900">
                     Status Codes
                   </a>
@@ -577,7 +588,28 @@ console.log(payload.data);`;
         </aside>
 
         {/* Right / Main Content Area */}
-        <main className="flex-1 min-w-0 space-y-12 pb-16">
+        <main className="flex-1 min-w-0 space-y-10 pb-16">
+          {/* Nextra-inspired Brand Header & Summary */}
+          <div className="space-y-3 pb-8 border-b border-slate-200">
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-bold tracking-tight text-slate-950 font-mono flex items-center gap-2">
+                <span className="text-[#023e8a]">✦</span> SNP-SMS Documentation
+              </span>
+            </div>
+            <p className="text-sm text-slate-600 leading-relaxed max-w-3xl font-sans">
+              <Link
+                href="/document"
+                className="underline underline-offset-4 decoration-slate-400 hover:decoration-[#023e8a] text-slate-900 font-medium"
+              >
+                SNP-SMS Open API
+              </Link>{' '}
+              provides unified programmatic access to the SNP-SMS modular monolith backend. It enables
+              partner developers, mobile apps, and institutional integrations to securely interact with
+              student profiles, academic calendars, attendance registries, and fee records through
+              standardized REST endpoints.
+            </p>
+          </div>
+
           {/* Change Logs Section */}
           <section id="changelogs" className="space-y-3 scroll-mt-24">
             <h2 className="text-sm font-bold tracking-tight text-slate-950 font-mono">Change Logs</h2>
@@ -610,6 +642,45 @@ console.log(payload.data);`;
                   ))}
                 </tbody>
               </table>
+            </div>
+          </section>
+
+          {/* Table of contents Section */}
+          <section id="table-of-contents" className="space-y-3 scroll-mt-24 border-t border-slate-200 pt-8">
+            <h2 className="text-sm font-bold tracking-tight text-slate-950 font-mono">Table of contents</h2>
+            <div className="rounded-lg border border-slate-200 bg-slate-50/60 p-4 font-mono text-xs text-slate-700">
+              <ol className="space-y-1.5 list-decimal list-inside">
+                <li>
+                  <a href="#introduction" className="text-[#023e8a] hover:underline">
+                    Introduction (Purpose, Scope, Overall API)
+                  </a>
+                </li>
+                <li>
+                  <a href="#who-can-access" className="text-[#023e8a] hover:underline">
+                    Who Can Access The API (RBAC Roles & Matrix)
+                  </a>
+                </li>
+                <li>
+                  <a href="#endpoints-available" className="text-[#023e8a] hover:underline">
+                    What Other Developers Can Get (Read & Query Endpoints)
+                  </a>
+                </li>
+                <li>
+                  <a href="#protected-endpoints" className="text-[#023e8a] hover:underline">
+                    What Endpoints Are Protected & How (Mutation Defense Guardrails)
+                  </a>
+                </li>
+                <li>
+                  <a href="#status-codes" className="text-[#023e8a] hover:underline">
+                    HTTP Status Codes Standard
+                  </a>
+                </li>
+                <li>
+                  <a href="#api-doc" className="text-[#023e8a] hover:underline">
+                    Interactive API Documentation & Explorer
+                  </a>
+                </li>
+              </ol>
             </div>
           </section>
 
@@ -950,17 +1021,17 @@ console.log(payload.data);`;
                       </div>
                     )}
 
-                    {/* Code Snippet Card */}
-                    <div className="rounded-lg border border-slate-900 bg-slate-950 overflow-hidden shadow-xs">
-                      <div className="flex items-center justify-between px-3.5 py-2 bg-slate-900 border-b border-slate-800 text-xs font-mono">
-                        <div className="flex items-center gap-1">
+                    {/* Code Snippet Card - 100% Light Mode */}
+                    <div className="rounded-lg border border-slate-200 bg-slate-50/50 overflow-hidden shadow-xs">
+                      <div className="flex items-center justify-between px-3.5 py-2 bg-slate-100/80 border-b border-slate-200 text-xs font-mono">
+                        <div className="flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={() => setCodeType('curl')}
                             className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
                               codeType === 'curl'
-                                ? 'bg-slate-800 text-white font-bold'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-white text-[#023e8a] border border-slate-300 font-bold shadow-xs'
+                                : 'text-slate-600 hover:text-slate-900'
                             }`}
                           >
                             cURL
@@ -970,8 +1041,8 @@ console.log(payload.data);`;
                             onClick={() => setCodeType('ts')}
                             className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
                               codeType === 'ts'
-                                ? 'bg-slate-800 text-white font-bold'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-white text-[#023e8a] border border-slate-300 font-bold shadow-xs'
+                                : 'text-slate-600 hover:text-slate-900'
                             }`}
                           >
                             TypeScript
@@ -981,8 +1052,8 @@ console.log(payload.data);`;
                             onClick={() => setCodeType('json')}
                             className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
                               codeType === 'json'
-                                ? 'bg-slate-800 text-white font-bold'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-white text-[#023e8a] border border-slate-300 font-bold shadow-xs'
+                                : 'text-slate-600 hover:text-slate-900'
                             }`}
                           >
                             Response
@@ -992,23 +1063,23 @@ console.log(payload.data);`;
                         <button
                           type="button"
                           onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
-                          className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800 border border-slate-700"
+                          className="flex items-center gap-1 text-[11px] text-slate-700 hover:text-slate-900 px-2 py-0.5 rounded bg-white border border-slate-300 shadow-xs"
                         >
                           {copiedId === item.id ? (
                             <>
-                              <Check className="size-3 text-emerald-400" />
-                              <span className="text-emerald-400">Copied</span>
+                              <Check className="size-3 text-emerald-600" />
+                              <span className="text-emerald-700 font-semibold">Copied</span>
                             </>
                           ) : (
                             <>
-                              <Copy className="size-3" />
+                              <Copy className="size-3 text-slate-600" />
                               <span>Copy</span>
                             </>
                           )}
                         </button>
                       </div>
 
-                      <pre className="p-3.5 overflow-x-auto text-xs font-mono text-slate-100 leading-relaxed max-h-64">
+                      <pre className="p-3.5 overflow-x-auto text-xs font-mono text-slate-800 leading-relaxed max-h-64 bg-white">
                         <code>{generateSnippet(item, codeType)}</code>
                       </pre>
                     </div>
