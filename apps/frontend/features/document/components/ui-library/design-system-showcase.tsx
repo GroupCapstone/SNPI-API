@@ -19,7 +19,11 @@ import {
   LibraryDropdown,
   LibraryTooltip,
 } from './index';
-
+import {
+  COMPONENT_LIBRARY_REGISTRY,
+  COMPONENT_CATEGORIES,
+  type ComponentItemDoc,
+} from './component-registry';
 import {
   Home,
   Search,
@@ -33,21 +37,32 @@ import {
   Tag,
   Mail,
   Check,
+  Code,
+  Copy,
+  Layers,
+  ChevronRight,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 export function DesignSystemShowcase() {
-  // 1. Snackbar state
+  // Navigation / Selection State
+  const [selectedId, setSelectedId] = React.useState<string>('snackbar');
+  const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const [showCode, setShowCode] = React.useState<boolean>(false);
+  const [copied, setCopied] = React.useState<boolean>(false);
+
+  // Interactive Component States
+  // 1. Snackbar
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('Thread #1042 archived.');
 
-  // 2. Bottom Sheet state
+  // 2. Bottom Sheet
   const [sheetOpen, setSheetOpen] = React.useState(false);
 
-  // 3. Dialog state
+  // 3. Dialog
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
-  // 4. Bottom Nav state
+  // 4. Bottom Nav
   const [activeTab, setActiveTab] = React.useState('home');
   const navItems: LibraryBottomNavItem[] = [
     { id: 'home', label: 'Home', icon: Home },
@@ -55,22 +70,22 @@ export function DesignSystemShowcase() {
     { id: 'academics', label: 'Academics', icon: Folder },
   ];
 
-  // 5. Toggle switch states
+  // 5. Toggle switch
   const [airplaneMode, setAirplaneMode] = React.useState(false);
   const [wifiEnabled, setWifiEnabled] = React.useState(true);
   const [notifications, setNotifications] = React.useState(true);
 
-  // 6. Chips state
-  const [selectedChip, setSelectedChip] = React.useState('All');
+  // 6. Chips
+  const [selectedChip, setSelectedChip] = React.useState('Academics');
   const chipOptions = ['All', 'Academics', 'Students', 'Finance', 'Attendance', 'Exams'];
 
-  // 7. FAB counter
+  // 7. FAB
   const [fabCount, setFabCount] = React.useState(0);
 
-  // 8. Card interactive state
+  // 8. Card
   const [cardLiked, setCardLiked] = React.useState(false);
 
-  // 9. Dropdown state
+  // 9. Dropdown
   const [selectedFont, setSelectedFont] = React.useState('roboto');
   const fontOptions = [
     { value: 'roboto', label: 'Roboto', description: 'Clean sans-serif, standard M3 typography' },
@@ -79,199 +94,99 @@ export function DesignSystemShowcase() {
     { value: 'georgia', label: 'Georgia', description: 'Classic editorial serif for long-form reading' },
   ];
 
-  return (
-    <div className="space-y-10 text-slate-900">
-      {/* Top Header / Document Introduction */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <span className="rounded-md border border-blue-200 bg-blue-50 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#023e8a]">
-            Developer Documentation · UI Component Library
-          </span>
-          <span className="text-slate-300">·</span>
-          <span className="font-mono text-xs text-slate-500">10 Core UI Components Standard</span>
-        </div>
+  // Active Component
+  const activeComponent =
+    COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === selectedId) || COMPONENT_LIBRARY_REGISTRY[0];
 
-        <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
-          10 Core UI Components & Design System
-        </h1>
-        <p className="max-w-4xl text-sm text-slate-600 sm:text-base leading-relaxed">
-          Authoritative interactive specifications, mental models, and real-world paradigms for the 10 foundational UI components in the SNP-SMS platform. Styled using the default clean white document standard.
-        </p>
+  // Filtered Registry
+  const filteredComponents = COMPONENT_LIBRARY_REGISTRY.filter((c) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      c.name.toLowerCase().includes(q) ||
+      c.category.toLowerCase().includes(q) ||
+      c.paradigm.toLowerCase().includes(q) ||
+      c.description.toLowerCase().includes(q)
+    );
+  });
 
-        {/* Quick Jump Bar */}
-        <div className="rounded-lg border border-slate-200 bg-slate-50/70 p-3.5 font-mono text-xs text-slate-700">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="font-bold text-slate-900">COMPONENTS:</span>
-            <a href="#comp-snackbar" className="text-[#023e8a] hover:underline">1. Snackbar</a>
-            <a href="#comp-bottom-sheet" className="text-[#023e8a] hover:underline">2. Bottom Sheet</a>
-            <a href="#comp-dialog" className="text-[#023e8a] hover:underline">3. Dialog</a>
-            <a href="#comp-bottom-nav" className="text-[#023e8a] hover:underline">4. Bottom Nav</a>
-            <a href="#comp-switch" className="text-[#023e8a] hover:underline">5. Toggle Switch</a>
-            <a href="#comp-chip" className="text-[#023e8a] hover:underline">6. Chips</a>
-            <a href="#comp-fab" className="text-[#023e8a] hover:underline">7. FAB</a>
-            <a href="#comp-card" className="text-[#023e8a] hover:underline">8. Card</a>
-            <a href="#comp-dropdown" className="text-[#023e8a] hover:underline">9. Dropdown</a>
-            <a href="#comp-tooltip" className="text-[#023e8a] hover:underline">10. Tooltip</a>
+  const handleCopyCode = (snippet: string) => {
+    navigator.clipboard.writeText(snippet);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  // Render Interactive Live Component based on ID
+  const renderInteractiveLiveComponent = (id: string) => {
+    switch (id) {
+      case 'snackbar':
+        return (
+          <div className="flex flex-wrap items-center justify-center gap-3 py-6">
+            <button
+              type="button"
+              onClick={() => {
+                setSnackbarMessage('Student profile archived.');
+                setSnackbarOpen(true);
+              }}
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 text-xs font-medium text-slate-800 shadow-xs hover:bg-slate-50 transition-colors"
+            >
+              <Mail className="h-4 w-4 text-slate-600" />
+              <span>Simulate Archive Student</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSnackbarMessage('Grade batch saved successfully.');
+                setSnackbarOpen(true);
+              }}
+              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-3.5 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
+            >
+              <Check className="h-4 w-4" />
+              <span>Simulate Batch Save</span>
+            </button>
           </div>
-        </div>
-      </div>
+        );
 
-      {/* 10 Components Interactive Grid */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* COMPONENT 1: SNACKBAR */}
-        <div id="comp-snackbar" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">01. SNACKBAR</span>
-              <h3 className="text-base font-bold text-slate-950">Quick Action Confirmation</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              Gmail Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A small bar that pops up at the bottom to confirm what you just did, then fades away after a few seconds. Includes an instant Undo action.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
-            <div className="flex flex-wrap gap-2.5">
-              <button
-                type="button"
-                onClick={() => {
-                  setSnackbarMessage('Student profile archived.');
-                  setSnackbarOpen(true);
-                }}
-                className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 text-xs font-medium text-slate-800 shadow-xs hover:bg-slate-50 transition-colors"
-              >
-                <Mail className="h-4 w-4 text-slate-600" />
-                <span>Simulate Archive Student</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setSnackbarMessage('Grade batch saved successfully.');
-                  setSnackbarOpen(true);
-                }}
-                className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-3.5 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
-              >
-                <Check className="h-4 w-4" />
-                <span>Simulate Batch Save</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* COMPONENT 2: BOTTOM SHEET */}
-        <div id="comp-bottom-sheet" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">02. BOTTOM SHEET</span>
-              <h3 className="text-base font-bold text-slate-950">Contextual Action Panel</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              Google Maps Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A panel sliding up from the bottom edge to reveal more options, details, or maps without forcing the user to leave the current screen.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+      case 'bottom-sheet':
+        return (
+          <div className="flex items-center justify-center py-6">
             <button
               type="button"
               onClick={() => setSheetOpen(true)}
-              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-3.5 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
+              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-4 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
             >
               <MapPin className="h-4 w-4" />
               <span>Open Campus Details Sheet</span>
             </button>
           </div>
-        </div>
+        );
 
-        {/* COMPONENT 3: DIALOG */}
-        <div id="comp-dialog" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">03. DIALOG</span>
-              <h3 className="text-base font-bold text-slate-950">Critical Confirmation Interrupt</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              WhatsApp Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A modal dialogue interrupting the user flow to confirm high-risk, irreversible operations like permanent deletions.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+      case 'dialog':
+        return (
+          <div className="flex items-center justify-center py-6">
             <button
               type="button"
               onClick={() => setDialogOpen(true)}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3.5 text-xs font-semibold text-red-700 shadow-xs hover:bg-red-100 transition-colors"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 text-xs font-semibold text-red-700 shadow-xs hover:bg-red-100 transition-colors"
             >
               <span>Trigger Delete Dialog</span>
             </button>
-            <LibraryDialog
-              open={dialogOpen}
-              onOpenChange={setDialogOpen}
-              title="Delete enrollment record?"
-              description="This will permanently revoke academic course registration for Student ID #2049. This action cannot be reversed."
-              confirmLabel="Delete Record"
-              cancelLabel="Cancel"
-              isDestructive
-              onConfirm={() => setDialogOpen(false)}
-            />
           </div>
-        </div>
+        );
 
-        {/* COMPONENT 4: BOTTOM NAV */}
-        <div id="comp-bottom-nav" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">04. BOTTOM NAV</span>
-              <h3 className="text-base font-bold text-slate-950">Thumb Navigation Bar</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              Spotify Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A persistent bar at the bottom for jumping between 3 to 5 core application areas, right where the thumb naturally rests.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-3">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
-            <LibraryBottomNav
-              items={navItems}
-              activeId={activeTab}
-              onSelect={setActiveTab}
-            />
+      case 'bottom-nav':
+        return (
+          <div className="w-full max-w-md py-4">
+            <LibraryBottomNav items={navItems} activeId={activeTab} onSelect={setActiveTab} />
             <div className="mt-2 text-center font-mono text-xs text-slate-500">
               Active Screen: <span className="font-bold text-[#023e8a] uppercase">{activeTab}</span>
             </div>
           </div>
-        </div>
+        );
 
-        {/* COMPONENT 5: TOGGLE SWITCH */}
-        <div id="comp-switch" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">05. TOGGLE SWITCH</span>
-              <h3 className="text-base font-bold text-slate-950">Instant Binary State Control</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              iPhone Settings Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            An on or off control for a setting that applies instantly without requiring an extra "Save" click, like a wall light switch.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4 space-y-2.5">
-            <span className="block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+      case 'switch':
+        return (
+          <div className="w-full max-w-sm space-y-2.5 py-4">
             <div className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-2 shadow-xs">
               <span className="text-xs font-medium text-slate-800">Airplane Mode</span>
               <LibrarySwitch checked={airplaneMode} onCheckedChange={setAirplaneMode} />
@@ -288,26 +203,12 @@ export function DesignSystemShowcase() {
               <LibrarySwitch checked={notifications} onCheckedChange={setNotifications} />
             </div>
           </div>
-        </div>
+        );
 
-        {/* COMPONENT 6: CHIPS */}
-        <div id="comp-chip" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">06. CHIPS</span>
-              <h3 className="text-base font-bold text-slate-950">Tappable Filter Tokens</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              YouTube Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            Small, rounded, easy-to-tap tags used to filter lists or select from a compact set of options, shaped like poker chips.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
-            <div className="flex flex-wrap gap-2">
+      case 'chip':
+        return (
+          <div className="space-y-3 py-6 text-center">
+            <div className="flex flex-wrap items-center justify-center gap-2">
               {chipOptions.map((opt) => (
                 <LibraryChip
                   key={opt}
@@ -319,64 +220,31 @@ export function DesignSystemShowcase() {
                 </LibraryChip>
               ))}
             </div>
-            <div className="mt-3 font-mono text-xs text-slate-500">
-              Selected: <span className="font-semibold text-[#023e8a]">{selectedChip}</span>
+            <div className="font-mono text-xs text-slate-500">
+              Active: <span className="font-semibold text-[#023e8a]">{selectedChip}</span>
             </div>
           </div>
-        </div>
+        );
 
-        {/* COMPONENT 7: FAB */}
-        <div id="comp-fab" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">07. FAB (FLOATING ACTION BUTTON)</span>
-              <h3 className="text-base font-bold text-slate-950">Primary Screen Action</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              Google Calendar Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A round button for the one main action on a screen, floating above content like a lifebuoy within comfortable thumb reach.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
-            <div className="flex flex-wrap items-center gap-4">
-              <LibraryFab
-                onClick={() => setFabCount((c) => c + 1)}
-                icon={<Plus className="h-5 w-5" />}
-              />
-              <LibraryFab
-                variant="secondary"
-                label="New Event"
-                onClick={() => setFabCount((c) => c + 1)}
-                icon={<Calendar className="h-4 w-4" />}
-              />
-              <div className="font-mono text-xs text-slate-600">
-                Actions Clicked: <span className="font-bold text-[#023e8a]">{fabCount}</span>
-              </div>
+      case 'fab':
+        return (
+          <div className="flex flex-wrap items-center justify-center gap-4 py-6">
+            <LibraryFab onClick={() => setFabCount((c) => c + 1)} icon={<Plus className="h-5 w-5" />} />
+            <LibraryFab
+              variant="secondary"
+              label="New Event"
+              onClick={() => setFabCount((c) => c + 1)}
+              icon={<Calendar className="h-4 w-4" />}
+            />
+            <div className="font-mono text-xs text-slate-600">
+              Actions Triggered: <span className="font-bold text-[#023e8a]">{fabCount}</span>
             </div>
           </div>
-        </div>
+        );
 
-        {/* COMPONENT 8: CARD */}
-        <div id="comp-card" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">08. CARD</span>
-              <h3 className="text-base font-bold text-slate-950">Self-Contained Content Unit</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              Airbnb Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A clean rectangular box grouping related information—such as a visual graphic, title, meta details, and price—into one tappable item.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+      case 'card':
+        return (
+          <div className="w-full max-w-sm py-4">
             <LibraryCard interactive onClick={() => setCardLiked((l) => !l)}>
               <LibraryCardMedia>
                 <div className="flex h-full w-full items-center justify-center bg-slate-100">
@@ -408,25 +276,11 @@ export function DesignSystemShowcase() {
               </LibraryCardFooter>
             </LibraryCard>
           </div>
-        </div>
+        );
 
-        {/* COMPONENT 9: DROPDOWN */}
-        <div id="comp-dropdown" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">09. DROPDOWN</span>
-              <h3 className="text-base font-bold text-slate-950">Roller Blind Choice Menu</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              Google Docs Paradigm
-            </span>
-          </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A button opening a clean list of choices like a roller blind, letting users pick an option and tucking away without cluttering the screen.
-          </p>
-
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
+      case 'dropdown':
+        return (
+          <div className="w-full max-w-xs py-6">
             <LibraryDropdown
               label="Typography Family"
               options={fontOptions}
@@ -434,111 +288,249 @@ export function DesignSystemShowcase() {
               onChange={setSelectedFont}
             />
           </div>
+        );
+
+      case 'tooltip':
+        return (
+          <div className="flex flex-wrap items-center justify-center gap-3 py-6">
+            <LibraryTooltip content="Move tool" shortcut="V">
+              <button
+                type="button"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
+              >
+                <span className="font-mono text-xs font-bold">V</span>
+              </button>
+            </LibraryTooltip>
+            <LibraryTooltip content="Hand tool" shortcut="H">
+              <button
+                type="button"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
+              >
+                <span className="font-mono text-xs font-bold">H</span>
+              </button>
+            </LibraryTooltip>
+            <LibraryTooltip content="Rectangle tool" shortcut="R">
+              <button
+                type="button"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
+              >
+                <span className="font-mono text-xs font-bold">R</span>
+              </button>
+            </LibraryTooltip>
+            <LibraryTooltip content="Text tool" shortcut="T">
+              <button
+                type="button"
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
+              >
+                <span className="font-mono text-xs font-bold">T</span>
+              </button>
+            </LibraryTooltip>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  // Calculate Next and Previous components for linear browsing
+  const currentIndex = COMPONENT_LIBRARY_REGISTRY.findIndex((c) => c.id === selectedId);
+  const prevComponent = currentIndex > 0 ? COMPONENT_LIBRARY_REGISTRY[currentIndex - 1] : null;
+  const nextComponent =
+    currentIndex < COMPONENT_LIBRARY_REGISTRY.length - 1
+      ? COMPONENT_LIBRARY_REGISTRY[currentIndex + 1]
+      : null;
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-8 items-start text-slate-900">
+      {/* Left Component Library Sidebar */}
+      <aside className="w-full lg:w-64 shrink-0 rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
+        {/* Search Input */}
+        <div className="relative mb-4">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+          <input
+            type="text"
+            placeholder="Search components..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="h-9 w-full rounded-lg border border-slate-200 bg-slate-50 pl-8 pr-3 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#023e8a] focus:bg-white focus:outline-none transition-colors"
+          />
         </div>
 
-        {/* COMPONENT 10: TOOLTIP */}
-        <div id="comp-tooltip" className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-mono text-xs font-bold text-[#023e8a]">10. TOOLTIP</span>
-              <h3 className="text-base font-bold text-slate-950">Hover Action Label & Shortcut</h3>
-            </div>
-            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
-              Figma Paradigm
+        {/* Grouped Component List */}
+        <nav className="space-y-5">
+          {COMPONENT_CATEGORIES.map((category) => {
+            const items = filteredComponents.filter((c) => c.category === category);
+            if (items.length === 0) return null;
+
+            return (
+              <div key={category} className="space-y-1">
+                <p className="px-2 font-mono text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+                  {category}
+                </p>
+                <div className="space-y-0.5">
+                  {items.map((item) => {
+                    const isSelected = selectedId === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedId(item.id);
+                          setShowCode(false);
+                        }}
+                        className={cn(
+                          'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs font-medium transition-colors',
+                          isSelected
+                            ? 'bg-blue-50 text-[#023e8a] font-semibold'
+                            : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900',
+                        )}
+                      >
+                        <span className="truncate">{item.name}</span>
+                        {isSelected && <ChevronRight className="h-3.5 w-3.5 text-[#023e8a]" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </nav>
+      </aside>
+
+      {/* Main Component Documentation & Interactive View */}
+      <div className="flex-1 w-full space-y-8">
+        {/* Component Header */}
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded border border-blue-200 bg-blue-50 px-2 py-0.5 font-mono text-xs font-semibold text-[#023e8a]">
+              {activeComponent.category}
+            </span>
+            <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-xs text-slate-600">
+              {activeComponent.paradigm}
             </span>
           </div>
-          <p className="mt-2 text-xs text-slate-600 leading-relaxed">
-            A tiny label appearing when you hover or focus, explaining what a tool does and providing its keyboard shortcut.
-          </p>
 
-          <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50/50 p-4">
-            <span className="mb-2 block font-mono text-[11px] font-semibold text-slate-500 uppercase">Interactive Demo</span>
-            <div className="flex flex-wrap items-center gap-3">
-              <LibraryTooltip content="Move tool" shortcut="V">
-                <button
-                  type="button"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
-                >
-                  <span className="font-mono text-xs font-bold">V</span>
-                </button>
-              </LibraryTooltip>
-              <LibraryTooltip content="Hand tool" shortcut="H">
-                <button
-                  type="button"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
-                >
-                  <span className="font-mono text-xs font-bold">H</span>
-                </button>
-              </LibraryTooltip>
-              <LibraryTooltip content="Rectangle tool" shortcut="R">
-                <button
-                  type="button"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
-                >
-                  <span className="font-mono text-xs font-bold">R</span>
-                </button>
-              </LibraryTooltip>
-              <LibraryTooltip content="Text tool" shortcut="T">
-                <button
-                  type="button"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-xs hover:bg-slate-50 hover:text-slate-900"
-                >
-                  <span className="font-mono text-xs font-bold">T</span>
-                </button>
-              </LibraryTooltip>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+            {activeComponent.name}
+          </h1>
+          <p className="max-w-3xl text-sm text-slate-600 sm:text-base leading-relaxed">
+            {activeComponent.description}
+          </p>
+        </div>
+
+        {/* Interactive Preview Sandbox Card */}
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
+          {/* Card Preview Body */}
+          <div className="flex min-h-[220px] items-center justify-center bg-slate-50/40 p-6 sm:p-10 border-b border-slate-100">
+            {renderInteractiveLiveComponent(activeComponent.id)}
+          </div>
+
+          {/* Action Ribbon: Show Code & Copy Button */}
+          <div className="flex items-center justify-between bg-white px-4 py-2.5">
+            <button
+              type="button"
+              onClick={() => setShowCode(!showCode)}
+              className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-slate-600 hover:text-[#023e8a] transition-colors"
+            >
+              <Code className="h-4 w-4" />
+              <span>{showCode ? 'Hide Code' : 'Show Code'}</span>
+            </button>
+
+            {showCode && (
+              <button
+                type="button"
+                onClick={() => handleCopyCode(activeComponent.codeSnippet)}
+                className="inline-flex items-center gap-1 rounded border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-[11px] text-slate-700 hover:bg-slate-100 transition-colors"
+              >
+                {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+                <span>{copied ? 'Copied' : 'Copy'}</span>
+              </button>
+            )}
+          </div>
+
+          {/* Expandable Code Snippet Block */}
+          {showCode && (
+            <div className="border-t border-slate-200 bg-slate-900 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+              <pre className="leading-relaxed">
+                <code>{activeComponent.codeSnippet}</code>
+              </pre>
+            </div>
+          )}
+        </div>
+
+        {/* Props & API Reference Specification Table */}
+        <div className="space-y-3">
+          <h2 className="text-base font-bold tracking-tight text-slate-950">Props & API Reference</h2>
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left font-mono text-xs text-slate-700">
+                <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-600 uppercase">
+                  <tr>
+                    <th className="px-4 py-2.5">Prop</th>
+                    <th className="px-4 py-2.5">Type</th>
+                    <th className="px-4 py-2.5">Default</th>
+                    <th className="px-4 py-2.5 font-sans font-medium text-slate-600">Description</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {activeComponent.props.map((prop) => (
+                    <tr key={prop.name} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="px-4 py-3 font-semibold text-[#023e8a]">{prop.name}</td>
+                      <td className="px-4 py-3 text-slate-600">
+                        <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-800">
+                          {prop.type}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-slate-500">{prop.default || '—'}</td>
+                      <td className="px-4 py-3 font-sans text-xs text-slate-600 leading-relaxed">
+                        {prop.description}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
+        </div>
+
+        {/* Next / Previous Component Navigation Footer */}
+        <div className="flex items-center justify-between border-t border-slate-200 pt-6">
+          {prevComponent ? (
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedId(prevComponent.id);
+                setShowCode(false);
+              }}
+              className="inline-flex flex-col items-start gap-1 text-left group"
+            >
+              <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-600">&larr; Previous</span>
+              <span className="text-sm font-semibold text-slate-900 group-hover:text-[#023e8a] transition-colors">
+                {prevComponent.name}
+              </span>
+            </button>
+          ) : (
+            <div />
+          )}
+
+          {nextComponent && (
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedId(nextComponent.id);
+                setShowCode(false);
+              }}
+              className="inline-flex flex-col items-end gap-1 text-right group"
+            >
+              <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-600">Next &rarr;</span>
+              <span className="text-sm font-semibold text-slate-900 group-hover:text-[#023e8a] transition-colors">
+                {nextComponent.name}
+              </span>
+            </button>
+          )}
         </div>
       </div>
-
-      {/* Mathematical Tokens & Specifications Card */}
-      <section className="border-t border-slate-200 pt-8 space-y-4">
-        <h2 className="text-base font-bold tracking-tight text-slate-950">
-          Design Specifications & Mathematical Tokens
-        </h2>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-            <span className="font-mono text-xs font-bold text-[#023e8a]">01. INNER RADIUS</span>
-            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
-              R_inner = R_outer - Padding
-            </div>
-            <p className="mt-1 text-xs text-slate-600">
-              Ensures concentric curves between cards and internal buttons.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-            <span className="font-mono text-xs font-bold text-[#023e8a]">02. LINE HEIGHT</span>
-            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
-              Font Size × 1.4 – 1.6
-            </div>
-            <p className="mt-1 text-xs text-slate-600">
-              Optimal reading rhythm and line density across documentation.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-            <span className="font-mono text-xs font-bold text-[#023e8a]">03. TOUCH TARGET</span>
-            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
-              Minimum 44 × 44px
-            </div>
-            <p className="mt-1 text-xs text-slate-600">
-              Meets WCAG AA accessibility standards across all interactive controls.
-            </p>
-          </div>
-
-          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-xs">
-            <span className="font-mono text-xs font-bold text-[#023e8a]">04. COLOR CONTRAST</span>
-            <div className="mt-1 font-mono text-sm font-bold text-slate-950">
-              (L1 + 0.05) / (L2 + 0.05) ≥ 4.5:1
-            </div>
-            <p className="mt-1 text-xs text-slate-600">
-              Strict WCAG AA contrast ratio between text and white background.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Global Overlays for active component interaction */}
       <LibrarySnackbar
@@ -577,6 +569,17 @@ export function DesignSystemShowcase() {
           </button>
         </div>
       </LibraryBottomSheet>
+
+      <LibraryDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        title="Delete enrollment record?"
+        description="This will permanently revoke academic course registration for Student ID #2049. This action cannot be reversed."
+        confirmLabel="Delete Record"
+        cancelLabel="Cancel"
+        isDestructive
+        onConfirm={() => setDialogOpen(false)}
+      />
     </div>
   );
 }

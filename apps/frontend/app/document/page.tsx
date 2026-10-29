@@ -532,7 +532,7 @@ console.log(payload.data);`;
                 href="/document/design-system"
                 className="block py-1 font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
               >
-                UI Design Library (10 Components) &rarr;
+                UI Component Library &rarr;
               </Link>
               <a href="#changelogs" className="block py-1 transition-colors hover:text-[#023e8a]">
                 Change Logs
@@ -695,7 +695,7 @@ console.log(payload.data);`;
               <ol className="list-inside list-decimal space-y-1.5">
                 <li>
                   <Link href="/document/design-system" className="font-semibold text-emerald-700 hover:underline">
-                    UI Design System & 10 Core UI Components Library (Interactive Showcase) &rarr;
+                    UI Component Library & Design System Showcase &rarr;
                   </Link>
                 </li>
                 <li>

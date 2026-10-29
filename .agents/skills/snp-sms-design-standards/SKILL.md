@@ -107,21 +107,19 @@ Where $L_1$ is the relative luminance of the lighter color and $L_2$ is the rela
 
 ---
 
-## 4. The 10 Core UI Components Guide
+## 4. Extensible UI Components Library Architecture
 
-The detailed component definitions, etymology, real-world paradigms, and Dark UI flat styling are codified in:
+The component definitions, etymology, real-world paradigms, and flat styling are codified in:
 👉 [**I. 10 UI components.md**](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/snp-sms-design-standards/I.%2010%20UI%20components.md)
 
-1. **Snackbar**: Small message popping up at the bottom confirming what you did, then fading away (Gmail undo paradigm).
-2. **Bottom Sheet**: Panel sliding up from the bottom showing more options without leaving the screen (Google Maps paradigm).
-3. **Dialog**: Modal box that interrupts to confirm risky actions (WhatsApp delete paradigm).
-4. **Bottom Nav**: Persistent bottom bar for thumb switching between 3 to 5 destinations (Spotify paradigm).
-5. **Toggle Switch**: Instant binary on/off setting flip (iPhone Settings paradigm).
-6. **Chips**: Small tappable pill tags for filters or choices (YouTube feed filters paradigm).
-7. **FAB (Floating Action Button)**: Round circular button for the one main screen action (Google Calendar paradigm).
-8. **Card**: Box grouping related info into one flat tappable unit (Airbnb cosy cabin stay paradigm).
-9. **Dropdown**: Button opening a list of choices like a roller blind (Google Docs font picker paradigm).
-10. **Tooltip**: Tiny micro-label on hover/focus explaining what a tool does (Figma tool tip paradigm).
+Components are organized into an extensible categorization system without fixed count limitations:
+- **Feedback & Overlays**: Snackbar, Bottom Sheet, Dialog, Tooltip
+- **Actions**: Floating Action Button (FAB), Chip, Toggle Switch
+- **Selection**: Dropdown, Checkbox, Radio, Select
+- **Navigation**: Bottom Nav
+- **Layout & Containers**: Card
+
+As new UI components are created, they are added directly to the component registry (`component-registry.tsx`) and displayed in the categorized developer library.
 
 ---
 
