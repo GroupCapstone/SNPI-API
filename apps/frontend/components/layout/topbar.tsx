@@ -4,8 +4,6 @@ import * as React from 'react';
 import { Bell, Menu, Search } from '@/components/icons';
 
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
-import { Tooltip } from '@/components/ui/tooltip';
 import { LanguageSwitcher } from '@/components/shared/language-switcher';
 import { UserProfileMenu } from '@/features/auth/components/user-profile-menu';
 import { useTranslation } from '@/lib/i18n';
@@ -35,7 +33,7 @@ export const Topbar = ({ onOpenNavigation }: TopbarProps) => {
 
   return (
     <>
-      <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur md:px-6 dark:border-white/10 dark:bg-[#161619]/95">
+      <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 backdrop-blur md:px-6">
         <div className="flex items-center gap-2 md:gap-3">
           {/* Mobile drawer open button (mobile only) */}
           <Button
@@ -77,29 +75,20 @@ export const Topbar = ({ onOpenNavigation }: TopbarProps) => {
           {/* Subtle Visual Divider */}
           <div className="hidden h-5 w-px bg-slate-200 md:block" />
 
-          {/* User Utility Actions: Theme Toggle, Language Switcher, Notifications, User Profile */}
+          {/* User Utility Actions: Language Switcher, Notifications, User Profile */}
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            {/* Theme Toggle (Dark / Light) */}
-            <Tooltip content="Toggle Light / Dark UI" position="bottom">
-              <ThemeToggle />
-            </Tooltip>
-
             {/* Language Switcher placed directly adjacent to Notification */}
-            <Tooltip content="Switch Language (EN / KH)" position="bottom">
-              <LanguageSwitcher variant="pill" />
-            </Tooltip>
+            <LanguageSwitcher variant="pill" />
 
             {/* Notifications Button */}
-            <Tooltip content={t.topbar.notifications} position="bottom">
-              <Button
-                aria-label={t.topbar.notifications}
-                size="icon"
-                variant="ghost"
-                className="size-9 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-zinc-400 dark:hover:bg-[#202024] dark:hover:text-zinc-100"
-              >
-                <Bell className="size-4" />
-              </Button>
-            </Tooltip>
+            <Button
+              aria-label={t.topbar.notifications}
+              size="icon"
+              variant="ghost"
+              className="size-9 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+            >
+              <Bell className="size-4" />
+            </Button>
 
             {/* Real Authenticated User Profile Menu */}
             <UserProfileMenu />
