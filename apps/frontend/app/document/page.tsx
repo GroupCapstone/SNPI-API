@@ -7,7 +7,11 @@ import { Check, Copy, Server } from '@/components/icons';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { Button } from '@/components/ui/button';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
-import { GeometricAsterisk, GeometricHeaderStamp } from '@/features/document/components/ui-library';
+import {
+  GeometricAsterisk,
+  GeometricHeaderStamp,
+  DocsStickyHeader,
+} from '@/features/document/components/ui-library';
 import { cn } from '@/lib/utils';
 
 interface AccessRoleSpec {
@@ -480,22 +484,9 @@ console.log(payload.data);`;
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
-      {/* Top Header - Strictly Logo and Open API | Document (Zero extra clutter) */}
-      <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6">
-          <div className="flex items-center gap-3">
-            <BrandMark compact size={32} />
-            <div className="flex items-center gap-2 font-sans">
-              <span className="text-base font-extrabold tracking-tight text-slate-950">
-                Open API
-              </span>
-              <span className="text-slate-300">|</span>
-              <span className="text-base font-medium text-slate-600">Document</span>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="flex min-h-screen flex-col bg-white text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
+      {/* Sticky Header with Open API & Library Switcher */}
+      <DocsStickyHeader activeTab="document" />
 
       {/* Main Grid: On This Page Sidebar + Body Content */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8 sm:px-6">

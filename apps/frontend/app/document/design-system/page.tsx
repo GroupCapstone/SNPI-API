@@ -26,6 +26,7 @@ import {
   GeometricButton,
   GeometricAsterisk,
   GeometricHeaderStamp,
+  DocsStickyHeader,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -107,22 +108,9 @@ export default function DesignSystemPage() {
     COMPONENT_LIBRARY_REGISTRY[0];
 
   return (
-    <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
-      {/* Top Header - Strictly Logo and Open API | Library (Zero extra clutter) */}
-      <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6">
-          <div className="flex items-center gap-3">
-            <BrandMark compact size={32} />
-            <div className="flex items-center gap-2 font-sans">
-              <span className="text-base font-extrabold tracking-tight text-slate-950">
-                Open API
-              </span>
-              <span className="text-slate-300">|</span>
-              <span className="text-base font-medium text-slate-600">Library</span>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="flex min-h-screen flex-col bg-white text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
+      {/* Sticky Header with Open API & Library Switcher */}
+      <DocsStickyHeader activeTab="library" />
 
       {/* 3-Column Documentation Grid (Cloudflare Docs Layout from Image 2) */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
