@@ -14,3 +14,4 @@ export * from './component-gallery-grid';
 export * from './line-tracker-toc';
 export * from './geometric-tag-primitives';
 export * from './docs-sticky-header';
+export * from './dual-mode-system-ui';
