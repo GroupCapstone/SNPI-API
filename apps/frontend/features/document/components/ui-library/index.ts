@@ -8,3 +8,4 @@ export * from './fab';
 export * from './card';
 export * from './dropdown';
 export * from './tooltip';
+export * from './component-registry';

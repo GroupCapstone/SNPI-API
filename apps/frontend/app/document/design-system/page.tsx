@@ -43,7 +43,7 @@ export default function DesignSystemPage() {
       {/* Footer */}
       <footer className="mt-auto border-t border-slate-200 bg-slate-50 py-8 text-center font-mono text-xs text-slate-500">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>UI Design System & Component Library · 10 Core UI Components Standard</div>
+          <div>UI Design System & Component Library</div>
           <div className="flex items-center gap-4">
             <Link href="/document" className="hover:text-slate-900">
               API Docs
