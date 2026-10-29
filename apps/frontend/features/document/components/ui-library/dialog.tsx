@@ -62,7 +62,7 @@ export function LibraryDialog({
           <div>
             <h3 className="text-lg font-bold text-slate-950">{title}</h3>
             {description && (
-              <p className="mt-1 text-xs text-slate-600 leading-relaxed">{description}</p>
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">{description}</p>
             )}
           </div>
           <button
@@ -81,7 +81,7 @@ export function LibraryDialog({
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            className="min-h-[44px] rounded-lg border border-slate-200 bg-white px-4 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            className="min-h-[44px] rounded-lg border border-slate-200 bg-white px-4 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50"
           >
             {cancelLabel}
           </button>
@@ -93,9 +93,7 @@ export function LibraryDialog({
             }}
             className={cn(
               'min-h-[44px] rounded-lg px-4 text-xs font-semibold text-white transition-colors',
-              isDestructive
-                ? 'bg-red-600 hover:bg-red-700'
-                : 'bg-[#023e8a] hover:bg-[#00509d]',
+              isDestructive ? 'bg-red-600 hover:bg-red-700' : 'bg-[#023e8a] hover:bg-[#00509d]',
             )}
           >
             {confirmLabel}

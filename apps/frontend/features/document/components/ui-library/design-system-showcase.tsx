@@ -91,7 +91,11 @@ export function DesignSystemShowcase() {
     { value: 'roboto', label: 'Roboto', description: 'Clean sans-serif, standard M3 typography' },
     { value: 'inter', label: 'Inter', description: 'Modern interface typeface with tall x-height' },
     { value: 'lora', label: 'Lora', description: 'Contemporary serif with calligraphy roots' },
-    { value: 'georgia', label: 'Georgia', description: 'Classic editorial serif for long-form reading' },
+    {
+      value: 'georgia',
+      label: 'Georgia',
+      description: 'Classic editorial serif for long-form reading',
+    },
   ];
 
   // Active Component
@@ -128,7 +132,7 @@ export function DesignSystemShowcase() {
                 setSnackbarMessage('Student profile archived.');
                 setSnackbarOpen(true);
               }}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 text-xs font-medium text-slate-800 shadow-xs hover:bg-slate-50 transition-colors"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-3.5 text-xs font-medium text-slate-800 shadow-xs transition-colors hover:bg-slate-50"
             >
               <Mail className="h-4 w-4 text-slate-600" />
               <span>Simulate Archive Student</span>
@@ -139,7 +143,7 @@ export function DesignSystemShowcase() {
                 setSnackbarMessage('Grade batch saved successfully.');
                 setSnackbarOpen(true);
               }}
-              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-3.5 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
+              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-3.5 text-xs font-medium text-white shadow-xs transition-colors hover:bg-[#00509d]"
             >
               <Check className="h-4 w-4" />
               <span>Simulate Batch Save</span>
@@ -153,7 +157,7 @@ export function DesignSystemShowcase() {
             <button
               type="button"
               onClick={() => setSheetOpen(true)}
-              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-4 text-xs font-medium text-white shadow-xs hover:bg-[#00509d] transition-colors"
+              className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#023e8a] px-4 text-xs font-medium text-white shadow-xs transition-colors hover:bg-[#00509d]"
             >
               <MapPin className="h-4 w-4" />
               <span>Open Campus Details Sheet</span>
@@ -167,7 +171,7 @@ export function DesignSystemShowcase() {
             <button
               type="button"
               onClick={() => setDialogOpen(true)}
-              className="inline-flex h-9 items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 text-xs font-semibold text-red-700 shadow-xs hover:bg-red-100 transition-colors"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 text-xs font-semibold text-red-700 shadow-xs transition-colors hover:bg-red-100"
             >
               <span>Trigger Delete Dialog</span>
             </button>
@@ -229,7 +233,10 @@ export function DesignSystemShowcase() {
       case 'fab':
         return (
           <div className="flex flex-wrap items-center justify-center gap-4 py-6">
-            <LibraryFab onClick={() => setFabCount((c) => c + 1)} icon={<Plus className="h-5 w-5" />} />
+            <LibraryFab
+              onClick={() => setFabCount((c) => c + 1)}
+              icon={<Plus className="h-5 w-5" />}
+            />
             <LibraryFab
               variant="secondary"
               label="New Event"
@@ -257,7 +264,9 @@ export function DesignSystemShowcase() {
               <LibraryCardHeader>
                 <div>
                   <LibraryCardTitle>Robotics & Autonomous Systems</LibraryCardTitle>
-                  <LibraryCardDescription>Grade 11 · Term 1 Curricular Track</LibraryCardDescription>
+                  <LibraryCardDescription>
+                    Grade 11 · Term 1 Curricular Track
+                  </LibraryCardDescription>
                 </div>
                 <button
                   type="button"
@@ -342,18 +351,18 @@ export function DesignSystemShowcase() {
       : null;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 items-start text-slate-900">
+    <div className="flex flex-col items-start gap-8 text-slate-900 lg:flex-row">
       {/* Left Component Library Sidebar */}
-      <aside className="w-full lg:w-64 shrink-0 rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
+      <aside className="w-full shrink-0 rounded-xl border border-slate-200 bg-white p-4 shadow-xs lg:w-64">
         {/* Search Input */}
         <div className="relative mb-4">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+          <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-slate-400" />
           <input
             type="text"
             placeholder="Search components..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-9 w-full rounded-lg border border-slate-200 bg-slate-50 pl-8 pr-3 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#023e8a] focus:bg-white focus:outline-none transition-colors"
+            className="h-9 w-full rounded-lg border border-slate-200 bg-slate-50 pr-3 pl-8 text-xs text-slate-900 transition-colors placeholder:text-slate-400 focus:border-[#023e8a] focus:bg-white focus:outline-none"
           />
         </div>
 
@@ -382,7 +391,7 @@ export function DesignSystemShowcase() {
                         className={cn(
                           'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs font-medium transition-colors',
                           isSelected
-                            ? 'bg-blue-50 text-[#023e8a] font-semibold'
+                            ? 'bg-blue-50 font-semibold text-[#023e8a]'
                             : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900',
                         )}
                       >
@@ -399,7 +408,7 @@ export function DesignSystemShowcase() {
       </aside>
 
       {/* Main Component Documentation & Interactive View */}
-      <div className="flex-1 w-full space-y-8">
+      <div className="w-full flex-1 space-y-8">
         {/* Component Header */}
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
@@ -414,7 +423,7 @@ export function DesignSystemShowcase() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
             {activeComponent.name}
           </h1>
-          <p className="max-w-3xl text-sm text-slate-600 sm:text-base leading-relaxed">
+          <p className="max-w-3xl text-sm leading-relaxed text-slate-600 sm:text-base">
             {activeComponent.description}
           </p>
         </div>
@@ -422,7 +431,7 @@ export function DesignSystemShowcase() {
         {/* Interactive Preview Sandbox Card */}
         <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
           {/* Card Preview Body */}
-          <div className="flex min-h-[220px] items-center justify-center bg-slate-50/40 p-6 sm:p-10 border-b border-slate-100">
+          <div className="flex min-h-[220px] items-center justify-center border-b border-slate-100 bg-slate-50/40 p-6 sm:p-10">
             {renderInteractiveLiveComponent(activeComponent.id)}
           </div>
 
@@ -431,7 +440,7 @@ export function DesignSystemShowcase() {
             <button
               type="button"
               onClick={() => setShowCode(!showCode)}
-              className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-slate-600 hover:text-[#023e8a] transition-colors"
+              className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-slate-600 transition-colors hover:text-[#023e8a]"
             >
               <Code className="h-4 w-4" />
               <span>{showCode ? 'Hide Code' : 'Show Code'}</span>
@@ -441,9 +450,13 @@ export function DesignSystemShowcase() {
               <button
                 type="button"
                 onClick={() => handleCopyCode(activeComponent.codeSnippet)}
-                className="inline-flex items-center gap-1 rounded border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-[11px] text-slate-700 hover:bg-slate-100 transition-colors"
+                className="inline-flex items-center gap-1 rounded border border-slate-200 bg-slate-50 px-2 py-1 font-mono text-[11px] text-slate-700 transition-colors hover:bg-slate-100"
               >
-                {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+                {copied ? (
+                  <Check className="h-3.5 w-3.5 text-emerald-600" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5" />
+                )}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
             )}
@@ -451,7 +464,7 @@ export function DesignSystemShowcase() {
 
           {/* Expandable Code Snippet Block */}
           {showCode && (
-            <div className="border-t border-slate-200 bg-slate-900 p-4 font-mono text-xs text-slate-200 overflow-x-auto">
+            <div className="overflow-x-auto border-t border-slate-200 bg-slate-900 p-4 font-mono text-xs text-slate-200">
               <pre className="leading-relaxed">
                 <code>{activeComponent.codeSnippet}</code>
               </pre>
@@ -461,7 +474,9 @@ export function DesignSystemShowcase() {
 
         {/* Props & API Reference Specification Table */}
         <div className="space-y-3">
-          <h2 className="text-base font-bold tracking-tight text-slate-950">Props & API Reference</h2>
+          <h2 className="text-base font-bold tracking-tight text-slate-950">
+            Props & API Reference
+          </h2>
           <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left font-mono text-xs text-slate-700">
@@ -470,12 +485,14 @@ export function DesignSystemShowcase() {
                     <th className="px-4 py-2.5">Prop</th>
                     <th className="px-4 py-2.5">Type</th>
                     <th className="px-4 py-2.5">Default</th>
-                    <th className="px-4 py-2.5 font-sans font-medium text-slate-600">Description</th>
+                    <th className="px-4 py-2.5 font-sans font-medium text-slate-600">
+                      Description
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {activeComponent.props.map((prop) => (
-                    <tr key={prop.name} className="hover:bg-slate-50/50 transition-colors">
+                    <tr key={prop.name} className="transition-colors hover:bg-slate-50/50">
                       <td className="px-4 py-3 font-semibold text-[#023e8a]">{prop.name}</td>
                       <td className="px-4 py-3 text-slate-600">
                         <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-800">
@@ -483,7 +500,7 @@ export function DesignSystemShowcase() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-slate-500">{prop.default || '—'}</td>
-                      <td className="px-4 py-3 font-sans text-xs text-slate-600 leading-relaxed">
+                      <td className="px-4 py-3 font-sans text-xs leading-relaxed text-slate-600">
                         {prop.description}
                       </td>
                     </tr>
@@ -503,10 +520,12 @@ export function DesignSystemShowcase() {
                 setSelectedId(prevComponent.id);
                 setShowCode(false);
               }}
-              className="inline-flex flex-col items-start gap-1 text-left group"
+              className="group inline-flex flex-col items-start gap-1 text-left"
             >
-              <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-600">&larr; Previous</span>
-              <span className="text-sm font-semibold text-slate-900 group-hover:text-[#023e8a] transition-colors">
+              <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-600">
+                &larr; Previous
+              </span>
+              <span className="text-sm font-semibold text-slate-900 transition-colors group-hover:text-[#023e8a]">
                 {prevComponent.name}
               </span>
             </button>
@@ -521,10 +540,12 @@ export function DesignSystemShowcase() {
                 setSelectedId(nextComponent.id);
                 setShowCode(false);
               }}
-              className="inline-flex flex-col items-end gap-1 text-right group"
+              className="group inline-flex flex-col items-end gap-1 text-right"
             >
-              <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-600">Next &rarr;</span>
-              <span className="text-sm font-semibold text-slate-900 group-hover:text-[#023e8a] transition-colors">
+              <span className="font-mono text-[11px] text-slate-400 group-hover:text-slate-600">
+                Next &rarr;
+              </span>
+              <span className="text-sm font-semibold text-slate-900 transition-colors group-hover:text-[#023e8a]">
                 {nextComponent.name}
               </span>
             </button>
@@ -547,8 +568,9 @@ export function DesignSystemShowcase() {
         title="Siem Reap Central Campus · Science Lab"
       >
         <div className="space-y-4">
-          <p className="text-sm text-slate-600 leading-relaxed">
-            Located in Academic Building B, 2nd Floor. Fully equipped with dual robotic testbenches and high-speed telemetry terminals.
+          <p className="text-sm leading-relaxed text-slate-600">
+            Located in Academic Building B, 2nd Floor. Fully equipped with dual robotic testbenches
+            and high-speed telemetry terminals.
           </p>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-center">
@@ -563,7 +585,7 @@ export function DesignSystemShowcase() {
           <button
             type="button"
             onClick={() => setSheetOpen(false)}
-            className="flex h-10 w-full items-center justify-center rounded-lg bg-[#023e8a] text-xs font-medium text-white hover:bg-[#00509d] transition-colors"
+            className="flex h-10 w-full items-center justify-center rounded-lg bg-[#023e8a] text-xs font-medium text-white transition-colors hover:bg-[#00509d]"
           >
             Close Sheet
           </button>

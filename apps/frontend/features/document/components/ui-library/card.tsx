@@ -57,7 +57,7 @@ export function LibraryCardDescription({
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <p className={cn('text-xs text-slate-600 leading-relaxed', className)} {...props}>
+    <p className={cn('text-xs leading-relaxed text-slate-600', className)} {...props}>
       {children}
     </p>
   );
@@ -70,7 +70,10 @@ export function LibraryCardMedia({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('relative mb-3 aspect-video w-full overflow-hidden rounded-lg bg-slate-100 border border-slate-200', className)}
+      className={cn(
+        'relative mb-3 aspect-video w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100',
+        className,
+      )}
       {...props}
     >
       {children}
@@ -84,7 +87,13 @@ export function LibraryCardFooter({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn('mt-4 flex items-center justify-between border-t border-slate-100 pt-3', className)} {...props}>
+    <div
+      className={cn(
+        'mt-4 flex items-center justify-between border-t border-slate-100 pt-3',
+        className,
+      )}
+      {...props}
+    >
       {children}
     </div>
   );
