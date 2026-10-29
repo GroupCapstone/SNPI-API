@@ -130,3 +130,38 @@ As new UI components are created, they are added directly to the component regis
 - **Mandatory Prototyping Sandbox**: All new UI components, dark mode variants, and layouts must be prototyped and demoed in this developer library first.
 - **Strict Prohibition on Real Frontend**: Do NOT touch or apply new designs to the real frontend (`/(dashboard)/*`, `apps/frontend/components/`, `globals.css`) until the user explicitly inspects the developer library demo and commands application.
 - **Immediate Revert Gate**: Any changes applied to real frontend prior to explicit user command must be reverted immediately.
+
+---
+
+## 6. Subdomain Custom Font Architecture (Docs & Library Isolated)
+
+To apply custom brand fonts to documentation and component library surfaces without polluting the main application:
+
+- **Primary Font Storage**: `apps/frontend/app/document/fonts/` (e.g. `inter.ttf`)
+- **Public Static Fallback**: `apps/frontend/public/fonts/docs/`
+- **Scoped Loader Pattern (`apps/frontend/app/document/layout.tsx`)**:
+  ```tsx
+  import localFont from 'next/font/local';
+
+  const docsFont = localFont({
+    src: './fonts/inter.ttf',
+    variable: '--font-docs-inter',
+    display: 'swap',
+  });
+
+  export default function DocumentLayout({ children }: { children: React.ReactNode }) {
+    return (
+      <div
+        className={docsFont.variable}
+        style={{
+          fontFamily: 'var(--font-docs-inter), ui-sans-serif, system-ui, sans-serif',
+          ['--font-sans' as string]: 'var(--font-docs-inter), ui-sans-serif, system-ui, sans-serif',
+        }}
+      >
+        {children}
+      </div>
+    );
+  }
+  ```
+- **Zero Real Frontend Impact**: All admin dashboard routes (`/(dashboard)/*`) continue referencing Google Sans and system font stacks in `globals.css`.
+
