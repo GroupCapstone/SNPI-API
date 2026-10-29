@@ -16,13 +16,14 @@ This skill defines the mandatory protocol that every agent and contributor must 
 ## 1. Core Rule & Execution Gate
 
 * **Never Push Blindly**: A push command must NEVER execute a raw `git push` without first running the standard verification pipeline and synchronizing the changelog.
+* **Mandatory Pre-Push CI & Deploy Quality Gate**: If any GitHub deployment or CI workflow is failed on `main`, pushing new commits, tags, or checkpoints is STRICTLY FORBIDDEN. All 17 GitHub checks must be green or verified clean prior to pushing.
 * **Explicit User Command Required**: Pushes are only triggered when the user explicitly commands `push`, `push now`, `publish`, or creates a release checkpoint.
 * **Checkpoint Tagging Standard**: Tag release checkpoints using semantic versioning (`v0.1.x`) with descriptive release annotations.
 * **Zero Emojis**: All commit messages, tags, summaries, and agent responses must strictly avoid emojis. Use textual badges: `[PASSED]`, `[FAILED]`, `[WARNING]`, `[COMPLETED]`.
 
 ---
 
-## 2. 7-Step Checkpoint & Push Pipeline
+## 2. 8-Step Checkpoint & Push Pipeline
 
 Whenever the user instructs to push or checkpoint, execute the following steps in sequence:
 
@@ -47,30 +48,37 @@ npm run smoke
 npm run test:api
 ```
 
-### Step 4: Real-Time Changelog Synchronization
+### Step 4: Pre-Push Deployment & CI Quality Gate
+```bash
+# Verifies deployment manifests, builds, and GitHub Actions status on main
+npm run deploy:verify
+```
+Asserts that all deployment manifests exist, production builds compile without errors, and no recent GitHub workflows on `main` are in a failed state. PUSH IS BLOCKED if any workflow is failing.
+
+### Step 5: Real-Time Changelog Synchronization
 ```bash
 npm run changelog:sync
 ```
 Captures recent commits into both `CHANGELOG.md` and the live developer technical document portal at `apps/frontend/features/document/changelog-data.ts`. Stage and commit these updates if new entries were generated.
 
-### Step 5: Checkpoint Version Tagging (For Milestone / Release Pushes)
+### Step 6: Checkpoint Version Tagging (For Milestone / Release Pushes)
 Determine the next patch version based on `package.json` and git tags:
 ```bash
 # Example for tagging release checkpoint
-git tag -a v0.1.1 -m "Release Checkpoint v0.1.1: <Summary of milestone capabilities>"
+git tag -a v0.1.9 -m "Release Checkpoint v0.1.9: <Summary of milestone capabilities>"
 ```
 
-### Step 6: GitHub Remote Push
+### Step 7: GitHub Remote Push
 Ensure large media buffer configuration is active and push commits along with release tags:
 ```bash
 git config http.postBuffer 524288000
 git push origin <branch> --tags
 ```
 
-### Step 7: CI/CD Pipeline Verification
-Confirm that GitHub Actions workflows are triggered and monitor run progress:
+### Step 8: CI/CD Pipeline Verification & Monitoring
+Confirm that GitHub Actions workflows are triggered and monitor run progress until green:
 ```bash
-gh run list --limit 3
+gh run list --limit 5
 ```
 
 ---
@@ -83,7 +91,8 @@ gh run list --limit 3
 | **2. Typecheck** | `npm run typecheck` | 0 Errors across all workspaces |
 | **3. Smoke Test** | `npm run smoke` | 4/4 Checks Passed |
 | **4. Live API Test** | `npm run test:api` | 56/56 Endpoints HTTP 200 OK |
-| **5. Changelog** | `npm run changelog:sync` | Live document & CHANGELOG.md updated |
-| **6. Checkpoint** | `git tag -a <version> -m "..."` | Annotated release tag created |
-| **7. Remote Push** | `git push origin main --tags` | Commits & tags pushed to GitHub |
-| **8. CI Verification**| `gh run list` | Workflow triggered and running clean |
+| **5. Deploy Gate** | `npm run deploy:verify` | Manifests valid, build passes, 0 CI failures |
+| **6. Changelog** | `npm run changelog:sync` | Live document & CHANGELOG.md updated |
+| **7. Checkpoint** | `git tag -a <version> -m "..."` | Annotated release tag created |
+| **8. Remote Push** | `git push origin main --tags` | Commits & tags pushed to GitHub |
+| **9. CI Monitor** | `gh run list` | All triggered workflows passing green |
