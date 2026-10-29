@@ -479,17 +479,17 @@ console.log(payload.data);`;
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
-      {/* Top Navigation Bar - Light Theme */}
-      <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
+      {/* Top Navigation Bar - Move Green / Signal Lime Brand Identity */}
+      <header className="sticky top-0 z-50 w-full border-b border-[#0F3B27]/20 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <BrandMark compact size={32} />
             <div className="flex items-center gap-2">
-              <span className="font-mono text-base font-extrabold tracking-tight text-slate-950">
+              <span className="font-mono text-base font-extrabold tracking-tight text-[#0F3B27]">
                 Open API
               </span>
               <span className="text-slate-300">|</span>
-              <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-[#023e8a]">
+              <span className="rounded-md border border-[#0F3B27] bg-[#0F3B27] px-2 py-0.5 text-xs font-semibold text-[#92FF5F]">
                 Document
               </span>
             </div>
@@ -502,14 +502,15 @@ console.log(payload.data);`;
             </span>
             <Link
               href="/document/design-system"
-              className="inline-flex h-8 items-center rounded-lg border border-emerald-300 bg-emerald-50 px-3 font-mono text-xs font-semibold text-emerald-800 transition-colors hover:bg-emerald-100"
+              className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#0F3B27] bg-[#0F3B27] px-3 font-mono text-xs font-semibold text-[#92FF5F] transition-all hover:bg-[#144d33] hover:shadow-xs"
             >
-              UI Design Library
+              <span className="h-2 w-2 rounded-full bg-[#92FF5F]" />
+              UI Library & Blueprint &rarr;
             </Link>
             <a href="#who-can-access">
               <Button
                 size="sm"
-                className="h-8 bg-[#023e8a] px-3.5 text-xs font-medium text-white hover:bg-[#00509d]"
+                className="h-8 bg-[#0F3B27] px-3.5 text-xs font-medium text-white hover:bg-[#144d33]"
               >
                 Get Started
               </Button>
@@ -530,9 +531,10 @@ console.log(payload.data);`;
             <nav className="space-y-1 text-slate-600">
               <Link
                 href="/document/design-system"
-                className="block py-1 font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
+                className="mb-2 flex items-center justify-between rounded-xl border border-[#0F3B27] bg-[#0F3B27] p-2.5 font-mono text-xs font-bold text-[#92FF5F] transition-colors hover:bg-[#144d33]"
               >
-                UI Component Library &rarr;
+                <span>UI Library & Blueprint</span>
+                <span className="text-xs">&rarr;</span>
               </Link>
               <a href="#changelogs" className="block py-1 transition-colors hover:text-[#023e8a]">
                 Change Logs
@@ -623,6 +625,31 @@ console.log(payload.data);`;
 
         {/* Right / Main Content Area */}
         <main className="min-w-0 flex-1 space-y-10 pb-16">
+          {/* Brand Concept Blueprint & Design System Hero Banner */}
+          <div className="overflow-hidden rounded-2xl border border-[#0F3B27] bg-[#0F3B27] p-4 text-[#F7F9F7] shadow-xs">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="inline-block h-2 w-2 rounded-full bg-[#92FF5F]" />
+                  <span className="font-mono text-xs font-bold tracking-wider text-[#92FF5F] uppercase">
+                    Brand Concept Blueprint & 10 UI Components
+                  </span>
+                </div>
+                <p className="text-xs text-[#C5E3D5]">
+                  Move Green (<code className="text-[#92FF5F]">#0F3B27</code>), Signal Lime (
+                  <code className="text-[#92FF5F]">#92FF5F</code>), Soft White, Orange, Ice, and
+                  Mint.
+                </p>
+              </div>
+              <Link
+                href="/document/design-system"
+                className="inline-flex h-8 items-center justify-center rounded-xl bg-[#92FF5F] px-4 font-mono text-xs font-bold text-[#0B2518] transition-colors hover:bg-[#7ceb49]"
+              >
+                Open Design System &rarr;
+              </Link>
+            </div>
+          </div>
+
           {/* Nextra-inspired Brand Header & Summary */}
           <div className="space-y-3 border-b border-slate-200 pb-8">
             <div className="flex items-center gap-2">
