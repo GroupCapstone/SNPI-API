@@ -55,7 +55,7 @@ export const DialogContent = ({
 }) => (
   <div
     className={cn(
-      'relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl border border-slate-200 bg-white p-6 shadow-none sm:p-7 dark:border-white/10 dark:bg-[#202024]',
+      'relative max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl border border-slate-200 bg-white p-6 shadow-none sm:p-7',
       className,
     )}
   >
@@ -64,7 +64,7 @@ export const DialogContent = ({
         variant="ghost"
         size="icon"
         onClick={onClose}
-        className="absolute top-4 right-4 min-h-[44px] min-w-[44px] text-slate-400 hover:text-slate-700 dark:text-zinc-400 dark:hover:text-zinc-100"
+        className="absolute top-4 right-4 text-slate-400 hover:text-slate-700"
         aria-label="Close"
       >
         <X className="size-4" />
@@ -79,14 +79,14 @@ export const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLD
 );
 
 export const DialogTitle = ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-  <h2 className={cn('text-lg font-semibold tracking-tight text-slate-900 dark:text-zinc-100', className)} {...props} />
+  <h2 className={cn('text-lg font-semibold tracking-tight text-slate-900', className)} {...props} />
 );
 
 export const DialogDescription = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) => (
-  <p className={cn('text-xs text-slate-500 dark:text-zinc-400', className)} {...props} />
+  <p className={cn('text-xs text-slate-500', className)} {...props} />
 );
 
 export const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
