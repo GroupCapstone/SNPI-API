@@ -9,7 +9,7 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.1.12",
     "date": "30.10.2026",
-    "commitHash": "b5c3592",
+    "commitHash": "417bfea",
     "description": "Revert(frontend): remove applied dark mode and UI components from main code per instruction"
   },
   {

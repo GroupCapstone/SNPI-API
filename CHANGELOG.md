@@ -2,7 +2,7 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.1.12 (30.10.2026) - `b5c3592`
+### Version 0.1.12 (30.10.2026) - `417bfea`
 
 - Revert(frontend): remove applied dark mode and UI components from main code per instruction
 
