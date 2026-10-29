@@ -491,28 +491,32 @@ console.log(payload.data);`;
   };
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-[#e2e8f0] font-sans antialiased selection:bg-blue-600/30 selection:text-blue-200 flex flex-col">
-      {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#090d16]/90 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+    <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col">
+      {/* Top Navigation Bar - Light Theme */}
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
-            <BrandMark size={28} />
-            <div className="flex items-center gap-2 font-mono">
-              <span className="text-sm font-bold tracking-tight text-white">SNP-SMS Open API</span>
-              <span className="text-xs text-slate-500">|</span>
-              <span className="text-xs text-slate-400 font-medium">Document</span>
+            <BrandMark size={32} />
+            <div className="flex items-center gap-2">
+              <span className="text-base font-extrabold tracking-tight text-slate-950 font-mono">
+                SNP-SMS Open API
+              </span>
+              <span className="text-slate-300">|</span>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-blue-50 text-[#023e8a] border border-blue-200">
+                Document
+              </span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-800/50">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              v0.1.0 · 193 Endpoints
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              <span className="size-2 rounded-full bg-emerald-500" />
+              v0.1.0 · 193 Endpoints · 100% Online
             </span>
             <Link href="/dashboard">
               <Button
                 size="sm"
-                className="text-xs h-7 px-3 bg-white text-slate-950 hover:bg-slate-200 font-medium"
+                className="text-xs h-8 px-3.5 bg-[#023e8a] text-white hover:bg-[#00509d] font-medium"
               >
                 Dashboard
               </Button>
@@ -525,48 +529,57 @@ console.log(payload.data);`;
       <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 sm:px-6 py-8 gap-8">
         {/* Left Column: On This Page Table of Contents */}
         <aside className="w-60 shrink-0 hidden md:block">
-          <div className="sticky top-20 space-y-4 font-mono text-xs text-slate-400">
-            <p className="text-[11px] font-bold tracking-wider uppercase text-slate-500">
+          <div className="sticky top-24 space-y-4 font-mono text-xs text-slate-600">
+            <p className="text-[11px] font-bold tracking-wider uppercase text-slate-400">
               ON THIS PAGE
             </p>
 
-            <nav className="space-y-1 text-slate-400">
-              <a href="#changelogs" className="block py-1 hover:text-white transition-colors">
+            <nav className="space-y-1 text-slate-600">
+              <a href="#changelogs" className="block py-1 hover:text-[#023e8a] transition-colors">
                 Change Logs
               </a>
-              <a href="#introduction" className="block py-1 hover:text-white transition-colors">
+              <a href="#introduction" className="block py-1 hover:text-[#023e8a] transition-colors">
                 Introduction
               </a>
               <div className="pl-2 space-y-0.5 text-slate-500">
-                <a href="#purpose" className="block py-0.5 hover:text-slate-300">
+                <a href="#purpose" className="block py-0.5 hover:text-slate-900">
                   1. Purpose
                 </a>
-                <a href="#scope" className="block py-0.5 hover:text-slate-300">
+                <a href="#scope" className="block py-0.5 hover:text-slate-900">
                   2. Scope
                 </a>
-                <a href="#overall-api" className="block py-0.5 hover:text-slate-300">
+                <a href="#overall-api" className="block py-0.5 hover:text-slate-900">
                   3. Overall API
                 </a>
               </div>
 
-              <a href="#who-can-access" className="block py-1 hover:text-white transition-colors font-semibold text-slate-300">
+              <a
+                href="#who-can-access"
+                className="block py-1 hover:text-[#023e8a] transition-colors font-semibold text-slate-800"
+              >
                 Who Can Access The API
               </a>
 
-              <a href="#endpoints-available" className="block py-1 hover:text-white transition-colors font-semibold text-slate-300">
+              <a
+                href="#endpoints-available"
+                className="block py-1 hover:text-[#023e8a] transition-colors font-semibold text-slate-800"
+              >
                 What Other Devs Can Get
               </a>
 
-              <a href="#protected-endpoints" className="block py-1 hover:text-white transition-colors font-semibold text-slate-300">
+              <a
+                href="#protected-endpoints"
+                className="block py-1 hover:text-[#023e8a] transition-colors font-semibold text-slate-800"
+              >
                 What Endpoints Are Protected
               </a>
 
               <div className="pt-2">
-                <a href="#api-doc" className="block py-1 font-semibold text-slate-300 hover:text-white">
+                <a href="#api-doc" className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]">
                   Interactive API Explorer
                 </a>
                 <div className="pl-2 space-y-0.5 text-slate-500">
-                  <a href="#status-codes" className="block py-0.5 hover:text-slate-300">
+                  <a href="#status-codes" className="block py-0.5 hover:text-slate-900">
                     Status Codes
                   </a>
                   {INTERACTIVE_ITEMS.map((item, idx) => (
@@ -575,7 +588,9 @@ console.log(payload.data);`;
                       href={`#${item.id}`}
                       onClick={() => setActiveEndpointId(item.id)}
                       className={`block py-0.5 truncate transition-colors ${
-                        activeEndpointId === item.id ? 'text-blue-400 font-bold' : 'hover:text-slate-300'
+                        activeEndpointId === item.id
+                          ? 'text-[#023e8a] font-bold'
+                          : 'hover:text-slate-900'
                       }`}
                     >
                       {idx + 1}. {item.title.split('. ')[1] || item.title}
@@ -590,23 +605,23 @@ console.log(payload.data);`;
         {/* Right / Main Content Area */}
         <main className="flex-1 min-w-0 space-y-12 pb-16">
           {/* Change Logs Section */}
-          <section id="changelogs" className="space-y-3 scroll-mt-20">
-            <h2 className="text-sm font-bold tracking-tight text-white font-mono">Change Logs</h2>
-            <div className="rounded-lg border border-slate-800 bg-[#0e1422] overflow-hidden text-xs">
+          <section id="changelogs" className="space-y-3 scroll-mt-24">
+            <h2 className="text-sm font-bold tracking-tight text-slate-950 font-mono">Change Logs</h2>
+            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-[#141b2d] border-b border-slate-800 text-slate-400 text-[11px]">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
                   <tr>
                     <th className="p-2.5 w-24">Version</th>
                     <th className="p-2.5 w-28">Date</th>
                     <th className="p-2.5">Description</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                <tbody className="divide-y divide-slate-100 text-slate-700">
                   {CHANGE_LOGS.map((log) => (
-                    <tr key={log.version} className="hover:bg-slate-800/30">
-                      <td className="p-2.5 text-blue-400 font-semibold">{log.version}</td>
-                      <td className="p-2.5 text-slate-400">{log.date}</td>
-                      <td className="p-2.5 text-slate-300 leading-relaxed font-sans">{log.description}</td>
+                    <tr key={log.version} className="hover:bg-slate-50">
+                      <td className="p-2.5 text-[#023e8a] font-bold">{log.version}</td>
+                      <td className="p-2.5 text-slate-500">{log.date}</td>
+                      <td className="p-2.5 text-slate-700 leading-relaxed font-sans">{log.description}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -615,65 +630,73 @@ console.log(payload.data);`;
           </section>
 
           {/* Introduction Section */}
-          <section id="introduction" className="space-y-6 scroll-mt-20 border-t border-slate-800/80 pt-8">
-            <h2 className="text-base font-bold tracking-tight text-white">Introduction</h2>
+          <section id="introduction" className="space-y-6 scroll-mt-24 border-t border-slate-200 pt-8">
+            <h2 className="text-base font-bold tracking-tight text-slate-950">Introduction</h2>
 
             {/* 1. Purpose */}
-            <div id="purpose" className="space-y-2 scroll-mt-20">
-              <h3 className="text-xs font-bold font-mono text-slate-300">1. Purpose</h3>
-              <p className="text-xs leading-relaxed text-slate-400 font-sans">
-                This document provides the authoritative technical REST API specification of the SNP
-                Integrated Multi-Branch School Management System (SNP-SMS). The primary audience is
-                third-party integrators, mobile developers, campus IT staff, and system administrators.
+            <div id="purpose" className="space-y-2 scroll-mt-24">
+              <h3 className="text-xs font-bold font-mono text-slate-800">1. Purpose</h3>
+              <p className="text-xs leading-relaxed text-slate-600 font-sans">
+                This document describes the technical REST API specification of the SNP Integrated
+                Multi-Branch School Management System (SNP-SMS). The primary audience is third-party
+                integrators, mobile developers, campus IT staff, and administrative client systems.
               </p>
             </div>
 
             {/* 2. Scope */}
-            <div id="scope" className="space-y-2 scroll-mt-20">
-              <h3 className="text-xs font-bold font-mono text-slate-300">2. Scope</h3>
-              <p className="text-xs leading-relaxed text-slate-400 font-sans">
-                Defines all accessible API surfaces, multi-branch scoping headers (X-Branch-Id), 
-                who can access each resource, authentication and token refresh lifecycles, and defense
-                mechanisms safeguarding sensitive financial and academic mutations.
+            <div id="scope" className="space-y-2 scroll-mt-24">
+              <h3 className="text-xs font-bold font-mono text-slate-800">2. Scope</h3>
+              <p className="text-xs leading-relaxed text-slate-600 font-sans">
+                Defines all accessible API surfaces, multi-branch scoping headers (X-Branch-Id), who can
+                access each resource, authentication and token refresh lifecycles, and defense mechanisms
+                safeguarding sensitive financial and academic mutations.
               </p>
             </div>
 
             {/* 3. Overall API */}
-            <div id="overall-api" className="space-y-3 scroll-mt-20">
-              <h3 className="text-xs font-bold font-mono text-slate-300">3. Overall API</h3>
+            <div id="overall-api" className="space-y-3 scroll-mt-24">
+              <h3 className="text-xs font-bold font-mono text-slate-800">3. Overall API</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-                <div className="rounded-lg border border-slate-800 bg-[#0e1422] p-3 space-y-1">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider">Base URL</span>
-                  <p className="text-blue-400 font-bold truncate">http://localhost:4000/api/v1</p>
+                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
+                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                    Base URL
+                  </span>
+                  <p className="text-[#023e8a] font-bold truncate">http://localhost:4000/api/v1</p>
                 </div>
-                <div className="rounded-lg border border-slate-800 bg-[#0e1422] p-3 space-y-1">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider">Payload Format</span>
-                  <p className="text-slate-300 font-bold">JSON (application/json)</p>
+                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
+                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                    Payload Format
+                  </span>
+                  <p className="text-slate-800 font-bold">JSON (application/json)</p>
                 </div>
-                <div className="rounded-lg border border-slate-800 bg-[#0e1422] p-3 space-y-1">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider">Authentication</span>
-                  <p className="text-amber-400 font-bold">Bearer &lt;access_token&gt;</p>
+                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
+                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                    Authorization
+                  </span>
+                  <p className="text-amber-700 font-bold">Bearer &lt;access_token&gt;</p>
                 </div>
-                <div className="rounded-lg border border-slate-800 bg-[#0e1422] p-3 space-y-1">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider">Campus Isolation</span>
-                  <p className="text-emerald-400 font-bold">X-Branch-Id: &lt;branch_id&gt;</p>
+                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
+                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                    Campus Isolation
+                  </span>
+                  <p className="text-emerald-700 font-bold">X-Branch-Id: &lt;branch_id&gt;</p>
                 </div>
               </div>
             </div>
           </section>
 
           {/* Section: Who Can Access The API */}
-          <section id="who-can-access" className="space-y-4 scroll-mt-20 border-t border-slate-800/80 pt-8">
+          <section id="who-can-access" className="space-y-4 scroll-mt-24 border-t border-slate-200 pt-8">
             <div>
-              <h2 className="text-base font-bold tracking-tight text-white">Who Can Access The API</h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <h2 className="text-base font-bold tracking-tight text-slate-950">Who Can Access The API</h2>
+              <p className="text-xs text-slate-500 mt-1">
                 Access is strictly governed by Role-Based Access Control (RBAC) and campus branch boundaries.
               </p>
             </div>
 
-            <div className="rounded-lg border border-slate-800 bg-[#0e1422] overflow-hidden text-xs">
+            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-[#141b2d] border-b border-slate-800 text-slate-400 text-[11px]">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
                   <tr>
                     <th className="p-2.5 w-36">Client Type / Role</th>
                     <th className="p-2.5 w-40">Target Audience</th>
@@ -681,16 +704,16 @@ console.log(payload.data);`;
                     <th className="p-2.5 w-52">Security & Verification</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-slate-300 font-sans">
+                <tbody className="divide-y divide-slate-100 text-slate-700 font-sans">
                   {ACCESS_ROLES.map((role) => (
-                    <tr key={role.role} className="hover:bg-slate-800/30">
-                      <td className="p-2.5 font-mono font-bold text-blue-400">{role.role}</td>
-                      <td className="p-2.5 text-slate-400 text-xs">{role.targetAudience}</td>
+                    <tr key={role.role} className="hover:bg-slate-50">
+                      <td className="p-2.5 font-mono font-bold text-[#023e8a]">{role.role}</td>
+                      <td className="p-2.5 text-slate-500 text-xs">{role.targetAudience}</td>
                       <td className="p-2.5 text-xs">
-                        <p className="text-slate-200 font-medium">{role.accessScope}</p>
-                        <p className="font-mono text-[11px] text-slate-400 mt-0.5">{role.allowedEndpoints}</p>
+                        <p className="text-slate-900 font-semibold">{role.accessScope}</p>
+                        <p className="font-mono text-[11px] text-slate-600 mt-0.5">{role.allowedEndpoints}</p>
                       </td>
-                      <td className="p-2.5 text-xs text-slate-400">{role.securityMethod}</td>
+                      <td className="p-2.5 text-xs text-slate-600">{role.securityMethod}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -699,20 +722,20 @@ console.log(payload.data);`;
           </section>
 
           {/* Section: What Other Devs Can Get */}
-          <section id="endpoints-available" className="space-y-4 scroll-mt-20 border-t border-slate-800/80 pt-8">
+          <section id="endpoints-available" className="space-y-4 scroll-mt-24 border-t border-slate-200 pt-8">
             <div>
-              <h2 className="text-base font-bold tracking-tight text-white">
+              <h2 className="text-base font-bold tracking-tight text-slate-950">
                 What Other Developers Can Get (Read & Integration Surface)
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 These standardized endpoints can be consumed by external client applications, mobile apps,
                 and reporting integrations using standard HTTP GET queries.
               </p>
             </div>
 
-            <div className="rounded-lg border border-slate-800 bg-[#0e1422] overflow-hidden text-xs">
+            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-[#141b2d] border-b border-slate-800 text-slate-400 text-[11px]">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
                   <tr>
                     <th className="p-2.5 w-32">Domain Category</th>
                     <th className="p-2.5 w-20">Method</th>
@@ -721,24 +744,26 @@ console.log(payload.data);`;
                     <th className="p-2.5 w-44">Required Permission</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                <tbody className="divide-y divide-slate-100 text-slate-700">
                   {AVAILABLE_ENDPOINTS_FOR_DEVS.map((ep) => (
-                    <tr key={ep.path + ep.method} className="hover:bg-slate-800/30">
-                      <td className="p-2.5 text-slate-400">{ep.category}</td>
+                    <tr key={ep.path + ep.method} className="hover:bg-slate-50">
+                      <td className="p-2.5 text-slate-600 font-semibold">{ep.category}</td>
                       <td className="p-2.5">
                         <span
                           className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
                             ep.method === 'GET'
-                              ? 'bg-blue-950 text-blue-400 border border-blue-800/50'
-                              : 'bg-emerald-950 text-emerald-400 border border-emerald-800/50'
+                              ? 'bg-blue-50 text-[#023e8a] border border-blue-200'
+                              : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                           }`}
                         >
                           {ep.method}
                         </span>
                       </td>
-                      <td className="p-2.5 text-white font-bold">{ep.path}</td>
-                      <td className="p-2.5 text-slate-300 font-sans text-xs">{ep.description}</td>
-                      <td className="p-2.5 text-amber-400 text-[11px] font-mono">{ep.requiredPermission}</td>
+                      <td className="p-2.5 text-slate-900 font-bold">{ep.path}</td>
+                      <td className="p-2.5 text-slate-600 font-sans text-xs">{ep.description}</td>
+                      <td className="p-2.5 text-amber-700 text-[11px] font-mono font-medium">
+                        {ep.requiredPermission}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -747,20 +772,20 @@ console.log(payload.data);`;
           </section>
 
           {/* Section: What Endpoints Must Be Protected & How */}
-          <section id="protected-endpoints" className="space-y-4 scroll-mt-20 border-t border-slate-800/80 pt-8">
+          <section id="protected-endpoints" className="space-y-4 scroll-mt-24 border-t border-slate-200 pt-8">
             <div>
-              <h2 className="text-base font-bold tracking-tight text-white">
+              <h2 className="text-base font-bold tracking-tight text-slate-950">
                 What Endpoints Must Be Protected & How
               </h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 High-impact write and mutation operations are enforced with multi-layer defense mechanisms
                 to prevent financial tampering, unauthorized grade alterations, and privilege escalations.
               </p>
             </div>
 
-            <div className="rounded-lg border border-slate-800 bg-[#0e1422] overflow-hidden text-xs">
+            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-[#141b2d] border-b border-slate-800 text-slate-400 text-[11px]">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
                   <tr>
                     <th className="p-2.5 w-36">Domain</th>
                     <th className="p-2.5 w-48">Endpoint</th>
@@ -768,16 +793,16 @@ console.log(payload.data);`;
                     <th className="p-2.5 w-60">Defense Guardrails Implemented</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-slate-300 font-sans">
+                <tbody className="divide-y divide-slate-100 text-slate-700 font-sans">
                   {PROTECTED_MUTATION_ENDPOINTS.map((item) => (
-                    <tr key={item.path + item.method} className="hover:bg-slate-800/30">
-                      <td className="p-2.5 font-bold text-white font-mono">{item.domain}</td>
+                    <tr key={item.path + item.method} className="hover:bg-slate-50">
+                      <td className="p-2.5 font-bold text-slate-900 font-mono">{item.domain}</td>
                       <td className="p-2.5 font-mono text-xs">
-                        <span className="text-amber-400 font-bold mr-1.5">{item.method}</span>
-                        <span className="text-slate-300">{item.path}</span>
+                        <span className="text-amber-700 font-bold mr-1.5">{item.method}</span>
+                        <span className="text-slate-800 font-semibold">{item.path}</span>
                       </td>
-                      <td className="p-2.5 text-xs text-slate-300">{item.whyProtected}</td>
-                      <td className="p-2.5 text-xs text-emerald-400 font-mono text-[11px]">
+                      <td className="p-2.5 text-xs text-slate-600">{item.whyProtected}</td>
+                      <td className="p-2.5 text-xs text-emerald-800 font-mono text-[11px]">
                         {item.defenseMechanisms}
                       </td>
                     </tr>
@@ -788,62 +813,76 @@ console.log(payload.data);`;
           </section>
 
           {/* Interactive API Explorer Section */}
-          <section id="api-doc" className="space-y-8 scroll-mt-20 border-t border-slate-800/80 pt-8">
+          <section id="api-doc" className="space-y-8 scroll-mt-24 border-t border-slate-200 pt-8">
             <div>
-              <h2 className="text-base font-bold tracking-tight text-white">Interactive API Explorer</h2>
-              <p className="text-xs text-slate-400 mt-1">
+              <h2 className="text-base font-bold tracking-tight text-slate-950">
+                Interactive API Explorer
+              </h2>
+              <p className="text-xs text-slate-500 mt-1">
                 Select any endpoint below to inspect request/response schemas, copy terminal cURL commands,
                 or send live test requests directly to the running backend.
               </p>
             </div>
 
             {/* Status Codes Table */}
-            <div id="status-codes" className="space-y-3 scroll-mt-20">
-              <h3 className="text-xs font-bold font-mono text-slate-300">HTTP Status Codes Standard</h3>
-              <div className="rounded-lg border border-slate-800 bg-[#0e1422] overflow-hidden text-xs">
+            <div id="status-codes" className="space-y-3 scroll-mt-24">
+              <h3 className="text-xs font-bold font-mono text-slate-800">HTTP Status Codes Standard</h3>
+              <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
                 <table className="w-full text-left font-mono">
-                  <thead className="bg-[#141b2d] border-b border-slate-800 text-slate-400 text-[11px]">
+                  <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
                     <tr>
                       <th className="p-2.5 w-24">HTTP Code</th>
                       <th className="p-2.5 w-32">Status</th>
                       <th className="p-2.5">Meaning & Description</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                  <tbody className="divide-y divide-slate-100 text-slate-700">
                     <tr>
-                      <td className="p-2.5 text-emerald-400 font-bold">200</td>
+                      <td className="p-2.5 text-emerald-700 font-bold">200</td>
                       <td className="p-2.5">OK</td>
-                      <td className="p-2.5 text-slate-400 font-sans">The request succeeded and returned the requested payload.</td>
+                      <td className="p-2.5 text-slate-600 font-sans">
+                        The request succeeded and returned the requested payload.
+                      </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-emerald-400 font-bold">201</td>
+                      <td className="p-2.5 text-emerald-700 font-bold">201</td>
                       <td className="p-2.5">Created</td>
-                      <td className="p-2.5 text-slate-400 font-sans">New entity created successfully.</td>
+                      <td className="p-2.5 text-slate-600 font-sans">New entity created successfully.</td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-amber-400 font-bold">400</td>
+                      <td className="p-2.5 text-amber-700 font-bold">400</td>
                       <td className="p-2.5">Bad Request</td>
-                      <td className="p-2.5 text-slate-400 font-sans">Payload validation failed against Zod schema.</td>
+                      <td className="p-2.5 text-slate-600 font-sans">
+                        Payload validation failed against Zod schema.
+                      </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-amber-400 font-bold">401</td>
+                      <td className="p-2.5 text-amber-700 font-bold">401</td>
                       <td className="p-2.5">Unauthorized</td>
-                      <td className="p-2.5 text-slate-400 font-sans">Missing, expired, or invalid JWT Bearer token.</td>
+                      <td className="p-2.5 text-slate-600 font-sans">
+                        Missing, expired, or invalid JWT Bearer token.
+                      </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-rose-400 font-bold">403</td>
+                      <td className="p-2.5 text-rose-700 font-bold">403</td>
                       <td className="p-2.5">Forbidden</td>
-                      <td className="p-2.5 text-slate-400 font-sans">User lacks the required RBAC permission or branch scope.</td>
+                      <td className="p-2.5 text-slate-600 font-sans">
+                        User lacks the required RBAC permission or branch scope.
+                      </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-rose-400 font-bold">404</td>
+                      <td className="p-2.5 text-rose-700 font-bold">404</td>
                       <td className="p-2.5">Not Found</td>
-                      <td className="p-2.5 text-slate-400 font-sans">Requested route or resource identifier does not exist.</td>
+                      <td className="p-2.5 text-slate-600 font-sans">
+                        Requested route or resource identifier does not exist.
+                      </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-amber-400 font-bold">429</td>
+                      <td className="p-2.5 text-amber-700 font-bold">429</td>
                       <td className="p-2.5">Too Many Requests</td>
-                      <td className="p-2.5 text-slate-400 font-sans">Rate limit exceeded (standard draft-8 headers provided).</td>
+                      <td className="p-2.5 text-slate-600 font-sans">
+                        Rate limit exceeded (standard draft-8 headers provided).
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -859,24 +898,24 @@ console.log(payload.data);`;
                   <div
                     key={item.id}
                     id={item.id}
-                    className="rounded-xl border border-slate-800 bg-[#0e1422] p-5 space-y-4 scroll-mt-20"
+                    className="rounded-xl border border-slate-200 bg-white p-6 space-y-4 scroll-mt-24 shadow-xs"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span
                             className={`font-mono text-[10px] font-extrabold px-2 py-0.5 rounded ${
                               item.method === 'GET'
-                                ? 'bg-blue-950 text-blue-400 border border-blue-800/60'
-                                : 'bg-emerald-950 text-emerald-400 border border-emerald-800/60'
+                                ? 'bg-blue-50 text-[#023e8a] border border-blue-200'
+                                : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                             }`}
                           >
                             {item.method}
                           </span>
-                          <span className="font-mono text-xs font-bold text-white">{item.path}</span>
+                          <span className="font-mono text-xs font-bold text-slate-900">{item.path}</span>
                         </div>
-                        <p className="text-xs font-bold text-slate-200">{item.title}</p>
-                        <p className="text-xs text-slate-400 font-sans">{item.summary}</p>
+                        <p className="text-xs font-bold text-slate-800">{item.title}</p>
+                        <p className="text-xs text-slate-600 font-sans">{item.summary}</p>
                       </div>
 
                       <div className="flex items-center gap-2">
@@ -885,9 +924,9 @@ console.log(payload.data);`;
                           variant="outline"
                           onClick={() => handleTest(item)}
                           disabled={isTestingThis}
-                          className="text-xs h-7 border-slate-700 bg-slate-800/80 text-slate-300 hover:text-white hover:bg-slate-700"
+                          className="text-xs h-8 border-slate-300 text-slate-700 hover:text-[#023e8a] hover:border-[#023e8a]"
                         >
-                          <Server className="size-3 mr-1 text-blue-400" />
+                          <Server className="size-3.5 mr-1 text-[#023e8a]" />
                           {isTestingThis ? 'Testing...' : 'Test Live'}
                         </Button>
                       </div>
@@ -895,12 +934,12 @@ console.log(payload.data);`;
 
                     {/* Metadata Badges */}
                     <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
-                      <div className="px-2 py-1 rounded bg-[#141b2d] border border-slate-800 text-slate-300">
-                        Permission: <strong className="text-amber-400">{item.permission}</strong>
+                      <div className="px-2.5 py-1 rounded bg-slate-50 border border-slate-200 text-slate-700">
+                        Permission: <strong className="text-amber-700">{item.permission}</strong>
                       </div>
-                      <div className="px-2 py-1 rounded bg-[#141b2d] border border-slate-800 text-slate-300">
+                      <div className="px-2.5 py-1 rounded bg-slate-50 border border-slate-200 text-slate-700">
                         Scope Header:{' '}
-                        <strong className={item.scopeHeader ? 'text-blue-400' : 'text-slate-500'}>
+                        <strong className={item.scopeHeader ? 'text-[#023e8a]' : 'text-slate-400'}>
                           {item.scopeHeader ? 'X-Branch-Id Required' : 'None'}
                         </strong>
                       </div>
@@ -908,32 +947,36 @@ console.log(payload.data);`;
 
                     {/* Live Test Output Display */}
                     {liveRes && (
-                      <div className="rounded-lg border border-slate-700 bg-[#090d16] p-3 text-xs font-mono space-y-1.5">
+                      <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs font-mono space-y-1.5">
                         <div className="flex items-center justify-between">
                           <span
                             className={
-                              liveRes.status === 200 ? 'text-emerald-400 font-bold' : 'text-amber-400 font-bold'
+                              liveRes.status === 200
+                                ? 'text-emerald-700 font-bold'
+                                : 'text-amber-700 font-bold'
                             }
                           >
                             Live Response: HTTP {liveRes.status}
                           </span>
                           <span className="text-slate-500">{liveRes.latency}ms</span>
                         </div>
-                        <pre className="max-h-32 overflow-y-auto text-[11px] text-slate-300 bg-black/40 p-2 rounded">
+                        <pre className="max-h-32 overflow-y-auto text-[11px] text-slate-800 bg-white p-2 rounded border border-slate-200">
                           {JSON.stringify(liveRes.body, null, 2)}
                         </pre>
                       </div>
                     )}
 
                     {/* Code Snippet Card */}
-                    <div className="rounded-lg border border-slate-800 bg-[#070b13] overflow-hidden">
-                      <div className="flex items-center justify-between px-3 py-1.5 bg-[#121929] border-b border-slate-800/80 text-xs font-mono">
+                    <div className="rounded-lg border border-slate-900 bg-slate-950 overflow-hidden shadow-xs">
+                      <div className="flex items-center justify-between px-3.5 py-2 bg-slate-900 border-b border-slate-800 text-xs font-mono">
                         <div className="flex items-center gap-1">
                           <button
                             type="button"
                             onClick={() => setCodeType('curl')}
-                            className={`px-2 py-0.5 rounded text-[11px] transition-colors ${
-                              codeType === 'curl' ? 'bg-slate-700 text-white font-bold' : 'text-slate-400 hover:text-white'
+                            className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
+                              codeType === 'curl'
+                                ? 'bg-slate-800 text-white font-bold'
+                                : 'text-slate-400 hover:text-white'
                             }`}
                           >
                             cURL
@@ -941,8 +984,10 @@ console.log(payload.data);`;
                           <button
                             type="button"
                             onClick={() => setCodeType('ts')}
-                            className={`px-2 py-0.5 rounded text-[11px] transition-colors ${
-                              codeType === 'ts' ? 'bg-slate-700 text-white font-bold' : 'text-slate-400 hover:text-white'
+                            className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
+                              codeType === 'ts'
+                                ? 'bg-slate-800 text-white font-bold'
+                                : 'text-slate-400 hover:text-white'
                             }`}
                           >
                             TypeScript
@@ -950,8 +995,10 @@ console.log(payload.data);`;
                           <button
                             type="button"
                             onClick={() => setCodeType('json')}
-                            className={`px-2 py-0.5 rounded text-[11px] transition-colors ${
-                              codeType === 'json' ? 'bg-slate-700 text-white font-bold' : 'text-slate-400 hover:text-white'
+                            className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
+                              codeType === 'json'
+                                ? 'bg-slate-800 text-white font-bold'
+                                : 'text-slate-400 hover:text-white'
                             }`}
                           >
                             Response
@@ -961,7 +1008,7 @@ console.log(payload.data);`;
                         <button
                           type="button"
                           onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
-                          className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800/60 border border-slate-700"
+                          className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800 border border-slate-700"
                         >
                           {copiedId === item.id ? (
                             <>
@@ -977,7 +1024,7 @@ console.log(payload.data);`;
                         </button>
                       </div>
 
-                      <pre className="p-3 overflow-x-auto text-xs font-mono text-slate-200 leading-relaxed max-h-64">
+                      <pre className="p-3.5 overflow-x-auto text-xs font-mono text-slate-100 leading-relaxed max-h-64">
                         <code>{generateSnippet(item, codeType)}</code>
                       </pre>
                     </div>
@@ -989,19 +1036,19 @@ console.log(payload.data);`;
         </main>
       </div>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-[#070b13] py-6 text-xs font-mono text-slate-500">
+      {/* Footer - Light Theme */}
+      <footer className="border-t border-slate-200 bg-white py-6 text-xs font-mono text-slate-500">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span>SNP International School · Open API Technical Document</span>
           <div className="flex items-center gap-6">
-            <Link href="/dashboard" className="hover:text-slate-300">
+            <Link href="/dashboard" className="hover:text-slate-900 font-sans">
               Administrative Console
             </Link>
             <a
               href="https://snp.edu.kh"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-slate-300"
+              className="hover:text-slate-900 font-sans"
             >
               snp.edu.kh
             </a>
