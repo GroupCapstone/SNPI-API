@@ -46,7 +46,11 @@ Before modifying code, packages, or repository structure, read:
 - **Multi-Tenant & Data Scoping**: Every query and write must strictly enforce `schoolId`, `branchId`, and user RBAC permissions server-side. Never trust client-supplied scopes.
 - **Cryptographic Security**: All signature checks, webhook verifications, and token hash comparisons must execute via constant-time `crypto.timingSafeEqual`. Plaintext credentials and placeholder secrets are strictly forbidden.
 - **Input Sanitization & Injection Defense**: Every HTTP endpoint must validate inputs using strict Zod schemas. Mongoose queries must run with `strictQuery: true`, rejecting raw unescaped regex and operator injections.
-- **Zero Direct Git Pushes**: Never run `git push` or remote publishing commands under any circumstances unless explicitly commanded by the user.
+- **Mandatory Local-Only Commits & Zero Push Without Explicit Command — ABSOLUTE RULE**:
+  - In every conversation, session, and task, AI agents and contributors are **strictly permitted to make local git commits only**.
+  - **NEVER execute `git push`**, push release tags, publish release checkpoints, or perform remote publishing actions under any circumstances unless the user gives an explicit, direct command (e.g., `git push`, `push now`, `push to github`).
+  - Do not auto-push "for convenience", at the conclusion of a turn, or after running builds, tests, or changelog syncs.
+  - Remote publishing is exclusively gated behind explicit user command.
 
 ---
 
