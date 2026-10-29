@@ -16,7 +16,8 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "smoke": "tsx scripts/monorepo-smoke.ts"
+    "smoke": "tsx scripts/monorepo-smoke.ts",
+    "test:api": "tsx scripts/test-all-apis.ts"
   },
   "devDependencies": {
     "prettier": "^3.9.10",
