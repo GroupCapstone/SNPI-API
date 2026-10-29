@@ -14,9 +14,9 @@ Before changing code or project structure, read:
 
 The shared skill is the source of truth for all agents. Do not replace it with personal memory, model-specific prompts, or unrecorded chat instructions.
 
-## Repository boundary
+## Workspace boundary
 
-This repository is the standalone Express, TypeScript, and MongoDB backend. The Next.js frontend is in the separate `snp-sms-frontend` repository and is deployed independently. Keep frontend pages, components, package dependencies, Vercel config, and frontend CI out of this repository. Preserve the HTTP API as the integration boundary.
+This workspace is the Express 5, TypeScript, and MongoDB modular monolith backend within the SNP-SMS monorepo. It communicates with the frontend via the REST API at `/api/v1/*` (proxied server-side by Next.js in `apps/frontend`) and shares types, permissions, and DTO validation schemas through `@snp/shared` in `packages/shared/`. Preserve the HTTP API and `@snp/shared` as the integration boundaries.
 
 ## Required architecture and safety
 
