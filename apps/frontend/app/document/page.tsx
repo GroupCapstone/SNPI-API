@@ -483,10 +483,10 @@ console.log(payload.data);`;
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
-            <BrandMark size={32} />
+            <BrandMark compact size={32} />
             <div className="flex items-center gap-2">
               <span className="font-mono text-base font-extrabold tracking-tight text-slate-950">
-                SNP-SMS Open API
+                Open API
               </span>
               <span className="text-slate-300">|</span>
               <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-[#023e8a]">
@@ -1166,7 +1166,7 @@ console.log(payload.data);`;
       {/* Footer - Light Theme */}
       <footer className="border-t border-slate-200 bg-white py-6 font-mono text-xs text-slate-500">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
-          <span>SNP International School · Open API Technical Document</span>
+          <span>Open API Technical Document</span>
           <div className="flex items-center gap-6">
             <Link href="/dashboard" className="font-sans hover:text-slate-900">
               Administrative Console
