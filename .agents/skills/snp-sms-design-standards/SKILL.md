@@ -137,25 +137,26 @@ As new UI components are created, they are added directly to the component regis
 
 To apply custom brand fonts to documentation and component library surfaces without polluting the main application:
 
-- **Primary Font Storage**: `apps/frontend/app/document/fonts/` (e.g. `inter.ttf`)
+- **Primary Font Storage**: `apps/frontend/app/document/fonts/` (e.g. `sora.woff2`)
 - **Public Static Fallback**: `apps/frontend/public/fonts/docs/`
 - **Scoped Loader Pattern (`apps/frontend/app/document/layout.tsx`)**:
   ```tsx
   import localFont from 'next/font/local';
 
-  const docsFont = localFont({
-    src: './fonts/inter.ttf',
-    variable: '--font-docs-inter',
+  const docsSora = localFont({
+    src: './fonts/sora.woff2',
+    variable: '--font-docs-sora',
     display: 'swap',
   });
 
   export default function DocumentLayout({ children }: { children: React.ReactNode }) {
     return (
       <div
-        className={docsFont.variable}
+        className={docsSora.variable}
         style={{
-          fontFamily: 'var(--font-docs-inter), ui-sans-serif, system-ui, sans-serif',
-          ['--font-sans' as string]: 'var(--font-docs-inter), ui-sans-serif, system-ui, sans-serif',
+          fontFamily: 'var(--font-docs-sora), ui-sans-serif, system-ui, sans-serif',
+          ['--font-sans' as string]:
+            'var(--font-docs-sora), ui-sans-serif, system-ui, sans-serif',
         }}
       >
         {children}
@@ -163,5 +164,13 @@ To apply custom brand fonts to documentation and component library surfaces with
     );
   }
   ```
+- **Brand Blueprint Palette**:
+  - `01 Royal Blue`: `#0056FF` (Hero Brand Accent)
+  - `02 Azure Blue`: `#2277FF` (Interactive Links)
+  - `03 Black`: `#000000` (High-Contrast Canvas)
+  - `04 Soft Lavender`: `#E3E7FC` (Surface Tint & Badges)
+  - `05 White`: `#FFFFFF` (Card Containers)
+  - `Gradient 1 (Futurewave)`: `#2277FF` via `#5C93FF` to `#AEC2FF`
+  - `Gradient 2 (Midnight Surge)`: `#000B26` via `#002D8A` to `#0056FF`
 - **Zero Real Frontend Impact**: All admin dashboard routes (`/(dashboard)/*`) continue referencing Google Sans and system font stacks in `globals.css`.
 

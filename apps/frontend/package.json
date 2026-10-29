@@ -13,13 +13,14 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@snp/shared": "*",
     "@fontsource-variable/google-sans": "^5.3.2",
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/noto-sans-khmer": "^5.3.0",
+    "@fontsource-variable/sora": "^5.3.0",
     "@hookform/resolvers": "^6.0.2",
     "@keyline-icons/react": "^2.2.0",
     "@radix-ui/react-slot": "^1.5.0",
+    "@snp/shared": "*",
     "@tanstack/react-query": "^5.105.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

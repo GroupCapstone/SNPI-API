@@ -48,10 +48,10 @@ import { cn } from '@/lib/utils';
 
 export function DesignSystemShowcase() {
   // Main View Selector: 'blueprint' (Colors & Concept) vs 'components' (Interactive Sandbox)
-  const [activeView, setActiveView] = React.useState<'components' | 'blueprint'>('components');
+  const [activeView, setActiveView] = React.useState<'blueprint' | 'components'>('blueprint');
 
-  // Preview Stage Background: 'dark' (Move Green #0F3B27) vs 'light' (Soft White #F7F9F7)
-  const [stageBg, setStageBg] = React.useState<'move-green' | 'soft-white'>('move-green');
+  // Preview Stage Background: 'midnight' (#000B26), 'lavender' (#E3E7FC), or 'white' (#FFFFFF)
+  const [stageBg, setStageBg] = React.useState<'midnight' | 'lavender' | 'white'>('midnight');
 
   // Navigation / Selection State
   const [selectedId, setSelectedId] = React.useState<string>('snackbar');
@@ -94,25 +94,19 @@ export function DesignSystemShowcase() {
   const [cardLiked, setCardLiked] = React.useState(false);
 
   // 9. Dropdown
-  const [selectedFont, setSelectedFont] = React.useState('roboto');
+  const [selectedFont, setSelectedFont] = React.useState('sora');
   const fontOptions = [
-    { value: 'roboto', label: 'Roboto', description: 'Clean sans-serif, standard M3 typography' },
-    { value: 'inter', label: 'Inter', description: 'Modern interface typeface with tall x-height' },
-    { value: 'lora', label: 'Lora', description: 'Contemporary serif with calligraphy roots' },
-    {
-      value: 'georgia',
-      label: 'Georgia',
-      description: 'Classic editorial serif for long-form reading',
-    },
+    { value: 'sora', label: 'Sora', description: 'Authoritative brand typeface, geometric sans' },
+    { value: 'inter', label: 'Inter', description: 'Tall x-height, neutral UI sans' },
+    { value: 'roboto', label: 'Roboto', description: 'Standard M3 typography' },
   ];
 
   // Active Component
   const activeComponent =
     COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === selectedId) || COMPONENT_LIBRARY_REGISTRY[0];
 
-  // Filtered Registry
+  // Filtered Components for search
   const filteredComponents = COMPONENT_LIBRARY_REGISTRY.filter((c) => {
-    if (!searchQuery.trim()) return true;
     const q = searchQuery.toLowerCase();
     return (
       c.name.toLowerCase().includes(q) ||
@@ -140,9 +134,9 @@ export function DesignSystemShowcase() {
                 setSnackbarMessage('Student profile archived.');
                 setSnackbarOpen(true);
               }}
-              className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/20 bg-[#0F3B27] px-4 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#144d33]"
+              className="inline-flex h-9 items-center gap-2 rounded-xl border border-white/20 bg-[#001338] px-4 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#002266]"
             >
-              <Mail className="h-4 w-4 text-[#92FF5F]" />
+              <Mail className="h-4 w-4 text-[#2277FF]" />
               <span>Simulate Archive Student</span>
             </button>
             <button
@@ -151,7 +145,7 @@ export function DesignSystemShowcase() {
                 setSnackbarMessage('Grade batch saved successfully.');
                 setSnackbarOpen(true);
               }}
-              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#92FF5F] px-4 text-xs font-bold text-[#0B2518] shadow-xs transition-colors hover:bg-[#7ceb49]"
+              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#2277FF]"
             >
               <Check className="h-4 w-4" />
               <span>Simulate Batch Save</span>
@@ -165,7 +159,7 @@ export function DesignSystemShowcase() {
             <button
               type="button"
               onClick={() => setSheetOpen(true)}
-              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#92FF5F] px-4 text-xs font-bold text-[#0B2518] shadow-xs transition-colors hover:bg-[#7ceb49]"
+              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#2277FF]"
             >
               <MapPin className="h-4 w-4" />
               <span>Open Campus Details Sheet</span>
@@ -179,7 +173,7 @@ export function DesignSystemShowcase() {
             <button
               type="button"
               onClick={() => setDialogOpen(true)}
-              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#FF7036] px-4 text-xs font-bold text-[#0B2518] shadow-xs transition-colors hover:bg-[#e65c22]"
+              className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#2277FF]"
             >
               <span>Trigger Delete Dialog</span>
             </button>
@@ -189,7 +183,7 @@ export function DesignSystemShowcase() {
       case 'bottom-nav':
         return (
           <div className="w-full max-w-md py-4">
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0F3B27] p-2">
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#001338] p-2">
               <div className="flex items-center justify-around">
                 {navItems.map((item) => {
                   const isActive = activeTab === item.id;
@@ -202,8 +196,8 @@ export function DesignSystemShowcase() {
                       className={cn(
                         'flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-colors',
                         isActive
-                          ? 'bg-[#92FF5F] font-bold text-[#0B2518]'
-                          : 'text-[#C5E3D5] hover:text-white',
+                          ? 'bg-[#0056FF] font-bold text-white'
+                          : 'text-[#C4CEF8] hover:text-white',
                       )}
                     >
                       <Icon className="h-4 w-4" />
@@ -213,8 +207,8 @@ export function DesignSystemShowcase() {
                 })}
               </div>
             </div>
-            <div className="mt-2 text-center font-mono text-xs text-[#7DAF99]">
-              Active Screen: <span className="font-bold text-[#92FF5F] uppercase">{activeTab}</span>
+            <div className="mt-2 text-center font-mono text-xs text-[#A3B4F0]">
+              Active Screen: <span className="font-bold text-[#0056FF] uppercase">{activeTab}</span>
             </div>
           </div>
         );
@@ -222,18 +216,15 @@ export function DesignSystemShowcase() {
       case 'switch':
         return (
           <div className="w-full max-w-sm space-y-2.5 py-4">
-            <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#0F3B27] px-4 py-2.5">
+            <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#001338] px-4 py-2.5">
               <span className="text-xs font-medium text-white">Airplane Mode</span>
               <LibrarySwitch checked={airplaneMode} onCheckedChange={setAirplaneMode} />
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#0F3B27] px-4 py-2.5">
-              <div className="flex items-center gap-2">
-                <Wifi className="h-4 w-4 text-[#92FF5F]" />
-                <span className="text-xs font-medium text-white">Campus Wi-Fi Sync</span>
-              </div>
+            <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#001338] px-4 py-2.5">
+              <span className="text-xs font-medium text-white">Campus High-Speed Wi-Fi</span>
               <LibrarySwitch checked={wifiEnabled} onCheckedChange={setWifiEnabled} />
             </div>
-            <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#0F3B27] px-4 py-2.5">
+            <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[#001338] px-4 py-2.5">
               <span className="text-xs font-medium text-white">Push Notifications</span>
               <LibrarySwitch checked={notifications} onCheckedChange={setNotifications} />
             </div>
@@ -242,103 +233,73 @@ export function DesignSystemShowcase() {
 
       case 'chip':
         return (
-          <div className="space-y-3 py-6 text-center">
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {chipOptions.map((opt) => {
-                const isSelected = selectedChip === opt;
-                return (
-                  <button
-                    key={opt}
-                    type="button"
-                    onClick={() => setSelectedChip(opt)}
-                    className={cn(
-                      'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-mono text-xs font-semibold transition-all',
-                      isSelected
-                        ? 'bg-[#92FF5F] text-[#0B2518]'
-                        : 'border border-white/20 bg-[#0F3B27] text-[#C5E3D5] hover:border-[#92FF5F]/50 hover:text-white',
-                    )}
-                  >
-                    <Tag className="h-3 w-3" />
-                    <span>{opt}</span>
-                  </button>
-                );
-              })}
-            </div>
-            <div className="font-mono text-xs text-[#7DAF99]">
-              Active Filter: <span className="font-bold text-[#92FF5F]">{selectedChip}</span>
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-2 py-6">
+            {chipOptions.map((opt) => (
+              <LibraryChip
+                key={opt}
+                active={selectedChip === opt}
+                onClick={() => setSelectedChip(opt)}
+              >
+                {opt}
+              </LibraryChip>
+            ))}
           </div>
         );
 
       case 'fab':
         return (
-          <div className="flex flex-wrap items-center justify-center gap-4 py-6">
-            <button
-              type="button"
-              onClick={() => setFabCount((c) => c + 1)}
-              className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#92FF5F] text-[#0B2518] shadow-md transition-transform hover:scale-105 active:scale-95"
-              aria-label="Add"
-            >
-              <Plus className="h-6 w-6 stroke-[2.5]" />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setFabCount((c) => c + 1)}
-              className="inline-flex h-12 items-center gap-2 rounded-2xl bg-[#FF7036] px-5 font-mono text-xs font-bold text-[#0B2518] shadow-md transition-transform hover:scale-105 active:scale-95"
-            >
-              <Calendar className="h-4 w-4" />
-              <span>New Academic Event</span>
-            </button>
-
-            <div className="w-full text-center font-mono text-xs text-[#7DAF99]">
-              Actions Triggered: <span className="font-bold text-[#92FF5F]">{fabCount}</span>
+          <div className="flex flex-col items-center justify-center gap-3 py-6">
+            <div className="flex items-center gap-4">
+              <LibraryFab
+                label="New Course"
+                icon={<Plus className="h-5 w-5" />}
+                onClick={() => setFabCount((c) => c + 1)}
+                className="bg-[#0056FF] text-white hover:bg-[#2277FF]"
+              />
             </div>
+            <span className="font-mono text-xs text-[#A3B4F0]">FAB Click Count: {fabCount}</span>
           </div>
         );
 
       case 'card':
         return (
           <div className="w-full max-w-sm py-4">
-            <div
-              onClick={() => setCardLiked((l) => !l)}
-              className="group cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-[#0F3B27] transition-all hover:border-[#92FF5F]/50"
-            >
-              <div className="flex h-32 items-center justify-center bg-[#071D13] p-4 text-center">
-                <div className="flex items-center gap-2 font-mono text-xs text-[#92FF5F]">
-                  <Sparkles className="h-4 w-4 text-[#92FF5F]" />
-                  <span>Academic Science Block B · Lab 4</span>
+            <LibraryCard className="border border-[#0F357D] bg-[#001338] text-white">
+              <LibraryCardMedia className="relative flex h-28 w-full items-start justify-between bg-gradient-to-r from-[#000B26] via-[#002D8A] to-[#0056FF] p-3">
+                <span className="rounded-md bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] font-bold text-white">
+                  ADVANCED STEM
+                </span>
+                <span className="font-mono text-[10px] text-white/80">SNPI-2026</span>
+              </LibraryCardMedia>
+              <LibraryCardHeader>
+                <div className="flex items-center gap-1.5 font-mono text-[11px] font-semibold text-[#2277FF]">
+                  <Calendar className="h-3.5 w-3.5" />
+                  <span>TERM 1 · SEMESTER 2026</span>
                 </div>
-              </div>
-              <div className="p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h3 className="text-base font-bold text-white">
-                      Robotics & Autonomous Systems
-                    </h3>
-                    <p className="mt-0.5 text-xs text-[#7DAF99]">
-                      Grade 11 · Term 1 Curricular Track
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCardLiked((l) => !l);
-                    }}
-                    className="p-1 text-[#7DAF99] hover:text-[#92FF5F]"
-                  >
-                    <Star className={cn('h-4 w-4', cardLiked && 'fill-[#92FF5F] text-[#92FF5F]')} />
-                  </button>
-                </div>
-                <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
-                  <span className="font-mono text-xs text-[#7DAF99]">32 Seats Enrolled</span>
-                  <span className="rounded bg-[#92FF5F] px-2 py-0.5 font-mono text-xs font-bold text-[#0B2518]">
-                    $350 / Term
-                  </span>
-                </div>
-              </div>
-            </div>
+                <LibraryCardTitle className="text-base font-bold text-white">
+                  Robotics & Autonomous Drones
+                </LibraryCardTitle>
+                <LibraryCardDescription className="text-xs text-[#C4CEF8]">
+                  Hands-on engineering lab covering flight telemetry, RTOS, and sensor fusion.
+                </LibraryCardDescription>
+              </LibraryCardHeader>
+              <LibraryCardFooter className="flex items-center justify-between border-t border-white/10 pt-3">
+                <span className="font-mono text-xs font-bold text-[#E3E7FC]">3 Credits · SNPI</span>
+                <button
+                  type="button"
+                  onClick={() => setCardLiked(!cardLiked)}
+                  className={cn(
+                    'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors',
+                    cardLiked
+                      ? 'bg-[#0056FF] text-white'
+                      : 'bg-white/10 text-white hover:bg-white/20',
+                  )}
+                >
+                  <Star className="h-3.5 w-3.5" />
+                  <span>{cardLiked ? 'Enrolled' : 'Enroll'}</span>
+                </button>
+              </LibraryCardFooter>
+            </LibraryCard>
           </div>
         );
 
@@ -346,16 +307,16 @@ export function DesignSystemShowcase() {
         return (
           <div className="w-full max-w-xs py-6">
             <div className="space-y-1.5">
-              <label className="block font-mono text-xs font-bold text-[#92FF5F] uppercase">
+              <label className="font-mono text-[11px] font-semibold tracking-wider text-[#A3B4F0] uppercase">
                 Typography Family
               </label>
               <select
                 value={selectedFont}
                 onChange={(e) => setSelectedFont(e.target.value)}
-                className="h-10 w-full rounded-xl border border-white/20 bg-[#0F3B27] px-3 font-mono text-xs text-white focus:border-[#92FF5F] focus:outline-none"
+                className="h-10 w-full rounded-xl border border-white/20 bg-[#001338] px-3 font-mono text-xs text-white focus:border-[#0056FF] focus:outline-none"
               >
                 {fontOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value} className="bg-[#0F3B27] text-white">
+                  <option key={opt.value} value={opt.value} className="bg-[#000B26] text-white">
                     {opt.label} — {opt.description}
                   </option>
                 ))}
@@ -371,7 +332,7 @@ export function DesignSystemShowcase() {
               <button
                 key={tool}
                 type="button"
-                className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/20 bg-[#0F3B27] text-sm font-bold text-white transition-colors hover:border-[#92FF5F] hover:bg-[#144d33] hover:text-[#92FF5F]"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/20 bg-[#001338] text-sm font-bold text-white transition-colors hover:border-[#0056FF] hover:bg-[#002266] hover:text-[#2277FF]"
               >
                 {tool.charAt(0)}
               </button>
@@ -395,39 +356,42 @@ export function DesignSystemShowcase() {
   return (
     <div className="space-y-8">
       {/* Top Mode Selector Tabs */}
-      <div className="flex flex-col gap-4 border-b border-[#1A4530] pb-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="inline-flex rounded-2xl border border-[#1A4530] bg-[#071D13] p-1.5">
-          <button
-            type="button"
-            onClick={() => setActiveView('components')}
-            className={cn(
-              'inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all',
-              activeView === 'components'
-                ? 'bg-[#92FF5F] text-[#0B2518]'
-                : 'text-[#7DAF99] hover:text-white',
-            )}
-          >
-            <Layers className="h-4 w-4" />
-            <span>Interactive Components</span>
-          </button>
+      <div className="flex flex-col gap-4 border-b border-[#0F357D] pb-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="inline-flex rounded-2xl border border-[#0F357D] bg-[#000B26] p-1.5">
           <button
             type="button"
             onClick={() => setActiveView('blueprint')}
             className={cn(
               'inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all',
               activeView === 'blueprint'
-                ? 'bg-[#92FF5F] text-[#0B2518]'
-                : 'text-[#7DAF99] hover:text-white',
+                ? 'bg-[#0056FF] text-white shadow-xs'
+                : 'text-[#A3B4F0] hover:text-white',
             )}
           >
             <Palette className="h-4 w-4" />
-            <span>Brand Concept Blueprint</span>
+            <span>Brand Color Blueprint</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveView('components')}
+            className={cn(
+              'inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all',
+              activeView === 'components'
+                ? 'bg-[#0056FF] text-white shadow-xs'
+                : 'text-[#A3B4F0] hover:text-white',
+            )}
+          >
+            <Layers className="h-4 w-4" />
+            <span>Interactive Components</span>
           </button>
         </div>
 
-        <div className="font-mono text-xs text-[#7DAF99]">
-          Domain Scope: <span className="font-bold text-[#92FF5F]">docs.snpi.edu.kh</span> (Docs &
-          Library Isolated)
+        <div className="flex items-center gap-2 font-mono text-xs text-[#A3B4F0]">
+          <span>Scope:</span>
+          <span className="font-bold text-[#2277FF]">docs.snpi.edu.kh</span>
+          <span className="rounded-md bg-[#0056FF]/20 px-2 py-0.5 font-bold text-[#E3E7FC]">
+            Sora Font
+          </span>
         </div>
       </div>
 
@@ -438,32 +402,34 @@ export function DesignSystemShowcase() {
       {activeView === 'components' && (
         <div className="flex flex-col items-start gap-8 lg:flex-row">
           {/* Left Component Library Sidebar */}
-          <aside className="w-full shrink-0 rounded-2xl border border-[#1A4530] bg-[#0F3B27] p-4 lg:w-64">
+          <aside className="w-full shrink-0 rounded-2xl border border-[#0F357D] bg-[#001338] p-4 lg:w-64">
             {/* Search Input */}
             <div className="relative mb-4">
-              <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-[#7DAF99]" />
+              <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-[#A3B4F0]" />
               <input
                 type="text"
                 placeholder="Search components..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-9 w-full rounded-xl border border-[#1A4530] bg-[#071D13] pr-3 pl-8 text-xs text-white placeholder-[#5A8771] focus:border-[#92FF5F] focus:outline-none"
+                className="h-9 w-full rounded-xl border border-[#0F357D] bg-[#000B26] pr-3 pl-8 text-xs text-white placeholder-[#5D72B0] focus:border-[#0056FF] focus:outline-none"
               />
             </div>
 
-            {/* Grouped Component List */}
-            <nav className="space-y-5">
+            {/* Categorized Component List */}
+            <nav className="space-y-4">
               {COMPONENT_CATEGORIES.map((category) => {
-                const items = filteredComponents.filter((c) => c.category === category);
-                if (items.length === 0) return null;
+                const categoryComponents = filteredComponents.filter(
+                  (c) => c.category === category,
+                );
+                if (categoryComponents.length === 0) return null;
 
                 return (
-                  <div key={category} className="space-y-1">
-                    <p className="px-2 font-mono text-[11px] font-bold tracking-wider text-[#92FF5F]/80 uppercase">
+                  <div key={category} className="space-y-1.5">
+                    <span className="font-mono text-[10px] font-bold tracking-wider text-[#A3B4F0] uppercase">
                       {category}
-                    </p>
+                    </span>
                     <div className="space-y-0.5">
-                      {items.map((item) => {
+                      {categoryComponents.map((item) => {
                         const isSelected = selectedId === item.id;
                         return (
                           <button
@@ -476,12 +442,12 @@ export function DesignSystemShowcase() {
                             className={cn(
                               'flex w-full items-center justify-between rounded-xl px-2.5 py-1.5 text-left text-xs font-medium transition-colors',
                               isSelected
-                                ? 'bg-[#92FF5F] font-bold text-[#0B2518]'
-                                : 'text-[#C5E3D5] hover:bg-[#144d33] hover:text-white',
+                                ? 'bg-[#0056FF] font-bold text-white'
+                                : 'text-[#C4CEF8] hover:bg-[#002266] hover:text-white',
                             )}
                           >
                             <span className="truncate">{item.name}</span>
-                            {isSelected && <ChevronRight className="h-3.5 w-3.5 text-[#0B2518]" />}
+                            {isSelected && <ChevronRight className="h-3.5 w-3.5 text-white" />}
                           </button>
                         );
                       })}
@@ -497,10 +463,10 @@ export function DesignSystemShowcase() {
             {/* Component Header */}
             <div className="space-y-2">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-md border border-[#92FF5F]/30 bg-[#92FF5F] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0B2518]">
+                <span className="rounded-md border border-[#0056FF]/40 bg-[#0056FF] px-2.5 py-0.5 font-mono text-xs font-bold text-white">
                   {activeComponent.category}
                 </span>
-                <span className="rounded-md border border-white/20 bg-[#0F3B27] px-2.5 py-0.5 font-mono text-xs font-semibold text-[#BFF2F0]">
+                <span className="rounded-md border border-[#0F357D] bg-[#001338] px-2.5 py-0.5 font-mono text-xs font-semibold text-[#E3E7FC]">
                   {activeComponent.paradigm}
                 </span>
               </div>
@@ -508,42 +474,54 @@ export function DesignSystemShowcase() {
               <h1 className="text-2xl font-black tracking-tight text-white sm:text-3xl">
                 {activeComponent.name}
               </h1>
-              <p className="max-w-3xl text-sm leading-relaxed text-[#A9D4C2] sm:text-base">
+              <p className="max-w-3xl text-sm leading-relaxed text-[#C4CEF8] sm:text-base">
                 {activeComponent.description}
               </p>
             </div>
 
             {/* Interactive Preview Sandbox Card */}
-            <div className="overflow-hidden rounded-3xl border border-[#1A4530] bg-[#0F3B27]">
+            <div className="overflow-hidden rounded-3xl border border-[#0F357D] bg-[#001338]">
               {/* Background Canvas Selector Ribbon */}
-              <div className="flex items-center justify-between border-b border-[#1A4530] bg-[#071D13] px-4 py-2">
-                <span className="font-mono text-[11px] font-semibold text-[#7DAF99]">
+              <div className="flex items-center justify-between border-b border-[#0F357D] bg-[#000B26] px-4 py-2">
+                <span className="font-mono text-[11px] font-semibold text-[#A3B4F0]">
                   PREVIEW STAGE CANVAS
                 </span>
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
-                    onClick={() => setStageBg('move-green')}
+                    onClick={() => setStageBg('midnight')}
                     className={cn(
                       'rounded-md px-2 py-0.5 font-mono text-[11px] transition-colors',
-                      stageBg === 'move-green'
-                        ? 'bg-[#92FF5F] font-bold text-[#0B2518]'
-                        : 'text-[#7DAF99] hover:text-white',
+                      stageBg === 'midnight'
+                        ? 'bg-[#0056FF] font-bold text-white'
+                        : 'text-[#A3B4F0] hover:text-white',
                     )}
                   >
-                    Move Green (#0F3B27)
+                    Midnight Surge (#000B26)
                   </button>
                   <button
                     type="button"
-                    onClick={() => setStageBg('soft-white')}
+                    onClick={() => setStageBg('lavender')}
                     className={cn(
                       'rounded-md px-2 py-0.5 font-mono text-[11px] transition-colors',
-                      stageBg === 'soft-white'
-                        ? 'bg-[#92FF5F] font-bold text-[#0B2518]'
-                        : 'text-[#7DAF99] hover:text-white',
+                      stageBg === 'lavender'
+                        ? 'bg-[#0056FF] font-bold text-white'
+                        : 'text-[#A3B4F0] hover:text-white',
                     )}
                   >
-                    Soft White (#F7F9F7)
+                    Soft Lavender (#E3E7FC)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStageBg('white')}
+                    className={cn(
+                      'rounded-md px-2 py-0.5 font-mono text-[11px] transition-colors',
+                      stageBg === 'white'
+                        ? 'bg-[#0056FF] font-bold text-white'
+                        : 'text-[#A3B4F0] hover:text-white',
+                    )}
+                  >
+                    White (#FFFFFF)
                   </button>
                 </div>
               </div>
@@ -552,18 +530,20 @@ export function DesignSystemShowcase() {
               <div
                 className={cn(
                   'flex min-h-[220px] items-center justify-center p-6 transition-colors sm:p-10',
-                  stageBg === 'move-green' ? 'bg-[#0F3B27]' : 'bg-[#F7F9F7] text-slate-900',
+                  stageBg === 'midnight' && 'bg-[#000B26] text-white',
+                  stageBg === 'lavender' && 'bg-[#E3E7FC] text-[#000B26]',
+                  stageBg === 'white' && 'bg-[#FFFFFF] text-slate-900',
                 )}
               >
                 {renderInteractiveLiveComponent(activeComponent.id)}
               </div>
 
               {/* Action Ribbon: Show Code & Copy Button */}
-              <div className="flex items-center justify-between border-t border-[#1A4530] bg-[#071D13] px-4 py-2.5">
+              <div className="flex items-center justify-between border-t border-[#0F357D] bg-[#000B26] px-4 py-2.5">
                 <button
                   type="button"
                   onClick={() => setShowCode(!showCode)}
-                  className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#92FF5F] transition-colors hover:text-[#BFF2F0]"
+                  className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#2277FF] transition-colors hover:text-white"
                 >
                   <Code className="h-4 w-4" />
                   <span>{showCode ? 'Hide Code' : 'Show Code'}</span>
@@ -573,69 +553,52 @@ export function DesignSystemShowcase() {
                   <button
                     type="button"
                     onClick={() => handleCopyCode(activeComponent.codeSnippet)}
-                    className="inline-flex items-center gap-1 rounded-md border border-[#1A4530] bg-[#0F3B27] px-2.5 py-1 font-mono text-[11px] text-[#92FF5F] transition-colors hover:bg-[#144d33]"
+                    className="inline-flex items-center gap-1 rounded-md border border-[#0F357D] bg-[#001338] px-2.5 py-1 font-mono text-[11px] text-[#2277FF] transition-colors hover:bg-[#002266] hover:text-white"
                   >
                     {copied ? (
-                      <Check className="h-3.5 w-3.5 text-[#92FF5F]" />
+                      <Check className="h-3.5 w-3.5 text-white" />
                     ) : (
                       <Copy className="h-3.5 w-3.5" />
                     )}
-                    <span>{copied ? 'Copied' : 'Copy Snippet'}</span>
+                    <span>{copied ? 'Copied snippet' : 'Copy snippet'}</span>
                   </button>
                 )}
               </div>
 
-              {/* Expandable Code Snippet Block */}
+              {/* Collapsible Source Code View */}
               {showCode && (
-                <div className="overflow-x-auto border-t border-[#1A4530] bg-[#05140D] p-4 font-mono text-xs text-[#92FF5F]">
-                  <pre className="leading-relaxed">
+                <div className="border-t border-[#0F357D] bg-[#00081C] p-4">
+                  <pre className="overflow-x-auto font-mono text-xs text-[#E3E7FC]">
                     <code>{activeComponent.codeSnippet}</code>
                   </pre>
                 </div>
               )}
             </div>
 
-            {/* Props & API Reference Specification Table */}
-            <div className="space-y-3">
-              <h2 className="text-base font-bold tracking-tight text-white">
-                Props & API Reference
-              </h2>
-              <div className="overflow-hidden rounded-2xl border border-[#1A4530] bg-[#0F3B27]">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left font-mono text-xs">
-                    <thead className="border-b border-[#1A4530] bg-[#071D13] text-[11px] font-bold text-[#92FF5F] uppercase">
-                      <tr>
-                        <th className="px-4 py-2.5">Prop</th>
-                        <th className="px-4 py-2.5">Type</th>
-                        <th className="px-4 py-2.5">Default</th>
-                        <th className="px-4 py-2.5 font-sans font-medium text-[#7DAF99]">
-                          Description
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#1A4530]">
-                      {activeComponent.props.map((prop) => (
-                        <tr key={prop.name} className="transition-colors hover:bg-[#144d33]/50">
-                          <td className="px-4 py-3 font-bold text-[#92FF5F]">{prop.name}</td>
-                          <td className="px-4 py-3">
-                            <span className="rounded bg-[#071D13] px-2 py-0.5 text-[11px] text-[#BFF2F0]">
-                              {prop.type}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-[#FF7036]">{prop.default || '—'}</td>
-                          <td className="px-4 py-3 font-sans text-xs leading-relaxed text-[#D4EADE]">
-                            {prop.description}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+            {/* Component Anatomy & Etymology Card */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="rounded-2xl border border-[#0F357D] bg-[#001338] p-5">
+                <span className="font-mono text-[11px] font-bold text-[#A3B4F0] uppercase">
+                  ET YMOLOGY & REAL-WORLD PARADIGM
+                </span>
+                <p className="mt-2 text-xs leading-relaxed text-[#C4CEF8]">
+                  {activeComponent.paradigm}: {activeComponent.description}
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-[#0F357D] bg-[#001338] p-5">
+                <span className="font-mono text-[11px] font-bold text-[#A3B4F0] uppercase">
+                  FLAT DESIGN & ELEVATION RULE
+                </span>
+                <p className="mt-2 text-xs leading-relaxed text-[#C4CEF8]">
+                  Zero dropped blur shadows. Depth is achieved purely through 1px border contrast
+                  and surface luminance hierarchy.
+                </p>
               </div>
             </div>
 
-            {/* Linear Navigation Footer */}
-            <div className="flex items-center justify-between border-t border-[#1A4530] pt-6">
+            {/* Linear Component Navigation Links */}
+            <div className="flex items-center justify-between border-t border-[#0F357D] pt-6">
               {prevComponent ? (
                 <button
                   type="button"
@@ -645,10 +608,10 @@ export function DesignSystemShowcase() {
                   }}
                   className="group inline-flex flex-col items-start gap-1 text-left"
                 >
-                  <span className="font-mono text-[11px] text-[#7DAF99] group-hover:text-white">
+                  <span className="font-mono text-[11px] text-[#A3B4F0] group-hover:text-white">
                     &larr; Previous
                   </span>
-                  <span className="text-sm font-bold text-[#C5E3D5] transition-colors group-hover:text-[#92FF5F]">
+                  <span className="text-sm font-bold text-[#E3E7FC] transition-colors group-hover:text-[#2277FF]">
                     {prevComponent.name}
                   </span>
                 </button>
@@ -665,10 +628,10 @@ export function DesignSystemShowcase() {
                   }}
                   className="group inline-flex flex-col items-end gap-1 text-right"
                 >
-                  <span className="font-mono text-[11px] text-[#7DAF99] group-hover:text-white">
+                  <span className="font-mono text-[11px] text-[#A3B4F0] group-hover:text-white">
                     Next &rarr;
                   </span>
-                  <span className="text-sm font-bold text-[#C5E3D5] transition-colors group-hover:text-[#92FF5F]">
+                  <span className="text-sm font-bold text-[#E3E7FC] transition-colors group-hover:text-[#2277FF]">
                     {nextComponent.name}
                   </span>
                 </button>
@@ -693,24 +656,24 @@ export function DesignSystemShowcase() {
         title="Siem Reap Central Campus · Science Lab"
       >
         <div className="space-y-4">
-          <p className="text-sm leading-relaxed text-[#A9D4C2]">
+          <p className="text-sm leading-relaxed text-[#C4CEF8]">
             Located in Academic Building B, 2nd Floor. Fully equipped with dual robotic testbenches
             and high-speed telemetry terminals.
           </p>
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl border border-white/10 bg-[#071D13] p-3 text-center">
-              <span className="font-mono text-xs text-[#7DAF99]">CAPACITY</span>
+            <div className="rounded-xl border border-white/10 bg-[#000B26] p-3 text-center">
+              <span className="font-mono text-xs text-[#A3B4F0]">CAPACITY</span>
               <div className="mt-0.5 text-base font-bold text-white">45 Students</div>
             </div>
-            <div className="rounded-xl border border-white/10 bg-[#071D13] p-3 text-center">
-              <span className="font-mono text-xs text-[#7DAF99]">STATUS</span>
-              <div className="mt-0.5 text-base font-bold text-[#92FF5F]">Active Session</div>
+            <div className="rounded-xl border border-white/10 bg-[#000B26] p-3 text-center">
+              <span className="font-mono text-xs text-[#A3B4F0]">STATUS</span>
+              <div className="mt-0.5 text-base font-bold text-[#2277FF]">Active Session</div>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setSheetOpen(false)}
-            className="flex h-10 w-full items-center justify-center rounded-xl bg-[#92FF5F] text-xs font-bold text-[#0B2518] transition-colors hover:bg-[#7ceb49]"
+            className="flex h-10 w-full items-center justify-center rounded-xl bg-[#0056FF] text-xs font-bold text-white transition-colors hover:bg-[#2277FF]"
           >
             Close Sheet
           </button>

@@ -6,12 +6,13 @@ export const metadata: Metadata = {
     default: 'SNP-SMS Open API & Design Library',
     template: '%s · SNP-SMS Docs',
   },
-  description: 'Enterprise API documentation, developer guidelines, and UI component standards.',
+  description:
+    'Enterprise API documentation, developer guidelines, and UI component standards with Royal Blue & Sora typography.',
 };
 
-const docsInter = localFont({
-  src: './fonts/inter.ttf',
-  variable: '--font-docs-inter',
+const docsSora = localFont({
+  src: './fonts/sora.woff2',
+  variable: '--font-docs-sora',
   display: 'swap',
 });
 
@@ -22,10 +23,10 @@ export default function DocumentLayout({
 }>) {
   return (
     <div
-      className={docsInter.variable}
+      className={docsSora.variable}
       style={{
-        fontFamily: 'var(--font-docs-inter), ui-sans-serif, system-ui, sans-serif',
-        ['--font-sans' as string]: 'var(--font-docs-inter), ui-sans-serif, system-ui, sans-serif',
+        fontFamily: 'var(--font-docs-sora), ui-sans-serif, system-ui, sans-serif',
+        ['--font-sans' as string]: 'var(--font-docs-sora), ui-sans-serif, system-ui, sans-serif',
       }}
     >
       {children}
