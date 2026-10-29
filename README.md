@@ -32,31 +32,33 @@ SNP-SMS/
 
 ## 2. Architectural Boundaries
 
-| Layer / Workspace | Type | Ownership & Boundary |
-| :--- | :--- | :--- |
-| **`apps/backend`** | Modular Monolith API | Express 5 HTTP endpoints, Mongoose models, transactions, RBAC middleware, Docker orchestration. |
-| **`apps/frontend`** | Serverless Web UI | Next.js App Router, React 19 UI, TanStack Query hooks, edge proxy to `/api/v1`. |
-| **`packages/shared`** | Shared Core Package | Canonical permissions catalog, role definitions, scope hierarchies, shared API response envelopes. |
-| **`packages/tsconfig`**| Shared Presets | TypeScript configurations (`base.json`, `node.json`, `nextjs.json`). |
-| **`packages/eslint-config`**| Shared Presets | Shared linting rules. |
+| Layer / Workspace            | Type                 | Ownership & Boundary                                                                               |
+| :--------------------------- | :------------------- | :------------------------------------------------------------------------------------------------- |
+| **`apps/backend`**           | Modular Monolith API | Express 5 HTTP endpoints, Mongoose models, transactions, RBAC middleware, Docker orchestration.    |
+| **`apps/frontend`**          | Serverless Web UI    | Next.js App Router, React 19 UI, TanStack Query hooks, edge proxy to `/api/v1`.                    |
+| **`packages/shared`**        | Shared Core Package  | Canonical permissions catalog, role definitions, scope hierarchies, shared API response envelopes. |
+| **`packages/tsconfig`**      | Shared Presets       | TypeScript configurations (`base.json`, `node.json`, `nextjs.json`).                               |
+| **`packages/eslint-config`** | Shared Presets       | Shared linting rules.                                                                              |
 
 ---
 
 ## 3. Hybrid Deployment Strategy
 
-* **Frontend (`apps/frontend`)**: Deployable to **Vercel** serverless edge infrastructure. Static assets are globally edge-cached, SSR functions scale on demand, and `/api/v1` traffic is proxied server-side to the backend internal URL.
-* **Backend (`apps/backend`)**: Deployable as a continuous **Docker Container** (Render, Railway, AWS ECS, or private VPS). Maintains persistent MongoDB connection pools, executes multi-document ACID transactions, enforces login rate-limiting, and processes PDF exports reliably.
-* **Database**: MongoDB 7.0+ Replica Set (`rs0`) for multi-branch transaction support.
+- **Frontend (`apps/frontend`)**: Deployable to **Vercel** serverless edge infrastructure. Static assets are globally edge-cached, SSR functions scale on demand, and `/api/v1` traffic is proxied server-side to the backend internal URL.
+- **Backend (`apps/backend`)**: Deployable as a continuous **Docker Container** (Render, Railway, AWS ECS, or private VPS). Maintains persistent MongoDB connection pools, executes multi-document ACID transactions, enforces login rate-limiting, and processes PDF exports reliably.
+- **Database**: MongoDB 7.0+ Replica Set (`rs0`) for multi-branch transaction support.
 
 ---
 
 ## 4. Local Development Workflows
 
 ### Prerequisites
-* Node.js `>=22.13.0` (Node 25 tested)
-* Docker Desktop (for local MongoDB replica set)
+
+- Node.js `>=22.13.0` (Node 25 tested)
+- Docker Desktop (for local MongoDB replica set)
 
 ### Initial Setup
+
 ```bash
 # 1. Install all dependencies across all workspaces
 npm install
@@ -73,6 +75,7 @@ npm run seed --workspace=apps/backend
 ```
 
 ### Running Applications
+
 ```bash
 # Start backend API (http://localhost:4000)
 npm run dev:backend
@@ -85,6 +88,7 @@ npm run dev
 ```
 
 ### Validation & Quality Gates
+
 ```bash
 # Run type checking across all workspaces
 npm run typecheck

@@ -1,8 +1,17 @@
 import { spawn, execSync } from 'node:child_process';
 import http from 'node:http';
-import { SYSTEM_PERMISSIONS, DEFAULT_CORE_ROLES, checkUserPermission, loginPayloadSchema } from '@snp/shared';
+import {
+  SYSTEM_PERMISSIONS,
+  DEFAULT_CORE_ROLES,
+  checkUserPermission,
+  loginPayloadSchema,
+} from '@snp/shared';
 
-async function request(url: string, options: http.RequestOptions = {}, postData?: string): Promise<{ statusCode: number; body: string }> {
+async function request(
+  url: string,
+  options: http.RequestOptions = {},
+  postData?: string,
+): Promise<{ statusCode: number; body: string }> {
   return new Promise((resolve, reject) => {
     const parsedUrl = new URL(url);
     const reqOptions: http.RequestOptions = {
@@ -47,16 +56,28 @@ async function main() {
     throw new Error('super_admin role not found in @snp/shared');
   }
 
-  const hasBranchAccess = checkUserPermission(superAdminRole.permissions, 'branch.view.all_branches');
+  const hasBranchAccess = checkUserPermission(
+    superAdminRole.permissions,
+    'branch.view.all_branches',
+  );
   if (!hasBranchAccess) {
     throw new Error('checkUserPermission failed for super_admin on all_branches');
   }
 
-  const validLogin = loginPayloadSchema.safeParse({ identifier: 'admin_local', password: 'password123' });
+  const validLogin = loginPayloadSchema.safeParse({
+    identifier: 'admin_local',
+    password: 'password123',
+  });
   if (!validLogin.success) {
     throw new Error('loginPayloadSchema validation failed');
   }
-  console.log('      [PASS] @snp/shared loaded: ' + SYSTEM_PERMISSIONS.length + ' permissions, ' + DEFAULT_CORE_ROLES.length + ' roles');
+  console.log(
+    '      [PASS] @snp/shared loaded: ' +
+      SYSTEM_PERMISSIONS.length +
+      ' permissions, ' +
+      DEFAULT_CORE_ROLES.length +
+      ' roles',
+  );
 
   console.log('[2/4] Checking MongoDB replicaSet container...');
   try {
@@ -85,7 +106,13 @@ async function main() {
   }
 
   console.log('[4/4] Verifying Monorepo Workspace Structure...');
-  const workspaces = ['apps/backend', 'apps/frontend', 'packages/shared', 'packages/tsconfig', 'packages/eslint-config'];
+  const workspaces = [
+    'apps/backend',
+    'apps/frontend',
+    'packages/shared',
+    'packages/tsconfig',
+    'packages/eslint-config',
+  ];
   for (const ws of workspaces) {
     console.log(`      [PASS] Workspace exists: ${ws}`);
   }

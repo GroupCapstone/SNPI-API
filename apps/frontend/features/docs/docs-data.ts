@@ -41,15 +41,18 @@ export const DOC_CATEGORIES: DocCategory[] = [
   {
     id: 'getting-started',
     title: 'Getting Started',
-    description: 'Core concepts, authentication, headers, and standard response envelopes for developers.',
+    description:
+      'Core concepts, authentication, headers, and standard response envelopes for developers.',
     domains: [
       {
         id: 'overview',
         name: 'API Overview & Standards',
         category: 'Getting Started',
-        description: 'SNP-SMS delivers a 7-layer modular monolith API serving 47 domain modules across 193 REST endpoints. All endpoints return standardized JSON envelopes.',
+        description:
+          'SNP-SMS delivers a 7-layer modular monolith API serving 47 domain modules across 193 REST endpoints. All endpoints return standardized JSON envelopes.',
         permissionPrefix: 'None (Public)',
-        layerPattern: 'route -> controller -> service -> repository -> model -> validation -> types',
+        layerPattern:
+          'route -> controller -> service -> repository -> model -> validation -> types',
         scoping: 'schoolId, branchId (Multi-tenant enforced server-side)',
         endpoints: [
           {
@@ -90,7 +93,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
         id: 'authentication',
         name: 'Authentication & Session',
         category: 'Getting Started',
-        description: 'Authentication uses short-lived JWT access tokens (15m) paired with long-lived HttpOnly refresh cookies (7d) rotated upon each refresh.',
+        description:
+          'Authentication uses short-lived JWT access tokens (15m) paired with long-lived HttpOnly refresh cookies (7d) rotated upon each refresh.',
         permissionPrefix: 'Public & Bearer Auth',
         layerPattern: 'JWT Bearer + HttpOnly Cookie Refresh Rotation',
         scoping: 'Global Authentication Scope',
@@ -100,10 +104,21 @@ export const DOC_CATEGORIES: DocCategory[] = [
             method: 'POST',
             path: '/api/v1/auth/login',
             title: 'User Sign In',
-            description: 'Authenticates with username/email and password, returning a JWT access token and setting the refresh cookie.',
+            description:
+              'Authenticates with username/email and password, returning a JWT access token and setting the refresh cookie.',
             bodyParams: [
-              { name: 'identifier', type: 'string', required: true, description: 'User email or username' },
-              { name: 'password', type: 'string', required: true, description: 'Plaintext password (min 12 chars)' },
+              {
+                name: 'identifier',
+                type: 'string',
+                required: true,
+                description: 'User email or username',
+              },
+              {
+                name: 'password',
+                type: 'string',
+                required: true,
+                description: 'Plaintext password (min 12 chars)',
+              },
             ],
             sampleRequest: {
               identifier: 'admin@snp.edu.kh',
@@ -130,10 +145,16 @@ export const DOC_CATEGORIES: DocCategory[] = [
             method: 'GET',
             path: '/api/v1/auth/me',
             title: 'Current User Profile',
-            description: 'Retrieves authenticated user details, permissions, roles, and branch access scopes.',
+            description:
+              'Retrieves authenticated user details, permissions, roles, and branch access scopes.',
             permission: 'Authenticated Session',
             headers: [
-              { name: 'Authorization', required: true, description: 'Bearer access token', example: 'Bearer eyJhbGci...' },
+              {
+                name: 'Authorization',
+                required: true,
+                description: 'Bearer access token',
+                example: 'Bearer eyJhbGci...',
+              },
             ],
             sampleResponse: {
               success: true,
@@ -156,15 +177,18 @@ export const DOC_CATEGORIES: DocCategory[] = [
   {
     id: 'organization',
     title: 'Core Organization',
-    description: 'Schools, campus branches, departments, job positions, and employee workforce records.',
+    description:
+      'Schools, campus branches, departments, job positions, and employee workforce records.',
     domains: [
       {
         id: 'schools',
         name: 'Schools Management',
         category: 'Core Organization',
-        description: 'Manages top-level school institutional profiles and general campus configurations.',
+        description:
+          'Manages top-level school institutional profiles and general campus configurations.',
         permissionPrefix: 'school.*',
-        layerPattern: 'school.route -> school.controller -> school.service -> school.repository -> school.model',
+        layerPattern:
+          'school.route -> school.controller -> school.service -> school.repository -> school.model',
         scoping: 'Global School Entity',
         endpoints: [
           {
@@ -175,9 +199,24 @@ export const DOC_CATEGORIES: DocCategory[] = [
             description: 'Retrieves paginated school organization profiles.',
             permission: 'school.view.all_branches',
             queryParams: [
-              { name: 'search', type: 'string', required: false, description: 'Filter by school name or code' },
-              { name: 'page', type: 'number', required: false, description: 'Page number (default 1)' },
-              { name: 'limit', type: 'number', required: false, description: 'Items per page (default 20)' },
+              {
+                name: 'search',
+                type: 'string',
+                required: false,
+                description: 'Filter by school name or code',
+              },
+              {
+                name: 'page',
+                type: 'number',
+                required: false,
+                description: 'Page number (default 1)',
+              },
+              {
+                name: 'limit',
+                type: 'number',
+                required: false,
+                description: 'Items per page (default 20)',
+              },
             ],
             sampleResponse: {
               success: true,
@@ -228,9 +267,11 @@ export const DOC_CATEGORIES: DocCategory[] = [
         id: 'branches',
         name: 'Branches & Campuses',
         category: 'Core Organization',
-        description: 'Multi-campus branch management with branch-level data isolation via X-Branch-Id header.',
+        description:
+          'Multi-campus branch management with branch-level data isolation via X-Branch-Id header.',
         permissionPrefix: 'branch.*',
-        layerPattern: 'branch.route -> branch.controller -> branch.service -> branch.repository -> branch.model',
+        layerPattern:
+          'branch.route -> branch.controller -> branch.service -> branch.repository -> branch.model',
         scoping: 'schoolId, branchId (X-Branch-Id header)',
         endpoints: [
           {
@@ -264,7 +305,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
         category: 'Core Organization',
         description: 'Organizational departments (e.g. Academic, Administration, IT, Finance).',
         permissionPrefix: 'department.*',
-        layerPattern: 'department.route -> department.controller -> department.service -> department.repository -> department.model',
+        layerPattern:
+          'department.route -> department.controller -> department.service -> department.repository -> department.model',
         scoping: 'schoolId, branchId',
         endpoints: [
           {
@@ -289,7 +331,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
         category: 'Core Organization',
         description: 'Teachers, faculty, administrators, and staff member directory.',
         permissionPrefix: 'employee.*',
-        layerPattern: 'employee.route -> employee.controller -> employee.service -> employee.repository -> employee.model',
+        layerPattern:
+          'employee.route -> employee.controller -> employee.service -> employee.repository -> employee.model',
         scoping: 'schoolId, branchId, departmentId',
         endpoints: [
           {
@@ -297,7 +340,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
             method: 'GET',
             path: '/api/v1/employees',
             title: 'List Employees',
-            description: 'Retrieves paginated employee directory with role and department relationships.',
+            description:
+              'Retrieves paginated employee directory with role and department relationships.',
             permission: 'employee.view.own_branch | employee.view.all_branches',
             sampleResponse: {
               success: true,
@@ -319,9 +363,11 @@ export const DOC_CATEGORIES: DocCategory[] = [
         id: 'students-dir',
         name: 'Students Directory',
         category: 'Student Lifecycle',
-        description: 'Core student records, demographic information, guardian profiles, and academic standing.',
+        description:
+          'Core student records, demographic information, guardian profiles, and academic standing.',
         permissionPrefix: 'student.*',
-        layerPattern: 'student.route -> student.controller -> student.service -> student.repository -> student.model',
+        layerPattern:
+          'student.route -> student.controller -> student.service -> student.repository -> student.model',
         scoping: 'schoolId, branchId',
         endpoints: [
           {
@@ -329,11 +375,22 @@ export const DOC_CATEGORIES: DocCategory[] = [
             method: 'GET',
             path: '/api/v1/students',
             title: 'List Students',
-            description: 'Retrieves paginated students directory with multi-field search and filters.',
+            description:
+              'Retrieves paginated students directory with multi-field search and filters.',
             permission: 'student.view.own_branch | student.view.all_branches',
             queryParams: [
-              { name: 'search', type: 'string', required: false, description: 'Search by student name or code' },
-              { name: 'status', type: 'string', required: false, description: 'active | enrolled | transferred | graduated' },
+              {
+                name: 'search',
+                type: 'string',
+                required: false,
+                description: 'Search by student name or code',
+              },
+              {
+                name: 'status',
+                type: 'string',
+                required: false,
+                description: 'active | enrolled | transferred | graduated',
+              },
               { name: 'page', type: 'number', required: false, description: 'Page number' },
               { name: 'limit', type: 'number', required: false, description: 'Page limit' },
             ],
@@ -379,7 +436,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
         category: 'Student Lifecycle',
         description: 'Assigns students to academic years, periods, programs, levels, and classes.',
         permissionPrefix: 'enrollment.*',
-        layerPattern: 'enrollment.route -> enrollment.controller -> enrollment.service -> enrollment.repository -> enrollment.model',
+        layerPattern:
+          'enrollment.route -> enrollment.controller -> enrollment.service -> enrollment.repository -> enrollment.model',
         scoping: 'schoolId, branchId, academicYearId',
         endpoints: [
           {
@@ -404,7 +462,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
         category: 'Student Lifecycle',
         description: 'New applicant intake, inquiry processing, and admission status tracking.',
         permissionPrefix: 'registration.*',
-        layerPattern: 'registration.route -> registration.controller -> registration.service -> registration.repository -> registration.model',
+        layerPattern:
+          'registration.route -> registration.controller -> registration.service -> registration.repository -> registration.model',
         scoping: 'schoolId, branchId',
         endpoints: [
           {
@@ -428,15 +487,18 @@ export const DOC_CATEGORIES: DocCategory[] = [
   {
     id: 'academic',
     title: 'Academic Structure',
-    description: 'Academic years, terms, curricula, programs, levels, subjects, classes, and schedules.',
+    description:
+      'Academic years, terms, curricula, programs, levels, subjects, classes, and schedules.',
     domains: [
       {
         id: 'academic-years',
         name: 'Academic Years & Terms',
         category: 'Academic Structure',
-        description: 'Configures school calendar years, terms, semesters, and active academic periods.',
+        description:
+          'Configures school calendar years, terms, semesters, and active academic periods.',
         permissionPrefix: 'academic_year.*',
-        layerPattern: 'academic-year.route -> academic-year.controller -> academic-year.service -> academic-year.repository -> academic-year.model',
+        layerPattern:
+          'academic-year.route -> academic-year.controller -> academic-year.service -> academic-year.repository -> academic-year.model',
         scoping: 'schoolId',
         endpoints: [
           {
@@ -469,9 +531,11 @@ export const DOC_CATEGORIES: DocCategory[] = [
         id: 'classes',
         name: 'Classes & Classrooms',
         category: 'Academic Structure',
-        description: 'Physical classrooms, assigned grade classes, capacity tracking, and homeroom teachers.',
+        description:
+          'Physical classrooms, assigned grade classes, capacity tracking, and homeroom teachers.',
         permissionPrefix: 'class.*',
-        layerPattern: 'class.route -> class.controller -> class.service -> class.repository -> class.model',
+        layerPattern:
+          'class.route -> class.controller -> class.service -> class.repository -> class.model',
         scoping: 'schoolId, branchId, academicYearId',
         endpoints: [
           {
@@ -495,15 +559,18 @@ export const DOC_CATEGORIES: DocCategory[] = [
   {
     id: 'attendance',
     title: 'Attendance & Operations',
-    description: 'Daily student attendance recording, leave applications, and teacher assignment rosters.',
+    description:
+      'Daily student attendance recording, leave applications, and teacher assignment rosters.',
     domains: [
       {
         id: 'attendance-rec',
         name: 'Daily Attendance',
         category: 'Attendance & Operations',
-        description: 'Bulk roll-call recording for student attendance (Present, Absent, Late, Excused).',
+        description:
+          'Bulk roll-call recording for student attendance (Present, Absent, Late, Excused).',
         permissionPrefix: 'attendance.*',
-        layerPattern: 'attendance.route -> attendance.controller -> attendance.service -> attendance.repository -> attendance.model',
+        layerPattern:
+          'attendance.route -> attendance.controller -> attendance.service -> attendance.repository -> attendance.model',
         scoping: 'schoolId, branchId, classId, date',
         endpoints: [
           {
@@ -527,15 +594,18 @@ export const DOC_CATEGORIES: DocCategory[] = [
   {
     id: 'finance',
     title: 'Finance & Payments',
-    description: 'Tuition fees, payment plans, cashier shifts, student invoices, and payment receipts.',
+    description:
+      'Tuition fees, payment plans, cashier shifts, student invoices, and payment receipts.',
     domains: [
       {
         id: 'payments',
         name: 'Payments & Invoices',
         category: 'Finance & Payments',
-        description: 'Student tuition fee invoicing, partial payments, receipts, and ACID transaction recording.',
+        description:
+          'Student tuition fee invoicing, partial payments, receipts, and ACID transaction recording.',
         permissionPrefix: 'payment.*',
-        layerPattern: 'payment.route -> payment.controller -> payment.service -> payment.repository -> payment.model',
+        layerPattern:
+          'payment.route -> payment.controller -> payment.service -> payment.repository -> payment.model',
         scoping: 'schoolId, branchId',
         endpoints: [
           {
@@ -565,7 +635,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
         id: 'permissions-domain',
         name: 'Permissions & Roles',
         category: 'Access Control & RBAC',
-        description: 'Granular RBAC permission hierarchy with 356 permissions across all 47 domain modules.',
+        description:
+          'Granular RBAC permission hierarchy with 356 permissions across all 47 domain modules.',
         permissionPrefix: 'permission.*, role.*',
         layerPattern: 'permission.route -> permission.controller -> @snp/shared',
         scoping: 'System-wide RBAC Matrix',
@@ -592,7 +663,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
             method: 'GET',
             path: '/api/v1/roles',
             title: 'List Core Roles',
-            description: 'Returns the 13 system roles (super_admin, branch_director, teacher, cashier, etc.).',
+            description:
+              'Returns the 13 system roles (super_admin, branch_director, teacher, cashier, etc.).',
             permission: 'role.view.all_branches',
             sampleResponse: {
               success: true,

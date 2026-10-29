@@ -3357,7 +3357,6 @@ export const DEFAULT_CORE_ROLES: CoreRoleDefinition[] = [
   },
 ];
 
-
 // --- Scope Hierarchy and Permission Checking Utilities ---
 
 export const IMPLIED_SCOPES: Record<string, ReadonlySet<string>> = {

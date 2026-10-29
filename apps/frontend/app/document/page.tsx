@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-import { Check, Copy, ExternalLink, Lock, Server, Shield } from '@/components/icons';
+import { Check, Copy, Server } from '@/components/icons';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { Button } from '@/components/ui/button';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
@@ -21,15 +21,18 @@ const ACCESS_ROLES: AccessRoleSpec[] = [
     role: 'Public / Guest',
     targetAudience: 'External verification portals, monitoring probes',
     accessScope: 'Public (Zero login required)',
-    allowedEndpoints: 'GET /api/v1/health, /health/liveness, /health/readiness, /verify/certificates/:code',
+    allowedEndpoints:
+      'GET /api/v1/health, /health/liveness, /health/readiness, /verify/certificates/:code',
     securityMethod: 'IP Rate Limiting (2000 req / 15m), Read-only public projection',
   },
   {
     role: 'External Partner / Dev Service Account',
     targetAudience: 'Third-party LMS, biometric attendance devices, mobile apps',
     accessScope: 'Specific branch scoped via X-Branch-Id',
-    allowedEndpoints: 'GET /students, GET /classes, GET /attendance, POST /attendance, GET /academic-years',
-    securityMethod: 'Dedicated service account credentials, short-lived JWT, least-privilege permissions',
+    allowedEndpoints:
+      'GET /students, GET /classes, GET /attendance, POST /attendance, GET /academic-years',
+    securityMethod:
+      'Dedicated service account credentials, short-lived JWT, least-privilege permissions',
   },
   {
     role: 'Teachers & Academic Staff',
@@ -49,7 +52,8 @@ const ACCESS_ROLES: AccessRoleSpec[] = [
     role: 'Branch Directors & Principals',
     targetAudience: 'Campus leadership and academic directors',
     accessScope: 'Entire campus branch (all departments & students)',
-    allowedEndpoints: 'Full CRUD across campus students, employees, classes, reports, and attendance',
+    allowedEndpoints:
+      'Full CRUD across campus students, employees, classes, reports, and attendance',
     securityMethod: 'JWT Bearer auth, branch.view.own_branch, strict X-Branch-Id validation',
   },
   {
@@ -200,7 +204,8 @@ const PROTECTED_MUTATION_ENDPOINTS: ProtectedMutationSpec[] = [
     path: '/api/v1/payments',
     purpose: 'Record cash/KHQR payment and issue immutable receipt',
     whyProtected: 'Prevents financial balance tampering and unauthorized receipt fabrication',
-    defenseMechanisms: 'ACID transaction (runInTransaction), cashier shift lock, payment.create.own_branch',
+    defenseMechanisms:
+      'ACID transaction (runInTransaction), cashier shift lock, payment.create.own_branch',
   },
   {
     domain: 'Student Enrollment Status',
@@ -208,7 +213,8 @@ const PROTECTED_MUTATION_ENDPOINTS: ProtectedMutationSpec[] = [
     path: '/api/v1/students/:id',
     purpose: 'Modify student active, suspended, or transferred status',
     whyProtected: 'Protects academic history and prevents unauthorized student deactivations',
-    defenseMechanisms: 'Audit log event capture, student.edit.own_branch, historical correction record',
+    defenseMechanisms:
+      'Audit log event capture, student.edit.own_branch, historical correction record',
   },
   {
     domain: 'Grading & Scores',
@@ -216,7 +222,8 @@ const PROTECTED_MUTATION_ENDPOINTS: ProtectedMutationSpec[] = [
     path: '/api/v1/scores',
     purpose: 'Submit student examination scores',
     whyProtected: 'Prevents unauthorized grade alteration and ensures academic integrity',
-    defenseMechanisms: 'Teacher assignment verification, score.create.own_branch, mutation rate limiting',
+    defenseMechanisms:
+      'Teacher assignment verification, score.create.own_branch, mutation rate limiting',
   },
   {
     domain: 'Users & Roles',
@@ -224,7 +231,8 @@ const PROTECTED_MUTATION_ENDPOINTS: ProtectedMutationSpec[] = [
     path: '/api/v1/users',
     purpose: 'Create user accounts and assign RBAC roles',
     whyProtected: 'Prevents privilege escalation and unauthorized administrator provisioning',
-    defenseMechanisms: 'user.create.all_branches, Argon2/bcrypt password hashing, super_admin boundary',
+    defenseMechanisms:
+      'user.create.all_branches, Argon2/bcrypt password hashing, super_admin boundary',
   },
   {
     domain: 'School Institutional Profile',
@@ -262,7 +270,8 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
     method: 'POST',
     path: '/api/v1/auth/login',
     title: '1. User Sign In & Token Issuance',
-    summary: 'Authenticate credentials and obtain a short-lived (15m) JWT access token and HttpOnly refresh cookie.',
+    summary:
+      'Authenticate credentials and obtain a short-lived (15m) JWT access token and HttpOnly refresh cookie.',
     permission: 'Public',
     scopeHeader: false,
     requestBody: {
@@ -289,7 +298,8 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
     method: 'GET',
     path: '/api/v1/students',
     title: '2. Query Students Directory',
-    summary: 'Query paginated student records with search filtering, grade level, and enrollment status.',
+    summary:
+      'Query paginated student records with search filtering, grade level, and enrollment status.',
     permission: 'student.view.own_branch',
     scopeHeader: true,
     responseBody: {
@@ -313,7 +323,8 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
     method: 'GET',
     path: '/api/v1/classes',
     title: '3. Query Classes & Classrooms',
-    summary: 'Query campus classes, classroom room codes, grade levels, and maximum seating capacity.',
+    summary:
+      'Query campus classes, classroom room codes, grade levels, and maximum seating capacity.',
     permission: 'class.view.own_branch',
     scopeHeader: true,
     responseBody: {
@@ -328,7 +339,8 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
     method: 'GET',
     path: '/api/v1/attendance',
     title: '4. Daily Attendance Records',
-    summary: 'Retrieve student attendance status (Present, Absent, Late, Excused) by class and date.',
+    summary:
+      'Retrieve student attendance status (Present, Absent, Late, Excused) by class and date.',
     permission: 'attendance.view.own_branch',
     scopeHeader: true,
     responseBody: {
@@ -343,7 +355,8 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
     method: 'GET',
     path: '/api/v1/payments',
     title: '5. Tuition Payments & Invoices',
-    summary: 'Query tuition transaction history, receipt numbers, and payment reconciliation statuses.',
+    summary:
+      'Query tuition transaction history, receipt numbers, and payment reconciliation statuses.',
     permission: 'payment.view.own_branch',
     scopeHeader: true,
     responseBody: {
@@ -465,32 +478,32 @@ console.log(payload.data);`;
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900 flex flex-col">
+    <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
       {/* Top Navigation Bar - Light Theme */}
       <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <BrandMark size={32} />
             <div className="flex items-center gap-2">
-              <span className="text-base font-extrabold tracking-tight text-slate-950 font-mono">
+              <span className="font-mono text-base font-extrabold tracking-tight text-slate-950">
                 SNP-SMS Open API
               </span>
               <span className="text-slate-300">|</span>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-blue-50 text-[#023e8a] border border-blue-200">
+              <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-[#023e8a]">
                 Document
               </span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+            <span className="hidden items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-mono text-xs text-emerald-800 sm:inline-flex">
               <span className="size-2 rounded-full bg-emerald-500" />
               v0.1.0 · 193 Endpoints · Online
             </span>
             <a href="#who-can-access">
               <Button
                 size="sm"
-                className="text-xs h-8 px-3.5 bg-[#023e8a] text-white hover:bg-[#00509d] font-medium"
+                className="h-8 bg-[#023e8a] px-3.5 text-xs font-medium text-white hover:bg-[#00509d]"
               >
                 Get Started
               </Button>
@@ -500,27 +513,33 @@ console.log(payload.data);`;
       </header>
 
       {/* Main Grid: On This Page Sidebar + Body Content */}
-      <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 sm:px-6 py-8 gap-8">
+      <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8 sm:px-6">
         {/* Left Column: On This Page Table of Contents */}
-        <aside className="w-60 shrink-0 hidden md:block">
+        <aside className="hidden w-60 shrink-0 md:block">
           <div className="sticky top-24 space-y-4 font-mono text-xs text-slate-600">
-            <p className="text-[11px] font-bold tracking-wider uppercase text-slate-400">
+            <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
               ON THIS PAGE
             </p>
 
             <nav className="space-y-1 text-slate-600">
-              <a href="#changelogs" className="block py-1 hover:text-[#023e8a] transition-colors">
+              <a href="#changelogs" className="block py-1 transition-colors hover:text-[#023e8a]">
                 Change Logs
               </a>
-              <a href="#table-of-contents" className="block py-1 hover:text-[#023e8a] transition-colors">
+              <a
+                href="#table-of-contents"
+                className="block py-1 transition-colors hover:text-[#023e8a]"
+              >
                 Table of contents
               </a>
 
               <div className="pt-1">
-                <a href="#introduction" className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]">
+                <a
+                  href="#introduction"
+                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]"
+                >
                   * Introduction
                 </a>
-                <div className="pl-3 space-y-0.5 text-slate-500">
+                <div className="space-y-0.5 pl-3 text-slate-500">
                   <a href="#purpose" className="block py-0.5 hover:text-slate-900">
                     1. Purpose
                   </a>
@@ -536,7 +555,7 @@ console.log(payload.data);`;
               <div className="pt-1">
                 <a
                   href="#who-can-access"
-                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a] transition-colors"
+                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#023e8a]"
                 >
                   * Who Can Access
                 </a>
@@ -545,11 +564,11 @@ console.log(payload.data);`;
               <div className="pt-1">
                 <a
                   href="#endpoints-available"
-                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a] transition-colors"
+                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#023e8a]"
                 >
                   * Endpoints Catalog
                 </a>
-                <div className="pl-3 space-y-0.5 text-slate-500">
+                <div className="space-y-0.5 pl-3 text-slate-500">
                   <a href="#endpoints-available" className="block py-0.5 hover:text-slate-900">
                     Available For Devs
                   </a>
@@ -560,10 +579,13 @@ console.log(payload.data);`;
               </div>
 
               <div className="pt-1">
-                <a href="#api-doc" className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]">
+                <a
+                  href="#api-doc"
+                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]"
+                >
                   * API Documentation
                 </a>
-                <div className="pl-3 space-y-0.5 text-slate-500">
+                <div className="space-y-0.5 pl-3 text-slate-500">
                   <a href="#status-codes" className="block py-0.5 hover:text-slate-900">
                     Status Codes
                   </a>
@@ -572,9 +594,9 @@ console.log(payload.data);`;
                       key={item.id}
                       href={`#${item.id}`}
                       onClick={() => setActiveEndpointId(item.id)}
-                      className={`block py-0.5 truncate transition-colors ${
+                      className={`block truncate py-0.5 transition-colors ${
                         activeEndpointId === item.id
-                          ? 'text-[#023e8a] font-bold'
+                          ? 'font-bold text-[#023e8a]'
                           : 'hover:text-slate-900'
                       }`}
                     >
@@ -588,56 +610,60 @@ console.log(payload.data);`;
         </aside>
 
         {/* Right / Main Content Area */}
-        <main className="flex-1 min-w-0 space-y-10 pb-16">
+        <main className="min-w-0 flex-1 space-y-10 pb-16">
           {/* Nextra-inspired Brand Header & Summary */}
-          <div className="space-y-3 pb-8 border-b border-slate-200">
+          <div className="space-y-3 border-b border-slate-200 pb-8">
             <div className="flex items-center gap-2">
-              <span className="text-xl font-bold tracking-tight text-slate-950 font-mono flex items-center gap-2">
+              <span className="flex items-center gap-2 font-mono text-xl font-bold tracking-tight text-slate-950">
                 <span className="text-[#023e8a]">✦</span> SNP-SMS Documentation
               </span>
             </div>
-            <p className="text-sm text-slate-600 leading-relaxed max-w-3xl font-sans">
+            <p className="max-w-3xl font-sans text-sm leading-relaxed text-slate-600">
               <Link
                 href="/document"
-                className="underline underline-offset-4 decoration-slate-400 hover:decoration-[#023e8a] text-slate-900 font-medium"
+                className="font-medium text-slate-900 underline decoration-slate-400 underline-offset-4 hover:decoration-[#023e8a]"
               >
                 SNP-SMS Open API
               </Link>{' '}
-              provides unified programmatic access to the SNP-SMS modular monolith backend. It enables
-              partner developers, mobile apps, and institutional integrations to securely interact with
-              student profiles, academic calendars, attendance registries, and fee records through
-              standardized REST endpoints.
+              provides unified programmatic access to the SNP-SMS modular monolith backend. It
+              enables partner developers, mobile apps, and institutional integrations to securely
+              interact with student profiles, academic calendars, attendance registries, and fee
+              records through standardized REST endpoints.
             </p>
           </div>
 
           {/* Change Logs Section */}
-          <section id="changelogs" className="space-y-3 scroll-mt-24">
-            <h2 className="text-sm font-bold tracking-tight text-slate-950 font-mono">Change Logs</h2>
-            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
+          <section id="changelogs" className="scroll-mt-24 space-y-3">
+            <h2 className="font-mono text-sm font-bold tracking-tight text-slate-950">
+              Change Logs
+            </h2>
+            <div className="overflow-hidden rounded-lg border border-slate-200 bg-white text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
+                <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-700">
                   <tr>
-                    <th className="p-2.5 w-20">Version</th>
-                    <th className="p-2.5 w-24">Date</th>
-                    <th className="p-2.5 w-24">Commit</th>
+                    <th className="w-20 p-2.5">Version</th>
+                    <th className="w-24 p-2.5">Date</th>
+                    <th className="w-24 p-2.5">Commit</th>
                     <th className="p-2.5">Description</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-slate-700">
                   {CHANGE_LOGS.map((log) => (
                     <tr key={log.version + (log.commitHash || '')} className="hover:bg-slate-50">
-                      <td className="p-2.5 text-[#023e8a] font-bold">{log.version}</td>
+                      <td className="p-2.5 font-bold text-[#023e8a]">{log.version}</td>
                       <td className="p-2.5 text-slate-500">{log.date}</td>
                       <td className="p-2.5">
                         {log.commitHash ? (
-                          <span className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 font-mono text-[10px]">
+                          <span className="rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] text-slate-700">
                             {log.commitHash}
                           </span>
                         ) : (
-                          <span className="text-slate-400 text-[10px]">-</span>
+                          <span className="text-[10px] text-slate-400">-</span>
                         )}
                       </td>
-                      <td className="p-2.5 text-slate-700 leading-relaxed font-sans">{log.description}</td>
+                      <td className="p-2.5 font-sans leading-relaxed text-slate-700">
+                        {log.description}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -646,10 +672,15 @@ console.log(payload.data);`;
           </section>
 
           {/* Table of contents Section */}
-          <section id="table-of-contents" className="space-y-3 scroll-mt-24 border-t border-slate-200 pt-8">
-            <h2 className="text-sm font-bold tracking-tight text-slate-950 font-mono">Table of contents</h2>
+          <section
+            id="table-of-contents"
+            className="scroll-mt-24 space-y-3 border-t border-slate-200 pt-8"
+          >
+            <h2 className="font-mono text-sm font-bold tracking-tight text-slate-950">
+              Table of contents
+            </h2>
             <div className="rounded-lg border border-slate-200 bg-slate-50/60 p-4 font-mono text-xs text-slate-700">
-              <ol className="space-y-1.5 list-decimal list-inside">
+              <ol className="list-inside list-decimal space-y-1.5">
                 <li>
                   <a href="#introduction" className="text-[#023e8a] hover:underline">
                     Introduction (Purpose, Scope, Overall API)
@@ -685,13 +716,16 @@ console.log(payload.data);`;
           </section>
 
           {/* Introduction Section */}
-          <section id="introduction" className="space-y-6 scroll-mt-24 border-t border-slate-200 pt-8">
+          <section
+            id="introduction"
+            className="scroll-mt-24 space-y-6 border-t border-slate-200 pt-8"
+          >
             <h2 className="text-base font-bold tracking-tight text-slate-950">Introduction</h2>
 
             {/* 1. Purpose */}
-            <div id="purpose" className="space-y-2 scroll-mt-24">
-              <h3 className="text-xs font-bold font-mono text-slate-800">1. Purpose</h3>
-              <p className="text-xs leading-relaxed text-slate-600 font-sans">
+            <div id="purpose" className="scroll-mt-24 space-y-2">
+              <h3 className="font-mono text-xs font-bold text-slate-800">1. Purpose</h3>
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
                 This document describes the technical REST API specification of the SNP Integrated
                 Multi-Branch School Management System (SNP-SMS). The primary audience is third-party
                 integrators, mobile developers, campus IT staff, and administrative client systems.
@@ -699,74 +733,82 @@ console.log(payload.data);`;
             </div>
 
             {/* 2. Scope */}
-            <div id="scope" className="space-y-2 scroll-mt-24">
-              <h3 className="text-xs font-bold font-mono text-slate-800">2. Scope</h3>
-              <p className="text-xs leading-relaxed text-slate-600 font-sans">
-                Defines all accessible API surfaces, multi-branch scoping headers (X-Branch-Id), who can
-                access each resource, authentication and token refresh lifecycles, and defense mechanisms
-                safeguarding sensitive financial and academic mutations.
+            <div id="scope" className="scroll-mt-24 space-y-2">
+              <h3 className="font-mono text-xs font-bold text-slate-800">2. Scope</h3>
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                Defines all accessible API surfaces, multi-branch scoping headers (X-Branch-Id), who
+                can access each resource, authentication and token refresh lifecycles, and defense
+                mechanisms safeguarding sensitive financial and academic mutations.
               </p>
             </div>
 
             {/* 3. Overall API */}
-            <div id="overall-api" className="space-y-3 scroll-mt-24">
-              <h3 className="text-xs font-bold font-mono text-slate-800">3. Overall API</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+            <div id="overall-api" className="scroll-mt-24 space-y-3">
+              <h3 className="font-mono text-xs font-bold text-slate-800">3. Overall API</h3>
+              <div className="grid grid-cols-1 gap-3 font-mono text-xs sm:grid-cols-2">
+                <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 shadow-xs">
+                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                     Base URL
                   </span>
-                  <p className="text-[#023e8a] font-bold truncate">http://localhost:4000/api/v1</p>
+                  <p className="truncate font-bold text-[#023e8a]">http://localhost:4000/api/v1</p>
                 </div>
-                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 shadow-xs">
+                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                     Payload Format
                   </span>
-                  <p className="text-slate-800 font-bold">JSON (application/json)</p>
+                  <p className="font-bold text-slate-800">JSON (application/json)</p>
                 </div>
-                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 shadow-xs">
+                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                     Authorization
                   </span>
-                  <p className="text-amber-700 font-bold">Bearer &lt;access_token&gt;</p>
+                  <p className="font-bold text-amber-700">Bearer &lt;access_token&gt;</p>
                 </div>
-                <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-1 shadow-xs">
-                  <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 shadow-xs">
+                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                     Campus Isolation
                   </span>
-                  <p className="text-emerald-700 font-bold">X-Branch-Id: &lt;branch_id&gt;</p>
+                  <p className="font-bold text-emerald-700">X-Branch-Id: &lt;branch_id&gt;</p>
                 </div>
               </div>
             </div>
           </section>
 
           {/* Section: Who Can Access The API */}
-          <section id="who-can-access" className="space-y-4 scroll-mt-24 border-t border-slate-200 pt-8">
+          <section
+            id="who-can-access"
+            className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+          >
             <div>
-              <h2 className="text-base font-bold tracking-tight text-slate-950">Who Can Access The API</h2>
-              <p className="text-xs text-slate-500 mt-1">
-                Access is strictly governed by Role-Based Access Control (RBAC) and campus branch boundaries.
+              <h2 className="text-base font-bold tracking-tight text-slate-950">
+                Who Can Access The API
+              </h2>
+              <p className="mt-1 text-xs text-slate-500">
+                Access is strictly governed by Role-Based Access Control (RBAC) and campus branch
+                boundaries.
               </p>
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
+            <div className="overflow-hidden rounded-lg border border-slate-200 bg-white text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
+                <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-700">
                   <tr>
-                    <th className="p-2.5 w-36">Client Type / Role</th>
-                    <th className="p-2.5 w-40">Target Audience</th>
+                    <th className="w-36 p-2.5">Client Type / Role</th>
+                    <th className="w-40 p-2.5">Target Audience</th>
                     <th className="p-2.5">Access Scope & Endpoints</th>
-                    <th className="p-2.5 w-52">Security & Verification</th>
+                    <th className="w-52 p-2.5">Security & Verification</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-700 font-sans">
+                <tbody className="divide-y divide-slate-100 font-sans text-slate-700">
                   {ACCESS_ROLES.map((role) => (
                     <tr key={role.role} className="hover:bg-slate-50">
                       <td className="p-2.5 font-mono font-bold text-[#023e8a]">{role.role}</td>
-                      <td className="p-2.5 text-slate-500 text-xs">{role.targetAudience}</td>
+                      <td className="p-2.5 text-xs text-slate-500">{role.targetAudience}</td>
                       <td className="p-2.5 text-xs">
-                        <p className="text-slate-900 font-semibold">{role.accessScope}</p>
-                        <p className="font-mono text-[11px] text-slate-600 mt-0.5">{role.allowedEndpoints}</p>
+                        <p className="font-semibold text-slate-900">{role.accessScope}</p>
+                        <p className="mt-0.5 font-mono text-[11px] text-slate-600">
+                          {role.allowedEndpoints}
+                        </p>
                       </td>
                       <td className="p-2.5 text-xs text-slate-600">{role.securityMethod}</td>
                     </tr>
@@ -777,46 +819,49 @@ console.log(payload.data);`;
           </section>
 
           {/* Section: What Other Devs Can Get */}
-          <section id="endpoints-available" className="space-y-4 scroll-mt-24 border-t border-slate-200 pt-8">
+          <section
+            id="endpoints-available"
+            className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+          >
             <div>
               <h2 className="text-base font-bold tracking-tight text-slate-950">
                 What Other Developers Can Get (Read & Integration Surface)
               </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                These standardized endpoints can be consumed by external client applications, mobile apps,
-                and reporting integrations using standard HTTP GET queries.
+              <p className="mt-1 text-xs text-slate-500">
+                These standardized endpoints can be consumed by external client applications, mobile
+                apps, and reporting integrations using standard HTTP GET queries.
               </p>
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
+            <div className="overflow-hidden rounded-lg border border-slate-200 bg-white text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
+                <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-700">
                   <tr>
-                    <th className="p-2.5 w-32">Domain Category</th>
-                    <th className="p-2.5 w-20">Method</th>
-                    <th className="p-2.5 w-52">Endpoint Path</th>
+                    <th className="w-32 p-2.5">Domain Category</th>
+                    <th className="w-20 p-2.5">Method</th>
+                    <th className="w-52 p-2.5">Endpoint Path</th>
                     <th className="p-2.5">Description & Purpose</th>
-                    <th className="p-2.5 w-44">Required Permission</th>
+                    <th className="w-44 p-2.5">Required Permission</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-slate-700">
                   {AVAILABLE_ENDPOINTS_FOR_DEVS.map((ep) => (
                     <tr key={ep.path + ep.method} className="hover:bg-slate-50">
-                      <td className="p-2.5 text-slate-600 font-semibold">{ep.category}</td>
+                      <td className="p-2.5 font-semibold text-slate-600">{ep.category}</td>
                       <td className="p-2.5">
                         <span
-                          className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                          className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${
                             ep.method === 'GET'
-                              ? 'bg-blue-50 text-[#023e8a] border border-blue-200'
-                              : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                              ? 'border border-blue-200 bg-blue-50 text-[#023e8a]'
+                              : 'border border-emerald-200 bg-emerald-50 text-emerald-800'
                           }`}
                         >
                           {ep.method}
                         </span>
                       </td>
-                      <td className="p-2.5 text-slate-900 font-bold">{ep.path}</td>
-                      <td className="p-2.5 text-slate-600 font-sans text-xs">{ep.description}</td>
-                      <td className="p-2.5 text-amber-700 text-[11px] font-mono font-medium">
+                      <td className="p-2.5 font-bold text-slate-900">{ep.path}</td>
+                      <td className="p-2.5 font-sans text-xs text-slate-600">{ep.description}</td>
+                      <td className="p-2.5 font-mono text-[11px] font-medium text-amber-700">
                         {ep.requiredPermission}
                       </td>
                     </tr>
@@ -827,37 +872,41 @@ console.log(payload.data);`;
           </section>
 
           {/* Section: What Endpoints Must Be Protected & How */}
-          <section id="protected-endpoints" className="space-y-4 scroll-mt-24 border-t border-slate-200 pt-8">
+          <section
+            id="protected-endpoints"
+            className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+          >
             <div>
               <h2 className="text-base font-bold tracking-tight text-slate-950">
                 What Endpoints Must Be Protected & How
               </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                High-impact write and mutation operations are enforced with multi-layer defense mechanisms
-                to prevent financial tampering, unauthorized grade alterations, and privilege escalations.
+              <p className="mt-1 text-xs text-slate-500">
+                High-impact write and mutation operations are enforced with multi-layer defense
+                mechanisms to prevent financial tampering, unauthorized grade alterations, and
+                privilege escalations.
               </p>
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
+            <div className="overflow-hidden rounded-lg border border-slate-200 bg-white text-xs shadow-xs">
               <table className="w-full text-left font-mono">
-                <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
+                <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-700">
                   <tr>
-                    <th className="p-2.5 w-36">Domain</th>
-                    <th className="p-2.5 w-48">Endpoint</th>
+                    <th className="w-36 p-2.5">Domain</th>
+                    <th className="w-48 p-2.5">Endpoint</th>
                     <th className="p-2.5">Why It Must Be Protected</th>
-                    <th className="p-2.5 w-60">Defense Guardrails Implemented</th>
+                    <th className="w-60 p-2.5">Defense Guardrails Implemented</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-700 font-sans">
+                <tbody className="divide-y divide-slate-100 font-sans text-slate-700">
                   {PROTECTED_MUTATION_ENDPOINTS.map((item) => (
                     <tr key={item.path + item.method} className="hover:bg-slate-50">
-                      <td className="p-2.5 font-bold text-slate-900 font-mono">{item.domain}</td>
+                      <td className="p-2.5 font-mono font-bold text-slate-900">{item.domain}</td>
                       <td className="p-2.5 font-mono text-xs">
-                        <span className="text-amber-700 font-bold mr-1.5">{item.method}</span>
-                        <span className="text-slate-800 font-semibold">{item.path}</span>
+                        <span className="mr-1.5 font-bold text-amber-700">{item.method}</span>
+                        <span className="font-semibold text-slate-800">{item.path}</span>
                       </td>
                       <td className="p-2.5 text-xs text-slate-600">{item.whyProtected}</td>
-                      <td className="p-2.5 text-xs text-emerald-800 font-mono text-[11px]">
+                      <td className="p-2.5 font-mono text-xs text-[11px] text-emerald-800">
                         {item.defenseMechanisms}
                       </td>
                     </tr>
@@ -868,74 +917,78 @@ console.log(payload.data);`;
           </section>
 
           {/* Interactive API Explorer Section */}
-          <section id="api-doc" className="space-y-8 scroll-mt-24 border-t border-slate-200 pt-8">
+          <section id="api-doc" className="scroll-mt-24 space-y-8 border-t border-slate-200 pt-8">
             <div>
               <h2 className="text-base font-bold tracking-tight text-slate-950">
                 Interactive API Explorer
               </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                Select any endpoint below to inspect request/response schemas, copy terminal cURL commands,
-                or send live test requests directly to the running backend.
+              <p className="mt-1 text-xs text-slate-500">
+                Select any endpoint below to inspect request/response schemas, copy terminal cURL
+                commands, or send live test requests directly to the running backend.
               </p>
             </div>
 
             {/* Status Codes Table */}
-            <div id="status-codes" className="space-y-3 scroll-mt-24">
-              <h3 className="text-xs font-bold font-mono text-slate-800">HTTP Status Codes Standard</h3>
-              <div className="rounded-lg border border-slate-200 bg-white overflow-hidden text-xs shadow-xs">
+            <div id="status-codes" className="scroll-mt-24 space-y-3">
+              <h3 className="font-mono text-xs font-bold text-slate-800">
+                HTTP Status Codes Standard
+              </h3>
+              <div className="overflow-hidden rounded-lg border border-slate-200 bg-white text-xs shadow-xs">
                 <table className="w-full text-left font-mono">
-                  <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
+                  <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-700">
                     <tr>
-                      <th className="p-2.5 w-24">HTTP Code</th>
-                      <th className="p-2.5 w-32">Status</th>
+                      <th className="w-24 p-2.5">HTTP Code</th>
+                      <th className="w-32 p-2.5">Status</th>
                       <th className="p-2.5">Meaning & Description</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-slate-700">
                     <tr>
-                      <td className="p-2.5 text-emerald-700 font-bold">200</td>
+                      <td className="p-2.5 font-bold text-emerald-700">200</td>
                       <td className="p-2.5">OK</td>
-                      <td className="p-2.5 text-slate-600 font-sans">
+                      <td className="p-2.5 font-sans text-slate-600">
                         The request succeeded and returned the requested payload.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-emerald-700 font-bold">201</td>
+                      <td className="p-2.5 font-bold text-emerald-700">201</td>
                       <td className="p-2.5">Created</td>
-                      <td className="p-2.5 text-slate-600 font-sans">New entity created successfully.</td>
+                      <td className="p-2.5 font-sans text-slate-600">
+                        New entity created successfully.
+                      </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-amber-700 font-bold">400</td>
+                      <td className="p-2.5 font-bold text-amber-700">400</td>
                       <td className="p-2.5">Bad Request</td>
-                      <td className="p-2.5 text-slate-600 font-sans">
+                      <td className="p-2.5 font-sans text-slate-600">
                         Payload validation failed against Zod schema.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-amber-700 font-bold">401</td>
+                      <td className="p-2.5 font-bold text-amber-700">401</td>
                       <td className="p-2.5">Unauthorized</td>
-                      <td className="p-2.5 text-slate-600 font-sans">
+                      <td className="p-2.5 font-sans text-slate-600">
                         Missing, expired, or invalid JWT Bearer token.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-rose-700 font-bold">403</td>
+                      <td className="p-2.5 font-bold text-rose-700">403</td>
                       <td className="p-2.5">Forbidden</td>
-                      <td className="p-2.5 text-slate-600 font-sans">
+                      <td className="p-2.5 font-sans text-slate-600">
                         User lacks the required RBAC permission or branch scope.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-rose-700 font-bold">404</td>
+                      <td className="p-2.5 font-bold text-rose-700">404</td>
                       <td className="p-2.5">Not Found</td>
-                      <td className="p-2.5 text-slate-600 font-sans">
+                      <td className="p-2.5 font-sans text-slate-600">
                         Requested route or resource identifier does not exist.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 text-amber-700 font-bold">429</td>
+                      <td className="p-2.5 font-bold text-amber-700">429</td>
                       <td className="p-2.5">Too Many Requests</td>
-                      <td className="p-2.5 text-slate-600 font-sans">
+                      <td className="p-2.5 font-sans text-slate-600">
                         Rate limit exceeded (standard draft-8 headers provided).
                       </td>
                     </tr>
@@ -953,24 +1006,26 @@ console.log(payload.data);`;
                   <div
                     key={item.id}
                     id={item.id}
-                    className="rounded-xl border border-slate-200 bg-white p-6 space-y-4 scroll-mt-24 shadow-xs"
+                    className="scroll-mt-24 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-xs"
                   >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                    <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span
-                            className={`font-mono text-[10px] font-extrabold px-2 py-0.5 rounded ${
+                            className={`rounded px-2 py-0.5 font-mono text-[10px] font-extrabold ${
                               item.method === 'GET'
-                                ? 'bg-blue-50 text-[#023e8a] border border-blue-200'
-                                : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                ? 'border border-blue-200 bg-blue-50 text-[#023e8a]'
+                                : 'border border-emerald-200 bg-emerald-50 text-emerald-800'
                             }`}
                           >
                             {item.method}
                           </span>
-                          <span className="font-mono text-xs font-bold text-slate-900">{item.path}</span>
+                          <span className="font-mono text-xs font-bold text-slate-900">
+                            {item.path}
+                          </span>
                         </div>
                         <p className="text-xs font-bold text-slate-800">{item.title}</p>
-                        <p className="text-xs text-slate-600 font-sans">{item.summary}</p>
+                        <p className="font-sans text-xs text-slate-600">{item.summary}</p>
                       </div>
 
                       <div className="flex items-center gap-2">
@@ -979,20 +1034,20 @@ console.log(payload.data);`;
                           variant="outline"
                           onClick={() => handleTest(item)}
                           disabled={isTestingThis}
-                          className="text-xs h-8 border-slate-300 text-slate-700 hover:text-[#023e8a] hover:border-[#023e8a]"
+                          className="h-8 border-slate-300 text-xs text-slate-700 hover:border-[#023e8a] hover:text-[#023e8a]"
                         >
-                          <Server className="size-3.5 mr-1 text-[#023e8a]" />
+                          <Server className="mr-1 size-3.5 text-[#023e8a]" />
                           {isTestingThis ? 'Testing...' : 'Test Live'}
                         </Button>
                       </div>
                     </div>
 
                     {/* Metadata Badges */}
-                    <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
-                      <div className="px-2.5 py-1 rounded bg-slate-50 border border-slate-200 text-slate-700">
+                    <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                      <div className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
                         Permission: <strong className="text-amber-700">{item.permission}</strong>
                       </div>
-                      <div className="px-2.5 py-1 rounded bg-slate-50 border border-slate-200 text-slate-700">
+                      <div className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
                         Scope Header:{' '}
                         <strong className={item.scopeHeader ? 'text-[#023e8a]' : 'text-slate-400'}>
                           {item.scopeHeader ? 'X-Branch-Id Required' : 'None'}
@@ -1002,35 +1057,35 @@ console.log(payload.data);`;
 
                     {/* Live Test Output Display */}
                     {liveRes && (
-                      <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs font-mono space-y-1.5">
+                      <div className="space-y-1.5 rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
                         <div className="flex items-center justify-between">
                           <span
                             className={
                               liveRes.status === 200
-                                ? 'text-emerald-700 font-bold'
-                                : 'text-amber-700 font-bold'
+                                ? 'font-bold text-emerald-700'
+                                : 'font-bold text-amber-700'
                             }
                           >
                             Live Response: HTTP {liveRes.status}
                           </span>
                           <span className="text-slate-500">{liveRes.latency}ms</span>
                         </div>
-                        <pre className="max-h-32 overflow-y-auto text-[11px] text-slate-800 bg-white p-2 rounded border border-slate-200">
+                        <pre className="max-h-32 overflow-y-auto rounded border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
                           {JSON.stringify(liveRes.body, null, 2)}
                         </pre>
                       </div>
                     )}
 
                     {/* Code Snippet Card - 100% Light Mode */}
-                    <div className="rounded-lg border border-slate-200 bg-slate-50/50 overflow-hidden shadow-xs">
-                      <div className="flex items-center justify-between px-3.5 py-2 bg-slate-100/80 border-b border-slate-200 text-xs font-mono">
+                    <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50/50 shadow-xs">
+                      <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
                         <div className="flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={() => setCodeType('curl')}
-                            className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
+                            className={`rounded px-2.5 py-1 text-[11px] transition-colors ${
                               codeType === 'curl'
-                                ? 'bg-white text-[#023e8a] border border-slate-300 font-bold shadow-xs'
+                                ? 'border border-slate-300 bg-white font-bold text-[#023e8a] shadow-xs'
                                 : 'text-slate-600 hover:text-slate-900'
                             }`}
                           >
@@ -1039,9 +1094,9 @@ console.log(payload.data);`;
                           <button
                             type="button"
                             onClick={() => setCodeType('ts')}
-                            className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
+                            className={`rounded px-2.5 py-1 text-[11px] transition-colors ${
                               codeType === 'ts'
-                                ? 'bg-white text-[#023e8a] border border-slate-300 font-bold shadow-xs'
+                                ? 'border border-slate-300 bg-white font-bold text-[#023e8a] shadow-xs'
                                 : 'text-slate-600 hover:text-slate-900'
                             }`}
                           >
@@ -1050,9 +1105,9 @@ console.log(payload.data);`;
                           <button
                             type="button"
                             onClick={() => setCodeType('json')}
-                            className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
+                            className={`rounded px-2.5 py-1 text-[11px] transition-colors ${
                               codeType === 'json'
-                                ? 'bg-white text-[#023e8a] border border-slate-300 font-bold shadow-xs'
+                                ? 'border border-slate-300 bg-white font-bold text-[#023e8a] shadow-xs'
                                 : 'text-slate-600 hover:text-slate-900'
                             }`}
                           >
@@ -1063,12 +1118,12 @@ console.log(payload.data);`;
                         <button
                           type="button"
                           onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
-                          className="flex items-center gap-1 text-[11px] text-slate-700 hover:text-slate-900 px-2 py-0.5 rounded bg-white border border-slate-300 shadow-xs"
+                          className="flex items-center gap-1 rounded border border-slate-300 bg-white px-2 py-0.5 text-[11px] text-slate-700 shadow-xs hover:text-slate-900"
                         >
                           {copiedId === item.id ? (
                             <>
                               <Check className="size-3 text-emerald-600" />
-                              <span className="text-emerald-700 font-semibold">Copied</span>
+                              <span className="font-semibold text-emerald-700">Copied</span>
                             </>
                           ) : (
                             <>
@@ -1079,7 +1134,7 @@ console.log(payload.data);`;
                         </button>
                       </div>
 
-                      <pre className="p-3.5 overflow-x-auto text-xs font-mono text-slate-800 leading-relaxed max-h-64 bg-white">
+                      <pre className="max-h-64 overflow-x-auto bg-white p-3.5 font-mono text-xs leading-relaxed text-slate-800">
                         <code>{generateSnippet(item, codeType)}</code>
                       </pre>
                     </div>
@@ -1092,18 +1147,18 @@ console.log(payload.data);`;
       </div>
 
       {/* Footer - Light Theme */}
-      <footer className="border-t border-slate-200 bg-white py-6 text-xs font-mono text-slate-500">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-slate-200 bg-white py-6 font-mono text-xs text-slate-500">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
           <span>SNP International School · Open API Technical Document</span>
           <div className="flex items-center gap-6">
-            <Link href="/dashboard" className="hover:text-slate-900 font-sans">
+            <Link href="/dashboard" className="font-sans hover:text-slate-900">
               Administrative Console
             </Link>
             <a
               href="https://snp.edu.kh"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-slate-900 font-sans"
+              className="font-sans hover:text-slate-900"
             >
               snp.edu.kh
             </a>

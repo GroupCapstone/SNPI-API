@@ -13,7 +13,10 @@ function loadEnv(filePath: string): Record<string, string> {
     if (idx !== -1) {
       const key = trimmed.slice(0, idx).trim();
       let val = trimmed.slice(idx + 1).trim();
-      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      if (
+        (val.startsWith('"') && val.endsWith('"')) ||
+        (val.startsWith("'") && val.endsWith("'"))
+      ) {
         val = val.slice(1, -1);
       }
       env[key] = val;
@@ -159,7 +162,9 @@ async function run() {
 
       const indicator = isSuccess ? '[PASS]' : '[FAIL]';
       const countStr = count !== undefined ? `(${count} records)` : '';
-      console.log(`${indicator} ${ep.method.padEnd(5)} ${ep.path.padEnd(46)} -> ${res.status} (${durationMs}ms) ${countStr}`);
+      console.log(
+        `${indicator} ${ep.method.padEnd(5)} ${ep.path.padEnd(46)} -> ${res.status} (${durationMs}ms) ${countStr}`,
+      );
     } catch (err) {
       const durationMs = Math.round(performance.now() - start);
       results.push({
@@ -169,7 +174,9 @@ async function run() {
         durationMs,
         success: false,
       });
-      console.log(`[ERR]  ${ep.method.padEnd(5)} ${ep.path.padEnd(46)} -> ERROR (${(err as Error).message})`);
+      console.log(
+        `[ERR]  ${ep.method.padEnd(5)} ${ep.path.padEnd(46)} -> ERROR (${(err as Error).message})`,
+      );
     }
   }
 

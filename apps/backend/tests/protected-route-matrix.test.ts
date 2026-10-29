@@ -106,6 +106,7 @@ visitMount(appSource);
 
 const publicEndpoints = new Set([
   'get /api/v1/health',
+  'get /api/v1/health/liveness',
   'get /api/v1/health/readiness',
   'post /api/v1/auth/login',
   'post /api/v1/auth/refresh',
