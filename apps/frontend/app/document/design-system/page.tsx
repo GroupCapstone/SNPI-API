@@ -25,6 +25,7 @@ import {
   LibraryDropdown,
   LibraryTooltip,
   DualModeSystemUI,
+  HangingTabsNav,
   COMPONENT_LIBRARY_REGISTRY,
   GeometricButton,
   GeometricHeaderStamp,
@@ -42,15 +43,18 @@ import {
   Code,
   Copy,
   Layers,
-  Sparkles,
   Palette,
+  Pin,
+  Newspaper,
+  FilePlus,
+  Contacts,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 export default function DesignSystemPage() {
-  // Main View: 'catalog' | 'playground' | 'blueprint' | 'dual-mode'
+  // Main View: 'catalog' | 'playground' | 'blueprint' | 'dual-mode' | 'top-nav'
   const [activeTab, setActiveTab] = React.useState<
-    'catalog' | 'playground' | 'blueprint' | 'dual-mode'
+    'catalog' | 'playground' | 'blueprint' | 'dual-mode' | 'top-nav'
   >('catalog');
 
   // Selected Component for playground inspection
@@ -76,6 +80,11 @@ export default function DesignSystemPage() {
   const [fabCount, setFabCount] = React.useState(0);
   const [cardEnrolled, setCardEnrolled] = React.useState(false);
 
+  // Hanging tabs navigation interactive state
+  const [hangingNavTab, setHangingNavTab] = React.useState<string>('newswire');
+  const [hangingNavSize, setHangingNavSize] = React.useState<'sm' | 'md' | 'lg'>('md');
+  const [hangingNavBadge, setHangingNavBadge] = React.useState<number>(8);
+
   // Additional component interactive states
   const [dropdownValue, setDropdownValue] = React.useState<string>('sora');
   const [activeTool, setActiveTool] = React.useState<string>('Move Tool (V)');
@@ -93,6 +102,7 @@ export default function DesignSystemPage() {
     () => [
       { id: 'how-it-works', title: 'SNP-SMS Design System: how it works', level: 1 },
       { id: 'architecture-flow', title: 'Architectural token flow', level: 2 },
+      { id: 'top-nav-style', title: 'Top Navigation Hanging Tabs Style', level: 1 },
       { id: 'component-gallery', title: 'Component Catalog & Variants', level: 1 },
       { id: 'interactive-stage', title: 'Interactive Component Playground', level: 1 },
       { id: 'brand-blueprint', title: 'Royal Blue (#0056FF) Brand Blueprint', level: 1 },
@@ -300,6 +310,34 @@ export default function DesignSystemPage() {
                         <span className="tracking-wider uppercase">Dual Mode UI</span>
                       </div>
                     </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveTab('top-nav');
+                        scrollToSection('top-nav-style');
+                      }}
+                      className={cn(
+                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
+                        activeTab === 'top-nav'
+                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
+                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
+                      )}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
+                            activeTab === 'top-nav'
+                              ? 'bg-[#000B26] text-white'
+                              : 'bg-slate-100 text-slate-600',
+                          )}
+                        >
+                          05
+                        </span>
+                        <span className="tracking-wider uppercase">Top Nav</span>
+                      </div>
+                    </button>
                   </div>
                 </div>
 
@@ -414,6 +452,139 @@ export default function DesignSystemPage() {
               </div>
             </div>
 
+            {/* SECTION: Top Navigation Hanging Tabs Style (Image Reference) */}
+            <section
+              id="top-nav-style"
+              className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
+            >
+              <div className="flex flex-col gap-1">
+                <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                  Header Navigation Architecture
+                </span>
+                <h2 className="font-sans text-xl font-bold text-slate-950 sm:text-2xl">
+                  Top Navigation Hanging Tabs Style
+                </h2>
+                <p className="font-sans text-sm leading-relaxed text-slate-600">
+                  Inverted trapezoid folder tabs suspended from the top header baseline. Built with
+                  vector-smooth SVG geometry, non-scaling continuous strokes, stacked icon and title
+                  hierarchy, and circular notification badges.
+                </p>
+              </div>
+
+              {/* Live Interactive Header Bar Stage */}
+              <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                {/* Header Ceiling Strip (Textured Slate Bar) */}
+                <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
+                  <div className="flex items-center justify-between pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
+                      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
+                        Application Workspace Ceiling
+                      </span>
+                    </div>
+                    <span className="font-mono text-[11px] text-slate-500">
+                      SNP-SMS Design Standard
+                    </span>
+                  </div>
+
+                  {/* Hanging Tabs Suspended from Ceiling */}
+                  <div className="-mb-[1px] flex justify-center">
+                    <HangingTabsNav
+                      activeId={hangingNavTab}
+                      onSelect={setHangingNavTab}
+                      size={hangingNavSize}
+                      items={[
+                        { id: 'map', label: 'Map', icon: Pin },
+                        {
+                          id: 'newswire',
+                          label: 'Newswire',
+                          icon: Newspaper,
+                          badge: hangingNavBadge > 0 ? hangingNavBadge : undefined,
+                          badgeColor: 'blue',
+                        },
+                        { id: 'post', label: 'Post', icon: FilePlus },
+                        { id: 'friends', label: 'Friends', icon: Contacts },
+                      ]}
+                    />
+                  </div>
+                </div>
+
+                {/* Interactive Controls & State Inspector */}
+                <div className="flex flex-col gap-4 border-t border-slate-100 bg-slate-50/60 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="font-sans text-xs font-semibold text-slate-600">
+                      Active Tab:
+                    </span>
+                    <span className="rounded-md border border-[#0056FF]/30 bg-[#0056FF]/10 px-2 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
+                      {hangingNavTab.toUpperCase()}
+                    </span>
+                  </div>
+
+                  {/* Size Switcher & Badge Modifier */}
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-1">
+                      {(['sm', 'md', 'lg'] as const).map((sz) => (
+                        <button
+                          key={sz}
+                          type="button"
+                          onClick={() => setHangingNavSize(sz)}
+                          className={cn(
+                            'rounded px-2.5 py-1 font-mono text-[11px] font-bold uppercase transition-all select-none',
+                            hangingNavSize === sz
+                              ? 'bg-[#0056FF] text-white'
+                              : 'text-slate-600 hover:bg-slate-100',
+                          )}
+                        >
+                          {sz}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1 font-mono text-xs">
+                      <span className="text-slate-500">Badge Count:</span>
+                      <button
+                        type="button"
+                        onClick={() => setHangingNavBadge((b) => Math.max(0, b - 1))}
+                        className="rounded px-1.5 py-0.5 font-bold select-none hover:bg-slate-100"
+                      >
+                        -
+                      </button>
+                      <span className="font-bold text-[#0056FF]">{hangingNavBadge}</span>
+                      <button
+                        type="button"
+                        onClick={() => setHangingNavBadge((b) => b + 1)}
+                        className="rounded px-1.5 py-0.5 font-bold select-none hover:bg-slate-100"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Technical Architecture Specs */}
+              <div className="grid grid-cols-1 gap-3 font-sans sm:grid-cols-3">
+                <div className="rounded-xl border border-slate-200/80 bg-white p-3.5">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase">Vector Geometry</h4>
+                  <p className="mt-1 font-mono text-[11px] text-slate-500">
+                    d=&quot;M 0,0 L 100,0 L 88,44 Q 85,50 78,50 L 22,50 Q 15,50 12,44 Z&quot;
+                  </p>
+                </div>
+                <div className="rounded-xl border border-slate-200/80 bg-white p-3.5">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase">Zero Broken Stroke</h4>
+                  <p className="mt-1 font-mono text-[11px] text-slate-500">
+                    vectorEffect=&quot;non-scaling-stroke&quot; prevents corner clipping
+                  </p>
+                </div>
+                <div className="rounded-xl border border-slate-200/80 bg-white p-3.5">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase">Notification Badge</h4>
+                  <p className="mt-1 font-mono text-[11px] text-slate-500">
+                    bg-[#0284C7] ring-2 ring-white floating on top-right of icon
+                  </p>
+                </div>
+              </div>
+            </section>
+
             {/* SECTION 1: Component Catalog (Image 1 Style Grid with Hover Animations) */}
             <section id="component-gallery" className="scroll-mt-24 space-y-4">
               <ComponentGalleryGrid
@@ -472,6 +643,12 @@ export default function DesignSystemPage() {
                     setBottomSheetChoice,
                     dialogDecision,
                     setDialogDecision,
+                    hangingNavTab,
+                    setHangingNavTab,
+                    hangingNavSize,
+                    setHangingNavSize,
+                    hangingNavBadge,
+                    setHangingNavBadge,
                   })}
                 </div>
 
@@ -701,6 +878,12 @@ function renderActivePlaygroundComponent(props: {
   setBottomSheetChoice: (c: string) => void;
   dialogDecision: string;
   setDialogDecision: (d: string) => void;
+  hangingNavTab: string;
+  setHangingNavTab: (t: string) => void;
+  hangingNavSize: 'sm' | 'md' | 'lg';
+  setHangingNavSize: (s: 'sm' | 'md' | 'lg') => void;
+  hangingNavBadge: number;
+  setHangingNavBadge: React.Dispatch<React.SetStateAction<number>>;
 }) {
   switch (props.id) {
     case 'snackbar':
@@ -1042,13 +1225,13 @@ function renderActivePlaygroundComponent(props: {
               </button>
             </LibraryTooltip>
 
-            <LibraryTooltip content="Inspect Element" shortcut="⌘I">
+            <LibraryTooltip content="Inspect Element" shortcut="Cmd+I">
               <button
                 type="button"
-                onClick={() => props.setActiveTool('Inspect Element (⌘I)')}
+                onClick={() => props.setActiveTool('Inspect Element (Cmd+I)')}
                 className={cn(
                   'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all select-none',
-                  props.activeTool === 'Inspect Element (⌘I)'
+                  props.activeTool === 'Inspect Element (Cmd+I)'
                     ? 'border-[#0056FF] bg-[#0056FF] text-white'
                     : 'border-slate-200/80 bg-white/90 text-slate-800 hover:border-[#0056FF] hover:bg-slate-50',
                 )}
@@ -1075,6 +1258,88 @@ function renderActivePlaygroundComponent(props: {
           <span className="font-mono text-[11px] text-slate-500">
             Active Tool Selected: {props.activeTool}
           </span>
+        </div>
+      );
+
+    case 'hanging-tabs-nav':
+      return (
+        <div className="flex w-full max-w-lg flex-col items-center gap-4 py-4">
+          {/* Top Bar Ceiling with Hanging Tabs */}
+          <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+            <div className="rounded-t-xl border-b border-slate-300 bg-slate-100/80 px-4 pt-3 pb-0">
+              <div className="flex items-center justify-between pb-2">
+                <span className="font-sans text-xs font-bold tracking-wider text-slate-700 uppercase">
+                  Application Header
+                </span>
+                <span className="font-mono text-[10px] text-slate-500">SNP-SMS v2.4</span>
+              </div>
+              <div className="-mb-[1px] flex justify-center">
+                <HangingTabsNav
+                  activeId={props.hangingNavTab}
+                  onSelect={props.setHangingNavTab}
+                  size={props.hangingNavSize}
+                  items={[
+                    { id: 'map', label: 'Map', icon: Pin },
+                    {
+                      id: 'newswire',
+                      label: 'Newswire',
+                      icon: Newspaper,
+                      badge: props.hangingNavBadge > 0 ? props.hangingNavBadge : undefined,
+                      badgeColor: 'blue',
+                    },
+                    { id: 'post', label: 'Post', icon: FilePlus },
+                    { id: 'friends', label: 'Friends', icon: Contacts },
+                  ]}
+                />
+              </div>
+            </div>
+            <div className="p-4 text-center">
+              <span className="font-mono text-xs text-slate-600">
+                Active Tab:{' '}
+                <strong className="text-[#0056FF]">{props.hangingNavTab.toUpperCase()}</strong>
+              </span>
+            </div>
+          </div>
+
+          {/* Interactive Controls */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-1">
+              {(['sm', 'md', 'lg'] as const).map((sz) => (
+                <button
+                  key={sz}
+                  type="button"
+                  onClick={() => props.setHangingNavSize(sz)}
+                  className={cn(
+                    'rounded px-2.5 py-1 font-mono text-[11px] font-bold uppercase transition-all select-none',
+                    props.hangingNavSize === sz
+                      ? 'bg-[#0056FF] text-white'
+                      : 'text-slate-600 hover:bg-slate-100',
+                  )}
+                >
+                  {sz}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1 font-mono text-xs">
+              <span className="text-slate-500">Badge:</span>
+              <button
+                type="button"
+                onClick={() => props.setHangingNavBadge((b) => Math.max(0, b - 1))}
+                className="rounded px-1.5 py-0.5 font-bold hover:bg-slate-100"
+              >
+                -
+              </button>
+              <span className="font-bold text-[#0056FF]">{props.hangingNavBadge}</span>
+              <button
+                type="button"
+                onClick={() => props.setHangingNavBadge((b) => b + 1)}
+                className="rounded px-1.5 py-0.5 font-bold hover:bg-slate-100"
+              >
+                +
+              </button>
+            </div>
+          </div>
         </div>
       );
 

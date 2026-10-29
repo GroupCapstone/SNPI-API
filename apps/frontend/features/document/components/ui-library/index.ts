@@ -15,3 +15,4 @@ export * from './line-tracker-toc';
 export * from './geometric-tag-primitives';
 export * from './docs-sticky-header';
 export * from './dual-mode-system-ui';
+export * from './hanging-tabs-nav';
