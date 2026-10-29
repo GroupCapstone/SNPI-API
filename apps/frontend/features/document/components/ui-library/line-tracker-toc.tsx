@@ -25,26 +25,26 @@ export function LineTrackerToc({
   return (
     <div className="sticky top-24 space-y-3 font-sans text-xs">
       {/* Table of contents title */}
-      <p className="font-mono text-[11px] font-bold tracking-wider text-[#A3B4F0] uppercase">
+      <p className="font-mono text-[11px] font-bold tracking-wider text-slate-400 uppercase">
         {title}
       </p>
 
-      {/* Cloudflare-inspired Track & Line Marker */}
+      {/* Cloudflare-inspired Track & Line Marker (Light Mode) */}
       <div className="relative pl-3">
         {/* Continuous Background Vertical Line */}
-        <div className="absolute top-1 bottom-1 left-0 w-[2px] rounded-full bg-[#0F357D]/50" />
+        <div className="absolute top-1 bottom-1 left-0 w-[2px] rounded-full bg-slate-200" />
 
         {/* Navigation list */}
-        <nav className="space-y-1.5">
+        <nav className="space-y-2">
           {items.map((item) => {
             const isActive = activeId === item.id;
             const isSubItem = item.level === 2 || item.level === 3;
 
             return (
               <div key={item.id} className="group relative">
-                {/* Active Sliding / Stationary Highlight Marker on the line */}
+                {/* Active Highlight Marker on the line */}
                 {isActive && (
-                  <span className="absolute top-1 bottom-1 -left-3 w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.6)]" />
+                  <span className="absolute top-0.5 bottom-0.5 -left-3 w-[2.5px] rounded-full bg-[#0056FF]" />
                 )}
 
                 <button
@@ -53,7 +53,7 @@ export function LineTrackerToc({
                   className={cn(
                     'block w-full text-left transition-colors duration-150',
                     isSubItem ? 'pl-2 text-[11px]' : 'text-xs',
-                    isActive ? 'font-bold text-[#0056FF]' : 'text-[#C4CEF8] hover:text-white',
+                    isActive ? 'font-bold text-[#0056FF]' : 'text-slate-600 hover:text-slate-950',
                   )}
                 >
                   <span className="truncate">{item.title}</span>

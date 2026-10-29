@@ -479,42 +479,18 @@ console.log(payload.data);`;
 
   return (
     <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900">
-      {/* Top Navigation Bar - Royal Blue & Sora Brand Identity */}
-      <header className="sticky top-0 z-50 w-full border-b border-[#0056FF]/20 bg-white/95 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+      {/* Top Header - Strictly Logo and Open API | Document (Zero extra clutter) */}
+      <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <BrandMark compact size={32} />
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-base font-extrabold tracking-tight text-[#0056FF]">
+            <div className="flex items-center gap-2 font-sans">
+              <span className="text-base font-extrabold tracking-tight text-slate-950">
                 Open API
               </span>
               <span className="text-slate-300">|</span>
-              <span className="rounded-md border border-[#0056FF]/30 bg-[#0056FF]/10 px-2 py-0.5 text-xs font-semibold text-[#0056FF]">
-                Document
-              </span>
+              <span className="text-base font-medium text-slate-600">Document</span>
             </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span className="hidden items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 font-mono text-xs text-[#0056FF] sm:inline-flex">
-              <span className="size-2 rounded-full bg-[#0056FF]" />
-              v0.1.0 · 193 Endpoints · Online
-            </span>
-            <Link
-              href="/document/design-system"
-              className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-[#0056FF] px-3 font-mono text-xs font-semibold text-white transition-all hover:bg-[#2277FF] hover:shadow-xs"
-            >
-              <span className="h-2 w-2 rounded-full bg-white" />
-              UI Library & Blueprint &rarr;
-            </Link>
-            <a href="#who-can-access">
-              <Button
-                size="sm"
-                className="h-8 bg-[#0056FF] px-3.5 text-xs font-medium text-white hover:bg-[#2277FF]"
-              >
-                Get Started
-              </Button>
-            </a>
           </div>
         </div>
       </header>
@@ -531,10 +507,9 @@ console.log(payload.data);`;
             <nav className="space-y-1 text-slate-600">
               <Link
                 href="/document/design-system"
-                className="mb-2 flex items-center justify-between rounded-xl border border-[#0056FF]/20 bg-[#0056FF]/10 p-2.5 font-mono text-xs font-bold text-[#0056FF] transition-colors hover:bg-[#0056FF] hover:text-white"
+                className="block py-1 text-xs font-semibold text-[#0056FF] transition-colors hover:underline"
               >
-                <span>UI Library & Blueprint</span>
-                <span className="text-xs">&rarr;</span>
+                UI Component Library &rarr;
               </Link>
               <a href="#changelogs" className="block py-1 transition-colors hover:text-[#023e8a]">
                 Change Logs
@@ -625,31 +600,6 @@ console.log(payload.data);`;
 
         {/* Right / Main Content Area */}
         <main className="min-w-0 flex-1 space-y-10 pb-16">
-          {/* Brand Concept Blueprint & Design System Hero Banner - Midnight Surge & Royal Blue */}
-          <div className="overflow-hidden rounded-2xl border border-[#0F357D] bg-gradient-to-r from-[#000B26] via-[#002D8A] to-[#0056FF] p-5 text-white shadow-xs">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="inline-block h-2 w-2 rounded-full bg-white" />
-                  <span className="font-mono text-xs font-bold tracking-wider text-white uppercase">
-                    Brand Color Blueprint · Royal Blue (#0056FF) & Sora Font
-                  </span>
-                </div>
-                <p className="text-xs text-[#E3E7FC]">
-                  01 Royal Blue (<code className="text-white">#0056FF</code>), 02 Azure Blue (
-                  <code className="text-white">#2277FF</code>), 03 Black, 04 Soft Lavender, 05
-                  White, and Futurewave Gradients.
-                </p>
-              </div>
-              <Link
-                href="/document/design-system"
-                className="inline-flex h-8 items-center justify-center rounded-xl bg-white px-4 font-mono text-xs font-bold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
-              >
-                Open Design System &rarr;
-              </Link>
-            </div>
-          </div>
-
           {/* Nextra-inspired Brand Header & Summary */}
           <div className="space-y-3 border-b border-slate-200 pb-8">
             <div className="flex items-center gap-2">
