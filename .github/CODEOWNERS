@@ -1,0 +1,32 @@
+# ==============================================================================
+# SNP-SMS Monorepo Code Ownership Policy
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# NOTE: The current GitHub account owner (@shiliaiwei) is provisional.
+# Ownership of this repository will be transferred to an institutional organization
+# or designated enterprise owner in the future.
+# ==============================================================================
+
+# Global fallback maintainer
+* @shiliaiwei
+
+# Monorepo Workspaces & Core Packages
+/packages/shared/ @shiliaiwei
+/packages/tsconfig/ @shiliaiwei
+/packages/eslint-config/ @shiliaiwei
+
+# Backend Modular Monolith (Express 5, MongoDB rs0, 47 Domains)
+/apps/backend/ @shiliaiwei
+/apps/backend/src/modules/ @shiliaiwei
+/apps/backend/infrastructure/ @shiliaiwei
+
+# Frontend App (Next.js App Router, React 19, Light Mode)
+/apps/frontend/ @shiliaiwei
+/apps/frontend/app/ @shiliaiwei
+/apps/frontend/features/ @shiliaiwei
+
+# CI/CD Workflows, Automation, and Security Governance
+/.github/ @shiliaiwei
+/.github/workflows/ @shiliaiwei
+/.github/scripts/ @shiliaiwei
+/scripts/ @shiliaiwei
