@@ -16,7 +16,7 @@ Before modifying code, packages, or repository structure, read:
 6. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
 7. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
 8. `.agents/skills/snp-sms-design-standards/SKILL.md`: Authoritative design standards and Dark UI specification (single folder design architecture, flat style, zero shadows, luminance depth, mathematical tokens).
-9. `.agents/skills/snp-sms-design-standards/I. 10 UI components.md`: Authoritative 10 core UI components specification and paradigms (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip).
+9. `.agents/skills/snp-sms-design-standards/10-ui-components.md`: Authoritative 10 core UI components specification and paradigms (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip).
 
 ---
 
@@ -130,11 +130,11 @@ All AI coding assistants (including Antigravity, Claude, Copilot, Codex, and sub
 
 Use these specific skill identifiers and command strings to instruct the agent:
 
-| Skill Code   | Specific Skill Folder & Filename                                 | Description                                                                                                                          | User Command String     |
-| :----------- | :--------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------- | :---------------------- |
-| `SKILL-ARCH` | `.agents/skills/snp-sms-monorepo-architecture/SKILL.md`          | Monorepo topology, 7-layer modular monolith, serverless/container hybrid model                                                       | `apply skill arch`      |
-| `SKILL-SEC`  | `.agents/skills/snp-sms-code-security-quality-policy/SKILL.md`   | Enterprise cryptographic hygiene, injection defenses, tenant scoping, zero emojis                                                    | `apply skill security`  |
-| `SKILL-DS`   | `.agents/skills/snp-sms-design-standards/SKILL.md`               | Single-folder Dark UI standards, flat components, zero shadows, luminance depth                                                      | `apply skill design`    |
-| `SKILL-UI10` | `.agents/skills/snp-sms-design-standards/I. 10 UI components.md` | 10 Core UI Components specification (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip) | `apply skill 10-ui`     |
-| `SKILL-LOG`  | `.agents/skills/snp-sms-changelog-workflow/SKILL.md`             | Real-time changelog synchronization with developer portal and CHANGELOG.md                                                           | `apply skill changelog` |
-| `SKILL-PUSH` | `.agents/skills/snp-sms-push-checkpoint-workflow/SKILL.md`       | Pre-push verification gate, automated testing, typechecking, checkpoint release tagging                                              | `apply skill push`      |
+| Skill Code   | Specific Skill Folder & Filename                               | Description                                                                                                                          | User Command String     |
+| :----------- | :------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------- | :---------------------- |
+| `SKILL-ARCH` | `.agents/skills/snp-sms-monorepo-architecture/SKILL.md`        | Monorepo topology, 7-layer modular monolith, serverless/container hybrid model                                                       | `apply skill arch`      |
+| `SKILL-SEC`  | `.agents/skills/snp-sms-code-security-quality-policy/SKILL.md` | Enterprise cryptographic hygiene, injection defenses, tenant scoping, zero emojis                                                    | `apply skill security`  |
+| `SKILL-DS`   | `.agents/skills/snp-sms-design-standards/SKILL.md`             | Single-folder Dark UI standards, flat components, zero shadows, luminance depth                                                      | `apply skill design`    |
+| `SKILL-UI10` | `.agents/skills/snp-sms-design-standards/10-ui-components.md`  | 10 Core UI Components specification (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip) | `apply skill 10-ui`     |
+| `SKILL-LOG`  | `.agents/skills/snp-sms-changelog-workflow/SKILL.md`           | Real-time changelog synchronization with developer portal and CHANGELOG.md                                                           | `apply skill changelog` |
+| `SKILL-PUSH` | `.agents/skills/snp-sms-push-checkpoint-workflow/SKILL.md`     | Pre-push verification gate, automated testing, typechecking, checkpoint release tagging                                              | `apply skill push`      |
