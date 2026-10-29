@@ -15,10 +15,10 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // verify.snpi.edu.kh -> rewrite root to /verify/certificates
+  // verify.snpi.edu.kh -> rewrite root to /verify
   if (host.startsWith('verify.snpi.edu.kh')) {
     if (pathname === '/') {
-      return NextResponse.rewrite(new URL('/verify/certificates', request.url));
+      return NextResponse.rewrite(new URL('/verify', request.url));
     }
   }
 
