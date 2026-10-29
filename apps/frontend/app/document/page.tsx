@@ -6,33 +6,7 @@ import Link from 'next/link';
 import { Check, Copy, ExternalLink, Lock, Server, Shield } from '@/components/icons';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { Button } from '@/components/ui/button';
-
-interface ChangeLogEntry {
-  version: string;
-  date: string;
-  description: string;
-}
-
-const CHANGE_LOGS: ChangeLogEntry[] = [
-  {
-    version: '0.1.0',
-    date: '29.10.2026',
-    description:
-      'Initial release of SNP-SMS 7-layer modular monolith API. 193 endpoints across 47 domain modules, MongoDB rs0 ACID transactions, and @snp/shared contracts.',
-  },
-  {
-    version: '0.0.9',
-    date: '15.10.2026',
-    description:
-      'Standardized multi-tenant scoping via X-Branch-Id header and implemented granular 356 RBAC permissions.',
-  },
-  {
-    version: '0.0.8',
-    date: '01.10.2026',
-    description:
-      'Added tuition fee billing, payment plan installment schedules, and cashier shift reconciliation.',
-  },
-];
+import { CHANGE_LOGS } from '@/features/document/changelog-data';
 
 interface AccessRoleSpec {
   role: string;
@@ -611,16 +585,26 @@ console.log(payload.data);`;
               <table className="w-full text-left font-mono">
                 <thead className="bg-slate-50 border-b border-slate-200 text-slate-700 text-[11px] font-bold">
                   <tr>
-                    <th className="p-2.5 w-24">Version</th>
-                    <th className="p-2.5 w-28">Date</th>
+                    <th className="p-2.5 w-20">Version</th>
+                    <th className="p-2.5 w-24">Date</th>
+                    <th className="p-2.5 w-24">Commit</th>
                     <th className="p-2.5">Description</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-slate-700">
                   {CHANGE_LOGS.map((log) => (
-                    <tr key={log.version} className="hover:bg-slate-50">
+                    <tr key={log.version + (log.commitHash || '')} className="hover:bg-slate-50">
                       <td className="p-2.5 text-[#023e8a] font-bold">{log.version}</td>
                       <td className="p-2.5 text-slate-500">{log.date}</td>
+                      <td className="p-2.5">
+                        {log.commitHash ? (
+                          <span className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 font-mono text-[10px]">
+                            {log.commitHash}
+                          </span>
+                        ) : (
+                          <span className="text-slate-400 text-[10px]">-</span>
+                        )}
+                      </td>
                       <td className="p-2.5 text-slate-700 leading-relaxed font-sans">{log.description}</td>
                     </tr>
                   ))}

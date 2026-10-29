@@ -9,9 +9,10 @@ These rules apply to every AI coding agent and human contributor working in the 
 Before modifying code, packages, or repository structure, read:
 
 1. `.agents/skills/snp-sms-monorepo-architecture/SKILL.md`: The authoritative monorepo and modular monolith architectural specification.
-2. `packages/shared/src/index.ts`: The single source of truth for permissions, core roles, implied scopes, and shared DTO contracts.
-3. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
-4. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
+2. `.agents/skills/snp-sms-changelog-workflow/SKILL.md`: Mandatory real-time changelog recording protocol.
+3. `packages/shared/src/index.ts`: The single source of truth for permissions, core roles, implied scopes, and shared DTO contracts.
+4. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
+5. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
 
 ---
 
@@ -62,4 +63,7 @@ npm run test
 
 # Verify production builds
 npm run build
+
+# Synchronize real-time changelog to live document portal and CHANGELOG.md
+npm run changelog:sync
 ```

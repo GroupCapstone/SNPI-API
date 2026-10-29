@@ -107,6 +107,9 @@ npm run dev:frontend
 # Start both servers concurrently
 npm run dev
 
+# Synchronize real-time changelog to live /document portal and CHANGELOG.md
+npm run changelog:sync
+
 # Quality gates
 npm run typecheck
 npm run test
