@@ -11,16 +11,16 @@ apps/frontend/
 ├── app/
 │   └── document/
 │       ├── fonts/
-│       │   ├── inter.ttf          # Primary TrueType font for docs
+│       │   ├── sora.woff2         # [PRIMARY] Active Sora variable font for docs
 │       │   └── README.md          # Architecture guide
 │       ├── layout.tsx             # Scoped font loader (next/font/local)
 │       ├── page.tsx               # API Documentation
 │       └── design-system/
-│           └── page.tsx           # Design Library & Brand Blueprint
+│           └── page.tsx           # Design Library & Royal Blue Brand Blueprint
 └── public/
     └── fonts/
         └── docs/
-            └── inter.ttf          # Static fallback copy
+            └── sora.woff2         # Static fallback copy
 ```
 
 ---
@@ -32,18 +32,22 @@ apps/frontend/
    ```tsx
    import localFont from 'next/font/local';
 
-   const docsInter = localFont({
-     src: './fonts/inter.ttf',
-     variable: '--font-docs-inter',
+   const docsSora = localFont({
+     src: './fonts/sora.woff2',
+     variable: '--font-docs-sora',
      display: 'swap',
    });
    ```
 
 2. **Zero Pollution of Admin Dashboard**:
-   - The CSS variable `--font-docs-inter` and scoped `--font-sans` override are attached **strictly to the root container of `DocumentLayout`**.
+   - The CSS variable `--font-docs-sora` and scoped `--font-sans` override are attached **strictly to the root container of `DocumentLayout`**.
    - Admin routes (`/(dashboard)/*`) and authentication (`/(auth)/*`) continue using system/Google Sans fonts in `apps/frontend/app/globals.css`.
 
-3. **Adding a New Custom Font for Docs**:
-   - Place your `.ttf`, `.woff2`, or `.otf` file in `apps/frontend/app/document/fonts/`.
-   - Update `src` in `apps/frontend/app/document/layout.tsx`.
-   - Next.js automatically self-hosts, preloads, and eliminates layout shift (CLS = 0).
+3. **Brand Color Blueprint**:
+   - 01: Royal Blue `#0056FF`
+   - 02: Azure Blue `#2277FF`
+   - 03: Black `#000000`
+   - 04: Soft Lavender `#E3E7FC`
+   - 05: White `#FFFFFF`
+   - Gradient 1: Futurewave (`#2277FF` -> `#AEC2FF`)
+   - Gradient 2: Midnight Surge (`#000B26` -> `#0056FF`)
