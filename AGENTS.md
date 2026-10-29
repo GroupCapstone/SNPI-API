@@ -10,9 +10,10 @@ Before modifying code, packages, or repository structure, read:
 
 1. `.agents/skills/snp-sms-monorepo-architecture/SKILL.md`: The authoritative monorepo and modular monolith architectural specification.
 2. `.agents/skills/snp-sms-changelog-workflow/SKILL.md`: Mandatory real-time changelog recording protocol.
-3. `packages/shared/src/index.ts`: The single source of truth for permissions, core roles, implied scopes, and shared DTO contracts.
-4. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
-5. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
+3. `.agents/skills/snp-sms-push-checkpoint-workflow/SKILL.md`: Mandatory GitHub push and checkpoint quality gate protocol.
+4. `packages/shared/src/index.ts`: The single source of truth for permissions, core roles, implied scopes, and shared DTO contracts.
+5. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
+6. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
 
 ---
 
