@@ -291,7 +291,7 @@ export const dashboardRoutePermissionRules: RoutePermissionRule[] = [
   },
   { pattern: /^\/audit-logs\/?$/, permissions: branchScopedView('audit') },
   {
-    pattern: /^\/settings(?:\/system-info)?\/?$/,
+    pattern: /^\/settings(?:\/(?:system-info|components))?\/?$/,
     permissions: ['setting.view.all_branches', 'setting.edit.all_branches'],
   },
 ];

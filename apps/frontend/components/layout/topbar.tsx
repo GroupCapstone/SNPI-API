@@ -5,6 +5,7 @@ import { Bell, Menu, Search } from '@/components/icons';
 
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { Tooltip } from '@/components/ui/tooltip';
 import { LanguageSwitcher } from '@/components/shared/language-switcher';
 import { UserProfileMenu } from '@/features/auth/components/user-profile-menu';
 import { useTranslation } from '@/lib/i18n';
@@ -79,20 +80,26 @@ export const Topbar = ({ onOpenNavigation }: TopbarProps) => {
           {/* User Utility Actions: Theme Toggle, Language Switcher, Notifications, User Profile */}
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             {/* Theme Toggle (Dark / Light) */}
-            <ThemeToggle />
+            <Tooltip content="Toggle Light / Dark UI" position="bottom">
+              <ThemeToggle />
+            </Tooltip>
 
             {/* Language Switcher placed directly adjacent to Notification */}
-            <LanguageSwitcher variant="pill" />
+            <Tooltip content="Switch Language (EN / KH)" position="bottom">
+              <LanguageSwitcher variant="pill" />
+            </Tooltip>
 
             {/* Notifications Button */}
-            <Button
-              aria-label={t.topbar.notifications}
-              size="icon"
-              variant="ghost"
-              className="size-9 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            >
-              <Bell className="size-4" />
-            </Button>
+            <Tooltip content={t.topbar.notifications} position="bottom">
+              <Button
+                aria-label={t.topbar.notifications}
+                size="icon"
+                variant="ghost"
+                className="size-9 rounded-lg text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-zinc-400 dark:hover:bg-[#202024] dark:hover:text-zinc-100"
+              >
+                <Bell className="size-4" />
+              </Button>
+            </Tooltip>
 
             {/* Real Authenticated User Profile Menu */}
             <UserProfileMenu />
