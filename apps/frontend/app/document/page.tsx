@@ -7,11 +7,7 @@ import { Check, Copy, Server } from '@/components/icons';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { Button } from '@/components/ui/button';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
-import {
-  GeometricAsterisk,
-  GeometricHeaderStamp,
-  DocsStickyHeader,
-} from '@/features/document/components/ui-library';
+import { GeometricHeaderStamp, DocsStickyHeader } from '@/features/document/components/ui-library';
 import { cn } from '@/lib/utils';
 
 interface AccessRoleSpec {
@@ -500,10 +496,9 @@ console.log(payload.data);`;
             <nav className="space-y-1.5 text-slate-600">
               <Link
                 href="/document/design-system"
-                className="inline-flex items-center gap-1.5 border-2 border-[#0056FF] bg-[#0056FF] px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-xs transition-all select-none [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)] hover:bg-[#0044D6]"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-[#0056FF] bg-[#0056FF] px-3.5 py-2 text-xs font-bold tracking-wider text-white uppercase shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)] transition-all select-none hover:bg-[#0040C0]"
               >
                 <span>UI Library</span>
-                <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
               </Link>
               <a href="#changelogs" className="block py-1 transition-colors hover:text-[#0056FF]">
                 Change Logs
@@ -598,13 +593,13 @@ console.log(payload.data);`;
           <div className="space-y-3 border-b border-slate-200 pb-8">
             <div className="flex items-center gap-2">
               <span className="flex items-center gap-2 font-mono text-xl font-bold tracking-tight text-slate-950">
-                <span className="text-[#0056FF]">✦</span> SNP-SMS Documentation
+                SNP-SMS Documentation
               </span>
             </div>
             <p className="max-w-3xl font-sans text-sm leading-relaxed text-slate-600">
               <Link
                 href="/document"
-                className="font-medium text-slate-900 underline decoration-slate-400 underline-offset-4 hover:decoration-[#0056FF]"
+                className="font-medium text-slate-900 transition-colors hover:text-[#0056FF]"
               >
                 SNP-SMS Open API
               </Link>{' '}
@@ -667,38 +662,56 @@ console.log(payload.data);`;
                 <li>
                   <Link
                     href="/document/design-system"
-                    className="font-semibold text-emerald-700 hover:underline"
+                    className="font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
                   >
                     UI Component Library & Design System Showcase &rarr;
                   </Link>
                 </li>
                 <li>
-                  <a href="#introduction" className="text-[#0056FF] hover:underline">
+                  <a
+                    href="#introduction"
+                    className="text-[#0056FF] transition-colors hover:text-[#0040C0]"
+                  >
                     Introduction (Purpose, Scope, Overall API)
                   </a>
                 </li>
                 <li>
-                  <a href="#who-can-access" className="text-[#0056FF] hover:underline">
+                  <a
+                    href="#who-can-access"
+                    className="text-[#0056FF] transition-colors hover:text-[#0040C0]"
+                  >
                     Who Can Access The API (RBAC Roles & Matrix)
                   </a>
                 </li>
                 <li>
-                  <a href="#endpoints-available" className="text-[#0056FF] hover:underline">
+                  <a
+                    href="#endpoints-available"
+                    className="text-[#0056FF] transition-colors hover:text-[#0040C0]"
+                  >
                     What Other Developers Can Get (Read & Query Endpoints)
                   </a>
                 </li>
                 <li>
-                  <a href="#protected-endpoints" className="text-[#0056FF] hover:underline">
+                  <a
+                    href="#protected-endpoints"
+                    className="text-[#0056FF] transition-colors hover:text-[#0040C0]"
+                  >
                     What Endpoints Are Protected & How (Mutation Defense Guardrails)
                   </a>
                 </li>
                 <li>
-                  <a href="#status-codes" className="text-[#0056FF] hover:underline">
+                  <a
+                    href="#status-codes"
+                    className="text-[#0056FF] transition-colors hover:text-[#0040C0]"
+                  >
                     HTTP Status Codes Standard
                   </a>
                 </li>
                 <li>
-                  <a href="#api-doc" className="text-[#0056FF] hover:underline">
+                  <a
+                    href="#api-doc"
+                    className="text-[#0056FF] transition-colors hover:text-[#0040C0]"
+                  >
                     Interactive API Documentation & Explorer
                   </a>
                 </li>
@@ -997,17 +1010,17 @@ console.log(payload.data);`;
                   <div
                     key={item.id}
                     id={item.id}
-                    className="scroll-mt-24 space-y-4 border-2 border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_14px,100%_100%,0_100%)] hover:border-[#0056FF] hover:shadow-lg"
+                    className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40 hover:shadow-lg"
                   >
-                    <div className="flex flex-col justify-between gap-3 border-b-2 border-slate-100 pb-4 sm:flex-row sm:items-center">
+                    <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span
                             className={cn(
-                              'border-2 px-2 py-0.5 font-mono text-[10px] font-black tracking-wider uppercase [clip-path:polygon(0_0,calc(100%-5px)_0,100%_5px,100%_100%,0_100%)]',
+                              'rounded-md px-2 py-0.5 font-mono text-[10px] font-black tracking-wider uppercase',
                               item.method === 'GET'
-                                ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                                : 'border-emerald-600 bg-emerald-600 text-white',
+                                ? 'border border-[#0056FF]/30 bg-[#0056FF] text-white shadow-xs'
+                                : 'border border-emerald-600/30 bg-emerald-600 text-white shadow-xs',
                             )}
                           >
                             {item.method}
@@ -1025,7 +1038,7 @@ console.log(payload.data);`;
                           type="button"
                           onClick={() => handleTest(item)}
                           disabled={isTestingThis}
-                          className="inline-flex h-8 items-center gap-1.5 border-2 border-slate-300 bg-white px-3 font-mono text-xs font-bold text-slate-800 shadow-xs transition-all [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)] hover:border-[#0056FF] hover:text-[#0056FF] disabled:opacity-50"
+                          className="inline-flex h-8 items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 font-mono text-xs font-bold text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all hover:border-[#0056FF] hover:text-[#0056FF] disabled:opacity-50"
                         >
                           <Server className="size-3.5 text-[#0056FF]" />
                           <span>{isTestingThis ? 'Testing...' : 'Test Live'}</span>
@@ -1035,10 +1048,10 @@ console.log(payload.data);`;
 
                     {/* Metadata Badges */}
                     <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-                      <div className="border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                      <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
                         Permission: <strong className="text-amber-700">{item.permission}</strong>
                       </div>
-                      <div className="border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                      <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
                         Scope Header:{' '}
                         <strong className={item.scopeHeader ? 'text-[#0056FF]' : 'text-slate-400'}>
                           {item.scopeHeader ? 'X-Branch-Id Required' : 'None'}
@@ -1048,7 +1061,7 @@ console.log(payload.data);`;
 
                     {/* Live Test Output Display */}
                     {liveRes && (
-                      <div className="space-y-1.5 border-2 border-slate-200 bg-slate-50 p-3 font-mono text-xs [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
+                      <div className="space-y-1.5 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3 font-mono text-xs shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
                         <div className="flex items-center justify-between">
                           <span
                             className={
@@ -1061,24 +1074,24 @@ console.log(payload.data);`;
                           </span>
                           <span className="text-slate-500">{liveRes.latency}ms</span>
                         </div>
-                        <pre className="max-h-32 overflow-y-auto border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
+                        <pre className="max-h-32 overflow-y-auto rounded-lg border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
                           {JSON.stringify(liveRes.body, null, 2)}
                         </pre>
                       </div>
                     )}
 
-                    {/* Code Snippet Card - 100% Light Mode & Geometric Shape */}
-                    <div className="overflow-hidden border-2 border-slate-200 bg-slate-50/50 shadow-xs [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
-                      <div className="flex items-center justify-between border-b-2 border-slate-200 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
+                    {/* Code Snippet Card - 100% Light Mode */}
+                    <div className="overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
+                      <div className="flex items-center justify-between border-b border-slate-200/80 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
                         <div className="flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={() => setCodeType('curl')}
                             className={cn(
-                              'border-2 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]',
+                              'rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none',
                               codeType === 'curl'
-                                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                                : 'border-slate-300 bg-white text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]',
+                                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_6px_rgba(0,86,255,0.2)]'
+                                : 'border border-slate-200 bg-white text-slate-600 hover:border-[#0056FF]/40 hover:text-[#0056FF]',
                             )}
                           >
                             cURL
@@ -1087,10 +1100,10 @@ console.log(payload.data);`;
                             type="button"
                             onClick={() => setCodeType('ts')}
                             className={cn(
-                              'border-2 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]',
+                              'rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none',
                               codeType === 'ts'
-                                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                                : 'border-slate-300 bg-white text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]',
+                                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_6px_rgba(0,86,255,0.2)]'
+                                : 'border border-slate-200 bg-white text-slate-600 hover:border-[#0056FF]/40 hover:text-[#0056FF]',
                             )}
                           >
                             TypeScript
@@ -1099,10 +1112,10 @@ console.log(payload.data);`;
                             type="button"
                             onClick={() => setCodeType('json')}
                             className={cn(
-                              'border-2 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]',
+                              'rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none',
                               codeType === 'json'
-                                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                                : 'border-slate-300 bg-white text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]',
+                                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_6px_rgba(0,86,255,0.2)]'
+                                : 'border border-slate-200 bg-white text-slate-600 hover:border-[#0056FF]/40 hover:text-[#0056FF]',
                             )}
                           >
                             Response
@@ -1112,7 +1125,7 @@ console.log(payload.data);`;
                         <button
                           type="button"
                           onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
-                          className="flex items-center gap-1 border-2 border-slate-300 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-xs transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)] hover:border-[#0056FF] hover:text-[#0056FF]"
+                          className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-xs transition-all select-none hover:border-[#0056FF] hover:text-[#0056FF]"
                         >
                           {copiedId === item.id ? (
                             <>

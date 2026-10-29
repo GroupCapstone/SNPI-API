@@ -23,27 +23,25 @@ export function LibraryFab({
 
   const variantStyles = {
     primary:
-      'bg-[#0056FF] text-white hover:bg-[#0040C0] border-2 border-[#0056FF] rounded-xl [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)] shadow-md active:scale-95',
+      'bg-[#0056FF] text-white hover:bg-[#0040C0] border border-[#0056FF] shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),_0_8px_20px_rgba(0,86,255,0.25)] active:scale-95',
     secondary:
-      'bg-slate-900 text-white hover:bg-black border-2 border-slate-900 rounded-xl [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)] shadow-md active:scale-95',
+      'bg-slate-900 text-white hover:bg-black border border-slate-900 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),_0_8px_20px_rgba(0,0,0,0.2)] active:scale-95',
     surface:
-      'bg-white text-slate-800 hover:bg-slate-50 border-2 border-slate-200 rounded-xl hover:border-[#0056FF] shadow-xs active:scale-95',
+      'bg-white text-slate-800 hover:bg-slate-50 border border-slate-200/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_4px_12px_rgba(0,0,0,0.04)] hover:border-[#0056FF]/40 active:scale-95',
   };
 
   const sizeStyles = {
     default: isExtended
-      ? 'h-12 px-5 text-sm font-semibold gap-2.5 rounded-full'
-      : 'h-12 w-12 rounded-full',
-    small: isExtended
-      ? 'h-10 px-4 text-xs font-semibold gap-2 rounded-full'
-      : 'h-10 w-10 rounded-full',
+      ? 'h-12 px-5 text-sm font-bold gap-2.5 rounded-2xl'
+      : 'h-12 w-12 rounded-2xl',
+    small: isExtended ? 'h-10 px-4 text-xs font-bold gap-2 rounded-xl' : 'h-10 w-10 rounded-xl',
   };
 
   return (
     <button
       type="button"
       className={cn(
-        'inline-flex items-center justify-center shadow-xs transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:outline-none',
+        'inline-flex items-center justify-center transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:outline-none',
         variantStyles[variant],
         sizeStyles[size],
         className,

@@ -24,7 +24,6 @@ import {
   LibraryCardFooter,
   COMPONENT_LIBRARY_REGISTRY,
   GeometricButton,
-  GeometricAsterisk,
   GeometricHeaderStamp,
   DocsStickyHeader,
 } from '@/features/document/components/ui-library';
@@ -141,16 +140,16 @@ export default function DesignSystemPage() {
                         setActiveSectionId('component-gallery');
                       }}
                       className={cn(
-                        'flex w-full items-center justify-between rounded-lg border-2 px-3 py-2 text-left font-medium transition-all select-none',
+                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
                         activeTab === 'catalog'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)]'
-                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
+                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <span
                           className={cn(
-                            'px-1.5 py-0.5 font-mono text-[10px] font-black',
+                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
                             activeTab === 'catalog'
                               ? 'bg-[#000B26] text-white'
                               : 'bg-slate-100 text-slate-600',
@@ -160,9 +159,6 @@ export default function DesignSystemPage() {
                         </span>
                         <span className="tracking-wider uppercase">Catalog</span>
                       </div>
-                      {activeTab === 'catalog' && (
-                        <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
-                      )}
                     </button>
 
                     <button
@@ -172,16 +168,16 @@ export default function DesignSystemPage() {
                         setActiveSectionId('interactive-stage');
                       }}
                       className={cn(
-                        'flex w-full items-center justify-between rounded-lg border-2 px-3 py-2 text-left font-medium transition-all select-none',
+                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
                         activeTab === 'playground'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)]'
-                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
+                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <span
                           className={cn(
-                            'px-1.5 py-0.5 font-mono text-[10px] font-black',
+                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
                             activeTab === 'playground'
                               ? 'bg-[#000B26] text-white'
                               : 'bg-slate-100 text-slate-600',
@@ -191,9 +187,6 @@ export default function DesignSystemPage() {
                         </span>
                         <span className="tracking-wider uppercase">Playground</span>
                       </div>
-                      {activeTab === 'playground' && (
-                        <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
-                      )}
                     </button>
 
                     <button
@@ -203,16 +196,16 @@ export default function DesignSystemPage() {
                         setActiveSectionId('brand-blueprint');
                       }}
                       className={cn(
-                        'flex w-full items-center justify-between rounded-lg border-2 px-3 py-2 text-left font-medium transition-all select-none',
+                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
                         activeTab === 'blueprint'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)]'
-                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
+                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
                       )}
                     >
                       <div className="flex items-center gap-2">
                         <span
                           className={cn(
-                            'px-1.5 py-0.5 font-mono text-[10px] font-black',
+                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
                             activeTab === 'blueprint'
                               ? 'bg-[#000B26] text-white'
                               : 'bg-slate-100 text-slate-600',
@@ -222,15 +215,12 @@ export default function DesignSystemPage() {
                         </span>
                         <span className="tracking-wider uppercase">Brand Colors</span>
                       </div>
-                      {activeTab === 'blueprint' && (
-                        <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
-                      )}
                     </button>
                   </div>
                 </div>
 
                 {/* 10 Core UI Components List */}
-                <div className="border-t-2 border-slate-200 pt-4">
+                <div className="border-t border-slate-200/80 pt-4">
                   <div className="space-y-1">
                     {COMPONENT_LIBRARY_REGISTRY.map((comp) => {
                       const isSelected =
@@ -245,14 +235,14 @@ export default function DesignSystemPage() {
                             setActiveSectionId('interactive-stage');
                           }}
                           className={cn(
-                            'flex w-full items-center justify-between rounded-md border-2 px-2.5 py-1.5 text-left text-xs transition-all select-none',
+                            'flex w-full items-center justify-between rounded-lg border px-2.5 py-1.5 text-left text-xs transition-all select-none',
                             isSelected
-                              ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]'
+                              ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_8px_rgba(0,86,255,0.2)]'
                               : 'border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
                           <span className="truncate">{comp.name}</span>
-                          {isSelected && <GeometricAsterisk className="h-3 w-3 text-white" />}
+                          {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-white" />}
                         </button>
                       );
                     })}
@@ -264,17 +254,10 @@ export default function DesignSystemPage() {
 
           {/* COLUMN 2: Center Main Documentation & Stage (Cloudflare Docs Style) */}
           <main className="space-y-10 lg:col-span-6">
-            {/* Header Anchor Section (Matching Image 2: "🔗 Access on Workers: how it works") */}
+            {/* Header Anchor Section */}
             <div id="how-it-works" className="space-y-4">
-              <div className="flex flex-col gap-4 border-b-2 border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2">
-                  <a
-                    href="#how-it-works"
-                    className="font-mono text-xl text-[#0056FF] hover:underline"
-                    title="Direct Section Link"
-                  >
-                    🔗
-                  </a>
                   <h1 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                     SNP-SMS Design System: how it works
                   </h1>
@@ -290,15 +273,15 @@ export default function DesignSystemPage() {
                 the Royal Blue and Sora standards.
               </p>
 
-              {/* Architectural Token Flow Diagram Card (Matching Image 2 Diagram with 2px lines & chamfer cut) */}
+              {/* Architectural Token Flow Diagram Card */}
               <div
                 id="architecture-flow"
-                className="overflow-hidden border-2 border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 [clip-path:polygon(0_0,calc(100%-16px)_0,100%_16px,100%_100%,0_100%)] hover:border-[#0056FF]"
+                className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40"
               >
                 <div className="flex flex-col items-center justify-around gap-4 sm:flex-row">
                   {/* Node 1: Developer */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center border-2 border-slate-300 bg-slate-50 text-slate-800 [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
                       <span className="font-mono text-base font-bold">DEV</span>
                     </div>
                     <span className="font-sans text-xs font-semibold tracking-wider text-slate-800 uppercase">
@@ -314,9 +297,8 @@ export default function DesignSystemPage() {
 
                   {/* Node 2: Royal Blue Tokens */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="relative flex h-14 w-14 items-center justify-center border-2 border-[#0056FF] bg-[#0056FF] text-white shadow-md [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
+                    <div className="relative flex h-14 w-14 items-center justify-center rounded-xl border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.25)]">
                       <span className="font-mono text-[11px] font-bold">#0056FF</span>
-                      <GeometricAsterisk className="absolute -top-1 -right-1 h-3.5 w-3.5 text-white" />
                     </div>
                     <span className="font-sans text-xs font-black tracking-wider text-[#0056FF] uppercase">
                       Royal Blue
@@ -331,7 +313,7 @@ export default function DesignSystemPage() {
 
                   {/* Node 3: Flat Component */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center border-2 border-slate-300 bg-slate-50 text-slate-800 [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
                       <span className="font-mono text-base font-bold">UI 10</span>
                     </div>
                     <span className="font-sans text-xs font-semibold tracking-wider text-slate-800 uppercase">
@@ -372,8 +354,8 @@ export default function DesignSystemPage() {
                   </GeometricButton>
                 </div>
 
-                {/* Interactive Stage Card (Geometric 2px lines & chamfer cut) */}
-                <div className="overflow-hidden border-2 border-slate-200 bg-white shadow-xs transition-all duration-300 [clip-path:polygon(0_0,calc(100%-16px)_0,100%_16px,100%_100%,0_100%)] hover:border-[#0056FF]">
+                {/* Interactive Stage Card */}
+                <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40">
                   {/* Stage Body */}
                   <div className="flex min-h-[220px] items-center justify-center bg-slate-50/70 p-8">
                     {renderActivePlaygroundComponent({
@@ -400,13 +382,12 @@ export default function DesignSystemPage() {
                     })}
                   </div>
 
-                  {/* Action Ribbon: Code Toggle & Copy (Geometric Buttons) */}
-                  <div className="flex items-center justify-between border-t-2 border-slate-200 bg-white px-4 py-2.5">
+                  {/* Action Ribbon: Code Toggle & Copy */}
+                  <div className="flex items-center justify-between border-t border-slate-200/80 bg-white px-4 py-2.5">
                     <GeometricButton
                       size="sm"
                       variant={showCode ? 'primary' : 'outline'}
                       isActive={showCode}
-                      showAsterisk
                       onClick={() => setShowCode(!showCode)}
                     >
                       <Code className="h-3.5 w-3.5" />
@@ -431,7 +412,7 @@ export default function DesignSystemPage() {
 
                   {/* Collapsible Source Code View */}
                   {showCode && (
-                    <div className="border-t-2 border-slate-200 bg-slate-900 p-4">
+                    <div className="border-t border-slate-200/80 bg-slate-900 p-4">
                       <pre className="overflow-x-auto font-mono text-xs text-slate-100">
                         <code>{activeDoc.codeSnippet}</code>
                       </pre>
@@ -439,14 +420,14 @@ export default function DesignSystemPage() {
                   )}
                 </div>
 
-                {/* Component Props Table (Geometric 2px lines & chamfer cut) */}
+                {/* Component Props Table */}
                 <div className="space-y-2">
                   <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
                     Props Interface
                   </h3>
-                  <div className="overflow-x-auto border-2 border-slate-200 bg-white [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
+                  <div className="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)] backdrop-blur-md">
                     <table className="w-full text-left font-sans text-xs">
-                      <thead className="border-b-2 border-slate-200 bg-slate-50 text-slate-600">
+                      <thead className="border-b border-slate-200/80 bg-slate-50 text-slate-600">
                         <tr>
                           <th className="px-4 py-2.5 font-bold tracking-wider uppercase">Prop</th>
                           <th className="px-4 py-2.5 font-bold tracking-wider uppercase">Type</th>
@@ -486,15 +467,8 @@ export default function DesignSystemPage() {
             )}
 
             {/* Design Principles Section */}
-            <section id="design-principles" className="space-y-4 border-t border-slate-200 pt-8">
+            <section id="design-principles" className="space-y-4 border-t border-slate-200/80 pt-8">
               <div className="flex items-center gap-2">
-                <a
-                  href="#design-principles"
-                  className="font-mono text-lg text-[#0056FF] hover:underline"
-                  title="Direct Section Link"
-                >
-                  🔗
-                </a>
                 <h2 className="font-sans text-xl font-bold text-slate-950">
                   Flat Design & Zero Shadows Policy
                 </h2>
@@ -661,7 +635,7 @@ function renderActivePlaygroundComponent(props: {
     case 'dialog':
       return (
         <div className="flex items-center justify-center py-6">
-          <GeometricButton variant="outline" showAsterisk onClick={() => props.setDialogOpen(true)}>
+          <GeometricButton variant="outline" onClick={() => props.setDialogOpen(true)}>
             <span>Trigger Decision Dialog</span>
           </GeometricButton>
         </div>
@@ -670,7 +644,7 @@ function renderActivePlaygroundComponent(props: {
     case 'bottom-nav':
       return (
         <div className="w-full max-w-sm py-4">
-          <div className="overflow-hidden border-2 border-slate-200 bg-white p-2 shadow-xs [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
             <div className="flex items-center justify-around">
               {props.bottomNavItems.map((item) => {
                 const isActive = props.bottomNavTab === item.id;
@@ -681,9 +655,9 @@ function renderActivePlaygroundComponent(props: {
                     type="button"
                     onClick={() => props.setBottomNavTab(item.id)}
                     className={cn(
-                      'flex flex-col items-center gap-1 rounded-md border-2 px-4 py-2 transition-all select-none',
+                      'flex flex-col items-center gap-1 rounded-xl border px-4 py-2 transition-all select-none',
                       isActive
-                        ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]'
+                        ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_8px_rgba(0,86,255,0.2)]'
                         : 'border-transparent text-slate-600 hover:border-slate-200 hover:text-slate-950',
                     )}
                   >
@@ -738,9 +712,9 @@ function renderActivePlaygroundComponent(props: {
     case 'card':
       return (
         <div className="w-full max-w-xs py-4">
-          <LibraryCard className="border-2 border-slate-200 bg-white shadow-xs [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
+          <LibraryCard className="rounded-2xl border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
             <LibraryCardMedia className="relative flex h-24 w-full items-start justify-between rounded-lg bg-gradient-to-r from-blue-100 to-[#0056FF] p-3">
-              <span className="border-2 border-[#0056FF] bg-[#0056FF] px-2 py-0.5 font-sans text-[10px] font-bold text-white [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]">
+              <span className="rounded-full border border-white/40 bg-[#0056FF] px-2.5 py-0.5 font-sans text-[10px] font-bold text-white shadow-xs">
                 STEM
               </span>
             </LibraryCardMedia>
@@ -752,7 +726,7 @@ function renderActivePlaygroundComponent(props: {
                 Sensors, telemetry & embedded systems.
               </LibraryCardDescription>
             </LibraryCardHeader>
-            <LibraryCardFooter className="flex items-center justify-between border-t-2 border-slate-100 pt-3">
+            <LibraryCardFooter className="flex items-center justify-between border-t border-slate-100 pt-3">
               <span className="font-sans text-xs font-bold text-slate-600">3 CREDITS</span>
               <GeometricButton
                 size="sm"
@@ -771,7 +745,7 @@ function renderActivePlaygroundComponent(props: {
     case 'dropdown':
       return (
         <div className="w-full max-w-xs py-6">
-          <select className="h-10 w-full border-2 border-slate-200 bg-white px-3 font-sans text-xs text-slate-800 [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)] focus:border-[#0056FF] focus:outline-none">
+          <select className="h-10 w-full rounded-xl border border-slate-200/80 bg-white/90 px-3 font-sans text-xs text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)] focus:border-[#0056FF] focus:outline-none">
             <option value="sora">Sora — Primary Brand Typography</option>
             <option value="inter">Inter — UI Sans</option>
             <option value="roboto">Roboto — M3 Material</option>
@@ -784,14 +758,14 @@ function renderActivePlaygroundComponent(props: {
         <div className="flex items-center justify-center gap-3 py-6">
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center border-2 border-slate-300 bg-white text-sm font-bold text-slate-800 shadow-xs transition-all [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)] hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200/80 bg-white/90 text-sm font-bold text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
             title="Move Tool (Shortcut: V)"
           >
             V
           </button>
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center border-2 border-slate-300 bg-white text-sm font-bold text-slate-800 shadow-xs transition-all [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)] hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200/80 bg-white/90 text-sm font-bold text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
             title="Hand Tool (Shortcut: H)"
           >
             H

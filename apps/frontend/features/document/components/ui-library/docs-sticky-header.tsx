@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { BrandMark } from '@/components/shared/brand-mark';
-import { GeometricAsterisk } from './geometric-tag-primitives';
 import { cn } from '@/lib/utils';
 
 export interface DocsStickyHeaderProps {
@@ -12,8 +11,8 @@ export interface DocsStickyHeaderProps {
 
 export function DocsStickyHeader({ activeTab }: DocsStickyHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full border-b-2 border-slate-200 bg-white/95 backdrop-blur-md">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/85 shadow-[0_1px_8px_rgba(0,0,0,0.03)] backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Left: Brand Identity */}
         <div className="flex items-center gap-3.5">
           <BrandMark compact size={36} />
@@ -22,42 +21,38 @@ export function DocsStickyHeader({ activeTab }: DocsStickyHeaderProps) {
               SNP-SMS
             </span>
             <span className="h-4 w-[2px] bg-[#0056FF]" />
-            <span className="font-sans text-sm font-bold tracking-wider text-slate-500 uppercase">
+            <span className="font-sans text-xs font-bold tracking-wider text-slate-500 uppercase">
               Docs
             </span>
           </div>
         </div>
 
-        {/* Right / Center: Sticky Navigation Menu (Open API / Document & Library) */}
-        <nav aria-label="Documentation Switcher" className="flex items-center gap-2 sm:gap-3">
+        {/* Right / Center: Sticky Navigation Menu (Apple Liquid Glass Style) */}
+        <nav aria-label="Documentation Switcher" className="flex items-center gap-2">
           {/* Document / Open API Link */}
           <Link
             href="/document"
             className={cn(
-              'inline-flex h-10 items-center justify-center gap-2 border-2 px-4 font-sans text-xs font-bold tracking-wider uppercase transition-all select-none sm:text-sm',
-              '[clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]',
+              'inline-flex h-9 items-center justify-center rounded-xl px-4 font-sans text-xs font-bold tracking-wider uppercase transition-all select-none',
               activeTab === 'document'
-                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-sm'
-                : 'border-slate-300 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),_0_4px_12px_rgba(0,86,255,0.2)]'
+                : 'border border-slate-200/90 bg-white/70 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)] hover:border-[#0056FF]/40 hover:bg-white hover:text-[#0056FF]',
             )}
           >
-            <span>Open API</span>
-            {activeTab === 'document' && <GeometricAsterisk className="h-3.5 w-3.5 text-white" />}
+            Open API
           </Link>
 
           {/* Library / Design System Link */}
           <Link
             href="/document/design-system"
             className={cn(
-              'inline-flex h-10 items-center justify-center gap-2 border-2 px-4 font-sans text-xs font-bold tracking-wider uppercase transition-all select-none sm:text-sm',
-              '[clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]',
+              'inline-flex h-9 items-center justify-center rounded-xl px-4 font-sans text-xs font-bold tracking-wider uppercase transition-all select-none',
               activeTab === 'library'
-                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-sm'
-                : 'border-slate-300 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),_0_4px_12px_rgba(0,86,255,0.2)]'
+                : 'border border-slate-200/90 bg-white/70 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)] hover:border-[#0056FF]/40 hover:bg-white hover:text-[#0056FF]',
             )}
           >
-            <span>Library</span>
-            {activeTab === 'library' && <GeometricAsterisk className="h-3.5 w-3.5 text-white" />}
+            Library
           </Link>
         </nav>
       </div>

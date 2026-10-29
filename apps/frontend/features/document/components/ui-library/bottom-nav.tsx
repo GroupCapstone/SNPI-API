@@ -23,7 +23,7 @@ export function LibraryBottomNav({ items, activeId, onSelect, className }: Libra
     <nav
       aria-label="Bottom Navigation Demo"
       className={cn(
-        'flex h-16 w-full items-center justify-around rounded-xl border border-slate-200 bg-white px-2 text-slate-800 shadow-xs',
+        'flex h-16 w-full items-center justify-around rounded-2xl border border-slate-200/80 bg-white/90 px-2 text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_12px_rgba(0,0,0,0.03)] backdrop-blur-xl',
         className,
       )}
     >
@@ -37,10 +37,10 @@ export function LibraryBottomNav({ items, activeId, onSelect, className }: Libra
             type="button"
             onClick={() => onSelect(item.id)}
             className={cn(
-              'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-lg px-3 py-1 text-xs font-normal transition-colors focus-visible:outline-none',
+              'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-xl px-3.5 py-1 text-xs font-semibold transition-all select-none focus-visible:outline-none',
               isActive
-                ? 'bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900',
+                ? 'bg-[#0056FF] text-white shadow-[0_2px_8px_rgba(0,86,255,0.25)]'
+                : 'text-slate-600 hover:bg-slate-100/60 hover:text-slate-900',
             )}
           >
             <div className="relative">
