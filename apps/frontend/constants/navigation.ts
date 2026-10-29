@@ -653,6 +653,13 @@ export const navigationGroups: NavigationGroup[] = [
         icon: Settings2,
         permission: 'setting.view.all_branches',
       },
+      {
+        label: '10 UI Components',
+        labelKh: 'ការណែនាំសមាសភាគ UI',
+        href: '/settings/components',
+        icon: Layers,
+        permission: 'setting.view.all_branches',
+      },
     ],
   },
 ];

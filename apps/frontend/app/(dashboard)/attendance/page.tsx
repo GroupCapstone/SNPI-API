@@ -3,6 +3,7 @@
 import * as React from 'react';
 
 import { Badge } from '@/components/ui/badge';
+import { Chip } from '@/components/ui/chip';
 import { AttendanceSheet } from '@/features/attendance/components/attendance-sheet';
 import { MonthlyAttendanceMatrix } from '@/features/attendance/components/monthly-attendance-matrix';
 import { PermissionGuard } from '@/features/auth/components/permission-guard';
@@ -35,30 +36,18 @@ export default function AttendancePage() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex rounded-lg border border-slate-200 bg-white p-0.5">
-              <button
-                type="button"
-                onClick={() => setActiveTab('daily')}
-                className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  activeTab === 'daily'
-                    ? 'bg-[#023e8a] text-white shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {isKhmer ? 'កត់វត្តមានប្រចាំថ្ងៃ' : 'Daily Roll-Call'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('monthly')}
-                className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  activeTab === 'monthly'
-                    ? 'bg-[#023e8a] text-white shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {isKhmer ? 'តារាងវត្តមានប្រចាំខែ (៣១ ថ្ងៃ)' : 'Monthly Matrix (31-Day)'}
-              </button>
-            </div>
+            <Chip
+              active={activeTab === 'daily'}
+              onClick={() => setActiveTab('daily')}
+            >
+              {isKhmer ? 'កត់វត្តមានប្រចាំថ្ងៃ' : 'Daily Roll-Call'}
+            </Chip>
+            <Chip
+              active={activeTab === 'monthly'}
+              onClick={() => setActiveTab('monthly')}
+            >
+              {isKhmer ? 'តារាងវត្តមានប្រចាំខែ (៣១ ថ្ងៃ)' : 'Monthly Matrix (31-Day)'}
+            </Chip>
           </div>
         </div>
 

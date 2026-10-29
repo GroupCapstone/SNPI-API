@@ -68,20 +68,36 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* Technical Blueprint Navigation Link */}
-        <Link
-          href="/settings/system-info"
-          className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-3.5 transition-all hover:border-[#00509d]/30 hover:bg-blue-50/20"
-        >
-          <div className="flex items-center gap-3">
-            <Layers3 className="size-6 shrink-0 text-[#00509d]" />
-            <div>
-              <p className="text-xs font-semibold text-slate-900">{t.settings.systemBlueprint}</p>
-              <p className="text-xs text-slate-500">{t.settings.systemBlueprintDesc}</p>
+        {/* Technical Blueprint & 10 UI Components Navigation Links */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <Link
+            href="/settings/system-info"
+            className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-3.5 transition-all hover:border-[#00509d]/30 hover:bg-blue-50/20 dark:border-white/10 dark:bg-[#161619] dark:hover:bg-[#202024]"
+          >
+            <div className="flex items-center gap-3">
+              <Layers3 className="size-6 shrink-0 text-[#00509d] dark:text-sky-400" />
+              <div>
+                <p className="text-xs font-semibold text-slate-900 dark:text-zinc-100">{t.settings.systemBlueprint}</p>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">{t.settings.systemBlueprintDesc}</p>
+              </div>
             </div>
-          </div>
-          <ChevronRight className="size-4 text-slate-400" />
-        </Link>
+            <ChevronRight className="size-4 text-slate-400" />
+          </Link>
+
+          <Link
+            href="/settings/components"
+            className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-3.5 transition-all hover:border-emerald-500/30 hover:bg-emerald-50/20 dark:border-white/10 dark:bg-[#161619] dark:hover:bg-[#202024]"
+          >
+            <div className="flex items-center gap-3">
+              <Layers3 className="size-6 shrink-0 text-emerald-500 dark:text-emerald-400" />
+              <div>
+                <p className="text-xs font-semibold text-slate-900 dark:text-zinc-100">10 Core UI Components Guide</p>
+                <p className="text-xs text-slate-500 dark:text-zinc-400">Interactive live playground for all 10 Dark UI components</p>
+              </div>
+            </div>
+            <ChevronRight className="size-4 text-slate-400" />
+          </Link>
+        </div>
 
         {/* Tab Navigation */}
         <div className="flex overflow-x-auto rounded-xl border border-slate-200 bg-slate-100/75 p-1 text-xs">
