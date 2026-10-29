@@ -9,8 +9,8 @@ const isAllowedOrigin = (origin: string): boolean => {
   if (allowedFrontendOrigins.includes('*') || allowedFrontendOrigins.includes(origin)) {
     return true;
   }
-  // Local development / testing
-  if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  // Local development / testing (localhost, 127.0.0.1, or local snpi.edu.kh subdomains)
+  if (/^https?:\/\/(localhost|127\.0\.0\.1|([a-z0-9-]+\.)*snpi\.edu\.kh)(:\d+)?$/.test(origin)) {
     return true;
   }
   // All Vercel deployments and preview URLs
