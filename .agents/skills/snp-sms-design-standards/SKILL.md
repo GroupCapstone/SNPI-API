@@ -5,7 +5,7 @@ description: >-
   Enforces single-folder design architecture, flat component design without shadows,
   depth via surface luminance hierarchy, #000000 avoidance, dual theme support,
   desaturated 200-500 color tones, eye-friendly typography, 44x44px touch targets,
-  mathematical design tokens, and the 10 Core UI Components guide (I. 10 UI components.md).
+  mathematical design tokens, and the 10 Core UI Components guide (10-ui-components.md).
 ---
 
 # SNP-SMS Design Standards & Dark UI Specification
@@ -18,7 +18,7 @@ This skill is the single authoritative design standard and architectural specifi
 
 All design standards, specifications, and component guides must strictly reside within this single skill folder:
 - **Root Skill**: `.agents/skills/snp-sms-design-standards/SKILL.md`
-- **10 Core UI Components Guide**: `.agents/skills/snp-sms-design-standards/I. 10 UI components.md`
+- **10 Core UI Components Guide**: `.agents/skills/snp-sms-design-standards/10-ui-components.md`
 
 Do not fragment design rules across multiple folders. Maintain all design documentation in this single location.
 
@@ -110,7 +110,7 @@ Where $L_1$ is the relative luminance of the lighter color and $L_2$ is the rela
 ## 4. Extensible UI Components Library Architecture
 
 The component definitions, etymology, real-world paradigms, and flat styling are codified in:
-👉 [**I. 10 UI components.md**](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/snp-sms-design-standards/I.%2010%20UI%20components.md)
+👉 [**10-ui-components.md**](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/snp-sms-design-standards/10-ui-components.md)
 
 Components are organized into an extensible categorization system without fixed count limitations:
 - **Feedback & Overlays**: Snackbar, Bottom Sheet, Dialog, Tooltip
