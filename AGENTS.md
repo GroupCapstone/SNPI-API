@@ -62,8 +62,8 @@ npm run typecheck
 # Run full test suite across backend and frontend
 npm run test
 
-# Verify production builds
-npm run build
+# Verify production builds and deployment manifests
+npm run deploy:verify
 
 # Synchronize real-time changelog to live document portal and CHANGELOG.md
 npm run changelog:sync
@@ -71,7 +71,16 @@ npm run changelog:sync
 
 ---
 
-## 5. Repository Ownership & Future Transfer Protocol
+## 5. Mandatory Pre-Push CI & Deployment Quality Gate Rule
+
+- **Zero Push on Failed Deploy or CI**: Never run `git push`, push release tags, or publish checkpoints if any GitHub deployment, build, test, or CI workflow is failed or failing on `main`.
+- **Pre-Push Deployment Gate (`npm run deploy:verify`)**: Always execute `npm run deploy:verify` prior to pushing to ensure all deployment manifests exist (`vercel.json`, `apps/backend/vercel.json`, `apps/frontend/vercel.json`, Kubernetes manifests), production builds compile with zero errors, and recent GitHub Actions workflows on `main` are green.
+- **Immediate Failure Resolution**: If a workflow fails on GitHub Actions, diagnosing and fixing the failure is the immediate top priority. Pushing further feature code is blocked until all 17 GitHub checks are green.
+- **Post-Push Health Monitoring**: Every push must be monitored via `gh run list` until all active workflows reach `[PASSED]` status.
+
+---
+
+## 6. Repository Ownership & Future Transfer Protocol
 
 - **Planned Ownership Transfer**: The current GitHub repository owner (`shiliaiwei`) is provisional. Repository ownership will be transferred in the future to an institutional organization or designated enterprise owner.
 - **Portable & Decoupled Configuration**:

@@ -18,6 +18,7 @@
     "format": "prettier --write .",
     "smoke": "tsx scripts/monorepo-smoke.ts",
     "test:api": "tsx scripts/test-all-apis.ts",
+    "deploy:verify": "tsx scripts/verify-deploy-gate.ts",
     "changelog:sync": "tsx scripts/sync-changelog.ts",
     "turbo": "turbo",
     "build:turbo": "turbo run build",
