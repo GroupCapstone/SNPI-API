@@ -23,11 +23,11 @@ export function LibraryFab({
 
   const variantStyles = {
     primary:
-      'bg-[#023e8a] text-white hover:bg-[#00509d] border border-blue-900 shadow-sm active:scale-95',
+      'bg-[#0056FF] text-white hover:bg-[#0040C0] border-2 border-[#0056FF] rounded-xl [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)] shadow-md active:scale-95',
     secondary:
-      'bg-emerald-600 text-white hover:bg-emerald-700 border border-emerald-700 shadow-sm active:scale-95',
+      'bg-slate-900 text-white hover:bg-black border-2 border-slate-900 rounded-xl [clip-path:polygon(0_0,calc(100%-10px)_0,100%_10px,100%_100%,0_100%)] shadow-md active:scale-95',
     surface:
-      'bg-white text-slate-800 hover:bg-slate-50 border border-slate-200 shadow-sm active:scale-95',
+      'bg-white text-slate-800 hover:bg-slate-50 border-2 border-slate-200 rounded-xl hover:border-[#0056FF] shadow-xs active:scale-95',
   };
 
   const sizeStyles = {

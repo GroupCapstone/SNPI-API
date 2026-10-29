@@ -39,7 +39,7 @@ export function LibraryBottomNav({ items, activeId, onSelect, className }: Libra
             className={cn(
               'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-lg px-3 py-1 text-xs font-normal transition-colors focus-visible:outline-none',
               isActive
-                ? 'bg-blue-50/70 font-bold text-[#023e8a]'
+                ? 'bg-[#0056FF] font-bold text-white shadow-sm [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900',
             )}
           >

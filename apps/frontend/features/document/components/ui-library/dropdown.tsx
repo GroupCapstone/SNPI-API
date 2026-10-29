@@ -74,7 +74,7 @@ export function LibraryDropdown({
         aria-expanded={isOpen}
         className={cn(
           'flex h-11 w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-900 shadow-xs transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:outline-none',
-          isOpen && 'border-[#023e8a] ring-1 ring-[#023e8a]',
+          isOpen && 'border-[#0056FF] ring-1 ring-[#0056FF]',
           disabled && 'cursor-not-allowed bg-slate-50 opacity-50',
         )}
       >
@@ -112,7 +112,7 @@ export function LibraryDropdown({
                 className={cn(
                   'flex min-h-[40px] w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors duration-100',
                   isSelected
-                    ? 'bg-blue-50 font-semibold text-[#023e8a]'
+                    ? 'bg-blue-50 font-semibold text-[#0056FF]'
                     : 'text-slate-800 hover:bg-slate-50',
                   option.disabled && 'cursor-not-allowed opacity-40',
                 )}
@@ -123,7 +123,7 @@ export function LibraryDropdown({
                     <span className="text-xs text-slate-500">{option.description}</span>
                   )}
                 </div>
-                {isSelected && <Check className="ml-2 h-4 w-4 shrink-0 text-[#023e8a]" />}
+                {isSelected && <Check className="ml-2 h-4 w-4 shrink-0 text-[#0056FF]" />}
               </button>
             );
           })}

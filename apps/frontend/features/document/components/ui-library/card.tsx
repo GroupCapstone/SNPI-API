@@ -16,8 +16,9 @@ export function LibraryCard({
   return (
     <div
       className={cn(
-        'rounded-xl border border-slate-200 bg-white p-5 text-slate-900 shadow-xs transition-all duration-150',
-        interactive && 'cursor-pointer hover:border-slate-300 hover:bg-slate-50/50 hover:shadow-sm',
+        'rounded-xl border-2 border-slate-200 bg-white p-5 text-slate-900 shadow-xs transition-all duration-200',
+        interactive &&
+          'cursor-pointer [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)] hover:-translate-y-1 hover:border-[#0056FF] hover:bg-white hover:shadow-lg',
         className,
       )}
       {...props}

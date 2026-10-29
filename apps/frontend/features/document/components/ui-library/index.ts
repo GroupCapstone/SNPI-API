@@ -12,3 +12,4 @@ export * from './component-registry';
 export * from './brand-concept-blueprint';
 export * from './component-gallery-grid';
 export * from './line-tracker-toc';
+export * from './geometric-tag-primitives';

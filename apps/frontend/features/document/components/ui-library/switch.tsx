@@ -43,7 +43,7 @@ export function LibrarySwitch({
       <span
         className={cn(
           'inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:ring-2 focus-visible:ring-blue-500/50',
-          checked ? 'bg-[#023e8a]' : 'bg-slate-300',
+          checked ? 'bg-[#0056FF]' : 'bg-slate-300',
           disabled && 'cursor-not-allowed opacity-50',
         )}
       >

@@ -7,6 +7,8 @@ import { Check, Copy, Server } from '@/components/icons';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { Button } from '@/components/ui/button';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
+import { GeometricAsterisk, GeometricHeaderStamp } from '@/features/document/components/ui-library';
+import { cn } from '@/lib/utils';
 
 interface AccessRoleSpec {
   role: string;
@@ -504,19 +506,20 @@ console.log(payload.data);`;
               ON THIS PAGE
             </p>
 
-            <nav className="space-y-1 text-slate-600">
+            <nav className="space-y-1.5 text-slate-600">
               <Link
                 href="/document/design-system"
-                className="block py-1 text-xs font-semibold text-[#0056FF] transition-colors hover:underline"
+                className="inline-flex items-center gap-1.5 border-2 border-[#0056FF] bg-[#0056FF] px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase shadow-xs transition-all select-none [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)] hover:bg-[#0044D6]"
               >
-                UI Component Library &rarr;
+                <span>UI Library</span>
+                <GeometricAsterisk className="h-3.5 w-3.5 text-white" />
               </Link>
-              <a href="#changelogs" className="block py-1 transition-colors hover:text-[#023e8a]">
+              <a href="#changelogs" className="block py-1 transition-colors hover:text-[#0056FF]">
                 Change Logs
               </a>
               <a
                 href="#table-of-contents"
-                className="block py-1 transition-colors hover:text-[#023e8a]"
+                className="block py-1 transition-colors hover:text-[#0056FF]"
               >
                 Table of contents
               </a>
@@ -524,7 +527,7 @@ console.log(payload.data);`;
               <div className="pt-1">
                 <a
                   href="#introduction"
-                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]"
+                  className="block py-1 font-semibold text-slate-800 hover:text-[#0056FF]"
                 >
                   * Introduction
                 </a>
@@ -544,7 +547,7 @@ console.log(payload.data);`;
               <div className="pt-1">
                 <a
                   href="#who-can-access"
-                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#023e8a]"
+                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#0056FF]"
                 >
                   * Who Can Access
                 </a>
@@ -553,7 +556,7 @@ console.log(payload.data);`;
               <div className="pt-1">
                 <a
                   href="#endpoints-available"
-                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#023e8a]"
+                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#0056FF]"
                 >
                   * Endpoints Catalog
                 </a>
@@ -570,7 +573,7 @@ console.log(payload.data);`;
               <div className="pt-1">
                 <a
                   href="#api-doc"
-                  className="block py-1 font-semibold text-slate-800 hover:text-[#023e8a]"
+                  className="block py-1 font-semibold text-slate-800 hover:text-[#0056FF]"
                 >
                   * API Documentation
                 </a>
@@ -585,7 +588,7 @@ console.log(payload.data);`;
                       onClick={() => setActiveEndpointId(item.id)}
                       className={`block truncate py-0.5 transition-colors ${
                         activeEndpointId === item.id
-                          ? 'font-bold text-[#023e8a]'
+                          ? 'font-bold text-[#0056FF]'
                           : 'hover:text-slate-900'
                       }`}
                     >
@@ -604,13 +607,13 @@ console.log(payload.data);`;
           <div className="space-y-3 border-b border-slate-200 pb-8">
             <div className="flex items-center gap-2">
               <span className="flex items-center gap-2 font-mono text-xl font-bold tracking-tight text-slate-950">
-                <span className="text-[#023e8a]">✦</span> SNP-SMS Documentation
+                <span className="text-[#0056FF]">✦</span> SNP-SMS Documentation
               </span>
             </div>
             <p className="max-w-3xl font-sans text-sm leading-relaxed text-slate-600">
               <Link
                 href="/document"
-                className="font-medium text-slate-900 underline decoration-slate-400 underline-offset-4 hover:decoration-[#023e8a]"
+                className="font-medium text-slate-900 underline decoration-slate-400 underline-offset-4 hover:decoration-[#0056FF]"
               >
                 SNP-SMS Open API
               </Link>{' '}
@@ -639,7 +642,7 @@ console.log(payload.data);`;
                 <tbody className="divide-y divide-slate-100 text-slate-700">
                   {CHANGE_LOGS.map((log) => (
                     <tr key={log.version + (log.commitHash || '')} className="hover:bg-slate-50">
-                      <td className="p-2.5 font-bold text-[#023e8a]">{log.version}</td>
+                      <td className="p-2.5 font-bold text-[#0056FF]">{log.version}</td>
                       <td className="p-2.5 text-slate-500">{log.date}</td>
                       <td className="p-2.5">
                         {log.commitHash ? (
@@ -679,32 +682,32 @@ console.log(payload.data);`;
                   </Link>
                 </li>
                 <li>
-                  <a href="#introduction" className="text-[#023e8a] hover:underline">
+                  <a href="#introduction" className="text-[#0056FF] hover:underline">
                     Introduction (Purpose, Scope, Overall API)
                   </a>
                 </li>
                 <li>
-                  <a href="#who-can-access" className="text-[#023e8a] hover:underline">
+                  <a href="#who-can-access" className="text-[#0056FF] hover:underline">
                     Who Can Access The API (RBAC Roles & Matrix)
                   </a>
                 </li>
                 <li>
-                  <a href="#endpoints-available" className="text-[#023e8a] hover:underline">
+                  <a href="#endpoints-available" className="text-[#0056FF] hover:underline">
                     What Other Developers Can Get (Read & Query Endpoints)
                   </a>
                 </li>
                 <li>
-                  <a href="#protected-endpoints" className="text-[#023e8a] hover:underline">
+                  <a href="#protected-endpoints" className="text-[#0056FF] hover:underline">
                     What Endpoints Are Protected & How (Mutation Defense Guardrails)
                   </a>
                 </li>
                 <li>
-                  <a href="#status-codes" className="text-[#023e8a] hover:underline">
+                  <a href="#status-codes" className="text-[#0056FF] hover:underline">
                     HTTP Status Codes Standard
                   </a>
                 </li>
                 <li>
-                  <a href="#api-doc" className="text-[#023e8a] hover:underline">
+                  <a href="#api-doc" className="text-[#0056FF] hover:underline">
                     Interactive API Documentation & Explorer
                   </a>
                 </li>
@@ -747,7 +750,7 @@ console.log(payload.data);`;
                   <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                     Base URL
                   </span>
-                  <p className="truncate font-bold text-[#023e8a]">http://localhost:4000/api/v1</p>
+                  <p className="truncate font-bold text-[#0056FF]">http://localhost:4000/api/v1</p>
                 </div>
                 <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 shadow-xs">
                   <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
@@ -799,7 +802,7 @@ console.log(payload.data);`;
                 <tbody className="divide-y divide-slate-100 font-sans text-slate-700">
                   {ACCESS_ROLES.map((role) => (
                     <tr key={role.role} className="hover:bg-slate-50">
-                      <td className="p-2.5 font-mono font-bold text-[#023e8a]">{role.role}</td>
+                      <td className="p-2.5 font-mono font-bold text-[#0056FF]">{role.role}</td>
                       <td className="p-2.5 text-xs text-slate-500">{role.targetAudience}</td>
                       <td className="p-2.5 text-xs">
                         <p className="font-semibold text-slate-900">{role.accessScope}</p>
@@ -849,7 +852,7 @@ console.log(payload.data);`;
                         <span
                           className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${
                             ep.method === 'GET'
-                              ? 'border border-blue-200 bg-blue-50 text-[#023e8a]'
+                              ? 'border border-blue-200 bg-blue-50 text-[#0056FF]'
                               : 'border border-emerald-200 bg-emerald-50 text-emerald-800'
                           }`}
                         >
@@ -1003,17 +1006,18 @@ console.log(payload.data);`;
                   <div
                     key={item.id}
                     id={item.id}
-                    className="scroll-mt-24 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-xs"
+                    className="scroll-mt-24 space-y-4 border-2 border-slate-200 bg-white p-6 shadow-xs transition-all duration-300 [clip-path:polygon(0_0,calc(100%-14px)_0,100%_14px,100%_100%,0_100%)] hover:border-[#0056FF] hover:shadow-lg"
                   >
-                    <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
+                    <div className="flex flex-col justify-between gap-3 border-b-2 border-slate-100 pb-4 sm:flex-row sm:items-center">
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span
-                            className={`rounded px-2 py-0.5 font-mono text-[10px] font-extrabold ${
+                            className={cn(
+                              'border-2 px-2 py-0.5 font-mono text-[10px] font-black tracking-wider uppercase [clip-path:polygon(0_0,calc(100%-5px)_0,100%_5px,100%_100%,0_100%)]',
                               item.method === 'GET'
-                                ? 'border border-blue-200 bg-blue-50 text-[#023e8a]'
-                                : 'border border-emerald-200 bg-emerald-50 text-emerald-800'
-                            }`}
+                                ? 'border-[#0056FF] bg-[#0056FF] text-white'
+                                : 'border-emerald-600 bg-emerald-600 text-white',
+                            )}
                           >
                             {item.method}
                           </span>
@@ -1026,27 +1030,26 @@ console.log(payload.data);`;
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <Button
-                          size="sm"
-                          variant="outline"
+                        <button
+                          type="button"
                           onClick={() => handleTest(item)}
                           disabled={isTestingThis}
-                          className="h-8 border-slate-300 text-xs text-slate-700 hover:border-[#023e8a] hover:text-[#023e8a]"
+                          className="inline-flex h-8 items-center gap-1.5 border-2 border-slate-300 bg-white px-3 font-mono text-xs font-bold text-slate-800 shadow-xs transition-all [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)] hover:border-[#0056FF] hover:text-[#0056FF] disabled:opacity-50"
                         >
-                          <Server className="mr-1 size-3.5 text-[#023e8a]" />
-                          {isTestingThis ? 'Testing...' : 'Test Live'}
-                        </Button>
+                          <Server className="size-3.5 text-[#0056FF]" />
+                          <span>{isTestingThis ? 'Testing...' : 'Test Live'}</span>
+                        </button>
                       </div>
                     </div>
 
                     {/* Metadata Badges */}
                     <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-                      <div className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                      <div className="border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
                         Permission: <strong className="text-amber-700">{item.permission}</strong>
                       </div>
-                      <div className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                      <div className="border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
                         Scope Header:{' '}
-                        <strong className={item.scopeHeader ? 'text-[#023e8a]' : 'text-slate-400'}>
+                        <strong className={item.scopeHeader ? 'text-[#0056FF]' : 'text-slate-400'}>
                           {item.scopeHeader ? 'X-Branch-Id Required' : 'None'}
                         </strong>
                       </div>
@@ -1054,7 +1057,7 @@ console.log(payload.data);`;
 
                     {/* Live Test Output Display */}
                     {liveRes && (
-                      <div className="space-y-1.5 rounded-lg border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
+                      <div className="space-y-1.5 border-2 border-slate-200 bg-slate-50 p-3 font-mono text-xs [clip-path:polygon(0_0,calc(100%-8px)_0,100%_8px,100%_100%,0_100%)]">
                         <div className="flex items-center justify-between">
                           <span
                             className={
@@ -1067,46 +1070,49 @@ console.log(payload.data);`;
                           </span>
                           <span className="text-slate-500">{liveRes.latency}ms</span>
                         </div>
-                        <pre className="max-h-32 overflow-y-auto rounded border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
+                        <pre className="max-h-32 overflow-y-auto border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
                           {JSON.stringify(liveRes.body, null, 2)}
                         </pre>
                       </div>
                     )}
 
-                    {/* Code Snippet Card - 100% Light Mode */}
-                    <div className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50/50 shadow-xs">
-                      <div className="flex items-center justify-between border-b border-slate-200 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
+                    {/* Code Snippet Card - 100% Light Mode & Geometric Shape */}
+                    <div className="overflow-hidden border-2 border-slate-200 bg-slate-50/50 shadow-xs [clip-path:polygon(0_0,calc(100%-12px)_0,100%_12px,100%_100%,0_100%)]">
+                      <div className="flex items-center justify-between border-b-2 border-slate-200 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
                         <div className="flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={() => setCodeType('curl')}
-                            className={`rounded px-2.5 py-1 text-[11px] transition-colors ${
+                            className={cn(
+                              'border-2 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]',
                               codeType === 'curl'
-                                ? 'border border-slate-300 bg-white font-bold text-[#023e8a] shadow-xs'
-                                : 'text-slate-600 hover:text-slate-900'
-                            }`}
+                                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                                : 'border-slate-300 bg-white text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]',
+                            )}
                           >
                             cURL
                           </button>
                           <button
                             type="button"
                             onClick={() => setCodeType('ts')}
-                            className={`rounded px-2.5 py-1 text-[11px] transition-colors ${
+                            className={cn(
+                              'border-2 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]',
                               codeType === 'ts'
-                                ? 'border border-slate-300 bg-white font-bold text-[#023e8a] shadow-xs'
-                                : 'text-slate-600 hover:text-slate-900'
-                            }`}
+                                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                                : 'border-slate-300 bg-white text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]',
+                            )}
                           >
                             TypeScript
                           </button>
                           <button
                             type="button"
                             onClick={() => setCodeType('json')}
-                            className={`rounded px-2.5 py-1 text-[11px] transition-colors ${
+                            className={cn(
+                              'border-2 px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)]',
                               codeType === 'json'
-                                ? 'border border-slate-300 bg-white font-bold text-[#023e8a] shadow-xs'
-                                : 'text-slate-600 hover:text-slate-900'
-                            }`}
+                                ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                                : 'border-slate-300 bg-white text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]',
+                            )}
                           >
                             Response
                           </button>
@@ -1115,7 +1121,7 @@ console.log(payload.data);`;
                         <button
                           type="button"
                           onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
-                          className="flex items-center gap-1 rounded border border-slate-300 bg-white px-2 py-0.5 text-[11px] text-slate-700 shadow-xs hover:text-slate-900"
+                          className="flex items-center gap-1 border-2 border-slate-300 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-xs transition-all select-none [clip-path:polygon(0_0,calc(100%-6px)_0,100%_6px,100%_100%,0_100%)] hover:border-[#0056FF] hover:text-[#0056FF]"
                         >
                           {copiedId === item.id ? (
                             <>
