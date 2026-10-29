@@ -10,6 +10,7 @@
     "dev": "npm run dev --workspaces --if-present",
     "dev:backend": "npm run dev --workspace=apps/backend",
     "dev:frontend": "npm run dev --workspace=apps/frontend",
+    "dev:proxy": "tsx scripts/local-proxy.ts",
     "build": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
