@@ -7,6 +7,12 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
+    "version": "0.1.11",
+    "date": "29.10.2026",
+    "commitHash": "d8b127e",
+    "description": "Establish automated real-time changelog synchronization skill, script, and live document integration"
+  },
+  {
     "version": "0.1.10",
     "date": "29.10.2026",
     "commitHash": "b2a1270",
