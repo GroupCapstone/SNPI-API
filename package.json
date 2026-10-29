@@ -18,15 +18,22 @@
     "format": "prettier --write .",
     "smoke": "tsx scripts/monorepo-smoke.ts",
     "test:api": "tsx scripts/test-all-apis.ts",
-    "changelog:sync": "tsx scripts/sync-changelog.ts"
+    "changelog:sync": "tsx scripts/sync-changelog.ts",
+    "turbo": "turbo",
+    "build:turbo": "turbo run build",
+    "test:turbo": "turbo run test",
+    "typecheck:turbo": "turbo run typecheck",
+    "lint:turbo": "turbo run lint"
   },
   "devDependencies": {
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tsx": "^4.19.3",
+    "turbo": "^2.11.10",
     "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=22.13.0"
-  }
+  },
+  "packageManager": "npm@10.8.2"
 }
