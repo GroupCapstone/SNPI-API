@@ -1,5 +1,4 @@
 import { createHash } from 'node:crypto';
-import { Types } from 'mongoose';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ReportService } from '../src/modules/report/report.service';
