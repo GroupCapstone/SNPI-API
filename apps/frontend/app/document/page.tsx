@@ -500,6 +500,12 @@ console.log(payload.data);`;
               <span className="size-2 rounded-full bg-emerald-500" />
               v0.1.0 · 193 Endpoints · Online
             </span>
+            <Link
+              href="/document/design-system"
+              className="inline-flex h-8 items-center rounded-lg border border-emerald-300 bg-emerald-50 px-3 font-mono text-xs font-semibold text-emerald-800 hover:bg-emerald-100 transition-colors"
+            >
+              UI Design Library
+            </Link>
             <a href="#who-can-access">
               <Button
                 size="sm"
@@ -522,6 +528,12 @@ console.log(payload.data);`;
             </p>
 
             <nav className="space-y-1 text-slate-600">
+              <Link
+                href="/document/design-system"
+                className="block py-1 font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
+              >
+                UI Design Library (10 Components) &rarr;
+              </Link>
               <a href="#changelogs" className="block py-1 transition-colors hover:text-[#023e8a]">
                 Change Logs
               </a>
@@ -681,6 +693,11 @@ console.log(payload.data);`;
             </h2>
             <div className="rounded-lg border border-slate-200 bg-slate-50/60 p-4 font-mono text-xs text-slate-700">
               <ol className="list-inside list-decimal space-y-1.5">
+                <li>
+                  <Link href="/document/design-system" className="font-semibold text-emerald-700 hover:underline">
+                    UI Design System & 10 Core UI Components Library (Interactive Showcase) &rarr;
+                  </Link>
+                </li>
                 <li>
                   <a href="#introduction" className="text-[#023e8a] hover:underline">
                     Introduction (Purpose, Scope, Overall API)
