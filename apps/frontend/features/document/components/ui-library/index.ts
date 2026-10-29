@@ -10,3 +10,5 @@ export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';
 export * from './brand-concept-blueprint';
+export * from './component-gallery-grid';
+export * from './line-tracker-toc';
