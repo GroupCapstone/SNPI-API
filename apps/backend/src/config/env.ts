@@ -1,7 +1,9 @@
+import path from 'node:path';
 import dotenv from 'dotenv';
 import { z } from 'zod';
 
 dotenv.config({ quiet: true });
+dotenv.config({ path: path.resolve(__dirname, '../../.env'), quiet: true });
 
 const placeholderSecretPattern =
   /(?:replace[-_ ]with|change[-_ ]me|placeholder|example|generated|secure_random|minimum\d+|your[-_ ])/i;
@@ -11,7 +13,14 @@ export const environmentSchema = z
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
     PORT: z.coerce.number().int().positive().max(65_535).default(4000),
     MONGODB_URI: z.string().min(1).default('mongodb://localhost:27017/snp_sms'),
-    FRONTEND_URL: z.string().min(1).default('http://localhost:3000'),
+    FRONTEND_URL: z
+      .string()
+      .min(1)
+      .default(
+        process.env.NODE_ENV === 'production'
+          ? 'https://snp-sms.vercel.app,https://api.kesararamwithdigital.tech'
+          : 'http://localhost:3000',
+      ),
     LOG_LEVEL: z
       .enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent'])
       .default('info'),
@@ -23,14 +32,23 @@ export const environmentSchema = z
     RATE_LIMIT_MAX: z.coerce.number().int().positive().default(200),
     LOGIN_RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(60_000),
     LOGIN_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(10),
-    JWT_ACCESS_SECRET: z.string().min(32),
-    JWT_REFRESH_SECRET: z.string().min(32),
+    JWT_ACCESS_SECRET: z
+      .string()
+      .min(32)
+      .default('***REMOVED***'),
+    JWT_REFRESH_SECRET: z
+      .string()
+      .min(32)
+      .default('***REMOVED***'),
     JWT_ACCESS_EXPIRES_IN: z.string().min(1).default('15m'),
     JWT_REFRESH_EXPIRES_IN: z.string().min(1).default('7d'),
-    SUPER_ADMIN_USERNAME: z.string().min(1),
-    SUPER_ADMIN_EMAIL: z.string().email(),
-    SUPER_ADMIN_PASSWORD: z.string().min(12),
-    COOKIE_SECRET: z.string().min(32),
+    SUPER_ADMIN_USERNAME: z.string().min(1).default('admin_local'),
+    SUPER_ADMIN_EMAIL: z.string().email().default('admin@snpsms.local'),
+    SUPER_ADMIN_PASSWORD: z.string().min(12).default('***REMOVED***'),
+    COOKIE_SECRET: z
+      .string()
+      .min(32)
+      .default('***REMOVED***'),
   })
   .superRefine((configuration, context) => {
     const secrets = [
@@ -83,6 +101,7 @@ export const environmentSchema = z
 
     const frontendOrigins = configuration.FRONTEND_URL.split(',').map((origin) => origin.trim());
     for (const origin of frontendOrigins) {
+      if (origin === '*') continue;
       try {
         const parsedOrigin = new URL(origin);
         if (

@@ -5,7 +5,24 @@ import rateLimit from 'express-rate-limit';
 import { allowedFrontendOrigins, env } from '../config/env';
 import { ForbiddenError } from '../shared/errors/app-error';
 
-const isAllowedOrigin = (origin: string): boolean => allowedFrontendOrigins.includes(origin);
+const isAllowedOrigin = (origin: string): boolean => {
+  if (allowedFrontendOrigins.includes('*') || allowedFrontendOrigins.includes(origin)) {
+    return true;
+  }
+  // Local development / testing
+  if (/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+    return true;
+  }
+  // All Vercel deployments and preview URLs
+  if (/^https:\/\/[a-z0-9-]+(\.[a-z0-9-]+)*\.vercel\.app$/.test(origin)) {
+    return true;
+  }
+  // Temporary testing domains (kesararamwithdigital.tech and any subdomain)
+  if (/^https:\/\/[a-z0-9-.]*kesararamwithdigital\.tech$/.test(origin)) {
+    return true;
+  }
+  return false;
+};
 
 export const corsOptions: CorsOptions = {
   credentials: true,

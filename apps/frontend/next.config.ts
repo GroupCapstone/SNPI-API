@@ -3,12 +3,12 @@ import type { NextConfig } from 'next';
 const isDocker = process.env.DOCKER_BUILD === 'true';
 const requiresHttpsBackend =
   Boolean(process.env.VERCEL_ENV) || process.env.APP_ENV === 'production';
-const backendUrl =
-  process.env.BACKEND_INTERNAL_URL ?? (requiresHttpsBackend ? '' : 'http://localhost:4000/api/v1');
-
-if (!backendUrl) {
-  throw new Error('BACKEND_INTERNAL_URL must be set for deployed environments');
-}
+const defaultBackendUrl =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (requiresHttpsBackend
+    ? 'https://api.kesararamwithdigital.tech/api/v1'
+    : 'http://localhost:4000/api/v1');
+const backendUrl = process.env.BACKEND_INTERNAL_URL ?? defaultBackendUrl;
 
 let backendDestination: string;
 try {
