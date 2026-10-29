@@ -23,7 +23,6 @@ import {
   LibraryCardMedia,
   LibraryCardFooter,
   COMPONENT_LIBRARY_REGISTRY,
-  COMPONENT_CATEGORIES,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -33,21 +32,17 @@ import {
   Star,
   MapPin,
   Calendar,
-  Sparkles,
-  Tag,
-  Mail,
   Check,
   Code,
   Copy,
   Layers,
-  ChevronRight,
+  Sparkles,
   Palette,
-  ExternalLink,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 export default function DesignSystemPage() {
-  // Main View Mode: 'catalog' (Image 1 Schematic Grid), 'playground' (Interactive Stage), 'blueprint' (Brand Colors)
+  // Main View: 'catalog' (Image 1 Schematic Grid), 'playground' (Interactive Stage), 'blueprint' (Brand Colors)
   const [activeTab, setActiveTab] = React.useState<'catalog' | 'playground' | 'blueprint'>(
     'catalog',
   );
@@ -58,11 +53,9 @@ export default function DesignSystemPage() {
   // Search filter
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
-  // Active TOC section
+  // Active TOC section for Line Tracker
   const [activeSectionId, setActiveSectionId] = React.useState<string>('how-it-works');
 
-  // Preview Stage Background
-  const [stageBg, setStageBg] = React.useState<'midnight' | 'lavender' | 'white'>('midnight');
   const [showCode, setShowCode] = React.useState<boolean>(false);
   const [copiedCode, setCopiedCode] = React.useState<boolean>(false);
 
@@ -83,7 +76,7 @@ export default function DesignSystemPage() {
     { id: 'academics', label: 'Academics', icon: Folder },
   ];
 
-  // Cloudflare Docs-style TOC Headings for Right Sidebar Line Tracker (Image 2)
+  // Headings for Right Sidebar Line Tracker (Image 2)
   const tocHeadings: TocHeadingItem[] = [
     { id: 'how-it-works', title: 'SNP-SMS Design System: how it works', level: 1 },
     { id: 'architecture-flow', title: 'Architectural token flow', level: 2 },
@@ -91,7 +84,7 @@ export default function DesignSystemPage() {
     { id: 'interactive-stage', title: 'Interactive Component Playground', level: 1 },
     { id: 'brand-blueprint', title: 'Royal Blue (#0056FF) Brand Blueprint', level: 1 },
     { id: 'design-principles', title: 'Flat Design & Zero Shadows Policy', level: 1 },
-    { id: 'wcag-contrast', title: 'Luminance Hierarchy & WCAG AA', level: 2 },
+    { id: 'touch-targets', title: 'Touch Targets & Accessibility', level: 2 },
   ];
 
   const handleSelectFromGallery = (id: string) => {
@@ -111,63 +104,45 @@ export default function DesignSystemPage() {
     COMPONENT_LIBRARY_REGISTRY[0];
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#000B26] font-sans text-white antialiased selection:bg-[#0056FF] selection:text-white">
-      {/* Top Header Navigation Bar */}
-      <header className="sticky top-0 z-40 w-full border-b border-[#0F357D] bg-[#000B26]/95 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+    <div className="flex min-h-screen flex-col bg-white font-sans text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
+      {/* Top Header - Strictly Logo and Open API | Library (Zero extra clutter) */}
+      <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <BrandMark compact size={32} />
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-base font-extrabold tracking-tight text-white">
+            <div className="flex items-center gap-2 font-sans">
+              <span className="text-base font-extrabold tracking-tight text-slate-950">
                 Open API
               </span>
-              <span className="text-[#0F357D]">|</span>
-              <span className="rounded-md border border-[#0056FF]/50 bg-[#0056FF]/20 px-2 py-0.5 font-mono text-xs font-semibold text-[#E3E7FC]">
-                Design System & Component Catalog
-              </span>
+              <span className="text-slate-300">|</span>
+              <span className="text-base font-medium text-slate-600">Library</span>
             </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/document"
-              className="inline-flex h-8 items-center rounded-lg border border-[#0F357D] bg-[#001338] px-3 font-mono text-xs font-medium text-[#C4CEF8] transition-colors hover:border-[#0056FF] hover:text-white"
-            >
-              &larr; API Documentation
-            </Link>
           </div>
         </div>
       </header>
 
       {/* 3-Column Documentation Grid (Cloudflare Docs Layout from Image 2) */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
-        <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* COLUMN 1: Left Navigation Sidebar Menu (Image 2 Left Sidebar) */}
+        <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-12">
+          {/* COLUMN 1: Left Navigation Sidebar Menu */}
           <aside className="lg:col-span-3">
             <div className="sticky top-24 space-y-6">
-              {/* Search Bar with Shortcut Badge */}
+              {/* Filter Input */}
               <div className="relative">
-                <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-[#A3B4F0]" />
+                <Search className="absolute top-2.5 left-3 h-4 w-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Filter components..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-9 w-full rounded-xl border border-[#0F357D] bg-[#001338] pr-8 pl-8 font-mono text-xs text-white placeholder-[#5D72B0] focus:border-[#0056FF] focus:outline-none"
+                  className="h-9 w-full rounded-xl border border-slate-200 bg-slate-50 pr-4 pl-9 font-sans text-xs text-slate-900 placeholder-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-none"
                 />
-                <span className="absolute top-2 right-2 rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[9px] text-[#A3B4F0]">
-                  /
-                </span>
               </div>
 
-              {/* Navigation Hierarchy */}
+              {/* Navigation Links */}
               <div className="space-y-4 font-sans text-xs">
-                {/* Section A: Views */}
                 <div>
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#A3B4F0] uppercase">
-                    NAVIGATION VIEWS
-                  </span>
-                  <div className="mt-2 space-y-1">
+                  <div className="space-y-1">
                     <button
                       type="button"
                       onClick={() => {
@@ -177,17 +152,14 @@ export default function DesignSystemPage() {
                       className={cn(
                         'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left font-medium transition-colors',
                         activeTab === 'catalog'
-                          ? 'bg-[#0056FF] font-bold text-white'
-                          : 'text-[#C4CEF8] hover:bg-[#001744] hover:text-white',
+                          ? 'bg-slate-100 font-bold text-[#0056FF]'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                       )}
                     >
-                      <div className="flex items-center gap-2">
-                        <Layers className="h-4 w-4" />
+                      <div className="flex items-center gap-2.5">
+                        <Layers className="h-4 w-4 text-slate-500" />
                         <span>Component Gallery</span>
                       </div>
-                      <span className="py-0.2 rounded-full bg-white/20 px-1.5 font-mono text-[10px]">
-                        19
-                      </span>
                     </button>
 
                     <button
@@ -199,17 +171,14 @@ export default function DesignSystemPage() {
                       className={cn(
                         'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left font-medium transition-colors',
                         activeTab === 'playground'
-                          ? 'bg-[#0056FF] font-bold text-white'
-                          : 'text-[#C4CEF8] hover:bg-[#001744] hover:text-white',
+                          ? 'bg-slate-100 font-bold text-[#0056FF]'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                       )}
                     >
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="h-4 w-4" />
+                      <div className="flex items-center gap-2.5">
+                        <Sparkles className="h-4 w-4 text-slate-500" />
                         <span>Interactive Playground</span>
                       </div>
-                      <span className="py-0.2 rounded-full bg-white/20 px-1.5 font-mono text-[10px]">
-                        Live
-                      </span>
                     </button>
 
                     <button
@@ -221,27 +190,21 @@ export default function DesignSystemPage() {
                       className={cn(
                         'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left font-medium transition-colors',
                         activeTab === 'blueprint'
-                          ? 'bg-[#0056FF] font-bold text-white'
-                          : 'text-[#C4CEF8] hover:bg-[#001744] hover:text-white',
+                          ? 'bg-slate-100 font-bold text-[#0056FF]'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                       )}
                     >
-                      <div className="flex items-center gap-2">
-                        <Palette className="h-4 w-4" />
-                        <span>Royal Blue Blueprint</span>
+                      <div className="flex items-center gap-2.5">
+                        <Palette className="h-4 w-4 text-slate-500" />
+                        <span>Brand Colors</span>
                       </div>
-                      <span className="py-0.2 rounded-full bg-white/20 px-1.5 font-mono text-[10px]">
-                        #0056FF
-                      </span>
                     </button>
                   </div>
                 </div>
 
-                {/* Section B: 10 Core Components Shortcut List */}
-                <div>
-                  <span className="font-mono text-[10px] font-bold tracking-wider text-[#A3B4F0] uppercase">
-                    10 CORE UI COMPONENTS
-                  </span>
-                  <div className="mt-2 space-y-0.5">
+                {/* 10 Core UI Components List */}
+                <div className="border-t border-slate-200 pt-4">
+                  <div className="space-y-0.5">
                     {COMPONENT_LIBRARY_REGISTRY.map((comp) => {
                       const isSelected =
                         activeTab === 'playground' && selectedComponentId === comp.id;
@@ -255,56 +218,40 @@ export default function DesignSystemPage() {
                             setActiveSectionId('interactive-stage');
                           }}
                           className={cn(
-                            'flex w-full items-center justify-between rounded-lg px-2.5 py-1 text-left text-xs transition-colors',
+                            'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs transition-colors',
                             isSelected
-                              ? 'bg-[#0056FF]/30 font-bold text-[#E3E7FC]'
-                              : 'text-[#C4CEF8] hover:bg-[#001744] hover:text-white',
+                              ? 'bg-blue-50 font-bold text-[#0056FF]'
+                              : 'text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
                           <span className="truncate">{comp.name}</span>
-                          <span className="font-mono text-[10px] text-[#A3B4F0]">
-                            {comp.paradigm.split(' ')[0]}
-                          </span>
                         </button>
                       );
                     })}
                   </div>
                 </div>
-
-                {/* Section C: Authoritative Standards */}
-                <div className="rounded-xl border border-[#0F357D] bg-[#001338] p-3 text-xs">
-                  <div className="font-mono text-[10px] font-bold text-[#A3B4F0] uppercase">
-                    STANDARDS GATES
-                  </div>
-                  <ul className="mt-1.5 space-y-1 font-mono text-[11px] text-[#C4CEF8]">
-                    <li>• Flat UI · Zero Blur Shadows</li>
-                    <li>• 44×44px Hit Targets</li>
-                    <li>• WCAG AA Contrast (&ge; 4.5:1)</li>
-                    <li>• Sora Typography</li>
-                  </ul>
-                </div>
               </div>
             </div>
           </aside>
 
-          {/* COLUMN 2: Center Main Documentation & Stage (Cloudflare Docs Center Pane) */}
+          {/* COLUMN 2: Center Main Documentation & Stage (Cloudflare Docs Style) */}
           <main className="space-y-10 lg:col-span-6">
-            {/* Cloudflare-style Anchor Heading (Image 2: "🔗 Access on Workers: how it works") */}
+            {/* Header Anchor Section (Matching Image 2: "🔗 Access on Workers: how it works") */}
             <div id="how-it-works" className="space-y-4">
               <div className="flex items-center gap-2">
                 <a
                   href="#how-it-works"
-                  className="font-mono text-xl text-[#0056FF] transition-colors hover:text-[#2277FF]"
+                  className="font-mono text-xl text-[#0056FF] hover:underline"
                   title="Direct Section Link"
                 >
                   🔗
                 </a>
-                <h1 className="font-sans text-2xl font-black tracking-tight text-white sm:text-3xl">
-                  SNP-SMS UI Design System: how it works
+                <h1 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                  SNP-SMS Design System: how it works
                 </h1>
               </div>
 
-              <p className="font-sans text-sm leading-relaxed text-[#C4CEF8]">
+              <p className="font-sans text-sm leading-relaxed text-slate-600">
                 When you build or extend interfaces in SNP-SMS, the Design System enforces visual
                 cohesion, strict flat aesthetics, and luminance-based depth before any code reaches
                 production. It does not matter whether the view is an institutional dashboard, a
@@ -312,71 +259,58 @@ export default function DesignSystemPage() {
                 the Royal Blue and Sora standards.
               </p>
 
-              {/* Cloudflare Docs-style Architecture Diagram Card (Matching Image 2 Diagram) */}
+              {/* Architectural Token Flow Diagram Card (Matching Image 2 Diagram) */}
               <div
                 id="architecture-flow"
-                className="overflow-hidden rounded-2xl border border-[#0F357D] bg-[#001338] p-6 shadow-sm"
+                className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs"
               >
                 <div className="flex flex-col items-center justify-around gap-4 sm:flex-row">
-                  {/* Node 1: User / Dev */}
+                  {/* Node 1: Developer */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#2277FF]/40 bg-[#000B26] text-[#2277FF] shadow-inner">
-                      <span className="font-mono text-xl font-bold">DEV</span>
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-800">
+                      <span className="font-mono text-base font-bold">DEV</span>
                     </div>
-                    <span className="font-sans text-xs font-bold text-white">Developer</span>
+                    <span className="font-sans text-xs font-semibold text-slate-800">
+                      Developer
+                    </span>
                   </div>
 
                   {/* Arrow 1 */}
-                  <div className="flex items-center gap-1 font-mono text-[#0056FF]">
-                    <span className="h-0.5 w-8 bg-[#0056FF]" />
+                  <div className="flex items-center gap-1 font-mono text-slate-400">
+                    <span className="h-0.5 w-8 bg-slate-300" />
                     <span>&rarr;</span>
                   </div>
 
-                  {/* Node 2: Tokens / Royal Blue */}
+                  {/* Node 2: Royal Blue Tokens */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#0056FF] bg-[#0056FF] text-white shadow-md">
-                      <span className="font-mono text-base font-black">#0056FF</span>
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0056FF] text-white shadow-sm">
+                      <span className="font-mono text-xs font-bold">#0056FF</span>
                     </div>
-                    <span className="font-sans text-xs font-bold text-[#E3E7FC]">Royal Blue</span>
+                    <span className="font-sans text-xs font-bold text-[#0056FF]">Royal Blue</span>
                   </div>
 
                   {/* Arrow 2 */}
-                  <div className="flex items-center gap-1 font-mono text-[#0056FF]">
-                    <span className="h-0.5 w-8 bg-[#0056FF]" />
+                  <div className="flex items-center gap-1 font-mono text-slate-400">
+                    <span className="h-0.5 w-8 bg-slate-300" />
                     <span>&rarr;</span>
                   </div>
 
-                  {/* Node 3: 10 Components */}
+                  {/* Node 3: Flat Component */}
                   <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#2277FF]/40 bg-[#000B26] text-[#2277FF] shadow-inner">
-                      <span className="font-mono text-xl font-bold">UI 10</span>
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-800">
+                      <span className="font-mono text-base font-bold">UI 10</span>
                     </div>
-                    <span className="font-sans text-xs font-bold text-white">Flat Component</span>
+                    <span className="font-sans text-xs font-semibold text-slate-800">
+                      Flat Component
+                    </span>
                   </div>
-                </div>
-
-                <div className="mt-4 border-t border-[#0F357D]/40 pt-3 text-center font-mono text-xs text-[#A3B4F0]">
-                  Single source of truth: mathematical tokens &rarr; zero dropped shadows &rarr;
-                  44px hit targets
                 </div>
               </div>
             </div>
 
-            {/* TAB CONTENT 1: Component Catalog (Image 1 Style) */}
+            {/* TAB CONTENT 1: Component Catalog (Image 1 Style Grid with Hover Animations) */}
             {activeTab === 'catalog' && (
               <section id="component-gallery" className="space-y-4">
-                <div className="flex items-center justify-between border-b border-[#0F357D] pb-3">
-                  <div>
-                    <h2 className="font-sans text-lg font-bold text-white">
-                      Component Catalog & Variants
-                    </h2>
-                    <p className="text-xs text-[#C4CEF8]">
-                      Inspired by modern schematic design libraries. Click any card to inspect its
-                      interactive playground and documentation.
-                    </p>
-                  </div>
-                </div>
-
                 <ComponentGalleryGrid
                   onSelectComponent={handleSelectFromGallery}
                   selectedId={selectedComponentId}
@@ -387,86 +321,27 @@ export default function DesignSystemPage() {
             {/* TAB CONTENT 2: Interactive Component Playground */}
             {activeTab === 'playground' && (
               <section id="interactive-stage" className="space-y-6">
-                <div className="flex items-center justify-between border-b border-[#0F357D] pb-3">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                   <div>
-                    <div className="flex items-center gap-2">
-                      <span className="rounded-md bg-[#0056FF] px-2 py-0.5 font-mono text-xs font-bold text-white">
-                        {activeDoc.category}
-                      </span>
-                      <span className="font-mono text-xs text-[#C4CEF8]">{activeDoc.paradigm}</span>
-                    </div>
-                    <h2 className="mt-1 font-sans text-2xl font-black text-white">
+                    <h2 className="font-sans text-2xl font-black text-slate-950">
                       {activeDoc.name}
                     </h2>
+                    <p className="mt-1 text-sm text-slate-600">{activeDoc.description}</p>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => setActiveTab('catalog')}
-                    className="font-mono text-xs text-[#2277FF] hover:underline"
+                    className="font-sans text-xs font-semibold text-[#0056FF] hover:underline"
                   >
                     &larr; Back to Catalog
                   </button>
                 </div>
 
-                <p className="text-sm leading-relaxed text-[#C4CEF8]">{activeDoc.description}</p>
-
                 {/* Interactive Stage Card */}
-                <div className="overflow-hidden rounded-2xl border border-[#0F357D] bg-[#001338]">
-                  {/* Canvas Switcher Header */}
-                  <div className="flex items-center justify-between border-b border-[#0F357D] bg-[#000B26] px-4 py-2">
-                    <span className="font-mono text-[11px] font-semibold text-[#A3B4F0]">
-                      STAGE CANVAS
-                    </span>
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => setStageBg('midnight')}
-                        className={cn(
-                          'rounded-md px-2 py-0.5 font-mono text-[11px] transition-colors',
-                          stageBg === 'midnight'
-                            ? 'bg-[#0056FF] font-bold text-white'
-                            : 'text-[#A3B4F0] hover:text-white',
-                        )}
-                      >
-                        Midnight
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setStageBg('lavender')}
-                        className={cn(
-                          'rounded-md px-2 py-0.5 font-mono text-[11px] transition-colors',
-                          stageBg === 'lavender'
-                            ? 'bg-[#0056FF] font-bold text-white'
-                            : 'text-[#A3B4F0] hover:text-white',
-                        )}
-                      >
-                        Soft Lavender
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setStageBg('white')}
-                        className={cn(
-                          'rounded-md px-2 py-0.5 font-mono text-[11px] transition-colors',
-                          stageBg === 'white'
-                            ? 'bg-[#0056FF] font-bold text-white'
-                            : 'text-[#A3B4F0] hover:text-white',
-                        )}
-                      >
-                        White
-                      </button>
-                    </div>
-                  </div>
-
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
                   {/* Stage Body */}
-                  <div
-                    className={cn(
-                      'flex min-h-[220px] items-center justify-center p-8 transition-colors',
-                      stageBg === 'midnight' && 'bg-[#000B26] text-white',
-                      stageBg === 'lavender' && 'bg-[#E3E7FC] text-[#000B26]',
-                      stageBg === 'white' && 'bg-[#FFFFFF] text-slate-900',
-                    )}
-                  >
+                  <div className="flex min-h-[220px] items-center justify-center bg-slate-50/70 p-8">
                     {renderActivePlaygroundComponent({
                       id: activeDoc.id,
                       snackbarOpen,
@@ -492,24 +367,24 @@ export default function DesignSystemPage() {
                   </div>
 
                   {/* Action Ribbon: Code Toggle & Copy */}
-                  <div className="flex items-center justify-between border-t border-[#0F357D] bg-[#000B26] px-4 py-2.5">
+                  <div className="flex items-center justify-between border-t border-slate-200 bg-white px-4 py-2.5">
                     <button
                       type="button"
                       onClick={() => setShowCode(!showCode)}
-                      className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#2277FF] hover:text-white"
+                      className="inline-flex items-center gap-1.5 font-sans text-xs font-bold text-[#0056FF] hover:text-[#0040C0]"
                     >
                       <Code className="h-4 w-4" />
-                      <span>{showCode ? 'Hide Code' : 'View Component Code'}</span>
+                      <span>{showCode ? 'Hide Code' : 'View Code'}</span>
                     </button>
 
                     {showCode && (
                       <button
                         type="button"
                         onClick={() => handleCopy(activeDoc.codeSnippet)}
-                        className="inline-flex items-center gap-1 rounded-md border border-[#0F357D] bg-[#001338] px-2.5 py-1 font-mono text-[11px] text-[#2277FF] hover:bg-[#002266] hover:text-white"
+                        className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-700 hover:bg-slate-100"
                       >
                         {copiedCode ? (
-                          <Check className="h-3.5 w-3.5 text-white" />
+                          <Check className="h-3.5 w-3.5 text-emerald-600" />
                         ) : (
                           <Copy className="h-3.5 w-3.5" />
                         )}
@@ -520,8 +395,8 @@ export default function DesignSystemPage() {
 
                   {/* Collapsible Source Code View */}
                   {showCode && (
-                    <div className="border-t border-[#0F357D] bg-[#00081C] p-4">
-                      <pre className="overflow-x-auto font-mono text-xs text-[#E3E7FC]">
+                    <div className="border-t border-slate-200 bg-slate-900 p-4">
+                      <pre className="overflow-x-auto font-mono text-xs text-slate-100">
                         <code>{activeDoc.codeSnippet}</code>
                       </pre>
                     </div>
@@ -530,28 +405,28 @@ export default function DesignSystemPage() {
 
                 {/* Component Props Table */}
                 <div className="space-y-2">
-                  <h3 className="font-mono text-xs font-bold text-[#A3B4F0] uppercase">
-                    PROPS INTERFACE
-                  </h3>
-                  <div className="overflow-x-auto rounded-xl border border-[#0F357D] bg-[#001338]">
-                    <table className="w-full text-left font-mono text-xs">
-                      <thead className="border-b border-[#0F357D] bg-[#000B26] text-[#A3B4F0]">
+                  <h3 className="font-sans text-sm font-bold text-slate-900">Props Interface</h3>
+                  <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                    <table className="w-full text-left font-sans text-xs">
+                      <thead className="border-b border-slate-200 bg-slate-50 text-slate-600">
                         <tr>
-                          <th className="px-4 py-2.5">Prop</th>
-                          <th className="px-4 py-2.5">Type</th>
-                          <th className="px-4 py-2.5">Default</th>
-                          <th className="px-4 py-2.5">Description</th>
+                          <th className="px-4 py-2.5 font-semibold">Prop</th>
+                          <th className="px-4 py-2.5 font-semibold">Type</th>
+                          <th className="px-4 py-2.5 font-semibold">Default</th>
+                          <th className="px-4 py-2.5 font-semibold">Description</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[#0F357D]/50 text-[#C4CEF8]">
+                      <tbody className="divide-y divide-slate-100 text-slate-700">
                         {activeDoc.props.map((p) => (
                           <tr key={p.name}>
-                            <td className="px-4 py-2 font-bold text-white">{p.name}</td>
-                            <td className="px-4 py-2 text-[#2277FF]">{p.type}</td>
-                            <td className="px-4 py-2 text-[#A3B4F0]">{p.default || '-'}</td>
-                            <td className="px-4 py-2 font-sans text-xs text-[#E3E7FC]">
-                              {p.description}
+                            <td className="px-4 py-2 font-mono font-bold text-[#0056FF]">
+                              {p.name}
                             </td>
+                            <td className="px-4 py-2 font-mono text-slate-600">{p.type}</td>
+                            <td className="px-4 py-2 font-mono text-slate-400">
+                              {p.default || '-'}
+                            </td>
+                            <td className="px-4 py-2 text-slate-600">{p.description}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -561,59 +436,47 @@ export default function DesignSystemPage() {
               </section>
             )}
 
-            {/* TAB CONTENT 3: Brand Concept Blueprint */}
+            {/* TAB CONTENT 3: Brand Colors */}
             {activeTab === 'blueprint' && (
               <section id="brand-blueprint" className="space-y-4">
                 <BrandConceptBlueprint />
               </section>
             )}
 
-            {/* Cloudflare-style Design Principles Section */}
-            <section id="design-principles" className="space-y-4 border-t border-[#0F357D] pt-8">
+            {/* Design Principles Section */}
+            <section id="design-principles" className="space-y-4 border-t border-slate-200 pt-8">
               <div className="flex items-center gap-2">
                 <a
                   href="#design-principles"
-                  className="font-mono text-lg text-[#0056FF]"
+                  className="font-mono text-lg text-[#0056FF] hover:underline"
                   title="Direct Section Link"
                 >
                   🔗
                 </a>
-                <h2 className="font-sans text-xl font-bold text-white">
+                <h2 className="font-sans text-xl font-bold text-slate-950">
                   Flat Design & Zero Shadows Policy
                 </h2>
               </div>
 
-              <p className="font-sans text-sm leading-relaxed text-[#C4CEF8]">
+              <p className="font-sans text-sm leading-relaxed text-slate-600">
                 Every component adheres to strict flat design principles without dropped blur
                 shadows (`box-shadow: none`). Spatial depth is established strictly through 1px
-                border luminance and background elevation hierarchy.
+                border contrast and background elevation hierarchy.
               </p>
 
-              <div id="wcag-contrast" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-[#0F357D] bg-[#001338] p-4">
-                  <span className="font-mono text-[11px] font-bold text-[#A3B4F0] uppercase">
-                    TOUCH TARGET MANDATE
-                  </span>
-                  <p className="mt-1 text-xs text-[#C4CEF8]">
-                    Minimum 44×44px interactive area for all buttons, chips, switches, and
-                    dropdowns.
-                  </p>
-                </div>
-
-                <div className="rounded-xl border border-[#0F357D] bg-[#001338] p-4">
-                  <span className="font-mono text-[11px] font-bold text-[#A3B4F0] uppercase">
-                    WCAG AA CONTRAST (&ge; 4.5:1)
-                  </span>
-                  <p className="mt-1 text-xs text-[#C4CEF8]">
-                    All text on Royal Blue (`#0056FF`) or Midnight surfaces exceeds WCAG AA
-                    standards.
-                  </p>
-                </div>
+              <div id="touch-targets" className="space-y-2 pt-2">
+                <h3 className="font-sans text-sm font-bold text-slate-900">
+                  Touch Targets & Accessibility
+                </h3>
+                <p className="font-sans text-sm leading-relaxed text-slate-600">
+                  All interactive elements provide a minimum 44×44px hit target area and exceed WCAG
+                  AA contrast ratios of 4.5:1 on light surfaces.
+                </p>
               </div>
             </section>
           </main>
 
-          {/* COLUMN 3: Right Sidebar "ON THIS PAGE" Line Tracker (Image 2 Right Sidebar) */}
+          {/* COLUMN 3: Right Sidebar Line Tracker (Image 2 Style) */}
           <aside className="hidden lg:col-span-3 lg:block">
             <LineTrackerToc
               items={tocHeadings}
@@ -649,13 +512,13 @@ export default function DesignSystemPage() {
         title="Campus Infrastructure Status"
       >
         <div className="space-y-4">
-          <p className="text-sm text-[#C4CEF8]">
+          <p className="text-sm text-slate-600">
             Siem Reap Science Wing B · Telemetry labs active with Gigabit Ethernet connectivity.
           </p>
           <button
             type="button"
             onClick={() => setSheetOpen(false)}
-            className="flex h-10 w-full items-center justify-center rounded-xl bg-[#0056FF] text-xs font-bold text-white transition-colors hover:bg-[#2277FF]"
+            className="flex h-10 w-full items-center justify-center rounded-xl bg-[#0056FF] text-xs font-bold text-white transition-colors hover:bg-[#0040C0]"
           >
             Close Sheet
           </button>
@@ -674,19 +537,23 @@ export default function DesignSystemPage() {
       />
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-[#0F357D] bg-[#00071A] py-8 text-center font-mono text-xs text-[#A3B4F0]">
+      <footer className="mt-auto border-t border-slate-200 bg-slate-50 py-8 text-center font-sans text-xs text-slate-500">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
           <div className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 rounded-full bg-[#0056FF]" />
-            <span>
-              SNP-SMS Design Standards & Component Catalog · Royal Blue (#0056FF) & Sora Font
-            </span>
+            <span>SNP-SMS Design Standards & Component Catalog · Sora Typography</span>
           </div>
           <div className="flex items-center gap-4">
-            <Link href="/document" className="text-[#C4CEF8] transition-colors hover:text-white">
+            <Link
+              href="/document"
+              className="text-slate-600 transition-colors hover:text-slate-900"
+            >
               API Docs
             </Link>
-            <Link href="/dashboard" className="text-[#C4CEF8] transition-colors hover:text-white">
+            <Link
+              href="/dashboard"
+              className="text-slate-600 transition-colors hover:text-slate-900"
+            >
               Dashboard
             </Link>
           </div>
@@ -697,7 +564,7 @@ export default function DesignSystemPage() {
 }
 
 /**
- * Helper to render interactive component playground demo
+ * Helper to render interactive playground component in light mode
  */
 function renderActivePlaygroundComponent(props: {
   id: string;
@@ -731,7 +598,7 @@ function renderActivePlaygroundComponent(props: {
               props.setSnackbarMsg('Student profile updated.');
               props.setSnackbarOpen(true);
             }}
-            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#2277FF]"
+            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#0040C0]"
           >
             <Check className="h-4 w-4" />
             <span>Trigger Confirmation Snackbar</span>
@@ -745,7 +612,7 @@ function renderActivePlaygroundComponent(props: {
           <button
             type="button"
             onClick={() => props.setSheetOpen(true)}
-            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#2277FF]"
+            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#0040C0]"
           >
             <MapPin className="h-4 w-4" />
             <span>Open Bottom Sheet</span>
@@ -759,7 +626,7 @@ function renderActivePlaygroundComponent(props: {
           <button
             type="button"
             onClick={() => props.setDialogOpen(true)}
-            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#2277FF]"
+            className="inline-flex h-9 items-center gap-2 rounded-xl bg-[#0056FF] px-4 text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#0040C0]"
           >
             <span>Trigger Decision Dialog</span>
           </button>
@@ -769,7 +636,7 @@ function renderActivePlaygroundComponent(props: {
     case 'bottom-nav':
       return (
         <div className="w-full max-w-sm py-4">
-          <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#001338] p-2">
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-xs">
             <div className="flex items-center justify-around">
               {props.bottomNavItems.map((item) => {
                 const isActive = props.bottomNavTab === item.id;
@@ -781,11 +648,11 @@ function renderActivePlaygroundComponent(props: {
                     onClick={() => props.setBottomNavTab(item.id)}
                     className={cn(
                       'flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-colors',
-                      isActive ? 'bg-[#0056FF] font-bold text-white' : 'text-[#C4CEF8]',
+                      isActive ? 'bg-[#0056FF] font-bold text-white' : 'text-slate-600',
                     )}
                   >
                     <Icon className="h-4 w-4" />
-                    <span className="font-mono text-[11px]">{item.label}</span>
+                    <span className="font-sans text-[11px]">{item.label}</span>
                   </button>
                 );
               })}
@@ -797,7 +664,7 @@ function renderActivePlaygroundComponent(props: {
     case 'switch':
       return (
         <div className="flex items-center gap-3 py-6">
-          <span className="text-xs font-medium">System Telemetry Probe</span>
+          <span className="text-xs font-medium text-slate-800">System Telemetry Probe</span>
           <LibrarySwitch checked={props.switchState} onCheckedChange={props.setSwitchState} />
         </div>
       );
@@ -824,31 +691,31 @@ function renderActivePlaygroundComponent(props: {
             label="Quick Action"
             icon={<Plus className="h-5 w-5" />}
             onClick={() => props.setFabCount((c) => c + 1)}
-            className="bg-[#0056FF] text-white hover:bg-[#2277FF]"
+            className="bg-[#0056FF] text-white hover:bg-[#0040C0]"
           />
-          <span className="font-mono text-xs">Clicks: {props.fabCount}</span>
+          <span className="font-sans text-xs text-slate-500">Clicks: {props.fabCount}</span>
         </div>
       );
 
     case 'card':
       return (
         <div className="w-full max-w-xs py-4">
-          <LibraryCard className="border border-[#0F357D] bg-[#001338] text-white">
-            <LibraryCardMedia className="relative flex h-24 w-full items-start justify-between bg-gradient-to-r from-[#000B26] via-[#002D8A] to-[#0056FF] p-3">
-              <span className="rounded-md bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] font-bold text-white">
+          <LibraryCard className="border border-slate-200 bg-white shadow-xs">
+            <LibraryCardMedia className="relative flex h-24 w-full items-start justify-between rounded-lg bg-gradient-to-r from-blue-100 to-[#0056FF] p-3">
+              <span className="rounded-md bg-[#0056FF] px-2 py-0.5 font-sans text-[10px] font-bold text-white">
                 STEM
               </span>
             </LibraryCardMedia>
             <LibraryCardHeader>
-              <LibraryCardTitle className="text-base font-bold text-white">
+              <LibraryCardTitle className="text-base font-bold text-slate-900">
                 Autonomous Robotics
               </LibraryCardTitle>
-              <LibraryCardDescription className="text-xs text-[#C4CEF8]">
+              <LibraryCardDescription className="text-xs text-slate-500">
                 Sensors, telemetry & embedded systems.
               </LibraryCardDescription>
             </LibraryCardHeader>
-            <LibraryCardFooter className="flex items-center justify-between border-t border-white/10 pt-3">
-              <span className="font-mono text-xs text-[#E3E7FC]">3 Credits</span>
+            <LibraryCardFooter className="flex items-center justify-between border-t border-slate-100 pt-3">
+              <span className="font-sans text-xs text-slate-600">3 Credits</span>
               <button
                 type="button"
                 onClick={() => props.setCardEnrolled(!props.cardEnrolled)}
@@ -856,7 +723,7 @@ function renderActivePlaygroundComponent(props: {
                   'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold',
                   props.cardEnrolled
                     ? 'bg-[#0056FF] text-white'
-                    : 'bg-white/10 text-white hover:bg-white/20',
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
                 )}
               >
                 <Star className="h-3.5 w-3.5" />
@@ -870,7 +737,7 @@ function renderActivePlaygroundComponent(props: {
     case 'dropdown':
       return (
         <div className="w-full max-w-xs py-6">
-          <select className="h-10 w-full rounded-xl border border-white/20 bg-[#001338] px-3 font-mono text-xs text-white focus:border-[#0056FF] focus:outline-none">
+          <select className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 font-sans text-xs text-slate-800 focus:border-[#0056FF] focus:outline-none">
             <option value="sora">Sora — Primary Brand Typography</option>
             <option value="inter">Inter — UI Sans</option>
             <option value="roboto">Roboto — M3 Material</option>
@@ -883,14 +750,14 @@ function renderActivePlaygroundComponent(props: {
         <div className="flex items-center justify-center gap-2 py-6">
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-[#001338] text-sm font-bold text-white hover:border-[#0056FF] hover:text-[#2277FF]"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 hover:border-[#0056FF] hover:text-[#0056FF]"
             title="Move Tool (Shortcut: V)"
           >
             V
           </button>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-[#001338] text-sm font-bold text-white hover:border-[#0056FF] hover:text-[#2277FF]"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 hover:border-[#0056FF] hover:text-[#0056FF]"
             title="Hand Tool (Shortcut: H)"
           >
             H

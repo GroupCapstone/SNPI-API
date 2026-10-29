@@ -2,26 +2,13 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  ChevronRight,
-  Layers,
-  Sparkles,
-  ArrowRight,
-  Check,
-  AlertTriangle,
-  Info,
-  XCircle,
-  Home,
-  Star,
-  User,
-  Zap,
-} from '@/components/icons';
+import { ChevronRight, Home, User, Zap, AlertTriangle, ArrowRight } from '@/components/icons';
 
 export interface GalleryComponentItem {
   id: string;
   name: string;
   variantsCount: number;
-  category: 'Core UI 10' | 'Actions & Inputs' | 'Feedback' | 'Navigation' | 'Data Display';
+  category: string;
   description: string;
   iconType:
     | 'accordion'
@@ -51,7 +38,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Accordion',
     variantsCount: 6,
     category: 'Data Display',
-    description: 'Vertically stacked disclosure panels for collapsible long-form documentation.',
+    description: 'Vertically stacked disclosure panels for collapsible long-form content.',
     iconType: 'accordion',
   },
   {
@@ -75,7 +62,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Avatar',
     variantsCount: 674,
     category: 'Data Display',
-    description: 'User and entity visual representations with status dots and fallbacks.',
+    description: 'User and entity visual representations with status indicators.',
     iconType: 'avatar',
   },
   {
@@ -83,7 +70,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Badge',
     variantsCount: 316,
     category: 'Data Display',
-    description: 'Compact status counters, category indicators, and metadata pills.',
+    description: 'Compact status counters and indicators.',
     iconType: 'badge',
   },
   {
@@ -123,7 +110,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Snackbar',
     variantsCount: 12,
     category: 'Core UI 10',
-    description: 'Gmail paradigm ephemeral feedback snackbar with instant Undo action.',
+    description: 'Ephemeral feedback snackbar with instant Undo action.',
     iconType: 'snackbar',
   },
   {
@@ -147,7 +134,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Bottom Nav',
     variantsCount: 10,
     category: 'Core UI 10',
-    description: 'Thumb-reachable primary 3-to-5 destination navigation bar.',
+    description: 'Thumb-reachable primary destination navigation bar.',
     iconType: 'bottom-nav',
   },
   {
@@ -163,7 +150,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Chips',
     variantsCount: 24,
     category: 'Core UI 10',
-    description: 'Compact interactive tags for filtering, tagging, and attribute selection.',
+    description: 'Compact interactive tags for filtering and selection.',
     iconType: 'chip',
   },
   {
@@ -171,7 +158,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Floating Action Button (FAB)',
     variantsCount: 18,
     category: 'Core UI 10',
-    description: 'Circular primary action button floating above surface for highest priority task.',
+    description: 'Primary action button floating above surface for highest priority task.',
     iconType: 'fab',
   },
   {
@@ -206,180 +193,113 @@ interface ComponentGalleryGridProps {
 }
 
 export function ComponentGalleryGrid({ onSelectComponent, selectedId }: ComponentGalleryGridProps) {
-  const [filterCategory, setFilterCategory] = React.useState<string>('All');
-  const [search, setSearch] = React.useState<string>('');
-
-  const categories = [
-    'All',
-    'Core UI 10',
-    'Actions & Inputs',
-    'Feedback',
-    'Navigation',
-    'Data Display',
-  ];
-
-  const filteredItems = GALLERY_COMPONENTS.filter((item) => {
-    const matchesCategory = filterCategory === 'All' || item.category === filterCategory;
-    const matchesSearch =
-      item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.description.toLowerCase().includes(search.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
   return (
-    <div className="space-y-6">
-      {/* Category Pills & Search */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-1.5">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setFilterCategory(cat)}
-              className={cn(
-                'rounded-full px-3 py-1 font-mono text-xs font-semibold transition-all',
-                filterCategory === cat
-                  ? 'bg-[#0056FF] text-white shadow-xs'
-                  : 'bg-[#001338] text-[#C4CEF8] hover:bg-[#002266] hover:text-white',
-              )}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {GALLERY_COMPONENTS.map((item) => {
+        const isSelected = selectedId === item.id;
+        return (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => onSelectComponent(item.id)}
+            className={cn(
+              'group flex flex-col overflow-hidden rounded-2xl border text-left transition-all duration-300 ease-out',
+              'hover:-translate-y-1.5 hover:border-[#0056FF] hover:shadow-xl',
+              isSelected
+                ? 'border-[#0056FF] bg-white shadow-md ring-2 ring-[#0056FF]/30'
+                : 'border-slate-200 bg-white hover:bg-white',
+            )}
+          >
+            {/* Schematic Illustration Canvas - Clean Light Theme matching Image 1 */}
+            <div className="relative flex h-48 w-full items-center justify-center overflow-hidden bg-[#F6F8FA] p-6 transition-all duration-300 group-hover:bg-[#F0F4FF]">
+              {/* Subtle Dot Grid */}
+              <div
+                className="absolute inset-0 opacity-40 transition-opacity group-hover:opacity-60"
+                style={{
+                  backgroundImage: 'radial-gradient(circle at 1px 1px, #CBD5E1 1px, transparent 0)',
+                  backgroundSize: '16px 16px',
+                }}
+              />
 
-        <div className="font-mono text-xs text-[#A3B4F0]">
-          Showing <span className="font-bold text-white">{filteredItems.length}</span> components ·{' '}
-          <span className="font-bold text-[#2277FF]">
-            {filteredItems.reduce((acc, curr) => acc + curr.variantsCount, 0)}
-          </span>{' '}
-          total variants
-        </div>
-      </div>
-
-      {/* 3-Column Schematic Card Grid (Image 1 Style) */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredItems.map((item) => {
-          const isSelected = selectedId === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => onSelectComponent(item.id)}
-              className={cn(
-                'group flex flex-col overflow-hidden rounded-2xl border text-left transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg',
-                isSelected
-                  ? 'border-[#0056FF] bg-[#001744] ring-2 ring-[#0056FF]/40'
-                  : 'border-[#0F357D] bg-[#001338] hover:border-[#2277FF] hover:bg-[#001744]',
-              )}
-            >
-              {/* Schematic Illustration Canvas (Image 1 Wireframe Visuals) */}
-              <div className="relative flex h-44 w-full items-center justify-center overflow-hidden bg-gradient-to-b from-[#000B26]/80 to-[#001338] p-4 transition-colors group-hover:from-[#000E30]">
-                {/* Subtle Grid Dot Background */}
-                <div
-                  className="absolute inset-0 opacity-15"
-                  style={{
-                    backgroundImage:
-                      'radial-gradient(circle at 1px 1px, #2277FF 1px, transparent 0)',
-                    backgroundSize: '16px 16px',
-                  }}
-                />
-
-                {/* Render Schematic Wireframe based on iconType */}
-                <div className="relative z-10 w-full max-w-[200px]">
-                  {renderSchematicIllustration(item.iconType)}
-                </div>
-
-                {/* Badge Category */}
-                <span className="absolute top-3 left-3 rounded-md bg-[#000B26]/80 px-2 py-0.5 font-mono text-[10px] font-semibold text-[#A3B4F0] backdrop-blur-xs">
-                  {item.category}
-                </span>
-
-                {/* Hover Arrow Indicator */}
-                <span className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-[#0056FF]/0 text-[#2277FF] transition-all group-hover:bg-[#0056FF] group-hover:text-white">
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </span>
+              {/* Schematic Wireframe */}
+              <div className="relative z-10 w-full max-w-[200px] transition-transform duration-300 ease-out group-hover:scale-105">
+                {renderSchematicIllustration(item.iconType)}
               </div>
+            </div>
 
-              {/* Card Footer: Title & Variant Count */}
-              <div className="flex flex-1 flex-col justify-between border-t border-[#0F357D]/60 p-4">
-                <div>
-                  <h3 className="font-sans text-base font-bold text-white transition-colors group-hover:text-[#2277FF]">
-                    {item.name}
-                  </h3>
-                  <p className="mt-0.5 line-clamp-1 text-xs text-[#A3B4F0]">{item.description}</p>
-                </div>
-
-                <div className="mt-3 flex items-center justify-between font-mono text-[11px]">
-                  <span className="text-[#C4CEF8]">{item.variantsCount} variants</span>
-                  <span className="font-semibold text-[#2277FF] group-hover:underline">
-                    View Demo &rarr;
-                  </span>
-                </div>
+            {/* Card Content - Clean Typography matching Image 1 (No chip/box labels) */}
+            <div className="flex flex-1 flex-col justify-between p-5">
+              <div>
+                <h3 className="font-sans text-base font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  {item.name}
+                </h3>
+                <p className="mt-1 font-sans text-xs text-slate-500">
+                  {item.variantsCount} variants
+                </p>
               </div>
-            </button>
-          );
-        })}
-      </div>
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }
 
 /**
- * Renders schematic wireframe illustrations matching the style of Image 1
+ * Schematic wireframe illustrations in clean light mode
  */
 function renderSchematicIllustration(type: GalleryComponentItem['iconType']) {
   switch (type) {
     case 'accordion':
       return (
-        <div className="space-y-1.5">
-          <div className="flex h-5 w-full items-center justify-between rounded-lg bg-white/10 px-2">
-            <div className="h-1.5 w-16 rounded-full bg-white/30" />
-            <div className="h-2 w-2 rounded-full bg-[#2277FF]" />
+        <div className="space-y-2">
+          <div className="flex h-6 w-full items-center justify-between rounded-lg border border-slate-200/80 bg-white px-3 shadow-xs">
+            <div className="h-2 w-20 rounded-full bg-slate-300" />
+            <div className="h-2 w-2 rounded-full bg-emerald-500" />
           </div>
-          <div className="h-10 w-full rounded-lg border border-[#0056FF]/40 bg-[#0056FF]/20 p-2">
-            <div className="h-1.5 w-24 rounded-full bg-white/40" />
-            <div className="mt-1.5 h-1.5 w-32 rounded-full bg-white/20" />
+          <div className="h-12 w-full rounded-lg border border-[#0056FF]/30 bg-blue-50/60 p-2.5 shadow-xs">
+            <div className="h-2 w-24 rounded-full bg-slate-400" />
+            <div className="mt-2 h-1.5 w-32 rounded-full bg-slate-300" />
           </div>
-          <div className="flex h-5 w-full items-center justify-between rounded-lg bg-white/10 px-2">
-            <div className="h-1.5 w-20 rounded-full bg-white/30" />
-            <div className="h-2 w-2 rounded-full bg-white/30" />
+          <div className="flex h-6 w-full items-center justify-between rounded-lg border border-slate-200/80 bg-white px-3 shadow-xs">
+            <div className="h-2 w-20 rounded-full bg-slate-300" />
+            <div className="h-2 w-2 rounded-full bg-slate-300" />
           </div>
         </div>
       );
 
     case 'activity-feed':
       return (
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2 rounded-xl bg-white/10 p-1.5">
-            <span className="h-5 w-5 rounded-full bg-amber-400/80" />
-            <div className="h-2 w-24 rounded-full bg-white/30" />
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-white p-2 shadow-xs">
+            <span className="h-5 w-5 rounded-full bg-amber-400" />
+            <div className="h-2 w-24 rounded-full bg-slate-300" />
           </div>
-          <div className="flex items-center gap-2 rounded-xl bg-white/10 p-1.5">
-            <span className="h-5 w-5 rounded-full bg-[#2277FF]" />
-            <div className="h-2 w-28 rounded-full bg-white/30" />
+          <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-white p-2 shadow-xs">
+            <span className="h-5 w-5 rounded-full bg-[#0056FF]" />
+            <div className="h-2 w-28 rounded-full bg-slate-300" />
           </div>
-          <div className="flex items-center gap-2 rounded-xl bg-white/10 p-1.5">
-            <span className="h-5 w-5 rounded-full bg-purple-400/80" />
-            <div className="h-2 w-20 rounded-full bg-white/30" />
+          <div className="flex items-center gap-2 rounded-xl border border-slate-200/80 bg-white p-2 shadow-xs">
+            <span className="h-5 w-5 rounded-full bg-purple-500" />
+            <div className="h-2 w-20 rounded-full bg-slate-300" />
           </div>
         </div>
       );
 
     case 'alert-toast':
       return (
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-950/30 px-2 py-1">
-            <span className="h-2 w-2 rounded-full bg-red-500" />
-            <div className="h-1.5 w-24 rounded-full bg-white/40" />
+        <div className="space-y-2">
+          <div className="flex items-center gap-2.5 rounded-lg border border-red-200 bg-white px-3 py-1.5 shadow-xs">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500" />
+            <div className="h-2 w-24 rounded-full bg-slate-300" />
           </div>
-          <div className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-950/30 px-2 py-1">
-            <span className="h-2 w-2 rounded-full bg-amber-400" />
-            <div className="h-1.5 w-28 rounded-full bg-white/40" />
+          <div className="flex items-center gap-2.5 rounded-lg border border-amber-200 bg-white px-3 py-1.5 shadow-xs">
+            <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+            <div className="h-2 w-28 rounded-full bg-slate-300" />
           </div>
-          <div className="flex items-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-950/30 px-2 py-1">
-            <span className="h-2 w-2 rounded-full bg-emerald-400" />
-            <div className="h-1.5 w-20 rounded-full bg-white/40" />
+          <div className="flex items-center gap-2.5 rounded-lg border border-emerald-200 bg-white px-3 py-1.5 shadow-xs">
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+            <div className="h-2 w-20 rounded-full bg-slate-300" />
           </div>
         </div>
       );
@@ -387,69 +307,68 @@ function renderSchematicIllustration(type: GalleryComponentItem['iconType']) {
     case 'avatar':
       return (
         <div className="flex items-center justify-center">
-          <div className="relative flex h-20 w-20 items-center justify-center rounded-full border-2 border-white/20 bg-white/10">
-            <User className="h-10 w-10 text-white/50" />
-            <span className="absolute right-1 bottom-1 h-3.5 w-3.5 rounded-full border-2 border-[#000B26] bg-[#0056FF]" />
+          <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-2 border-slate-200 bg-white shadow-xs">
+            <User className="h-12 w-12 text-slate-400" />
+            <span className="absolute right-1.5 bottom-1.5 h-4 w-4 rounded-full border-2 border-white bg-emerald-500" />
           </div>
         </div>
       );
 
     case 'badge':
       return (
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#FF7036]" />
-            <div className="h-1.5 w-16 rounded-full bg-white/40" />
+        <div className="space-y-2.5">
+          <div className="flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-1.5 shadow-xs">
+            <span className="h-3 w-3 rounded-full bg-[#FF7036]" />
+            <div className="h-2 w-20 rounded-full bg-slate-300" />
           </div>
-          <div className="flex items-center gap-2 rounded-full bg-[#0056FF]/20 px-3 py-1">
-            <Zap className="h-3 w-3 text-[#2277FF]" />
-            <div className="h-1.5 w-20 rounded-full bg-white/50" />
+          <div className="flex items-center gap-2.5 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 shadow-xs">
+            <Zap className="h-3.5 w-3.5 text-[#0056FF]" />
+            <div className="h-2 w-24 rounded-full bg-slate-400" />
           </div>
-          <div className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-            <div className="h-1.5 w-14 rounded-full bg-white/40" />
+          <div className="flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-1.5 shadow-xs">
+            <span className="h-3 w-3 rounded-full bg-emerald-500" />
+            <div className="h-2 w-16 rounded-full bg-slate-300" />
           </div>
         </div>
       );
 
     case 'banner':
       return (
-        <div className="overflow-hidden rounded-xl border border-white/20 bg-white/5">
-          <div className="flex items-center gap-1.5 border-b border-white/10 bg-white/10 px-2 py-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs">
+          <div className="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50 px-3 py-1.5">
+            <span className="h-2 w-2 rounded-full bg-red-400" />
+            <span className="h-2 w-2 rounded-full bg-amber-400" />
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
           </div>
-          <div className="flex items-center gap-2 bg-[#FF7036]/20 p-2">
-            <AlertTriangle className="h-3.5 w-3.5 text-[#FF7036]" />
-            <div className="h-1.5 w-28 rounded-full bg-white/50" />
+          <div className="flex items-center gap-2 border-b border-amber-100 bg-amber-50 px-3 py-2">
+            <AlertTriangle className="h-3.5 w-3.5 text-amber-600" />
+            <div className="h-2 w-28 rounded-full bg-amber-200" />
           </div>
           <div className="p-3">
-            <div className="h-2 w-full rounded-full bg-white/10" />
+            <div className="h-2 w-full rounded-full bg-slate-200" />
           </div>
         </div>
       );
 
     case 'breadcrumbs':
       return (
-        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-2">
-          <Home className="h-3.5 w-3.5 text-[#2277FF]" />
-          <span className="text-white/40">/</span>
-          <div className="h-1.5 w-10 rounded-full bg-white/40" />
-          <span className="text-white/40">/</span>
-          <div className="h-1.5 w-12 rounded-full bg-[#0056FF]" />
+        <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-xs">
+          <Home className="h-4 w-4 text-[#0056FF]" />
+          <span className="font-bold text-slate-300">/</span>
+          <div className="h-2 w-12 rounded-full bg-slate-300" />
+          <span className="font-bold text-slate-300">/</span>
+          <div className="h-2 w-14 rounded-full bg-[#0056FF]" />
         </div>
       );
 
     case 'button':
       return (
         <div className="flex flex-col items-center justify-center gap-2">
-          <div className="relative inline-flex h-9 items-center justify-center rounded-xl bg-[#0056FF] px-6 text-xs font-bold text-white shadow-md">
+          <div className="relative inline-flex h-10 items-center justify-center rounded-xl bg-[#0056FF] px-7 text-xs font-bold text-white shadow-sm transition-transform group-hover:scale-105">
             <span>Button</span>
-            {/* Visual Pointer Cursor */}
             <span className="absolute -right-2 -bottom-2 flex h-6 w-6 items-center justify-center">
               <svg
-                className="h-5 w-5 text-white drop-shadow-md"
+                className="h-5 w-5 text-[#0056FF] drop-shadow-md"
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -457,18 +376,20 @@ function renderSchematicIllustration(type: GalleryComponentItem['iconType']) {
               </svg>
             </span>
           </div>
-          <div className="h-1.5 w-16 rounded-full bg-white/20" />
+          <div className="h-2 w-16 rounded-full bg-slate-200" />
         </div>
       );
 
     case 'button-group':
       return (
-        <div className="inline-flex rounded-xl border border-white/15 bg-white/10 p-1">
-          <div className="h-7 rounded-lg px-3 py-1 text-[11px] font-medium text-white/60">View</div>
-          <div className="h-7 rounded-lg bg-[#FF7036] px-3 py-1 text-[11px] font-bold text-white shadow-xs">
+        <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-xs">
+          <div className="h-8 rounded-lg px-3.5 py-1.5 text-xs font-medium text-slate-500">
+            View
+          </div>
+          <div className="h-8 rounded-lg bg-[#FF7036] px-3.5 py-1.5 text-xs font-bold text-white shadow-xs">
             Edit
           </div>
-          <div className="h-7 rounded-lg px-3 py-1 text-[11px] font-medium text-white/60">
+          <div className="h-8 rounded-lg px-3.5 py-1.5 text-xs font-medium text-slate-500">
             Share
           </div>
         </div>
@@ -476,9 +397,9 @@ function renderSchematicIllustration(type: GalleryComponentItem['iconType']) {
 
     case 'snackbar':
       return (
-        <div className="flex w-full items-center justify-between rounded-xl border border-[#0F357D] bg-[#001744] p-2.5 shadow-lg">
-          <div className="h-2 w-20 rounded-full bg-white/50" />
-          <span className="rounded-md bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] font-bold text-white">
+        <div className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white p-3 shadow-md">
+          <div className="h-2 w-24 rounded-full bg-slate-300" />
+          <span className="rounded-md bg-[#0056FF] px-2.5 py-1 font-mono text-[10px] font-bold text-white">
             Undo
           </span>
         </div>
@@ -486,58 +407,58 @@ function renderSchematicIllustration(type: GalleryComponentItem['iconType']) {
 
     case 'bottom-sheet':
       return (
-        <div className="relative h-20 w-full overflow-hidden rounded-t-2xl border-x border-t border-[#0056FF]/50 bg-[#001744] p-2">
-          <div className="mx-auto h-1 w-8 rounded-full bg-white/30" />
-          <div className="mt-2 space-y-1.5">
-            <div className="h-2 w-24 rounded-full bg-white/40" />
-            <div className="h-1.5 w-36 rounded-full bg-white/20" />
+        <div className="relative h-20 w-full overflow-hidden rounded-t-2xl border-x border-t border-slate-200 bg-white p-2.5 shadow-sm">
+          <div className="mx-auto h-1 w-10 rounded-full bg-slate-300" />
+          <div className="mt-3 space-y-2">
+            <div className="h-2 w-28 rounded-full bg-slate-300" />
+            <div className="h-1.5 w-36 rounded-full bg-slate-200" />
           </div>
         </div>
       );
 
     case 'dialog':
       return (
-        <div className="w-full rounded-xl border border-white/20 bg-[#001744] p-3 shadow-xl">
-          <div className="flex items-center justify-between border-b border-white/10 pb-2">
-            <div className="h-2 w-16 rounded-full bg-white/60" />
-            <span className="h-2 w-2 rounded-full bg-red-400" />
+        <div className="w-full rounded-xl border border-slate-200 bg-white p-3.5 shadow-lg">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+            <div className="h-2.5 w-20 rounded-full bg-slate-400" />
+            <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
           </div>
-          <div className="space-y-1 py-2">
-            <div className="h-1.5 w-full rounded-full bg-white/20" />
-            <div className="h-1.5 w-3/4 rounded-full bg-white/20" />
+          <div className="space-y-1.5 py-2.5">
+            <div className="h-2 w-full rounded-full bg-slate-200" />
+            <div className="h-2 w-3/4 rounded-full bg-slate-200" />
           </div>
-          <div className="mt-1 flex justify-end gap-1.5">
-            <div className="h-4 w-10 rounded-md bg-white/10" />
-            <div className="h-4 w-12 rounded-md bg-[#0056FF]" />
+          <div className="mt-2 flex justify-end gap-2">
+            <div className="h-5 w-12 rounded-md bg-slate-100" />
+            <div className="h-5 w-14 rounded-md bg-[#0056FF]" />
           </div>
         </div>
       );
 
     case 'bottom-nav':
       return (
-        <div className="flex w-full items-center justify-around rounded-xl border border-white/15 bg-white/10 p-2">
-          <div className="h-4 w-4 rounded-md bg-white/30" />
-          <div className="h-4 w-4 rounded-md bg-[#0056FF]" />
-          <div className="h-4 w-4 rounded-md bg-white/30" />
+        <div className="flex w-full items-center justify-around rounded-xl border border-slate-200 bg-white p-2.5 shadow-xs">
+          <div className="h-5 w-5 rounded-md bg-slate-200" />
+          <div className="h-5 w-5 rounded-md bg-[#0056FF]" />
+          <div className="h-5 w-5 rounded-md bg-slate-200" />
         </div>
       );
 
     case 'switch':
       return (
         <div className="flex items-center justify-center">
-          <div className="relative h-7 w-12 rounded-full bg-[#0056FF] p-1">
-            <span className="absolute top-1 right-1 h-5 w-5 rounded-full bg-white shadow-sm" />
+          <div className="relative h-8 w-14 rounded-full bg-[#0056FF] p-1 shadow-inner">
+            <span className="absolute top-1 right-1 h-6 w-6 rounded-full bg-white shadow-md" />
           </div>
         </div>
       );
 
     case 'chip':
       return (
-        <div className="flex items-center justify-center gap-1.5">
-          <div className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] text-white">
+        <div className="flex items-center justify-center gap-2">
+          <div className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 shadow-xs">
             Passive
           </div>
-          <div className="rounded-full bg-[#0056FF] px-2.5 py-1 text-[10px] font-bold text-white shadow-xs">
+          <div className="rounded-full bg-[#0056FF] px-3 py-1 text-xs font-bold text-white shadow-xs">
             Active
           </div>
         </div>
@@ -546,40 +467,40 @@ function renderSchematicIllustration(type: GalleryComponentItem['iconType']) {
     case 'fab':
       return (
         <div className="flex items-center justify-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0056FF] text-white shadow-lg">
-            <span className="text-xl font-bold">+</span>
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0056FF] text-white shadow-lg transition-transform group-hover:scale-110">
+            <span className="text-2xl font-bold">+</span>
           </div>
         </div>
       );
 
     case 'card':
       return (
-        <div className="w-full rounded-xl border border-[#0F357D] bg-white/5 p-2.5">
-          <div className="h-8 w-full rounded-lg bg-gradient-to-r from-[#000B26] to-[#0056FF]" />
-          <div className="mt-2 h-2 w-20 rounded-full bg-white/40" />
-          <div className="mt-1 h-1.5 w-28 rounded-full bg-white/20" />
+        <div className="w-full rounded-xl border border-slate-200 bg-white p-3 shadow-xs">
+          <div className="h-10 w-full rounded-lg bg-gradient-to-r from-blue-100 to-[#0056FF]" />
+          <div className="mt-2.5 h-2.5 w-24 rounded-full bg-slate-400" />
+          <div className="mt-1.5 h-2 w-32 rounded-full bg-slate-200" />
         </div>
       );
 
     case 'dropdown':
       return (
-        <div className="flex w-full items-center justify-between rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-xs">
-          <span className="text-white/60">Select Option</span>
-          <span className="text-xs text-white/40">&darr;</span>
+        <div className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-xs shadow-xs">
+          <span className="text-slate-600">Select Option</span>
+          <span className="text-xs text-slate-400">&darr;</span>
         </div>
       );
 
     case 'tooltip':
       return (
         <div className="flex flex-col items-center justify-center gap-1">
-          <div className="rounded-md bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] text-white shadow-md">
+          <div className="rounded-md bg-slate-900 px-3 py-1 font-mono text-[11px] text-white shadow-md">
             Shortcut: ⌘K
           </div>
-          <div className="h-1.5 w-1.5 rotate-45 bg-[#0056FF]" />
+          <div className="h-2 w-2 rotate-45 bg-slate-900" />
         </div>
       );
 
     default:
-      return <div className="h-10 w-24 rounded-lg bg-white/10" />;
+      return <div className="h-12 w-28 rounded-lg bg-slate-100" />;
   }
 }
