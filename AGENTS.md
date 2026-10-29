@@ -104,3 +104,34 @@ All AI coding assistants (including Antigravity, Claude, Copilot, Codex, and sub
   - Never hardcode personal GitHub usernames or user paths into CI/CD workflows, automation secrets, or package metadata.
   - Maintainer verification relies on immutable numeric GitHub account IDs in `.github/maintainers.json`, which must be updated upon ownership migration.
   - Remote repository URLs in git remotes, documentation (`README.md`, `CONTRIBUTING.md`), and container registries must remain easily re-targetable via `git remote set-url origin <new-url>`.
+
+---
+
+## 8. Mandatory UI Skill Design Protocol — Developer Library First & Zero Real Frontend Changes
+
+- **Mandatory User Confirmation Gate**:
+  - Whenever a new skill or design specification is created or verified as good, the user explicitly confirms it. Once confirmed, the skill MUST be permanently recorded into `.agents/skills/<skill-name>/` so all future builds reference and enforce it.
+- **Developer Library First Mandate**:
+  - All new UI components, dark modes, animations, layouts, and design tokens MUST strictly be built and demoed in the **Public Developer Documentation Library** (`apps/frontend/features/document/components/ui-library/` and `apps/frontend/app/document/design-system/`).
+  - Prototyping must never touch production application routes.
+- **Strict Prohibition — Zero Changes to Real Frontend Without Explicit Command**:
+  - AI agents and contributors MUST NEVER apply, inject, or migrate experimental designs, dark modes, or new components to the real frontend (`apps/frontend/app/(dashboard)/`, `apps/frontend/components/`, `apps/frontend/app/globals.css`) until the user inspects the library demo and issues an **explicit command** to apply it.
+  - The Admin Dashboard (`/(dashboard)/*`) strictly remains clean, light mode, and unaffected.
+- **Immediate Revert Requirement**:
+  - If any design or component is accidentally or prematurely applied to the real frontend before explicit user command, it must be reverted back immediately and placed in the developer library first.
+
+---
+
+## 9. Authoritative Monorepo Skills & Specific Command Catalog
+
+Use these specific skill identifiers and command strings to instruct the agent:
+
+| Skill Code | Specific Skill Folder & Filename | Description | User Command String |
+| :--- | :--- | :--- | :--- |
+| `SKILL-ARCH` | `.agents/skills/snp-sms-monorepo-architecture/SKILL.md` | Monorepo topology, 7-layer modular monolith, serverless/container hybrid model | `apply skill arch` |
+| `SKILL-SEC` | `.agents/skills/snp-sms-code-security-quality-policy/SKILL.md` | Enterprise cryptographic hygiene, injection defenses, tenant scoping, zero emojis | `apply skill security` |
+| `SKILL-DS` | `.agents/skills/snp-sms-design-standards/SKILL.md` | Single-folder Dark UI standards, flat components, zero shadows, luminance depth | `apply skill design` |
+| `SKILL-UI10` | `.agents/skills/snp-sms-design-standards/I. 10 UI components.md` | 10 Core UI Components specification (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip) | `apply skill 10-ui` |
+| `SKILL-LOG` | `.agents/skills/snp-sms-changelog-workflow/SKILL.md` | Real-time changelog synchronization with developer portal and CHANGELOG.md | `apply skill changelog` |
+| `SKILL-PUSH` | `.agents/skills/snp-sms-push-checkpoint-workflow/SKILL.md` | Pre-push verification gate, automated testing, typechecking, checkpoint release tagging | `apply skill push` |
+

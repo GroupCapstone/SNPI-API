@@ -125,8 +125,10 @@ The detailed component definitions, etymology, real-world paradigms, and Dark UI
 
 ---
 
-## 5. Live Interactive Showcase
+## 5. Live Interactive Showcase & Developer Library First Protocol
 
-An interactive live playground showcasing all 10 components in both Dark and Light mode is mounted at:
-- Route: `/settings/components`
-- Navigation: Settings &rarr; 10 Core UI Components Guide
+- **Public Design System Library Route**: `/document/design-system`
+- **Developer Documentation Integration**: Accessible directly from `/document` (Header navigation, sidebar, and table of contents).
+- **Mandatory Prototyping Sandbox**: All new UI components, dark mode variants, and layouts must be prototyped and demoed in this developer library first.
+- **Strict Prohibition on Real Frontend**: Do NOT touch or apply new designs to the real frontend (`/(dashboard)/*`, `apps/frontend/components/`, `globals.css`) until the user explicitly inspects the developer library demo and commands application.
+- **Immediate Revert Gate**: Any changes applied to real frontend prior to explicit user command must be reverted immediately.
