@@ -1,13 +1,14 @@
 const API_PATH = '/api/v1';
 
 const getServerApiBaseUrl = (): string => {
-  const configuredUrl = process.env.BACKEND_INTERNAL_URL;
   const requiresHttps = Boolean(process.env.VERCEL_ENV) || process.env.APP_ENV !== 'development';
-  if (!configuredUrl && requiresHttps) {
-    throw new Error('BACKEND_INTERNAL_URL must be configured for production server requests');
-  }
+  const defaultUrl = requiresHttps
+    ? 'https://api.kesararamwithdigital.tech/api/v1'
+    : 'http://localhost:4000/api/v1';
 
-  const backendUrl = configuredUrl ?? 'http://localhost:4000/api/v1';
+  const backendUrl =
+    process.env.BACKEND_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL || defaultUrl;
+
   const parsedUrl = new URL(backendUrl);
   const apiPath = parsedUrl.pathname.replace(/\/$/, '');
 
