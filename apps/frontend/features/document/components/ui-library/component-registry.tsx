@@ -552,4 +552,59 @@ export function Example() {
       },
     ],
   },
+  {
+    id: 'hanging-tabs-nav',
+    name: 'Hanging Tabs Nav',
+    category: 'Navigation',
+    paradigm: 'Hanging Trapezoid Top Navigation',
+    description:
+      'Inverted trapezoid folder tabs suspended from the top header bar with vector-smooth continuous borders, icon and title stacking, and circular notification badges.',
+    codeSnippet: `import { HangingTabsNav } from '@/features/document/components/ui-library';
+import { Pin, Newspaper, FilePlus, Contacts } from '@/components/icons';
+
+export function Example() {
+  const [activeTab, setActiveTab] = React.useState('newswire');
+
+  return (
+    <HangingTabsNav
+      activeId={activeTab}
+      onSelect={setActiveTab}
+      size="md"
+      items={[
+        { id: 'map', label: 'Map', icon: Pin },
+        { id: 'newswire', label: 'Newswire', icon: Newspaper, badge: 8, badgeColor: 'blue' },
+        { id: 'post', label: 'Post', icon: FilePlus },
+        { id: 'friends', label: 'Friends', icon: Contacts },
+      ]}
+    />
+  );
+}`,
+    props: [
+      {
+        name: 'items',
+        type: 'HangingTabItem[]',
+        default: '[]',
+        description:
+          'Array of navigation tab items with icon, label, optional badge, and optional href.',
+      },
+      {
+        name: 'activeId',
+        type: 'string',
+        default: '—',
+        description: 'Identifier of the currently selected/active tab.',
+      },
+      {
+        name: 'onSelect',
+        type: '(id: string) => void',
+        default: '—',
+        description: 'Callback invoked when a tab is clicked.',
+      },
+      {
+        name: 'size',
+        type: "'sm' | 'md' | 'lg'",
+        default: "'md'",
+        description: 'Size variant controlling tab dimensions and padding.',
+      },
+    ],
+  },
 ];
