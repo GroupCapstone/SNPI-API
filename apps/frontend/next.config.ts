@@ -1,0 +1,68 @@
+import type { NextConfig } from 'next';
+
+const isDocker = process.env.DOCKER_BUILD === 'true';
+const requiresHttpsBackend =
+  Boolean(process.env.VERCEL_ENV) || process.env.APP_ENV === 'production';
+const backendUrl =
+  process.env.BACKEND_INTERNAL_URL ?? (requiresHttpsBackend ? '' : 'http://localhost:4000/api/v1');
+
+if (!backendUrl) {
+  throw new Error('BACKEND_INTERNAL_URL must be set for deployed environments');
+}
+
+let backendDestination: string;
+try {
+  const parsedBackendUrl = new URL(backendUrl);
+  const backendPath = parsedBackendUrl.pathname.replace(/\/$/, '');
+  const allowedProtocol =
+    parsedBackendUrl.protocol === 'https:' ||
+    (!requiresHttpsBackend && parsedBackendUrl.protocol === 'http:');
+
+  if (
+    !allowedProtocol ||
+    parsedBackendUrl.username ||
+    parsedBackendUrl.password ||
+    parsedBackendUrl.search ||
+    parsedBackendUrl.hash ||
+    backendPath !== '/api/v1'
+  ) {
+    throw new Error('invalid backend URL');
+  }
+
+  backendDestination = `${parsedBackendUrl.origin}${backendPath}`;
+} catch {
+  throw new Error(
+    'BACKEND_INTERNAL_URL must be an HTTPS API base ending in /api/v1 for deployed environments',
+  );
+}
+
+const nextConfig: NextConfig = {
+  transpilePackages: ['@snp/shared'],
+  ...(isDocker
+    ? {
+        output: 'standalone',
+        outputFileTracingRoot: process.cwd(),
+      }
+    : {}),
+  reactStrictMode: true,
+  async headers() {
+    if (!requiresHttpsBackend) return [];
+
+    return [
+      {
+        source: '/:path*',
+        headers: [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }],
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/v1/:path*',
+        destination: `${backendDestination}/:path*`,
+      },
+    ];
+  },
+};
+
+export default nextConfig;
