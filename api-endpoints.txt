@@ -1,0 +1,159 @@
+================================================================================
+SNP-SMS Modular Monolith REST API - Full Endpoint Directory
+================================================================================
+
+BASE URLS:
+- Local Server:     http://localhost:4000
+- Temporary Domain: https://api.kesararamwithdigital.tech
+- Vercel Deployment: https://snp-sms.vercel.app
+
+AUTHENTICATION:
+- Login Endpoint: POST /api/v1/auth/login
+- Super Admin:    admin_local
+- Password:       AdminPasse7a049b8a2009c4c22be1e02
+- Header:         Authorization: Bearer <ACCESS_TOKEN>
+
+================================================================================
+1. DOCUMENTATION & SYSTEM HEALTH
+================================================================================
+GET  https://api.kesararamwithdigital.tech/
+GET  https://api.kesararamwithdigital.tech/api/v1/health
+GET  https://api.kesararamwithdigital.tech/api/v1/docs
+GET  https://api.kesararamwithdigital.tech/api/v1/docs/openapi.json
+
+================================================================================
+2. AUTHENTICATION & ACCESS
+================================================================================
+POST https://api.kesararamwithdigital.tech/api/v1/auth/login
+POST https://api.kesararamwithdigital.tech/api/v1/auth/refresh
+GET  https://api.kesararamwithdigital.tech/api/v1/auth/me
+POST https://api.kesararamwithdigital.tech/api/v1/auth/logout
+
+================================================================================
+3. INSTITUTION & ORGANIZATIONAL STRUCTURE
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/schools
+POST https://api.kesararamwithdigital.tech/api/v1/schools
+GET  https://api.kesararamwithdigital.tech/api/v1/branches
+POST https://api.kesararamwithdigital.tech/api/v1/branches
+GET  https://api.kesararamwithdigital.tech/api/v1/departments
+POST https://api.kesararamwithdigital.tech/api/v1/departments
+GET  https://api.kesararamwithdigital.tech/api/v1/positions
+POST https://api.kesararamwithdigital.tech/api/v1/positions
+GET  https://api.kesararamwithdigital.tech/api/v1/employees
+POST https://api.kesararamwithdigital.tech/api/v1/employees
+
+================================================================================
+4. ACADEMIC STRUCTURE & TIMETABLE
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/academic-years
+POST https://api.kesararamwithdigital.tech/api/v1/academic-years
+GET  https://api.kesararamwithdigital.tech/api/v1/academic-periods
+POST https://api.kesararamwithdigital.tech/api/v1/academic-periods
+GET  https://api.kesararamwithdigital.tech/api/v1/academic-rules
+POST https://api.kesararamwithdigital.tech/api/v1/academic-rules
+GET  https://api.kesararamwithdigital.tech/api/v1/programs
+POST https://api.kesararamwithdigital.tech/api/v1/programs
+GET  https://api.kesararamwithdigital.tech/api/v1/levels
+POST https://api.kesararamwithdigital.tech/api/v1/levels
+GET  https://api.kesararamwithdigital.tech/api/v1/curriculum
+POST https://api.kesararamwithdigital.tech/api/v1/curriculum
+GET  https://api.kesararamwithdigital.tech/api/v1/subjects
+POST https://api.kesararamwithdigital.tech/api/v1/subjects
+GET  https://api.kesararamwithdigital.tech/api/v1/classes
+POST https://api.kesararamwithdigital.tech/api/v1/classes
+GET  https://api.kesararamwithdigital.tech/api/v1/classrooms
+POST https://api.kesararamwithdigital.tech/api/v1/classrooms
+GET  https://api.kesararamwithdigital.tech/api/v1/study-modes
+POST https://api.kesararamwithdigital.tech/api/v1/study-modes
+GET  https://api.kesararamwithdigital.tech/api/v1/time-slots
+POST https://api.kesararamwithdigital.tech/api/v1/time-slots
+GET  https://api.kesararamwithdigital.tech/api/v1/class-schedules
+POST https://api.kesararamwithdigital.tech/api/v1/class-schedules
+
+================================================================================
+5. ADMISSIONS, REGISTRATIONS & STUDENTS
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/registrations
+POST https://api.kesararamwithdigital.tech/api/v1/registrations
+GET  https://api.kesararamwithdigital.tech/api/v1/placement-tests
+POST https://api.kesararamwithdigital.tech/api/v1/placement-tests
+GET  https://api.kesararamwithdigital.tech/api/v1/enrollments
+POST https://api.kesararamwithdigital.tech/api/v1/enrollments
+GET  https://api.kesararamwithdigital.tech/api/v1/students
+POST https://api.kesararamwithdigital.tech/api/v1/students
+GET  https://api.kesararamwithdigital.tech/api/v1/student-transfers
+POST https://api.kesararamwithdigital.tech/api/v1/student-transfers
+GET  https://api.kesararamwithdigital.tech/api/v1/intakes
+POST https://api.kesararamwithdigital.tech/api/v1/intakes
+
+================================================================================
+6. TEACHER ALLOCATION & ATTENDANCE
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/teacher-assignments
+POST https://api.kesararamwithdigital.tech/api/v1/teacher-assignments
+GET  https://api.kesararamwithdigital.tech/api/v1/attendance
+POST https://api.kesararamwithdigital.tech/api/v1/attendance
+GET  https://api.kesararamwithdigital.tech/api/v1/attendance-leaves
+POST https://api.kesararamwithdigital.tech/api/v1/attendance-leaves
+GET  https://api.kesararamwithdigital.tech/api/v1/skills
+POST https://api.kesararamwithdigital.tech/api/v1/skills
+
+================================================================================
+7. ASSESSMENTS, GRADES & VERIFICATION
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/assessments
+POST https://api.kesararamwithdigital.tech/api/v1/assessments
+GET  https://api.kesararamwithdigital.tech/api/v1/scores
+POST https://api.kesararamwithdigital.tech/api/v1/scores
+GET  https://api.kesararamwithdigital.tech/api/v1/term-results
+POST https://api.kesararamwithdigital.tech/api/v1/term-results
+GET  https://api.kesararamwithdigital.tech/api/v1/reports/certificates/verify/:code
+
+================================================================================
+8. TUITION, BILLING & CASHIER OPERATIONS
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/tuition-fees
+POST https://api.kesararamwithdigital.tech/api/v1/tuition-fees
+GET  https://api.kesararamwithdigital.tech/api/v1/payments
+POST https://api.kesararamwithdigital.tech/api/v1/payments
+GET  https://api.kesararamwithdigital.tech/api/v1/payment-plans
+POST https://api.kesararamwithdigital.tech/api/v1/payment-plans
+GET  https://api.kesararamwithdigital.tech/api/v1/finance-operations/discount-policies
+POST https://api.kesararamwithdigital.tech/api/v1/finance-operations/discount-policies
+GET  https://api.kesararamwithdigital.tech/api/v1/finance-operations/cashier-shifts
+POST https://api.kesararamwithdigital.tech/api/v1/finance-operations/cashier-shifts
+
+================================================================================
+9. USERS, ROLES, PERMISSIONS & AUDITING
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/users
+POST https://api.kesararamwithdigital.tech/api/v1/users
+GET  https://api.kesararamwithdigital.tech/api/v1/roles
+POST https://api.kesararamwithdigital.tech/api/v1/roles
+GET  https://api.kesararamwithdigital.tech/api/v1/permissions
+GET  https://api.kesararamwithdigital.tech/api/v1/permissions/grouped
+GET  https://api.kesararamwithdigital.tech/api/v1/audit-logs
+GET  https://api.kesararamwithdigital.tech/api/v1/system-settings
+PATCH https://api.kesararamwithdigital.tech/api/v1/system-settings
+GET  https://api.kesararamwithdigital.tech/api/v1/notifications
+POST https://api.kesararamwithdigital.tech/api/v1/notifications
+GET  https://api.kesararamwithdigital.tech/api/v1/announcements
+POST https://api.kesararamwithdigital.tech/api/v1/announcements
+
+================================================================================
+10. LIFECYCLE ROLLOVERS, CORRECTIONS & EXECUTIVE DASHBOARDS
+================================================================================
+GET  https://api.kesararamwithdigital.tech/api/v1/rollovers
+POST https://api.kesararamwithdigital.tech/api/v1/rollovers
+GET  https://api.kesararamwithdigital.tech/api/v1/historical-corrections
+POST https://api.kesararamwithdigital.tech/api/v1/historical-corrections
+GET  https://api.kesararamwithdigital.tech/api/v1/reports/catalog
+GET  https://api.kesararamwithdigital.tech/api/v1/reports/documents
+GET  https://api.kesararamwithdigital.tech/api/v1/reports/monthly-overview
+GET  https://api.kesararamwithdigital.tech/api/v1/dashboard/action-items
+GET  https://api.kesararamwithdigital.tech/api/v1/dashboard/finance-pulse
+GET  https://api.kesararamwithdigital.tech/api/v1/dashboard/student-affairs-pulse
+GET  https://api.kesararamwithdigital.tech/api/v1/dashboard/hr-pulse
+GET  https://api.kesararamwithdigital.tech/api/v1/dashboard/academic-honor-roll
+================================================================================

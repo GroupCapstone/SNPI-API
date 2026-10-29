@@ -20,9 +20,21 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     console.error('Database connection failed on serverless invocation:', err);
   }
 
+  if (req.url && (req.url.startsWith('/api/index') || req.url === '/api')) {
+    const matched =
+      (req.headers['x-matched-path'] as string | undefined) ||
+      (req.headers['x-forwarded-uri'] as string | undefined);
+    if (matched) {
+      req.url = matched;
+    }
+  }
+
   const app = getApp();
 
   return new Promise<void>((resolve, reject) => {
+    res.on('finish', () => resolve());
+    res.on('close', () => resolve());
+    res.on('error', (err) => reject(err));
     app(req as unknown as express.Request, res as unknown as express.Response, (err?: unknown) => {
       if (err) {
         return reject(err);
