@@ -14,6 +14,10 @@ This skill establishes the production standards, directory organization, applica
 
 ## 1. High-Level Architecture Overview
 
+* **Private Repository**: `https://github.com/shiliaiwei/SNP-SMS.git`
+* **Release Checkpoint**: `v0.1.0` (Tag: `v0.1.0`, Commit: `28ef01b`)
+* **Live Document Portal**: `/document` (Publicly accessible technical specification)
+
 ```text
 SNP-SMS/
 ├── apps/
