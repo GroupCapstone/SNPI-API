@@ -3497,23 +3497,22 @@ export const seedDatabase = async (options?: { clearFirst?: boolean }): Promise<
           records,
         });
 
-        // Seed individual AttendanceRecordModel documents
-        for (let i = 0; i < enrollments.length; i++) {
-          const enr = enrollments[i]!;
-          const rec = records[i]!;
-          await AttendanceRecordModel.create({
-            attendanceSessionId: sessionDoc._id,
-            schoolId: school._id,
-            branchId: cls.branchId,
-            academicYearId: academicYear._id,
-            academicPeriodId: cls.academicPeriodId,
-            classId: cls._id,
-            studentId: enr.studentId,
-            enrollmentId: enr._id,
-            status: rec.status,
-            markedBy: teacherId,
-            markedAt: date,
-          });
+        // Seed individual AttendanceRecordModel documents in batch
+        const recordDocs = enrollments.map((enr, i) => ({
+          attendanceSessionId: sessionDoc!._id,
+          schoolId: school._id,
+          branchId: cls.branchId,
+          academicYearId: academicYear._id,
+          academicPeriodId: cls.academicPeriodId,
+          classId: cls._id,
+          studentId: enr.studentId,
+          enrollmentId: enr._id,
+          status: records[i]!.status,
+          markedBy: teacherId,
+          markedAt: date,
+        }));
+        if (recordDocs.length > 0) {
+          await AttendanceRecordModel.insertMany(recordDocs);
         }
       }
     }
@@ -3560,11 +3559,9 @@ export const seedDatabase = async (options?: { clearFirst?: boolean }): Promise<
         });
         logger.info(`Seeded monthly test: ${assCode}`);
 
-        // Seed scores for enrolled students
+        // Seed scores for enrolled students in batch
         const enrollments = await EnrollmentModel.find({ classId: cls._id, isDeleted: false });
-        for (let i = 0; i < enrollments.length; i++) {
-          const enr = enrollments[i]!;
-          // Deterministic realistic scores
+        const scoreDocs = enrollments.map((enr, i) => {
           const baseScores = [96, 92, 88, 85, 82, 79, 75, 72, 68, 65, 94, 89, 84, 78, 62, 58];
           const scoreVal = baseScores[(i + item.m) % baseScores.length]!;
           const letter =
@@ -3579,22 +3576,24 @@ export const seedDatabase = async (options?: { clearFirst?: boolean }): Promise<
                     : scoreVal >= 50
                       ? 'E'
                       : 'F';
-
-          await ScoreModel.create({
+          return {
             schoolId: school._id,
             branchId: cls.branchId,
             academicYearId: academicYear._id,
             academicPeriodId: cls.academicPeriodId,
             classId: cls._id,
             subjectId: seededSubjects['ENG-GRAM']?._id || seededSubjects['COM-FND']?._id,
-            assessmentId: assDoc._id,
+            assessmentId: assDoc!._id,
             studentId: enr.studentId,
             enrollmentId: enr._id,
             scoreObtained: scoreVal,
             percentage: scoreVal,
             letterGrade: letter,
             isAbsent: false,
-          });
+          };
+        });
+        if (scoreDocs.length > 0) {
+          await ScoreModel.insertMany(scoreDocs);
         }
       }
     }
