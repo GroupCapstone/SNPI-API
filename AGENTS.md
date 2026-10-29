@@ -15,8 +15,8 @@ Before modifying code, packages, or repository structure, read:
 5. `packages/shared/src/index.ts`: The single source of truth for permissions, core roles, implied scopes, and shared DTO contracts.
 6. `apps/backend/src/modules/`: The 47 domain modules in the modular monolith backend.
 7. `apps/frontend/app/`: The Next.js App Router frontend routes, features, and proxy architecture.
-8. `.agents/skills/snp-sms-frontend-dark-ui-standards/SKILL.md`: Mandatory frontend folder architecture and Dark UI design standards (flat style, zero shadows, luminance depth, mathematical tokens).
-9. `.agents/skills/snp-sms-ui-components-guide/SKILL.md`: Mandatory 10 core UI components reference guide (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip).
+8. `.agents/skills/snp-sms-design-standards/SKILL.md`: Authoritative design standards and Dark UI specification (single folder design architecture, flat style, zero shadows, luminance depth, mathematical tokens).
+9. `.agents/skills/snp-sms-design-standards/I. 10 UI components.md`: Authoritative 10 core UI components specification and paradigms (Snackbar, Bottom Sheet, Dialog, Bottom Nav, Toggle Switch, Chips, FAB, Card, Dropdown, Tooltip).
 
 ---
 
