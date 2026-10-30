@@ -424,8 +424,8 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
         service: 'SNPI-SMS API',
         status: 'healthy',
         database: 'connected',
-        version: '0.1.0',
-        timestamp: '2026-10-29T12:00:00.000Z',
+        version: '0.2.7',
+        timestamp: '2026-10-30T12:00:00.000Z',
       },
     },
   },
@@ -443,6 +443,8 @@ const DOC_TOC_HEADINGS: TocHeadingItem[] = [
   { id: 'api-doc', title: 'API Documentation', level: 1 },
   { id: 'status-codes', title: 'Status Codes', level: 2 },
   { id: 'changelogs', title: 'Change Logs', level: 1 },
+  { id: 'privacy-policy', title: 'Privacy Policy', level: 2 },
+  { id: 'terms-of-service', title: 'Terms of Service', level: 2 },
 ];
 
 async function executeApiProbe(item: ApiDocItem) {
@@ -1265,7 +1267,7 @@ console.log(payload.data);`;
                     branch: main
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-[11px] font-bold text-slate-700">
-                    checkpoint: v0.1.12
+                    checkpoint: v{CHANGE_LOGS[0]?.version || '0.2.7'}
                   </span>
                   <a
                     href="https://github.com/shiliaiwei/SNP-SMS"
@@ -1323,6 +1325,105 @@ console.log(payload.data);`;
                     ? 'Show fewer releases (Recent 3)'
                     : `Show all changelogs (${CHANGE_LOGS.length})`}
                 </GeometricButton>
+              </div>
+            </section>
+
+            {/* SECTION 8: Privacy Policy */}
+            <section
+              id="privacy-policy"
+              className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.02)]"
+            >
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
+                  LEGAL & SECURITY
+                </span>
+                <span className="font-mono text-xs text-slate-400">Updated: 30.10.2026</span>
+              </div>
+              <h2 className="text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                Privacy & Data Protection Policy
+              </h2>
+              <p className="text-sm leading-relaxed text-slate-600">
+                The SNP-SMS platform implements strict data privacy, multi-tenant isolation, and
+                zero-trust security controls. All access to student lifecycles, staff profiles, and
+                academic records adheres to international data privacy standards and Cambodian
+                national digital education regulations.
+              </p>
+              <div className="grid gap-3 pt-2 sm:grid-cols-3">
+                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
+                  <div className="font-sans text-xs font-bold text-slate-900">Tenant Isolation</div>
+                  <p className="mt-1 font-sans text-xs text-slate-500">
+                    Queries and mutations strictly enforce school and branch scoping server-side.
+                    Zero cross-tenant data leakage.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
+                  <div className="font-sans text-xs font-bold text-slate-900">
+                    Cryptographic Hygiene
+                  </div>
+                  <p className="mt-1 font-sans text-xs text-slate-500">
+                    Credentials, tokens, and webhooks verify via constant-time checks. Passwords use
+                    argon2 hashing.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
+                  <div className="font-sans text-xs font-bold text-slate-900">
+                    Audit & Non-Repudiation
+                  </div>
+                  <p className="mt-1 font-sans text-xs text-slate-500">
+                    Every state mutation generates an immutable cryptographic ledger entry with
+                    caller identity and timestamp.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* SECTION 9: Terms of Service */}
+            <section
+              id="terms-of-service"
+              className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.02)]"
+            >
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-100 px-2.5 py-0.5 font-mono text-xs font-bold text-slate-700">
+                  PLATFORM AGREEMENT
+                </span>
+                <span className="font-mono text-xs text-slate-400">Effective: 30.10.2026</span>
+              </div>
+              <h2 className="text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                Terms of Service & API Usage
+              </h2>
+              <p className="text-sm leading-relaxed text-slate-600">
+                By accessing the SNPI-SMS APIs, design library, or developer documentation portal,
+                organizations and authorized integrators agree to comply with rate limits,
+                role-based scope boundaries, and responsible disclosure obligations.
+              </p>
+              <div className="grid gap-3 pt-2 sm:grid-cols-3">
+                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
+                  <div className="font-sans text-xs font-bold text-slate-900">
+                    Authorized Integrations
+                  </div>
+                  <p className="mt-1 font-sans text-xs text-slate-500">
+                    API calls require active JWT Bearer tokens or dedicated service account keys
+                    with least-privilege RBAC.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
+                  <div className="font-sans text-xs font-bold text-slate-900">
+                    Rate Limits & SLAs
+                  </div>
+                  <p className="mt-1 font-sans text-xs text-slate-500">
+                    Default 2,000 requests per 15-minute window per IP. Burst mutation guards apply
+                    on financial accounting endpoints.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
+                  <div className="font-sans text-xs font-bold text-slate-900">
+                    Service Reliability
+                  </div>
+                  <p className="mt-1 font-sans text-xs text-slate-500">
+                    Target 99.95% uptime with automated MongoDB replica set failover and serverless
+                    edge distribution.
+                  </p>
+                </div>
               </div>
             </section>
           </main>

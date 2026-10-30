@@ -7,75 +7,153 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
-    "version": "0.1.12",
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "3ff6db3",
+    "description": "Synchronize real-time changelog with Navigation Menu component"
+  },
+  {
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "b34c2fb",
     "description": "Implement Navigation Menu with Rare UI 3-island floating dock, mega menu panel, and usage specs"
   },
   {
-    "version": "0.1.11",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "7c76801",
     "description": "Synchronize real-time changelog with Preview Code toolbar feature"
   },
   {
-    "version": "0.1.10",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "3f4322f",
     "description": "Implement Preview Code toolbar with responsive device switcher, dark mode, expand, and reset controls"
   },
   {
-    "version": "0.1.9",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "9e8ae58",
     "description": "Synchronize real-time changelog with Border Beam Card component"
   },
   {
-    "version": "0.1.8",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "b4c1332",
     "description": "Design Border Beam Login Card with 4-dash SVG physics, instrument-panel telemetry, and amber glow"
   },
   {
-    "version": "0.1.7",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "6dae343",
     "description": "Synchronize real-time changelog and technical portal"
   },
   {
-    "version": "0.1.6",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "085697d",
     "description": "Redesign native Snackbar component with bottom-center anchor, obsidian surface, progress countdown, and action recovery"
   },
   {
-    "version": "0.1.5",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "28fa0e3",
     "description": "Remove background outlined watermark words and clutter elements from UI Library and Open API headers"
   },
   {
-    "version": "0.1.4",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "ca270d5",
     "description": "Add Component Templates for Backgrounds, Text Effects, Cards, Sections, Forms, and Overlays with Rare UI capsule dock navigation copy style"
   },
   {
-    "version": "0.1.3",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "f03bb47",
     "description": "Add 28 interactive components across 5 categories with responsive Web/Phone preview"
   },
   {
-    "version": "0.1.2",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "b56feb8",
-    "description": "Style(docs): apply #E3E7FC header background, remove github button, and remove design standard badge from demo"
+    "description": "Apply #E3E7FC header background, remove github button, and remove design standard badge from demo"
   },
   {
-    "version": "0.1.1",
+    "version": "0.2.7",
     "date": "30.10.2026",
     "commitHash": "e1cadf4",
-    "description": "Style(ui-library): streamline hero card with bold title, ultra-short component descriptions, and direct sidebar components list"
+    "description": "Streamline hero card with bold title, ultra-short component descriptions, and direct sidebar components list"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "cfc9d95",
+    "description": "Resolve Open API navigation glitch and hanging tabs click suppression"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "220a601",
+    "description": "Provide complete 52-collection test data seeder and self-protect deletion script"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "71edb9e",
+    "description": "Resolve production vercel builds for frontend and backend with shared package compilation"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "ee6ae19",
+    "description": "Configure app.kesararamwithdigital.tech and api.kesararamwithdigital.tech temporary domains"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "10b3646",
+    "description": "Ignore .vercel directory for clean teardown"
+  },
+  {
+    "version": "0.2.6",
+    "date": "30.10.2026",
+    "commitHash": "847e12b",
+    "description": "Remove verify and portal subdomains, proxy routes, and /verify web page"
+  },
+  {
+    "version": "0.2.6",
+    "date": "30.10.2026",
+    "commitHash": "c5e3dd8",
+    "description": "Format AGENTS.md table style with prettier and sync changelog"
+  },
+  {
+    "version": "0.2.5",
+    "date": "30.10.2026",
+    "commitHash": "bf94507",
+    "description": "Consolidate 21 design manuals into single folder architecture (v0.2.5)"
+  },
+  {
+    "version": "0.2.4",
+    "date": "30.10.2026",
+    "commitHash": "a9859ab",
+    "description": "Synchronize real-time changelog and technical portal"
+  },
+  {
+    "version": "0.2.4",
+    "date": "30.10.2026",
+    "commitHash": "f5eb812",
+    "description": "Activate all sidebar navigation menus, pin sticky sidebars, and document 9 interface motion and cognitive ux skills"
+  },
+  {
+    "version": "0.2.4",
+    "date": "30.10.2026",
+    "commitHash": "e5aed2f",
+    "description": "Unify design concept, 3-column layout, and capsule nav across Open API and UI Library views"
+  },
+  {
+    "version": "0.2.3",
+    "date": "30.10.2026",
+    "commitHash": "c5e7337",
+    "description": "Sync changelog and build types prior to push checkpoint"
   }
 ];

@@ -1,5 +1,6 @@
 import type { RequestHandler } from 'express';
 import mongoose from 'mongoose';
+import { APP_VERSION } from '@snp/shared';
 
 import { sendSuccess } from '../../shared/http/api-response';
 
@@ -19,7 +20,7 @@ export const getHealth: RequestHandler = (_request, response) => {
     service: 'SNP-SMS API',
     status: isDbConnected || process.env.NODE_ENV === 'test' ? 'healthy' : 'degraded',
     database: isDbConnected ? 'connected' : dbState === 2 ? 'connecting' : 'disconnected',
-    version: '0.1.0',
+    version: APP_VERSION,
     timestamp: new Date().toISOString(),
   };
 

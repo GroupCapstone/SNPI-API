@@ -90,7 +90,9 @@ export function BorderBeamSvg({
     <svg
       className={cn(
         'pointer-events-none absolute inset-0 size-full overflow-visible transition-opacity duration-300',
-        forceBright ? 'opacity-100' : 'opacity-35 group-hover:opacity-100 group-focus-within:opacity-100',
+        forceBright
+          ? 'opacity-100'
+          : 'opacity-35 group-focus-within:opacity-100 group-hover:opacity-100',
         className,
       )}
       xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +133,10 @@ export function BorderBeamSvg({
         strokeDasharray="20 80"
         pathLength="100"
         filter={`url(#${filterId})`}
-        className={cn('beam-dash-animate-' + color, 'opacity-40 transition-opacity group-hover:opacity-85')}
+        className={cn(
+          'beam-dash-animate-' + color,
+          'opacity-40 transition-opacity group-hover:opacity-85',
+        )}
         style={{ strokeDashoffset: '4' }}
       />
 
@@ -149,7 +154,10 @@ export function BorderBeamSvg({
         strokeDasharray="12 88"
         pathLength="100"
         strokeLinecap="round"
-        className={cn('beam-dash-animate-' + color, 'opacity-65 transition-opacity group-hover:opacity-95')}
+        className={cn(
+          'beam-dash-animate-' + color,
+          'opacity-65 transition-opacity group-hover:opacity-95',
+        )}
         style={{ strokeDashoffset: '2.5' }}
       />
 
@@ -167,7 +175,10 @@ export function BorderBeamSvg({
         strokeDasharray="6 94"
         pathLength="100"
         strokeLinecap="round"
-        className={cn('beam-dash-animate-' + color, 'opacity-90 transition-opacity group-hover:opacity-100')}
+        className={cn(
+          'beam-dash-animate-' + color,
+          'opacity-90 transition-opacity group-hover:opacity-100',
+        )}
         style={{ strokeDashoffset: '1.2' }}
       />
 
@@ -319,9 +330,7 @@ export function BorderBeamLoginCard({
             }}
             className={cn(
               'rounded-lg py-1.5 font-mono text-[11px] font-bold tracking-wider uppercase transition-all duration-150',
-              role === r
-                ? 'bg-[#0056FF] text-white shadow-sm'
-                : 'text-slate-400 hover:text-white',
+              role === r ? 'bg-[#0056FF] text-white shadow-sm' : 'text-slate-400 hover:text-white',
             )}
           >
             {r}
@@ -342,7 +351,7 @@ export function BorderBeamLoginCard({
               type="text"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              className="w-full rounded-xl border border-slate-800 bg-[#070A0F] px-3.5 py-2.5 font-mono text-xs text-slate-100 placeholder:text-slate-600 focus:border-[#0056FF] focus:outline-none focus:ring-1 focus:ring-[#0056FF]"
+              className="w-full rounded-xl border border-slate-800 bg-[#070A0F] px-3.5 py-2.5 font-mono text-xs text-slate-100 placeholder:text-slate-600 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
               placeholder="e.g. STU-2026-0891"
               required
             />
@@ -360,14 +369,14 @@ export function BorderBeamLoginCard({
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-slate-800 bg-[#070A0F] px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-100 placeholder:text-slate-600 focus:border-[#0056FF] focus:outline-none focus:ring-1 focus:ring-[#0056FF]"
+              className="w-full rounded-xl border border-slate-800 bg-[#070A0F] px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-100 placeholder:text-slate-600 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
               placeholder="Enter secure passkey"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+              className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-500 hover:text-slate-300"
             >
               {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
             </button>
@@ -386,10 +395,7 @@ export function BorderBeamLoginCard({
             <span className="font-mono text-[11px] text-slate-400">Preserve Session</span>
           </label>
 
-          <button
-            type="button"
-            className="font-mono text-[11px] text-[#38BDF8] hover:underline"
-          >
+          <button type="button" className="font-mono text-[11px] text-[#38BDF8] hover:underline">
             Rotate Key
           </button>
         </div>
@@ -399,10 +405,10 @@ export function BorderBeamLoginCard({
           type="submit"
           disabled={isAuthenticating}
           className={cn(
-            'group/btn relative flex w-full min-h-[46px] items-center justify-center gap-2 overflow-hidden rounded-xl border font-sans text-xs font-bold tracking-wide transition-all duration-200 active:scale-[0.98]',
+            'group/btn relative flex min-h-[46px] w-full items-center justify-center gap-2 overflow-hidden rounded-xl border font-sans text-xs font-bold tracking-wide transition-all duration-200 active:scale-[0.98]',
             authSuccess
               ? 'border-emerald-500 bg-emerald-600 text-white'
-              : 'border-[#0056FF] bg-gradient-to-r from-[#0056FF] to-[#2277FF] text-white hover:brightness-110 shadow-[0_4px_20px_rgba(0,86,255,0.3)]',
+              : 'border-[#0056FF] bg-gradient-to-r from-[#0056FF] to-[#2277FF] text-white shadow-[0_4px_20px_rgba(0,86,255,0.3)] hover:brightness-110',
           )}
         >
           {isAuthenticating ? (
@@ -417,7 +423,7 @@ export function BorderBeamLoginCard({
             </span>
           ) : (
             <>
-              <span className="font-mono uppercase tracking-wider">Authenticate Session</span>
+              <span className="font-mono tracking-wider uppercase">Authenticate Session</span>
               <ArrowRight className="size-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
             </>
           )}
@@ -477,9 +483,7 @@ export function BorderBeamPricingCard({
           <span className="font-mono text-4xl font-extrabold tracking-tight text-white tabular-nums">
             $1,240.00
           </span>
-          <span className="font-mono text-xs font-semibold text-slate-400 uppercase">
-            / Month
-          </span>
+          <span className="font-mono text-xs font-semibold text-slate-400 uppercase">/ Month</span>
         </div>
         <p className="mt-1 font-sans text-xs text-slate-400">
           Dedicated MongoDB replica set (rs0), 47 domain modules, zero rate limits.
@@ -508,7 +512,7 @@ export function BorderBeamPricingCard({
       {/* Deploy Button */}
       <button
         type="button"
-        className="group/btn relative z-10 flex w-full min-h-[46px] items-center justify-center gap-2 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500 to-amber-600 font-mono text-xs font-bold tracking-wider text-slate-950 uppercase shadow-[0_4px_20px_rgba(245,158,11,0.25)] transition-all hover:brightness-110 active:scale-[0.98]"
+        className="group/btn relative z-10 flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500 to-amber-600 font-mono text-xs font-bold tracking-wider text-slate-950 uppercase shadow-[0_4px_20px_rgba(245,158,11,0.25)] transition-all hover:brightness-110 active:scale-[0.98]"
       >
         <span>Deploy Cluster Node</span>
         <ArrowRight className="size-3.5 transition-transform group-hover/btn:translate-x-1" />
@@ -655,7 +659,7 @@ export function BorderBeamInteractiveShowcase() {
       {/* Architectural Description Badge */}
       <div className="flex max-w-xl items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 font-mono text-[11px] text-slate-600 shadow-xs">
         <span className="flex items-center gap-1.5">
-          <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
+          <span className="size-2 animate-pulse rounded-full bg-amber-500" />
           <span>Architecture: 4 stacked SVG dashes on single pathLength="100"</span>
         </span>
         <span className="h-3 w-[1px] bg-slate-200" />

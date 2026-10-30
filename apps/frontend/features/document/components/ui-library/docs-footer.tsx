@@ -4,6 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { cn } from '@/lib/utils';
+import { CHANGE_LOGS } from '../../changelog-data';
 
 export interface DocsFooterProps {
   theme?: 'light' | 'dark';
@@ -13,6 +14,7 @@ export interface DocsFooterProps {
 export function DocsFooter({ theme = 'light', className }: DocsFooterProps) {
   const [selectedLang] = React.useState('EN');
   const isDark = theme === 'dark';
+  const currentVersion = CHANGE_LOGS[0]?.version || '0.2.7';
 
   // Timeline ruler seconds 0 to 14s
   const timelineSeconds = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -30,8 +32,10 @@ export function DocsFooter({ theme = 'light', className }: DocsFooterProps) {
   const secondaryLinks = [
     { label: 'Help Center', href: '/document#endpoints-available' },
     { label: 'Contact us', href: 'mailto:support@snpi.edu.kh' },
-    { label: 'Privacy Policy', href: '/document#protected-endpoints' },
-    { label: 'Terms of Use', href: '/document#status-codes' },
+    { label: 'Privacy Policy', href: '/document#privacy-policy' },
+    { label: 'Terms of Service', href: '/document#terms-of-service' },
+    { label: 'Sitemap', href: '/sitemap.xml' },
+    { label: 'robots.txt', href: '/robots.txt' },
   ];
 
   return (
@@ -154,20 +158,77 @@ export function DocsFooter({ theme = 'light', className }: DocsFooterProps) {
           </span>
         </div>
 
-        {/* Bottom Bar: Copyright Left | Language & Links Right */}
+        {/* Bottom Bar: Copyright Left | Legal & Crawl Center | Language & Links Right */}
         <div
           className={cn(
-            'mt-4 flex flex-col gap-3 border-t pt-4 text-xs sm:flex-row sm:items-center sm:justify-between',
+            'mt-4 flex flex-col gap-4 border-t pt-4 text-xs lg:flex-row lg:items-center lg:justify-between',
             isDark ? 'border-white/10 text-slate-400' : 'border-slate-200/90 text-slate-500',
           )}
         >
-          {/* Left: Copyright */}
+          {/* Left: Copyright & Real-time Live Version Badge */}
           <div className="flex flex-wrap items-center gap-2 font-sans font-medium">
             <span>&copy; SNPI-SMS 2026. All rights reserved</span>
+            <span className={isDark ? 'text-white/20' : 'text-slate-300'}>&middot;</span>
+            <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+              v{currentVersion}
+            </span>
+          </div>
+
+          {/* Center: Legal & Crawl Links (Privacy Policy · Terms of Service · Sitemap · robots.txt ·) */}
+          <div
+            className={cn(
+              'flex flex-wrap items-center justify-center gap-2 font-sans text-xs font-medium',
+              isDark ? 'text-slate-400' : 'text-slate-600',
+            )}
+          >
+            <Link
+              href="/document#privacy-policy"
+              className={cn(
+                'transition-colors',
+                isDark ? 'hover:text-white' : 'hover:text-[#0056FF]',
+              )}
+            >
+              Privacy Policy
+            </Link>
+            <span className={isDark ? 'text-white/20' : 'text-slate-300'}>&middot;</span>
+            <Link
+              href="/document#terms-of-service"
+              className={cn(
+                'transition-colors',
+                isDark ? 'hover:text-white' : 'hover:text-[#0056FF]',
+              )}
+            >
+              Terms of Service
+            </Link>
+            <span className={isDark ? 'text-white/20' : 'text-slate-300'}>&middot;</span>
+            <a
+              href="/sitemap.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'transition-colors',
+                isDark ? 'hover:text-white' : 'hover:text-[#0056FF]',
+              )}
+            >
+              Sitemap
+            </a>
+            <span className={isDark ? 'text-white/20' : 'text-slate-300'}>&middot;</span>
+            <a
+              href="/robots.txt"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                'transition-colors',
+                isDark ? 'hover:text-white' : 'hover:text-[#0056FF]',
+              )}
+            >
+              robots.txt
+            </a>
+            <span className={isDark ? 'text-white/20' : 'text-slate-300'}>&middot;</span>
           </div>
 
           {/* Right: Language Selector and Links */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center justify-between gap-5 sm:justify-end">
             {/* Language Selector */}
             <div
               className={cn(

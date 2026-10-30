@@ -19,7 +19,36 @@ const ROOT_CHANGELOG_MD = path.join(ROOT_DIR, 'CHANGELOG.md');
 export const syncChangelog = (): void => {
   console.log('[Changelog] Extracting recent git commits for real-time document sync...');
 
-  const gitOutput = execSync('git log -n 12 --pretty=format:"%h|%ad|%s" --date=format:"%d.%m.%Y"', {
+  // 1. Resolve current active version from package.json or shared version
+  let currentVersion = '0.2.7';
+  try {
+    const pkgJson = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'package.json'), 'utf-8'));
+    if (pkgJson.version) {
+      currentVersion = pkgJson.version;
+    }
+  } catch {
+    // fallback
+  }
+
+  // 2. Map existing tags to their dereferenced commit hashes
+  const tagMap = new Map<string, string>();
+  try {
+    const tagOutput = execSync('git show-ref --tags -d', { cwd: ROOT_DIR, encoding: 'utf-8' });
+    for (const line of tagOutput.trim().split('\n').filter(Boolean)) {
+      const [hash, ref] = line.split(' ');
+      const match = ref.match(/refs\/tags\/(v[0-9.]+)(\^\{\})?$/);
+      if (match) {
+        const tagName = match[1].replace(/^v/, '');
+        tagMap.set(hash.slice(0, 7), tagName);
+        tagMap.set(hash, tagName);
+      }
+    }
+  } catch {
+    // Ignore tag resolution errors
+  }
+
+  // 3. Extract recent commits (last 25 for rich document history)
+  const gitOutput = execSync('git log -n 25 --pretty=format:"%h|%ad|%s" --date=format:"%d.%m.%Y"', {
     cwd: ROOT_DIR,
     encoding: 'utf-8',
   });
@@ -27,29 +56,32 @@ export const syncChangelog = (): void => {
   const lines = gitOutput.trim().split('\n').filter(Boolean);
   const items: ChangeLogItem[] = [];
 
-  let minor = 1;
-  let patch = lines.length;
+  let runningVersion = currentVersion;
 
   for (const line of lines) {
     const [hash, date, ...subjectParts] = line.split('|');
     const subject = subjectParts.join('|').trim();
+    const shortHash = hash.trim().slice(0, 7);
 
-    // Clean conventional commit prefix for readability
+    // If this commit has an explicit release tag, step into that release version
+    if (tagMap.has(shortHash)) {
+      runningVersion = tagMap.get(shortHash)!;
+    }
+
+    // Clean conventional commit prefix for clean readability
     const cleanDesc = subject
-      .replace(/^(feat|fix|docs|refactor|test|chore)(\([^)]+\))?:\s*/i, '')
+      .replace(/^(feat|fix|docs|refactor|test|chore|style)(\([^)]+\))?:\s*/i, '')
       .replace(/^./, (c) => c.toUpperCase());
 
     items.push({
-      version: `0.${minor}.${patch}`,
+      version: runningVersion,
       date: date.trim(),
-      commitHash: hash.trim(),
+      commitHash: shortHash,
       description: cleanDesc,
     });
-
-    patch -= 1;
   }
 
-  // 1. Write TypeScript file for live frontend /document page
+  // 4. Write TypeScript file for live frontend /document page
   const tsContent = `export interface ChangeLogEntry {
   version: string;
   date: string;
@@ -63,7 +95,7 @@ export const CHANGE_LOGS: ChangeLogEntry[] = ${JSON.stringify(items, null, 2)};
   fs.writeFileSync(CHANGELOG_DATA_FILE, tsContent, 'utf-8');
   console.log(`[Changelog] Successfully updated ${CHANGELOG_DATA_FILE} (${items.length} entries).`);
 
-  // 2. Write root CHANGELOG.md
+  // 5. Write root CHANGELOG.md
   let mdContent = `# SNP-SMS Changelog\n\nAll notable changes, commits, and skill updates are recorded here in real-time.\n\n`;
   for (const item of items) {
     mdContent += `### Version ${item.version} (${item.date}) - \`${item.commitHash}\`\n\n- ${item.description}\n\n`;

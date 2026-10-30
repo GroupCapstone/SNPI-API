@@ -1381,9 +1381,17 @@ export function Example() {
     paradigm: 'Sticky Rail Standard',
     description: 'Vertical sticky rail track with reading progress and milestone pips.',
     explanation: 'Rail TOC anchors an interactive reading milestone track on the screen edge.',
-    props: [{ name: 'sections', type: 'Array<{id, number, title}>', description: 'List of milestones.' }],
+    props: [
+      { name: 'sections', type: 'Array<{id, number, title}>', description: 'List of milestones.' },
+    ],
     codeSnippet: `import { RailTocDemo } from '@/features/document/components/ui-library';\n\n<RailTocDemo />`,
-    realWorldExamples: [{ title: 'Academic Syllabus', scenario: 'Students browse long course syllabi.', impact: 'Real-time progress.' }],
+    realWorldExamples: [
+      {
+        title: 'Academic Syllabus',
+        scenario: 'Students browse long course syllabi.',
+        impact: 'Real-time progress.',
+      },
+    ],
     uxPsychology: [{ principle: "Fitts's Law", detail: 'Edge rail is easily acquired.' }],
     usageGuidelines: [{ doItem: 'Keep titles short.', dontItem: 'Avoid more than 8 sections.' }],
     implementationNotes: ['Smooth SVG vertical track with active pip.'],
@@ -1398,7 +1406,13 @@ export function Example() {
     explanation: 'Applies cubic-bezier spring overshoot physics on collapse and expansion.',
     props: [{ name: 'isOpen', type: 'boolean', description: 'Drawer state.' }],
     codeSnippet: `import { BounceSidebarDemo } from '@/features/document/components/ui-library';\n\n<BounceSidebarDemo />`,
-    realWorldExamples: [{ title: 'Workspace Nav', scenario: 'Teachers collapse the sidebar.', impact: 'Fluid feedback.' }],
+    realWorldExamples: [
+      {
+        title: 'Workspace Nav',
+        scenario: 'Teachers collapse the sidebar.',
+        impact: 'Fluid feedback.',
+      },
+    ],
     uxPsychology: [{ principle: 'Doherty Threshold', detail: 'Sub-300ms transition.' }],
     usageGuidelines: [{ doItem: 'Use spring physics.', dontItem: 'Do not lock animations.' }],
     implementationNotes: ['Cubic bezier spring curves.'],
@@ -1413,7 +1427,13 @@ export function Example() {
     explanation: 'Provides an edge-pinned kinetic hook that pulls open contextual tools.',
     props: [{ name: 'isHooked', type: 'boolean', description: 'Open state.' }],
     codeSnippet: `import { HookSidebarDemo } from '@/features/document/components/ui-library';\n\n<HookSidebarDemo />`,
-    realWorldExamples: [{ title: 'Quick Ledger', scenario: 'Accountant peeks at daily ledger.', impact: 'Preserves context.' }],
+    realWorldExamples: [
+      {
+        title: 'Quick Ledger',
+        scenario: 'Accountant peeks at daily ledger.',
+        impact: 'Preserves context.',
+      },
+    ],
     uxPsychology: [{ principle: 'Affordance', detail: 'Visual tab invites pull gesture.' }],
     usageGuidelines: [{ doItem: 'Anchor cleanly.', dontItem: 'Avoid blocking page content.' }],
     implementationNotes: ['Absolute anchored tab with translate-x drawer.'],
@@ -1428,9 +1448,17 @@ export function Example() {
     explanation: 'Minimizes cognitive load by expanding only when cursor moves into proximity.',
     props: [{ name: 'threshold', type: 'number', description: 'Proximity distance in px.' }],
     codeSnippet: `import { ProximitySidebarDemo } from '@/features/document/components/ui-library';\n\n<ProximitySidebarDemo />`,
-    realWorldExamples: [{ title: 'Power User Nav', scenario: 'Staff navigates multi-branch tools.', impact: 'Maximum canvas area.' }],
+    realWorldExamples: [
+      {
+        title: 'Power User Nav',
+        scenario: 'Staff navigates multi-branch tools.',
+        impact: 'Maximum canvas area.',
+      },
+    ],
     uxPsychology: [{ principle: 'Hick’s Law', detail: 'Keeps main viewport uncluttered.' }],
-    usageGuidelines: [{ doItem: 'Smooth width transitions.', dontItem: 'Avoid abrupt layout shifts.' }],
+    usageGuidelines: [
+      { doItem: 'Smooth width transitions.', dontItem: 'Avoid abrupt layout shifts.' },
+    ],
     implementationNotes: ['Mouse enter/leave boundary listeners.'],
     supportedStates: ['Compact Rail', 'Expanded Dock'],
   },
@@ -1443,8 +1471,16 @@ export function Example() {
     explanation: 'Visualizes document consumption percentage with tick milestone markers.',
     props: [{ name: 'progress', type: 'number', description: 'Progress percentage (0-100).' }],
     codeSnippet: `import { ScrollProgressDemo } from '@/features/document/components/ui-library';\n\n<ScrollProgressDemo />`,
-    realWorldExamples: [{ title: 'Curriculum Reading', scenario: 'Student studies exam regulations.', impact: 'Clear completion signal.' }],
-    uxPsychology: [{ principle: 'Goal Gradient Effect', detail: 'Accelerates completion motivation.' }],
+    realWorldExamples: [
+      {
+        title: 'Curriculum Reading',
+        scenario: 'Student studies exam regulations.',
+        impact: 'Clear completion signal.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Goal Gradient Effect', detail: 'Accelerates completion motivation.' },
+    ],
     usageGuidelines: [{ doItem: 'Show percentage.', dontItem: 'Do not obstruct navigation.' }],
     implementationNotes: ['Rounded continuous progress track.'],
     supportedStates: ['Active', 'Complete'],
@@ -1458,7 +1494,13 @@ export function Example() {
     explanation: 'Smoothly interpolates pill geometry between destination segments.',
     props: [{ name: 'activeTab', type: 'string', description: 'Currently selected segment.' }],
     codeSnippet: `import { GooeyNavDemo } from '@/features/document/components/ui-library';\n\n<GooeyNavDemo />`,
-    realWorldExamples: [{ title: 'Period Switcher', scenario: 'Registrar toggles Day/Week view.', impact: 'Delightful fluidity.' }],
+    realWorldExamples: [
+      {
+        title: 'Period Switcher',
+        scenario: 'Registrar toggles Day/Week view.',
+        impact: 'Delightful fluidity.',
+      },
+    ],
     uxPsychology: [{ principle: 'Continuity', detail: 'Guides eye between states.' }],
     usageGuidelines: [{ doItem: 'Use fluid pill indicator.', dontItem: 'Do not delay selection.' }],
     implementationNotes: ['CSS transition on background pill.'],
@@ -1475,9 +1517,17 @@ export function Example() {
     explanation: 'Combines fast 15m/30m/1h quick preset pills with incremental adjustment.',
     props: [{ name: 'minutes', type: 'number', description: 'Duration in minutes.' }],
     codeSnippet: `import { DurationPickerDemo } from '@/features/document/components/ui-library';\n\n<DurationPickerDemo />`,
-    realWorldExamples: [{ title: 'Class Scheduling', scenario: 'Academic coordinator sets period length.', impact: 'One-tap presets.' }],
+    realWorldExamples: [
+      {
+        title: 'Class Scheduling',
+        scenario: 'Academic coordinator sets period length.',
+        impact: 'One-tap presets.',
+      },
+    ],
     uxPsychology: [{ principle: "Miller's Law", detail: 'Pre-chunked duration values.' }],
-    usageGuidelines: [{ doItem: 'Provide common increments.', dontItem: 'Avoid freeform typing only.' }],
+    usageGuidelines: [
+      { doItem: 'Provide common increments.', dontItem: 'Avoid freeform typing only.' },
+    ],
     implementationNotes: ['Preset buttons plus custom stepper.'],
     supportedStates: ['Preset Selected', 'Custom Stepper'],
   },
@@ -1490,9 +1540,17 @@ export function Example() {
     explanation: 'Automates focus forwarding and backspace deletion across PIN cells.',
     props: [{ name: 'length', type: 'number', default: '6', description: 'Number of digits.' }],
     codeSnippet: `import { OtpInputDemo } from '@/features/document/components/ui-library';\n\n<OtpInputDemo />`,
-    realWorldExamples: [{ title: 'Account Verification', scenario: 'Director confirms privileged login.', impact: 'Zero typing friction.' }],
+    realWorldExamples: [
+      {
+        title: 'Account Verification',
+        scenario: 'Director confirms privileged login.',
+        impact: 'Zero typing friction.',
+      },
+    ],
     uxPsychology: [{ principle: 'Immediate Feedback', detail: 'Auto-advance signals success.' }],
-    usageGuidelines: [{ doItem: 'Handle paste event.', dontItem: 'Do not allow non-numeric input.' }],
+    usageGuidelines: [
+      { doItem: 'Handle paste event.', dontItem: 'Do not allow non-numeric input.' },
+    ],
     implementationNotes: ['Ref array with auto-focus next.'],
     supportedStates: ['Incomplete', 'Valid'],
   },
@@ -1505,7 +1563,13 @@ export function Example() {
     explanation: 'Visualizes password entropy and policy compliance in real-time.',
     props: [{ name: 'value', type: 'string', description: 'Password string.' }],
     codeSnippet: `import { PasswordInputDemo } from '@/features/document/components/ui-library';\n\n<PasswordInputDemo />`,
-    realWorldExamples: [{ title: 'Staff Onboarding', scenario: 'HR registers new employee credentials.', impact: 'Enforces security.' }],
+    realWorldExamples: [
+      {
+        title: 'Staff Onboarding',
+        scenario: 'HR registers new employee credentials.',
+        impact: 'Enforces security.',
+      },
+    ],
     uxPsychology: [{ principle: 'Direct Feedback', detail: 'Real-time color bar.' }],
     usageGuidelines: [{ doItem: 'Show checklist.', dontItem: 'Never hide validation rules.' }],
     implementationNotes: ['Regex strength checks.'],
@@ -1520,7 +1584,13 @@ export function Example() {
     explanation: 'Presents visual mini-window tiles representing application luminance modes.',
     props: [{ name: 'theme', type: 'string', description: 'Selected mode.' }],
     codeSnippet: `import { ThemeSelectorDemo } from '@/features/document/components/ui-library';\n\n<ThemeSelectorDemo />`,
-    realWorldExamples: [{ title: 'User Preferences', scenario: 'Teacher selects dark mode.', impact: 'Instant tactile switch.' }],
+    realWorldExamples: [
+      {
+        title: 'User Preferences',
+        scenario: 'Teacher selects dark mode.',
+        impact: 'Instant tactile switch.',
+      },
+    ],
     uxPsychology: [{ principle: 'Recognition over Recall', detail: 'Visual preview tiles.' }],
     usageGuidelines: [{ doItem: 'Show preview tiles.', dontItem: 'Avoid plain text dropdowns.' }],
     implementationNotes: ['Grid of interactive cards.'],
@@ -1535,8 +1605,16 @@ export function Example() {
     explanation: 'Requires an explicit secondary confirmation click to prevent accidental loss.',
     props: [{ name: 'onConfirm', type: '() => void', description: 'Execution handler.' }],
     codeSnippet: `import { DeleteButtonDemo } from '@/features/document/components/ui-library';\n\n<DeleteButtonDemo />`,
-    realWorldExamples: [{ title: 'Record Purge', scenario: 'Registrar deletes draft certificate.', impact: 'Zero accidental clicks.' }],
-    uxPsychology: [{ principle: 'Error Prevention', detail: 'Two-step confirmation prevents slips.' }],
+    realWorldExamples: [
+      {
+        title: 'Record Purge',
+        scenario: 'Registrar deletes draft certificate.',
+        impact: 'Zero accidental clicks.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Error Prevention', detail: 'Two-step confirmation prevents slips.' },
+    ],
     usageGuidelines: [{ doItem: 'Provide cancel option.', dontItem: 'Never execute in 1-click.' }],
     implementationNotes: ['State machine: idle -> confirm -> deleted.'],
     supportedStates: ['Idle', 'Confirming', 'Purged'],
@@ -1550,9 +1628,20 @@ export function Example() {
     explanation: 'Interactive task tracker with check animation and completion counts.',
     props: [{ name: 'tasks', type: 'Array<{id, title, done}>', description: 'Task items.' }],
     codeSnippet: `import { TaskListDemo } from '@/features/document/components/ui-library';\n\n<TaskListDemo />`,
-    realWorldExamples: [{ title: 'Campus Checklist', scenario: 'Branch manager completes daily opening tasks.', impact: 'Structured verification.' }],
+    realWorldExamples: [
+      {
+        title: 'Campus Checklist',
+        scenario: 'Branch manager completes daily opening tasks.',
+        impact: 'Structured verification.',
+      },
+    ],
     uxPsychology: [{ principle: 'Zeigarnik Effect', detail: 'Incomplete tasks drive completion.' }],
-    usageGuidelines: [{ doItem: 'Strike through completed.', dontItem: 'Do not remove completed items immediately.' }],
+    usageGuidelines: [
+      {
+        doItem: 'Strike through completed.',
+        dontItem: 'Do not remove completed items immediately.',
+      },
+    ],
     implementationNotes: ['State array with toggle and add.'],
     supportedStates: ['Active', 'Completed'],
   },
@@ -1567,8 +1656,16 @@ export function Example() {
     explanation: 'Transient floating alert banner notifying users of asynchronous background jobs.',
     props: [{ name: 'toasts', type: 'Array<{id, title, type}>', description: 'Toast items.' }],
     codeSnippet: `import { ToastDemo } from '@/features/document/components/ui-library';\n\n<ToastDemo />`,
-    realWorldExamples: [{ title: 'Background Sync', scenario: 'Cloud MongoDB sync completes.', impact: 'Non-blocking confirmation.' }],
-    uxPsychology: [{ principle: 'Non-intrusive Alerts', detail: 'Fades away without user effort.' }],
+    realWorldExamples: [
+      {
+        title: 'Background Sync',
+        scenario: 'Cloud MongoDB sync completes.',
+        impact: 'Non-blocking confirmation.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Non-intrusive Alerts', detail: 'Fades away without user effort.' },
+    ],
     usageGuidelines: [{ doItem: 'Auto-dismiss in 4s.', dontItem: 'Never block navigation.' }],
     implementationNotes: ['Stack array with timeout filters.'],
     supportedStates: ['Success', 'Warning', 'Info'],
@@ -1582,8 +1679,16 @@ export function Example() {
     explanation: 'Engaging micro-feedback pills for collaborative announcements and lessons.',
     props: [{ name: 'reactions', type: 'Array<{emoji, count}>', description: 'Reaction badges.' }],
     codeSnippet: `import { EmojiReactionDemo } from '@/features/document/components/ui-library';\n\n<EmojiReactionDemo />`,
-    realWorldExamples: [{ title: 'School Announcement', scenario: 'Parents react to sports day notice.', impact: 'High community engagement.' }],
-    uxPsychology: [{ principle: 'Social Proof', detail: 'Visible counters validate shared sentiments.' }],
+    realWorldExamples: [
+      {
+        title: 'School Announcement',
+        scenario: 'Parents react to sports day notice.',
+        impact: 'High community engagement.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Social Proof', detail: 'Visible counters validate shared sentiments.' },
+    ],
     usageGuidelines: [{ doItem: 'Include count badges.', dontItem: 'Avoid obscure glyphs.' }],
     implementationNotes: ['Tappable pills with count increment.'],
     supportedStates: ['Reacted', 'Unreacted'],
@@ -1595,11 +1700,21 @@ export function Example() {
     paradigm: 'Popover Feed Standard',
     description: 'Animated bell with unread badge counter and instant notification dropdown.',
     explanation: 'Combines an alert bell trigger with an unread badge and flyout feed.',
-    props: [{ name: 'unreadCount', type: 'number', description: 'Number of unread notifications.' }],
+    props: [
+      { name: 'unreadCount', type: 'number', description: 'Number of unread notifications.' },
+    ],
     codeSnippet: `import { NotificationBellDemo } from '@/features/document/components/ui-library';\n\n<NotificationBellDemo />`,
-    realWorldExamples: [{ title: 'Institutional Alerts', scenario: 'Teachers check daily attendance alerts.', impact: 'Zero missed notices.' }],
+    realWorldExamples: [
+      {
+        title: 'Institutional Alerts',
+        scenario: 'Teachers check daily attendance alerts.',
+        impact: 'Zero missed notices.',
+      },
+    ],
     uxPsychology: [{ principle: 'Attention Guidance', detail: 'Bright badge draws eye.' }],
-    usageGuidelines: [{ doItem: 'Clear unread on open.', dontItem: 'Avoid loud persistent badges.' }],
+    usageGuidelines: [
+      { doItem: 'Clear unread on open.', dontItem: 'Avoid loud persistent badges.' },
+    ],
     implementationNotes: ['Popover card with unread state.'],
     supportedStates: ['Unread', 'Read', 'Expanded'],
   },
@@ -1614,7 +1729,13 @@ export function Example() {
     explanation: 'Skeuomorphic digital folder tab that stores and organizes files.',
     props: [{ name: 'files', type: 'Array<{name, size}>', description: 'Stored files.' }],
     codeSnippet: `import { FolderDemo } from '@/features/document/components/ui-library';\n\n<FolderDemo />`,
-    realWorldExamples: [{ title: 'Student Dossier', scenario: 'Admissions staff inspects identity files.', impact: 'Neat visual chunking.' }],
+    realWorldExamples: [
+      {
+        title: 'Student Dossier',
+        scenario: 'Admissions staff inspects identity files.',
+        impact: 'Neat visual chunking.',
+      },
+    ],
     uxPsychology: [{ principle: 'Spatial Metaphor', detail: 'Folder mimics physical archives.' }],
     usageGuidelines: [{ doItem: 'Show file count.', dontItem: 'Avoid deeply nested folders.' }],
     implementationNotes: ['Expandable container.'],
@@ -1629,9 +1750,17 @@ export function Example() {
     explanation: 'Syntax-highlighted code container built for developer portal API schemas.',
     props: [{ name: 'code', type: 'string', description: 'Code string.' }],
     codeSnippet: `import { CodeBlockDemo } from '@/features/document/components/ui-library';\n\n<CodeBlockDemo />`,
-    realWorldExamples: [{ title: 'API Reference', scenario: 'Third-party developer copies curl command.', impact: '100% copy accuracy.' }],
+    realWorldExamples: [
+      {
+        title: 'API Reference',
+        scenario: 'Third-party developer copies curl command.',
+        impact: '100% copy accuracy.',
+      },
+    ],
     uxPsychology: [{ principle: 'Efficiency of Use', detail: '1-click clipboard integration.' }],
-    usageGuidelines: [{ doItem: 'Provide copy button.', dontItem: 'Do not disable text selection.' }],
+    usageGuidelines: [
+      { doItem: 'Provide copy button.', dontItem: 'Do not disable text selection.' },
+    ],
     implementationNotes: ['Pre tag with copy feedback.'],
     supportedStates: ['Default', 'Copied'],
   },
@@ -1644,7 +1773,13 @@ export function Example() {
     explanation: 'Simulates gravitational acceleration and rotational displacement on typography.',
     props: [{ name: 'text', type: 'string', description: 'Letter string.' }],
     codeSnippet: `import { GravityLettersDemo } from '@/features/document/components/ui-library';\n\n<GravityLettersDemo />`,
-    realWorldExamples: [{ title: 'Interactive Title', scenario: 'Student touches banner on mobile portal.', impact: 'Playful engagement.' }],
+    realWorldExamples: [
+      {
+        title: 'Interactive Title',
+        scenario: 'Student touches banner on mobile portal.',
+        impact: 'Playful engagement.',
+      },
+    ],
     uxPsychology: [{ principle: 'Tactile Delight', detail: 'Physics creates visceral reaction.' }],
     usageGuidelines: [{ doItem: 'Use on hero titles.', dontItem: 'Never use on body text.' }],
     implementationNotes: ['CSS transform with cubic bezier bounce.'],
@@ -1659,8 +1794,16 @@ export function Example() {
     explanation: 'Matrix grid visualizing operational repository commit activity.',
     props: [{ name: 'weeks', type: 'number[][]', description: 'Activity matrix.' }],
     codeSnippet: `import { GitHubActivityDemo } from '@/features/document/components/ui-library';\n\n<GitHubActivityDemo />`,
-    realWorldExamples: [{ title: 'Dev Portal Telemetry', scenario: 'Auditor verifies continuous deployment.', impact: 'Visible momentum.' }],
-    uxPsychology: [{ principle: 'Streaks & Consistency', detail: 'Visual green blocks inspire progress.' }],
+    realWorldExamples: [
+      {
+        title: 'Dev Portal Telemetry',
+        scenario: 'Auditor verifies continuous deployment.',
+        impact: 'Visible momentum.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Streaks & Consistency', detail: 'Visual green blocks inspire progress.' },
+    ],
     usageGuidelines: [{ doItem: 'Show color legend.', dontItem: 'Do not crowd cell spacing.' }],
     implementationNotes: ['Flex column grid of rounded cells.'],
     supportedStates: ['Level 0', 'Level 1', 'Level 2', 'Level 3'],
@@ -1674,7 +1817,13 @@ export function Example() {
     explanation: 'Guides users through sequential institutional onboarding processes.',
     props: [{ name: 'currentStep', type: 'number', description: 'Active step.' }],
     codeSnippet: `import { StepPlayerDemo } from '@/features/document/components/ui-library';\n\n<StepPlayerDemo />`,
-    realWorldExamples: [{ title: 'Student Enrollment', scenario: 'Registrar steps through admission stages.', impact: 'Zero skipped steps.' }],
+    realWorldExamples: [
+      {
+        title: 'Student Enrollment',
+        scenario: 'Registrar steps through admission stages.',
+        impact: 'Zero skipped steps.',
+      },
+    ],
     uxPsychology: [{ principle: 'Chunking', detail: 'Breaks long forms into bite-sized steps.' }],
     usageGuidelines: [{ doItem: 'Show clear numbers.', dontItem: 'Do not hide progress.' }],
     implementationNotes: ['Step pills with next/prev buttons.'],
@@ -1689,9 +1838,19 @@ export function Example() {
     explanation: 'Smoothly rolls numbers when key school metrics update.',
     props: [{ name: 'value', type: 'number', description: 'Numeric count.' }],
     codeSnippet: `import { AnimatedCounterDemo } from '@/features/document/components/ui-library';\n\n<AnimatedCounterDemo />`,
-    realWorldExamples: [{ title: 'Campus Dashboard', scenario: 'Director views live student enrollment totals.', impact: 'Live dynamism.' }],
-    uxPsychology: [{ principle: 'Visual Salience', detail: 'Moving numbers convey live vitality.' }],
-    usageGuidelines: [{ doItem: 'Format with commas.', dontItem: 'Avoid rapid flashing counters.' }],
+    realWorldExamples: [
+      {
+        title: 'Campus Dashboard',
+        scenario: 'Director views live student enrollment totals.',
+        impact: 'Live dynamism.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Visual Salience', detail: 'Moving numbers convey live vitality.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Format with commas.', dontItem: 'Avoid rapid flashing counters.' },
+    ],
     implementationNotes: ['React state counting with locale string.'],
     supportedStates: ['Resting', 'Incrementing'],
   },
@@ -1704,8 +1863,16 @@ export function Example() {
     explanation: 'Voice message playback capsule with sound waveform visualization.',
     props: [{ name: 'duration', type: 'string', description: 'Audio length.' }],
     codeSnippet: `import { VoiceNoteDemo } from '@/features/document/components/ui-library';\n\n<VoiceNoteDemo />`,
-    realWorldExamples: [{ title: 'Parent Communication', scenario: 'Teacher sends audio update on student progress.', impact: 'Personal connection.' }],
-    uxPsychology: [{ principle: 'Multimodal Feedback', detail: 'Visual waveform confirms audio content.' }],
+    realWorldExamples: [
+      {
+        title: 'Parent Communication',
+        scenario: 'Teacher sends audio update on student progress.',
+        impact: 'Personal connection.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Multimodal Feedback', detail: 'Visual waveform confirms audio content.' },
+    ],
     usageGuidelines: [{ doItem: 'Provide speed toggles.', dontItem: 'Never autoplay sound.' }],
     implementationNotes: ['Waveform bars with pulse animation.'],
     supportedStates: ['Playing', 'Paused'],
@@ -1719,9 +1886,19 @@ export function Example() {
     explanation: 'Progressively discloses answers to frequent institutional questions.',
     props: [{ name: 'items', type: 'Array<{q, a}>', description: 'Questions and answers.' }],
     codeSnippet: `import { FaqDemo } from '@/features/document/components/ui-library';\n\n<FaqDemo />`,
-    realWorldExamples: [{ title: 'Help Portal', scenario: 'Students find tuition payment methods.', impact: 'Reduced support tickets.' }],
-    uxPsychology: [{ principle: 'Progressive Disclosure', detail: 'Shows questions first, answers on demand.' }],
-    usageGuidelines: [{ doItem: 'Collapse other items.', dontItem: 'Do not hide critical links inside FAQs.' }],
+    realWorldExamples: [
+      {
+        title: 'Help Portal',
+        scenario: 'Students find tuition payment methods.',
+        impact: 'Reduced support tickets.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Progressive Disclosure', detail: 'Shows questions first, answers on demand.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Collapse other items.', dontItem: 'Do not hide critical links inside FAQs.' },
+    ],
     implementationNotes: ['Smooth height transition with rotating icon.'],
     supportedStates: ['Collapsed', 'Expanded'],
   },
@@ -1736,8 +1913,16 @@ export function Example() {
     explanation: 'Luminescent morphing orb representing agentic thinking states.',
     props: [{ name: 'pulse', type: 'boolean', description: 'Pulse trigger.' }],
     codeSnippet: `import { FluidOrbDemo } from '@/features/document/components/ui-library';\n\n<FluidOrbDemo />`,
-    realWorldExamples: [{ title: 'AI Assistant', scenario: 'Student queries AI tutor for math problem.', impact: 'Futuristic presence.' }],
-    uxPsychology: [{ principle: 'Anthropomorphic Feedback', detail: 'Breathing rhythm feels alive.' }],
+    realWorldExamples: [
+      {
+        title: 'AI Assistant',
+        scenario: 'Student queries AI tutor for math problem.',
+        impact: 'Futuristic presence.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Anthropomorphic Feedback', detail: 'Breathing rhythm feels alive.' },
+    ],
     usageGuidelines: [{ doItem: 'Use subtle glows.', dontItem: 'Avoid high-frequency strobe.' }],
     implementationNotes: ['CSS blur filters with radial gradients.'],
     supportedStates: ['Breathing', 'Active Pulse'],
@@ -1751,7 +1936,13 @@ export function Example() {
     explanation: 'Reveals autonomous agent telemetry across distributed services.',
     props: [{ name: 'cards', type: 'Array<{title, speed}>', description: 'Grid nodes.' }],
     codeSnippet: `import { GridRevealDemo } from '@/features/document/components/ui-library';\n\n<GridRevealDemo />`,
-    realWorldExamples: [{ title: 'Autonomous Agent Monitor', scenario: 'Admin monitors background reconciliation agents.', impact: 'Real-time confidence.' }],
+    realWorldExamples: [
+      {
+        title: 'Autonomous Agent Monitor',
+        scenario: 'Admin monitors background reconciliation agents.',
+        impact: 'Real-time confidence.',
+      },
+    ],
     uxPsychology: [{ principle: 'Status Transparency', detail: 'Shows system actively working.' }],
     usageGuidelines: [{ doItem: 'Show execution speed.', dontItem: 'Avoid flashing colors.' }],
     implementationNotes: ['Laser beam line with animated pulse.'],
@@ -1766,9 +1957,17 @@ export function Example() {
     explanation: 'Cybernetic orb with dual rotating rings and telemetry readout.',
     props: [{ name: 'online', type: 'boolean', description: 'System health state.' }],
     codeSnippet: `import { MatrixOrbDemo } from '@/features/document/components/ui-library';\n\n<MatrixOrbDemo />`,
-    realWorldExamples: [{ title: 'Campus Security AI', scenario: 'Operator monitors AI automated gate checks.', impact: 'Immediate health check.' }],
+    realWorldExamples: [
+      {
+        title: 'Campus Security AI',
+        scenario: 'Operator monitors AI automated gate checks.',
+        impact: 'Immediate health check.',
+      },
+    ],
     uxPsychology: [{ principle: 'Visual Anchor', detail: 'Rotating geometry indicates health.' }],
-    usageGuidelines: [{ doItem: 'Show clear uptime percentage.', dontItem: 'Never hide downtime.' }],
+    usageGuidelines: [
+      { doItem: 'Show clear uptime percentage.', dontItem: 'Never hide downtime.' },
+    ],
     implementationNotes: ['Concentric rotating border rings.'],
     supportedStates: ['Online', 'Standby'],
   },
@@ -1781,9 +1980,17 @@ export function Example() {
     explanation: 'Agentic search component displaying verified cited domains.',
     props: [{ name: 'query', type: 'string', description: 'Search term.' }],
     codeSnippet: `import { WebSearchDemo } from '@/features/document/components/ui-library';\n\n<WebSearchDemo />`,
-    realWorldExamples: [{ title: 'Regulatory Search', scenario: 'Academic dean searches ministry accreditation decrees.', impact: 'Cited references.' }],
+    realWorldExamples: [
+      {
+        title: 'Regulatory Search',
+        scenario: 'Academic dean searches ministry accreditation decrees.',
+        impact: 'Cited references.',
+      },
+    ],
     uxPsychology: [{ principle: 'Source Verifiability', detail: 'Chips validate answer truth.' }],
-    usageGuidelines: [{ doItem: 'Display domain badges.', dontItem: 'Never show unverified citations.' }],
+    usageGuidelines: [
+      { doItem: 'Display domain badges.', dontItem: 'Never show unverified citations.' },
+    ],
     implementationNotes: ['Search input with citation pills.'],
     supportedStates: ['Searching', 'Synthesized'],
   },
@@ -1796,9 +2003,22 @@ export function Example() {
     explanation: 'Compact inline telemetry pill communicating autonomous sub-agent progress.',
     props: [{ name: 'step', type: 'number', description: 'Active agent phase.' }],
     codeSnippet: `import { InlineAiStatusDemo } from '@/features/document/components/ui-library';\n\n<InlineAiStatusDemo />`,
-    realWorldExamples: [{ title: 'Database Migration', scenario: 'System runs 52-collection tenant migration.', impact: 'Step-by-step transparency.' }],
-    uxPsychology: [{ principle: 'Visibility of System Status', detail: 'Informs user of exact background phase.' }],
-    usageGuidelines: [{ doItem: 'Use ping animation.', dontItem: 'Do not use ambiguous loading text.' }],
+    realWorldExamples: [
+      {
+        title: 'Database Migration',
+        scenario: 'System runs 52-collection tenant migration.',
+        impact: 'Step-by-step transparency.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Visibility of System Status',
+        detail: 'Informs user of exact background phase.',
+      },
+    ],
+    usageGuidelines: [
+      { doItem: 'Use ping animation.', dontItem: 'Do not use ambiguous loading text.' },
+    ],
     implementationNotes: ['Pill with animated ping dot.'],
     supportedStates: ['Thinking', 'Querying', 'Synthesizing', 'Complete'],
   },
@@ -1810,34 +2030,64 @@ export function Example() {
     name: 'Navigation Menu (Rare UI Floating Dock)',
     category: 'Navigation',
     paradigm: 'Floating 3-Island Mega Menu Standard',
-    description: 'Floating 3-island header with brand pill, links pill opening mega menu panels with glyphs & summaries, and GitHub stars pill with theme circle.',
-    explanation: 'Site headers whose top level items open panels of links in a shared animated viewport. Features columns with summaries, glyphs, and a call-to-action button, mixing panel triggers with plain links.',
+    description:
+      'Floating 3-island header with brand pill, links pill opening mega menu panels with glyphs & summaries, and GitHub stars pill with theme circle.',
+    explanation:
+      'Site headers whose top level items open panels of links in a shared animated viewport. Features columns with summaries, glyphs, and a call-to-action button, mixing panel triggers with plain links.',
     props: [
-      { name: 'viewport', type: 'boolean', description: 'Enable shared NavigationMenuViewport animation.' },
+      {
+        name: 'viewport',
+        type: 'boolean',
+        description: 'Enable shared NavigationMenuViewport animation.',
+      },
       { name: 'asChild', type: 'boolean', description: 'Radix twin anchor delegation.' },
-      { name: 'render', type: '(props) => ReactNode', description: 'Base twin render prop delegation.' },
+      {
+        name: 'render',
+        type: '(props) => ReactNode',
+        description: 'Base twin render prop delegation.',
+      },
     ],
     codeSnippet: `import { RareUiNavigationMenu, NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from '@/features/document/components/ui-library';\n\n{/* Full 3-Island Rare UI Navigation Menu */}\n<RareUiNavigationMenu />`,
     realWorldExamples: [
-      { title: 'Site Header Mega Panels', scenario: 'Top level items open panels of links for docs and components.', impact: 'Uncluttered scannability.' },
-      { title: 'Columns with Summaries & Glyphs', scenario: 'Mega menu organizes featured items with glyphs and CTA button.', impact: 'High conversion.' },
+      {
+        title: 'Site Header Mega Panels',
+        scenario: 'Top level items open panels of links for docs and components.',
+        impact: 'Uncluttered scannability.',
+      },
+      {
+        title: 'Columns with Summaries & Glyphs',
+        scenario: 'Mega menu organizes featured items with glyphs and CTA button.',
+        impact: 'High conversion.',
+      },
     ],
     uxPsychology: [
-      { principle: "Fitts's Law 3-Island Dock", detail: 'Centralized floating islands reduce eye travel distance.' },
-      { principle: 'Progressive Disclosure', detail: 'Mega panels expand only on focused intent with zero visual clutter.' },
+      {
+        principle: "Fitts's Law 3-Island Dock",
+        detail: 'Centralized floating islands reduce eye travel distance.',
+      },
+      {
+        principle: 'Progressive Disclosure',
+        detail: 'Mega panels expand only on focused intent with zero visual clutter.',
+      },
     ],
     usageGuidelines: [
       {
-        doItem: 'When to use: Site headers whose top level items open panels of links (docs, components, industry pages).',
-        dontItem: 'When not to use: Actions on the current page (edit, share, sign out): use Dropdown Menu.',
+        doItem:
+          'When to use: Site headers whose top level items open panels of links (docs, components, industry pages).',
+        dontItem:
+          'When not to use: Actions on the current page (edit, share, sign out): use Dropdown Menu.',
       },
       {
-        doItem: 'When to use: Mega menu panels laying out links with summaries in columns, glyphs, and a call to action button.',
-        dontItem: 'When not to use: Sections of a signed in app along the screen edge: use Sidebar.',
+        doItem:
+          'When to use: Mega menu panels laying out links with summaries in columns, glyphs, and a call to action button.',
+        dontItem:
+          'When not to use: Sections of a signed in app along the screen edge: use Sidebar.',
       },
       {
-        doItem: 'When to use: Header rows mixing panel triggers with plain top level links styled to match them.',
-        dontItem: 'When not to use: Complete pre-placed header with logo and Get Started button: use Navbar blocks.',
+        doItem:
+          'When to use: Header rows mixing panel triggers with plain top level links styled to match them.',
+        dontItem:
+          'When not to use: Complete pre-placed header with logo and Get Started button: use Navbar blocks.',
       },
     ],
     implementationNotes: [
@@ -1860,9 +2110,19 @@ export function Example() {
     explanation: 'Mathematical radial dot grid providing structural depth for canvas cards.',
     props: [{ name: 'spacing', type: 'number', description: 'Distance between dots in px.' }],
     codeSnippet: `import { DotPatternDemo } from '@/features/document/components/ui-library';\n\n<DotPatternDemo />`,
-    realWorldExamples: [{ title: 'Admissions Canvas', scenario: 'Applicant reviews admission roadmap.', impact: 'Structured canvas texture.' }],
-    uxPsychology: [{ principle: 'Subtle Grounding', detail: 'Dots ground floating cards without visual noise.' }],
-    usageGuidelines: [{ doItem: 'Keep opacity under 40%.', dontItem: 'Never use dark opaque dots on white.' }],
+    realWorldExamples: [
+      {
+        title: 'Admissions Canvas',
+        scenario: 'Applicant reviews admission roadmap.',
+        impact: 'Structured canvas texture.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Subtle Grounding', detail: 'Dots ground floating cards without visual noise.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Keep opacity under 40%.', dontItem: 'Never use dark opaque dots on white.' },
+    ],
     implementationNotes: ['CSS radial-gradient pattern.'],
     supportedStates: ['Default', 'Dense', 'Spaced'],
   },
@@ -1875,9 +2135,19 @@ export function Example() {
     explanation: 'Isometric 3D grid evoking modern developer retro-futuristic dashboards.',
     props: [{ name: 'perspective', type: 'boolean', description: 'Enable 3D X-axis tilt.' }],
     codeSnippet: `import { RetroGridDemo } from '@/features/document/components/ui-library';\n\n<RetroGridDemo />`,
-    realWorldExamples: [{ title: 'Developer Portal Hero', scenario: 'API consumer lands on developer docs.', impact: 'High-tech aesthetic.' }],
-    uxPsychology: [{ principle: 'Linear Perspective', detail: 'Creates illusion of infinite depth.' }],
-    usageGuidelines: [{ doItem: 'Pair with subtle top horizon glow.', dontItem: 'Do not obscure core text.' }],
+    realWorldExamples: [
+      {
+        title: 'Developer Portal Hero',
+        scenario: 'API consumer lands on developer docs.',
+        impact: 'High-tech aesthetic.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Linear Perspective', detail: 'Creates illusion of infinite depth.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Pair with subtle top horizon glow.', dontItem: 'Do not obscure core text.' },
+    ],
     implementationNotes: ['CSS rotateX(60deg) grid plane.'],
     supportedStates: ['3D Active', '2D Flat'],
   },
@@ -1890,9 +2160,19 @@ export function Example() {
     explanation: 'Multi-blob blurred radial gradients simulating atmospheric northern lights.',
     props: [{ name: 'pulse', type: 'boolean', description: 'Animate scale and opacity.' }],
     codeSnippet: `import { AuroraWavesDemo } from '@/features/document/components/ui-library';\n\n<AuroraWavesDemo />`,
-    realWorldExamples: [{ title: 'Executive Dashboard', scenario: 'Rector views annual KPI summary.', impact: 'Premium aesthetic.' }],
-    uxPsychology: [{ principle: 'Aesthetic Usability', detail: 'Ambient glow increases perceived value.' }],
-    usageGuidelines: [{ doItem: 'Use 60px+ blur radius.', dontItem: 'Never use high contrast unblurred colors.' }],
+    realWorldExamples: [
+      {
+        title: 'Executive Dashboard',
+        scenario: 'Rector views annual KPI summary.',
+        impact: 'Premium aesthetic.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Aesthetic Usability', detail: 'Ambient glow increases perceived value.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Use 60px+ blur radius.', dontItem: 'Never use high contrast unblurred colors.' },
+    ],
     implementationNotes: ['Blur-3xl radial blobs.'],
     supportedStates: ['Calm', 'Pulse'],
   },
@@ -1905,9 +2185,19 @@ export function Example() {
     explanation: 'Discrete node constellation providing subtle organic activity.',
     props: [{ name: 'count', type: 'number', description: 'Number of floating nodes.' }],
     codeSnippet: `import { InteractiveParticlesDemo } from '@/features/document/components/ui-library';\n\n<InteractiveParticlesDemo />`,
-    realWorldExamples: [{ title: 'System Telemetry', scenario: 'Admin monitors active microservice pods.', impact: 'Conveys live system state.' }],
-    uxPsychology: [{ principle: 'Organic Motion', detail: 'Gentle pulsing conveys live connectivity.' }],
-    usageGuidelines: [{ doItem: 'Limit to 32 nodes for performance.', dontItem: 'Avoid fast flickering.' }],
+    realWorldExamples: [
+      {
+        title: 'System Telemetry',
+        scenario: 'Admin monitors active microservice pods.',
+        impact: 'Conveys live system state.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Organic Motion', detail: 'Gentle pulsing conveys live connectivity.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Limit to 32 nodes for performance.', dontItem: 'Avoid fast flickering.' },
+    ],
     implementationNotes: ['Absolute positioned nodes with CSS pulse.'],
     supportedStates: ['16 Nodes', '32 Nodes'],
   },
@@ -1923,9 +2213,19 @@ export function Example() {
     explanation: 'Dynamic linear background-clip animation drawing attention to key titles.',
     props: [{ name: 'speed', type: 'string', description: 'Shimmer speed preset.' }],
     codeSnippet: `import { TextShimmerDemo } from '@/features/document/components/ui-library';\n\n<TextShimmerDemo />`,
-    realWorldExamples: [{ title: 'Hero Headline', scenario: 'Landing page title introduces new campus launch.', impact: 'Eye-catching focal point.' }],
-    uxPsychology: [{ principle: 'Visual Saliency', detail: 'Motion captures user visual focus within 200ms.' }],
-    usageGuidelines: [{ doItem: 'Use subtle contrast sweep.', dontItem: 'Do not use jarring rainbow gradients.' }],
+    realWorldExamples: [
+      {
+        title: 'Hero Headline',
+        scenario: 'Landing page title introduces new campus launch.',
+        impact: 'Eye-catching focal point.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Visual Saliency', detail: 'Motion captures user visual focus within 200ms.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Use subtle contrast sweep.', dontItem: 'Do not use jarring rainbow gradients.' },
+    ],
     implementationNotes: ['background-clip: text with background-position animation.'],
     supportedStates: ['Normal', 'Fast'],
   },
@@ -1938,9 +2238,22 @@ export function Example() {
     explanation: 'Animated numeral ticker with constant font-variant-numeric spacing.',
     props: [{ name: 'val', type: 'number', description: 'Target value.' }],
     codeSnippet: `import { NumberTickerDemo } from '@/features/document/components/ui-library';\n\n<NumberTickerDemo />`,
-    realWorldExamples: [{ title: 'Finance Revenue', scenario: 'Bursar watches real-time tuition payments.', impact: 'Fluid metric visualization.' }],
-    uxPsychology: [{ principle: 'Numerical Anchoring', detail: 'Tabular digits prevent layout shift.' }],
-    usageGuidelines: [{ doItem: 'Enforce font-mono or tabular-nums.', dontItem: 'Avoid variable width digit jumping.' }],
+    realWorldExamples: [
+      {
+        title: 'Finance Revenue',
+        scenario: 'Bursar watches real-time tuition payments.',
+        impact: 'Fluid metric visualization.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Numerical Anchoring', detail: 'Tabular digits prevent layout shift.' },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Enforce font-mono or tabular-nums.',
+        dontItem: 'Avoid variable width digit jumping.',
+      },
+    ],
     implementationNotes: ['font-mono tabular formatting.'],
     supportedStates: ['Updating', 'Static'],
   },
@@ -1953,9 +2266,19 @@ export function Example() {
     explanation: 'Cybernetic text-shadow split simulating CRT monitor signal displacement.',
     props: [{ name: 'active', type: 'boolean', description: 'Trigger displacement state.' }],
     codeSnippet: `import { GlitchTextDemo } from '@/features/document/components/ui-library';\n\n<GlitchTextDemo />`,
-    realWorldExamples: [{ title: 'Security Portal', scenario: 'SecOps engineer inspects zero-day audit alerts.', impact: 'Tactile cyber feel.' }],
-    uxPsychology: [{ principle: 'Tactile Feedback', detail: 'Immediate hover reaction rewards curiosity.' }],
-    usageGuidelines: [{ doItem: 'Limit displacement to 2-3px.', dontItem: 'Never induce strobing or flash.' }],
+    realWorldExamples: [
+      {
+        title: 'Security Portal',
+        scenario: 'SecOps engineer inspects zero-day audit alerts.',
+        impact: 'Tactile cyber feel.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Tactile Feedback', detail: 'Immediate hover reaction rewards curiosity.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Limit displacement to 2-3px.', dontItem: 'Never induce strobing or flash.' },
+    ],
     implementationNotes: ['Multi-color text-shadow.'],
     supportedStates: ['Resting', 'Glitched'],
   },
@@ -1968,9 +2291,19 @@ export function Example() {
     explanation: 'Progressive filter blur-in transition simulating optical lens focus.',
     props: [{ name: 'duration', type: 'string', description: 'Animation duration.' }],
     codeSnippet: `import { BlurInDemo } from '@/features/document/components/ui-library';\n\n<BlurInDemo />`,
-    realWorldExamples: [{ title: 'Keynote Announcement', scenario: 'User lands on institutional announcement.', impact: 'Cinematic entrance.' }],
-    uxPsychology: [{ principle: 'Gradual Revelation', detail: 'Soft blur entrance feels gentle on eyes.' }],
-    usageGuidelines: [{ doItem: 'Keep duration under 700ms.', dontItem: 'Do not use on tiny paragraph text.' }],
+    realWorldExamples: [
+      {
+        title: 'Keynote Announcement',
+        scenario: 'User lands on institutional announcement.',
+        impact: 'Cinematic entrance.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Gradual Revelation', detail: 'Soft blur entrance feels gentle on eyes.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Keep duration under 700ms.', dontItem: 'Do not use on tiny paragraph text.' },
+    ],
     implementationNotes: ['CSS blur-in animation.'],
     supportedStates: ['Blurring', 'Focused'],
   },
@@ -1986,9 +2319,19 @@ export function Example() {
     explanation: 'Card surface tracking cursor coordinates to render dynamic radial spotlight.',
     props: [{ name: 'radius', type: 'number', description: 'Spotlight radius in px.' }],
     codeSnippet: `import { SpotlightCardDemo } from '@/features/document/components/ui-library';\n\n<SpotlightCardDemo />`,
-    realWorldExamples: [{ title: 'Featured Course', scenario: 'Prospective student hovers over degree program.', impact: 'Fluid spotlight highlight.' }],
-    uxPsychology: [{ principle: 'Feedback Loop', detail: 'Follows cursor to confirm interactive affordance.' }],
-    usageGuidelines: [{ doItem: 'Use subtle radial alpha.', dontItem: 'Do not overpower card text.' }],
+    realWorldExamples: [
+      {
+        title: 'Featured Course',
+        scenario: 'Prospective student hovers over degree program.',
+        impact: 'Fluid spotlight highlight.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Feedback Loop', detail: 'Follows cursor to confirm interactive affordance.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Use subtle radial alpha.', dontItem: 'Do not overpower card text.' },
+    ],
     implementationNotes: ['Mouse event tracking with radial-gradient layer.'],
     supportedStates: ['Resting', 'Hover Spotlight'],
   },
@@ -2001,9 +2344,19 @@ export function Example() {
     explanation: 'Discrete feature card engineered for structured multi-column bento grids.',
     props: [{ name: 'variant', type: 'string', description: 'Accent color theme.' }],
     codeSnippet: `import { BentoCardDemo } from '@/features/document/components/ui-library';\n\n<BentoCardDemo />`,
-    realWorldExamples: [{ title: 'System Specs', scenario: 'CTO reviews system SLA and latency metrics.', impact: 'High data density.' }],
-    uxPsychology: [{ principle: "Miller's Law", detail: 'Bento boxes chunk complex data into digestibles.' }],
-    usageGuidelines: [{ doItem: 'Maintain uniform border tokens.', dontItem: 'Do not mix inconsistent radius.' }],
+    realWorldExamples: [
+      {
+        title: 'System Specs',
+        scenario: 'CTO reviews system SLA and latency metrics.',
+        impact: 'High data density.',
+      },
+    ],
+    uxPsychology: [
+      { principle: "Miller's Law", detail: 'Bento boxes chunk complex data into digestibles.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Maintain uniform border tokens.', dontItem: 'Do not mix inconsistent radius.' },
+    ],
     implementationNotes: ['Rounded-2xl with subtle border.'],
     supportedStates: ['Default', 'Hovered'],
   },
@@ -2016,9 +2369,22 @@ export function Example() {
     explanation: 'Perspective card tilting toward cursor position with spring damping.',
     props: [{ name: 'maxAngle', type: 'number', description: 'Max rotation angle.' }],
     codeSnippet: `import { TiltCardDemo } from '@/features/document/components/ui-library';\n\n<TiltCardDemo />`,
-    realWorldExamples: [{ title: 'Student Diploma', scenario: 'Alumnus views digital graduation credential.', impact: 'Tactile physical weight.' }],
-    uxPsychology: [{ principle: 'Physicality & Skeuomorphism', detail: 'Tilt gives cards realistic tactile presence.' }],
-    usageGuidelines: [{ doItem: 'Cap tilt at 10-15 degrees.', dontItem: 'Do not disorient with extreme tilt.' }],
+    realWorldExamples: [
+      {
+        title: 'Student Diploma',
+        scenario: 'Alumnus views digital graduation credential.',
+        impact: 'Tactile physical weight.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Physicality & Skeuomorphism',
+        detail: 'Tilt gives cards realistic tactile presence.',
+      },
+    ],
+    usageGuidelines: [
+      { doItem: 'Cap tilt at 10-15 degrees.', dontItem: 'Do not disorient with extreme tilt.' },
+    ],
     implementationNotes: ['perspective(1000px) rotateX and rotateY.'],
     supportedStates: ['Flat', 'Tilted'],
   },
@@ -2027,24 +2393,57 @@ export function Example() {
     name: 'Border Beam Card',
     category: 'Cards',
     paradigm: 'Instrument Panel & 4-Dash SVG Physics',
-    description: 'Matte graphite card with one short amber beam tracing its perimeter at constant speed. Quiet until you look at it; hover to brighten.',
-    explanation: 'Constructed from four stacked SVG dashes on a single pathLength="100" path so the head always leads the tail and speed never changes at the corners. Features instrument-panel telemetry, tabular numerals, and document brand palette.',
+    description:
+      'Matte graphite card with one short amber beam tracing its perimeter at constant speed. Quiet until you look at it; hover to brighten.',
+    explanation:
+      'Constructed from four stacked SVG dashes on a single pathLength="100" path so the head always leads the tail and speed never changes at the corners. Features instrument-panel telemetry, tabular numerals, and document brand palette.',
     props: [
-      { name: 'color', type: "'amber' | 'blue' | 'emerald' | 'rose'", description: 'Beam color token (amber default or docs royal blue).' },
-      { name: 'duration', type: 'number', description: 'Seconds per perimeter loop (default: 7s constant velocity).' },
-      { name: 'onAuthenticate', type: '(role, id) => void', description: 'Authentication callback for Login mode.' },
+      {
+        name: 'color',
+        type: "'amber' | 'blue' | 'emerald' | 'rose'",
+        description: 'Beam color token (amber default or docs royal blue).',
+      },
+      {
+        name: 'duration',
+        type: 'number',
+        description: 'Seconds per perimeter loop (default: 7s constant velocity).',
+      },
+      {
+        name: 'onAuthenticate',
+        type: '(role, id) => void',
+        description: 'Authentication callback for Login mode.',
+      },
     ],
     codeSnippet: `import { BorderBeamLoginCard, BorderBeamPricingCard } from '@/features/document/components/ui-library';\n\n{/* Instrument Login Card */}\n<BorderBeamLoginCard color="amber" duration={7} />\n\n{/* Instrument Pricing Card */}\n<BorderBeamPricingCard color="amber" duration={7} />`,
     realWorldExamples: [
-      { title: 'Operator Zero-Trust Gateway', scenario: 'Admin authenticates session into cluster terminal.', impact: 'Uncompromising instrument precision.' },
-      { title: 'Cluster Infrastructure Tier', scenario: 'Institutions evaluate high-throughput dedicated nodes.', impact: 'Quiet, premium visual signature.' },
+      {
+        title: 'Operator Zero-Trust Gateway',
+        scenario: 'Admin authenticates session into cluster terminal.',
+        impact: 'Uncompromising instrument precision.',
+      },
+      {
+        title: 'Cluster Infrastructure Tier',
+        scenario: 'Institutions evaluate high-throughput dedicated nodes.',
+        impact: 'Quiet, premium visual signature.',
+      },
     ],
     uxPsychology: [
-      { principle: 'Preattentive Attention', detail: 'The quiet beam sits below distraction threshold until focused, whereupon it brightens to guide intent.' },
-      { principle: 'Perceptual Constancy', detail: 'Single path length normalization preserves linear speed through 24px rounded corners.' },
+      {
+        principle: 'Preattentive Attention',
+        detail:
+          'The quiet beam sits below distraction threshold until focused, whereupon it brightens to guide intent.',
+      },
+      {
+        principle: 'Perceptual Constancy',
+        detail:
+          'Single path length normalization preserves linear speed through 24px rounded corners.',
+      },
     ],
     usageGuidelines: [
-      { doItem: 'Pair with matte graphite (#0B0F17) and hairline borders.', dontItem: 'Do not use uneven multi-path gradients that accelerate around corners.' },
+      {
+        doItem: 'Pair with matte graphite (#0B0F17) and hairline borders.',
+        dontItem: 'Do not use uneven multi-path gradients that accelerate around corners.',
+      },
     ],
     implementationNotes: [
       'Four stacked SVG dashes on single continuous rect with pathLength="100".',
@@ -2068,9 +2467,19 @@ export function Example() {
     explanation: 'Complete flagship section introducing platform value with clear hierarchy.',
     props: [{ name: 'title', type: 'string', description: 'Headline copy.' }],
     codeSnippet: `import { HeroSectionDemo } from '@/features/document/components/ui-library';\n\n<HeroSectionDemo />`,
-    realWorldExamples: [{ title: 'Admissions Landing', scenario: 'Parents evaluate SNPI curriculum.', impact: 'Clear conversion CTA.' }],
-    uxPsychology: [{ principle: 'Hierarchy of Needs', detail: 'Headline -> Value Prop -> Dual Action.' }],
-    usageGuidelines: [{ doItem: 'Use high-contrast primary CTA.', dontItem: 'Do not crowd with 3+ buttons.' }],
+    realWorldExamples: [
+      {
+        title: 'Admissions Landing',
+        scenario: 'Parents evaluate SNPI curriculum.',
+        impact: 'Clear conversion CTA.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Hierarchy of Needs', detail: 'Headline -> Value Prop -> Dual Action.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Use high-contrast primary CTA.', dontItem: 'Do not crowd with 3+ buttons.' },
+    ],
     implementationNotes: ['Gradient background with centered layout.'],
     supportedStates: ['Desktop', 'Mobile'],
   },
@@ -2083,9 +2492,19 @@ export function Example() {
     explanation: 'Clean horizontal bento section grouping system capabilities.',
     props: [{ name: 'columns', type: 'number', description: 'Grid columns.' }],
     codeSnippet: `import { FeatureBentoDemo } from '@/features/document/components/ui-library';\n\n<FeatureBentoDemo />`,
-    realWorldExamples: [{ title: 'Product Overview', scenario: 'School board reviews system modules.', impact: 'Scannable benefits.' }],
-    uxPsychology: [{ principle: 'Rule of Threes', detail: 'Trio of cards is proven most memorable.' }],
-    usageGuidelines: [{ doItem: 'Keep text under 2 lines per card.', dontItem: 'Avoid uneven card heights.' }],
+    realWorldExamples: [
+      {
+        title: 'Product Overview',
+        scenario: 'School board reviews system modules.',
+        impact: 'Scannable benefits.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Rule of Threes', detail: 'Trio of cards is proven most memorable.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Keep text under 2 lines per card.', dontItem: 'Avoid uneven card heights.' },
+    ],
     implementationNotes: ['Responsive grid with sm:grid-cols-3.'],
     supportedStates: ['Default', 'Selected'],
   },
@@ -2098,9 +2517,22 @@ export function Example() {
     explanation: 'Billing period switchable license tier presentation with discount badge.',
     props: [{ name: 'period', type: 'string', description: 'Billing frequency.' }],
     codeSnippet: `import { PricingMatrixDemo } from '@/features/document/components/ui-library';\n\n<PricingMatrixDemo />`,
-    realWorldExamples: [{ title: 'Institutional Subscription', scenario: 'Director chooses annual license.', impact: 'Clear price breakdown.' }],
-    uxPsychology: [{ principle: 'Decoy Effect & Discount Anchor', detail: 'Yearly discount incentivizes commitment.' }],
-    usageGuidelines: [{ doItem: 'Highlight recommended tier.', dontItem: 'Hide hidden fees or clauses.' }],
+    realWorldExamples: [
+      {
+        title: 'Institutional Subscription',
+        scenario: 'Director chooses annual license.',
+        impact: 'Clear price breakdown.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Decoy Effect & Discount Anchor',
+        detail: 'Yearly discount incentivizes commitment.',
+      },
+    ],
+    usageGuidelines: [
+      { doItem: 'Highlight recommended tier.', dontItem: 'Hide hidden fees or clauses.' },
+    ],
     implementationNotes: ['Interactive toggle state recalculating prices.'],
     supportedStates: ['Monthly', 'Yearly (-20%)'],
   },
@@ -2113,9 +2545,19 @@ export function Example() {
     explanation: 'Endless marquee carousel displaying accredited institutions and partners.',
     props: [{ name: 'items', type: 'array', description: 'List of partner labels.' }],
     codeSnippet: `import { MarqueeSectionDemo } from '@/features/document/components/ui-library';\n\n<MarqueeSectionDemo />`,
-    realWorldExamples: [{ title: 'Accreditation Strip', scenario: 'Showcases Ministry and partner universities.', impact: 'Builds social proof.' }],
-    uxPsychology: [{ principle: 'Social Proof', detail: 'Partner logos establish institutional trust.' }],
-    usageGuidelines: [{ doItem: 'Allow horizontal scrolling on touch.', dontItem: 'Do not auto-scroll too fast.' }],
+    realWorldExamples: [
+      {
+        title: 'Accreditation Strip',
+        scenario: 'Showcases Ministry and partner universities.',
+        impact: 'Builds social proof.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Social Proof', detail: 'Partner logos establish institutional trust.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Allow horizontal scrolling on touch.', dontItem: 'Do not auto-scroll too fast.' },
+    ],
     implementationNotes: ['Flex container with horizontal overflow.'],
     supportedStates: ['Scrolling', 'Paused'],
   },
@@ -2131,9 +2573,19 @@ export function Example() {
     explanation: 'Label transforms smoothly into border micro-stamp upon input focus.',
     props: [{ name: 'label', type: 'string', description: 'Field label text.' }],
     codeSnippet: `import { FloatingLabelFormDemo } from '@/features/document/components/ui-library';\n\n<FloatingLabelFormDemo />`,
-    realWorldExamples: [{ title: 'Fast Enrollment', scenario: 'Registrar types student ID without losing context.', impact: 'Eliminates placeholder disappearance.' }],
-    uxPsychology: [{ principle: 'Cognitive Continuity', detail: 'Label never disappears from user sight.' }],
-    usageGuidelines: [{ doItem: 'Position label clearly on focus.', dontItem: 'Do not overlap entered text.' }],
+    realWorldExamples: [
+      {
+        title: 'Fast Enrollment',
+        scenario: 'Registrar types student ID without losing context.',
+        impact: 'Eliminates placeholder disappearance.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Cognitive Continuity', detail: 'Label never disappears from user sight.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Position label clearly on focus.', dontItem: 'Do not overlap entered text.' },
+    ],
     implementationNotes: ['peer and peer-focus CSS classes.'],
     supportedStates: ['Resting', 'Focused', 'Filled'],
   },
@@ -2146,9 +2598,22 @@ export function Example() {
     explanation: 'Divides lengthy enrollment questionnaires into 3 manageable stages.',
     props: [{ name: 'step', type: 'number', description: 'Active step 1-3.' }],
     codeSnippet: `import { MultiStepWizardDemo } from '@/features/document/components/ui-library';\n\n<MultiStepWizardDemo />`,
-    realWorldExamples: [{ title: 'Admissions Application', scenario: 'Applicant completes profile, guardian, and documents.', impact: 'Drastically lowers drop-off.' }],
-    uxPsychology: [{ principle: "Hick's Law", detail: 'Breaking 20 fields into 3 steps prevents cognitive overload.' }],
-    usageGuidelines: [{ doItem: 'Allow navigating back.', dontItem: 'Never discard entered data on back step.' }],
+    realWorldExamples: [
+      {
+        title: 'Admissions Application',
+        scenario: 'Applicant completes profile, guardian, and documents.',
+        impact: 'Drastically lowers drop-off.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Hick's Law",
+        detail: 'Breaking 20 fields into 3 steps prevents cognitive overload.',
+      },
+    ],
+    usageGuidelines: [
+      { doItem: 'Allow navigating back.', dontItem: 'Never discard entered data on back step.' },
+    ],
     implementationNotes: ['Step indicator with previous/next controls.'],
     supportedStates: ['Step 1', 'Step 2', 'Step 3'],
   },
@@ -2161,9 +2626,22 @@ export function Example() {
     explanation: 'Tactile file ingestion zone with live list of verified dossier attachments.',
     props: [{ name: 'maxSize', type: 'string', description: 'Allowed file size limit.' }],
     codeSnippet: `import { FileDropzoneDemo } from '@/features/document/components/ui-library';\n\n<FileDropzoneDemo />`,
-    realWorldExamples: [{ title: 'Birth Certificate Upload', scenario: 'Guardian uploads scanned PDF dossier.', impact: 'Immediate feedback confirmation.' }],
-    uxPsychology: [{ principle: 'Spatial Affordance', detail: 'Dashed border invites dragging files.' }],
-    usageGuidelines: [{ doItem: 'Display accepted extensions and sizes.', dontItem: 'Do not silently drop invalid files.' }],
+    realWorldExamples: [
+      {
+        title: 'Birth Certificate Upload',
+        scenario: 'Guardian uploads scanned PDF dossier.',
+        impact: 'Immediate feedback confirmation.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Spatial Affordance', detail: 'Dashed border invites dragging files.' },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Display accepted extensions and sizes.',
+        dontItem: 'Do not silently drop invalid files.',
+      },
+    ],
     implementationNotes: ['Dashed 2px border with file badge rows.'],
     supportedStates: ['Idle', 'Hovering', 'File Added'],
   },
@@ -2176,9 +2654,19 @@ export function Example() {
     explanation: 'Real-time card visualization mirroring user keystrokes into live card layout.',
     props: [{ name: 'cardNumber', type: 'string', description: 'Masked card number.' }],
     codeSnippet: `import { PaymentCardDemo } from '@/features/document/components/ui-library';\n\n<PaymentCardDemo />`,
-    realWorldExamples: [{ title: 'Tuition Payment', scenario: 'Guardian pays semester tuition online.', impact: 'High payment confidence.' }],
-    uxPsychology: [{ principle: 'WYSIWYG Mirroring', detail: 'Seeing physical card preview eliminates typos.' }],
-    usageGuidelines: [{ doItem: 'Format with 4-digit spacing.', dontItem: 'Never log CVV in plaintext.' }],
+    realWorldExamples: [
+      {
+        title: 'Tuition Payment',
+        scenario: 'Guardian pays semester tuition online.',
+        impact: 'High payment confidence.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'WYSIWYG Mirroring', detail: 'Seeing physical card preview eliminates typos.' },
+    ],
+    usageGuidelines: [
+      { doItem: 'Format with 4-digit spacing.', dontItem: 'Never log CVV in plaintext.' },
+    ],
     implementationNotes: ['Real-time string masking and mirroring.'],
     supportedStates: ['Empty', 'Masked', 'Validating'],
   },
@@ -2194,9 +2682,25 @@ export function Example() {
     explanation: 'Power-user search interface triggered via Cmd+K for zero-mouse operations.',
     props: [{ name: 'open', type: 'boolean', description: 'Dialog presence state.' }],
     codeSnippet: `import { CommandPaletteDemo } from '@/features/document/components/ui-library';\n\n<CommandPaletteDemo />`,
-    realWorldExamples: [{ title: 'Power User Dispatch', scenario: 'Principal presses Cmd+K to jump to staff record.', impact: 'Sub-second navigation.' }],
-    uxPsychology: [{ principle: "Doherty Threshold", detail: 'Instant command search sustains user flow state.' }],
-    usageGuidelines: [{ doItem: 'Provide prominent keyboard shortcuts.', dontItem: 'Do not require mouse clicking.' }],
+    realWorldExamples: [
+      {
+        title: 'Power User Dispatch',
+        scenario: 'Principal presses Cmd+K to jump to staff record.',
+        impact: 'Sub-second navigation.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Doherty Threshold',
+        detail: 'Instant command search sustains user flow state.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Provide prominent keyboard shortcuts.',
+        dontItem: 'Do not require mouse clicking.',
+      },
+    ],
     implementationNotes: ['Floating search list with kbd badge.'],
     supportedStates: ['Closed', 'Open with Suggestions'],
   },
@@ -2209,9 +2713,25 @@ export function Example() {
     explanation: 'Particle physics burst rewarding major milestones and graduation approvals.',
     props: [{ name: 'burst', type: 'boolean', description: 'Fire cannon trigger.' }],
     codeSnippet: `import { ConfettiCannonDemo } from '@/features/document/components/ui-library';\n\n<ConfettiCannonDemo />`,
-    realWorldExamples: [{ title: 'Graduation Approval', scenario: 'Registrar confirms degree award for senior class.', impact: 'Delightful emotional peak.' }],
-    uxPsychology: [{ principle: 'Peak-End Rule & Gamification', detail: 'Celebration marks significant accomplishment.' }],
-    usageGuidelines: [{ doItem: 'Use sparingly for genuine wins.', dontItem: 'Never fire on routine tiny actions.' }],
+    realWorldExamples: [
+      {
+        title: 'Graduation Approval',
+        scenario: 'Registrar confirms degree award for senior class.',
+        impact: 'Delightful emotional peak.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Peak-End Rule & Gamification',
+        detail: 'Celebration marks significant accomplishment.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use sparingly for genuine wins.',
+        dontItem: 'Never fire on routine tiny actions.',
+      },
+    ],
     implementationNotes: ['Multi-color particle explosion simulation.'],
     supportedStates: ['Idle', 'Burst Active'],
   },
@@ -2224,9 +2744,25 @@ export function Example() {
     explanation: 'Edge drawer overlay providing contextual secondary details without leaving page.',
     props: [{ name: 'open', type: 'boolean', description: 'Drawer visibility.' }],
     codeSnippet: `import { DrawerSheetDemo } from '@/features/document/components/ui-library';\n\n<DrawerSheetDemo />`,
-    realWorldExamples: [{ title: 'Student Dossier Quick View', scenario: 'Teacher views student medical alerts from roster.', impact: 'Context preserved.' }],
-    uxPsychology: [{ principle: 'Preservation of Context', detail: 'Sliding drawer keeps primary table visible.' }],
-    usageGuidelines: [{ doItem: 'Include visible close X and backdrop click.', dontItem: 'Do not stack drawers inside drawers.' }],
+    realWorldExamples: [
+      {
+        title: 'Student Dossier Quick View',
+        scenario: 'Teacher views student medical alerts from roster.',
+        impact: 'Context preserved.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Preservation of Context',
+        detail: 'Sliding drawer keeps primary table visible.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Include visible close X and backdrop click.',
+        dontItem: 'Do not stack drawers inside drawers.',
+      },
+    ],
     implementationNotes: ['Slide-in panel with backdrop-blur.'],
     supportedStates: ['Closed', 'Open'],
   },
@@ -2239,9 +2775,22 @@ export function Example() {
     explanation: 'High-res modal overlay expanding thumbnail images for detailed inspection.',
     props: [{ name: 'zoom', type: 'boolean', description: 'Zoom state toggle.' }],
     codeSnippet: `import { ImageLightboxDemo } from '@/features/document/components/ui-library';\n\n<ImageLightboxDemo />`,
-    realWorldExamples: [{ title: 'ID Badge Photo Verification', scenario: 'Admin inspects high-res student passport photo.', impact: 'High-fidelity verification.' }],
-    uxPsychology: [{ principle: 'Focus of Attention', detail: 'Dimmed background directs 100% focus to image.' }],
-    usageGuidelines: [{ doItem: 'Allow escape key to close.', dontItem: 'Never lock user in modal without close button.' }],
+    realWorldExamples: [
+      {
+        title: 'ID Badge Photo Verification',
+        scenario: 'Admin inspects high-res student passport photo.',
+        impact: 'High-fidelity verification.',
+      },
+    ],
+    uxPsychology: [
+      { principle: 'Focus of Attention', detail: 'Dimmed background directs 100% focus to image.' },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Allow escape key to close.',
+        dontItem: 'Never lock user in modal without close button.',
+      },
+    ],
     implementationNotes: ['Scale transition with backdrop ring.'],
     supportedStates: ['Thumbnail', 'Lightbox Expanded'],
   },

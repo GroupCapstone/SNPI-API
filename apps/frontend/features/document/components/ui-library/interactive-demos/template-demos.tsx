@@ -133,7 +133,7 @@ export function AuroraWavesDemo() {
       />
       <div
         className={cn(
-          'pointer-events-none absolute -bottom-12 -right-12 size-56 rounded-full bg-indigo-600/30 blur-3xl transition-all duration-1000',
+          'pointer-events-none absolute -right-12 -bottom-12 size-56 rounded-full bg-indigo-600/30 blur-3xl transition-all duration-1000',
           pulse && 'scale-125 bg-indigo-500/40',
         )}
       />
@@ -169,8 +169,8 @@ export function InteractiveParticlesDemo() {
             key={i}
             className="absolute size-1.5 animate-pulse rounded-full bg-blue-400"
             style={{
-              top: `${(i * 19) % 90 + 5}%`,
-              left: `${(i * 31) % 90 + 5}%`,
+              top: `${((i * 19) % 90) + 5}%`,
+              left: `${((i * 31) % 90) + 5}%`,
               opacity: (i % 5) * 0.2 + 0.2,
               animationDuration: `${(i % 3) + 2}s`,
             }}
@@ -208,11 +208,12 @@ export function TextShimmerDemo() {
       <div className="relative inline-block overflow-hidden font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
         <span
           className={cn(
-            'inline-block bg-gradient-to-r from-slate-900 via-[#0056FF] to-slate-900 bg-[length:200%_auto] bg-clip-text text-transparent animate-shimmer',
+            'animate-shimmer inline-block bg-gradient-to-r from-slate-900 via-[#0056FF] to-slate-900 bg-[length:200%_auto] bg-clip-text text-transparent',
             speed === 'fast' && 'animate-shimmer-fast',
           )}
           style={{
-            animation: speed === 'fast' ? 'shimmer 1.5s linear infinite' : 'shimmer 3s linear infinite',
+            animation:
+              speed === 'fast' ? 'shimmer 1.5s linear infinite' : 'shimmer 3s linear infinite',
           }}
         >
           SNPI Autonomous Campus
@@ -240,7 +241,7 @@ export function NumberTickerDemo() {
 
   return (
     <div className="flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs">
-      <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
+      <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
         Daily Processed Requests
       </span>
       <div className="font-mono text-4xl font-black tracking-tight text-[#0056FF] sm:text-5xl">
@@ -285,11 +286,9 @@ export function GlitchTextDemo() {
       <div
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
-        className="cursor-pointer select-none font-mono text-3xl font-black tracking-widest text-[#FF5500] transition-all"
+        className="cursor-pointer font-mono text-3xl font-black tracking-widest text-[#FF5500] transition-all select-none"
         style={{
-          textShadow: active
-            ? '2px 0 #0056FF, -2px 0 #FF0055, 0 2px #00FFCC'
-            : '1px 1px 0 #0056FF',
+          textShadow: active ? '2px 0 #0056FF, -2px 0 #FF0055, 0 2px #00FFCC' : '1px 1px 0 #0056FF',
         }}
       >
         CYBER_TERMINAL_2026
@@ -314,7 +313,10 @@ export function BlurInDemo() {
 
   return (
     <div className="flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs">
-      <div key={key} className="transition-all duration-700 ease-out animate-in fade-in-0 blur-in-sm">
+      <div
+        key={key}
+        className="animate-in fade-in-0 blur-in-sm transition-all duration-700 ease-out"
+      >
         <h3 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
           Zero-Lag Fluid Interface
         </h3>
@@ -392,7 +394,7 @@ export function BentoCardDemo() {
   return (
     <div className="grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-2">
       <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-        <div className="size-9 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] flex items-center justify-center text-[#0056FF]">
+        <div className="flex size-9 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
           <Shield className="size-5" />
         </div>
         <div className="mt-4 space-y-1">
@@ -404,14 +406,12 @@ export function BentoCardDemo() {
       </div>
 
       <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-        <div className="size-9 rounded-xl border border-emerald-200 bg-emerald-50 flex items-center justify-center text-emerald-600">
+        <div className="flex size-9 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-600">
           <Zap className="size-5" />
         </div>
         <div className="mt-4 space-y-1">
           <h5 className="font-sans text-sm font-bold text-slate-900">42ms Sub-Query</h5>
-          <p className="font-sans text-xs text-slate-500">
-            MongoDB replica set index routing.
-          </p>
+          <p className="font-sans text-xs text-slate-500">MongoDB replica set index routing.</p>
         </div>
       </div>
     </div>
@@ -574,7 +574,9 @@ export function PricingMatrixDemo() {
             {period === 'monthly' ? '$189' : '$149'}{' '}
             <span className="font-mono text-xs text-slate-400">/mo</span>
           </div>
-          <p className="mt-1 font-sans text-xs text-slate-600">Unlimited campuses & replica sets.</p>
+          <p className="mt-1 font-sans text-xs text-slate-600">
+            Unlimited campuses & replica sets.
+          </p>
         </div>
       </div>
     </div>
@@ -583,14 +585,20 @@ export function PricingMatrixDemo() {
 
 // 4.4 Marquee Section
 export function MarqueeSectionDemo() {
-  const partners = ['Siem Reap Campus', 'Phnom Penh Main', 'Battambang Wing', 'Kampot Academy', 'Kandal Science'];
+  const partners = [
+    'Siem Reap Campus',
+    'Phnom Penh Main',
+    'Battambang Wing',
+    'Kampot Academy',
+    'Kandal Science',
+  ];
 
   return (
     <div className="w-full max-w-lg space-y-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
-      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400">
+      <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
         Active Institutional Campuses
       </span>
-      <div className="flex items-center gap-3 overflow-x-auto py-2 scrollbar-none">
+      <div className="flex scrollbar-none items-center gap-3 overflow-x-auto py-2">
         {partners.concat(partners).map((name, i) => (
           <span
             key={i}
@@ -624,7 +632,7 @@ export function FloatingLabelFormDemo() {
           onChange={(e) => setVal(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="peer w-full rounded-full border-2 border-slate-200 px-4 pt-5 pb-2 font-sans text-xs font-semibold text-slate-900 outline-none transition-colors focus:border-[#0056FF]"
+          className="peer w-full rounded-full border-2 border-slate-200 px-4 pt-5 pb-2 font-sans text-xs font-semibold text-slate-900 transition-colors outline-none focus:border-[#0056FF]"
         />
         <label
           htmlFor="student-id-field"
@@ -671,9 +679,21 @@ export function MultiStepWizardDemo() {
       </div>
 
       <div className="min-h-[70px] py-2">
-        {step === 1 && <p className="font-sans text-xs text-slate-600">Step 1: Enter applicant legal name & DOB.</p>}
-        {step === 2 && <p className="font-sans text-xs text-slate-600">Step 2: Enter legal guardian phone & emergency contact.</p>}
-        {step === 3 && <p className="font-sans text-xs text-slate-600">Step 3: Review admissions documents & biometric authorization.</p>}
+        {step === 1 && (
+          <p className="font-sans text-xs text-slate-600">
+            Step 1: Enter applicant legal name & DOB.
+          </p>
+        )}
+        {step === 2 && (
+          <p className="font-sans text-xs text-slate-600">
+            Step 2: Enter legal guardian phone & emergency contact.
+          </p>
+        )}
+        {step === 3 && (
+          <p className="font-sans text-xs text-slate-600">
+            Step 3: Review admissions documents & biometric authorization.
+          </p>
+        )}
       </div>
 
       <div className="flex items-center justify-between border-t border-slate-100 pt-3">
@@ -720,9 +740,12 @@ export function FileDropzoneDemo() {
 
       <div className="space-y-1.5">
         {uploaded.map((f, i) => (
-          <div key={i} className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs">
+          <div
+            key={i}
+            className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs"
+          >
             <span className="font-sans font-semibold text-slate-700">{f}</span>
-            <span className="font-mono text-[10px] text-emerald-600 font-bold">READY</span>
+            <span className="font-mono text-[10px] font-bold text-emerald-600">READY</span>
           </div>
         ))}
       </div>
@@ -739,7 +762,9 @@ export function PaymentCardDemo() {
       {/* Holographic Card Preview */}
       <div className="relative overflow-hidden rounded-2xl border border-blue-900 bg-gradient-to-tr from-[#000B26] via-[#0056FF] to-blue-900 p-5 text-white shadow-xl">
         <div className="flex items-center justify-between">
-          <span className="font-mono text-xs font-bold tracking-widest uppercase">SNPI TUITION CARD</span>
+          <span className="font-mono text-xs font-bold tracking-widest uppercase">
+            SNPI TUITION CARD
+          </span>
           <CreditCard className="size-5" />
         </div>
         <div className="my-4 font-mono text-lg font-bold tracking-widest">{num}</div>
@@ -788,18 +813,23 @@ export function CommandPaletteDemo() {
 
       {open && (
         <div className="space-y-1.5 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-lg">
-          <span className="px-2 font-mono text-[10px] font-bold text-slate-400 uppercase">Suggestions</span>
-          {['Enroll new student', 'Issue tuition invoice', 'Export monthly attendance', 'System settings'].map(
-            (act, i) => (
-              <div
-                key={i}
-                className="flex cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 text-xs hover:bg-[#E3E7FC] hover:text-[#0056FF]"
-              >
-                <span className="font-semibold">{act}</span>
-                <ArrowRight className="size-3 text-slate-400" />
-              </div>
-            ),
-          )}
+          <span className="px-2 font-mono text-[10px] font-bold text-slate-400 uppercase">
+            Suggestions
+          </span>
+          {[
+            'Enroll new student',
+            'Issue tuition invoice',
+            'Export monthly attendance',
+            'System settings',
+          ].map((act, i) => (
+            <div
+              key={i}
+              className="flex cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 text-xs hover:bg-[#E3E7FC] hover:text-[#0056FF]"
+            >
+              <span className="font-semibold">{act}</span>
+              <ArrowRight className="size-3 text-slate-400" />
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -817,11 +847,13 @@ export function ConfettiCannonDemo() {
 
   return (
     <div className="relative flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs">
-      <span className="font-sans text-sm font-bold text-slate-900">Celebration Confetti Cannon</span>
+      <span className="font-sans text-sm font-bold text-slate-900">
+        Celebration Confetti Cannon
+      </span>
       <button
         type="button"
         onClick={triggerBurst}
-        className="rounded-full bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-md hover:bg-blue-700 active:scale-95 transition-all"
+        className="rounded-full bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-md transition-all hover:bg-blue-700 active:scale-95"
       >
         Trigger Confetti Cannon
       </button>
@@ -831,11 +863,11 @@ export function ConfettiCannonDemo() {
           {[...Array(24)].map((_, i) => (
             <div
               key={i}
-              className="absolute size-2 rounded-full animate-ping"
+              className="absolute size-2 animate-ping rounded-full"
               style={{
                 backgroundColor: ['#0056FF', '#FF5500', '#10B981', '#F59E0B', '#8B5CF6'][i % 5],
-                top: `${(i * 17) % 80 + 10}%`,
-                left: `${(i * 29) % 80 + 10}%`,
+                top: `${((i * 17) % 80) + 10}%`,
+                left: `${((i * 29) % 80) + 10}%`,
                 animationDuration: '0.8s',
               }}
             />
@@ -864,7 +896,11 @@ export function DrawerSheetDemo() {
         <div className="rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC]/60 p-4 text-left shadow-inner">
           <div className="flex items-center justify-between border-b border-slate-200 pb-2">
             <span className="font-sans text-xs font-bold text-slate-900">Student Inspector</span>
-            <button type="button" onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-700">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="text-slate-400 hover:text-slate-700"
+            >
               <X className="size-4" />
             </button>
           </div>
@@ -892,7 +928,7 @@ export function ImageLightboxDemo() {
           zoom ? 'scale-105 shadow-2xl ring-4 ring-[#0056FF]/30' : 'hover:scale-102',
         )}
       >
-        <div className="flex h-32 w-56 items-center justify-center bg-gradient-to-tr from-[#0056FF] to-indigo-600 text-white font-sans text-xs font-bold">
+        <div className="flex h-32 w-56 items-center justify-center bg-gradient-to-tr from-[#0056FF] to-indigo-600 font-sans text-xs font-bold text-white">
           Click To Expand Lightbox
         </div>
       </div>

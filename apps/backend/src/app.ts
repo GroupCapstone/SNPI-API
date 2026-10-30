@@ -3,6 +3,7 @@ import path from 'node:path';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import helmet from 'helmet';
+import { APP_VERSION } from '@snp/shared';
 
 import { env } from './config/env';
 import { etagMiddleware } from './middleware/etag';
@@ -154,7 +155,7 @@ export const createApp = (): express.Express => {
     response.status(200).json({
       success: true,
       message: 'SNP-SMS Backend API',
-      version: '0.1.0',
+      version: APP_VERSION,
       apiBase: '/api/v1',
       health: '/api/v1/health',
     });

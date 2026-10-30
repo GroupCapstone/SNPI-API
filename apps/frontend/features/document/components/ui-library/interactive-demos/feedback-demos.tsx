@@ -2,15 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  Bell,
-  Check,
-  Alert,
-  Info,
-  X,
-  FaceSmile,
-  Sparkles,
-} from '@/components/icons';
+import { Bell, Check, Alert, Info, X, FaceSmile, Sparkles } from '@/components/icons';
 
 // 1. Toast Notification Stack
 export function ToastDemo() {
@@ -36,7 +28,7 @@ export function ToastDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Toast Notification Stack
         </span>
         <div className="flex gap-1.5">
@@ -67,7 +59,7 @@ export function ToastDemo() {
             <div
               key={toast.id}
               className={cn(
-                'flex items-center justify-between rounded-xl border p-3 font-sans text-xs shadow-xs transition-all animate-in fade-in slide-in-from-top-1',
+                'animate-in fade-in slide-in-from-top-1 flex items-center justify-between rounded-xl border p-3 font-sans text-xs shadow-xs transition-all',
                 toast.type === 'success' && 'border-emerald-200 bg-emerald-50/70 text-emerald-900',
                 toast.type === 'info' && 'border-blue-200 bg-blue-50/70 text-blue-900',
                 toast.type === 'warning' && 'border-amber-200 bg-amber-50/70 text-amber-900',
@@ -114,7 +106,7 @@ export function EmojiReactionDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Social & Lesson Emoji Reactions
       </span>
 
@@ -161,7 +153,7 @@ export function NotificationBellDemo() {
 
   return (
     <div className="relative flex w-full max-w-md flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="pb-3 font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="pb-3 font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Notification Bell & Popover
       </span>
 
@@ -183,7 +175,7 @@ export function NotificationBellDemo() {
         </button>
 
         {isOpen && (
-          <div className="absolute top-14 left-1/2 -translate-x-1/2 z-30 w-72 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl animate-in fade-in slide-in-from-top-2">
+          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-30 w-72 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl">
             <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <span className="font-sans text-xs font-bold text-slate-900">Notifications</span>
               <button

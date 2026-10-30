@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "SNP-SMS Enterprise Modular Monolith REST API",
-    "version": "0.1.0",
+    "version": "0.2.7",
     "description": "Enterprise School Management Platform RESTful API with versioned endpoints, granular RBAC, cryptographic ledger proofs, RFC 7807 problem details, and idempotency write guards.",
     "contact": {
       "name": "SNP-SMS Engineering Team",

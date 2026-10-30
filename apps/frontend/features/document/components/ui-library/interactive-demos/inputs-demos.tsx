@@ -2,18 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  Clock,
-  Key,
-  Eye,
-  EyeOff,
-  Sun,
-  Moon,
-  Laptop,
-  Trash,
-  Check,
-  Plus,
-} from '@/components/icons';
+import { Clock, Key, Eye, EyeOff, Sun, Moon, Laptop, Trash, Check, Plus } from '@/components/icons';
 
 // 1. Duration Picker
 export function DurationPickerDemo() {
@@ -25,12 +14,14 @@ export function DurationPickerDemo() {
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
           <Clock className="size-4 text-[#0056FF]" />
-          <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
             Duration Picker
           </span>
         </div>
         <span className="rounded-full bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
-          {minutes < 60 ? `${minutes}m` : `${Math.floor(minutes / 60)}h ${minutes % 60 ? `${minutes % 60}m` : ''}`}
+          {minutes < 60
+            ? `${minutes}m`
+            : `${Math.floor(minutes / 60)}h ${minutes % 60 ? `${minutes % 60}m` : ''}`}
         </span>
       </div>
 
@@ -109,7 +100,7 @@ export function OtpInputDemo() {
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
           <Key className="size-4 text-[#0056FF]" />
-          <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
             OTP / 2FA Verification
           </span>
         </div>
@@ -176,7 +167,7 @@ export function PasswordInputDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Password Input & Policy
       </span>
 
@@ -226,7 +217,10 @@ export function PasswordInputDemo() {
         ].map((c, i) => (
           <div
             key={i}
-            className={cn('flex items-center gap-1.5 font-medium', c.met ? 'text-emerald-700' : 'text-slate-400')}
+            className={cn(
+              'flex items-center gap-1.5 font-medium',
+              c.met ? 'text-emerald-700' : 'text-slate-400',
+            )}
           >
             <Check className={cn('size-3.5', c.met ? 'text-emerald-600' : 'opacity-30')} />
             <span>{c.label}</span>
@@ -249,7 +243,7 @@ export function ThemeSelectorDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Theme Selector
       </span>
 
@@ -295,7 +289,7 @@ export function DeleteButtonDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Safety-Gated Delete Trigger
       </span>
 
@@ -378,7 +372,7 @@ export function TaskListDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Interactive Task List
         </span>
         <span className="font-mono text-xs font-bold text-[#0056FF]">
@@ -402,12 +396,16 @@ export function TaskListDemo() {
             <div
               className={cn(
                 'flex size-5 shrink-0 items-center justify-center rounded-md border transition-all',
-                task.done ? 'border-[#0056FF] bg-[#0056FF] text-white' : 'border-slate-300 bg-white',
+                task.done
+                  ? 'border-[#0056FF] bg-[#0056FF] text-white'
+                  : 'border-slate-300 bg-white',
               )}
             >
               {task.done && <Check className="size-3.5" />}
             </div>
-            <span className={cn('flex-1 font-sans text-xs font-medium', task.done && 'line-through')}>
+            <span
+              className={cn('flex-1 font-sans text-xs font-medium', task.done && 'line-through')}
+            >
               {task.title}
             </span>
           </button>
