@@ -91,7 +91,12 @@ import {
   EyeOff,
   User,
   Smartphone,
+  Tablet,
   Monitor,
+  Moon,
+  Sun,
+  Maximize,
+  RotateCcw,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
@@ -103,26 +108,58 @@ export function UiLibraryView() {
   // Search query to filter components
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
-  // Per-component tab view state: 'preview' | 'usage' | 'code'
-  const [componentTabs, setComponentTabs] = React.useState<
-    Record<string, 'preview' | 'usage' | 'code'>
-  >({});
-
-  const getCompTab = (id: string): 'preview' | 'usage' | 'code' => componentTabs[id] || 'preview';
-
-  const setCompTab = (id: string, tab: 'preview' | 'usage' | 'code') => {
+  // Per-component tab view state: 'preview' | 'code'
+  const [componentTabs, setComponentTabs] = React.useState<Record<string, 'preview' | 'code'>>({});
+  const getCompTab = (id: string): 'preview' | 'code' => componentTabs[id] || 'preview';
+  const setCompTab = (id: string, tab: 'preview' | 'code') => {
     setComponentTabs((prev) => ({ ...prev, [id]: tab }));
   };
 
-  // Per-component device preview mode: 'web' | 'phone'
-  const [compDeviceModes, setCompDeviceModes] = React.useState<Record<string, 'web' | 'phone'>>({});
-  const getCompDevice = (id: string): 'web' | 'phone' => compDeviceModes[id] || 'web';
-  const setCompDevice = (id: string, mode: 'web' | 'phone') => {
+  // Per-component device preview mode: 'mobile' | 'tablet' | 'desktop'
+  const [compDeviceModes, setCompDeviceModes] = React.useState<
+    Record<string, 'mobile' | 'tablet' | 'desktop'>
+  >({});
+  const getCompDevice = (id: string): 'mobile' | 'tablet' | 'desktop' =>
+    compDeviceModes[id] || 'desktop';
+  const setCompDevice = (id: string, mode: 'mobile' | 'tablet' | 'desktop') => {
     setCompDeviceModes((prev) => ({ ...prev, [id]: mode }));
   };
 
-  // Hanging tabs demo device mode: 'web' | 'phone'
-  const [hangingNavDevice, setHangingNavDevice] = React.useState<'web' | 'phone'>('web');
+  // Per-component dark / light stage theme mode
+  const [compThemeModes, setCompThemeModes] = React.useState<Record<string, 'light' | 'dark'>>({});
+  const getCompTheme = (id: string): 'light' | 'dark' => compThemeModes[id] || 'light';
+  const toggleCompTheme = (id: string) => {
+    setCompThemeModes((prev) => ({
+      ...prev,
+      [id]: prev[id] === 'dark' ? 'light' : 'dark',
+    }));
+  };
+
+  // Per-component expanded canvas state
+  const [compExpandedModes, setCompExpandedModes] = React.useState<Record<string, boolean>>({});
+  const getCompExpanded = (id: string): boolean => compExpandedModes[id] || false;
+  const toggleCompExpanded = (id: string) => {
+    setCompExpandedModes((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  // Per-component reset keys for re-mounting and tactile refresh
+  const [compResetKeys, setCompResetKeys] = React.useState<Record<string, number>>({});
+  const [compSpinning, setCompSpinning] = React.useState<Record<string, boolean>>({});
+  const getCompResetKey = (id: string): number => compResetKeys[id] || 0;
+  const resetComp = (id: string) => {
+    setCompResetKeys((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    setCompSpinning((prev) => ({ ...prev, [id]: true }));
+    setTimeout(() => {
+      setCompSpinning((prev) => ({ ...prev, [id]: false }));
+    }, 600);
+  };
+
+  // Hanging tabs demo device mode: 'mobile' | 'tablet' | 'desktop'
+  const [hangingNavDevice, setHangingNavDevice] = React.useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [hangingNavTheme, setHangingNavTheme] = React.useState<'light' | 'dark'>('light');
+  const [hangingNavTabMode, setHangingNavTabMode] = React.useState<'preview' | 'code'>('preview');
+  const [hangingNavResetKey, setHangingNavResetKey] = React.useState(0);
+  const [hangingNavSpinning, setHangingNavSpinning] = React.useState(false);
 
   // Active section for Line Tracker
   const [activeSectionId, setActiveSectionId] = React.useState<string>('interactive-feed');
@@ -559,131 +596,278 @@ export function UiLibraryView() {
               id="top-nav-style"
               className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
             >
-              <div className="flex flex-col gap-1">
-                <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  Header Navigation Architecture
-                </span>
-                <h2 className="font-sans text-xl font-bold text-slate-950 sm:text-2xl">
-                  Top Navigation Hanging Tabs Style
-                </h2>
-                <p className="font-sans text-xs text-slate-600">
-                  Inverted trapezoid tabs suspended from the top header baseline with vector-smooth SVG geometry.
-                </p>
+              <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
+                <div className="flex flex-col gap-1">
+                  <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                    Header Navigation Architecture
+                  </span>
+                  <h2 className="font-sans text-xl font-bold text-slate-950 sm:text-2xl">
+                    Top Navigation Hanging Tabs Style
+                  </h2>
+                  <p className="font-sans text-xs text-slate-600">
+                    Inverted trapezoid tabs suspended from the top header baseline with vector-smooth SVG geometry.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* 1. Preview | Code Segmented Pill */}
+                  <div className="flex items-center rounded-xl bg-[#F1F5F9] p-1 shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={() => setHangingNavTabMode('preview')}
+                      className={cn(
+                        'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
+                        hangingNavTabMode === 'preview'
+                          ? 'bg-white text-slate-900 shadow-xs'
+                          : 'text-slate-500 hover:text-slate-900',
+                      )}
+                    >
+                      Preview
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setHangingNavTabMode('code')}
+                      className={cn(
+                        'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
+                        hangingNavTabMode === 'code'
+                          ? 'bg-white text-slate-900 shadow-xs'
+                          : 'text-slate-500 hover:text-slate-900',
+                      )}
+                    >
+                      Code
+                    </button>
+                  </div>
+
+                  {/* 2. Device Viewport Switcher */}
+                  {hangingNavTabMode === 'preview' && (
+                    <div className="flex items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs">
+                      <button
+                        type="button"
+                        onClick={() => setHangingNavDevice('mobile')}
+                        title="Mobile Phone Viewport (380px)"
+                        className={cn(
+                          'flex size-7 items-center justify-center rounded-lg transition-all',
+                          hangingNavDevice === 'mobile'
+                            ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                            : 'text-slate-500 hover:text-slate-900',
+                        )}
+                      >
+                        <Smartphone className="size-4 stroke-[1.8]" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setHangingNavDevice('tablet')}
+                        title="Tablet Viewport (680px)"
+                        className={cn(
+                          'flex size-7 items-center justify-center rounded-lg transition-all',
+                          hangingNavDevice === 'tablet'
+                            ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                            : 'text-slate-500 hover:text-slate-900',
+                        )}
+                      >
+                        <Tablet className="size-4 stroke-[1.8]" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setHangingNavDevice('desktop')}
+                        title="Desktop Monitor"
+                        className={cn(
+                          'flex size-7 items-center justify-center rounded-lg transition-all',
+                          hangingNavDevice === 'desktop'
+                            ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                            : 'text-slate-500 hover:text-slate-900',
+                        )}
+                      >
+                        <Monitor className="size-4 stroke-[1.8]" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* 3. Dark / Light Mode Toggle */}
+                  {hangingNavTabMode === 'preview' && (
+                    <button
+                      type="button"
+                      onClick={() => setHangingNavTheme(hangingNavTheme === 'dark' ? 'light' : 'dark')}
+                      title={hangingNavTheme === 'dark' ? 'Switch to Light Stage' : 'Switch to Dark Stage'}
+                      className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-2xs transition-all hover:bg-slate-50 active:scale-95"
+                    >
+                      {hangingNavTheme === 'dark' ? (
+                        <Sun className="size-4 stroke-[1.8] text-amber-500" />
+                      ) : (
+                        <Moon className="size-4 stroke-[1.8]" />
+                      )}
+                    </button>
+                  )}
+
+                  {/* 4. Reset Button */}
+                  {hangingNavTabMode === 'preview' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHangingNavResetKey((k) => k + 1);
+                        setHangingNavTab('newswire');
+                        setHangingNavSpinning(true);
+                        setTimeout(() => setHangingNavSpinning(false), 600);
+                      }}
+                      title="Reset Navigation State"
+                      className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-700 shadow-2xs ring-2 ring-slate-200/60 transition-all hover:bg-slate-50 active:scale-95"
+                    >
+                      <RotateCcw
+                        className={cn(
+                          'size-4 stroke-[2] transition-transform duration-500',
+                          hangingNavSpinning && 'rotate-[-360deg]',
+                        )}
+                      />
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Live Interactive Header Bar Stage */}
-              <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 sm:p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                {hangingNavDevice === 'phone' ? (
-                  <div className="mx-auto w-full max-w-[390px] overflow-hidden rounded-[38px] border-[6px] border-slate-900 bg-white shadow-xl">
-                    <div className="flex justify-center bg-white pt-2.5 pb-1">
-                      <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
-                        <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
-                      </div>
-                    </div>
-                    {/* Header Ceiling Strip (Textured Slate Bar) */}
-                    <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-3 pt-3 pb-0">
-                      <div className="flex items-center pb-2">
-                        <div className="flex items-center gap-1.5">
-                          <span className="h-2 w-2 rounded-full bg-[#0056FF]" />
-                          <span className="font-sans text-[10px] font-bold tracking-wider text-slate-800 uppercase">
-                            Workspace Ceiling
-                          </span>
+              {hangingNavTabMode === 'preview' ? (
+                <div
+                  className={cn(
+                    'overflow-hidden rounded-2xl border p-4 sm:p-6 transition-colors shadow-inner',
+                    hangingNavTheme === 'dark'
+                      ? 'border-slate-800 bg-[#0B0F19] text-white'
+                      : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
+                  )}
+                >
+                  {hangingNavDevice === 'mobile' ? (
+                    <div className="mx-auto w-full max-w-[390px] overflow-hidden rounded-[38px] border-[6px] border-slate-900 bg-white shadow-xl">
+                      <div className="flex justify-center bg-white pt-2.5 pb-1">
+                        <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
+                          <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
                         </div>
                       </div>
-                      <div className="flex items-end justify-center overflow-x-auto pb-0">
-                        <HangingTabsNav
-                          items={[
-                            { id: 'map', label: 'Map', icon: MapPin },
-                            { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                            { id: 'post', label: 'Post', icon: FilePlus },
-                            { id: 'friends', label: 'Friends', icon: Contacts },
-                          ]}
-                          activeId={hangingNavTab}
-                          onSelect={(tabId) => setHangingNavTab(tabId)}
-                          size="sm"
-                        />
+                      {/* Header Ceiling Strip (Textured Slate Bar) */}
+                      <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-3 pt-3 pb-0">
+                        <div className="flex items-center pb-2">
+                          <div className="flex items-center gap-1.5">
+                            <span className="h-2 w-2 rounded-full bg-[#0056FF]" />
+                            <span className="font-sans text-[10px] font-bold tracking-wider text-slate-800 uppercase">
+                              Workspace Ceiling
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-end justify-center overflow-x-auto pb-0">
+                          <HangingTabsNav
+                            items={[
+                              { id: 'map', label: 'Map', icon: MapPin },
+                              { id: 'newswire', label: 'Newswire', icon: Newspaper },
+                              { id: 'post', label: 'Post', icon: FilePlus },
+                              { id: 'friends', label: 'Friends', icon: Contacts },
+                            ]}
+                            activeId={hangingNavTab}
+                            onSelect={(tabId) => setHangingNavTab(tabId)}
+                            size="sm"
+                          />
+                        </div>
+                      </div>
+                      {/* Phone Screen Area */}
+                      <div className="min-h-[140px] bg-slate-50 p-4 text-center">
+                        <span className="font-mono text-xs text-slate-500">Active View: </span>
+                        <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+                          {hangingNavTab}
+                        </span>
+                      </div>
+                      <div className="flex justify-center bg-white py-2">
+                        <div className="h-1 w-28 rounded-full bg-slate-300" />
                       </div>
                     </div>
-                    {/* Phone Screen Area */}
-                    <div className="min-h-[140px] bg-slate-50 p-4 text-center">
-                      <span className="font-mono text-xs text-slate-500">Active View: </span>
-                      <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+                  ) : hangingNavDevice === 'tablet' ? (
+                    <div className="mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-xl">
+                      <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-5 pt-3.5 pb-0">
+                        <div className="flex items-center pb-2.5">
+                          <div className="flex items-center gap-1.5">
+                            <span className="h-2 w-2 rounded-full bg-[#0056FF]" />
+                            <span className="font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
+                              Tablet Workspace Ceiling
+                            </span>
+                          </div>
+                        </div>
+                        <div className="flex items-end justify-center">
+                          <HangingTabsNav
+                            items={[
+                              { id: 'map', label: 'Map', icon: MapPin },
+                              { id: 'newswire', label: 'Newswire', icon: Newspaper },
+                              { id: 'post', label: 'Post', icon: FilePlus },
+                              { id: 'friends', label: 'Friends', icon: Contacts },
+                            ]}
+                            activeId={hangingNavTab}
+                            onSelect={(tabId) => setHangingNavTab(tabId)}
+                            size="md"
+                          />
+                        </div>
+                      </div>
+                      <div className="min-h-[160px] bg-slate-50 p-6 text-center">
+                        <span className="font-mono text-xs text-slate-500">Active View: </span>
+                        <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+                          {hangingNavTab}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs">
+                      {/* Header Ceiling Strip (Textured Slate Bar) */}
+                      <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
+                        <div className="flex items-center pb-3">
+                          <div className="flex items-center gap-2">
+                            <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
+                            <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
+                              Application Workspace Ceiling
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-end justify-center">
+                          <HangingTabsNav
+                            items={[
+                              { id: 'map', label: 'Map', icon: MapPin },
+                              { id: 'newswire', label: 'Newswire', icon: Newspaper },
+                              { id: 'post', label: 'Post', icon: FilePlus },
+                              { id: 'friends', label: 'Friends', icon: Contacts },
+                            ]}
+                            activeId={hangingNavTab}
+                            onSelect={(tabId) => setHangingNavTab(tabId)}
+                            size={hangingNavSize}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Sub-bar Controls */}
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3 font-sans">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs text-slate-500">Active Tab:</span>
+                      <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF] uppercase">
                         {hangingNavTab}
                       </span>
                     </div>
-                    <div className="flex justify-center bg-white py-2">
-                      <div className="h-1 w-28 rounded-full bg-slate-300" />
+
+                    <div className="flex items-center gap-2 font-mono text-xs text-slate-500">
+                      <span>Interactive Tabs: Map, Newswire, Post, Friends</span>
                     </div>
-                  </div>
-                ) : (
-                  <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs">
-                    {/* Header Ceiling Strip (Textured Slate Bar) */}
-                    <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
-                      <div className="flex items-center pb-3">
-                        <div className="flex items-center gap-2">
-                          <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
-                          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-                            Application Workspace Ceiling
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-end justify-center">
-                        <HangingTabsNav
-                          items={[
-                            { id: 'map', label: 'Map', icon: MapPin },
-                            { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                            { id: 'post', label: 'Post', icon: FilePlus },
-                            { id: 'friends', label: 'Friends', icon: Contacts },
-                          ]}
-                          activeId={hangingNavTab}
-                          onSelect={(tabId) => setHangingNavTab(tabId)}
-                          size={hangingNavSize}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Sub-bar Controls */}
-                <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3 font-sans">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-slate-500">Active Tab:</span>
-                    <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF] uppercase">
-                      {hangingNavTab}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
-                    <button
-                      type="button"
-                      onClick={() => setHangingNavDevice('web')}
-                      className={cn(
-                        'flex items-center gap-1.5 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all',
-                        hangingNavDevice === 'web'
-                          ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900',
-                      )}
-                    >
-                      <Monitor className="h-3.5 w-3.5" />
-                      <span>Web</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setHangingNavDevice('phone')}
-                      className={cn(
-                        'flex items-center gap-1.5 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all',
-                        hangingNavDevice === 'phone'
-                          ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900',
-                      )}
-                    >
-                      <Smartphone className="h-3.5 w-3.5" />
-                      <span>Phone</span>
-                    </button>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 p-4 text-slate-800 shadow-xs">
+                  <pre className="max-h-72 overflow-auto font-mono text-xs leading-relaxed text-slate-800">
+                    <code>{`<HangingTabsNav
+  items={[
+    { id: 'map', label: 'Map', icon: MapPin },
+    { id: 'newswire', label: 'Newswire', icon: Newspaper },
+    { id: 'post', label: 'Post', icon: FilePlus },
+    { id: 'friends', label: 'Friends', icon: Contacts },
+  ]}
+  activeId={activeTab}
+  onSelect={(id) => setActiveTab(id)}
+  size="md"
+/>`}</code>
+                  </pre>
+                </div>
+              )}
             </section>
 
             {/* SECTION 3: 65 Interactive UI Components & Templates Single Scroll Feed */}
@@ -740,77 +924,160 @@ export function UiLibraryView() {
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2">
-                        {/* Device Switcher (Web / Phone) */}
+                        {/* 1. Preview | Code Segmented Pill (User Screenshot Style) */}
+                        <div className="flex items-center rounded-xl bg-[#F1F5F9] p-1 shadow-2xs">
+                          <button
+                            type="button"
+                            onClick={() => setCompTab(comp.id, 'preview')}
+                            className={cn(
+                              'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
+                              currentTab === 'preview'
+                                ? 'bg-white text-slate-900 shadow-xs'
+                                : 'text-slate-500 hover:text-slate-900',
+                            )}
+                          >
+                            Preview
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCompTab(comp.id, 'code')}
+                            className={cn(
+                              'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
+                              currentTab === 'code'
+                                ? 'bg-white text-slate-900 shadow-xs'
+                                : 'text-slate-500 hover:text-slate-900',
+                            )}
+                          >
+                            Code
+                          </button>
+                        </div>
+
+                        {/* 2. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
                         {currentTab === 'preview' && (
-                          <div className="flex items-center rounded-full border border-slate-200 bg-slate-50 p-0.5">
+                          <div className="flex items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs">
                             <button
                               type="button"
-                              onClick={() => setCompDevice(comp.id, 'web')}
+                              onClick={() => setCompDevice(comp.id, 'mobile')}
+                              title="Mobile Phone Viewport (380px)"
                               className={cn(
-                                'flex items-center gap-1 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all',
-                                getCompDevice(comp.id) === 'web'
-                                  ? 'bg-[#0056FF] text-white shadow-xs'
-                                  : 'text-slate-600 hover:text-slate-900',
+                                'flex size-7 items-center justify-center rounded-lg transition-all',
+                                getCompDevice(comp.id) === 'mobile'
+                                  ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                  : 'text-slate-500 hover:text-slate-900',
                               )}
-                              title="Desktop Web Preview"
                             >
-                              <Monitor className="h-3 w-3" />
-                              <span>Web</span>
+                              <Smartphone className="size-4 stroke-[1.8]" />
                             </button>
                             <button
                               type="button"
-                              onClick={() => setCompDevice(comp.id, 'phone')}
+                              onClick={() => setCompDevice(comp.id, 'tablet')}
+                              title="Tablet Viewport (680px)"
                               className={cn(
-                                'flex items-center gap-1 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all',
-                                getCompDevice(comp.id) === 'phone'
-                                  ? 'bg-[#0056FF] text-white shadow-xs'
-                                  : 'text-slate-600 hover:text-slate-900',
+                                'flex size-7 items-center justify-center rounded-lg transition-all',
+                                getCompDevice(comp.id) === 'tablet'
+                                  ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                  : 'text-slate-500 hover:text-slate-900',
                               )}
-                              title="Mobile Phone Viewport (380px)"
                             >
-                              <Smartphone className="h-3 w-3" />
-                              <span>Phone</span>
+                              <Tablet className="size-4 stroke-[1.8]" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setCompDevice(comp.id, 'desktop')}
+                              title="Desktop Viewport"
+                              className={cn(
+                                'flex size-7 items-center justify-center rounded-lg transition-all',
+                                getCompDevice(comp.id) === 'desktop'
+                                  ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                  : 'text-slate-500 hover:text-slate-900',
+                              )}
+                            >
+                              <Monitor className="size-4 stroke-[1.8]" />
                             </button>
                           </div>
                         )}
 
-                        {/* Triple Tabs: Preview | Usage | Code */}
-                        <div className="flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 p-1">
-                          {(['preview', 'usage', 'code'] as const).map((t) => (
-                            <button
-                              key={t}
-                              type="button"
-                              onClick={() => setCompTab(comp.id, t)}
+                        {/* 3. Dark / Light Mode Toggle */}
+                        {currentTab === 'preview' && (
+                          <button
+                            type="button"
+                            onClick={() => toggleCompTheme(comp.id)}
+                            title={getCompTheme(comp.id) === 'dark' ? 'Switch to Light Stage' : 'Switch to Dark Stage'}
+                            className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-2xs transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95"
+                          >
+                            {getCompTheme(comp.id) === 'dark' ? (
+                              <Sun className="size-4 stroke-[1.8] text-amber-500" />
+                            ) : (
+                              <Moon className="size-4 stroke-[1.8]" />
+                            )}
+                          </button>
+                        )}
+
+                        {/* 4. Fullscreen / Maximize Toggle */}
+                        {currentTab === 'preview' && (
+                          <button
+                            type="button"
+                            onClick={() => toggleCompExpanded(comp.id)}
+                            title={getCompExpanded(comp.id) ? 'Collapse Stage' : 'Expand Stage'}
+                            className={cn(
+                              'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
+                              getCompExpanded(comp.id)
+                                ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
+                                : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-2xs',
+                            )}
+                          >
+                            <Maximize className="size-4 stroke-[1.8]" />
+                          </button>
+                        )}
+
+                        {/* 5. Reset / Reload Button */}
+                        {currentTab === 'preview' && (
+                          <button
+                            type="button"
+                            onClick={() => resetComp(comp.id)}
+                            title="Reset Component State"
+                            className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-700 shadow-2xs ring-2 ring-slate-200/60 transition-all hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 active:scale-95"
+                          >
+                            <RotateCcw
                               className={cn(
-                                'cursor-pointer rounded-full px-3 py-1 font-sans text-[11px] font-bold transition-all',
-                                currentTab === t
-                                  ? 'bg-[#0056FF] text-white shadow-xs'
-                                  : 'text-slate-600 hover:text-slate-900',
+                                'size-4 stroke-[2] transition-transform duration-500',
+                                compSpinning[comp.id] && 'rotate-[-360deg]',
                               )}
-                            >
-                              {t === 'preview' ? 'Preview' : t === 'usage' ? 'Usage' : 'Code'}
-                            </button>
-                          ))}
-                        </div>
+                            />
+                          </button>
+                        )}
                       </div>
                     </div>
 
                     {/* TAB CONTENT: PREVIEW */}
                     {currentTab === 'preview' && (
                       <div className="space-y-4">
-                        {/* Live Interactive Stage Canvas (Expansive, High-Visibility Viewport) */}
-                        <div className="relative flex min-h-[440px] w-full items-center justify-center overflow-hidden rounded-3xl border border-slate-200/90 bg-[#F8FAFC] p-4 shadow-inner sm:p-8">
+                        {/* Live Interactive Stage Canvas (Responsive Viewport & Theme Aware) */}
+                        <div
+                          className={cn(
+                            'relative flex w-full items-center justify-center overflow-hidden rounded-3xl border p-4 shadow-inner transition-all duration-300 sm:p-8',
+                            getCompExpanded(comp.id) ? 'min-h-[620px]' : 'min-h-[440px]',
+                            getCompTheme(comp.id) === 'dark'
+                              ? 'border-slate-800 bg-[#0B0F19] text-white'
+                              : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
+                          )}
+                        >
                           {/* Subtle Dot Grid */}
                           <div
-                            className="pointer-events-none absolute inset-0 opacity-30"
+                            className={cn(
+                              'pointer-events-none absolute inset-0',
+                              getCompTheme(comp.id) === 'dark' ? 'opacity-20' : 'opacity-30',
+                            )}
                             style={{
                               backgroundImage:
-                                'radial-gradient(circle at 1px 1px, #CAD3F5 1px, transparent 0)',
+                                getCompTheme(comp.id) === 'dark'
+                                  ? 'radial-gradient(circle at 1px 1px, #1E293B 1px, transparent 0)'
+                                  : 'radial-gradient(circle at 1px 1px, #CAD3F5 1px, transparent 0)',
                               backgroundSize: '16px 16px',
                             }}
                           />
 
-                          {getCompDevice(comp.id) === 'phone' ? (
+                          {getCompDevice(comp.id) === 'mobile' ? (
                             /* Realistic Mobile Phone Viewport Frame */
                             <div className="relative z-10 mx-auto w-full max-w-[380px] overflow-hidden rounded-[44px] border-[8px] border-slate-900 bg-white shadow-2xl ring-1 ring-slate-900/10">
                               <div className="flex justify-center bg-white pt-2.5 pb-1">
@@ -818,16 +1085,48 @@ export function UiLibraryView() {
                                   <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
                                 </div>
                               </div>
-                              <div className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/50 p-4">
+                              <div
+                                key={getCompResetKey(comp.id)}
+                                className={cn(
+                                  'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-4 transition-colors',
+                                  getCompTheme(comp.id) === 'dark'
+                                    ? 'bg-[#0F172A] text-white'
+                                    : 'bg-slate-50/50 text-slate-900',
+                                )}
+                              >
                                 {renderFeedComponentDemo(comp.id, stateBundle)}
                               </div>
                               <div className="flex justify-center bg-white py-2">
                                 <div className="h-1 w-28 rounded-full bg-slate-300" />
                               </div>
                             </div>
+                          ) : getCompDevice(comp.id) === 'tablet' ? (
+                            /* Realistic Tablet Viewport Frame */
+                            <div className="relative z-10 mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-2xl">
+                              <div className="flex justify-center bg-slate-900 py-1.5">
+                                <div className="size-2 rounded-full bg-slate-700" />
+                              </div>
+                              <div
+                                key={getCompResetKey(comp.id)}
+                                className={cn(
+                                  'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-6 transition-colors',
+                                  getCompTheme(comp.id) === 'dark'
+                                    ? 'bg-[#0F172A] text-white'
+                                    : 'bg-slate-50/40 text-slate-900',
+                                )}
+                              >
+                                {renderFeedComponentDemo(comp.id, stateBundle)}
+                              </div>
+                            </div>
                           ) : (
-                            /* Real Functional Component Demo in Place (Expansive Max-Width) */
-                            <div className="relative z-10 flex w-full max-w-2xl flex-col items-center justify-center">
+                            /* Desktop Monitor Stage */
+                            <div
+                              key={getCompResetKey(comp.id)}
+                              className={cn(
+                                'relative z-10 flex w-full flex-col items-center justify-center',
+                                getCompExpanded(comp.id) ? 'max-w-4xl' : 'max-w-2xl',
+                              )}
+                            >
                               {renderFeedComponentDemo(comp.id, stateBundle)}
                             </div>
                           )}
@@ -865,9 +1164,36 @@ export function UiLibraryView() {
                       </div>
                     )}
 
-                    {/* TAB CONTENT: USAGE */}
-                    {currentTab === 'usage' && (
+                    {/* TAB CONTENT: CODE (With Props Specifications & Mental Model) */}
+                    {currentTab === 'code' && (
                       <div className="space-y-4 pt-2">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-xs font-bold text-slate-700">
+                            React / TypeScript Source
+                          </span>
+                          <GeometricButton
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleCopyCode(comp.id, comp.codeSnippet)}
+                            icon={
+                              copiedCodeId === comp.id ? (
+                                <Check className="size-3 text-[#0056FF]" />
+                              ) : (
+                                <Copy className="size-3 text-slate-600" />
+                              )
+                            }
+                          >
+                            {copiedCodeId === comp.id ? 'Copied' : 'Copy Code'}
+                          </GeometricButton>
+                        </div>
+
+                        <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 p-4 text-slate-800 shadow-xs">
+                          <pre className="max-h-80 overflow-auto font-mono text-xs leading-relaxed text-slate-800">
+                            <code>{comp.codeSnippet}</code>
+                          </pre>
+                        </div>
+
+                        {/* Mental Model & Specs */}
                         <div className="space-y-1.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4">
                           <h4 className="font-sans text-xs font-bold tracking-wider text-slate-900 uppercase">
                             Mental Model & Paradigm
@@ -899,7 +1225,7 @@ export function UiLibraryView() {
                           </div>
                         </div>
 
-                        {/* Do's & Don'ts */}
+                        {/* Best Practices & Anti-Patterns */}
                         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                           <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/40 p-3 text-xs">
                             <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
@@ -928,36 +1254,6 @@ export function UiLibraryView() {
                               ))}
                             </ul>
                           </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* TAB CONTENT: CODE */}
-                    {currentTab === 'code' && (
-                      <div className="space-y-3 pt-2">
-                        <div className="flex items-center justify-between">
-                          <span className="font-mono text-xs font-bold text-slate-700">
-                            React / TypeScript Source
-                          </span>
-                          <GeometricButton
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleCopyCode(comp.id, comp.codeSnippet)}
-                            icon={
-                              copiedCodeId === comp.id ? (
-                                <Check className="size-3 text-[#0056FF]" />
-                              ) : (
-                                <Copy className="size-3 text-slate-600" />
-                              )
-                            }
-                          >
-                            {copiedCodeId === comp.id ? 'Copied' : 'Copy Code'}
-                          </GeometricButton>
-                        </div>
-                        <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 p-4 text-slate-800 shadow-xs">
-                          <pre className="max-h-72 overflow-auto font-mono text-xs leading-relaxed text-slate-800">
-                            <code>{comp.codeSnippet}</code>
-                          </pre>
                         </div>
                       </div>
                     )}
