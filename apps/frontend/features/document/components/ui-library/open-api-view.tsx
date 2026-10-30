@@ -2,13 +2,13 @@
 
 import * as React from 'react';
 
-import { Check, Copy, Server, Layers } from '@/components/icons';
+import { Check, Copy, Server, Search } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import {
   GeometricButton,
+  GeometricInput,
   GeometricHeaderStamp,
   LineTrackerToc,
-  useDocsNav,
   type TocHeadingItem,
 } from '@/features/document/components/ui-library';
 import { cn } from '@/lib/utils';
@@ -465,11 +465,42 @@ async function executeApiProbe(item: ApiDocItem) {
 }
 
 export function OpenApiView() {
-  const { setActiveTab } = useDocsNav();
   const [activeDocSection, setActiveDocSection] = React.useState<string>('open-api-head');
   const [expandedChangelog, setExpandedChangelog] = React.useState<boolean>(false);
   const [codeType, setCodeType] = React.useState<'curl' | 'ts' | 'json'>('curl');
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
+
+  // Search query & Category filter for Left Sidebar Navigation (Matching UI Library)
+  const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
+
+  const categories = React.useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const ep of AVAILABLE_ENDPOINTS_FOR_DEVS) {
+      counts[ep.category] = (counts[ep.category] || 0) + 1;
+    }
+    const list = Object.entries(counts).map(([name, count]) => ({ name, count }));
+    return [{ name: 'All Modules', count: AVAILABLE_ENDPOINTS_FOR_DEVS.length }, ...list];
+  }, []);
+
+  const filteredEndpoints = React.useMemo(() => {
+    return AVAILABLE_ENDPOINTS_FOR_DEVS.filter((ep) => {
+      const matchCat =
+        selectedCategory === 'All' ||
+        selectedCategory === 'All Modules' ||
+        ep.category === selectedCategory;
+      if (!matchCat) return false;
+      if (!searchQuery.trim()) return true;
+      const q = searchQuery.toLowerCase().trim();
+      return (
+        ep.path.toLowerCase().includes(q) ||
+        ep.description.toLowerCase().includes(q) ||
+        ep.category.toLowerCase().includes(q) ||
+        ep.method.toLowerCase().includes(q) ||
+        ep.requiredPermission.toLowerCase().includes(q)
+      );
+    });
+  }, [searchQuery, selectedCategory]);
 
   const scrollToDocSection = (id: string) => {
     setActiveDocSection(id);
@@ -569,34 +600,149 @@ console.log(payload.data);`;
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
-      {/* Main Grid: On This Page Sidebar + Body Content */}
-      <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8 sm:px-6">
-        {/* Left Column: On This Page Table of Contents with Real-time Tracker Line */}
-        <aside className="hidden w-64 shrink-0 md:block">
-          <div className="sticky top-24 space-y-4">
-            <GeometricButton
-              onClick={() => setActiveTab('library')}
-              variant="blue"
-              size="sm"
-              icon={<Layers className="size-3.5" />}
-              className="w-full justify-center"
-            >
-              UI Library
-            </GeometricButton>
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white">
+      {/* Main Grid Container (Exact same max-w-[1560px] 3-column layout matching UI Library) */}
+      <div className="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+          {/* COLUMN 1: Left Sticky Sidebar Navigation */}
+          <aside className="w-full shrink-0 lg:w-60 xl:w-64">
+            <div className="sticky top-24 space-y-6">
+              {/* Filter Input */}
+              <GeometricInput
+                inputSize="sm"
+                placeholder="Filter endpoints..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
+              />
 
-            <LineTrackerToc
-              items={DOC_TOC_HEADINGS}
-              activeId={activeDocSection}
-              onSelect={scrollToDocSection}
-              onActiveChange={setActiveDocSection}
-              title="ON THIS PAGE"
-            />
-          </div>
-        </aside>
+              {/* Primary Nav Capsules (Matching UI Library Design Concept) */}
+              <div className="space-y-1.5 font-sans">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('All Modules');
+                    scrollToDocSection('endpoints-available');
+                  }}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#0056FF] bg-[#0056FF] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0047D4]"
+                >
+                  <span>All Modules</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('endpoints-available')}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-2 text-left font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#D5DCFA]"
+                >
+                  <span>Catalog</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('api-doc')}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-slate-200/90 bg-[#E3E7FC]/60 px-4 py-2 text-left font-sans text-xs font-bold text-slate-900 transition-all hover:bg-[#E3E7FC]"
+                >
+                  <span>Live Tester</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('protected-endpoints')}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#000B26] bg-[#000B26] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-black"
+                >
+                  <span>Protected APIs</span>
+                </button>
+              </div>
 
-        {/* Right / Main Content Area */}
-        <main className="min-w-0 flex-1 space-y-10 pb-16">
+              {/* Endpoint Modules / Categories with Active Highlights */}
+              <div className="space-y-4 font-sans text-xs">
+                <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
+                  <span>API Modules</span>
+                  <span className="text-[#0056FF]">{categories.length}</span>
+                </div>
+                <div className="space-y-1.5">
+                  {categories.map((cat) => {
+                    const isSelected = selectedCategory === cat.name;
+                    return (
+                      <button
+                        key={cat.name}
+                        type="button"
+                        onClick={() => {
+                          setSelectedCategory(cat.name);
+                          scrollToDocSection('endpoints-available');
+                        }}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-3.5 py-1.5 text-left font-sans text-xs font-semibold transition-all',
+                          isSelected
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                        )}
+                      >
+                        <div className="flex items-center gap-2 truncate">
+                          <span
+                            className={cn(
+                              'size-1.5 rounded-full transition-colors',
+                              isSelected ? 'bg-white' : 'bg-slate-400',
+                            )}
+                          />
+                          <span className="truncate">{cat.name}</span>
+                        </div>
+                        <span
+                          className={cn(
+                            'font-mono text-[10px] font-bold',
+                            isSelected ? 'text-white' : 'text-slate-400',
+                          )}
+                        >
+                          {cat.count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Documentation Section Links */}
+                <div className="border-t border-slate-200/80 pt-3">
+                  <div className="pb-2 font-mono text-[10px] font-bold text-slate-400 uppercase">
+                    <span>Quick Sections</span>
+                  </div>
+                  <div className="space-y-1.5">
+                    {[
+                      { id: 'open-api-head', label: 'Overview' },
+                      { id: 'introduction', label: 'Introduction' },
+                      { id: 'who-can-access', label: 'Access Matrix' },
+                      { id: 'endpoints-available', label: 'Endpoints Catalog' },
+                      { id: 'api-doc', label: 'Interactive Tester' },
+                      { id: 'status-codes', label: 'Status Codes' },
+                      { id: 'changelogs', label: 'Change Logs' },
+                    ].map((doc) => {
+                      const isCurrentActive = activeDocSection === doc.id;
+                      return (
+                        <button
+                          key={doc.id}
+                          type="button"
+                          onClick={() => scrollToDocSection(doc.id)}
+                          className={cn(
+                            'flex w-full cursor-pointer items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-left font-sans text-xs font-semibold transition-all',
+                            isCurrentActive
+                              ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                              : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                          )}
+                        >
+                          <span
+                            className={cn(
+                              'size-1.5 rounded-full transition-colors',
+                              isCurrentActive ? 'bg-white' : 'bg-slate-400',
+                            )}
+                          />
+                          <span className="truncate">{doc.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* COLUMN 2: Center Main Content Feed */}
+          <main className="min-w-0 flex-1 space-y-12">
           {/* HERO HEAD TITLE: Specific to Open API (Monumental Big As Footer Style) */}
           <section id="open-api-head" className="scroll-mt-24 space-y-4">
             <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50/50 to-[#E3E7FC]/30 p-6 shadow-xs sm:p-10">
@@ -810,34 +956,45 @@ console.log(payload.data);`;
             </div>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {AVAILABLE_ENDPOINTS_FOR_DEVS.map((ep) => (
-                <div
-                  key={ep.path + ep.method}
-                  className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
-                        {ep.method}
-                      </span>
-                      <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-sans text-[10px] font-semibold text-slate-600">
-                        {ep.category}
-                      </span>
-                    </div>
-                    <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
-                      {ep.path}
-                    </div>
-                    <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
-                      {ep.description}
-                    </p>
-                  </div>
-                  <div className="mt-3 border-t border-slate-100 pt-2">
-                    <span className="font-mono text-[10.5px] font-medium text-[#0056FF]">
-                      Permission: {ep.requiredPermission}
-                    </span>
-                  </div>
+              {filteredEndpoints.length === 0 ? (
+                <div className="col-span-full rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
+                  <p className="font-sans text-sm font-semibold text-slate-600">
+                    No matching endpoints found
+                  </p>
+                  <p className="mt-1 font-sans text-xs text-slate-400">
+                    Try searching for another keyword or select &quot;All Modules&quot;
+                  </p>
                 </div>
-              ))}
+              ) : (
+                filteredEndpoints.map((ep) => (
+                  <div
+                    key={ep.path + ep.method}
+                    className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
+                          {ep.method}
+                        </span>
+                        <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-sans text-[10px] font-semibold text-slate-600">
+                          {ep.category}
+                        </span>
+                      </div>
+                      <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
+                        {ep.path}
+                      </div>
+                      <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
+                        {ep.description}
+                      </p>
+                    </div>
+                    <div className="mt-3 border-t border-slate-100 pt-2">
+                      <span className="font-mono text-[10.5px] font-medium text-[#0056FF]">
+                        Permission: {ep.requiredPermission}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </section>
 
@@ -1153,7 +1310,21 @@ console.log(payload.data);`;
             </div>
           </section>
         </main>
+
+        {/* COLUMN 3: Right Sticky Sidebar with Real-Time Tracking Line */}
+        <aside className="hidden w-64 shrink-0 xl:block">
+          <div className="sticky top-24 space-y-6">
+            <LineTrackerToc
+              items={DOC_TOC_HEADINGS}
+              activeId={activeDocSection}
+              onSelect={scrollToDocSection}
+              onActiveChange={setActiveDocSection}
+              title="ON THIS PAGE"
+            />
+          </div>
+        </aside>
       </div>
     </div>
+  </div>
   );
 }

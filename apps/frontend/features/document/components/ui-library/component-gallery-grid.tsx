@@ -3,17 +3,13 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import {
-  Check,
   Search,
   Home,
   User,
   Plus,
   Layers,
   ChevronDown,
-  Info,
-  Calendar,
   FileText,
-  MapPin,
 } from '@/components/icons';
 
 export interface GalleryComponentItem {

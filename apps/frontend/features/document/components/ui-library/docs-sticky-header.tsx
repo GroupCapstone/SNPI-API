@@ -41,7 +41,7 @@ export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderP
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 shadow-[0_1px_8px_rgba(0,0,0,0.03)] backdrop-blur-xl">
-      <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="relative mx-auto flex h-16 max-w-[1560px] items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left: Brand Identity */}
         <div className="z-10 flex items-center gap-3.5">
           <BrandMark compact size={36} />
