@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "93d79a9",
+    "description": "Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "545c574",
+    "description": "Synchronize real-time changelog for Multi-Step Form Wizard"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "4b93117",
     "description": "Implement 10-point Multi-Step Form Wizard with per-step validation, sessionStorage persistence, and summary review"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "cfc9d95",
     "description": "Resolve Open API navigation glitch and hanging tabs click suppression"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "220a601",
-    "description": "Provide complete 52-collection test data seeder and self-protect deletion script"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "71edb9e",
-    "description": "Resolve production vercel builds for frontend and backend with shared package compilation"
   }
 ];

@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `93d79a9`
+
+- Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake
+
+### Version 0.2.7 (30.10.2026) - `545c574`
+
+- Synchronize real-time changelog for Multi-Step Form Wizard
+
 ### Version 0.2.7 (30.10.2026) - `4b93117`
 
 - Implement 10-point Multi-Step Form Wizard with per-step validation, sessionStorage persistence, and summary review
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `cfc9d95`
 
 - Resolve Open API navigation glitch and hanging tabs click suppression
-
-### Version 0.2.7 (30.10.2026) - `220a601`
-
-- Provide complete 52-collection test data seeder and self-protect deletion script
-
-### Version 0.2.7 (30.10.2026) - `71edb9e`
-
-- Resolve production vercel builds for frontend and backend with shared package compilation
 
