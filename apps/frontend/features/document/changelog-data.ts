@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "4b93117",
+    "description": "Implement 10-point Multi-Step Form Wizard with per-step validation, sessionStorage persistence, and summary review"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "6b6061c",
+    "description": "Synchronize real-time changelog for Cipher Decode component"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "4986f81",
     "description": "Implement Cipher Decode Nav & Headline with per-character timeline, throttled glyph shimmer, and live lock counter"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "71edb9e",
     "description": "Resolve production vercel builds for frontend and backend with shared package compilation"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "ee6ae19",
-    "description": "Configure app.kesararamwithdigital.tech and api.kesararamwithdigital.tech temporary domains"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "10b3646",
-    "description": "Ignore .vercel directory for clean teardown"
   }
 ];
