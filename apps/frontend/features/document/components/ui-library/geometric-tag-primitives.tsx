@@ -61,78 +61,59 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
       lg: 'h-12 px-4 text-sm font-bold gap-3 rounded-full',
     }[size];
 
-    const iconTileSizes = {
-      sm: 'size-5 rounded-md text-[10px]',
-      md: 'size-6 rounded-lg text-xs',
-      lg: 'size-7 rounded-lg text-sm',
-    }[size];
-
     // Normalize variant aliases
     const resolvedVariant =
       variant === 'primary' || variant === 'tab' || variant === 'ticket' || variant === 'speech'
         ? 'blue'
         : variant;
 
-    // Variant style configurations
+    // Variant style configurations (Strictly zero color behind icons or numbers)
     const variantStyles = {
       blue: {
         button: isActive
           ? 'border-2 border-[#0056FF] bg-[#0056FF] text-white shadow-none'
           : 'border-2 border-[#0056FF] bg-blue-50/70 text-[#0056FF] hover:bg-blue-100/70',
-        tile: isActive ? 'bg-white/20 text-white' : 'bg-[#0056FF]/15 text-[#0056FF]',
       },
       green: {
         button: isActive
           ? 'border-2 border-emerald-600 bg-emerald-600 text-white shadow-none'
           : 'border-2 border-emerald-600 bg-emerald-50/70 text-emerald-800 hover:bg-emerald-100/70',
-        tile: isActive ? 'bg-white/20 text-white' : 'bg-emerald-200/60 text-emerald-700',
       },
       purple: {
         button: isActive
           ? 'border-2 border-purple-600 bg-purple-600 text-white shadow-none'
           : 'border-2 border-purple-600 bg-purple-50/70 text-purple-800 hover:bg-purple-100/70',
-        tile: isActive ? 'bg-white/20 text-white' : 'bg-purple-200/60 text-purple-700',
       },
       orange: {
         button: isActive
           ? 'border-2 border-orange-500 bg-orange-500 text-white shadow-none'
           : 'border-2 border-orange-500 bg-orange-50/70 text-orange-800 hover:bg-orange-100/70',
-        tile: isActive ? 'bg-white/20 text-white' : 'bg-orange-200/60 text-orange-700',
       },
       navy: {
         button: isActive
           ? 'border-2 border-blue-900 bg-blue-900 text-white shadow-none'
           : 'border-2 border-blue-900 bg-blue-50/70 text-blue-950 hover:bg-blue-100/70',
-        tile: isActive ? 'bg-white/20 text-white' : 'bg-blue-200/70 text-blue-950',
       },
       cyan: {
         button: isActive
           ? 'border-2 border-cyan-500 bg-cyan-500 text-white shadow-none'
           : 'border-2 border-cyan-500 bg-cyan-50/70 text-cyan-800 hover:bg-cyan-100/70',
-        tile: isActive ? 'bg-white/20 text-white' : 'bg-cyan-200/60 text-cyan-700',
       },
       outline: {
         button: isActive
           ? 'border-2 border-slate-900 bg-slate-900 text-white shadow-none'
           : 'border-2 border-slate-300 bg-slate-50/80 text-slate-700 hover:border-[#0056FF] hover:bg-blue-50/40 hover:text-[#0056FF]',
-        tile: isActive
-          ? 'bg-white/20 text-white'
-          : 'bg-slate-200/70 text-slate-700 group-hover:bg-[#0056FF]/15 group-hover:text-[#0056FF]',
       },
       ghost: {
         button: isActive
           ? 'border-2 border-transparent bg-slate-100 text-slate-900'
           : 'border-2 border-transparent bg-transparent text-slate-700 hover:bg-slate-100 hover:text-slate-950',
-        tile: isActive
-          ? 'bg-slate-200 text-slate-900'
-          : 'bg-slate-100 text-slate-700 group-hover:bg-slate-200',
       },
     }[
       resolvedVariant as
         'blue' | 'green' | 'purple' | 'orange' | 'navy' | 'cyan' | 'outline' | 'ghost'
     ] || {
       button: 'border-2 border-slate-300 bg-slate-50 text-slate-700',
-      tile: 'bg-slate-200 text-slate-700',
     };
 
     // Separate leading icon child from text children if present
@@ -152,16 +133,16 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
 
     const tileContent =
       leadingIcon ||
-      (attachedTag ? <span className="font-mono font-black">{attachedTag}</span> : null);
+      (attachedTag ? (
+        <span className="font-mono font-bold tracking-tight">{attachedTag}</span>
+      ) : null);
 
     const buttonBody = (
       <>
         {tileContent && (
           <span
             className={cn(
-              'flex shrink-0 items-center justify-center transition-colors',
-              iconTileSizes,
-              variantStyles.tile,
+              'flex shrink-0 items-center justify-center bg-transparent transition-colors',
               iconTileClassName,
             )}
           >
@@ -181,8 +162,21 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
     );
 
     if (href) {
+      const isExternal = href.startsWith('http') || target === '_blank';
+      if (isExternal) {
+        return (
+          <a
+            href={href}
+            target={target || '_blank'}
+            rel={rel || 'noopener noreferrer'}
+            className={commonClasses}
+          >
+            {buttonBody}
+          </a>
+        );
+      }
       return (
-        <Link href={href} target={target} rel={rel} className={commonClasses}>
+        <Link href={href} prefetch={true} className={commonClasses}>
           {buttonBody}
         </Link>
       );
@@ -197,6 +191,57 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
 );
 
 GeometricButton.displayName = 'GeometricButton';
+
+/**
+ * Capsule Pill Input with Matching Button Aesthetics
+ * Shares the same 2px continuous border, rounded-full pill geometry,
+ * clean inline icon with zero color behind it, and focused states.
+ */
+export interface GeometricInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'size'
+> {
+  variant?: 'outline' | 'blue';
+  inputSize?: 'sm' | 'md' | 'lg';
+  icon?: React.ReactNode;
+}
+
+export const GeometricInput = React.forwardRef<HTMLInputElement, GeometricInputProps>(
+  ({ className, variant = 'outline', inputSize = 'md', icon, disabled, ...props }, ref) => {
+    const sizeClasses = {
+      sm: 'h-8 px-3 text-xs gap-2 rounded-full',
+      md: 'h-10 px-4 text-xs gap-2.5 rounded-full',
+      lg: 'h-12 px-5 text-sm gap-3 rounded-full',
+    }[inputSize];
+
+    return (
+      <div
+        className={cn(
+          'group relative flex w-full items-center font-sans tracking-tight transition-all duration-200 select-none',
+          sizeClasses,
+          'border-2 border-slate-300 bg-slate-50/80 text-slate-800 placeholder-slate-400',
+          'focus-within:border-[#0056FF] focus-within:bg-white',
+          disabled && 'pointer-events-none cursor-not-allowed opacity-50',
+          className,
+        )}
+      >
+        {icon && (
+          <span className="flex shrink-0 items-center justify-center bg-transparent text-slate-400 transition-colors group-focus-within:text-[#0056FF]">
+            {icon}
+          </span>
+        )}
+        <input
+          ref={ref}
+          disabled={disabled}
+          className="w-full bg-transparent font-sans text-xs font-semibold text-slate-900 placeholder-slate-400 focus:outline-none"
+          {...props}
+        />
+      </div>
+    );
+  },
+);
+
+GeometricInput.displayName = 'GeometricInput';
 
 /**
  * Apple-style Liquid Glass Card Container

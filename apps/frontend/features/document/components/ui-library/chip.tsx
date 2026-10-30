@@ -26,15 +26,15 @@ export function LibraryChip({
         type="button"
         onClick={onClick}
         className={cn(
-          'inline-flex h-8 min-h-[44px] items-center gap-1.5 rounded-full border px-3.5 text-xs font-semibold transition-all select-none focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:outline-none',
+          'inline-flex h-8 items-center gap-1.5 rounded-full border-2 px-3.5 text-xs font-bold transition-all select-none focus-visible:outline-none',
           active
-            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),_0_2px_8px_rgba(0,86,255,0.25)]'
-            : 'border-slate-200/90 bg-white/80 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
+            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-none'
+            : 'border-slate-300 bg-slate-50/80 text-slate-700 hover:border-[#0056FF] hover:bg-blue-50/40 hover:text-[#0056FF]',
           className,
         )}
         {...props}
       >
-        {icon && <span className="shrink-0">{icon}</span>}
+        {icon && <span className="shrink-0 bg-transparent">{icon}</span>}
         <span>{children}</span>
       </button>
       {onDismiss && (

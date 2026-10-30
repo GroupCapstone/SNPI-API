@@ -65,7 +65,7 @@ export function LibraryDropdown({
         <label className="mb-1.5 block text-xs font-semibold text-slate-700">{label}</label>
       )}
 
-      {/* Trigger Button - 44px min height */}
+      {/* Trigger Button - Capsule Pill Style matching Buttons */}
       <button
         type="button"
         disabled={disabled}
@@ -73,18 +73,18 @@ export function LibraryDropdown({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         className={cn(
-          'flex h-11 w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-900 shadow-xs transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:outline-none',
-          isOpen && 'border-[#0056FF] ring-1 ring-[#0056FF]',
-          disabled && 'cursor-not-allowed bg-slate-50 opacity-50',
+          'flex h-10 w-full items-center justify-between rounded-full border-2 border-slate-300 bg-slate-50/80 px-4 font-sans text-xs font-bold text-slate-800 transition-all select-none hover:border-[#0056FF] focus-visible:outline-none',
+          isOpen && 'border-[#0056FF] bg-white ring-2 ring-[#0056FF]/20',
+          disabled && 'cursor-not-allowed bg-slate-100 opacity-50',
         )}
       >
-        <span className={cn('truncate', !selectedOption && 'text-slate-500')}>
+        <span className={cn('truncate', !selectedOption && 'font-normal text-slate-400')}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <ChevronDown
           className={cn(
-            'ml-2 h-4 w-4 text-slate-500 transition-transform duration-200',
-            isOpen && 'rotate-180 text-slate-900',
+            'ml-2 h-3.5 w-3.5 shrink-0 bg-transparent text-slate-500 transition-transform duration-200',
+            isOpen && 'rotate-180 text-[#0056FF]',
           )}
         />
       </button>

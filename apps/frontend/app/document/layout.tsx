@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DocsStickyHeader } from '@/features/document/components/ui-library';
 
 export const metadata: Metadata = {
   title: {
@@ -92,6 +93,7 @@ export default function DocumentLayout({
             `,
           }}
         />
+        <DocsStickyHeader />
         {children}
       </div>
     </>
