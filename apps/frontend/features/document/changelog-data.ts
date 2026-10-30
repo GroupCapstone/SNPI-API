@@ -9,7 +9,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
-    "commitHash": "133bba9",
+    "commitHash": "8f6cfe6",
+    "description": "Implement 54px icon bar with label bloom status dot and roving tabindex"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "cafb0ec",
     "description": "Arrange demos by flow group and synchronize sequential line tracker without rank jumping"
   },
   {
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "c91bd85",
     "description": "Synchronize real-time changelog for Command Palette"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "5179bb9",
-    "description": "Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap"
   }
 ];

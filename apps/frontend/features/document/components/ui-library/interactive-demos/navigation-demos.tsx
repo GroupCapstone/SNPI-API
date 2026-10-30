@@ -15,6 +15,7 @@ import {
   Menu,
 } from '@/components/icons';
 import { RailToc, type RailTocItem } from '../rail-toc';
+import { IconBar } from '../icon-bar';
 
 // 1. Primary Component: Rail TOC (Paper Plane Flying Along Indented Track)
 export function RailTocDemo() {
@@ -453,4 +454,22 @@ export function GooeyNavDemo() {
 // 7. Navigation Menu (Rare UI Floating 3-Island Header & Mega Menu)
 export function NavigationMenuDemo() {
   return <RareUiNavigationMenu />;
+}
+
+// 8. Icon Bar (Horizontal Toolbar with Bloom Label Reveal & Roving Tabindex)
+export function IconBarDemo() {
+  const [selectedTool, setSelectedTool] = React.useState('pen');
+
+  return (
+    <div className="flex w-full flex-col items-center justify-center gap-6 py-6">
+      <IconBar selectedId={selectedTool} onSelect={setSelectedTool} />
+
+      <div className="flex items-center gap-3 rounded-full border border-slate-200/90 bg-white px-4 py-1.5 shadow-2xs">
+        <span className="font-mono text-[11px] text-slate-500">Active Tool:</span>
+        <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+          {selectedTool || 'None (Cleared)'}
+        </span>
+      </div>
+    </div>
+  );
 }

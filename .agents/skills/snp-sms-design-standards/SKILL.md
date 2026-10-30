@@ -41,6 +41,7 @@ All design standards, specifications, and component guides must strictly reside 
 - **System Architecture Lexicon**: `.agents/skills/snp-sms-design-standards/system-architecture-lexicon.md` (1,111 concepts: systems, concurrency, cryptography, LLM, and AI agents)
 - **Universal AI Agent Prompt Manual**: `.agents/skills/snp-sms-design-standards/universal-ai-agent-prompt-manual.md` (Procedural prompt synthesis, [Preview | Prompt] tabs, 1-click copy action, MVP component blueprints)
 - **Precision Line Tracker Navigation Manual**: `.agents/skills/snp-sms-design-standards/line-tracker-navigation-manual.md` (Dotless continuous vertical rail, active indicator segment, zero-scrollbar standard)
+- **Icon Bar & Blueprint Grid Manual**: `.agents/skills/snp-sms-design-standards/icon-bar-toolbar-manual.md` (54px horizontal toolbar, label bloom reveal, status dot indicator, roving tabindex, r4 radii, 44px banner suite)
 
 Do not fragment design rules across multiple folders. Maintain all design documentation in this single location.
 

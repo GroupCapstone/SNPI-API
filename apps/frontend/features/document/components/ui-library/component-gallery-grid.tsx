@@ -80,6 +80,12 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
       'Floating 3-island capsule dock with brand pill, mega menu, and contrast switcher.',
   },
   {
+    id: 'icon-bar',
+    name: 'Icon Bar',
+    category: 'Navigation',
+    description: 'Bloom-open label reveal horizontal toolbar with status dot and roving tabindex.',
+  },
+  {
     id: 'input',
     name: 'Pill Input & Search',
     category: 'Actions & Inputs',
@@ -471,6 +477,20 @@ function renderRealMiniDemo(
           </div>
           <div className="flex h-7 items-center gap-1 rounded-full border border-slate-800 bg-[#0A0D14] px-2 font-mono text-[8px] text-slate-200">
             1866
+          </div>
+        </div>
+      );
+
+    case 'icon-bar':
+      return (
+        <div className="flex items-center justify-center pt-2">
+          <div className="flex h-8 items-center gap-1 rounded-xl border border-slate-800 bg-[#0A0D14] px-2 text-[10px] text-white">
+            <span className="relative flex items-center gap-1 rounded-lg bg-white/10 px-2 py-0.5 font-bold">
+              <span className="size-1 rounded-full bg-[#818CF8]" />
+              <span>Pen</span>
+            </span>
+            <span className="px-1 font-mono text-slate-500">Eraser</span>
+            <span className="px-1 font-mono text-slate-500">Fill</span>
           </div>
         </div>
       );

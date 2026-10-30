@@ -2775,6 +2775,94 @@ const columns: DataTableColumn<StudentRecord>[] = [
     ],
     supportedStates: ['Default', 'Mega Menu Active', 'Starred', 'Dark / Light'],
   },
+  {
+    id: 'icon-bar',
+    name: 'Icon Bar',
+    category: 'Navigation',
+    paradigm: 'Bloom Toolbar Paradigm',
+    description:
+      'A horizontal toolbar of icon buttons with bloom-open label reveal on hover/selection, accent dot indicator, and roving tabindex.',
+    explanation:
+      'The Icon Bar is a compact 54px horizontal toolbar engineered for editing canvases, drawing environments, and workspace tool selectors. By keeping tools compact as vector glyphs by default and blooming labels open horizontally on hover or keyboard focus, it provides maximum canvas efficiency without sacrificing discoverability.',
+    supportedStates: [
+      'Default',
+      'Hovered (Bloomed)',
+      'Selected (Pinned Fill)',
+      'Focused',
+      'Status Dot Active',
+    ],
+    realWorldExamples: [
+      {
+        title: 'Canvas Drawing & Annotation Toolbar',
+        scenario:
+          'Educator selects Pen, Eraser, Fill Bucket, or Text tool while marking student exam papers.',
+        impact: 'Zero layout shift with instant tool feedback and sub-200ms bloom reveal.',
+      },
+      {
+        title: 'Rich Editor Action Dock',
+        scenario: 'Content creator switches between Select, Crop, and Typography tools.',
+        impact:
+          'Keyboard arrow roving navigation allows seamless tool cycling without mouse dependency.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Fitts's Law & Spatial Economy",
+        detail:
+          'Compact 54px footprint preserves valuable viewport space while bloom-open expansion enlarges touch/click targets dynamically upon interaction.',
+      },
+      {
+        principle: 'WAI-ARIA Roving Tabindex Hygiene',
+        detail:
+          'Arrow keys cycle focus within a single Tab stop, reducing keyboard navigation fatigue across dense toolbars.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'Use for 3 to 8 contextual tools that benefit from single-keystroke selection and spatial proximity.',
+        dontItem:
+          'Do not use for destructive permanent actions (like Delete Account) without a confirmation step.',
+      },
+      {
+        doItem: 'Provide a status dot on active or pinned tools to maintain spatial orientation.',
+        dontItem:
+          'Avoid vertical text bloom; always bloom labels horizontally with overflow containment.',
+      },
+    ],
+    implementationNotes: [
+      'Outer height strictly locked to 54px (h-[54px]) with 4px gap (gap-1) between items.',
+      'Selected tool gains filled surface background and accent status dot at top-right corner.',
+      'Full roving tabindex: ArrowRight/Down, ArrowLeft/Up, Home, End, Enter to pin, Escape to clear.',
+      'Strict r4 corner radius standard enforced across controls.',
+    ],
+    props: [
+      {
+        name: 'items',
+        type: 'IconBarItemData[]',
+        default: 'DEFAULT_ICON_BAR_ITEMS',
+        description: 'Array of tool items with id, label, icon component, and optional status dot.',
+      },
+      {
+        name: 'selectedId',
+        type: 'string',
+        default: "'pen'",
+        description: 'Id of the currently selected/pinned tool.',
+      },
+      {
+        name: 'onSelect',
+        type: '(id: string) => void',
+        default: '—',
+        description: 'Callback invoked when a tool is selected or pinned.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        description: 'Additional class names for root toolbar container.',
+      },
+    ],
+    codeSnippet: `import { IconBar } from '@/features/document/components/ui-library';\n\nexport function Example() {\n  const [activeTool, setActiveTool] = React.useState('pen');\n\n  return (\n    <IconBar\n      selectedId={activeTool}\n      onSelect={setActiveTool}\n    />\n  );\n}`,
+  },
   // ==========================================
   // BACKGROUNDS
   // ==========================================
