@@ -17,6 +17,7 @@ export * from './searchable-dropdown';
 export * from './command-palette';
 export * from './modal-dialog';
 export * from './toast-stack';
+export * from './skeleton-loading-screen';
 export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';
