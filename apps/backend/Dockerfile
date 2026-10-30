@@ -25,7 +25,7 @@ COPY package.json package-lock.json ./
 COPY packages/ ./packages/
 COPY apps/backend/package.json ./apps/backend/
 
-RUN npm ci --omit=dev --workspace=apps/backend --include-workspace-root
+RUN npm ci --omit=dev --ignore-scripts --workspace=apps/backend --include-workspace-root
 
 COPY --from=base /app/packages/shared/dist ./packages/shared/dist
 COPY --from=base /app/apps/backend/dist ./apps/backend/dist

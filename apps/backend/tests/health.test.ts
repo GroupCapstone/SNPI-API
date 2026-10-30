@@ -1,4 +1,5 @@
 import request from 'supertest';
+import { APP_VERSION } from '@snp/shared';
 
 import { createApp } from '../src/app';
 
@@ -12,7 +13,7 @@ describe('GET /api/v1/health', () => {
       data: {
         service: 'SNP-SMS API',
         status: 'healthy',
-        version: '0.1.0',
+        version: APP_VERSION,
       },
     });
     expect(response.body.data.timestamp).toEqual(expect.any(String));
