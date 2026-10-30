@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `5179bb9`
+
+- Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap
+
+### Version 0.2.7 (30.10.2026) - `f35a661`
+
+- Synchronize real-time changelog for Searchable Dropdown
+
 ### Version 0.2.7 (30.10.2026) - `61896be`
 
 - Implement Searchable Dropdown with ARIA combobox contract, active descendant, removable chips, and match highlights
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `085697d`
 
 - Redesign native Snackbar component with bottom-center anchor, obsidian surface, progress countdown, and action recovery
-
-### Version 0.2.7 (30.10.2026) - `28fa0e3`
-
-- Remove background outlined watermark words and clutter elements from UI Library and Open API headers
-
-### Version 0.2.7 (30.10.2026) - `ca270d5`
-
-- Add Component Templates for Backgrounds, Text Effects, Cards, Sections, Forms, and Overlays with Rare UI capsule dock navigation copy style
 
