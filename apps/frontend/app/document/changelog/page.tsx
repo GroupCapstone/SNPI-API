@@ -1,0 +1,5 @@
+import { DocsSpaShell } from '@/features/document/components/ui-library';
+
+export default function ChangelogPage() {
+  return <DocsSpaShell defaultTab="openapi" />;
+}
