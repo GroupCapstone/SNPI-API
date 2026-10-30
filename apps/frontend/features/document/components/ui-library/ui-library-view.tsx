@@ -270,20 +270,9 @@ export function UiLibraryView() {
   const [inputDemoLoading, setInputDemoLoading] = React.useState(false);
   const [inputDemoDisabled, setInputDemoDisabled] = React.useState(false);
 
-  // Section IDs for active tracking in Left Sticky Menu (40 components)
-  const scrollSectionIds = React.useMemo(
-    () => [
-      'ui-library-head',
-      'interactive-feed',
-      ...COMPONENT_LIBRARY_REGISTRY.map((c) => `comp-${c.id}`),
-      'brand-blueprint',
-      'design-principles',
-      'touch-targets',
-    ],
-    [],
-  );
+  const sidebarContainerRef = React.useRef<HTMLDivElement>(null);
 
-  // Filter 40 components in real-time
+  // Filter 73 components in real-time (preserves canonical COMPONENT_CATEGORIES order)
   const filteredComponents = React.useMemo(() => {
     if (!searchQuery.trim()) return COMPONENT_LIBRARY_REGISTRY;
     const q = searchQuery.toLowerCase().trim();
@@ -291,9 +280,37 @@ export function UiLibraryView() {
       (c) =>
         c.name.toLowerCase().includes(q) ||
         c.description.toLowerCase().includes(q) ||
-        c.id.toLowerCase().includes(q),
+        c.id.toLowerCase().includes(q) ||
+        c.category.toLowerCase().includes(q),
     );
   }, [searchQuery]);
+
+  // Group filtered components strictly by flow group (category) matching the menu
+  const groupedCategories = React.useMemo(() => {
+    return COMPONENT_CATEGORIES.map((category, index) => {
+      const comps = filteredComponents.filter((c) => c.category === category);
+      const categorySlug = category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      return {
+        category,
+        categoryId: `cat-${categorySlug}`,
+        groupNumber: index + 1,
+        components: comps,
+      };
+    }).filter((group) => group.components.length > 0);
+  }, [filteredComponents]);
+
+  // Section IDs for active tracking in Left Sticky Menu (strictly linear sequential flow)
+  const scrollSectionIds = React.useMemo(() => {
+    const ids = ['ui-library-head', 'interactive-feed'];
+    groupedCategories.forEach((group) => {
+      ids.push(group.categoryId);
+      group.components.forEach((comp) => {
+        ids.push(`comp-${comp.id}`);
+      });
+    });
+    ids.push('brand-blueprint', 'design-principles', 'touch-targets');
+    return ids;
+  }, [groupedCategories]);
 
   // Smooth scroll helper with header offset clearance
   const scrollToSection = (id: string) => {
@@ -347,6 +364,23 @@ export function UiLibraryView() {
       if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
     };
   }, [scrollSectionIds]);
+
+  // Keep active item gently visible within Left Sticky Sidebar
+  React.useEffect(() => {
+    if (!sidebarContainerRef.current || isManualScrollRef.current) return;
+    const container = sidebarContainerRef.current;
+    const activeEl = container.querySelector<HTMLElement>(`[data-section-id="${activeSectionId}"]`);
+    if (!activeEl) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const elRect = activeEl.getBoundingClientRect();
+
+    if (elRect.top < containerRect.top + 45) {
+      container.scrollTop += elRect.top - containerRect.top - 45;
+    } else if (elRect.bottom > containerRect.bottom - 45) {
+      container.scrollTop += elRect.bottom - containerRect.bottom + 45;
+    }
+  }, [activeSectionId]);
 
   const handleCopyCode = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -441,7 +475,10 @@ export function UiLibraryView() {
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* COLUMN 1: Left Sticky Sidebar Navigation (Permanently Pinned Like Navbar) */}
           <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-60 lg:self-start xl:w-64">
-            <div className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <div
+              ref={sidebarContainerRef}
+              className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            >
               {/* Filter Input */}
               <GeometricInput
                 inputSize="sm"
@@ -451,43 +488,66 @@ export function UiLibraryView() {
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
-              {/* Core UI Components Grouped By Categories with Modern Line Tracker Style */}
+              {/* Core UI Components Grouped By Flow Range */}
               <div className="space-y-5 font-sans text-xs">
                 <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
-                  <span>Components</span>
+                  <span>Flow Groups</span>
                   <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 text-[10px] font-black text-[#0056FF]">
                     {filteredComponents.length} Active
                   </span>
                 </div>
 
-                {filteredComponents.length === 0 ? (
+                {groupedCategories.length === 0 ? (
                   <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
                     No matching components found
                   </div>
                 ) : (
-                  COMPONENT_CATEGORIES.map((category) => {
-                    const categoryComps = filteredComponents.filter((c) => c.category === category);
-                    if (categoryComps.length === 0) return null;
+                  groupedCategories.map((group) => {
+                    const isCategoryActive =
+                      activeSectionId === group.categoryId ||
+                      group.components.some((c) => activeSectionId === `comp-${c.id}`);
 
                     return (
-                      <div key={category} className="space-y-1.5">
-                        {/* Category Heading */}
-                        <div className="flex items-center justify-between px-1 py-0.5">
-                          <span className="font-mono text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-                            {category}{' '}
-                            <span className="text-[#FF5500]">[{categoryComps.length}]</span>
+                      <div key={group.category} className="space-y-1.5">
+                        {/* Category Flow Header Button */}
+                        <button
+                          type="button"
+                          data-section-id={group.categoryId}
+                          onClick={() => {
+                            if (searchQuery.trim()) setSearchQuery('');
+                            scrollToSection(group.categoryId);
+                          }}
+                          className={cn(
+                            'group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1 text-left font-mono text-[11px] font-bold tracking-wider transition-all select-none',
+                            isCategoryActive
+                              ? 'bg-[#0056FF]/10 text-[#0056FF]'
+                              : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900',
+                          )}
+                        >
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              className={cn(
+                                'size-1.5 rounded-full transition-colors',
+                                isCategoryActive ? 'bg-[#0056FF]' : 'bg-slate-300',
+                              )}
+                            />
+                            <span className="uppercase">{group.category}</span>
+                          </div>
+                          <span className="text-[10px] text-[#FF5500]">
+                            [{group.components.length}]
                           </span>
-                        </div>
+                        </button>
 
                         {/* Continuous Vertical Line Tracker Track (Zero Dots, Pure Precision Line) */}
                         <div className="relative space-y-0.5 border-l-2 border-slate-200/90 pl-3 dark:border-slate-800">
-                          {categoryComps.map((comp) => {
+                          {group.components.map((comp) => {
                             const targetId = `comp-${comp.id}`;
                             const isCurrentActive = activeSectionId === targetId;
                             return (
                               <button
                                 key={comp.id}
                                 type="button"
+                                data-section-id={targetId}
                                 onClick={() => {
                                   if (searchQuery.trim()) {
                                     setSearchQuery('');
@@ -546,6 +606,7 @@ export function UiLibraryView() {
                         <button
                           key={doc.id}
                           type="button"
+                          data-section-id={doc.id}
                           onClick={() => scrollToSection(doc.id)}
                           className={cn(
                             'group relative flex w-full cursor-pointer items-center justify-between rounded-r-lg py-1.5 pr-2 pl-2.5 text-left font-sans text-xs transition-all duration-150 select-none',
@@ -594,474 +655,530 @@ export function UiLibraryView() {
               </div>
             </section>
 
-            {/* SECTION 2: 65 Interactive UI Components & Templates Single Scroll Feed */}
+            {/* SECTION 2: Interactive UI Components & Templates Flow Feed */}
             <div
               id="interactive-feed"
               className="scroll-mt-24 space-y-2 border-t border-slate-200/80 pt-8 pb-2"
             >
               <div className="flex items-center gap-2">
                 <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                  Single Feed Mode
+                  Flow Range Mode
                 </span>
                 <span className="font-mono text-[11px] text-slate-400">
-                  65 Interactive Demos & Templates · Live Keyboard Ready
+                  {filteredComponents.length} Interactive Demos & Templates · Step-by-Step
+                  Sequential Flow
                 </span>
               </div>
               <h2 className="font-sans text-xl font-black tracking-tight text-slate-950 sm:text-2xl">
-                Component Catalog (65 Interactive Components & Templates)
+                Component Catalog ({filteredComponents.length} Components by Flow Range)
               </h2>
               <p className="font-sans text-xs text-slate-600">
-                Full-stack design systems, navigation docks, backgrounds, text effects, cards,
-                sections, forms, and overlays.
+                Components arranged strictly by flow group to ensure step-by-step sequential
+                scrolling without group jumping.
               </p>
             </div>
 
-            {/* THE 12 REAL INTERACTIVE COMPONENT DEMOS (STACKED VERTICALLY IN ONE CONTINUOUS FEED) */}
-            <div className="space-y-14">
-              {filteredComponents.map((comp, idx) => {
-                const sectionId = `comp-${comp.id}`;
-                const currentTab = getCompTab(comp.id);
-
+            {/* COMPONENT DEMOS ARRANGED BY FLOW GROUP & RANGE */}
+            <div className="space-y-16">
+              {groupedCategories.map((group) => {
                 return (
-                  <section
-                    key={comp.id}
-                    id={sectionId}
-                    className="scroll-mt-24 space-y-4 rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-6"
+                  <div
+                    key={group.category}
+                    id={group.categoryId}
+                    className="scroll-mt-24 space-y-8"
                   >
-                    {/* Component Card Header */}
-                    <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
-                      <div>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-mono text-xs font-black text-[#0056FF]">
-                            0{idx + 1}.
-                          </span>
-                          <h2 className="font-sans text-xl font-black text-slate-950">
-                            {comp.name}
-                          </h2>
-                          <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                            {comp.paradigm}
-                          </span>
-                          <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
-                            {comp.category}
-                          </span>
+                    {/* Category Flow Group Sticky Header Banner */}
+                    <div className="sticky top-20 z-20 flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white/95 px-5 py-3 shadow-xs backdrop-blur-md transition-all">
+                      <div className="flex items-center gap-3">
+                        <span className="flex size-7 items-center justify-center rounded-lg bg-[#0056FF] font-mono text-xs font-black text-white">
+                          0{group.groupNumber}
+                        </span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-sans text-sm font-black tracking-tight text-slate-950 uppercase sm:text-base">
+                              {group.category}
+                            </h3>
+                            <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                              {group.components.length} Components
+                            </span>
+                          </div>
+                          <p className="font-sans text-[11px] text-slate-500">
+                            Flow Group {group.groupNumber} · Step-by-Step Range
+                          </p>
                         </div>
-                        <p className="mt-1 font-sans text-xs text-slate-600">{comp.description}</p>
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-2">
-                        {/* 1. Preview | Prompt Segmented Pill */}
-                        <div className="flex items-center rounded-xl bg-[#F1F5F9] p-1 shadow-2xs">
-                          <button
-                            type="button"
-                            onClick={() => setCompTab(comp.id, 'preview')}
-                            className={cn(
-                              'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
-                              currentTab === 'preview'
-                                ? 'bg-white text-slate-900 shadow-xs'
-                                : 'text-slate-500 hover:text-slate-900',
-                            )}
-                          >
-                            Preview
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setCompTab(comp.id, 'prompt')}
-                            className={cn(
-                              'flex cursor-pointer items-center gap-1.5 rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
-                              currentTab === 'prompt'
-                                ? 'bg-[#0056FF] text-white shadow-xs'
-                                : 'text-slate-500 hover:text-slate-900',
-                            )}
-                          >
-                            <Sparkles className="size-3 stroke-[2]" />
-                            <span>Prompt</span>
-                          </button>
-                        </div>
-
-                        {/* 2. Direct 1-Click Copy AI Agent Prompt Button */}
-                        <button
-                          type="button"
-                          onClick={() => handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))}
-                          title="Copy complete MVP specification prompt to clipboard for any AI agent"
-                          className={cn(
-                            'flex cursor-pointer items-center gap-1.5 rounded-xl border px-3 py-1.5 font-sans text-xs font-bold transition-all active:scale-95',
-                            copiedPromptId === comp.id
-                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-2xs'
-                              : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
-                          )}
-                        >
-                          {copiedPromptId === comp.id ? (
-                            <>
-                              <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
-                              <span>Prompt Copied!</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="size-3.5 stroke-[2]" />
-                              <span>Copy Prompt</span>
-                            </>
-                          )}
-                        </button>
-
-                        {/* 3. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
-                        {currentTab === 'preview' && (
-                          <div className="flex items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs">
-                            <button
-                              type="button"
-                              onClick={() => setCompDevice(comp.id, 'mobile')}
-                              title="Mobile Phone Viewport (380px)"
-                              className={cn(
-                                'flex size-7 items-center justify-center rounded-lg transition-all',
-                                getCompDevice(comp.id) === 'mobile'
-                                  ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                                  : 'text-slate-500 hover:text-slate-900',
-                              )}
-                            >
-                              <Smartphone className="size-4 stroke-[1.8]" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setCompDevice(comp.id, 'tablet')}
-                              title="Tablet Viewport (680px)"
-                              className={cn(
-                                'flex size-7 items-center justify-center rounded-lg transition-all',
-                                getCompDevice(comp.id) === 'tablet'
-                                  ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                                  : 'text-slate-500 hover:text-slate-900',
-                              )}
-                            >
-                              <Tablet className="size-4 stroke-[1.8]" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setCompDevice(comp.id, 'desktop')}
-                              title="Desktop Viewport"
-                              className={cn(
-                                'flex size-7 items-center justify-center rounded-lg transition-all',
-                                getCompDevice(comp.id) === 'desktop'
-                                  ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                                  : 'text-slate-500 hover:text-slate-900',
-                              )}
-                            >
-                              <Monitor className="size-4 stroke-[1.8]" />
-                            </button>
-                          </div>
-                        )}
-
-                        {/* 4. Dark / Light Mode Toggle */}
-                        {currentTab === 'preview' && (
-                          <button
-                            type="button"
-                            onClick={() => toggleCompTheme(comp.id)}
-                            title={
-                              getCompTheme(comp.id) === 'dark'
-                                ? 'Switch to Light Stage'
-                                : 'Switch to Dark Stage'
-                            }
-                            className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-2xs transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95"
-                          >
-                            {getCompTheme(comp.id) === 'dark' ? (
-                              <Sun className="size-4 stroke-[1.8] text-amber-500" />
-                            ) : (
-                              <Moon className="size-4 stroke-[1.8]" />
-                            )}
-                          </button>
-                        )}
-
-                        {/* 5. Fullscreen / Maximize Toggle */}
-                        {currentTab === 'preview' && (
-                          <button
-                            type="button"
-                            onClick={() => toggleCompExpanded(comp.id)}
-                            title={getCompExpanded(comp.id) ? 'Collapse Stage' : 'Expand Stage'}
-                            className={cn(
-                              'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
-                              getCompExpanded(comp.id)
-                                ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
-                                : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900',
-                            )}
-                          >
-                            <Maximize className="size-4 stroke-[1.8]" />
-                          </button>
-                        )}
+                      <div className="hidden items-center gap-2 font-mono text-[10px] text-slate-400 sm:flex">
+                        <span>
+                          Range 0{group.groupNumber} of 0{groupedCategories.length}
+                        </span>
                       </div>
                     </div>
 
-                    {/* TAB CONTENT: PREVIEW */}
-                    {currentTab === 'preview' && (
-                      <div className="space-y-4">
-                        {/* Live Interactive Stage Canvas (Responsive Viewport & Theme Aware) */}
-                        <div
-                          className={cn(
-                            'relative flex w-full items-center justify-center overflow-hidden rounded-3xl border p-4 shadow-inner transition-all duration-300 sm:p-8',
-                            getCompExpanded(comp.id) ? 'min-h-[620px]' : 'min-h-[440px]',
-                            getCompTheme(comp.id) === 'dark'
-                              ? 'border-slate-800 bg-[#0B0F19] text-white'
-                              : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
-                          )}
-                        >
-                          {/* Subtle Dot Grid */}
-                          <div
-                            className={cn(
-                              'pointer-events-none absolute inset-0',
-                              getCompTheme(comp.id) === 'dark' ? 'opacity-20' : 'opacity-30',
-                            )}
-                            style={{
-                              backgroundImage:
-                                getCompTheme(comp.id) === 'dark'
-                                  ? 'radial-gradient(circle at 1px 1px, #1E293B 1px, transparent 0)'
-                                  : 'radial-gradient(circle at 1px 1px, #CAD3F5 1px, transparent 0)',
-                              backgroundSize: '16px 16px',
-                            }}
-                          />
+                    {/* Demos Inside This Flow Category Range */}
+                    <div className="space-y-10">
+                      {group.components.map((comp, compIdx) => {
+                        const sectionId = `comp-${comp.id}`;
+                        const currentTab = getCompTab(comp.id);
 
-                          {getCompDevice(comp.id) === 'mobile' ? (
-                            /* Realistic Mobile Phone Viewport Frame */
-                            <div className="relative z-10 mx-auto w-full max-w-[380px] overflow-hidden rounded-[44px] border-[8px] border-slate-900 bg-white shadow-2xl ring-1 ring-slate-900/10">
-                              <div className="flex justify-center bg-white pt-2.5 pb-1">
-                                <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
-                                  <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
+                        return (
+                          <section
+                            key={comp.id}
+                            id={sectionId}
+                            className="scroll-mt-24 space-y-4 rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-6"
+                          >
+                            {/* Component Card Header */}
+                            <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
+                              <div>
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span className="font-mono text-xs font-black text-[#0056FF]">
+                                    0{group.groupNumber}.0{compIdx + 1}
+                                  </span>
+                                  <h2 className="font-sans text-xl font-black text-slate-950">
+                                    {comp.name}
+                                  </h2>
+                                  <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                                    {comp.paradigm}
+                                  </span>
+                                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
+                                    {comp.category}
+                                  </span>
                                 </div>
-                              </div>
-                              <div
-                                key={`${comp.id}-mobile`}
-                                className={cn(
-                                  'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-4 transition-colors',
-                                  getCompTheme(comp.id) === 'dark'
-                                    ? 'bg-[#0F172A] text-white'
-                                    : 'bg-slate-50/50 text-slate-900',
-                                )}
-                              >
-                                {renderFeedComponentDemo(comp.id, stateBundle)}
-                              </div>
-                              <div className="flex justify-center bg-white py-2">
-                                <div className="h-1 w-28 rounded-full bg-slate-300" />
-                              </div>
-                            </div>
-                          ) : getCompDevice(comp.id) === 'tablet' ? (
-                            /* Realistic Tablet Viewport Frame */
-                            <div className="relative z-10 mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-2xl">
-                              <div className="flex justify-center bg-slate-900 py-1.5">
-                                <div className="size-2 rounded-full bg-slate-700" />
-                              </div>
-                              <div
-                                key={`${comp.id}-mobile`}
-                                className={cn(
-                                  'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-6 transition-colors',
-                                  getCompTheme(comp.id) === 'dark'
-                                    ? 'bg-[#0F172A] text-white'
-                                    : 'bg-slate-50/40 text-slate-900',
-                                )}
-                              >
-                                {renderFeedComponentDemo(comp.id, stateBundle)}
-                              </div>
-                            </div>
-                          ) : (
-                            /* Desktop Monitor Stage */
-                            <div
-                              key={`${comp.id}-desktop`}
-                              className={cn(
-                                'relative z-10 flex w-full flex-col items-center justify-center',
-                                getCompExpanded(comp.id) ? 'max-w-4xl' : 'max-w-2xl',
-                              )}
-                            >
-                              {renderFeedComponentDemo(comp.id, stateBundle)}
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Supported States & Install Banner */}
-                        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs">
-                          <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
-                            <span className="font-bold text-slate-400 uppercase">States:</span>
-                            {comp.supportedStates.map((st) => (
-                              <span
-                                key={st}
-                                className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-semibold text-slate-700"
-                              >
-                                {st}
-                              </span>
-                            ))}
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <code className="font-mono text-[11px] text-[#0056FF]">
-                              npx @snp/cli add {comp.id}
-                            </code>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                handleCopyInstall(comp.id, `npx @snp/cli add ${comp.id}`)
-                              }
-                              className="rounded-full border border-slate-200 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]"
-                            >
-                              {copiedInstallId === comp.id ? 'Copied' : 'Copy'}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* TAB CONTENT: PROMPT (Universal AI Agent MVP Specification Skill) */}
-                    {currentTab === 'prompt' && (
-                      <div className="space-y-4 pt-2">
-                        {/* Prompt Header & 1-Click Copy Banner */}
-                        <div className="flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 sm:flex-row sm:items-center sm:justify-between">
-                          <div className="flex items-center gap-3">
-                            <span className="flex size-9 items-center justify-center rounded-xl bg-[#0056FF] text-white shadow-xs">
-                              <Sparkles className="size-4 stroke-[2]" />
-                            </span>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <h3 className="font-sans text-xs font-bold text-slate-900">
-                                  Universal AI Agent MVP Prompt Skill
-                                </h3>
-                                <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                                  {comp.category}
-                                </span>
-                              </div>
-                              <p className="font-sans text-[11px] text-slate-500">
-                                Direct MVP instructions for Antigravity, Cursor, Claude 3.5,
-                                ChatGPT, Copilot, or v0.
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2">
-                            <GeometricButton
-                              size="sm"
-                              variant={copiedPromptId === comp.id ? 'blue' : 'outline'}
-                              onClick={() => handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))}
-                              icon={
-                                copiedPromptId === comp.id ? (
-                                  <Check className="size-3 stroke-[2.2] text-white" />
-                                ) : (
-                                  <Copy className="size-3 stroke-[2] text-slate-600" />
-                                )
-                              }
-                            >
-                              {copiedPromptId === comp.id ? 'Prompt Copied!' : 'Copy AI Prompt'}
-                            </GeometricButton>
-                          </div>
-                        </div>
-
-                        {/* Complete Monospace Prompt Box */}
-                        <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0B0F19] p-5 text-slate-100 shadow-md">
-                          <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-3">
-                            <div className="flex items-center gap-2">
-                              <div className="size-2.5 rounded-full bg-rose-500" />
-                              <div className="size-2.5 rounded-full bg-amber-500" />
-                              <div className="size-2.5 rounded-full bg-emerald-500" />
-                              <span className="ml-2 font-mono text-[11px] font-semibold text-slate-400">
-                                {comp.id}-ai-agent-mvp-prompt.md
-                              </span>
-                            </div>
-                            <span className="rounded-md border border-slate-700 bg-slate-800/80 px-2.5 py-0.5 font-mono text-[10px] text-cyan-400">
-                              Universal AI Prompt
-                            </span>
-                          </div>
-
-                          <pre className="max-h-96 [scrollbar-width:thin] overflow-auto font-mono text-xs leading-relaxed text-slate-200 select-all">
-                            <code>{generateAiAgentPrompt(comp)}</code>
-                          </pre>
-                        </div>
-
-                        {/* 3 Step Workflow */}
-                        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-                          <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
-                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                              01. 1-Click Copy
-                            </span>
-                            <p className="mt-1 font-sans text-[11px] text-slate-600">
-                              Copy the complete structured prompt with full interface contract and
-                              behavioral rules.
-                            </p>
-                          </div>
-                          <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
-                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                              02. Paste to Any Agent
-                            </span>
-                            <p className="mt-1 font-sans text-[11px] text-slate-600">
-                              Paste directly into Antigravity, Cursor, Claude 3.5, ChatGPT, Copilot,
-                              or v0 without modification.
-                            </p>
-                          </div>
-                          <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
-                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                              03. Ship Instant MVP
-                            </span>
-                            <p className="mt-1 font-sans text-[11px] text-slate-600">
-                              The AI agent generates the complete standalone component with states,
-                              a11y, and zero shadows.
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Mental Model & Specs */}
-                        <div className="space-y-1.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4">
-                          <h4 className="font-sans text-xs font-bold tracking-wider text-slate-900 uppercase">
-                            Mental Model & Paradigm
-                          </h4>
-                          <p className="font-sans text-xs leading-relaxed text-slate-600">
-                            {comp.explanation}
-                          </p>
-                        </div>
-
-                        {/* Real-world Scenarios */}
-                        <div className="space-y-2">
-                          <h4 className="font-sans text-xs font-bold tracking-wider text-slate-900 uppercase">
-                            Production Scenarios
-                          </h4>
-                          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                            {comp.realWorldExamples.map((ex, i) => (
-                              <div
-                                key={i}
-                                className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs"
-                              >
-                                <span className="font-mono text-[10px] font-bold text-[#0056FF]">
-                                  0{i + 1}. {ex.title}
-                                </span>
-                                <p className="mt-1 font-sans text-[11px] text-slate-600">
-                                  {ex.scenario}
+                                <p className="mt-1 font-sans text-xs text-slate-600">
+                                  {comp.description}
                                 </p>
                               </div>
-                            ))}
-                          </div>
-                        </div>
 
-                        {/* Best Practices & Anti-Patterns */}
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                          <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/40 p-3 text-xs">
-                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                              Best Practices (DO)
-                            </span>
-                            <ul className="space-y-1 font-sans text-[11px] text-slate-700">
-                              {comp.usageGuidelines.map((g, i) => (
-                                <li key={i} className="flex items-start gap-1.5">
-                                  <span className="mt-1 size-1 shrink-0 rounded-full bg-[#0056FF]" />
-                                  <span>{g.doItem}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                {/* 1. Preview | Prompt Segmented Pill */}
+                                <div className="flex items-center rounded-xl bg-[#F1F5F9] p-1 shadow-2xs">
+                                  <button
+                                    type="button"
+                                    onClick={() => setCompTab(comp.id, 'preview')}
+                                    className={cn(
+                                      'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
+                                      currentTab === 'preview'
+                                        ? 'bg-white text-slate-900 shadow-xs'
+                                        : 'text-slate-500 hover:text-slate-900',
+                                    )}
+                                  >
+                                    Preview
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => setCompTab(comp.id, 'prompt')}
+                                    className={cn(
+                                      'flex cursor-pointer items-center gap-1.5 rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
+                                      currentTab === 'prompt'
+                                        ? 'bg-[#0056FF] text-white shadow-xs'
+                                        : 'text-slate-500 hover:text-slate-900',
+                                    )}
+                                  >
+                                    <Sparkles className="size-3 stroke-[2]" />
+                                    <span>Prompt</span>
+                                  </button>
+                                </div>
 
-                          <div className="space-y-1.5 rounded-xl border border-rose-200 bg-rose-50/60 p-3 text-xs text-rose-950">
-                            <span className="font-mono text-[10px] font-bold text-rose-600 uppercase">
-                              Anti-Patterns (DON&apos;T)
-                            </span>
-                            <ul className="space-y-1 font-sans text-[11px] text-slate-700">
-                              {comp.usageGuidelines.map((g, i) => (
-                                <li key={i} className="flex items-start gap-1.5">
-                                  <span className="mt-1 size-1 shrink-0 rounded-full bg-rose-400" />
-                                  <span>{g.dontItem}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </section>
+                                {/* 2. Direct 1-Click Copy AI Agent Prompt Button */}
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
+                                  }
+                                  title="Copy complete MVP specification prompt to clipboard for any AI agent"
+                                  className={cn(
+                                    'flex cursor-pointer items-center gap-1.5 rounded-xl border px-3 py-1.5 font-sans text-xs font-bold transition-all active:scale-95',
+                                    copiedPromptId === comp.id
+                                      ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-2xs'
+                                      : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
+                                  )}
+                                >
+                                  {copiedPromptId === comp.id ? (
+                                    <>
+                                      <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
+                                      <span>Prompt Copied!</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Copy className="size-3.5 stroke-[2]" />
+                                      <span>Copy Prompt</span>
+                                    </>
+                                  )}
+                                </button>
+
+                                {/* 3. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
+                                {currentTab === 'preview' && (
+                                  <div className="flex items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs">
+                                    <button
+                                      type="button"
+                                      onClick={() => setCompDevice(comp.id, 'mobile')}
+                                      title="Mobile Phone Viewport (380px)"
+                                      className={cn(
+                                        'flex size-7 items-center justify-center rounded-lg transition-all',
+                                        getCompDevice(comp.id) === 'mobile'
+                                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                          : 'text-slate-500 hover:text-slate-900',
+                                      )}
+                                    >
+                                      <Smartphone className="size-4 stroke-[1.8]" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setCompDevice(comp.id, 'tablet')}
+                                      title="Tablet Viewport (680px)"
+                                      className={cn(
+                                        'flex size-7 items-center justify-center rounded-lg transition-all',
+                                        getCompDevice(comp.id) === 'tablet'
+                                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                          : 'text-slate-500 hover:text-slate-900',
+                                      )}
+                                    >
+                                      <Tablet className="size-4 stroke-[1.8]" />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={() => setCompDevice(comp.id, 'desktop')}
+                                      title="Desktop Viewport"
+                                      className={cn(
+                                        'flex size-7 items-center justify-center rounded-lg transition-all',
+                                        getCompDevice(comp.id) === 'desktop'
+                                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                          : 'text-slate-500 hover:text-slate-900',
+                                      )}
+                                    >
+                                      <Monitor className="size-4 stroke-[1.8]" />
+                                    </button>
+                                  </div>
+                                )}
+
+                                {/* 4. Dark / Light Mode Toggle */}
+                                {currentTab === 'preview' && (
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleCompTheme(comp.id)}
+                                    title={
+                                      getCompTheme(comp.id) === 'dark'
+                                        ? 'Switch to Light Stage'
+                                        : 'Switch to Dark Stage'
+                                    }
+                                    className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-2xs transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95"
+                                  >
+                                    {getCompTheme(comp.id) === 'dark' ? (
+                                      <Sun className="size-4 stroke-[1.8] text-amber-500" />
+                                    ) : (
+                                      <Moon className="size-4 stroke-[1.8]" />
+                                    )}
+                                  </button>
+                                )}
+
+                                {/* 5. Fullscreen / Maximize Toggle */}
+                                {currentTab === 'preview' && (
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleCompExpanded(comp.id)}
+                                    title={
+                                      getCompExpanded(comp.id) ? 'Collapse Stage' : 'Expand Stage'
+                                    }
+                                    className={cn(
+                                      'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
+                                      getCompExpanded(comp.id)
+                                        ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
+                                        : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900',
+                                    )}
+                                  >
+                                    <Maximize className="size-4 stroke-[1.8]" />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* TAB CONTENT: PREVIEW */}
+                            {currentTab === 'preview' && (
+                              <div className="space-y-4">
+                                {/* Live Interactive Stage Canvas (Responsive Viewport & Theme Aware) */}
+                                <div
+                                  className={cn(
+                                    'relative flex w-full items-center justify-center overflow-hidden rounded-3xl border p-4 shadow-inner transition-all duration-300 sm:p-8',
+                                    getCompExpanded(comp.id) ? 'min-h-[620px]' : 'min-h-[440px]',
+                                    getCompTheme(comp.id) === 'dark'
+                                      ? 'border-slate-800 bg-[#0B0F19] text-white'
+                                      : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
+                                  )}
+                                >
+                                  {/* Subtle Dot Grid */}
+                                  <div
+                                    className={cn(
+                                      'pointer-events-none absolute inset-0',
+                                      getCompTheme(comp.id) === 'dark'
+                                        ? 'opacity-20'
+                                        : 'opacity-30',
+                                    )}
+                                    style={{
+                                      backgroundImage:
+                                        getCompTheme(comp.id) === 'dark'
+                                          ? 'radial-gradient(circle at 1px 1px, #1E293B 1px, transparent 0)'
+                                          : 'radial-gradient(circle at 1px 1px, #CAD3F5 1px, transparent 0)',
+                                      backgroundSize: '16px 16px',
+                                    }}
+                                  />
+
+                                  {getCompDevice(comp.id) === 'mobile' ? (
+                                    /* Realistic Mobile Phone Viewport Frame */
+                                    <div className="relative z-10 mx-auto w-full max-w-[380px] overflow-hidden rounded-[44px] border-[8px] border-slate-900 bg-white shadow-2xl ring-1 ring-slate-900/10">
+                                      <div className="flex justify-center bg-white pt-2.5 pb-1">
+                                        <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
+                                          <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
+                                        </div>
+                                      </div>
+                                      <div
+                                        key={`${comp.id}-mobile`}
+                                        className={cn(
+                                          'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-4 transition-colors',
+                                          getCompTheme(comp.id) === 'dark'
+                                            ? 'bg-[#0F172A] text-white'
+                                            : 'bg-slate-50/50 text-slate-900',
+                                        )}
+                                      >
+                                        {renderFeedComponentDemo(comp.id, stateBundle)}
+                                      </div>
+                                      <div className="flex justify-center bg-white py-2">
+                                        <div className="h-1 w-28 rounded-full bg-slate-300" />
+                                      </div>
+                                    </div>
+                                  ) : getCompDevice(comp.id) === 'tablet' ? (
+                                    /* Realistic Tablet Viewport Frame */
+                                    <div className="relative z-10 mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-2xl">
+                                      <div className="flex justify-center bg-slate-900 py-1.5">
+                                        <div className="size-2 rounded-full bg-slate-700" />
+                                      </div>
+                                      <div
+                                        key={`${comp.id}-mobile`}
+                                        className={cn(
+                                          'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-6 transition-colors',
+                                          getCompTheme(comp.id) === 'dark'
+                                            ? 'bg-[#0F172A] text-white'
+                                            : 'bg-slate-50/40 text-slate-900',
+                                        )}
+                                      >
+                                        {renderFeedComponentDemo(comp.id, stateBundle)}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    /* Desktop Monitor Stage */
+                                    <div
+                                      key={`${comp.id}-desktop`}
+                                      className={cn(
+                                        'relative z-10 flex w-full flex-col items-center justify-center',
+                                        getCompExpanded(comp.id) ? 'max-w-4xl' : 'max-w-2xl',
+                                      )}
+                                    >
+                                      {renderFeedComponentDemo(comp.id, stateBundle)}
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* Supported States & Install Banner */}
+                                <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs">
+                                  <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
+                                    <span className="font-bold text-slate-400 uppercase">
+                                      States:
+                                    </span>
+                                    {comp.supportedStates.map((st) => (
+                                      <span
+                                        key={st}
+                                        className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-semibold text-slate-700"
+                                      >
+                                        {st}
+                                      </span>
+                                    ))}
+                                  </div>
+
+                                  <div className="flex items-center gap-2">
+                                    <code className="font-mono text-[11px] text-[#0056FF]">
+                                      npx @snp/cli add {comp.id}
+                                    </code>
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        handleCopyInstall(comp.id, `npx @snp/cli add ${comp.id}`)
+                                      }
+                                      className="rounded-full border border-slate-200 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]"
+                                    >
+                                      {copiedInstallId === comp.id ? 'Copied' : 'Copy'}
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* TAB CONTENT: PROMPT (Universal AI Agent MVP Specification Skill) */}
+                            {currentTab === 'prompt' && (
+                              <div className="space-y-4 pt-2">
+                                {/* Prompt Header & 1-Click Copy Banner */}
+                                <div className="flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 sm:flex-row sm:items-center sm:justify-between">
+                                  <div className="flex items-center gap-3">
+                                    <span className="flex size-9 items-center justify-center rounded-xl bg-[#0056FF] text-white shadow-xs">
+                                      <Sparkles className="size-4 stroke-[2]" />
+                                    </span>
+                                    <div>
+                                      <div className="flex items-center gap-2">
+                                        <h3 className="font-sans text-xs font-bold text-slate-900">
+                                          Universal AI Agent MVP Prompt Skill
+                                        </h3>
+                                        <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                                          {comp.category}
+                                        </span>
+                                      </div>
+                                      <p className="font-sans text-[11px] text-slate-500">
+                                        Direct MVP instructions for Antigravity, Cursor, Claude 3.5,
+                                        ChatGPT, Copilot, or v0.
+                                      </p>
+                                    </div>
+                                  </div>
+
+                                  <div className="flex items-center gap-2">
+                                    <GeometricButton
+                                      size="sm"
+                                      variant={copiedPromptId === comp.id ? 'blue' : 'outline'}
+                                      onClick={() =>
+                                        handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
+                                      }
+                                      icon={
+                                        copiedPromptId === comp.id ? (
+                                          <Check className="size-3 stroke-[2.2] text-white" />
+                                        ) : (
+                                          <Copy className="size-3 stroke-[2] text-slate-600" />
+                                        )
+                                      }
+                                    >
+                                      {copiedPromptId === comp.id
+                                        ? 'Prompt Copied!'
+                                        : 'Copy AI Prompt'}
+                                    </GeometricButton>
+                                  </div>
+                                </div>
+
+                                {/* Complete Monospace Prompt Box */}
+                                <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0B0F19] p-5 text-slate-100 shadow-md">
+                                  <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-3">
+                                    <div className="flex items-center gap-2">
+                                      <div className="size-2.5 rounded-full bg-rose-500" />
+                                      <div className="size-2.5 rounded-full bg-amber-500" />
+                                      <div className="size-2.5 rounded-full bg-emerald-500" />
+                                      <span className="ml-2 font-mono text-[11px] font-semibold text-slate-400">
+                                        {comp.id}-ai-agent-mvp-prompt.md
+                                      </span>
+                                    </div>
+                                    <span className="rounded-md border border-slate-700 bg-slate-800/80 px-2.5 py-0.5 font-mono text-[10px] text-cyan-400">
+                                      Universal AI Prompt
+                                    </span>
+                                  </div>
+
+                                  <pre className="max-h-96 [scrollbar-width:thin] overflow-auto font-mono text-xs leading-relaxed text-slate-200 select-all">
+                                    <code>{generateAiAgentPrompt(comp)}</code>
+                                  </pre>
+                                </div>
+
+                                {/* 3 Step Workflow */}
+                                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+                                  <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
+                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                                      01. 1-Click Copy
+                                    </span>
+                                    <p className="mt-1 font-sans text-[11px] text-slate-600">
+                                      Copy the complete structured prompt with full interface
+                                      contract and behavioral rules.
+                                    </p>
+                                  </div>
+                                  <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
+                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                                      02. Paste to Any Agent
+                                    </span>
+                                    <p className="mt-1 font-sans text-[11px] text-slate-600">
+                                      Paste directly into Antigravity, Cursor, Claude 3.5, ChatGPT,
+                                      Copilot, or v0 without modification.
+                                    </p>
+                                  </div>
+                                  <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
+                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                                      03. Ship Instant MVP
+                                    </span>
+                                    <p className="mt-1 font-sans text-[11px] text-slate-600">
+                                      The AI agent generates the complete standalone component with
+                                      states, a11y, and zero shadows.
+                                    </p>
+                                  </div>
+                                </div>
+
+                                {/* Mental Model & Specs */}
+                                <div className="space-y-1.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4">
+                                  <h4 className="font-sans text-xs font-bold tracking-wider text-slate-900 uppercase">
+                                    Mental Model & Paradigm
+                                  </h4>
+                                  <p className="font-sans text-xs leading-relaxed text-slate-600">
+                                    {comp.explanation}
+                                  </p>
+                                </div>
+
+                                {/* Real-world Scenarios */}
+                                <div className="space-y-2">
+                                  <h4 className="font-sans text-xs font-bold tracking-wider text-slate-900 uppercase">
+                                    Production Scenarios
+                                  </h4>
+                                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                                    {comp.realWorldExamples.map((ex, i) => (
+                                      <div
+                                        key={i}
+                                        className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs"
+                                      >
+                                        <span className="font-mono text-[10px] font-bold text-[#0056FF]">
+                                          0{i + 1}. {ex.title}
+                                        </span>
+                                        <p className="mt-1 font-sans text-[11px] text-slate-600">
+                                          {ex.scenario}
+                                        </p>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                {/* Best Practices & Anti-Patterns */}
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                  <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/40 p-3 text-xs">
+                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                                      Best Practices (DO)
+                                    </span>
+                                    <ul className="space-y-1 font-sans text-[11px] text-slate-700">
+                                      {comp.usageGuidelines.map((g, i) => (
+                                        <li key={i} className="flex items-start gap-1.5">
+                                          <span className="mt-1 size-1 shrink-0 rounded-full bg-[#0056FF]" />
+                                          <span>{g.doItem}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+
+                                  <div className="space-y-1.5 rounded-xl border border-rose-200 bg-rose-50/60 p-3 text-xs text-rose-950">
+                                    <span className="font-mono text-[10px] font-bold text-rose-600 uppercase">
+                                      Anti-Patterns (DON&apos;T)
+                                    </span>
+                                    <ul className="space-y-1 font-sans text-[11px] text-slate-700">
+                                      {comp.usageGuidelines.map((g, i) => (
+                                        <li key={i} className="flex items-start gap-1.5">
+                                          <span className="mt-1 size-1 shrink-0 rounded-full bg-rose-400" />
+                                          <span>{g.dontItem}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </section>
+                        );
+                      })}
+                    </div>
+                  </div>
                 );
               })}
             </div>
