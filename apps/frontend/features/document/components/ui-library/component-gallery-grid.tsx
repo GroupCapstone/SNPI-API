@@ -2,15 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  Search,
-  Home,
-  User,
-  Plus,
-  Layers,
-  ChevronDown,
-  FileText,
-} from '@/components/icons';
+import { Search, Home, User, Plus, Layers, ChevronDown, FileText } from '@/components/icons';
 
 export interface GalleryComponentItem {
   id: string;

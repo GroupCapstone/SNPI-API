@@ -19,6 +19,15 @@ This skill is the single authoritative design standard and architectural specifi
 All design standards, specifications, and component guides must strictly reside within this single skill folder:
 - **Root Skill**: `.agents/skills/snp-sms-design-standards/SKILL.md`
 - **10 Core UI Components Guide**: `.agents/skills/snp-sms-design-standards/10-ui-components.md`
+- **Living Interface Animation Manual**: `.agents/skills/snp-sms-design-standards/living-interface-animation-manual.md` (The 12 Principles of Animation, <300ms timing rule, and Motion standards)
+- **Modern CSS Pseudo-Elements Manual**: `.agents/skills/snp-sms-design-standards/modern-css-pseudo-elements-manual.md` (::before/::after hit targets, View Transitions API, native dialog ::backdrop)
+- **Easing Curves vs. Springs Guide**: `.agents/skills/snp-sms-design-standards/eases-vs-springs-guide.md` (User Reacting vs System Speaking, Interaction Roles, Bézier vs Spring Physics, <300ms timing rule)
+- **Interface Sound Design Manual**: `.agents/skills/snp-sms-design-standards/interface-sound-design-manual.md` (Auditory speed advantage 25ms vs 250ms, complementary accessibility, interaction audio matrix, Web Audio API synthesis)
+- **Procedural Audio Synthesis Manual**: `.agents/skills/snp-sms-design-standards/ai-sound-synthesis-manual.md` (Waveform primitives, bandpass noise clicks, exponential envelopes, zero-asset UI sound libraries)
+- **Morphing Icons Specification**: `.agents/skills/snp-sms-design-standards/morphing-icons-specification.md` (Universal 3-line SVG invariant, collapsed invisible anchors, rotational groups, zero-DOM-churn transitions)
+- **Animating Container Bounds Manual**: `.agents/skills/snp-sms-design-standards/animating-container-bounds-manual.md` (Two-div measurement/animation separation, zero-dependency useMeasure hook, mount zero-guard)
+- **Laws of UX Psychology Manual**: `.agents/skills/snp-sms-design-standards/laws-of-ux-psychology-manual.md` (Fitts's Law, Hick's Law, Miller's Law, Doherty Threshold <400ms, Postel's Law)
+- **Mastering Animate Presence Manual**: `.agents/skills/snp-sms-design-standards/mastering-animate-presence-manual.md` (Presence lifecycle, useIsPresent, usePresence safeToRemove async exits, propagate, sync/wait/popLayout modes)
 
 Do not fragment design rules across multiple folders. Maintain all design documentation in this single location.
 

@@ -3,8 +3,6 @@
 import * as React from 'react';
 import {
   BrandConceptBlueprint,
-  LineTrackerToc,
-  type TocHeadingItem,
   LibrarySnackbar,
   LibraryBottomSheet,
   LibraryDialog,
@@ -14,7 +12,6 @@ import {
   LibraryFab,
   LibraryDropdown,
   LibraryTooltip,
-  DualModeSystemUI,
   HangingTabsNav,
   COMPONENT_LIBRARY_REGISTRY,
   GeometricButton,
@@ -40,6 +37,10 @@ import {
 import { cn } from '@/lib/utils';
 
 export function UiLibraryView() {
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const isManualScrollRef = React.useRef<boolean>(false);
+  const scrollTimerRef = React.useRef<NodeJS.Timeout | null>(null);
+
   // Search query to filter components
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
@@ -55,7 +56,7 @@ export function UiLibraryView() {
   };
 
   // Active section for Line Tracker
-  const [activeSectionId, setActiveSectionId] = React.useState<string>('ui-library-head');
+  const [activeSectionId, setActiveSectionId] = React.useState<string>('interactive-feed');
 
   // Copy tracking states
   const [copiedCodeId, setCopiedCodeId] = React.useState<string | null>(null);
@@ -158,28 +159,27 @@ export function UiLibraryView() {
   const [inputDemoLoading, setInputDemoLoading] = React.useState(false);
   const [inputDemoDisabled, setInputDemoDisabled] = React.useState(false);
 
-  // Headings for Right Sidebar Line Tracker (Real-time Scroll Feed)
-  const tocHeadings: TocHeadingItem[] = React.useMemo(
+  // Section IDs for active tracking in Left Sticky Menu (Light UI only)
+  const scrollSectionIds = React.useMemo(
     () => [
-      { id: 'ui-library-head', title: 'UI Library (12 Core UI)', level: 1 },
-      { id: 'top-nav-style', title: 'Top Navigation Hanging Tabs Style', level: 1 },
-      { id: 'interactive-feed', title: 'Component Catalog (12 Core UI)', level: 1 },
-      { id: 'comp-snackbar', title: '1. Snackbar', level: 2 },
-      { id: 'comp-bottom-sheet', title: '2. Bottom Sheet', level: 2 },
-      { id: 'comp-dialog', title: '3. Dialog', level: 2 },
-      { id: 'comp-tooltip', title: '4. Tooltip', level: 2 },
-      { id: 'comp-fab', title: '5. FAB', level: 2 },
-      { id: 'comp-chip', title: '6. Chip', level: 2 },
-      { id: 'comp-switch', title: '7. Toggle Switch', level: 2 },
-      { id: 'comp-dropdown', title: '8. Dropdown', level: 2 },
-      { id: 'comp-bottom-nav', title: '9. Bottom Nav', level: 2 },
-      { id: 'comp-card', title: '10. Card (Folder & Metrics)', level: 2 },
-      { id: 'comp-hanging-tabs-nav', title: '11. Hanging Tabs', level: 2 },
-      { id: 'comp-input', title: '12. Pill Input & Search', level: 2 },
-      { id: 'brand-blueprint', title: 'Brand Blueprint (#0056FF)', level: 1 },
-      { id: 'dual-mode-system', title: 'Dual Mode System UI', level: 1 },
-      { id: 'design-principles', title: 'Design Standards & Policies', level: 1 },
-      { id: 'touch-targets', title: 'Touch Targets & Accessibility', level: 2 },
+      'ui-library-head',
+      'top-nav-style',
+      'interactive-feed',
+      'comp-snackbar',
+      'comp-bottom-sheet',
+      'comp-dialog',
+      'comp-tooltip',
+      'comp-fab',
+      'comp-chip',
+      'comp-switch',
+      'comp-dropdown',
+      'comp-bottom-nav',
+      'comp-card',
+      'comp-hanging-tabs-nav',
+      'comp-input',
+      'brand-blueprint',
+      'design-principles',
+      'touch-targets',
     ],
     [],
   );
@@ -199,31 +199,42 @@ export function UiLibraryView() {
   // Smooth scroll helper with header offset clearance
   const scrollToSection = (id: string) => {
     setActiveSectionId(id);
-    const element = document.getElementById(id);
-    if (element) {
-      const top = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+    isManualScrollRef.current = true;
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    scrollTimerRef.current = setTimeout(() => {
+      isManualScrollRef.current = false;
+    }, 800);
+
+    requestAnimationFrame(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   };
 
-  // Real-time scroll spy for tracking point lines
+  // Real-time scroll spy tracking for Left Sticky Navigation
   React.useEffect(() => {
     const handleScroll = () => {
+      if (!rootRef.current || rootRef.current.offsetParent === null || isManualScrollRef.current) {
+        return;
+      }
+
       const isAtBottom =
         window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
       if (isAtBottom) {
-        setActiveSectionId('design-principles');
+        setActiveSectionId('touch-targets');
         return;
       }
 
       const scrollPosition = window.scrollY + 140;
-      for (let i = tocHeadings.length - 1; i >= 0; i--) {
-        const item = tocHeadings[i];
-        const el = document.getElementById(item.id);
+      for (let i = scrollSectionIds.length - 1; i >= 0; i--) {
+        const id = scrollSectionIds[i];
+        const el = document.getElementById(id);
         if (el) {
           const top = el.getBoundingClientRect().top + window.scrollY;
           if (scrollPosition >= top) {
-            setActiveSectionId(item.id);
+            setActiveSectionId(id);
             break;
           }
         }
@@ -232,8 +243,11 @@ export function UiLibraryView() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [tocHeadings]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    };
+  }, [scrollSectionIds]);
 
   const handleCopyCode = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -248,13 +262,16 @@ export function UiLibraryView() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white">
+    <div
+      ref={rootRef}
+      className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white"
+    >
       {/* Main Grid Container */}
       <div className="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
-          {/* COLUMN 1: Left Sticky Sidebar Navigation */}
-          <aside className="w-full shrink-0 lg:w-60 xl:w-64">
-            <div className="sticky top-24 space-y-6">
+        <div className="flex flex-col gap-8 lg:flex-row">
+          {/* COLUMN 1: Left Sticky Sidebar Navigation (Permanently Pinned Like Navbar) */}
+          <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-60 lg:self-start xl:w-64">
+            <div className="max-h-[calc(100vh-5.5rem)] space-y-6 overflow-y-auto pr-1">
               {/* Filter Input */}
               <GeometricInput
                 inputSize="sm"
@@ -264,36 +281,63 @@ export function UiLibraryView() {
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
-              {/* Primary Nav Capsules (Exact Match to Design Specs) */}
+              {/* Primary Nav Capsules (Strictly Light Theme - Zero Black/Dark Buttons) */}
               <div className="space-y-1.5 font-sans">
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('interactive-feed')}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#0056FF] bg-[#0056FF] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0047D4]"
-                >
-                  <span>Catalog</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('comp-snackbar')}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-2 text-left font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#D5DCFA]"
-                >
-                  <span>Playground</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('brand-blueprint')}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-slate-200/90 bg-[#E3E7FC]/60 px-4 py-2 text-left font-sans text-xs font-bold text-slate-900 transition-all hover:bg-[#E3E7FC]"
-                >
-                  <span>Brand Colors</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('dual-mode-system')}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#000B26] bg-[#000B26] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-black"
-                >
-                  <span>Dual Mode UI</span>
-                </button>
+                {(() => {
+                  const isCatalogActive =
+                    activeSectionId === 'interactive-feed' ||
+                    activeSectionId === 'ui-library-head' ||
+                    activeSectionId === 'top-nav-style';
+                  const isPlaygroundActive = activeSectionId.startsWith('comp-');
+                  const isBrandColorsActive = activeSectionId === 'brand-blueprint';
+
+                  return (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchQuery('');
+                          scrollToSection('interactive-feed');
+                        }}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
+                          isCatalogActive
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                        )}
+                      >
+                        <span>Catalog</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchQuery('');
+                          scrollToSection('comp-snackbar');
+                        }}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
+                          isPlaygroundActive
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                        )}
+                      >
+                        <span>Playground</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => scrollToSection('brand-blueprint')}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
+                          isBrandColorsActive
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                        )}
+                      >
+                        <span>Brand Colors</span>
+                      </button>
+                    </>
+                  );
+                })()}
               </div>
 
               {/* 12 Core UI Components List with Active Highlights */}
@@ -315,7 +359,12 @@ export function UiLibraryView() {
                         <button
                           key={comp.id}
                           type="button"
-                          onClick={() => scrollToSection(targetId)}
+                          onClick={() => {
+                            if (searchQuery.trim()) {
+                              setSearchQuery('');
+                            }
+                            scrollToSection(targetId);
+                          }}
                           className={cn(
                             'flex w-full cursor-pointer items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-left font-sans text-xs font-semibold transition-all',
                             isCurrentActive
@@ -344,7 +393,6 @@ export function UiLibraryView() {
                   <div className="space-y-1.5">
                     {[
                       { id: 'brand-blueprint', label: 'Brand Blueprint' },
-                      { id: 'dual-mode-system', label: 'Dual Mode UI' },
                       { id: 'design-principles', label: 'Design Standards' },
                       { id: 'touch-targets', label: 'Touch Targets' },
                     ].map((doc) => {
@@ -773,14 +821,14 @@ export function UiLibraryView() {
                             </ul>
                           </div>
 
-                          <div className="space-y-1.5 rounded-xl border border-slate-900 bg-[#000B26] p-3 text-xs text-white">
-                            <span className="font-mono text-[10px] font-bold text-[#CAD3F5] uppercase">
+                          <div className="space-y-1.5 rounded-xl border border-rose-200 bg-rose-50/60 p-3 text-xs text-rose-950">
+                            <span className="font-mono text-[10px] font-bold text-rose-600 uppercase">
                               Anti-Patterns (DON&apos;T)
                             </span>
-                            <ul className="space-y-1 font-sans text-[11px] text-slate-300">
+                            <ul className="space-y-1 font-sans text-[11px] text-slate-700">
                               {comp.usageGuidelines.map((g, i) => (
                                 <li key={i} className="flex items-start gap-1.5">
-                                  <span className="mt-1 size-1 shrink-0 rounded-full bg-slate-400" />
+                                  <span className="mt-1 size-1 shrink-0 rounded-full bg-rose-400" />
                                   <span>{g.dontItem}</span>
                                 </li>
                               ))}
@@ -812,8 +860,8 @@ export function UiLibraryView() {
                             {copiedCodeId === comp.id ? 'Copied' : 'Copy Code'}
                           </GeometricButton>
                         </div>
-                        <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#000B26] p-4 text-white shadow-md">
-                          <pre className="max-h-72 overflow-auto font-mono text-xs leading-relaxed text-slate-100">
+                        <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 p-4 text-slate-800 shadow-xs">
+                          <pre className="max-h-72 overflow-auto font-mono text-xs leading-relaxed text-slate-800">
                             <code>{comp.codeSnippet}</code>
                           </pre>
                         </div>
@@ -830,14 +878,6 @@ export function UiLibraryView() {
               className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
             >
               <BrandConceptBlueprint />
-            </section>
-
-            {/* SECTION: Dual Mode System UI */}
-            <section
-              id="dual-mode-system"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
-            >
-              <DualModeSystemUI />
             </section>
 
             {/* SECTION: Design Standards & Policies */}
@@ -865,16 +905,6 @@ export function UiLibraryView() {
               </div>
             </section>
           </main>
-
-          {/* COLUMN 3: Right Sidebar Line Tracker (Real-time Scroll Tracker) */}
-          <aside className="hidden w-full shrink-0 lg:block lg:w-64 xl:w-72">
-            <LineTrackerToc
-              items={tocHeadings}
-              activeId={activeSectionId}
-              onSelect={scrollToSection}
-              onActiveChange={setActiveSectionId}
-            />
-          </aside>
         </div>
       </div>
 
@@ -1055,16 +1085,16 @@ function renderFeedComponentDemo(
             </GeometricButton>
           </div>
 
-          {/* Interactive In-Stage Real-Time Toast Banner */}
-          <div className="w-full max-w-xl rounded-2xl border border-slate-900 bg-[#000B26] p-5 text-white shadow-xl transition-all">
+          {/* Interactive In-Stage Real-Time Toast Banner (Light Surface) */}
+          <div className="w-full max-w-xl rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC]/40 p-5 text-slate-900 shadow-xs transition-all">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
                 <span className="size-2.5 animate-pulse rounded-full bg-[#0056FF]" />
                 <div>
-                  <span className="block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                  <span className="block font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
                     SNPI Notification Hub
                   </span>
-                  <span className="font-sans text-xs font-semibold text-slate-100">
+                  <span className="font-sans text-xs font-semibold text-slate-800">
                     {state.snackbarMsg}
                   </span>
                 </div>
@@ -1075,14 +1105,14 @@ function renderFeedComponentDemo(
                   onClick={() =>
                     state.setSnackbarMsg('Action reverted successfully. Record restored.')
                   }
-                  className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
+                  className="rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-xs font-bold text-[#0056FF] shadow-xs transition-all hover:bg-[#E3E7FC] active:scale-95"
                 >
                   Undo
                 </button>
                 <button
                   type="button"
                   onClick={() => state.setSnackbarOpen(false)}
-                  className="rounded-full border border-slate-700 px-3 py-1 font-mono text-xs text-slate-300 hover:border-slate-500 hover:text-white"
+                  className="cursor-pointer rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-xs font-semibold text-slate-700 shadow-xs transition-all hover:border-slate-300 hover:bg-slate-50"
                 >
                   Dismiss
                 </button>
