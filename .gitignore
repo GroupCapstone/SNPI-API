@@ -5,6 +5,7 @@ build/
 .next/
 out/
 coverage/
+.vercel/
 *.log
 .DS_Store
 .env
