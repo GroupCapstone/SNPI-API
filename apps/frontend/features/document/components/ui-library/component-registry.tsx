@@ -1378,24 +1378,33 @@ export function Example() {
     id: 'rail-toc',
     name: 'Rail TOC (Primary)',
     category: 'Navigation',
-    paradigm: 'Sticky Rail Standard',
-    description: 'Vertical sticky rail track with reading progress and milestone pips.',
-    explanation: 'Rail TOC anchors an interactive reading milestone track on the screen edge.',
+    paradigm: 'Line Tracker Standard',
+    description:
+      'Vertical sticky line tracker with continuous rail and section line indicators (zero dots).',
+    explanation:
+      'Line Tracker TOC anchors a continuous reading milestone rail along the container edge, lighting up precision line segments per section without circular dots.',
     props: [
       { name: 'sections', type: 'Array<{id, number, title}>', description: 'List of milestones.' },
     ],
     codeSnippet: `import { RailTocDemo } from '@/features/document/components/ui-library';\n\n<RailTocDemo />`,
     realWorldExamples: [
       {
-        title: 'Academic Syllabus',
-        scenario: 'Students browse long course syllabi.',
-        impact: 'Real-time progress.',
+        title: 'Academic Syllabus & Long Documentation',
+        scenario: 'Students and developers browse long multi-section documents.',
+        impact: 'Real-time section orientation with zero distraction.',
       },
     ],
     uxPsychology: [{ principle: "Fitts's Law", detail: 'Edge rail is easily acquired.' }],
-    usageGuidelines: [{ doItem: 'Keep titles short.', dontItem: 'Avoid more than 8 sections.' }],
-    implementationNotes: ['Smooth SVG vertical track with active pip.'],
-    supportedStates: ['Default', 'Active', 'Hovered'],
+    usageGuidelines: [
+      {
+        doItem: 'Keep section titles short and readable.',
+        dontItem: 'Avoid cluttering line with circular dots.',
+      },
+    ],
+    implementationNotes: [
+      'Continuous vertical rail track with active section line segment, zero-scrollbar styling, and zero circular dots.',
+    ],
+    supportedStates: ['Default Track', 'Active Section Line', 'Hovered'],
   },
   {
     id: 'bounce-sidebar',

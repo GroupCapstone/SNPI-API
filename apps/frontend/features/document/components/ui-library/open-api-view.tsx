@@ -629,7 +629,7 @@ console.log(payload.data);`;
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* COLUMN 1: Left Sticky Sidebar Navigation (Permanently Pinned Like Navbar) */}
           <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-60 lg:self-start xl:w-64">
-            <div className="max-h-[calc(100vh-5.5rem)] space-y-6 overflow-y-auto pr-1">
+            <div className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {/* Filter Input */}
               <GeometricInput
                 inputSize="sm"
@@ -722,7 +722,8 @@ console.log(payload.data);`;
                   <span>API Modules</span>
                   <span className="text-[#0056FF]">{categories.length}</span>
                 </div>
-                <div className="space-y-1.5">
+                {/* Continuous Vertical Line Tracker Track (Zero Dots, Pure Precision Line) */}
+                <div className="relative space-y-0.5 border-l-2 border-slate-200/90 pl-3 dark:border-slate-800">
                   {categories.map((cat) => {
                     const isSelected = selectedCategory === cat.name;
                     return (
@@ -735,25 +736,23 @@ console.log(payload.data);`;
                           scrollToDocSection('endpoints-available');
                         }}
                         className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-3.5 py-1.5 text-left font-sans text-xs font-semibold transition-all',
+                          'group relative flex w-full cursor-pointer items-center justify-between rounded-r-lg py-1.5 pr-2 pl-2.5 text-left font-sans text-xs transition-all duration-150 select-none',
                           isSelected
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                            ? '-ml-[2px] bg-[#0056FF]/[0.07] font-bold text-[#0056FF]'
+                            : 'font-normal text-slate-600 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-950',
                         )}
                       >
-                        <div className="flex items-center gap-2 truncate">
+                        {isSelected && (
                           <span
-                            className={cn(
-                              'size-1.5 rounded-full transition-colors',
-                              isSelected ? 'bg-white' : 'bg-slate-400',
-                            )}
+                            aria-hidden="true"
+                            className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
                           />
-                          <span className="truncate">{cat.name}</span>
-                        </div>
+                        )}
+                        <span className="truncate">{cat.name}</span>
                         <span
                           className={cn(
                             'font-mono text-[10px] font-bold',
-                            isSelected ? 'text-white' : 'text-slate-400',
+                            isSelected ? 'text-[#0056FF]' : 'text-slate-400',
                           )}
                         >
                           {cat.count}
@@ -1430,7 +1429,7 @@ console.log(payload.data);`;
 
           {/* COLUMN 3: Right Sticky Sidebar with Real-Time Tracking Line (Permanently Pinned Like Navbar) */}
           <aside className="hidden w-64 shrink-0 xl:sticky xl:top-20 xl:z-30 xl:block xl:self-start">
-            <div className="max-h-[calc(100vh-5.5rem)] space-y-6 overflow-y-auto pr-1">
+            <div className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               <LineTrackerToc
                 items={DOC_TOC_HEADINGS}
                 activeId={activeDocSection}

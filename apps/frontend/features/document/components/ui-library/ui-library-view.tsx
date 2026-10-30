@@ -451,7 +451,7 @@ export function UiLibraryView() {
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* COLUMN 1: Left Sticky Sidebar Navigation (Permanently Pinned Like Navbar) */}
           <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-60 lg:self-start xl:w-64">
-            <div className="max-h-[calc(100vh-5.5rem)] space-y-6 overflow-y-auto pr-1">
+            <div className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {/* Filter Input */}
               <GeometricInput
                 inputSize="sm"
@@ -461,8 +461,8 @@ export function UiLibraryView() {
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
-              {/* 40 Core UI Components Grouped By 5 Categories */}
-              <div className="space-y-4 font-sans text-xs">
+              {/* Core UI Components Grouped By Categories with Modern Line Tracker Style */}
+              <div className="space-y-5 font-sans text-xs">
                 <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
                   <span>Components</span>
                   <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 text-[10px] font-black text-[#0056FF]">
@@ -480,16 +480,17 @@ export function UiLibraryView() {
                     if (categoryComps.length === 0) return null;
 
                     return (
-                      <div key={category} className="space-y-1.5 pt-1">
-                        <div className="flex items-center justify-between px-1.5 py-0.5">
-                          <span className="font-sans text-xs font-bold text-slate-900">
+                      <div key={category} className="space-y-1.5">
+                        {/* Category Heading */}
+                        <div className="flex items-center justify-between px-1 py-0.5">
+                          <span className="font-mono text-[11px] font-bold tracking-wider text-slate-400 uppercase">
                             {category}{' '}
-                            <span className="font-mono font-black text-[#FF5500]">
-                              [{categoryComps.length}]
-                            </span>
+                            <span className="text-[#FF5500]">[{categoryComps.length}]</span>
                           </span>
                         </div>
-                        <div className="space-y-1">
+
+                        {/* Continuous Vertical Line Tracker Track (Zero Dots, Pure Precision Line) */}
+                        <div className="relative space-y-0.5 border-l-2 border-slate-200/90 pl-3 dark:border-slate-800">
                           {categoryComps.map((comp) => {
                             const targetId = `comp-${comp.id}`;
                             const isCurrentActive = activeSectionId === targetId;
@@ -504,27 +505,26 @@ export function UiLibraryView() {
                                   scrollToSection(targetId);
                                 }}
                                 className={cn(
-                                  'flex w-full cursor-pointer items-center justify-between rounded-full border px-3 py-1.5 text-left font-sans text-xs font-semibold transition-all',
+                                  'group relative flex w-full cursor-pointer items-center justify-between rounded-r-lg py-1.5 pr-2 pl-2.5 text-left font-sans text-xs transition-all duration-150 select-none',
                                   isCurrentActive
-                                    ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                                    : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                                    ? '-ml-[2px] bg-[#0056FF]/[0.07] font-bold text-[#0056FF]'
+                                    : 'font-normal text-slate-600 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-950',
                                 )}
                               >
-                                <div className="flex items-center gap-2 truncate">
+                                {/* Active Line Indicator Segment (Zero Dots, Pure Precision Line) */}
+                                {isCurrentActive && (
                                   <span
-                                    className={cn(
-                                      'size-1.5 shrink-0 rounded-full transition-colors',
-                                      isCurrentActive ? 'bg-white' : 'bg-slate-400',
-                                    )}
+                                    aria-hidden="true"
+                                    className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
                                   />
-                                  <span className="truncate">{comp.name}</span>
-                                </div>
+                                )}
+                                <span className="truncate">{comp.name}</span>
                                 {comp.id === 'rail-toc' && (
                                   <span
                                     className={cn(
-                                      'py-0.2 rounded-full px-1.5 font-mono text-[8px] font-bold uppercase',
+                                      'ml-1 shrink-0 rounded-full px-1.5 py-0.5 font-mono text-[8px] font-bold uppercase',
                                       isCurrentActive
-                                        ? 'bg-white text-[#0056FF]'
+                                        ? 'bg-[#0056FF] text-white'
                                         : 'bg-[#E3E7FC] text-[#0056FF]',
                                     )}
                                   >
@@ -545,7 +545,7 @@ export function UiLibraryView() {
                   <div className="pb-2 font-mono text-[10px] font-bold text-slate-400 uppercase">
                     <span>Documentation</span>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="relative space-y-0.5 border-l-2 border-slate-200/90 pl-3 dark:border-slate-800">
                     {[
                       { id: 'brand-blueprint', label: 'Brand Blueprint' },
                       { id: 'design-principles', label: 'Design Standards' },
@@ -558,18 +558,18 @@ export function UiLibraryView() {
                           type="button"
                           onClick={() => scrollToSection(doc.id)}
                           className={cn(
-                            'flex w-full cursor-pointer items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-left font-sans text-xs font-semibold transition-all',
+                            'group relative flex w-full cursor-pointer items-center justify-between rounded-r-lg py-1.5 pr-2 pl-2.5 text-left font-sans text-xs transition-all duration-150 select-none',
                             isCurrentActive
-                              ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                              : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                              ? '-ml-[2px] bg-[#0056FF]/[0.07] font-bold text-[#0056FF]'
+                              : 'font-normal text-slate-600 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
-                          <span
-                            className={cn(
-                              'size-1.5 rounded-full transition-colors',
-                              isCurrentActive ? 'bg-white' : 'bg-slate-400',
-                            )}
-                          />
+                          {isCurrentActive && (
+                            <span
+                              aria-hidden="true"
+                              className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
+                            />
+                          )}
                           <span className="truncate">{doc.label}</span>
                         </button>
                       );
