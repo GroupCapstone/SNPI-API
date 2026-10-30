@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "24f7d0f",
+    "description": "Implement Interactive Data Table with tri-state sorting, sticky header, debounced search, status pills, and boundary-clamped pagination"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "58dacb7",
     "description": "Record v0.2.7 release checkpoint in real-time changelog and document portal"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "a9859ab",
     "description": "Synchronize real-time changelog and technical portal"
-  },
-  {
-    "version": "0.2.4",
-    "date": "30.10.2026",
-    "commitHash": "f5eb812",
-    "description": "Activate all sidebar navigation menus, pin sticky sidebars, and document 9 interface motion and cognitive ux skills"
   }
 ];
