@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "d585ab0",
+    "description": "Add legal and crawl footer links, implement dynamic real-time version tracker v0.2.7, and configure sitemap and robots routes"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "3ff6db3",
     "description": "Synchronize real-time changelog with Navigation Menu component"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "e5aed2f",
     "description": "Unify design concept, 3-column layout, and capsule nav across Open API and UI Library views"
-  },
-  {
-    "version": "0.2.3",
-    "date": "30.10.2026",
-    "commitHash": "c5e7337",
-    "description": "Sync changelog and build types prior to push checkpoint"
   }
 ];
