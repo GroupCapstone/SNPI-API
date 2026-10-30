@@ -579,34 +579,36 @@ export default function DesignSystemPage() {
                 </ul>
               </div>
 
-              {/* 6. Component Props Table */}
-              <div className="space-y-2">
+              {/* 6. Component Props Interface (Modern Card Grid - No Table) */}
+              <div className="space-y-2.5">
                 <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
                   6. Props Interface
                 </h3>
-                <div className="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)] backdrop-blur-md">
-                  <table className="w-full text-left font-sans text-xs">
-                    <thead className="border-b border-slate-200/80 bg-slate-50 text-slate-600">
-                      <tr>
-                        <th className="px-4 py-2.5 font-bold tracking-wider uppercase">Prop</th>
-                        <th className="px-4 py-2.5 font-bold tracking-wider uppercase">Type</th>
-                        <th className="px-4 py-2.5 font-bold tracking-wider uppercase">Default</th>
-                        <th className="px-4 py-2.5 font-bold tracking-wider uppercase">
-                          Description
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 text-slate-700">
-                      {activeDoc.props.map((p) => (
-                        <tr key={p.name}>
-                          <td className="px-4 py-2 font-mono font-bold text-[#0056FF]">{p.name}</td>
-                          <td className="px-4 py-2 font-mono text-slate-600">{p.type}</td>
-                          <td className="px-4 py-2 font-mono text-slate-400">{p.default || '-'}</td>
-                          <td className="px-4 py-2 text-slate-600">{p.description}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  {activeDoc.props.map((p) => (
+                    <div
+                      key={p.name}
+                      className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-mono text-xs font-bold text-[#0056FF]">
+                            {p.name}
+                          </span>
+                          <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#0056FF]">
+                            {p.type}
+                          </span>
+                        </div>
+                        <p className="mt-2 font-sans text-xs leading-relaxed text-slate-600">
+                          {p.description}
+                        </p>
+                      </div>
+                      <div className="mt-2.5 border-t border-slate-100 pt-1.5 font-mono text-[10.5px] text-slate-400">
+                        Default:{' '}
+                        <span className="font-semibold text-slate-700">{p.default || '-'}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </section>

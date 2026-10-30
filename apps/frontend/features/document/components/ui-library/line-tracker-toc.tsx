@@ -35,14 +35,16 @@ export function LineTrackerToc({
     onActiveChangeRef.current = onActiveChange;
   }, [onActiveChange]);
 
-  // Real-time interpolated vertical tracker progress
+  // Real-time vertical tracker progress
   const [trackerState, setTrackerState] = React.useState<{
-    height: number;
+    fillHeight: number;
     indicatorTop: number;
+    activeIdx: number;
     isReady: boolean;
   }>({
-    height: 0,
+    fillHeight: 0,
     indicatorTop: 0,
+    activeIdx: 0,
     isReady: false,
   });
 
@@ -50,6 +52,10 @@ export function LineTrackerToc({
   React.useEffect(() => {
     const computeProgress = () => {
       if (!navRef.current || items.length === 0) return;
+
+      // Check if user is scrolled near the bottom of the page
+      const isAtPageBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
 
       // Collect bounding positions using real absolute page coordinates
       const sectionMetrics: { id: string; top: number; bottom: number }[] = [];
@@ -67,33 +73,47 @@ export function LineTrackerToc({
         const activeBtn = itemRefs.current.get(activeId);
         if (activeBtn) {
           const center = activeBtn.offsetTop + activeBtn.offsetHeight / 2;
-          setTrackerState({ height: center, indicatorTop: center - 8, isReady: true });
+          setTrackerState({
+            fillHeight: center,
+            indicatorTop: Math.max(0, center - 10),
+            activeIdx: Math.max(
+              0,
+              items.findIndex((i) => i.id === activeId),
+            ),
+            isReady: true,
+          });
         }
         return;
       }
 
-      // Viewport target offset: 140px below the ceiling sticky header
-      const currentScroll = window.scrollY + 140;
-
       let activeIdx = 0;
       let segmentProgress = 0;
 
-      if (currentScroll <= sectionMetrics[0].top) {
-        activeIdx = 0;
-        segmentProgress = 0;
-      } else if (currentScroll >= sectionMetrics[sectionMetrics.length - 1].top) {
+      if (isAtPageBottom) {
+        // Snap to last item when user hits page bottom
         activeIdx = sectionMetrics.length - 1;
         segmentProgress = 1;
       } else {
-        for (let i = 0; i < sectionMetrics.length - 1; i++) {
-          const cur = sectionMetrics[i];
-          const next = sectionMetrics[i + 1];
+        // Viewport target offset: 120px below ceiling sticky header
+        const currentScroll = window.scrollY + 120;
 
-          if (currentScroll >= cur.top && currentScroll < next.top) {
-            activeIdx = i;
-            const distance = next.top - cur.top;
-            segmentProgress = distance > 0 ? (currentScroll - cur.top) / distance : 0;
-            break;
+        if (currentScroll <= sectionMetrics[0].top) {
+          activeIdx = 0;
+          segmentProgress = 0;
+        } else if (currentScroll >= sectionMetrics[sectionMetrics.length - 1].top) {
+          activeIdx = sectionMetrics.length - 1;
+          segmentProgress = 1;
+        } else {
+          for (let i = 0; i < sectionMetrics.length - 1; i++) {
+            const cur = sectionMetrics[i];
+            const next = sectionMetrics[i + 1];
+
+            if (currentScroll >= cur.top && currentScroll < next.top) {
+              activeIdx = i;
+              const distance = next.top - cur.top;
+              segmentProgress = distance > 0 ? (currentScroll - cur.top) / distance : 0;
+              break;
+            }
           }
         }
       }
@@ -104,7 +124,7 @@ export function LineTrackerToc({
         onActiveChangeRef.current(detectedActiveId);
       }
 
-      // Map segment progress to the TOC button vertical positions
+      // Map progress to the TOC button positions
       const curBtn = itemRefs.current.get(items[activeIdx]?.id);
       const nextBtn = itemRefs.current.get(items[activeIdx + 1]?.id);
 
@@ -118,8 +138,9 @@ export function LineTrackerToc({
         }
 
         setTrackerState({
-          height: Math.max(0, targetCenter),
-          indicatorTop: Math.max(0, targetCenter - 8),
+          fillHeight: Math.max(0, targetCenter),
+          indicatorTop: Math.max(0, targetCenter - 9),
+          activeIdx,
           isReady: true,
         });
       }
@@ -148,29 +169,31 @@ export function LineTrackerToc({
   return (
     <div className={cn('sticky top-24 space-y-3 font-sans text-xs select-none', className)}>
       {/* Title */}
-      <p className="font-mono text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-        {title}
-      </p>
+      <div className="flex items-center gap-2">
+        <p className="font-mono text-[11px] font-bold tracking-wider text-slate-400 uppercase">
+          {title}
+        </p>
+      </div>
 
       {/* Real-time Dynamic Scroll Loading Tracker Rail */}
-      <div ref={navRef} className="relative pl-3">
-        {/* Continuous Light Gray Background Rail (Sleek 1.5px) */}
-        <div className="absolute top-1 bottom-1 left-0 w-[1.5px] rounded-full bg-slate-200/80" />
+      <div ref={navRef} className="relative pl-3.5">
+        {/* Continuous Light Gray Background Rail */}
+        <div className="absolute top-2 bottom-2 left-0 w-[1.5px] rounded-full bg-slate-200/90" />
 
-        {/* Real-time Blue Progress Fill Line (Loads as user scrolls down) */}
+        {/* Real-time Blue Progress Fill Line (Loads continuously as user scrolls down) */}
         {trackerState.isReady && (
           <div
-            className="absolute top-1 left-0 w-[1.5px] rounded-full bg-[#0056FF] transition-[height] duration-75 ease-out"
+            className="absolute top-2 left-0 w-[1.5px] rounded-full bg-gradient-to-b from-[#0056FF] to-[#2277FF] transition-[height] duration-75 ease-out"
             style={{
-              height: `${Math.max(0, trackerState.height)}px`,
+              height: `${Math.max(0, trackerState.fillHeight)}px`,
             }}
           />
         )}
 
-        {/* Real-time Sleek Active Bar Indicator (Sleek 2px vertical bar beside active item) */}
+        {/* Real-time Sleek Active Floating Indicator Bar */}
         {trackerState.isReady && (
           <div
-            className="pointer-events-none absolute -left-[0.25px] h-4 w-[2px] rounded-full bg-[#0056FF] transition-transform duration-75 ease-out"
+            className="pointer-events-none absolute -left-[0.5px] h-[18px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.4)] transition-transform duration-75 ease-out"
             style={{
               top: 0,
               transform: `translateY(${Math.max(0, trackerState.indicatorTop)}px)`,
@@ -179,9 +202,10 @@ export function LineTrackerToc({
         )}
 
         {/* Headings Navigation List */}
-        <nav className="space-y-1.5">
-          {items.map((item) => {
+        <nav className="space-y-1">
+          {items.map((item, idx) => {
             const isActive = activeId === item.id;
+            const isPassed = idx < trackerState.activeIdx;
             const isSubItem = item.level === 2 || item.level === 3;
 
             return (
@@ -194,14 +218,16 @@ export function LineTrackerToc({
                 type="button"
                 onClick={() => onSelect(item.id)}
                 className={cn(
-                  'flex w-full items-start py-0.5 text-left transition-colors duration-150 select-none',
-                  isSubItem ? 'pl-2 text-[10.5px]' : 'text-[11.5px]',
+                  'group flex w-full cursor-pointer items-start py-1 text-left transition-all duration-150 select-none',
+                  isSubItem ? 'pl-2.5 text-[11px]' : 'text-[12px]',
                   isActive
-                    ? 'font-bold text-[#0056FF]'
-                    : 'font-medium text-slate-600 hover:text-slate-950',
+                    ? 'translate-x-0.5 font-bold text-[#0056FF]'
+                    : isPassed
+                      ? 'font-semibold text-slate-800 hover:text-slate-950'
+                      : 'font-normal text-slate-500 hover:text-slate-900',
                 )}
               >
-                <span className="leading-snug">{item.title}</span>
+                <span className="leading-snug transition-colors">{item.title}</span>
               </button>
             );
           })}
