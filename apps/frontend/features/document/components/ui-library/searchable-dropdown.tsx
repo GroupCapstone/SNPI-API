@@ -517,10 +517,7 @@ export function SearchableDropdownDemo() {
           />
 
           <div className="font-mono text-[11px] text-slate-400">
-            Selected ID:{' '}
-            <span className="font-bold text-slate-900">
-              {singleValue || 'None'}
-            </span>
+            Selected ID: <span className="font-bold text-slate-900">{singleValue || 'None'}</span>
           </div>
         </div>
 
@@ -546,9 +543,7 @@ export function SearchableDropdownDemo() {
 
           <div className="font-mono text-[11px] text-slate-400">
             Selected Tags ({multiValue.length}):{' '}
-            <span className="font-bold text-slate-900">
-              {multiValue.join(', ') || 'None'}
-            </span>
+            <span className="font-bold text-slate-900">{multiValue.join(', ') || 'None'}</span>
           </div>
         </div>
       </div>

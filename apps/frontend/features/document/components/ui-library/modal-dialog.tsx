@@ -323,7 +323,6 @@ export function ModalDialogDemo() {
 
   return (
     <div className="w-full space-y-6">
-
       {/* Live In-Stage Modal Dialog Surface (Say Less Show More Result - Never Hidden) */}
       <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-6 text-left shadow-md">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -445,9 +444,7 @@ export function ModalDialogDemo() {
           <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
             <div className="flex items-center justify-between">
               <span className="text-slate-400">BATCH TX:</span>
-              <span className="font-bold text-[#0056FF]">
-                sha256:7f8a92e4b102
-              </span>
+              <span className="font-bold text-[#0056FF]">sha256:7f8a92e4b102</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-slate-400">ENROLLED CANDIDATES:</span>
@@ -485,10 +482,8 @@ export function ModalDialogDemo() {
       >
         <div className="space-y-3">
           <p className="font-sans text-xs text-slate-500">
-            Pressing{' '}
-            <kbd className="font-mono font-bold text-slate-800">Escape</kbd>{' '}
-            right now will close <em>only this nested dialog</em> while preserving the parent dialog
-            beneath it.
+            Pressing <kbd className="font-mono font-bold text-slate-800">Escape</kbd> right now will
+            close <em>only this nested dialog</em> while preserving the parent dialog beneath it.
           </p>
 
           <input

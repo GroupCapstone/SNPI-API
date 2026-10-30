@@ -68,7 +68,7 @@ export function DocsStickyHeader({
         </Link>
 
         {/* Center: Futuristic Cyber Armor Modular Nav Bar (Aerospace / Mecha HUD Console) */}
-        <div className="pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center md:flex">
+        <div className="pointer-events-auto absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center md:flex">
           <HangingTabsNav items={navTabs} activeId={currentTab} size="md" />
         </div>
 

@@ -693,9 +693,7 @@ export function RichTextEditorDemo() {
       {/* Feature & Security Architecture Grid */}
       <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-4">
         <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-[#0056FF]">
-            01 Surface
-          </span>
+          <span className="font-mono text-[10px] font-bold text-[#0056FF]">01 Surface</span>
           <p className="font-bold text-slate-800">contenteditable</p>
           <p className="text-[11px] text-slate-500">
             Native DOM surface with role=&quot;textbox&quot;, no iframe.
@@ -703,9 +701,7 @@ export function RichTextEditorDemo() {
         </div>
 
         <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-emerald-600">
-            04 Sanitizer
-          </span>
+          <span className="font-mono text-[10px] font-bold text-emerald-600">04 Sanitizer</span>
           <p className="font-bold text-slate-800">Detached Allowlist</p>
           <p className="text-[11px] text-slate-500">
             Strips script, style, and unknown tags on paste.
@@ -713,9 +709,7 @@ export function RichTextEditorDemo() {
         </div>
 
         <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-amber-600">
-            05 URL Guard
-          </span>
+          <span className="font-mono text-[10px] font-bold text-amber-600">05 URL Guard</span>
           <p className="font-bold text-slate-800">Scheme Shield</p>
           <p className="text-[11px] text-slate-500">
             Rejects javascript: & data:; appends noopener.
@@ -723,9 +717,7 @@ export function RichTextEditorDemo() {
         </div>
 
         <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-purple-600">
-            07 Selection
-          </span>
+          <span className="font-mono text-[10px] font-bold text-purple-600">07 Selection</span>
           <p className="font-bold text-slate-800">Caret Retention</p>
           <p className="text-[11px] text-slate-500">
             Preserves selection range across toolbar clicks.
