@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@snp/shared": ["../../packages/shared/src/index.ts"],
+      "@snp/shared/*": ["../../packages/shared/src/*"]
     }
   },
   "include": [
