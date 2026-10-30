@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "58dacb7",
+    "description": "Record v0.2.7 release checkpoint in real-time changelog and document portal"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "d585ab0",
     "description": "Add legal and crawl footer links, implement dynamic real-time version tracker v0.2.7, and configure sitemap and robots routes"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "f5eb812",
     "description": "Activate all sidebar navigation menus, pin sticky sidebars, and document 9 interface motion and cognitive ux skills"
-  },
-  {
-    "version": "0.2.4",
-    "date": "30.10.2026",
-    "commitHash": "e5aed2f",
-    "description": "Unify design concept, 3-column layout, and capsule nav across Open API and UI Library views"
   }
 ];

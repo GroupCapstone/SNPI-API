@@ -1902,6 +1902,149 @@ export function Example() {
     implementationNotes: ['Smooth height transition with rotating icon.'],
     supportedStates: ['Collapsed', 'Expanded'],
   },
+  {
+    id: 'data-table',
+    name: 'Interactive Data Table',
+    category: 'Display',
+    paradigm: 'Client-Side Ledger & Tri-State Sorting Standard',
+    description:
+      'Sticky header data table with debounced global search, tri-state column sorting, type-aware comparator, status pills, and boundary-clamped pagination.',
+    explanation:
+      'High-performance zero-dependency tabular records manager. Features keyboard-focusable tri-state sort headers (none -> asc -> desc), debounced full-row search, animated SVG direction caret, stable sorting, status badges, live aria-live count announcements, sticky headers with dynamic scroll shadows, and smart windowed pagination.',
+    props: [
+      { name: 'data', type: 'T[]', description: 'Array of tabular records to display and filter.' },
+      {
+        name: 'columns',
+        type: 'DataTableColumn<T>[]',
+        description:
+          'Column definitions with headers, keys, type, alignment, and custom cell renderers.',
+      },
+      {
+        name: 'initialPageSize',
+        type: 'number',
+        default: '10',
+        description: 'Default rows displayed per page.',
+      },
+      {
+        name: 'pageSizeOptions',
+        type: 'number[]',
+        default: '[5, 10, 20, 50]',
+        description: 'Selectable rows-per-page options.',
+      },
+      {
+        name: 'searchPlaceholder',
+        type: 'string',
+        description: 'Placeholder for debounced search box.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Surface color mode.',
+      },
+    ],
+    codeSnippet: `import { DataTable, type DataTableColumn, StatusPill } from '@/features/document/components/ui-library';
+
+interface StudentRecord {
+  id: string;
+  code: string;
+  name: string;
+  program: string;
+  gpa: number;
+  status: 'Active' | 'Pending' | 'Probation';
+  tuitionFee: number;
+}
+
+const columns: DataTableColumn<StudentRecord>[] = [
+  { key: 'code', header: 'Student ID', sortable: true, type: 'string' },
+  { key: 'name', header: 'Student Name', sortable: true, type: 'string' },
+  { key: 'program', header: 'Program', sortable: true, type: 'string' },
+  { key: 'gpa', header: 'GPA', sortable: true, type: 'number', align: 'center' },
+  {
+    key: 'status',
+    header: 'Status',
+    sortable: true,
+    render: (val) => <StatusPill status={String(val)} />,
+  },
+  { key: 'tuitionFee', header: 'Tuition', sortable: true, type: 'number', align: 'right' },
+];
+
+<DataTable
+  title="Student Academic Roster"
+  data={records}
+  columns={columns}
+  initialPageSize={10}
+/>`,
+    realWorldExamples: [
+      {
+        title: 'Academic Enrollment Ledger',
+        scenario:
+          'Registrars search, sort by GPA, and verify active student cohorts across programs.',
+        impact: 'Zero latency instant filtering.',
+      },
+      {
+        title: 'Tuition Fee Accounts Roster',
+        scenario:
+          'Finance officers review tuition fee collections, filter by status pill, and export ledger pages.',
+        impact: 'Accurate tabular numeral auditing.',
+      },
+      {
+        title: 'Faculty Assignment Directory',
+        scenario: 'Deans inspect faculty course loads, sorting by department and teaching hours.',
+        impact: 'Frictionless client-side sorting.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Doherty Threshold (<400ms)',
+        detail:
+          'Debounced 200ms search and instantaneous client-side sorting keeps users in uninterrupted flow state.',
+      },
+      {
+        principle: "Fitts's Law & Coyote Time",
+        detail:
+          'Full column header hit targets with keyboard Enter/Space triggers ensure effortless sorting.',
+      },
+      {
+        principle: "Miller's Law & Chunking",
+        detail: 'Windowed pagination chunks dense data into digestible 5, 10, or 20 row sets.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'Use when building admin dashboards, settings screens, or internal tools listing structured records with few hundred to thousand client-side rows with zero bundle weight.',
+        dontItem:
+          'Do not use for millions of rows (use server-side pagination with row virtualization) or hierarchical tree-tables.',
+      },
+      {
+        doItem:
+          'Click any column header to sort (none -> ascending -> descending), use the search box to filter across all columns, and page through the results below.',
+        dontItem:
+          'Do not require inline editing, drag reordering, or column resizing — keep client-side table focused on high-performance reading and auditing.',
+      },
+    ],
+    implementationNotes: [
+      '01 Search Input: Debounced text filter with a magnifier icon and inline clear button. Matches across every column.',
+      '02 Result Count: Live "Showing X-Y of Z" region announced to assistive tech via aria-live.',
+      '03 Sortable Header: Keyboard-focusable column header with a tri-state click cycle: none, ascending, descending.',
+      '04 Sort Indicator: Animated caret in the active column that rotates to flip direction without re-rendering.',
+      '05 Comparator: Type-aware comparison for strings, numbers, and dates. Stable so equal rows keep insertion order.',
+      '06 Status Pill: Colored badge with a leading dot for at-a-glance scanning of categorical values.',
+      '07 Sticky Header: Headers stay pinned while the body scrolls. A subtle shadow appears once the user has scrolled.',
+      '08 Pagination Nav: First, last, and a window around the current page with ellipses. Disabled at boundaries.',
+      '09 Page Size: Selector for rows per page that re-clamps the current page so the visible window stays valid.',
+      '10 Empty State: Friendly fallback when the search filter yields no rows, telling the user what they searched for.',
+    ],
+    supportedStates: [
+      'Default Table View',
+      'Debounced Search Filtering',
+      'Ascending Column Sort',
+      'Descending Column Sort',
+      'Sticky Header Scrolled Shadow',
+      'Empty State Search Fallback',
+    ],
+  },
 
   // AI KIT GROUP
   {

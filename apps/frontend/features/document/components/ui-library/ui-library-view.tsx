@@ -74,6 +74,7 @@ import {
   ConfettiCannonDemo,
   DrawerSheetDemo,
   ImageLightboxDemo,
+  DataTableDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2820,6 +2821,8 @@ function renderFeedComponentDemo(
       return <VoiceNoteDemo />;
     case 'faq':
       return <FaqDemo />;
+    case 'data-table':
+      return <DataTableDemo />;
 
     // ==========================================
     // AI KIT GROUP (Interactive Demos)

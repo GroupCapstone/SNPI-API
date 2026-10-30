@@ -7,6 +7,7 @@ export * from './chip';
 export * from './fab';
 export * from './card';
 export * from './border-beam-card';
+export * from './data-table';
 export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';
