@@ -572,7 +572,7 @@ export function Example() {
       size="md"
       items={[
         { id: 'map', label: 'Map', icon: Pin },
-        { id: 'newswire', label: 'Newswire', icon: Newspaper, badge: 8, badgeColor: 'blue' },
+        { id: 'newswire', label: 'Newswire', icon: Newspaper },
         { id: 'post', label: 'Post', icon: FilePlus },
         { id: 'friends', label: 'Friends', icon: Contacts },
       ]}

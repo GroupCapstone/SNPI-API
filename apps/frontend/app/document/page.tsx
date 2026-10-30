@@ -3,11 +3,15 @@
 import * as React from 'react';
 import Link from 'next/link';
 
-import { Check, Copy, Server } from '@/components/icons';
+import { Check, Copy, Server, Layers } from '@/components/icons';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { Button } from '@/components/ui/button';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
-import { GeometricHeaderStamp, DocsStickyHeader } from '@/features/document/components/ui-library';
+import {
+  GeometricHeaderStamp,
+  DocsStickyHeader,
+  GeometricButton,
+} from '@/features/document/components/ui-library';
 import { cn } from '@/lib/utils';
 
 interface AccessRoleSpec {
@@ -493,13 +497,15 @@ console.log(payload.data);`;
               ON THIS PAGE
             </p>
 
-            <nav className="space-y-1.5 text-slate-600">
-              <Link
+            <nav className="space-y-2 text-slate-600">
+              <GeometricButton
                 href="/document/design-system"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#0056FF] bg-[#0056FF] px-3.5 py-2 text-xs font-bold tracking-wider text-white uppercase shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)] transition-all select-none hover:bg-[#0040C0]"
+                variant="blue"
+                size="sm"
+                icon={<Layers className="size-3.5" />}
               >
-                <span>UI Library</span>
-              </Link>
+                UI Library
+              </GeometricButton>
               <a href="#changelogs" className="block py-1 transition-colors hover:text-[#0056FF]">
                 Change Logs
               </a>
@@ -1034,15 +1040,15 @@ console.log(payload.data);`;
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => handleTest(item)}
+                        <GeometricButton
+                          size="sm"
+                          variant="outline"
                           disabled={isTestingThis}
-                          className="inline-flex h-8 items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 font-mono text-xs font-bold text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all hover:border-[#0056FF] hover:text-[#0056FF] disabled:opacity-50"
+                          onClick={() => handleTest(item)}
+                          icon={<Server className="size-3 text-[#0056FF]" />}
                         >
-                          <Server className="size-3.5 text-[#0056FF]" />
-                          <span>{isTestingThis ? 'Testing...' : 'Test Live'}</span>
-                        </button>
+                          {isTestingThis ? 'Testing...' : 'Test Live'}
+                        </GeometricButton>
                       </div>
                     </div>
 
@@ -1084,61 +1090,46 @@ console.log(payload.data);`;
                     <div className="overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
                       <div className="flex items-center justify-between border-b border-slate-200/80 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
                         <div className="flex items-center gap-1.5">
-                          <button
-                            type="button"
+                          <GeometricButton
+                            size="sm"
+                            variant={codeType === 'curl' ? 'blue' : 'outline'}
+                            isActive={codeType === 'curl'}
                             onClick={() => setCodeType('curl')}
-                            className={cn(
-                              'rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none',
-                              codeType === 'curl'
-                                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_6px_rgba(0,86,255,0.2)]'
-                                : 'border border-slate-200 bg-white text-slate-600 hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                            )}
                           >
                             cURL
-                          </button>
-                          <button
-                            type="button"
+                          </GeometricButton>
+                          <GeometricButton
+                            size="sm"
+                            variant={codeType === 'ts' ? 'blue' : 'outline'}
+                            isActive={codeType === 'ts'}
                             onClick={() => setCodeType('ts')}
-                            className={cn(
-                              'rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none',
-                              codeType === 'ts'
-                                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_6px_rgba(0,86,255,0.2)]'
-                                : 'border border-slate-200 bg-white text-slate-600 hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                            )}
                           >
                             TypeScript
-                          </button>
-                          <button
-                            type="button"
+                          </GeometricButton>
+                          <GeometricButton
+                            size="sm"
+                            variant={codeType === 'json' ? 'blue' : 'outline'}
+                            isActive={codeType === 'json'}
                             onClick={() => setCodeType('json')}
-                            className={cn(
-                              'rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold tracking-wider uppercase transition-all select-none',
-                              codeType === 'json'
-                                ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_6px_rgba(0,86,255,0.2)]'
-                                : 'border border-slate-200 bg-white text-slate-600 hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                            )}
                           >
                             Response
-                          </button>
+                          </GeometricButton>
                         </div>
 
-                        <button
-                          type="button"
+                        <GeometricButton
+                          size="sm"
+                          variant="outline"
                           onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
-                          className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-xs transition-all select-none hover:border-[#0056FF] hover:text-[#0056FF]"
-                        >
-                          {copiedId === item.id ? (
-                            <>
+                          icon={
+                            copiedId === item.id ? (
                               <Check className="size-3 text-emerald-600" />
-                              <span className="font-semibold text-emerald-700">Copied</span>
-                            </>
-                          ) : (
-                            <>
+                            ) : (
                               <Copy className="size-3 text-slate-600" />
-                              <span>Copy</span>
-                            </>
-                          )}
-                        </button>
+                            )
+                          }
+                        >
+                          {copiedId === item.id ? 'Copied' : 'Copy'}
+                        </GeometricButton>
                       </div>
 
                       <pre className="max-h-64 overflow-x-auto bg-white p-3.5 font-mono text-xs leading-relaxed text-slate-800">

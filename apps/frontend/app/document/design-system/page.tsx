@@ -48,6 +48,12 @@ import {
   Newspaper,
   FilePlus,
   Contacts,
+  Monitor,
+  Briefcase,
+  Wind,
+  Zap,
+  ShieldCheck,
+  Droplets,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
@@ -198,152 +204,82 @@ export default function DesignSystemPage() {
               {/* Navigation Links */}
               <div className="space-y-4 font-sans text-xs">
                 <div>
-                  <div className="space-y-1.5">
-                    <button
-                      type="button"
+                  <div className="space-y-2">
+                    <GeometricButton
+                      variant="blue"
+                      size="sm"
+                      attachedTag="01"
+                      isActive={activeTab === 'catalog'}
                       onClick={() => {
                         setActiveTab('catalog');
                         scrollToSection('component-gallery');
                       }}
-                      className={cn(
-                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
-                        activeTab === 'catalog'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
-                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                      )}
+                      className="w-full justify-start"
                     >
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
-                            activeTab === 'catalog'
-                              ? 'bg-[#000B26] text-white'
-                              : 'bg-slate-100 text-slate-600',
-                          )}
-                        >
-                          01
-                        </span>
-                        <span className="tracking-wider uppercase">Catalog</span>
-                      </div>
-                    </button>
+                      Catalog
+                    </GeometricButton>
 
-                    <button
-                      type="button"
+                    <GeometricButton
+                      variant="green"
+                      size="sm"
+                      attachedTag="02"
+                      isActive={activeTab === 'playground'}
                       onClick={() => {
                         setActiveTab('playground');
                         scrollToSection('interactive-stage');
                       }}
-                      className={cn(
-                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
-                        activeTab === 'playground'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
-                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                      )}
+                      className="w-full justify-start"
                     >
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
-                            activeTab === 'playground'
-                              ? 'bg-[#000B26] text-white'
-                              : 'bg-slate-100 text-slate-600',
-                          )}
-                        >
-                          02
-                        </span>
-                        <span className="tracking-wider uppercase">Playground</span>
-                      </div>
-                    </button>
+                      Playground
+                    </GeometricButton>
 
-                    <button
-                      type="button"
+                    <GeometricButton
+                      variant="purple"
+                      size="sm"
+                      attachedTag="03"
+                      isActive={activeTab === 'blueprint'}
                       onClick={() => {
                         setActiveTab('blueprint');
                         scrollToSection('brand-blueprint');
                       }}
-                      className={cn(
-                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
-                        activeTab === 'blueprint'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
-                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                      )}
+                      className="w-full justify-start"
                     >
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
-                            activeTab === 'blueprint'
-                              ? 'bg-[#000B26] text-white'
-                              : 'bg-slate-100 text-slate-600',
-                          )}
-                        >
-                          03
-                        </span>
-                        <span className="tracking-wider uppercase">Brand Colors</span>
-                      </div>
-                    </button>
+                      Brand Colors
+                    </GeometricButton>
 
-                    <button
-                      type="button"
+                    <GeometricButton
+                      variant="orange"
+                      size="sm"
+                      attachedTag="04"
+                      isActive={activeTab === 'dual-mode'}
                       onClick={() => {
                         setActiveTab('dual-mode');
                         scrollToSection('dual-mode-system');
                       }}
-                      className={cn(
-                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
-                        activeTab === 'dual-mode'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
-                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                      )}
+                      className="w-full justify-start"
                     >
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
-                            activeTab === 'dual-mode'
-                              ? 'bg-[#000B26] text-white'
-                              : 'bg-slate-100 text-slate-600',
-                          )}
-                        >
-                          04
-                        </span>
-                        <span className="tracking-wider uppercase">Dual Mode UI</span>
-                      </div>
-                    </button>
+                      Dual Mode UI
+                    </GeometricButton>
 
-                    <button
-                      type="button"
+                    <GeometricButton
+                      variant="cyan"
+                      size="sm"
+                      attachedTag="05"
+                      isActive={activeTab === 'top-nav'}
                       onClick={() => {
                         setActiveTab('top-nav');
                         scrollToSection('top-nav-style');
                       }}
-                      className={cn(
-                        'flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left font-medium transition-all select-none',
-                        activeTab === 'top-nav'
-                          ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.2)]'
-                          : 'border-slate-200/80 bg-white/90 text-slate-700 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:border-[#0056FF]/40 hover:text-[#0056FF]',
-                      )}
+                      className="w-full justify-start"
                     >
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-black',
-                            activeTab === 'top-nav'
-                              ? 'bg-[#000B26] text-white'
-                              : 'bg-slate-100 text-slate-600',
-                          )}
-                        >
-                          05
-                        </span>
-                        <span className="tracking-wider uppercase">Top Nav</span>
-                      </div>
-                    </button>
+                      Top Nav
+                    </GeometricButton>
                   </div>
                 </div>
 
                 {/* 10 Core UI Components List */}
                 <div className="border-t border-slate-200/80 pt-4">
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     {filteredComponents.length === 0 ? (
                       <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
                         No matching components found
@@ -353,24 +289,28 @@ export default function DesignSystemPage() {
                         const isSelected =
                           activeTab === 'playground' && selectedComponentId === comp.id;
                         return (
-                          <button
+                          <GeometricButton
                             key={comp.id}
-                            type="button"
+                            variant={isSelected ? 'blue' : 'outline'}
+                            size="sm"
+                            isActive={isSelected}
                             onClick={() => {
                               setSelectedComponentId(comp.id);
                               setActiveTab('playground');
                               scrollToSection('interactive-stage');
                             }}
-                            className={cn(
-                              'flex w-full items-center justify-between rounded-lg border px-2.5 py-1.5 text-left text-xs transition-all select-none',
-                              isSelected
-                                ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_8px_rgba(0,86,255,0.2)]'
-                                : 'border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-slate-950',
-                            )}
+                            className="w-full justify-start text-[11px]"
+                            icon={
+                              <span
+                                className={cn(
+                                  'size-1.5 rounded-full',
+                                  isSelected ? 'bg-white' : 'bg-slate-400',
+                                )}
+                              />
+                            }
                           >
-                            <span className="truncate">{comp.name}</span>
-                            {isSelected && <span className="h-1.5 w-1.5 rounded-full bg-white" />}
-                          </button>
+                            {comp.name}
+                          </GeometricButton>
                         );
                       })
                     )}
@@ -487,7 +427,7 @@ export default function DesignSystemPage() {
                     </span>
                   </div>
 
-                  {/* Hanging Tabs Suspended from Ceiling */}
+                  {/* Hanging Tabs Suspended from Ceiling (Centered on Page, Zero Number Labels) */}
                   <div className="-mb-[1px] flex justify-center">
                     <HangingTabsNav
                       activeId={hangingNavTab}
@@ -495,13 +435,7 @@ export default function DesignSystemPage() {
                       size={hangingNavSize}
                       items={[
                         { id: 'map', label: 'Map', icon: Pin },
-                        {
-                          id: 'newswire',
-                          label: 'Newswire',
-                          icon: Newspaper,
-                          badge: hangingNavBadge > 0 ? hangingNavBadge : undefined,
-                          badgeColor: 'blue',
-                        },
+                        { id: 'newswire', label: 'Newswire', icon: Newspaper },
                         { id: 'post', label: 'Post', icon: FilePlus },
                         { id: 'friends', label: 'Friends', icon: Contacts },
                       ]}
@@ -515,50 +449,104 @@ export default function DesignSystemPage() {
                     <span className="font-sans text-xs font-semibold text-slate-600">
                       Active Tab:
                     </span>
-                    <span className="rounded-md border border-[#0056FF]/30 bg-[#0056FF]/10 px-2 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
+                    <span className="rounded-full border-2 border-[#0056FF] bg-blue-50/80 px-3 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
                       {hangingNavTab.toUpperCase()}
                     </span>
                   </div>
 
-                  {/* Size Switcher & Badge Modifier */}
-                  <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-1">
-                      {(['sm', 'md', 'lg'] as const).map((sz) => (
-                        <button
-                          key={sz}
-                          type="button"
-                          onClick={() => setHangingNavSize(sz)}
-                          className={cn(
-                            'rounded px-2.5 py-1 font-mono text-[11px] font-bold uppercase transition-all select-none',
-                            hangingNavSize === sz
-                              ? 'bg-[#0056FF] text-white'
-                              : 'text-slate-600 hover:bg-slate-100',
-                          )}
-                        >
-                          {sz}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1 font-mono text-xs">
-                      <span className="text-slate-500">Badge Count:</span>
-                      <button
-                        type="button"
-                        onClick={() => setHangingNavBadge((b) => Math.max(0, b - 1))}
-                        className="rounded px-1.5 py-0.5 font-bold select-none hover:bg-slate-100"
+                  {/* Size Switcher Using Image 2 Pill Button Style */}
+                  <div className="flex items-center gap-1.5">
+                    {(['sm', 'md', 'lg'] as const).map((sz) => (
+                      <GeometricButton
+                        key={sz}
+                        variant={hangingNavSize === sz ? 'blue' : 'outline'}
+                        size="sm"
+                        isActive={hangingNavSize === sz}
+                        onClick={() => setHangingNavSize(sz)}
                       >
-                        -
-                      </button>
-                      <span className="font-bold text-[#0056FF]">{hangingNavBadge}</span>
-                      <button
-                        type="button"
-                        onClick={() => setHangingNavBadge((b) => b + 1)}
-                        className="rounded px-1.5 py-0.5 font-bold select-none hover:bg-slate-100"
-                      >
-                        +
-                      </button>
-                    </div>
+                        {sz.toUpperCase()}
+                      </GeometricButton>
+                    ))}
                   </div>
+                </div>
+              </div>
+
+              {/* Image 2 Inspired: Six Capsule Pill Buttons System */}
+              <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                <div className="flex flex-col gap-1 border-b border-slate-100 pb-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <h3 className="font-sans text-sm font-bold text-slate-900">
+                      Capsule Pill Buttons Palette
+                    </h3>
+                    <p className="font-sans text-xs text-slate-500">
+                      2px colored stroke, soft pastel surface tint, and squircle icon tiles
+                    </p>
+                  </div>
+                  <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                    SNP-SMS Pill Standard
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+                  {/* 1. Digital - Blue */}
+                  <GeometricButton
+                    variant="blue"
+                    size="md"
+                    icon={<Monitor className="size-4" />}
+                    className="w-full"
+                  >
+                    Digital
+                  </GeometricButton>
+
+                  {/* 2. Finance - Green */}
+                  <GeometricButton
+                    variant="green"
+                    size="md"
+                    icon={<Briefcase className="size-4" />}
+                    className="w-full"
+                  >
+                    Finance
+                  </GeometricButton>
+
+                  {/* 3. Simple - Purple */}
+                  <GeometricButton
+                    variant="purple"
+                    size="md"
+                    icon={<Wind className="size-4" />}
+                    className="w-full"
+                  >
+                    Simple
+                  </GeometricButton>
+
+                  {/* 4. Fast - Orange */}
+                  <GeometricButton
+                    variant="orange"
+                    size="md"
+                    icon={<Zap className="size-4" />}
+                    className="w-full"
+                  >
+                    Fast
+                  </GeometricButton>
+
+                  {/* 5. Secure - Navy */}
+                  <GeometricButton
+                    variant="navy"
+                    size="md"
+                    icon={<ShieldCheck className="size-4" />}
+                    className="w-full"
+                  >
+                    Secure
+                  </GeometricButton>
+
+                  {/* 6. Fluid - Cyan */}
+                  <GeometricButton
+                    variant="cyan"
+                    size="md"
+                    icon={<Droplets className="size-4" />}
+                    className="w-full"
+                  >
+                    Fluid
+                  </GeometricButton>
                 </div>
               </div>
 
@@ -798,13 +786,9 @@ export default function DesignSystemPage() {
           <p className="text-sm text-slate-600">
             Siem Reap Science Wing B · Telemetry labs active with Gigabit Ethernet connectivity.
           </p>
-          <button
-            type="button"
-            onClick={() => setSheetOpen(false)}
-            className="flex h-10 w-full items-center justify-center rounded-xl bg-[#0056FF] text-xs font-bold text-white transition-colors hover:bg-[#0040C0]"
-          >
+          <GeometricButton variant="blue" className="w-full" onClick={() => setSheetOpen(false)}>
             Close Sheet
-          </button>
+          </GeometricButton>
         </div>
       </LibraryBottomSheet>
 
@@ -1001,20 +985,20 @@ function renderActivePlaygroundComponent(props: {
               will be preserved.
             </p>
             <div className="mt-4 flex items-center justify-end gap-2">
-              <button
-                type="button"
+              <GeometricButton
+                size="sm"
+                variant="outline"
                 onClick={() => props.setDialogDecision('Cancelled / Preserved')}
-                className="rounded-lg border border-slate-200 px-3 py-1.5 font-sans text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-50"
               >
                 Cancel
-              </button>
-              <button
-                type="button"
+              </GeometricButton>
+              <GeometricButton
+                size="sm"
+                variant="blue"
                 onClick={() => props.setDialogDecision('Confirmed (Deferred to 2027)')}
-                className="rounded-lg bg-[#0056FF] px-3.5 py-1.5 font-sans text-xs font-bold text-white transition-colors hover:bg-[#0040C0]"
               >
                 Confirm Deferral
-              </button>
+              </GeometricButton>
             </div>
           </div>
 
@@ -1108,13 +1092,9 @@ function renderActivePlaygroundComponent(props: {
               onClick={() => props.setFabCount((c) => c + 1)}
               className="bg-[#0056FF] text-white hover:bg-[#0040C0]"
             />
-            <button
-              type="button"
-              onClick={() => props.setFabCount(0)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 font-sans text-xs font-semibold text-slate-600 hover:text-slate-900"
-            >
+            <GeometricButton size="sm" variant="outline" onClick={() => props.setFabCount(0)}>
               Reset
-            </button>
+            </GeometricButton>
           </div>
           <span className="font-mono text-xs text-slate-600">
             Total Tap Events Recorded: {props.fabCount}
@@ -1280,13 +1260,7 @@ function renderActivePlaygroundComponent(props: {
                   size={props.hangingNavSize}
                   items={[
                     { id: 'map', label: 'Map', icon: Pin },
-                    {
-                      id: 'newswire',
-                      label: 'Newswire',
-                      icon: Newspaper,
-                      badge: props.hangingNavBadge > 0 ? props.hangingNavBadge : undefined,
-                      badgeColor: 'blue',
-                    },
+                    { id: 'newswire', label: 'Newswire', icon: Newspaper },
                     { id: 'post', label: 'Post', icon: FilePlus },
                     { id: 'friends', label: 'Friends', icon: Contacts },
                   ]}
@@ -1301,44 +1275,19 @@ function renderActivePlaygroundComponent(props: {
             </div>
           </div>
 
-          {/* Interactive Controls */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-1">
-              {(['sm', 'md', 'lg'] as const).map((sz) => (
-                <button
-                  key={sz}
-                  type="button"
-                  onClick={() => props.setHangingNavSize(sz)}
-                  className={cn(
-                    'rounded px-2.5 py-1 font-mono text-[11px] font-bold uppercase transition-all select-none',
-                    props.hangingNavSize === sz
-                      ? 'bg-[#0056FF] text-white'
-                      : 'text-slate-600 hover:bg-slate-100',
-                  )}
-                >
-                  {sz}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1 font-mono text-xs">
-              <span className="text-slate-500">Badge:</span>
-              <button
-                type="button"
-                onClick={() => props.setHangingNavBadge((b) => Math.max(0, b - 1))}
-                className="rounded px-1.5 py-0.5 font-bold hover:bg-slate-100"
+          {/* Interactive Size Controls */}
+          <div className="flex items-center justify-center gap-2">
+            {(['sm', 'md', 'lg'] as const).map((sz) => (
+              <GeometricButton
+                key={sz}
+                size="sm"
+                variant={props.hangingNavSize === sz ? 'blue' : 'outline'}
+                isActive={props.hangingNavSize === sz}
+                onClick={() => props.setHangingNavSize(sz)}
               >
-                -
-              </button>
-              <span className="font-bold text-[#0056FF]">{props.hangingNavBadge}</span>
-              <button
-                type="button"
-                onClick={() => props.setHangingNavBadge((b) => b + 1)}
-                className="rounded px-1.5 py-0.5 font-bold hover:bg-slate-100"
-              >
-                +
-              </button>
-            </div>
+                {sz.toUpperCase()}
+              </GeometricButton>
+            ))}
           </div>
         </div>
       );

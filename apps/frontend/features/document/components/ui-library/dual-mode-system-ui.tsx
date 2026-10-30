@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { GeometricButton } from './geometric-tag-primitives';
 
 export interface DualModeSystemUIProps {
   className?: string;
@@ -137,43 +138,31 @@ export function DualModeSystemUI({ className }: DualModeSystemUIProps) {
           </h3>
         </div>
 
-        <div className="flex items-center gap-1.5 font-sans text-xs">
-          <button
-            type="button"
+        <div className="flex items-center gap-2 font-sans text-xs">
+          <GeometricButton
+            size="sm"
+            variant={activeView === 'side-by-side' ? 'blue' : 'outline'}
+            isActive={activeView === 'side-by-side'}
             onClick={() => setActiveView('side-by-side')}
-            className={cn(
-              'rounded-none border px-3 py-1.5 font-bold uppercase transition-colors select-none',
-              activeView === 'side-by-side'
-                ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300',
-            )}
           >
             Side by Side
-          </button>
-          <button
-            type="button"
+          </GeometricButton>
+          <GeometricButton
+            size="sm"
+            variant={activeView === 'light' ? 'blue' : 'outline'}
+            isActive={activeView === 'light'}
             onClick={() => setActiveView('light')}
-            className={cn(
-              'rounded-none border px-3 py-1.5 font-bold uppercase transition-colors select-none',
-              activeView === 'light'
-                ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300',
-            )}
           >
             Light Only
-          </button>
-          <button
-            type="button"
+          </GeometricButton>
+          <GeometricButton
+            size="sm"
+            variant={activeView === 'dark' ? 'blue' : 'outline'}
+            isActive={activeView === 'dark'}
             onClick={() => setActiveView('dark')}
-            className={cn(
-              'rounded-none border px-3 py-1.5 font-bold uppercase transition-colors select-none',
-              activeView === 'dark'
-                ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300',
-            )}
           >
             Dark Only
-          </button>
+          </GeometricButton>
         </div>
       </div>
 
