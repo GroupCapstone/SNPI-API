@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.8 (30.10.2026) - `5435db2`
+
+- Remove toolbar gray scrollbar and implement continuous line tracker navigation without dots
+
+### Version 0.2.8 (30.10.2026) - `79764a7`
+
+- Record v0.2.8 release checkpoint in real-time changelog and document portal
+
 ### Version 0.2.8 (30.10.2026) - `7e62686`
 
 - Bump version to 0.2.8 and standardize shared package build lifecycle in CI, Docker, and typecheck
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `93d79a9`
 
 - Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake
-
-### Version 0.2.8 (30.10.2026) - `545c574`
-
-- Synchronize real-time changelog for Multi-Step Form Wizard
-
-### Version 0.2.8 (30.10.2026) - `4b93117`
-
-- Implement 10-point Multi-Step Form Wizard with per-step validation, sessionStorage persistence, and summary review
 
