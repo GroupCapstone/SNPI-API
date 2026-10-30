@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
     "seed": "tsx src/scripts/seed.ts",
+    "seed:complete": "tsx src/scripts/seed-complete-test-data.ts",
+    "seed:protect": "rm -f src/scripts/seed-complete-test-data.ts && echo '[PROTECT] Temporary seeder script safely deleted.'",
     "seed:clean": "tsx src/scripts/seed-clean.ts",
     "db:clear": "tsx src/scripts/clear-db.ts",
     "db:reset": "tsx src/scripts/clear-db.ts && tsx src/scripts/seed.ts",

@@ -48,21 +48,22 @@ export const bootstrapBaseline = async (): Promise<void> => {
     }
 
     // 3. Ensure academic year exists
-    const academicYear = await AcademicYearModel.findOne({
+    const hasCurrentYear = await AcademicYearModel.findOne({
       schoolId: school._id,
-      code: '2026-2027',
+      isCurrent: true,
+      isDeleted: false,
     });
-    if (!academicYear) {
+    if (!hasCurrentYear) {
       await AcademicYearModel.create({
         schoolId: school._id,
         name: 'Academic Year 2026-2027',
-        code: '2026-2027',
+        code: 'AY-2026-2027',
         startDate: new Date('2026-09-01'),
         endDate: new Date('2027-08-31'),
         isCurrent: true,
         status: 'active',
       });
-      logger.info('[Bootstrap] Created default academic year 2026-2027');
+      logger.info('[Bootstrap] Created default academic year AY-2026-2027');
     }
 
     // 4. Ensure core system roles exist

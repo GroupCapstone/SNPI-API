@@ -6,11 +6,8 @@ const getServerApiBaseUrl = (): string => {
     ? 'https://api.kesararamwithdigital.tech/api/v1'
     : 'http://localhost:4000/api/v1';
 
-  const configuredUrl = process.env.BACKEND_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL;
   const backendUrl =
-    requiresHttps && configuredUrl?.startsWith('http://')
-      ? defaultUrl
-      : configuredUrl || defaultUrl;
+    process.env.BACKEND_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL || defaultUrl;
 
   const parsedUrl = new URL(backendUrl);
   const apiPath = parsedUrl.pathname.replace(/\/$/, '');
