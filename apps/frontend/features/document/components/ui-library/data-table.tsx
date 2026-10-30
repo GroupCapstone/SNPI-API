@@ -13,7 +13,7 @@ export interface DataTableColumn<T> {
   type?: 'string' | 'number' | 'date';
   align?: 'left' | 'center' | 'right';
   width?: string;
-  render?: (value: any, row: T) => React.ReactNode; // eslint-disable-line @typescript-eslint/no-explicit-any
+  render?: (value: unknown, row: T) => React.ReactNode;
 }
 
 export interface DataTableProps<T> {
@@ -63,8 +63,7 @@ export function StatusPill({ status }: { status: string }) {
   );
 }
 
-export function DataTable<T extends Record<string, any>>({
-  // eslint-disable-line @typescript-eslint/no-explicit-any
+export function DataTable<T extends Record<string, unknown>>({
   data,
   columns,
   initialPageSize = 10,
@@ -111,8 +110,7 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   // 05 Comparator: Type-aware and Stable
-  const getNestedValue = (obj: any, key: string) => {
-    // eslint-disable-line @typescript-eslint/no-explicit-any
+  const getNestedValue = (obj: Record<string, unknown>, key: string) => {
     if (!obj) return '';
     return obj[key];
   };
