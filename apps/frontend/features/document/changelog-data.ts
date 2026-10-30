@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "28735c8",
+    "description": "Implement WCAG 2.1 Color Contrast Checker with relative luminance math, AA/AAA badges, and live preview"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "7696a73",
+    "description": "Synchronize real-time changelog for Border Beam Card"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "a08574e",
     "description": "Upgrade 8-pillar Border Beam Card with ResizeObserver geometry, reduced-motion freeze, and tabular pricing"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "4986f81",
     "description": "Implement Cipher Decode Nav & Headline with per-character timeline, throttled glyph shimmer, and live lock counter"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "6d0689e",
-    "description": "Synchronize real-time changelog for Spotlight Bento Grid implementation"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "4560c0b",
-    "description": "Implement Admin Audit Health Spotlight Bento Grid with rAF-throttled pointer, border spotlight, cascading deploy log, and self-drawing sparkline"
   }
 ];

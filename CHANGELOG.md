@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `28735c8`
+
+- Implement WCAG 2.1 Color Contrast Checker with relative luminance math, AA/AAA badges, and live preview
+
+### Version 0.2.7 (30.10.2026) - `7696a73`
+
+- Synchronize real-time changelog for Border Beam Card
+
 ### Version 0.2.7 (30.10.2026) - `a08574e`
 
 - Upgrade 8-pillar Border Beam Card with ResizeObserver geometry, reduced-motion freeze, and tabular pricing
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `4986f81`
 
 - Implement Cipher Decode Nav & Headline with per-character timeline, throttled glyph shimmer, and live lock counter
-
-### Version 0.2.7 (30.10.2026) - `6d0689e`
-
-- Synchronize real-time changelog for Spotlight Bento Grid implementation
-
-### Version 0.2.7 (30.10.2026) - `4560c0b`
-
-- Implement Admin Audit Health Spotlight Bento Grid with rAF-throttled pointer, border spotlight, cascading deploy log, and self-drawing sparkline
 
