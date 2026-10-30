@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
+    "commitHash": "fb6aa66",
+    "description": "Record real-time commit checkpoint for Royal Blue brand system"
+  },
+  {
+    "version": "0.2.10",
+    "date": "31.10.2026",
     "commitHash": "d1b80a7",
     "description": "Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "d83c8d7",
     "description": "Implement 8-pillar Rich Text Editor with contenteditable surface, allowlist sanitizer, URL scheme guard, and HTML view"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "81b45b9",
-    "description": "Synchronize real-time changelog for Real-Time Data Chart"
   }
 ];
