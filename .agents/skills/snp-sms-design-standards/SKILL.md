@@ -28,6 +28,17 @@ All design standards, specifications, and component guides must strictly reside 
 - **Animating Container Bounds Manual**: `.agents/skills/snp-sms-design-standards/animating-container-bounds-manual.md` (Two-div measurement/animation separation, zero-dependency useMeasure hook, mount zero-guard)
 - **Laws of UX Psychology Manual**: `.agents/skills/snp-sms-design-standards/laws-of-ux-psychology-manual.md` (Fitts's Law, Hick's Law, Miller's Law, Doherty Threshold <400ms, Postel's Law)
 - **Mastering Animate Presence Manual**: `.agents/skills/snp-sms-design-standards/mastering-animate-presence-manual.md` (Presence lifecycle, useIsPresent, usePresence safeToRemove async exits, propagate, sync/wait/popLayout modes)
+- **Sidebar Architecture Manual**: `.agents/skills/snp-sms-design-standards/sidebar-design-manual.md` (Header, quick action pills, nested groups, count badges, sticky positioning)
+- **Color Theory Standards Manual**: `.agents/skills/snp-sms-design-standards/color-theory-manual.md` (60-30-10 rule, functional palettes, accessible contrast, emotional psychology)
+- **Button Design System Manual**: `.agents/skills/snp-sms-design-standards/button-design-system-manual.md` (4 states, 3 variants, 44x44px touch targets, full-width mobile CTAs)
+- **Scroll Patterns Manual**: `.agents/skills/snp-sms-design-standards/scroll-patterns-manual.md` (9 core patterns: sticky, scroll snap, scroll driven, parallax, infinite scroll)
+- **Profile Settings Manual**: `.agents/skills/snp-sms-design-standards/profile-settings-manual.md` (8 UX principles, categorization, universal icons, instant search filtering)
+- **Dark Mode Elevation Manual**: `.agents/skills/snp-sms-design-standards/dark-mode-elevation-manual.md` (5-level elevation ladder, surface lightness, 87/60/38 typography ratios)
+- **Linear Blur Glassmorphism Manual**: `.agents/skills/snp-sms-design-standards/linear-blur-glassmorphism-manual.md` (Progressive multi-layer blur, subtle borders, luminance highlights)
+- **Production Deploy Checklist**: `.agents/skills/snp-sms-design-standards/production-deploy-checklist.md` (20-point pre-launch quality gate: responsiveness, SEO, a11y, CWV)
+- **Foundational UX/UI Laws Manual**: `.agents/skills/snp-sms-design-standards/ux-ui-laws-manual.md` (Jakob's, Fitts's, Miller's, Hick's, Proximity, and Tesler's Laws)
+- **Interactive Effects Catalog**: `.agents/skills/snp-sms-design-standards/interactive-effects-manual.md` (18+ effect styles: kinetic hook, gravity drop, NLE timeline, jiggle delete)
+- **System Architecture Lexicon**: `.agents/skills/snp-sms-design-standards/system-architecture-lexicon.md` (1,111 concepts: systems, concurrency, cryptography, LLM, and AI agents)
 
 Do not fragment design rules across multiple folders. Maintain all design documentation in this single location.
 
@@ -182,4 +193,45 @@ To apply custom brand fonts to documentation and component library surfaces with
   - `Gradient 1 (Futurewave)`: `#2277FF` via `#5C93FF` to `#AEC2FF`
   - `Gradient 2 (Midnight Surge)`: `#000B26` via `#002D8A` to `#0056FF`
 - **Zero Real Frontend Impact**: All admin dashboard routes (`/(dashboard)/*`) continue referencing Google Sans and system font stacks in `globals.css`.
+
+---
+
+## 7. Mathematical Design Specifications & Token Formulations
+
+To ensure optical balance, mathematical harmony, and enterprise consistency across all components:
+
+### 7.1 Border Radius Formula
+Nested elements must maintain concentric curvature so that inner corners do not collide or look distorted:
+$$\text{Inner Radius} = \text{Outer Radius} - \text{Padding}$$
+- *Example*: Card outer radius = `24px`, internal padding = `8px` $\implies$ Inner button radius = `16px`.
+- *Example*: Button outer radius = `12px`, internal icon padding = `4px` $\implies$ Inner icon badge radius = `8px`.
+
+### 7.2 Typography & Scale Rules
+- **Line Height**: $\text{Line Height} = \text{Font Size} \times (1.4 \text{ to } 1.6)$ (Body 16px uses 24px line-height).
+- **Type Scale Ratio**: $\text{Current Size} \times 1.25$ (Major Third progression: 12px, 15px, 18.75px, 23.4px, 29.3px, 36.6px).
+- **Spacing Scale**: Multiples of $4\text{px}$ or $8\text{px}$ (`4px`, `8px`, `12px`, `16px`, `24px`, `32px`, `48px`, `64px`).
+- **Touch Target Size**: Minimum $44 \times 44\text{px}$ bounding box for all interactive controls (using `::before` pseudo-element expansion for visually compact triggers).
+- **Color Contrast Formula**:
+  $$\text{Contrast Ratio} = \frac{L_1 + 0.05}{L_2 + 0.05}$$
+  Enforce WCAG 2.1 AA compliance: $\ge 4.5:1$ for standard body text, $\ge 3.0:1$ for large text ($\ge 18\text{pt}$ or bold $\ge 14\text{pt}$) and active UI boundaries.
+
+### 7.3 The 60-30-10 Color Balance System
+- **60% Dominant (Canvas & Background)**: Deep obsidian canvas (`#0E0E10` or `#121212`) establishing visual calm.
+- **30% Secondary (Cards & Structure)**: Elevated surfaces (`#161619` / `#1E1E1E`), sidebars, tables, and borders.
+- **10% Accent (Action & Focus)**: Information Blue (`#2563EB`), Emerald Green (`#059669`), or Signal Gold (`#D97706`) reserved strictly for CTAs, selected tabs, active indicators, and status badges.
+
+### 7.4 Dark Mode Elevation Ladder
+Elevation is expressed through progressive surface lightness overlay rather than shadows:
+- **0dp (Canvas Background)**: `#121212` (0% white overlay)
+- **1dp (Cards & Tables)**: `#1E1E1E` (5% white overlay)
+- **4dp (Elevated Modals & Popovers)**: `#272727` (9% white overlay)
+- **8dp (Navigation Menus & Sheets)**: `#2E2E2E` (12% white overlay)
+- **24dp (Dialogs & Tooltips)**: `#383838` (16% white overlay)
+
+### 7.5 Typography Contrast Ratios in Dark Mode
+To prevent visual fatigue and halo glare, avoid `#FFFFFF` for continuous reading:
+- **High Emphasis Text (Headings, Active Labels)**: 87% White (`#E0E0E0` / `text-zinc-100`)
+- **Medium Emphasis Text (Body, Descriptions)**: 60% White (`#A0A0A0` / `text-zinc-400`)
+- **Disabled & Decorative Text (Hints, Icons)**: 38% White (`#6C6C6C` / `text-zinc-600`)
+
 
