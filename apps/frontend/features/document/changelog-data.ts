@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "d83c8d7",
+    "description": "Implement 8-pillar Rich Text Editor with contenteditable surface, allowlist sanitizer, URL scheme guard, and HTML view"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "81b45b9",
+    "description": "Synchronize real-time changelog for Real-Time Data Chart"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "afd8591",
     "description": "Implement 10-pillar Real-Time Data Chart with Canvas 60fps streaming, Bezier splines, dot grid, glow, and hover crosshair"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "24f7d0f",
     "description": "Implement Interactive Data Table with tri-state sorting, sticky header, debounced search, status pills, and boundary-clamped pagination"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "58dacb7",
-    "description": "Record v0.2.7 release checkpoint in real-time changelog and document portal"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "d585ab0",
-    "description": "Add legal and crawl footer links, implement dynamic real-time version tracker v0.2.7, and configure sitemap and robots routes"
   }
 ];
