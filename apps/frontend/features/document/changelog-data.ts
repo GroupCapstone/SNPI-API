@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
+    "commitHash": "8028088",
+    "description": "Apply floating capsule dock nav and purge legacy hanging tabs header"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "eef9ef6",
+    "description": "Implement paper plane rail toc with motion flight and apply 0px border 4px radius button standard"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
     "commitHash": "8bc39a4",
     "description": "Record universal ai agent prompt and precision line tracker navigation standards"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "f35a661",
     "description": "Synchronize real-time changelog for Searchable Dropdown"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "61896be",
-    "description": "Implement Searchable Dropdown with ARIA combobox contract, active descendant, removable chips, and match highlights"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "2e43da5",
-    "description": "Synchronize real-time changelog for Date Picker component"
   }
 ];

@@ -32,12 +32,13 @@ import {
 } from '@/components/icons';
 
 import { RareUiNavigationMenu } from '../navigation-menu';
+import { CapsuleDockNav } from '../capsule-dock-nav';
 
 // ==========================================
-// 0. CAPSULE DOCK NAV (Rare UI Floating 3-Island Navigation Menu)
+// 0. CAPSULE DOCK NAV (Floating 3-Island Navigation Menu)
 // ==========================================
 export function CapsuleDockDemo() {
-  return <RareUiNavigationMenu />;
+  return <CapsuleDockNav />;
 }
 
 // ==========================================

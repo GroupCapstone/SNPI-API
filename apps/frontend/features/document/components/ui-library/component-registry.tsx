@@ -1244,111 +1244,6 @@ export function Example() {
     ],
   },
   {
-    id: 'hanging-tabs-nav',
-    name: 'Hanging Tabs Nav',
-    category: 'Navigation',
-    paradigm: 'Trapezoid Ceiling Paradigm',
-    description: 'Inverted trapezoid tabs anchored to the top header.',
-    explanation:
-      'The Hanging Tabs Nav suspends navigation tabs directly from the application header baseline. Inspired by index dividers in physical filing cabinets, its inverted trapezoid geometry provides a distinctive, tactile sense of workspace organization while maintaining centered page balance.',
-    supportedStates: [
-      'Map Active',
-      'Newswire Active',
-      'Post Active',
-      'Friends Active',
-      'Size Small',
-      'Size Medium',
-      'Size Large',
-    ],
-    realWorldExamples: [
-      {
-        title: 'Master Developer Documentation Portal',
-        scenario:
-          'Developers switch between "Open API", "Library", and "Changelog" in the top bar.',
-        impact: 'Zero number labels, centered on page, with instantaneous smooth page switching.',
-      },
-      {
-        title: 'Campus Workspace Mode Selector',
-        scenario: 'Administrators switch between "Map", "Newswire", "Post", and "Friends".',
-        impact:
-          'Tactile folder metaphor anchors user attention to the current application workspace.',
-      },
-    ],
-    uxPsychology: [
-      {
-        principle: 'Skeuomorphic Folder Divider Familiarity',
-        detail:
-          'Draws upon decades of physical paper indexing intuition, making active tab state instantly distinguishable.',
-      },
-      {
-        principle: 'Ceiling Anchoring & Visual Balance',
-        detail:
-          'Hanging from the header baseline creates an organized spatial ceiling, framing the content below.',
-      },
-    ],
-    usageGuidelines: [
-      {
-        doItem: 'Center navigation on the page with zero number labels for maximal elegance.',
-        dontItem: 'Add colored background blocks behind icons or wrap tabs onto multiple lines.',
-      },
-      {
-        doItem: 'Use vector-smooth non-scaling SVG geometry to ensure continuous 2px strokes.',
-        dontItem:
-          'Use hanging tabs inside compact mobile navigation bars where horizontal space is constrained.',
-      },
-    ],
-    implementationNotes: [
-      'Built with smooth SVG paths featuring nonScalingStroke to preserve 2px continuous border width.',
-      'Active tab highlighted with Royal Blue (#0056FF) stroke and bold title typography.',
-      'Supports three standard sizes: sm (h-12), md (h-14), and lg (h-16).',
-    ],
-    codeSnippet: `import { HangingTabsNav } from '@/features/document/components/ui-library';
-import { Newspaper, Pin, FilePlus } from '@/components/icons';
-
-export function Example() {
-  const [tab, setTab] = React.useState('newswire');
-
-  return (
-    <HangingTabsNav
-      activeId={tab}
-      onSelect={setTab}
-      size="md"
-      items={[
-        { id: 'map', label: 'Map', icon: Pin },
-        { id: 'newswire', label: 'Newswire', icon: Newspaper },
-        { id: 'post', label: 'Post', icon: FilePlus },
-      ]}
-    />
-  );
-}`,
-    props: [
-      {
-        name: 'items',
-        type: 'HangingTabItem[]',
-        default: '[]',
-        description: 'Array of id, label, icon, and optional badge objects.',
-      },
-      {
-        name: 'activeId',
-        type: 'string',
-        default: '—',
-        description: 'Id of the currently active tab.',
-      },
-      {
-        name: 'onSelect',
-        type: '(id: string) => void',
-        default: '—',
-        description: 'Callback invoked when a tab is pressed.',
-      },
-      {
-        name: 'size',
-        type: "'sm' | 'md' | 'lg'",
-        default: "'md'",
-        description: 'Height and scale preset.',
-      },
-    ],
-  },
-  {
     id: 'input',
     name: 'Pill Input & Search',
     category: 'Inputs',
@@ -2803,7 +2698,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
   // ==========================================
   {
     id: 'capsule-dock-nav',
-    name: 'Navigation Menu (Rare UI Floating Dock)',
+    name: 'Capsule Dock Nav',
     category: 'Navigation',
     paradigm: 'Floating 3-Island Mega Menu Standard',
     description:
@@ -2812,18 +2707,24 @@ const columns: DataTableColumn<StudentRecord>[] = [
       'Site headers whose top level items open panels of links in a shared animated viewport. Features columns with summaries, glyphs, and a call-to-action button, mixing panel triggers with plain links.',
     props: [
       {
-        name: 'viewport',
-        type: 'boolean',
-        description: 'Enable shared NavigationMenuViewport animation.',
+        name: 'repoUrl',
+        type: 'string',
+        default: "'https://github.com/shiliaiwei/SNP-SMS'",
+        description: 'Target GitHub repository URL for the stars pill.',
       },
-      { name: 'asChild', type: 'boolean', description: 'Radix twin anchor delegation.' },
       {
-        name: 'render',
-        type: '(props) => ReactNode',
-        description: 'Base twin render prop delegation.',
+        name: 'starsCount',
+        type: 'number',
+        default: '1866',
+        description: 'Numeric star badge displayed inside the right island.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        description: 'Additional class names for root header container.',
       },
     ],
-    codeSnippet: `import { RareUiNavigationMenu, NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from '@/features/document/components/ui-library';\n\n{/* Full 3-Island Rare UI Navigation Menu */}\n<RareUiNavigationMenu />`,
+    codeSnippet: `import { CapsuleDockNav } from '@/features/document/components/ui-library';\n\n{/* Floating 3-Island Capsule Dock Navigation */}\n<CapsuleDockNav starsCount={1866} />`,
     realWorldExamples: [
       {
         title: 'Site Header Mega Panels',

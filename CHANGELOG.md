@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.8 (31.10.2026) - `8028088`
+
+- Apply floating capsule dock nav and purge legacy hanging tabs header
+
+### Version 0.2.8 (31.10.2026) - `eef9ef6`
+
+- Implement paper plane rail toc with motion flight and apply 0px border 4px radius button standard
+
 ### Version 0.2.8 (31.10.2026) - `8bc39a4`
 
 - Record universal ai agent prompt and precision line tracker navigation standards
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `f35a661`
 
 - Synchronize real-time changelog for Searchable Dropdown
-
-### Version 0.2.8 (30.10.2026) - `61896be`
-
-- Implement Searchable Dropdown with ARIA combobox contract, active descendant, removable chips, and match highlights
-
-### Version 0.2.8 (30.10.2026) - `2e43da5`
-
-- Synchronize real-time changelog for Date Picker component
 

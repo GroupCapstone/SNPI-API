@@ -2414,58 +2414,6 @@ function renderFeedComponentDemo(
         </div>
       );
 
-    case 'hanging-tabs-nav':
-      return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Controls Bar */}
-          <div className="flex items-center justify-center gap-2">
-            {(['sm', 'md', 'lg'] as const).map((sz) => (
-              <GeometricButton
-                key={sz}
-                size="sm"
-                variant={state.hangingNavSize === sz ? 'blue' : 'outline'}
-                isActive={state.hangingNavSize === sz}
-                onClick={() => state.setHangingNavSize(sz)}
-              >
-                Size {sz.toUpperCase()}
-              </GeometricButton>
-            ))}
-          </div>
-
-          <div className="w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
-            <div className="rounded-t-2xl border-b border-slate-200 bg-slate-50 px-6 pt-4 pb-0">
-              <div className="flex items-center justify-between pb-3">
-                <span className="font-sans text-xs font-bold tracking-wider text-slate-700 uppercase">
-                  Header Navigation Ceiling
-                </span>
-                <span className="font-mono text-[10px] text-slate-500">
-                  SNPI-SMS Hanging Tabs Standard
-                </span>
-              </div>
-              <div className="-mb-[1px] flex justify-center">
-                <HangingTabsNav
-                  activeId={state.hangingNavTab}
-                  onSelect={state.setHangingNavTab}
-                  size={state.hangingNavSize}
-                  items={[
-                    { id: 'map', label: 'Map', icon: Pin },
-                    { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                    { id: 'post', label: 'Post', icon: FilePlus },
-                    { id: 'friends', label: 'Friends', icon: Contacts },
-                  ]}
-                />
-              </div>
-            </div>
-            <div className="p-5 text-center">
-              <span className="font-mono text-xs text-slate-600">
-                Active Tab:{' '}
-                <strong className="text-[#0056FF]">{state.hangingNavTab.toUpperCase()}</strong>
-              </span>
-            </div>
-          </div>
-        </div>
-      );
-
     case 'input':
       return (
         <div className="flex w-full flex-col items-center gap-5">
