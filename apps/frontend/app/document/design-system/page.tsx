@@ -29,8 +29,6 @@ import {
   COMPONENT_LIBRARY_REGISTRY,
   GeometricButton,
   GeometricInput,
-  GeometricHeaderStamp,
-  DocsStickyHeader,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -44,17 +42,15 @@ import {
   Code,
   Copy,
   Layers,
-  Palette,
   Pin,
   Newspaper,
   FilePlus,
   Contacts,
-  Monitor,
-  Briefcase,
-  Wind,
   Zap,
-  ShieldCheck,
-  Droplets,
+  Eye,
+  EyeOff,
+  User,
+  SlidersHorizontal,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
@@ -65,7 +61,13 @@ export default function DesignSystemPage() {
   >('catalog');
 
   // Selected Component for playground inspection
-  const [selectedComponentId, setSelectedComponentId] = React.useState<string>('snackbar');
+  const [selectedComponentId, setSelectedComponentId] = React.useState<string>('card');
+
+  // Playground Stage Tab: 'preview' | 'usage' | 'code'
+  const [stageTab, setStageTab] = React.useState<'preview' | 'usage' | 'code'>('preview');
+
+  // Playground Stage Canvas Theme: 'light' | 'dark'
+  const [stageTheme, setStageTheme] = React.useState<'light' | 'dark'>('light');
 
   // Search filter
   const [searchQuery, setSearchQuery] = React.useState<string>('');
@@ -73,17 +75,19 @@ export default function DesignSystemPage() {
   // Active TOC section for Line Tracker
   const [activeSectionId, setActiveSectionId] = React.useState<string>('component-gallery');
 
-  const [showCode, setShowCode] = React.useState<boolean>(false);
   const [copiedCode, setCopiedCode] = React.useState<boolean>(false);
+  const [copiedInstall, setCopiedInstall] = React.useState<boolean>(false);
 
   // Interactive Component States (Fully tapable live demos)
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-  const [snackbarMsg, setSnackbarMsg] = React.useState('Student enrollment confirmed.');
+  const [snackbarMsg, setSnackbarMsg] = React.useState(
+    'Student enrollment confirmed for STU-2026-0891.',
+  );
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [bottomNavTab, setBottomNavTab] = React.useState('home');
   const [switchState, setSwitchState] = React.useState(true);
-  const [selectedChip, setSelectedChip] = React.useState('Academics');
+  const [selectedChip, setSelectedChip] = React.useState('All');
   const [fabCount, setFabCount] = React.useState(0);
   const [cardEnrolled, setCardEnrolled] = React.useState(false);
 
@@ -95,11 +99,23 @@ export default function DesignSystemPage() {
   // Additional component interactive states
   const [dropdownValue, setDropdownValue] = React.useState<string>('sora');
   const [activeTool, setActiveTool] = React.useState<string>('Move Tool (V)');
-  const [bottomSheetChoice, setBottomSheetChoice] = React.useState<string>('Roster Exported');
-  const [dialogDecision, setDialogDecision] = React.useState<string>('None');
+  const [bottomSheetChoice, setBottomSheetChoice] = React.useState<string>(
+    'Export Student Roster (CSV / PDF)',
+  );
+  const [dialogDecision, setDialogDecision] = React.useState<string>('Pending');
 
-  // Input & Search interactive states (Capsule Pill with primary brand colors)
-  const [inputDemoText, setInputDemoText] = React.useState<string>('hello');
+  // Card component interactive modes: 'folder' | 'metrics'
+  const [cardPresentationMode, setCardPresentationMode] = React.useState<'folder' | 'metrics'>(
+    'folder',
+  );
+  const [cardRevealed, setCardRevealed] = React.useState<boolean>(false);
+  const [cardSlidOut, setCardSlidOut] = React.useState<boolean>(false);
+  const [metricsTimeRange, setMetricsTimeRange] = React.useState<'30D' | '90D' | '1Y' | 'All'>(
+    '30D',
+  );
+
+  // Input & Search interactive states
+  const [inputDemoText, setInputDemoText] = React.useState<string>('Dara Sok');
   const [inputDemoVariant, setInputDemoVariant] = React.useState<
     'outline' | 'blue' | 'azure' | 'soft-lavender' | 'black' | 'error'
   >('blue');
@@ -108,7 +124,6 @@ export default function DesignSystemPage() {
   const [inputDemoDisabled, setInputDemoDisabled] = React.useState<boolean>(false);
 
   // Additional component state controls
-  const [cardTheme, setCardTheme] = React.useState<'light' | 'dark' | 'futurewave'>('light');
   const [fabSpeedDialOpen, setFabSpeedDialOpen] = React.useState<boolean>(false);
   const [tooltipPosition, setTooltipPosition] = React.useState<'top' | 'bottom'>('top');
 
@@ -116,16 +131,21 @@ export default function DesignSystemPage() {
     { id: 'home', label: 'Home', icon: Home },
     { id: 'search', label: 'Search', icon: Search },
     { id: 'academics', label: 'Academics', icon: Folder },
+    { id: 'profile', label: 'Profile', icon: User },
   ];
 
   // Headings for Right Sidebar Line Tracker
   const tocHeadings: TocHeadingItem[] = React.useMemo(
     () => [
-      { id: 'component-gallery', title: 'Component Catalog & Variants', level: 1 },
-      { id: 'interactive-stage', title: 'Interactive Component Playground', level: 1 },
-      { id: 'brand-blueprint', title: 'Royal Blue (#0056FF) Brand Blueprint', level: 1 },
-      { id: 'dual-mode-system', title: 'Dual Mode System UI (Light & Dark)', level: 1 },
-      { id: 'design-principles', title: 'Flat Design & Zero Shadows Policy', level: 1 },
+      { id: 'component-gallery', title: 'Component Catalog (12 Core UI)', level: 1 },
+      {
+        id: 'interactive-stage',
+        title: 'Interactive Playground (Preview · Usage · Code)',
+        level: 1,
+      },
+      { id: 'brand-blueprint', title: 'Brand Blueprint (#0056FF)', level: 1 },
+      { id: 'dual-mode-system', title: 'Dual Mode System UI', level: 1 },
+      { id: 'design-principles', title: 'Design Standards & Policies', level: 1 },
       { id: 'touch-targets', title: 'Touch Targets & Accessibility', level: 2 },
     ],
     [],
@@ -156,6 +176,13 @@ export default function DesignSystemPage() {
   // Real-time scroll spy for tracking point lines
   React.useEffect(() => {
     const handleScroll = () => {
+      const isAtBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+      if (isAtBottom) {
+        setActiveSectionId('design-principles');
+        return;
+      }
+
       const scrollPosition = window.scrollY + 140;
       for (let i = tocHeadings.length - 1; i >= 0; i--) {
         const item = tocHeadings[i];
@@ -175,99 +202,112 @@ export default function DesignSystemPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [tocHeadings]);
 
-  const handleSelectFromGallery = (id: string) => {
-    setSelectedComponentId(id);
-    setActiveTab('playground');
-    scrollToSection('interactive-stage');
-  };
+  // Active component document item
+  const activeDoc = React.useMemo(() => {
+    return (
+      COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === selectedComponentId) ||
+      COMPONENT_LIBRARY_REGISTRY[0]
+    );
+  }, [selectedComponentId]);
 
-  const handleCopy = (code: string) => {
-    navigator.clipboard.writeText(code);
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 2000);
   };
 
-  const activeDoc =
-    COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === selectedComponentId) ||
-    COMPONENT_LIBRARY_REGISTRY[0];
+  const handleCopyInstall = (cmd: string) => {
+    navigator.clipboard.writeText(cmd);
+    setCopiedInstall(true);
+    setTimeout(() => setCopiedInstall(false), 2000);
+  };
+
+  const handleSelectFromGallery = (id: string) => {
+    setSelectedComponentId(id);
+    setActiveTab('playground');
+    setStageTab('preview');
+    scrollToSection('interactive-stage');
+  };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
-      {/* 3-Column Documentation Grid (Cloudflare Docs Layout from Image 2) */}
-      <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
-        <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-12">
-          {/* COLUMN 1: Left Navigation Sidebar Menu */}
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white">
+      {/* Main Grid Container */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+          {/* COLUMN 1: Left Sticky Sidebar Navigation */}
           <aside className="lg:col-span-3">
             <div className="sticky top-24 space-y-6">
-              {/* Filter Input using GeometricInput */}
+              {/* Filter Input */}
               <GeometricInput
                 inputSize="sm"
                 placeholder="Filter components..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                icon={<Search className="h-3.5 w-3.5" />}
+                icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
               {/* Navigation Links */}
               <div className="space-y-4 font-sans text-xs">
-                <div>
-                  <div className="space-y-2">
-                    <GeometricButton
-                      variant="blue"
-                      size="sm"
-                      isActive={activeTab === 'catalog'}
-                      onClick={() => {
-                        setActiveTab('catalog');
-                        scrollToSection('component-gallery');
-                      }}
-                      className="w-full justify-start"
-                    >
-                      <span>Catalog</span>
-                    </GeometricButton>
+                <div className="space-y-2">
+                  <GeometricButton
+                    variant="blue"
+                    size="sm"
+                    isActive={activeTab === 'catalog'}
+                    onClick={() => {
+                      setActiveTab('catalog');
+                      scrollToSection('component-gallery');
+                    }}
+                    className="w-full justify-start"
+                  >
+                    <span>Catalog</span>
+                  </GeometricButton>
 
-                    <GeometricButton
-                      variant="azure"
-                      size="sm"
-                      isActive={activeTab === 'playground'}
-                      onClick={() => {
-                        setActiveTab('playground');
-                        scrollToSection('interactive-stage');
-                      }}
-                      className="w-full justify-start"
-                    >
-                      <span>Playground</span>
-                    </GeometricButton>
+                  <GeometricButton
+                    variant="azure"
+                    size="sm"
+                    isActive={activeTab === 'playground'}
+                    onClick={() => {
+                      setActiveTab('playground');
+                      scrollToSection('interactive-stage');
+                    }}
+                    className="w-full justify-start"
+                  >
+                    <span>Playground</span>
+                  </GeometricButton>
 
-                    <GeometricButton
-                      variant="soft-lavender"
-                      size="sm"
-                      isActive={activeTab === 'blueprint'}
-                      onClick={() => {
-                        setActiveTab('blueprint');
-                        scrollToSection('brand-blueprint');
-                      }}
-                      className="w-full justify-start"
-                    >
-                      <span>Brand Colors</span>
-                    </GeometricButton>
+                  <GeometricButton
+                    variant="soft-lavender"
+                    size="sm"
+                    isActive={activeTab === 'blueprint'}
+                    onClick={() => {
+                      setActiveTab('blueprint');
+                      scrollToSection('brand-blueprint');
+                    }}
+                    className="w-full justify-start"
+                  >
+                    <span>Brand Colors</span>
+                  </GeometricButton>
 
-                    <GeometricButton
-                      variant="black"
-                      size="sm"
-                      isActive={activeTab === 'dual-mode'}
-                      onClick={() => {
-                        setActiveTab('dual-mode');
-                        scrollToSection('dual-mode-system');
-                      }}
-                      className="w-full justify-start"
-                    >
-                      <span>Dual Mode UI</span>
-                    </GeometricButton>
-                  </div>
+                  <GeometricButton
+                    variant="black"
+                    size="sm"
+                    isActive={activeTab === 'dual-mode'}
+                    onClick={() => {
+                      setActiveTab('dual-mode');
+                      scrollToSection('dual-mode-system');
+                    }}
+                    className="w-full justify-start"
+                  >
+                    <span>Dual Mode UI</span>
+                  </GeometricButton>
                 </div>
 
-                {/* 10 Core UI Components List */}
+                {/* 12 Core UI Components List */}
                 <div className="border-t border-slate-200/80 pt-4">
+                  <div className="flex items-center justify-between pb-2 font-mono text-[10px] font-bold text-slate-400 uppercase">
+                    <span>12 Core UI Components</span>
+                    <span className="text-[#0056FF]">{filteredComponents.length}</span>
+                  </div>
                   <div className="space-y-1.5">
                     {filteredComponents.length === 0 ? (
                       <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
@@ -301,32 +341,45 @@ export default function DesignSystemPage() {
             </div>
           </aside>
 
-          {/* COLUMN 2: Center Main Documentation & Stage (Cloudflare Docs Style) */}
+          {/* COLUMN 2: Center Main Documentation & Stage */}
           <main className="space-y-10 lg:col-span-6">
-            {/* SECTION 1: Component Catalog (Image 1 Style Grid with Hover Animations) */}
+            {/* SECTION 1: Component Catalog (Real Live Interactive Cards) */}
             <section id="component-gallery" className="scroll-mt-24 space-y-4">
+              <div className="flex flex-col gap-1 border-b border-slate-200 pb-3">
+                <h2 className="font-sans text-xl font-black text-slate-950">Component Catalog</h2>
+                <p className="font-sans text-xs text-slate-600">
+                  The 12 canonical UI components built strictly with the Royal Blue (#0056FF) and
+                  Soft Lavender design standards. Click any card to launch its deep interactive
+                  playground.
+                </p>
+              </div>
+
               <ComponentGalleryGrid
                 onSelectComponent={handleSelectFromGallery}
                 selectedId={selectedComponentId}
               />
             </section>
 
-            {/* SECTION 2: Interactive Component Playground (Real Tapable Demo) */}
-            <section id="interactive-stage" className="scroll-mt-24 space-y-6">
+            {/* SECTION 2: Interactive Component Playground (Preview · Usage · Code) */}
+            <section
+              id="interactive-stage"
+              className="scroll-mt-24 space-y-6 border-t border-slate-200 pt-8"
+            >
+              {/* Stage Header Info */}
               <div className="flex flex-col gap-3 border-b-2 border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-sans text-2xl font-black text-slate-950">
                       {activeDoc.name}
                     </h2>
-                    <span className="rounded-full border border-[#0056FF]/30 bg-blue-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                    <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
                       {activeDoc.paradigm}
                     </span>
-                    <span className="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
+                    <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-700 uppercase">
                       {activeDoc.category}
                     </span>
                   </div>
-                  <p className="mt-1 font-sans text-sm text-slate-600">{activeDoc.description}</p>
+                  <p className="mt-1 font-sans text-xs text-slate-600">{activeDoc.description}</p>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -340,277 +393,402 @@ export default function DesignSystemPage() {
                 </div>
               </div>
 
-              {/* Interactive Stage Card */}
-              <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40">
-                {/* Stage Header Info */}
-                <div className="flex flex-wrap items-center justify-between border-b border-slate-100 bg-slate-50/80 px-4 py-2.5">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-block size-2 rounded-full bg-[#0056FF]" />
-                    <span className="font-mono text-[11px] font-bold text-slate-700 uppercase">
-                      Interactive Live Demo & State Testing
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500">
-                    <span>Target: 44×44px hit bounds</span>
-                    <span>·</span>
-                    <span>Zero shadows</span>
-                  </div>
+              {/* Triple Tabs Navigation: Preview | Usage | Code (Matching Image 3 & 4) */}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-1">
+                <div className="flex items-center gap-1.5">
+                  {(['preview', 'usage', 'code'] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      type="button"
+                      onClick={() => setStageTab(tab)}
+                      className={cn(
+                        'cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all duration-150 select-none',
+                        stageTab === tab
+                          ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                          : 'border border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-slate-900',
+                      )}
+                    >
+                      {tab === 'preview' ? 'Preview' : tab === 'usage' ? 'Usage' : 'Code'}
+                    </button>
+                  ))}
                 </div>
 
-                {/* Stage Body */}
-                <div className="flex min-h-[260px] items-center justify-center bg-slate-50/50 p-6 sm:p-8">
-                  {renderActivePlaygroundComponent({
-                    id: activeDoc.id,
-                    snackbarOpen,
-                    setSnackbarOpen,
-                    snackbarMsg,
-                    setSnackbarMsg,
-                    sheetOpen,
-                    setSheetOpen,
-                    dialogOpen,
-                    setDialogOpen,
-                    bottomNavTab,
-                    setBottomNavTab,
-                    bottomNavItems,
-                    switchState,
-                    setSwitchState,
-                    selectedChip,
-                    setSelectedChip,
-                    fabCount,
-                    setFabCount,
-                    cardEnrolled,
-                    setCardEnrolled,
-                    dropdownValue,
-                    setDropdownValue,
-                    activeTool,
-                    setActiveTool,
-                    bottomSheetChoice,
-                    setBottomSheetChoice,
-                    dialogDecision,
-                    setDialogDecision,
-                    hangingNavTab,
-                    setHangingNavTab,
-                    hangingNavSize,
-                    setHangingNavSize,
-                    hangingNavBadge,
-                    setHangingNavBadge,
-                    inputDemoText,
-                    setInputDemoText,
-                    inputDemoVariant,
-                    setInputDemoVariant,
-                    inputDemoSize,
-                    setInputDemoSize,
-                    inputDemoLoading,
-                    setInputDemoLoading,
-                    inputDemoDisabled,
-                    setInputDemoDisabled,
-                    cardTheme,
-                    setCardTheme,
-                    fabSpeedDialOpen,
-                    setFabSpeedDialOpen,
-                    tooltipPosition,
-                    setTooltipPosition,
-                  })}
-                </div>
+                {/* Right Stage Controls: Live Status & Theme Switcher */}
+                <div className="flex items-center gap-2.5">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-medium text-slate-500">
+                    <span className="size-1.5 animate-pulse rounded-full bg-[#0056FF]" />
+                    Live · keyboard ready
+                  </span>
 
-                {/* Action Ribbon: Supported States & Code Controls */}
-                <div className="flex flex-col gap-3 border-t border-slate-200/80 bg-white p-3.5 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex flex-wrap items-center gap-1.5">
-                    <span className="font-mono text-[10px] font-bold text-slate-400 uppercase">
-                      Supported States:
-                    </span>
-                    {activeDoc.supportedStates.map((st) => (
-                      <span
-                        key={st}
-                        className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-700"
-                      >
-                        {st}
-                      </span>
-                    ))}
+                  <span className="h-3 w-[1px] bg-slate-200" />
+
+                  {/* Stage Theme Switcher */}
+                  <div className="flex items-center rounded-full border border-slate-200 bg-slate-50 p-0.5">
+                    <button
+                      type="button"
+                      onClick={() => setStageTheme('light')}
+                      className={cn(
+                        'rounded-full px-2.5 py-0.5 font-sans text-[10px] font-bold transition-colors',
+                        stageTheme === 'light'
+                          ? 'bg-white text-slate-950 shadow-xs'
+                          : 'text-slate-500 hover:text-slate-900',
+                      )}
+                    >
+                      Light
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStageTheme('dark')}
+                      className={cn(
+                        'rounded-full px-2.5 py-0.5 font-sans text-[10px] font-bold transition-colors',
+                        stageTheme === 'dark'
+                          ? 'bg-[#000B26] text-white shadow-xs'
+                          : 'text-slate-500 hover:text-slate-900',
+                      )}
+                    >
+                      Dark
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* TAB 1: PREVIEW */}
+              {stageTab === 'preview' && (
+                <div className="space-y-6">
+                  {/* Interactive Stage Canvas Container */}
+                  <div
+                    className={cn(
+                      'relative overflow-hidden rounded-2xl border shadow-sm transition-colors duration-200',
+                      stageTheme === 'dark'
+                        ? 'border-slate-800 bg-[#000B26] text-white'
+                        : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
+                    )}
+                  >
+                    {/* Subtle Dot Grid Background */}
+                    <div
+                      className="pointer-events-none absolute inset-0 opacity-25"
+                      style={{
+                        backgroundImage: `radial-gradient(circle at 1px 1px, ${
+                          stageTheme === 'dark' ? '#2277FF' : '#CAD3F5'
+                        } 1px, transparent 0)`,
+                        backgroundSize: '16px 16px',
+                      }}
+                    />
+
+                    {/* Canvas Stage Body */}
+                    <div className="relative z-10 flex min-h-[320px] items-center justify-center p-6 sm:p-10">
+                      {renderActivePlaygroundComponent({
+                        id: activeDoc.id,
+                        stageTheme,
+                        snackbarOpen,
+                        setSnackbarOpen,
+                        snackbarMsg,
+                        setSnackbarMsg,
+                        sheetOpen,
+                        setSheetOpen,
+                        dialogOpen,
+                        setDialogOpen,
+                        bottomNavTab,
+                        setBottomNavTab,
+                        bottomNavItems,
+                        switchState,
+                        setSwitchState,
+                        selectedChip,
+                        setSelectedChip,
+                        fabCount,
+                        setFabCount,
+                        cardEnrolled,
+                        setCardEnrolled,
+                        dropdownValue,
+                        setDropdownValue,
+                        activeTool,
+                        setActiveTool,
+                        bottomSheetChoice,
+                        setBottomSheetChoice,
+                        dialogDecision,
+                        setDialogDecision,
+                        hangingNavTab,
+                        setHangingNavTab,
+                        hangingNavSize,
+                        setHangingNavSize,
+                        hangingNavBadge,
+                        setHangingNavBadge,
+                        cardPresentationMode,
+                        setCardPresentationMode,
+                        cardRevealed,
+                        setCardRevealed,
+                        cardSlidOut,
+                        setCardSlidOut,
+                        metricsTimeRange,
+                        setMetricsTimeRange,
+                        inputDemoText,
+                        setInputDemoText,
+                        inputDemoVariant,
+                        setInputDemoVariant,
+                        inputDemoSize,
+                        setInputDemoSize,
+                        inputDemoLoading,
+                        setInputDemoLoading,
+                        inputDemoDisabled,
+                        setInputDemoDisabled,
+                        fabSpeedDialOpen,
+                        setFabSpeedDialOpen,
+                        tooltipPosition,
+                        setTooltipPosition,
+                      })}
+                    </div>
+
+                    {/* Stage Bottom Controls Bar */}
+                    <div
+                      className={cn(
+                        'flex flex-wrap items-center justify-between border-t px-4 py-3 font-mono text-[11px]',
+                        stageTheme === 'dark'
+                          ? 'border-slate-800 bg-[#00071A] text-slate-400'
+                          : 'border-slate-200/90 bg-white text-slate-500',
+                      )}
+                    >
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="font-bold tracking-wider text-slate-400 uppercase">
+                          States:
+                        </span>
+                        {activeDoc.supportedStates.map((st) => (
+                          <span
+                            key={st}
+                            className={cn(
+                              'rounded-full px-2 py-0.5 text-[10px] font-semibold',
+                              stageTheme === 'dark'
+                                ? 'border border-white/10 bg-white/5 text-slate-300'
+                                : 'border border-slate-200 bg-slate-50 text-slate-700',
+                            )}
+                          >
+                            {st}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <span>44×44px hit bounds</span>
+                        <span>·</span>
+                        <span>Zero dropped shadows</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  {/* Install / CLI Command Banner */}
+                  <div className="flex items-center justify-between rounded-xl border border-slate-200/90 bg-white p-3 shadow-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="font-sans text-xs font-bold text-slate-700">Install:</span>
+                      <code className="font-mono text-xs font-semibold text-[#0056FF]">
+                        npx @snp/cli add {activeDoc.id}
+                      </code>
+                    </div>
                     <GeometricButton
                       size="sm"
-                      variant={showCode ? 'primary' : 'outline'}
-                      isActive={showCode}
-                      onClick={() => setShowCode(!showCode)}
-                    >
-                      <Code className="h-3.5 w-3.5" />
-                      <span>{showCode ? 'Hide Code' : 'View Code'}</span>
-                    </GeometricButton>
-
-                    {showCode && (
-                      <GeometricButton
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleCopy(activeDoc.codeSnippet)}
-                      >
-                        {copiedCode ? (
-                          <Check className="h-3.5 w-3.5 text-[#0056FF]" />
+                      variant="outline"
+                      onClick={() => handleCopyInstall(`npx @snp/cli add ${activeDoc.id}`)}
+                      icon={
+                        copiedInstall ? (
+                          <Check className="size-3 text-[#0056FF]" />
                         ) : (
-                          <Copy className="h-3.5 w-3.5" />
-                        )}
-                        <span>{copiedCode ? 'Copied' : 'Copy'}</span>
-                      </GeometricButton>
-                    )}
+                          <Copy className="size-3 text-slate-600" />
+                        )
+                      }
+                    >
+                      {copiedInstall ? 'Copied' : 'Copy'}
+                    </GeometricButton>
                   </div>
                 </div>
+              )}
 
-                {/* Collapsible Source Code View */}
-                {showCode && (
-                  <div className="border-t border-slate-200/80 bg-slate-900 p-4">
-                    <pre className="overflow-x-auto font-mono text-xs text-slate-100">
+              {/* TAB 2: USAGE & GUIDELINES */}
+              {stageTab === 'usage' && (
+                <div className="space-y-6">
+                  {/* 1. Component Explanation */}
+                  <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                      <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                        1. Mental Model & Paradigm
+                      </h3>
+                      <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                        {activeDoc.paradigm}
+                      </span>
+                    </div>
+                    <p className="font-sans text-xs leading-relaxed text-slate-700">
+                      {activeDoc.explanation}
+                    </p>
+                  </div>
+
+                  {/* 2. Real-World Product Examples */}
+                  <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+                    <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                      2. Real-World Product Scenarios
+                    </h3>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                      {activeDoc.realWorldExamples.map((ex, idx) => (
+                        <div
+                          key={idx}
+                          className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3.5"
+                        >
+                          <div className="space-y-1.5">
+                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                              Scenario 0{idx + 1}
+                            </span>
+                            <h4 className="font-sans text-xs font-bold text-slate-900">
+                              {ex.title}
+                            </h4>
+                            <p className="font-sans text-[11px] leading-relaxed text-slate-600">
+                              {ex.scenario}
+                            </p>
+                          </div>
+                          <div className="mt-2.5 border-t border-slate-200/60 pt-2 font-sans text-[11px] font-semibold text-slate-800">
+                            {ex.impact}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 3. UX Psychology & Design Principles */}
+                  <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+                    <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                      3. UX Psychology & Design Principles
+                    </h3>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      {activeDoc.uxPsychology.map((ux, idx) => (
+                        <div
+                          key={idx}
+                          className="space-y-1 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3.5"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                            Principle 0{idx + 1}
+                          </span>
+                          <h4 className="font-sans text-xs font-bold text-slate-900">
+                            {ux.principle}
+                          </h4>
+                          <p className="font-sans text-[11px] leading-relaxed text-slate-600">
+                            {ux.detail}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 4. Usage Guidelines: Do's & Don'ts */}
+                  <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+                    <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                      4. Usage Guidelines
+                    </h3>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="space-y-2">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          DO: Best Practices
+                        </span>
+                        <ul className="space-y-2 font-sans text-xs text-slate-700">
+                          {activeDoc.usageGuidelines.map((g, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#0056FF]" />
+                              <span>{g.doItem}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="space-y-2">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-slate-900 bg-[#000B26] px-2.5 py-0.5 font-mono text-[10px] font-bold text-white uppercase">
+                          DON&apos;T: Anti-Patterns
+                        </span>
+                        <ul className="space-y-2 font-sans text-xs text-slate-700">
+                          {activeDoc.usageGuidelines.map((g, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="mt-1 size-1.5 shrink-0 rounded-full bg-slate-400" />
+                              <span className="text-slate-600">{g.dontItem}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 5. Developer Implementation Notes */}
+                  <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+                    <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                      5. Developer Implementation Notes
+                    </h3>
+                    <ul className="space-y-1.5 font-sans text-xs text-slate-700">
+                      {activeDoc.implementationNotes.map((note, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#0056FF]" />
+                          <span>{note}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* 6. Props Interface (Card Grid) */}
+                  <div className="space-y-2.5">
+                    <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                      6. Props Interface
+                    </h3>
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                      {activeDoc.props.map((p) => (
+                        <div
+                          key={p.name}
+                          className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                        >
+                          <div>
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="font-mono text-xs font-bold text-[#0056FF]">
+                                {p.name}
+                              </span>
+                              <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#0056FF]">
+                                {p.type}
+                              </span>
+                            </div>
+                            <p className="mt-2 font-sans text-xs leading-relaxed text-slate-600">
+                              {p.description}
+                            </p>
+                          </div>
+                          <div className="mt-2.5 border-t border-slate-100 pt-1.5 font-mono text-[10.5px] text-slate-400">
+                            Default:{' '}
+                            <span className="font-semibold text-slate-700">{p.default || '-'}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: SOURCE CODE */}
+              {stageTab === 'code' && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between rounded-xl border border-slate-200/90 bg-slate-50 px-4 py-2.5">
+                    <span className="font-mono text-xs font-bold text-slate-700">
+                      TypeScript / React Implementation
+                    </span>
+                    <GeometricButton
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleCopy(activeDoc.codeSnippet)}
+                      icon={
+                        copiedCode ? (
+                          <Check className="size-3 text-[#0056FF]" />
+                        ) : (
+                          <Copy className="size-3 text-slate-600" />
+                        )
+                      }
+                    >
+                      {copiedCode ? 'Copied' : 'Copy Code'}
+                    </GeometricButton>
+                  </div>
+
+                  <div className="overflow-hidden rounded-2xl border border-slate-800 bg-[#000B26] p-4 text-white shadow-md">
+                    <pre className="max-h-[500px] overflow-auto font-mono text-xs leading-relaxed text-slate-100">
                       <code>{activeDoc.codeSnippet}</code>
                     </pre>
                   </div>
-                )}
-              </div>
-
-              {/* 1. Component Explanation */}
-              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                  <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
-                    1. Component Explanation & Mental Model
-                  </h3>
-                  <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                    {activeDoc.paradigm}
-                  </span>
                 </div>
-                <p className="font-sans text-xs leading-relaxed text-slate-700">
-                  {activeDoc.explanation}
-                </p>
-              </div>
-
-              {/* 2. Real-World Product Examples */}
-              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
-                  2. Real-World Product Examples
-                </h3>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {activeDoc.realWorldExamples.map((ex, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col justify-between rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5"
-                    >
-                      <div className="space-y-1.5">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          Example 0{idx + 1}
-                        </span>
-                        <h4 className="font-sans text-xs font-bold text-slate-900">{ex.title}</h4>
-                        <p className="font-sans text-[11px] leading-relaxed text-slate-600">
-                          {ex.scenario}
-                        </p>
-                      </div>
-                      <div className="mt-2.5 border-t border-slate-200/60 pt-2 font-sans text-[11px] font-semibold text-slate-800">
-                        {ex.impact}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 3. UX Psychology & Design Principles */}
-              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
-                  3. UX Psychology & Design Principles
-                </h3>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {activeDoc.uxPsychology.map((ux, idx) => (
-                    <div
-                      key={idx}
-                      className="space-y-1.5 rounded-xl border border-blue-100 bg-blue-50/40 p-3.5"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="size-2 rounded-full bg-[#0056FF]" />
-                        <h4 className="font-sans text-xs font-bold text-[#0056FF]">
-                          {ux.principle}
-                        </h4>
-                      </div>
-                      <p className="font-sans text-[11px] leading-relaxed text-slate-700">
-                        {ux.detail}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 4. Usage Guidelines & Best Practices */}
-              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
-                  4. Usage Guidelines & Best Practices
-                </h3>
-                <div className="space-y-2">
-                  {activeDoc.usageGuidelines.map((g, idx) => (
-                    <div key={idx} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      <div className="rounded-xl border border-[#2277FF]/30 bg-[#E3E7FC]/40 p-3">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          [DO]
-                        </span>
-                        <p className="mt-1 font-sans text-xs leading-relaxed text-[#000B26]">
-                          {g.doItem}
-                        </p>
-                      </div>
-                      <div className="rounded-xl border border-slate-900 bg-[#000B26] p-3 text-white">
-                        <span className="font-mono text-[10px] font-bold text-white uppercase">
-                          [DON&apos;T]
-                        </span>
-                        <p className="mt-1 font-sans text-xs leading-relaxed text-slate-300">
-                          {g.dontItem}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 5. Developer Implementation Notes */}
-              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
-                  5. Developer Implementation Notes
-                </h3>
-                <ul className="space-y-1.5 font-sans text-xs text-slate-700">
-                  {activeDoc.implementationNotes.map((note, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#0056FF]" />
-                      <span>{note}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* 6. Component Props Interface (Modern Card Grid - No Table) */}
-              <div className="space-y-2.5">
-                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
-                  6. Props Interface
-                </h3>
-                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  {activeDoc.props.map((p) => (
-                    <div
-                      key={p.name}
-                      className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
-                    >
-                      <div>
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="font-mono text-xs font-bold text-[#0056FF]">
-                            {p.name}
-                          </span>
-                          <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#0056FF]">
-                            {p.type}
-                          </span>
-                        </div>
-                        <p className="mt-2 font-sans text-xs leading-relaxed text-slate-600">
-                          {p.description}
-                        </p>
-                      </div>
-                      <div className="mt-2.5 border-t border-slate-100 pt-1.5 font-mono text-[10.5px] text-slate-400">
-                        Default:{' '}
-                        <span className="font-semibold text-slate-700">{p.default || '-'}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              )}
             </section>
 
             {/* SECTION 3: Brand Colors Blueprint */}
@@ -621,7 +799,7 @@ export default function DesignSystemPage() {
               <BrandConceptBlueprint />
             </section>
 
-            {/* SECTION 4: Dual Mode System UI (Light & Dark) */}
+            {/* SECTION 4: Dual Mode System UI */}
             <section
               id="dual-mode-system"
               className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
@@ -629,7 +807,7 @@ export default function DesignSystemPage() {
               <DualModeSystemUI />
             </section>
 
-            {/* SECTION 5: Design Principles */}
+            {/* SECTION 5: Design Principles & Accessibility */}
             <section
               id="design-principles"
               className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
@@ -658,17 +836,13 @@ export default function DesignSystemPage() {
             </section>
           </main>
 
-          {/* COLUMN 3: Right Sidebar Line Tracker (Image 2 Style) */}
+          {/* COLUMN 3: Right Sidebar Line Tracker */}
           <aside className="hidden lg:col-span-3 lg:block">
             <LineTrackerToc
               items={tocHeadings}
               activeId={activeSectionId}
-              onSelect={(id) => {
-                scrollToSection(id);
-              }}
-              onActiveChange={(id) => {
-                setActiveSectionId(id);
-              }}
+              onSelect={scrollToSection}
+              onActiveChange={setActiveSectionId}
             />
           </aside>
         </div>
@@ -686,11 +860,11 @@ export default function DesignSystemPage() {
       <LibraryBottomSheet
         open={sheetOpen}
         onClose={() => setSheetOpen(false)}
-        title="Campus Infrastructure Status"
+        title="Campus Infrastructure Operations"
       >
         <div className="space-y-4">
           <p className="text-sm text-slate-600">
-            Siem Reap Science Wing B · Telemetry labs active with Gigabit Ethernet connectivity.
+            Siem Reap Science Wing B · Active student roster exports and telemetry diagnostics.
           </p>
           <GeometricButton variant="blue" className="w-full" onClick={() => setSheetOpen(false)}>
             Close Sheet
@@ -706,41 +880,22 @@ export default function DesignSystemPage() {
         confirmLabel="Confirm Revoke"
         cancelLabel="Cancel"
         isDestructive
-        onConfirm={() => setDialogOpen(false)}
+        onConfirm={() => {
+          setDialogOpen(false);
+          setDialogDecision('Revocation Confirmed');
+        }}
       />
-
-      {/* Footer */}
-      <footer className="mt-auto border-t border-slate-200 bg-slate-50 py-8 text-center font-sans text-xs text-slate-500">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
-          <div className="flex items-center gap-2">
-            <span className="inline-block h-2 w-2 rounded-full bg-[#0056FF]" />
-            <span>SNPI-SMS Design Standards & Component Catalog · Sora Typography</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/document"
-              className="text-slate-600 transition-colors hover:text-slate-900"
-            >
-              API Docs
-            </Link>
-            <Link
-              href="/dashboard"
-              className="text-slate-600 transition-colors hover:text-slate-900"
-            >
-              Dashboard
-            </Link>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
 
 /**
- * Helper to render interactive playground component in light mode
+ * Helper to render interactive playground components in high-fidelity
+ * STRICTLY adhering to the docs brand palette (#0056FF, #2277FF, #000B26, #E3E7FC, #FFFFFF)
  */
 function renderActivePlaygroundComponent(props: {
   id: string;
+  stageTheme: 'light' | 'dark';
   snackbarOpen: boolean;
   setSnackbarOpen: (o: boolean) => void;
   snackbarMsg: string;
@@ -774,6 +929,14 @@ function renderActivePlaygroundComponent(props: {
   setHangingNavSize: (s: 'sm' | 'md' | 'lg') => void;
   hangingNavBadge: number;
   setHangingNavBadge: React.Dispatch<React.SetStateAction<number>>;
+  cardPresentationMode: 'folder' | 'metrics';
+  setCardPresentationMode: (m: 'folder' | 'metrics') => void;
+  cardRevealed: boolean;
+  setCardRevealed: (r: boolean) => void;
+  cardSlidOut: boolean;
+  setCardSlidOut: (s: boolean) => void;
+  metricsTimeRange: '30D' | '90D' | '1Y' | 'All';
+  setMetricsTimeRange: (r: '30D' | '90D' | '1Y' | 'All') => void;
   inputDemoText: string;
   setInputDemoText: (t: string) => void;
   inputDemoVariant: 'outline' | 'blue' | 'azure' | 'soft-lavender' | 'black' | 'error';
@@ -786,18 +949,217 @@ function renderActivePlaygroundComponent(props: {
   setInputDemoLoading: (l: boolean) => void;
   inputDemoDisabled: boolean;
   setInputDemoDisabled: (d: boolean) => void;
-  cardTheme: 'light' | 'dark' | 'futurewave';
-  setCardTheme: (t: 'light' | 'dark' | 'futurewave') => void;
   fabSpeedDialOpen: boolean;
   setFabSpeedDialOpen: (o: boolean) => void;
   tooltipPosition: 'top' | 'bottom';
   setTooltipPosition: (p: 'top' | 'bottom') => void;
 }) {
+  const isDark = props.stageTheme === 'dark';
+
   switch (props.id) {
+    case 'card':
+      return (
+        <div className="flex w-full max-w-md flex-col items-center gap-5 py-2">
+          {/* Presentation Mode Selector: Card Folder (Images 3 & 4) vs Metrics Card (Image 2) */}
+          <div className="flex items-center rounded-full border border-slate-200 bg-white p-1 shadow-xs">
+            <button
+              type="button"
+              onClick={() => props.setCardPresentationMode('folder')}
+              className={cn(
+                'rounded-full px-3 py-1 font-sans text-xs font-bold transition-all',
+                props.cardPresentationMode === 'folder'
+                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900',
+              )}
+            >
+              Card Folder Mode
+            </button>
+            <button
+              type="button"
+              onClick={() => props.setCardPresentationMode('metrics')}
+              className={cn(
+                'rounded-full px-3 py-1 font-sans text-xs font-bold transition-all',
+                props.cardPresentationMode === 'metrics'
+                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900',
+              )}
+            >
+              Daily Metrics Mode
+            </button>
+          </div>
+
+          {/* MODE 1: Interactive Card Folder (Replicating User Images 3 & 4) */}
+          {props.cardPresentationMode === 'folder' ? (
+            <div className="relative w-full max-w-sm pt-4 select-none">
+              {/* Sliding Credit / Student Card */}
+              <div
+                onClick={() => props.setCardSlidOut(!props.cardSlidOut)}
+                className={cn(
+                  'relative mx-auto w-[92%] cursor-pointer rounded-2xl p-4 transition-all duration-300 ease-out',
+                  'border border-slate-700/60 bg-gradient-to-br from-[#0B0E14] via-[#000B26] to-[#0056FF]',
+                  'text-white shadow-lg',
+                  props.cardSlidOut ? '-translate-y-8 scale-[1.02]' : 'translate-y-0',
+                )}
+              >
+                {/* Card Top: Chip and Brand */}
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] tracking-widest text-slate-400 uppercase">
+                    SNPI STUDENT PASS
+                  </span>
+                  {/* EMV Chip */}
+                  <div className="h-6 w-8 rounded-md border border-amber-300/40 bg-amber-400/20" />
+                </div>
+
+                {/* Card Number */}
+                <div className="mt-5 font-mono text-base font-bold tracking-widest text-slate-100">
+                  {props.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
+                </div>
+
+                {/* Cardholder & Expiry */}
+                <div className="mt-4 flex items-end justify-between font-mono text-xs">
+                  <div>
+                    <span className="block text-[9px] text-slate-400 uppercase">Student</span>
+                    <span className="font-bold text-slate-100">DARA SOK</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="block text-[9px] text-slate-400 uppercase">Valid Thru</span>
+                    <span className="font-bold text-slate-100">08/29</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="block text-[9px] text-slate-400 uppercase">CVV</span>
+                    <span className="font-bold text-[#CAD3F5]">
+                      {props.cardRevealed ? '742' : '•••'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Curved Folder Pocket Base (Images 3 & 4 Style) */}
+              <div
+                className={cn(
+                  'relative z-20 -mt-12 w-full rounded-2xl border p-4 transition-all duration-200',
+                  isDark
+                    ? 'border-slate-800 bg-[#00071A] text-white shadow-xl'
+                    : 'border-slate-200/90 bg-white text-slate-900 shadow-md',
+                )}
+              >
+                {/* Wavy Pocket Seam */}
+                <div className="flex items-center justify-between border-b border-dashed border-slate-300 pb-3 dark:border-slate-700">
+                  <button
+                    type="button"
+                    onClick={() => props.setCardRevealed(!props.cardRevealed)}
+                    className="flex items-center gap-1.5 rounded-full border border-slate-200 px-2.5 py-1 text-xs font-semibold hover:border-[#0056FF]"
+                  >
+                    {props.cardRevealed ? (
+                      <EyeOff className="size-3.5 text-[#0056FF]" />
+                    ) : (
+                      <Eye className="size-3.5 text-slate-600" />
+                    )}
+                    <span>{props.cardRevealed ? 'Hide Details' : 'Reveal Details'}</span>
+                  </button>
+
+                  <div className="flex items-center gap-3 font-mono text-[11px]">
+                    <div>
+                      <span className="block text-[9px] text-slate-400 uppercase">Expiry</span>
+                      <strong className="text-slate-800 dark:text-slate-200">08/29</strong>
+                    </div>
+                    <div>
+                      <span className="block text-[9px] text-slate-400 uppercase">CVV</span>
+                      <strong className="text-slate-800 dark:text-slate-200">
+                        {props.cardRevealed ? '742' : '•••'}
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between">
+                  <div>
+                    <h4 className="font-sans text-xs font-bold">Dara Sok</h4>
+                    <p className="font-mono text-[11px] text-slate-500">
+                      {props.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => props.setCardSlidOut(!props.cardSlidOut)}
+                    className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF]"
+                  >
+                    {props.cardSlidOut ? 'Insert Card' : 'Pull Card'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* MODE 2: Daily Active Students Metrics Card (Replicating User Image 2) */
+            <div
+              className={cn(
+                'w-full max-w-sm rounded-2xl border p-5 shadow-sm transition-all',
+                isDark
+                  ? 'border-slate-800 bg-[#00071A] text-white'
+                  : 'border-slate-200/90 bg-white text-slate-900',
+              )}
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <h4 className="font-sans text-sm font-bold">Daily active students</h4>
+                  <p className="font-sans text-xs text-slate-500">12,340 a day · Term 1 2026</p>
+                </div>
+
+                {/* Range Buttons (Image 2 style) */}
+                <div className="flex items-center rounded-full border border-slate-200 bg-slate-50 p-0.5 font-mono text-[10px]">
+                  {(['30D', '90D', '1Y', 'All'] as const).map((r) => (
+                    <button
+                      key={r}
+                      type="button"
+                      onClick={() => props.setMetricsTimeRange(r)}
+                      className={cn(
+                        'rounded-full px-2 py-0.5 font-bold transition-colors',
+                        props.metricsTimeRange === r
+                          ? 'bg-[#0056FF] text-white'
+                          : 'text-slate-600 hover:text-slate-950',
+                      )}
+                    >
+                      {r}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Floating Tooltip Callout (Image 2 style) */}
+              <div className="mt-4 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3">
+                <div className="flex items-center justify-between font-mono text-[11px] text-slate-500">
+                  <span>Saturday, Oct 30, 2026</span>
+                  <span className="font-bold text-[#0056FF]">+8.5% growth</span>
+                </div>
+                <div className="mt-1 font-sans text-2xl font-black text-slate-950 dark:text-white">
+                  10,119 students
+                </div>
+                <p className="mt-0.5 font-sans text-[11px] text-slate-600">
+                  14,002 seven day average vs a week earlier
+                </p>
+              </div>
+
+              {/* Interactive Trend Line Simulation */}
+              <div className="mt-4 flex h-14 w-full items-end gap-1.5 pt-2">
+                {[38, 45, 42, 58, 64, 60, 72, 68, 85, 92, 88, 100].map((val, i) => (
+                  <div
+                    key={i}
+                    style={{ height: `${val}%` }}
+                    className={cn(
+                      'flex-1 rounded-t-sm transition-all duration-200 hover:opacity-80',
+                      i >= 8 ? 'bg-[#0056FF]' : 'bg-[#E3E7FC] dark:bg-slate-700',
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+
     case 'snackbar':
       return (
         <div className="flex w-full max-w-md flex-col items-center gap-4 py-4">
-          {/* Controls Bar for State Testing */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <GeometricButton
               variant="blue"
@@ -824,7 +1186,7 @@ function renderActivePlaygroundComponent(props: {
               variant="outline"
               size="sm"
               onClick={() => {
-                props.setSnackbarMsg('Payment gateway connection timed out.');
+                props.setSnackbarMsg('Tuition payment gateway timed out.');
                 props.setSnackbarOpen(true);
               }}
             >
@@ -843,17 +1205,17 @@ function renderActivePlaygroundComponent(props: {
           </div>
 
           {/* Interactive In-Stage Snackbar Card */}
-          <div className="w-full rounded-2xl border border-slate-200/90 bg-slate-900 p-4 text-white shadow-lg transition-all">
+          <div className="w-full rounded-2xl border border-slate-900 bg-[#000B26] p-4 text-white shadow-lg transition-all">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <span className="size-2 rounded-full bg-[#2277FF]" />
+                <span className="size-2 animate-pulse rounded-full bg-[#0056FF]" />
                 <span className="font-sans text-xs">{props.snackbarMsg}</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => props.setSnackbarMsg('Action reverted successfully.')}
-                  className="rounded-full px-2.5 py-1 font-mono text-[11px] font-bold text-[#60A5FA] uppercase transition-colors hover:bg-white/10"
+                  className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-1 font-mono text-[11px] font-bold text-[#0056FF] transition-transform active:scale-95"
                 >
                   Undo
                 </button>
@@ -872,8 +1234,6 @@ function renderActivePlaygroundComponent(props: {
             <span>State: {props.snackbarOpen ? 'ACTIVE (DISPLAYING)' : 'READY'}</span>
             <span className="h-3 w-[1px] bg-slate-300" />
             <span>Duration: 5000ms</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Role: status</span>
           </div>
         </div>
       );
@@ -881,7 +1241,6 @@ function renderActivePlaygroundComponent(props: {
     case 'bottom-sheet':
       return (
         <div className="flex w-full max-w-sm flex-col items-center gap-4 py-2">
-          {/* Controls Bar for State Testing */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <GeometricButton variant="blue" size="sm" onClick={() => props.setSheetOpen(true)}>
               <MapPin className="h-3.5 w-3.5" />
@@ -896,8 +1255,7 @@ function renderActivePlaygroundComponent(props: {
             </GeometricButton>
           </div>
 
-          {/* In-Stage Interactive Action Sheet Mock */}
-          <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+          <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
             <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-slate-300" />
             <div className="flex items-center justify-between pb-1">
               <h4 className="font-sans text-xs font-bold tracking-wider text-slate-400 uppercase">
@@ -918,7 +1276,7 @@ function renderActivePlaygroundComponent(props: {
                   className={cn(
                     'flex w-full items-center justify-between rounded-xl border p-2.5 text-left font-semibold transition-all select-none',
                     props.bottomSheetChoice === opt
-                      ? 'border-[#0056FF] bg-blue-50/70 text-[#0056FF]'
+                      ? 'border-[#0056FF] bg-[#E3E7FC] text-[#0056FF]'
                       : 'border-slate-100 bg-slate-50 text-slate-700 hover:border-slate-200 hover:bg-white',
                   )}
                 >
@@ -932,8 +1290,6 @@ function renderActivePlaygroundComponent(props: {
           </div>
 
           <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-            <span>State: {props.sheetOpen ? 'OPEN (OVERLAY)' : 'IN-STAGE'}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
             <span>Selected: {props.bottomSheetChoice}</span>
           </div>
         </div>
@@ -942,7 +1298,6 @@ function renderActivePlaygroundComponent(props: {
     case 'dialog':
       return (
         <div className="flex w-full max-w-md flex-col items-center gap-4 py-2">
-          {/* Controls Bar for State Testing */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <GeometricButton variant="blue" size="sm" onClick={() => props.setDialogOpen(true)}>
               <span>Open Modal Dialog</span>
@@ -956,13 +1311,12 @@ function renderActivePlaygroundComponent(props: {
             </GeometricButton>
           </div>
 
-          {/* In-Stage Interactive Decision Dialog Container */}
-          <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-5 text-left shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+          <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-5 text-left shadow-sm">
             <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <h4 className="font-sans text-sm font-bold text-slate-900">
                 Confirm Enrollment Deferral
               </h4>
-              <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#000B26] uppercase">
+              <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
                 Action Required
               </span>
             </div>
@@ -974,7 +1328,7 @@ function renderActivePlaygroundComponent(props: {
               <GeometricButton
                 size="sm"
                 variant="outline"
-                onClick={() => props.setDialogDecision('Cancelled / Preserved')}
+                onClick={() => props.setDialogDecision('Cancelled')}
               >
                 Cancel
               </GeometricButton>
@@ -990,318 +1344,6 @@ function renderActivePlaygroundComponent(props: {
 
           <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
             <span>Decision: {props.dialogDecision}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Role: dialog (aria-modal)</span>
-          </div>
-        </div>
-      );
-
-    case 'bottom-nav':
-      return (
-        <div className="flex w-full max-w-sm flex-col items-center gap-4 py-4">
-          {/* Controls Bar for State Testing */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => props.setHangingNavBadge((b) => (b > 0 ? 0 : 8))}
-            >
-              Toggle Badge ({props.hangingNavBadge > 0 ? 'Clear' : '8'})
-            </GeometricButton>
-          </div>
-
-          <div className="w-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
-            <div className="flex items-center justify-around">
-              {props.bottomNavItems.map((item) => {
-                const isActive = props.bottomNavTab === item.id;
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => props.setBottomNavTab(item.id)}
-                    className={cn(
-                      'relative flex flex-col items-center gap-1 rounded-xl border px-4 py-2 transition-all select-none',
-                      isActive
-                        ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_8px_rgba(0,86,255,0.2)]'
-                        : 'border-transparent text-slate-600 hover:border-slate-200 hover:text-slate-950',
-                    )}
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span className="font-sans text-[11px] tracking-wider uppercase">
-                      {item.label}
-                    </span>
-                    {item.id === 'academics' && props.hangingNavBadge > 0 && (
-                      <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-bold text-white ring-2 ring-white">
-                        {props.hangingNavBadge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-            <span>Active Screen: {props.bottomNavTab.toUpperCase()}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Badge Count: {props.hangingNavBadge}</span>
-          </div>
-        </div>
-      );
-
-    case 'switch':
-      return (
-        <div className="flex flex-col items-center gap-4 py-6">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="blue"
-              size="sm"
-              onClick={() => props.setSwitchState(!props.switchState)}
-            >
-              Toggle State
-            </GeometricButton>
-            <GeometricButton variant="outline" size="sm" onClick={() => props.setSwitchState(true)}>
-              Reset to Online
-            </GeometricButton>
-          </div>
-
-          <div className="flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-white px-6 py-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
-            <div className="space-y-0.5">
-              <span className="font-sans text-xs font-bold text-slate-900">
-                System Telemetry Probe
-              </span>
-              <p className="font-sans text-[11px] text-slate-500">
-                Live replica set change streams
-              </p>
-            </div>
-            <LibrarySwitch checked={props.switchState} onCheckedChange={props.setSwitchState} />
-          </div>
-
-          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-            <span>
-              {props.switchState ? 'STATE: ONLINE (STREAMING 120 FPS)' : 'STATE: OFFLINE (PAUSED)'}
-            </span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Role: switch (aria-checked)</span>
-          </div>
-        </div>
-      );
-
-    case 'chip':
-      return (
-        <div className="flex flex-col items-center gap-4 py-6">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => props.setSelectedChip('All')}
-            >
-              Reset Filter
-            </GeometricButton>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {['All', 'Academics', 'Students', 'Finance', 'Attendance', 'Graduation'].map(
-              (label) => (
-                <LibraryChip
-                  key={label}
-                  active={props.selectedChip === label}
-                  onClick={() => props.setSelectedChip(label)}
-                >
-                  {label}
-                </LibraryChip>
-              ),
-            )}
-          </div>
-
-          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-            <span>Selected Filter: {props.selectedChip.toUpperCase()}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Radius: 9999px (Pill)</span>
-          </div>
-        </div>
-      );
-
-    case 'fab':
-      return (
-        <div className="flex flex-col items-center justify-center gap-4 py-6">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => props.setFabSpeedDialOpen(!props.fabSpeedDialOpen)}
-            >
-              Toggle Speed Dial
-            </GeometricButton>
-            <GeometricButton variant="outline" size="sm" onClick={() => props.setFabCount(0)}>
-              Reset Counter
-            </GeometricButton>
-          </div>
-
-          <div className="relative flex items-center justify-center gap-4 py-2">
-            {props.fabSpeedDialOpen && (
-              <div className="flex items-center gap-2">
-                <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-[#0056FF]">
-                  Add Student
-                </span>
-                <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-[#0056FF]">
-                  Attendance
-                </span>
-                <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-[#0056FF]">
-                  Invoice
-                </span>
-              </div>
-            )}
-
-            <LibraryFab
-              label="Quick Action"
-              icon={<Plus className="h-5 w-5" />}
-              onClick={() => props.setFabCount((c) => c + 1)}
-              className="bg-[#0056FF] text-white hover:bg-[#0040C0]"
-            />
-          </div>
-
-          <div className="flex items-center gap-2 font-mono text-xs text-slate-600">
-            <span>Tap Events Recorded: {props.fabCount}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Dimensions: 56×56px</span>
-          </div>
-        </div>
-      );
-
-    case 'card':
-      return (
-        <div className="flex flex-col items-center gap-4 py-4">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant={props.cardEnrolled ? 'blue' : 'outline'}
-              size="sm"
-              onClick={() => props.setCardEnrolled(!props.cardEnrolled)}
-            >
-              Toggle Enrollment
-            </GeometricButton>
-            {(['light', 'dark', 'futurewave'] as const).map((t) => (
-              <GeometricButton
-                key={t}
-                variant={props.cardTheme === t ? 'blue' : 'outline'}
-                size="sm"
-                isActive={props.cardTheme === t}
-                onClick={() => props.setCardTheme(t)}
-              >
-                {t.toUpperCase()}
-              </GeometricButton>
-            ))}
-          </div>
-
-          <div
-            className={cn(
-              'w-full max-w-xs transition-all duration-200',
-              props.cardTheme === 'dark' && 'rounded-2xl bg-slate-900 p-2 text-white',
-              props.cardTheme === 'futurewave' &&
-                'rounded-2xl bg-gradient-to-br from-[#2277FF]/20 to-[#AEC2FF]/30 p-2',
-            )}
-          >
-            <LibraryCard
-              className={cn(
-                'rounded-2xl border bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md',
-                props.cardTheme === 'dark'
-                  ? 'border-slate-800 bg-slate-900 text-white'
-                  : 'border-slate-200/80',
-              )}
-            >
-              <LibraryCardMedia className="relative flex h-24 w-full items-start justify-between rounded-lg bg-gradient-to-r from-blue-100 to-[#0056FF] p-3">
-                <span className="rounded-full border border-white/40 bg-[#0056FF] px-2.5 py-0.5 font-sans text-[10px] font-bold text-white shadow-xs">
-                  {props.cardEnrolled ? 'ENROLLED' : 'AVAILABLE'}
-                </span>
-                <span className="font-mono text-[10px] font-semibold text-white/90">TERM 1</span>
-              </LibraryCardMedia>
-              <LibraryCardHeader>
-                <LibraryCardTitle
-                  className={cn(
-                    'text-base font-bold',
-                    props.cardTheme === 'dark' ? 'text-white' : 'text-slate-900',
-                  )}
-                >
-                  Autonomous Robotics
-                </LibraryCardTitle>
-                <LibraryCardDescription
-                  className={cn(
-                    'text-xs',
-                    props.cardTheme === 'dark' ? 'text-slate-400' : 'text-slate-500',
-                  )}
-                >
-                  Sensors, telemetry & embedded micro-controllers.
-                </LibraryCardDescription>
-              </LibraryCardHeader>
-              <LibraryCardFooter className="flex items-center justify-between border-t border-slate-100 pt-3">
-                <span className="font-sans text-xs font-bold text-slate-500">3 CREDITS</span>
-                <GeometricButton
-                  size="sm"
-                  variant={props.cardEnrolled ? 'primary' : 'outline'}
-                  isActive={props.cardEnrolled}
-                  onClick={() => props.setCardEnrolled(!props.cardEnrolled)}
-                >
-                  <Star className="h-3.5 w-3.5" />
-                  <span>{props.cardEnrolled ? 'Enrolled' : 'Enroll'}</span>
-                </GeometricButton>
-              </LibraryCardFooter>
-            </LibraryCard>
-          </div>
-
-          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-            <span>Status: {props.cardEnrolled ? 'ENROLLED' : 'AVAILABLE'}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Theme: {props.cardTheme.toUpperCase()}</span>
-          </div>
-        </div>
-      );
-
-    case 'dropdown':
-      return (
-        <div className="flex w-full max-w-xs flex-col items-center gap-4 py-6">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => props.setDropdownValue('sora')}
-            >
-              Reset to Sora
-            </GeometricButton>
-          </div>
-
-          <LibraryDropdown
-            label="Brand Typography Engine"
-            value={props.dropdownValue}
-            onChange={(val) => props.setDropdownValue(val)}
-            options={[
-              {
-                value: 'sora',
-                label: 'Sora — Primary Brand Typography',
-                description: 'Google Fonts geometric sans',
-              },
-              {
-                value: 'inter',
-                label: 'Inter — UI Standard Sans',
-                description: 'Functional UI sans',
-              },
-              {
-                value: 'mono',
-                label: 'IBM Plex Mono — Code Standards',
-                description: 'Monospace data display',
-              },
-              {
-                value: 'roboto',
-                label: 'Roboto — Material M3',
-                description: 'Expressive enterprise sans',
-              },
-            ]}
-          />
-
-          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-            <span>Selected Token: {props.dropdownValue.toUpperCase()}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Options: 4</span>
           </div>
         </div>
       );
@@ -1333,78 +1375,191 @@ function renderActivePlaygroundComponent(props: {
                 type="button"
                 onClick={() => props.setActiveTool('Move Tool (V)')}
                 className={cn(
-                  'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all select-none',
+                  'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold transition-all select-none',
                   props.activeTool === 'Move Tool (V)'
                     ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                    : 'border-slate-200/80 bg-white/90 text-slate-800 hover:border-[#0056FF] hover:bg-slate-50',
+                    : 'border-slate-200 bg-white text-slate-800 hover:border-[#0056FF]',
                 )}
               >
                 V
               </button>
             </LibraryTooltip>
 
-            <LibraryTooltip
-              content="Hand Tool (Pan Canvas)"
-              shortcut="H"
-              position={props.tooltipPosition}
-            >
+            <LibraryTooltip content="Save Record" shortcut="⌘S" position={props.tooltipPosition}>
               <button
                 type="button"
-                onClick={() => props.setActiveTool('Hand Tool (H)')}
+                onClick={() => props.setActiveTool('Save Record (⌘S)')}
                 className={cn(
-                  'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all select-none',
-                  props.activeTool === 'Hand Tool (H)'
+                  'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold transition-all select-none',
+                  props.activeTool === 'Save Record (⌘S)'
                     ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                    : 'border-slate-200/80 bg-white/90 text-slate-800 hover:border-[#0056FF] hover:bg-slate-50',
+                    : 'border-slate-200 bg-white text-slate-800 hover:border-[#0056FF]',
                 )}
               >
-                H
-              </button>
-            </LibraryTooltip>
-
-            <LibraryTooltip
-              content="Inspect Element"
-              shortcut="Cmd+I"
-              position={props.tooltipPosition}
-            >
-              <button
-                type="button"
-                onClick={() => props.setActiveTool('Inspect Element (Cmd+I)')}
-                className={cn(
-                  'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all select-none',
-                  props.activeTool === 'Inspect Element (Cmd+I)'
-                    ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                    : 'border-slate-200/80 bg-white/90 text-slate-800 hover:border-[#0056FF] hover:bg-slate-50',
-                )}
-              >
-                I
-              </button>
-            </LibraryTooltip>
-
-            <LibraryTooltip
-              content="Quick Enroll Student"
-              shortcut="E"
-              position={props.tooltipPosition}
-            >
-              <button
-                type="button"
-                onClick={() => props.setActiveTool('Quick Enroll Student (E)')}
-                className={cn(
-                  'flex h-11 w-11 items-center justify-center rounded-xl border text-sm font-bold shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] transition-all select-none',
-                  props.activeTool === 'Quick Enroll Student (E)'
-                    ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                    : 'border-slate-200/80 bg-white/90 text-slate-800 hover:border-[#0056FF] hover:bg-slate-50',
-                )}
-              >
-                E
+                S
               </button>
             </LibraryTooltip>
           </div>
 
           <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
             <span>Active Tool: {props.activeTool}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Anchor: {props.tooltipPosition.toUpperCase()}</span>
+          </div>
+        </div>
+      );
+
+    case 'fab':
+      return (
+        <div className="flex flex-col items-center justify-center gap-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => props.setFabSpeedDialOpen(!props.fabSpeedDialOpen)}
+            >
+              Toggle Speed Dial
+            </GeometricButton>
+            <GeometricButton variant="outline" size="sm" onClick={() => props.setFabCount(0)}>
+              Reset Counter
+            </GeometricButton>
+          </div>
+
+          <div className="relative flex items-center justify-center gap-4 py-2">
+            {props.fabSpeedDialOpen && (
+              <div className="flex items-center gap-2">
+                <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 text-xs font-bold text-[#0056FF]">
+                  Add Student
+                </span>
+                <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 text-xs font-bold text-[#0056FF]">
+                  Attendance
+                </span>
+                <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 text-xs font-bold text-[#0056FF]">
+                  Invoice
+                </span>
+              </div>
+            )}
+
+            <LibraryFab
+              label="Quick Action"
+              icon={<Plus className="h-5 w-5" />}
+              onClick={() => props.setFabCount((c) => c + 1)}
+              className="bg-[#0056FF] text-white hover:bg-[#2277FF]"
+            />
+          </div>
+
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-600">
+            <span>Tap Count: {props.fabCount}</span>
+          </div>
+        </div>
+      );
+
+    case 'chip':
+      return (
+        <div className="flex flex-col items-center gap-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {['All', 'Academics', 'Students', 'Finance', 'Attendance', 'Graduation'].map(
+              (label) => (
+                <LibraryChip
+                  key={label}
+                  active={props.selectedChip === label}
+                  onClick={() => props.setSelectedChip(label)}
+                >
+                  {label}
+                </LibraryChip>
+              ),
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Selected Filter: {props.selectedChip.toUpperCase()}</span>
+          </div>
+        </div>
+      );
+
+    case 'switch':
+      return (
+        <div className="flex flex-col items-center gap-4 py-6">
+          <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm">
+            <div className="space-y-0.5">
+              <span className="font-sans text-xs font-bold text-slate-900">
+                Auto Sync Telemetry
+              </span>
+              <p className="font-sans text-[11px] text-slate-500">
+                Live replica set change streams
+              </p>
+            </div>
+            <LibrarySwitch checked={props.switchState} onCheckedChange={props.setSwitchState} />
+          </div>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>{props.switchState ? 'STATE: ONLINE' : 'STATE: PAUSED'}</span>
+          </div>
+        </div>
+      );
+
+    case 'dropdown':
+      return (
+        <div className="flex w-full max-w-xs flex-col items-center gap-4 py-6">
+          <LibraryDropdown
+            label="Brand Typography Engine"
+            value={props.dropdownValue}
+            onChange={(val) => props.setDropdownValue(val)}
+            options={[
+              {
+                value: 'sora',
+                label: 'Sora — Primary Typography',
+                description: 'Google Fonts geometric sans',
+              },
+              {
+                value: 'inter',
+                label: 'Inter — UI Standard Sans',
+                description: 'Functional clean UI sans',
+              },
+              {
+                value: 'mono',
+                label: 'IBM Plex Mono — Code Standards',
+                description: 'Monospace data display',
+              },
+            ]}
+          />
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Selected: {props.dropdownValue.toUpperCase()}</span>
+          </div>
+        </div>
+      );
+
+    case 'bottom-nav':
+      return (
+        <div className="flex w-full max-w-sm flex-col items-center gap-4 py-4">
+          <div className="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+            <div className="flex items-center justify-around">
+              {props.bottomNavItems.map((item) => {
+                const isActive = props.bottomNavTab === item.id;
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => props.setBottomNavTab(item.id)}
+                    className={cn(
+                      'relative flex flex-col items-center gap-1 rounded-xl border px-3 py-1.5 transition-all select-none',
+                      isActive
+                        ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-xs'
+                        : 'border-transparent text-slate-600 hover:border-slate-200 hover:text-slate-950',
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="font-sans text-[10px] tracking-wider uppercase">
+                      {item.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Active Screen: {props.bottomNavTab.toUpperCase()}</span>
           </div>
         </div>
       );
@@ -1412,11 +1567,11 @@ function renderActivePlaygroundComponent(props: {
     case 'hanging-tabs-nav':
       return (
         <div className="flex w-full max-w-lg flex-col items-center gap-4 py-4">
-          <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-            <div className="rounded-t-xl border-b border-slate-300 bg-slate-100/80 px-4 pt-3 pb-0">
+          <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm">
+            <div className="rounded-t-xl border-b border-slate-200 bg-slate-50 px-4 pt-3 pb-0">
               <div className="flex items-center justify-between pb-2">
                 <span className="font-sans text-xs font-bold tracking-wider text-slate-700 uppercase">
-                  Application Header
+                  Application Header Ceiling
                 </span>
                 <span className="font-mono text-[10px] text-slate-500">SNPI-SMS v2.4</span>
               </div>
@@ -1461,9 +1616,7 @@ function renderActivePlaygroundComponent(props: {
     case 'input':
       return (
         <div className="flex w-full max-w-lg flex-col items-center gap-5 py-4">
-          {/* Controls Bar for State Testing */}
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="font-sans text-xs font-semibold text-slate-600">Theme:</span>
             {(['blue', 'azure', 'soft-lavender', 'black', 'outline'] as const).map((v) => (
               <GeometricButton
                 key={v}
@@ -1485,40 +1638,6 @@ function renderActivePlaygroundComponent(props: {
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="font-sans text-xs font-semibold text-slate-600">Size:</span>
-            {(['sm', 'md', 'lg'] as const).map((s) => (
-              <GeometricButton
-                key={s}
-                variant={props.inputDemoSize === s ? 'blue' : 'outline'}
-                size="sm"
-                isActive={props.inputDemoSize === s}
-                onClick={() => props.setInputDemoSize(s)}
-              >
-                {s.toUpperCase()}
-              </GeometricButton>
-            ))}
-
-            <GeometricButton
-              variant={props.inputDemoLoading ? 'blue' : 'outline'}
-              size="sm"
-              isActive={props.inputDemoLoading}
-              onClick={() => props.setInputDemoLoading(!props.inputDemoLoading)}
-            >
-              Loading Spinner
-            </GeometricButton>
-
-            <GeometricButton
-              variant={props.inputDemoDisabled ? 'blue' : 'outline'}
-              size="sm"
-              isActive={props.inputDemoDisabled}
-              onClick={() => props.setInputDemoDisabled(!props.inputDemoDisabled)}
-            >
-              Disabled Mode
-            </GeometricButton>
-          </div>
-
-          {/* Interactive Live Pill Input Field (Image 2 style with primary brand colors) */}
           <div className="w-full max-w-md space-y-2">
             <GeometricInput
               type="search"
@@ -1535,13 +1654,10 @@ function renderActivePlaygroundComponent(props: {
             />
           </div>
 
-          {/* Real-time State Feedback Badge */}
           <div className="flex flex-wrap items-center justify-center gap-2 font-mono text-[11px] text-slate-500">
             <span>Value: &quot;{props.inputDemoText}&quot;</span>
             <span className="h-3 w-[1px] bg-slate-300" />
             <span>Variant: {props.inputDemoVariant.toUpperCase()}</span>
-            <span className="h-3 w-[1px] bg-slate-300" />
-            <span>Size: {props.inputDemoSize.toUpperCase()}</span>
           </div>
         </div>
       );
