@@ -59,9 +59,9 @@ import {
 import { cn } from '@/lib/utils';
 
 export default function DesignSystemPage() {
-  // Main View: 'catalog' | 'playground' | 'blueprint' | 'dual-mode' | 'top-nav'
+  // Main View: 'catalog' | 'playground' | 'blueprint' | 'dual-mode'
   const [activeTab, setActiveTab] = React.useState<
-    'catalog' | 'playground' | 'blueprint' | 'dual-mode' | 'top-nav'
+    'catalog' | 'playground' | 'blueprint' | 'dual-mode'
   >('catalog');
 
   // Selected Component for playground inspection
@@ -71,7 +71,7 @@ export default function DesignSystemPage() {
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
   // Active TOC section for Line Tracker
-  const [activeSectionId, setActiveSectionId] = React.useState<string>('how-it-works');
+  const [activeSectionId, setActiveSectionId] = React.useState<string>('component-gallery');
 
   const [showCode, setShowCode] = React.useState<boolean>(false);
   const [copiedCode, setCopiedCode] = React.useState<boolean>(false);
@@ -121,9 +121,6 @@ export default function DesignSystemPage() {
   // Headings for Right Sidebar Line Tracker
   const tocHeadings: TocHeadingItem[] = React.useMemo(
     () => [
-      { id: 'how-it-works', title: 'SNPI-SMS Design System: how it works', level: 1 },
-      { id: 'architecture-flow', title: 'Architectural token flow', level: 2 },
-      { id: 'top-nav-style', title: 'Top Navigation Hanging Tabs Style', level: 1 },
       { id: 'component-gallery', title: 'Component Catalog & Variants', level: 1 },
       { id: 'interactive-stage', title: 'Interactive Component Playground', level: 1 },
       { id: 'brand-blueprint', title: 'Royal Blue (#0056FF) Brand Blueprint', level: 1 },
@@ -266,19 +263,6 @@ export default function DesignSystemPage() {
                     >
                       <span>Dual Mode UI</span>
                     </GeometricButton>
-
-                    <GeometricButton
-                      variant="futurewave"
-                      size="sm"
-                      isActive={activeTab === 'top-nav'}
-                      onClick={() => {
-                        setActiveTab('top-nav');
-                        scrollToSection('top-nav-style');
-                      }}
-                      className="w-full justify-start"
-                    >
-                      <span>Top Nav</span>
-                    </GeometricButton>
                   </div>
                 </div>
 
@@ -319,259 +303,6 @@ export default function DesignSystemPage() {
 
           {/* COLUMN 2: Center Main Documentation & Stage (Cloudflare Docs Style) */}
           <main className="space-y-10 lg:col-span-6">
-            {/* Header Anchor Section */}
-            <div id="how-it-works" className="space-y-4">
-              <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-2">
-                  <h1 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                    SNPI-SMS Design System: how it works
-                  </h1>
-                </div>
-                <GeometricHeaderStamp codeA="20" titleA="SYSTEM" codeB="26" titleB="DOCS" />
-              </div>
-
-              <p className="font-sans text-sm leading-relaxed text-slate-600">
-                When you build or extend interfaces in SNPI-SMS, the Design System enforces visual
-                cohesion, strict flat aesthetics, and luminance-based depth before any code reaches
-                production. It does not matter whether the view is an institutional dashboard, a
-                public verification portal, or a mobile portal. If it runs on SNPI-SMS, it follows
-                the Royal Blue and Sora standards.
-              </p>
-
-              {/* Architectural Token Flow Diagram Card */}
-              <div
-                id="architecture-flow"
-                className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40"
-              >
-                <div className="flex flex-col items-center justify-around gap-4 sm:flex-row">
-                  {/* Node 1: Developer */}
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
-                      <span className="font-mono text-base font-bold">DEV</span>
-                    </div>
-                    <span className="font-sans text-xs font-semibold tracking-wider text-slate-800 uppercase">
-                      Developer
-                    </span>
-                  </div>
-
-                  {/* Arrow 1 */}
-                  <div className="flex items-center gap-1 font-mono text-slate-400">
-                    <span className="h-0.5 w-8 bg-[#0056FF]" />
-                    <span className="font-bold text-[#0056FF]">&rarr;</span>
-                  </div>
-
-                  {/* Node 2: Royal Blue Tokens */}
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="relative flex h-14 w-14 items-center justify-center rounded-xl border border-[#0056FF] bg-[#0056FF] text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_4px_12px_rgba(0,86,255,0.25)]">
-                      <span className="font-mono text-[11px] font-bold">#0056FF</span>
-                    </div>
-                    <span className="font-sans text-xs font-black tracking-wider text-[#0056FF] uppercase">
-                      Royal Blue
-                    </span>
-                  </div>
-
-                  {/* Arrow 2 */}
-                  <div className="flex items-center gap-1 font-mono text-slate-400">
-                    <span className="h-0.5 w-8 bg-[#0056FF]" />
-                    <span className="font-bold text-[#0056FF]">&rarr;</span>
-                  </div>
-
-                  {/* Node 3: Flat Component */}
-                  <div className="flex flex-col items-center gap-2 text-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
-                      <span className="font-mono text-base font-bold">UI 10</span>
-                    </div>
-                    <span className="font-sans text-xs font-semibold tracking-wider text-slate-800 uppercase">
-                      Component
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* SECTION: Top Navigation Hanging Tabs Style (Image Reference) */}
-            <section
-              id="top-nav-style"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
-            >
-              <div className="flex flex-col gap-1">
-                <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  Header Navigation Architecture
-                </span>
-                <h2 className="font-sans text-xl font-bold text-slate-950 sm:text-2xl">
-                  Top Navigation Hanging Tabs Style
-                </h2>
-                <p className="font-sans text-sm leading-relaxed text-slate-600">
-                  Inverted trapezoid folder tabs suspended from the top header baseline. Built with
-                  vector-smooth SVG geometry, non-scaling continuous strokes, stacked icon and title
-                  hierarchy, and circular notification badges.
-                </p>
-              </div>
-
-              {/* Live Interactive Header Bar Stage */}
-              <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                {/* Header Ceiling Strip (Textured Slate Bar) */}
-                <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
-                  <div className="flex items-center justify-between pb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
-                      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-                        Application Workspace Ceiling
-                      </span>
-                    </div>
-                    <span className="font-mono text-[11px] text-slate-500">
-                      SNPI-SMS Design Standard
-                    </span>
-                  </div>
-
-                  {/* Hanging Tabs Suspended from Ceiling (Centered on Page, Zero Number Labels) */}
-                  <div className="-mb-[1px] flex justify-center">
-                    <HangingTabsNav
-                      activeId={hangingNavTab}
-                      onSelect={setHangingNavTab}
-                      size={hangingNavSize}
-                      items={[
-                        { id: 'map', label: 'Map', icon: Pin },
-                        { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                        { id: 'post', label: 'Post', icon: FilePlus },
-                        { id: 'friends', label: 'Friends', icon: Contacts },
-                      ]}
-                    />
-                  </div>
-                </div>
-
-                {/* Interactive Controls & State Inspector */}
-                <div className="flex flex-col gap-4 border-t border-slate-100 bg-slate-50/60 p-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-sans text-xs font-semibold text-slate-600">
-                      Active Tab:
-                    </span>
-                    <span className="rounded-full border-2 border-[#0056FF] bg-blue-50/80 px-3 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
-                      {hangingNavTab.toUpperCase()}
-                    </span>
-                  </div>
-
-                  {/* Size Switcher Using Image 2 Pill Button Style */}
-                  <div className="flex items-center gap-1.5">
-                    {(['sm', 'md', 'lg'] as const).map((sz) => (
-                      <GeometricButton
-                        key={sz}
-                        variant={hangingNavSize === sz ? 'blue' : 'outline'}
-                        size="sm"
-                        isActive={hangingNavSize === sz}
-                        onClick={() => setHangingNavSize(sz)}
-                      >
-                        {sz.toUpperCase()}
-                      </GeometricButton>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Image 2 Inspired: Six Capsule Pill Buttons System */}
-              <div className="space-y-3 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                <div className="flex flex-col gap-1 border-b border-slate-100 pb-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <h3 className="font-sans text-sm font-bold text-slate-900">
-                      Capsule Pill Buttons Palette
-                    </h3>
-                    <p className="font-sans text-xs text-slate-500">
-                      2px colored stroke, soft pastel surface tint, and squircle icon tiles
-                    </p>
-                  </div>
-                  <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                    SNPI-SMS Pill Standard
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
-                  {/* 1. Digital - Blue */}
-                  <GeometricButton
-                    variant="blue"
-                    size="md"
-                    icon={<Monitor className="size-4" />}
-                    className="w-full"
-                  >
-                    Digital
-                  </GeometricButton>
-
-                  {/* 2. Finance - Azure */}
-                  <GeometricButton
-                    variant="azure"
-                    size="md"
-                    icon={<Briefcase className="size-4" />}
-                    className="w-full"
-                  >
-                    Finance
-                  </GeometricButton>
-
-                  {/* 3. Simple - Soft Lavender */}
-                  <GeometricButton
-                    variant="soft-lavender"
-                    size="md"
-                    icon={<Wind className="size-4" />}
-                    className="w-full"
-                  >
-                    Simple
-                  </GeometricButton>
-
-                  {/* 4. Fast - Black */}
-                  <GeometricButton
-                    variant="black"
-                    size="md"
-                    icon={<Zap className="size-4" />}
-                    className="w-full"
-                  >
-                    Fast
-                  </GeometricButton>
-
-                  {/* 5. Secure - Midnight Surge */}
-                  <GeometricButton
-                    variant="midnight"
-                    size="md"
-                    icon={<ShieldCheck className="size-4" />}
-                    className="w-full"
-                  >
-                    Secure
-                  </GeometricButton>
-
-                  {/* 6. Fluid - Futurewave */}
-                  <GeometricButton
-                    variant="futurewave"
-                    size="md"
-                    icon={<Droplets className="size-4" />}
-                    className="w-full"
-                  >
-                    Fluid
-                  </GeometricButton>
-                </div>
-              </div>
-
-              {/* Technical Architecture Specs */}
-              <div className="grid grid-cols-1 gap-3 font-sans sm:grid-cols-3">
-                <div className="rounded-xl border border-slate-200/80 bg-white p-3.5">
-                  <h4 className="text-xs font-bold text-slate-900 uppercase">Vector Geometry</h4>
-                  <p className="mt-1 font-mono text-[11px] text-slate-500">
-                    d=&quot;M 0,0 L 100,0 L 88,44 Q 85,50 78,50 L 22,50 Q 15,50 12,44 Z&quot;
-                  </p>
-                </div>
-                <div className="rounded-xl border border-slate-200/80 bg-white p-3.5">
-                  <h4 className="text-xs font-bold text-slate-900 uppercase">Zero Broken Stroke</h4>
-                  <p className="mt-1 font-mono text-[11px] text-slate-500">
-                    vectorEffect=&quot;non-scaling-stroke&quot; prevents corner clipping
-                  </p>
-                </div>
-                <div className="rounded-xl border border-slate-200/80 bg-white p-3.5">
-                  <h4 className="text-xs font-bold text-slate-900 uppercase">
-                    Zero Badge & Label Box
-                  </h4>
-                  <p className="mt-1 font-mono text-[11px] text-slate-500">
-                    Pure flat typography and bare vector icons with zero background patches
-                  </p>
-                </div>
-              </div>
-            </section>
-
             {/* SECTION 1: Component Catalog (Image 1 Style Grid with Hover Animations) */}
             <section id="component-gallery" className="scroll-mt-24 space-y-4">
               <ComponentGalleryGrid
