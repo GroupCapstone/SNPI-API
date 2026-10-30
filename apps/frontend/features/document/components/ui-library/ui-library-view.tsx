@@ -14,9 +14,38 @@ import {
   LibraryTooltip,
   HangingTabsNav,
   COMPONENT_LIBRARY_REGISTRY,
+  COMPONENT_CATEGORIES,
   GeometricButton,
   GeometricInput,
   GeometricHeaderStamp,
+  RailTocDemo,
+  BounceSidebarDemo,
+  HookSidebarDemo,
+  ProximitySidebarDemo,
+  ScrollProgressDemo,
+  GooeyNavDemo,
+  DurationPickerDemo,
+  OtpInputDemo,
+  PasswordInputDemo,
+  ThemeSelectorDemo,
+  DeleteButtonDemo,
+  TaskListDemo,
+  ToastDemo,
+  EmojiReactionDemo,
+  NotificationBellDemo,
+  FolderDemo,
+  CodeBlockDemo,
+  GravityLettersDemo,
+  GitHubActivityDemo,
+  StepPlayerDemo,
+  AnimatedCounterDemo,
+  VoiceNoteDemo,
+  FaqDemo,
+  FluidOrbDemo,
+  GridRevealDemo,
+  MatrixOrbDemo,
+  WebSearchDemo,
+  InlineAiStatusDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -33,6 +62,8 @@ import {
   Eye,
   EyeOff,
   User,
+  Smartphone,
+  Monitor,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
@@ -54,6 +85,16 @@ export function UiLibraryView() {
   const setCompTab = (id: string, tab: 'preview' | 'usage' | 'code') => {
     setComponentTabs((prev) => ({ ...prev, [id]: tab }));
   };
+
+  // Per-component device preview mode: 'web' | 'phone'
+  const [compDeviceModes, setCompDeviceModes] = React.useState<Record<string, 'web' | 'phone'>>({});
+  const getCompDevice = (id: string): 'web' | 'phone' => compDeviceModes[id] || 'web';
+  const setCompDevice = (id: string, mode: 'web' | 'phone') => {
+    setCompDeviceModes((prev) => ({ ...prev, [id]: mode }));
+  };
+
+  // Hanging tabs demo device mode: 'web' | 'phone'
+  const [hangingNavDevice, setHangingNavDevice] = React.useState<'web' | 'phone'>('web');
 
   // Active section for Line Tracker
   const [activeSectionId, setActiveSectionId] = React.useState<string>('interactive-feed');
@@ -159,24 +200,13 @@ export function UiLibraryView() {
   const [inputDemoLoading, setInputDemoLoading] = React.useState(false);
   const [inputDemoDisabled, setInputDemoDisabled] = React.useState(false);
 
-  // Section IDs for active tracking in Left Sticky Menu (Light UI only)
+  // Section IDs for active tracking in Left Sticky Menu (40 components)
   const scrollSectionIds = React.useMemo(
     () => [
       'ui-library-head',
       'top-nav-style',
       'interactive-feed',
-      'comp-snackbar',
-      'comp-bottom-sheet',
-      'comp-dialog',
-      'comp-tooltip',
-      'comp-fab',
-      'comp-chip',
-      'comp-switch',
-      'comp-dropdown',
-      'comp-bottom-nav',
-      'comp-card',
-      'comp-hanging-tabs-nav',
-      'comp-input',
+      ...COMPONENT_LIBRARY_REGISTRY.map((c) => `comp-${c.id}`),
       'brand-blueprint',
       'design-principles',
       'touch-targets',
@@ -184,7 +214,7 @@ export function UiLibraryView() {
     [],
   );
 
-  // Filter 12 components in real-time
+  // Filter 40 components in real-time
   const filteredComponents = React.useMemo(() => {
     if (!searchQuery.trim()) return COMPONENT_LIBRARY_REGISTRY;
     const q = searchQuery.toLowerCase().trim();
@@ -261,6 +291,75 @@ export function UiLibraryView() {
     setTimeout(() => setCopiedInstallId(null), 2000);
   };
 
+  const stateBundle = {
+    snackbarOpen,
+    setSnackbarOpen,
+    snackbarMsg,
+    setSnackbarMsg,
+    sheetOpen,
+    setSheetOpen,
+    bottomSheetChoice,
+    setBottomSheetChoice,
+    dialogOpen,
+    setDialogOpen,
+    dialogDecision,
+    setDialogDecision,
+    deferralReason,
+    setDeferralReason,
+    activeTool,
+    setActiveTool,
+    tooltipPosition,
+    setTooltipPosition,
+    fabCount,
+    setFabCount,
+    fabSpeedDialOpen,
+    setFabSpeedDialOpen,
+    fabActionCounts,
+    setFabActionCounts,
+    selectedChips,
+    setSelectedChips,
+    toggleChip,
+    switchAutoSync,
+    setSwitchAutoSync,
+    switchBiometric,
+    setSwitchBiometric,
+    switchSMSAlerts,
+    setSwitchSMSAlerts,
+    switchAuditLog,
+    setSwitchAuditLog,
+    dropdownValue,
+    setDropdownValue,
+    dropdownCampus,
+    setDropdownCampus,
+    bottomNavTab,
+    setBottomNavTab,
+    bottomNavBadge,
+    setBottomNavBadge,
+    bottomNavItems,
+    cardPresentationMode,
+    setCardPresentationMode,
+    cardRevealed,
+    setCardRevealed,
+    cardSlidOut,
+    setCardSlidOut,
+    metricsTimeRange,
+    setMetricsTimeRange,
+    hangingNavTab,
+    setHangingNavTab,
+    hangingNavSize,
+    setHangingNavSize,
+    inputDemoText,
+    setInputDemoText,
+    inputDemoVariant,
+    setInputDemoVariant,
+    inputDemoSize,
+    setInputDemoSize,
+    inputDemoLoading,
+    setInputDemoLoading,
+    inputDemoDisabled,
+    setInputDemoDisabled,
+  };
+
   return (
     <div
       ref={rootRef}
@@ -281,50 +380,82 @@ export function UiLibraryView() {
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
-              {/* 12 Core UI Components List with Active Highlights */}
+              {/* 40 Core UI Components Grouped By 5 Categories */}
               <div className="space-y-4 font-sans text-xs">
                 <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
                   <span>Components</span>
-                  <span className="text-[#0056FF]">{filteredComponents.length}</span>
+                  <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 text-[10px] font-black text-[#0056FF]">
+                    {filteredComponents.length} Active
+                  </span>
                 </div>
-                <div className="space-y-1.5">
-                  {filteredComponents.length === 0 ? (
-                    <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
-                      No matching components found
-                    </div>
-                  ) : (
-                    filteredComponents.map((comp) => {
-                      const targetId = `comp-${comp.id}`;
-                      const isCurrentActive = activeSectionId === targetId;
-                      return (
-                        <button
-                          key={comp.id}
-                          type="button"
-                          onClick={() => {
-                            if (searchQuery.trim()) {
-                              setSearchQuery('');
-                            }
-                            scrollToSection(targetId);
-                          }}
-                          className={cn(
-                            'flex w-full cursor-pointer items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-left font-sans text-xs font-semibold transition-all',
-                            isCurrentActive
-                              ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                              : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              'size-1.5 rounded-full transition-colors',
-                              isCurrentActive ? 'bg-white' : 'bg-slate-400',
-                            )}
-                          />
-                          <span className="truncate">{comp.name}</span>
-                        </button>
-                      );
-                    })
-                  )}
-                </div>
+
+                {filteredComponents.length === 0 ? (
+                  <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
+                    No matching components found
+                  </div>
+                ) : (
+                  COMPONENT_CATEGORIES.map((category) => {
+                    const categoryComps = filteredComponents.filter((c) => c.category === category);
+                    if (categoryComps.length === 0) return null;
+
+                    return (
+                      <div key={category} className="space-y-1.5 pt-1">
+                        <div className="flex items-center justify-between px-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                          <span className="text-slate-800">{category}</span>
+                          <span className="rounded-full border border-slate-200 bg-slate-100 px-1.5 py-0.2 font-mono text-[9px] text-[#0056FF]">
+                            {categoryComps.length}
+                          </span>
+                        </div>
+                        <div className="space-y-1">
+                          {categoryComps.map((comp) => {
+                            const targetId = `comp-${comp.id}`;
+                            const isCurrentActive = activeSectionId === targetId;
+                            return (
+                              <button
+                                key={comp.id}
+                                type="button"
+                                onClick={() => {
+                                  if (searchQuery.trim()) {
+                                    setSearchQuery('');
+                                  }
+                                  scrollToSection(targetId);
+                                }}
+                                className={cn(
+                                  'flex w-full cursor-pointer items-center justify-between rounded-full border px-3 py-1.5 text-left font-sans text-xs font-semibold transition-all',
+                                  isCurrentActive
+                                    ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                                    : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                                )}
+                              >
+                                <div className="flex items-center gap-2 truncate">
+                                  <span
+                                    className={cn(
+                                      'size-1.5 shrink-0 rounded-full transition-colors',
+                                      isCurrentActive ? 'bg-white' : 'bg-slate-400',
+                                    )}
+                                  />
+                                  <span className="truncate">{comp.name}</span>
+                                </div>
+                                {comp.id === 'rail-toc' && (
+                                  <span
+                                    className={cn(
+                                      'rounded-full px-1.5 py-0.2 font-mono text-[8px] font-bold uppercase',
+                                      isCurrentActive
+                                        ? 'bg-white text-[#0056FF]'
+                                        : 'bg-[#E3E7FC] text-[#0056FF]',
+                                    )}
+                                  >
+                                    Primary
+                                  </span>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
 
                 {/* Documentation Section Links */}
                 <div className="border-t border-slate-200/80 pt-3">
@@ -393,7 +524,7 @@ export function UiLibraryView() {
 
                   <div className="shrink-0">
                     <GeometricHeaderStamp
-                      codeA="12"
+                      codeA="40"
                       titleA="COMPONENTS"
                       codeB="100%"
                       titleB="INTERACTIVE"
@@ -421,35 +552,81 @@ export function UiLibraryView() {
               </div>
 
               {/* Live Interactive Header Bar Stage */}
-              <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-                {/* Header Ceiling Strip (Textured Slate Bar) */}
-                <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
-                  <div className="flex items-center pb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
-                      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-                        Application Workspace Ceiling
+              <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 sm:p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                {hangingNavDevice === 'phone' ? (
+                  <div className="mx-auto w-full max-w-[390px] overflow-hidden rounded-[38px] border-[6px] border-slate-900 bg-white shadow-xl">
+                    <div className="flex justify-center bg-white pt-2.5 pb-1">
+                      <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
+                        <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
+                      </div>
+                    </div>
+                    {/* Header Ceiling Strip (Textured Slate Bar) */}
+                    <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-3 pt-3 pb-0">
+                      <div className="flex items-center pb-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className="h-2 w-2 rounded-full bg-[#0056FF]" />
+                          <span className="font-sans text-[10px] font-bold tracking-wider text-slate-800 uppercase">
+                            Workspace Ceiling
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex items-end justify-center overflow-x-auto pb-0">
+                        <HangingTabsNav
+                          items={[
+                            { id: 'map', label: 'Map', icon: MapPin },
+                            { id: 'newswire', label: 'Newswire', icon: Newspaper },
+                            { id: 'post', label: 'Post', icon: FilePlus },
+                            { id: 'friends', label: 'Friends', icon: Contacts },
+                          ]}
+                          activeId={hangingNavTab}
+                          onSelect={(tabId) => setHangingNavTab(tabId)}
+                          size="sm"
+                        />
+                      </div>
+                    </div>
+                    {/* Phone Screen Area */}
+                    <div className="min-h-[140px] bg-slate-50 p-4 text-center">
+                      <span className="font-mono text-xs text-slate-500">Active View: </span>
+                      <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+                        {hangingNavTab}
                       </span>
                     </div>
+                    <div className="flex justify-center bg-white py-2">
+                      <div className="h-1 w-28 rounded-full bg-slate-300" />
+                    </div>
                   </div>
+                ) : (
+                  <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs">
+                    {/* Header Ceiling Strip (Textured Slate Bar) */}
+                    <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
+                      <div className="flex items-center pb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
+                          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
+                            Application Workspace Ceiling
+                          </span>
+                        </div>
+                      </div>
 
-                  <div className="flex items-end justify-center">
-                    <HangingTabsNav
-                      items={[
-                        { id: 'map', label: 'Map', icon: MapPin },
-                        { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                        { id: 'post', label: 'Post', icon: FilePlus },
-                        { id: 'friends', label: 'Friends', icon: Contacts },
-                      ]}
-                      activeId={hangingNavTab}
-                      onSelect={(tabId) => setHangingNavTab(tabId)}
-                      size={hangingNavSize}
-                    />
+                      <div className="flex items-end justify-center">
+                        <HangingTabsNav
+                          items={[
+                            { id: 'map', label: 'Map', icon: MapPin },
+                            { id: 'newswire', label: 'Newswire', icon: Newspaper },
+                            { id: 'post', label: 'Post', icon: FilePlus },
+                            { id: 'friends', label: 'Friends', icon: Contacts },
+                          ]}
+                          activeId={hangingNavTab}
+                          onSelect={(tabId) => setHangingNavTab(tabId)}
+                          size={hangingNavSize}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Sub-bar Controls */}
-                <div className="flex flex-wrap items-center justify-between gap-3 bg-white px-5 py-3 font-sans">
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3 font-sans">
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-xs text-slate-500">Active Tab:</span>
                     <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF] uppercase">
@@ -457,24 +634,39 @@ export function UiLibraryView() {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-1.5">
-                    {(['sm', 'md', 'lg'] as const).map((sz) => (
-                      <GeometricButton
-                        key={sz}
-                        variant={hangingNavSize === sz ? 'blue' : 'outline'}
-                        size="sm"
-                        isActive={hangingNavSize === sz}
-                        onClick={() => setHangingNavSize(sz)}
-                      >
-                        {sz.toUpperCase()}
-                      </GeometricButton>
-                    ))}
+                  <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
+                    <button
+                      type="button"
+                      onClick={() => setHangingNavDevice('web')}
+                      className={cn(
+                        'flex items-center gap-1.5 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all',
+                        hangingNavDevice === 'web'
+                          ? 'bg-[#0056FF] text-white shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900',
+                      )}
+                    >
+                      <Monitor className="h-3.5 w-3.5" />
+                      <span>Web</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setHangingNavDevice('phone')}
+                      className={cn(
+                        'flex items-center gap-1.5 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all',
+                        hangingNavDevice === 'phone'
+                          ? 'bg-[#0056FF] text-white shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900',
+                      )}
+                    >
+                      <Smartphone className="h-3.5 w-3.5" />
+                      <span>Phone</span>
+                    </button>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* SECTION 3: 12 Core UI Components Single Scroll Feed */}
+            {/* SECTION 3: 40 Interactive UI Components Single Scroll Feed */}
             <div
               id="interactive-feed"
               className="scroll-mt-24 space-y-2 border-t border-slate-200/80 pt-8 pb-2"
@@ -484,14 +676,14 @@ export function UiLibraryView() {
                   Single Feed Mode
                 </span>
                 <span className="font-mono text-[11px] text-slate-400">
-                  12 Interactive Demos · Live Keyboard Ready
+                  40 Interactive Demos · Live Keyboard Ready
                 </span>
               </div>
               <h2 className="font-sans text-xl font-black tracking-tight text-slate-950 sm:text-2xl">
-                Component Catalog (12 Core UI)
+                Component Catalog (40 Interactive UI Components)
               </h2>
               <p className="font-sans text-xs text-slate-600">
-                12 interactive components with live states, preview stages, and code.
+                40 interactive components with live states, preview stages, and code.
               </p>
             </div>
 
@@ -527,23 +719,59 @@ export function UiLibraryView() {
                         <p className="mt-1 font-sans text-xs text-slate-600">{comp.description}</p>
                       </div>
 
-                      {/* Triple Tabs: Preview | Usage | Code */}
-                      <div className="flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 p-1">
-                        {(['preview', 'usage', 'code'] as const).map((t) => (
-                          <button
-                            key={t}
-                            type="button"
-                            onClick={() => setCompTab(comp.id, t)}
-                            className={cn(
-                              'cursor-pointer rounded-full px-3 py-1 font-sans text-[11px] font-bold transition-all',
-                              currentTab === t
-                                ? 'bg-[#0056FF] text-white shadow-xs'
-                                : 'text-slate-600 hover:text-slate-900',
-                            )}
-                          >
-                            {t === 'preview' ? 'Preview' : t === 'usage' ? 'Usage' : 'Code'}
-                          </button>
-                        ))}
+                      <div className="flex flex-wrap items-center gap-2">
+                        {/* Device Switcher (Web / Phone) */}
+                        {currentTab === 'preview' && (
+                          <div className="flex items-center rounded-full border border-slate-200 bg-slate-50 p-0.5">
+                            <button
+                              type="button"
+                              onClick={() => setCompDevice(comp.id, 'web')}
+                              className={cn(
+                                'flex items-center gap-1 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all',
+                                getCompDevice(comp.id) === 'web'
+                                  ? 'bg-[#0056FF] text-white shadow-xs'
+                                  : 'text-slate-600 hover:text-slate-900',
+                              )}
+                              title="Desktop Web Preview"
+                            >
+                              <Monitor className="h-3 w-3" />
+                              <span>Web</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setCompDevice(comp.id, 'phone')}
+                              className={cn(
+                                'flex items-center gap-1 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all',
+                                getCompDevice(comp.id) === 'phone'
+                                  ? 'bg-[#0056FF] text-white shadow-xs'
+                                  : 'text-slate-600 hover:text-slate-900',
+                              )}
+                              title="Mobile Phone Viewport (380px)"
+                            >
+                              <Smartphone className="h-3 w-3" />
+                              <span>Phone</span>
+                            </button>
+                          </div>
+                        )}
+
+                        {/* Triple Tabs: Preview | Usage | Code */}
+                        <div className="flex shrink-0 items-center rounded-full border border-slate-200 bg-slate-50 p-1">
+                          {(['preview', 'usage', 'code'] as const).map((t) => (
+                            <button
+                              key={t}
+                              type="button"
+                              onClick={() => setCompTab(comp.id, t)}
+                              className={cn(
+                                'cursor-pointer rounded-full px-3 py-1 font-sans text-[11px] font-bold transition-all',
+                                currentTab === t
+                                  ? 'bg-[#0056FF] text-white shadow-xs'
+                                  : 'text-slate-600 hover:text-slate-900',
+                              )}
+                            >
+                              {t === 'preview' ? 'Preview' : t === 'usage' ? 'Usage' : 'Code'}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
@@ -551,7 +779,7 @@ export function UiLibraryView() {
                     {currentTab === 'preview' && (
                       <div className="space-y-4">
                         {/* Live Interactive Stage Canvas (Expansive, High-Visibility Viewport) */}
-                        <div className="relative flex min-h-[420px] w-full items-center justify-center overflow-hidden rounded-3xl border border-slate-200/90 bg-[#F8FAFC] p-6 shadow-inner sm:p-10">
+                        <div className="relative flex min-h-[440px] w-full items-center justify-center overflow-hidden rounded-3xl border border-slate-200/90 bg-[#F8FAFC] p-4 shadow-inner sm:p-8">
                           {/* Subtle Dot Grid */}
                           <div
                             className="pointer-events-none absolute inset-0 opacity-30"
@@ -562,77 +790,27 @@ export function UiLibraryView() {
                             }}
                           />
 
-                          {/* Real Functional Component Demo in Place (Expansive Max-Width) */}
-                          <div className="relative z-10 flex w-full max-w-2xl flex-col items-center justify-center">
-                            {renderFeedComponentDemo(comp.id, {
-                              snackbarOpen,
-                              setSnackbarOpen,
-                              snackbarMsg,
-                              setSnackbarMsg,
-                              sheetOpen,
-                              setSheetOpen,
-                              bottomSheetChoice,
-                              setBottomSheetChoice,
-                              dialogOpen,
-                              setDialogOpen,
-                              dialogDecision,
-                              setDialogDecision,
-                              deferralReason,
-                              setDeferralReason,
-                              activeTool,
-                              setActiveTool,
-                              tooltipPosition,
-                              setTooltipPosition,
-                              fabCount,
-                              setFabCount,
-                              fabSpeedDialOpen,
-                              setFabSpeedDialOpen,
-                              fabActionCounts,
-                              setFabActionCounts,
-                              selectedChips,
-                              setSelectedChips,
-                              toggleChip,
-                              switchAutoSync,
-                              setSwitchAutoSync,
-                              switchBiometric,
-                              setSwitchBiometric,
-                              switchSMSAlerts,
-                              setSwitchSMSAlerts,
-                              switchAuditLog,
-                              setSwitchAuditLog,
-                              dropdownValue,
-                              setDropdownValue,
-                              dropdownCampus,
-                              setDropdownCampus,
-                              bottomNavTab,
-                              setBottomNavTab,
-                              bottomNavBadge,
-                              setBottomNavBadge,
-                              bottomNavItems,
-                              cardPresentationMode,
-                              setCardPresentationMode,
-                              cardRevealed,
-                              setCardRevealed,
-                              cardSlidOut,
-                              setCardSlidOut,
-                              metricsTimeRange,
-                              setMetricsTimeRange,
-                              hangingNavTab,
-                              setHangingNavTab,
-                              hangingNavSize,
-                              setHangingNavSize,
-                              inputDemoText,
-                              setInputDemoText,
-                              inputDemoVariant,
-                              setInputDemoVariant,
-                              inputDemoSize,
-                              setInputDemoSize,
-                              inputDemoLoading,
-                              setInputDemoLoading,
-                              inputDemoDisabled,
-                              setInputDemoDisabled,
-                            })}
-                          </div>
+                          {getCompDevice(comp.id) === 'phone' ? (
+                            /* Realistic Mobile Phone Viewport Frame */
+                            <div className="relative z-10 mx-auto w-full max-w-[380px] overflow-hidden rounded-[44px] border-[8px] border-slate-900 bg-white shadow-2xl ring-1 ring-slate-900/10">
+                              <div className="flex justify-center bg-white pt-2.5 pb-1">
+                                <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
+                                  <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
+                                </div>
+                              </div>
+                              <div className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/50 p-4">
+                                {renderFeedComponentDemo(comp.id, stateBundle)}
+                              </div>
+                              <div className="flex justify-center bg-white py-2">
+                                <div className="h-1 w-28 rounded-full bg-slate-300" />
+                              </div>
+                            </div>
+                          ) : (
+                            /* Real Functional Component Demo in Place (Expansive Max-Width) */
+                            <div className="relative z-10 flex w-full max-w-2xl flex-col items-center justify-center">
+                              {renderFeedComponentDemo(comp.id, stateBundle)}
+                            </div>
+                          )}
                         </div>
 
                         {/* Supported States & Install Banner */}
@@ -2252,6 +2430,82 @@ function renderFeedComponentDemo(
           </div>
         </div>
       );
+
+    // ==========================================
+    // NAVIGATION GROUP (Interactive Demos)
+    // ==========================================
+    case 'rail-toc':
+      return <RailTocDemo />;
+    case 'bounce-sidebar':
+      return <BounceSidebarDemo />;
+    case 'hook-sidebar':
+      return <HookSidebarDemo />;
+    case 'proximity-sidebar':
+      return <ProximitySidebarDemo />;
+    case 'scroll-progress':
+      return <ScrollProgressDemo />;
+    case 'gooey-nav':
+      return <GooeyNavDemo />;
+
+    // ==========================================
+    // INPUTS GROUP (Interactive Demos)
+    // ==========================================
+    case 'duration-picker':
+      return <DurationPickerDemo />;
+    case 'otp-input':
+      return <OtpInputDemo />;
+    case 'password-input':
+      return <PasswordInputDemo />;
+    case 'theme-selector':
+      return <ThemeSelectorDemo />;
+    case 'delete-button':
+      return <DeleteButtonDemo />;
+    case 'task-list':
+      return <TaskListDemo />;
+
+    // ==========================================
+    // FEEDBACK GROUP (Interactive Demos)
+    // ==========================================
+    case 'toast':
+      return <ToastDemo />;
+    case 'emoji-reaction':
+      return <EmojiReactionDemo />;
+    case 'notification-bell':
+      return <NotificationBellDemo />;
+
+    // ==========================================
+    // DISPLAY GROUP (Interactive Demos)
+    // ==========================================
+    case 'folder':
+      return <FolderDemo />;
+    case 'code-block':
+      return <CodeBlockDemo />;
+    case 'gravity-letters':
+      return <GravityLettersDemo />;
+    case 'github-activity':
+      return <GitHubActivityDemo />;
+    case 'step-player':
+      return <StepPlayerDemo />;
+    case 'animated-counter':
+      return <AnimatedCounterDemo />;
+    case 'voice-note':
+      return <VoiceNoteDemo />;
+    case 'faq':
+      return <FaqDemo />;
+
+    // ==========================================
+    // AI KIT GROUP (Interactive Demos)
+    // ==========================================
+    case 'fluid-orb':
+      return <FluidOrbDemo />;
+    case 'grid-reveal':
+      return <GridRevealDemo />;
+    case 'matrix-orb':
+      return <MatrixOrbDemo />;
+    case 'web-search':
+      return <WebSearchDemo />;
+    case 'inline-ai-status':
+      return <InlineAiStatusDemo />;
 
     default:
       return null;
