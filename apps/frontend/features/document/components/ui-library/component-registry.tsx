@@ -1605,13 +1605,23 @@ export function Example() {
     name: 'Cyber Armor Nav',
     category: 'Navigation',
     paradigm: 'Aerospace Mecha HUD Console',
-    description: 'High-tech modular segmented navigation bar with stepped armor plates and Royal Blue glow.',
-    explanation: 'Combines chamfered 45° stepped mecha armor wings, physical double-seam divider lines, and a luminous Royal Blue (#0056FF) active indicator bar.',
+    description:
+      'High-tech modular segmented navigation bar with stepped armor plates and Royal Blue glow.',
+    explanation:
+      'Combines chamfered 45° stepped mecha armor wings, physical double-seam divider lines, and a luminous Royal Blue (#0056FF) active indicator bar.',
     props: [
-      { name: 'items', type: 'HangingTabItem[]', description: 'Array of navigation items with id, label, and optional icon.' },
+      {
+        name: 'items',
+        type: 'HangingTabItem[]',
+        description: 'Array of navigation items with id, label, and optional icon.',
+      },
       { name: 'activeId', type: 'string', description: 'Currently active tab ID.' },
       { name: 'onSelect', type: '(id: string) => void', description: 'Tab selection callback.' },
-      { name: 'size', type: "'sm' | 'md' | 'lg'", description: 'Console size variant (sm: 44px, md: 50px, lg: 56px).' },
+      {
+        name: 'size',
+        type: "'sm' | 'md' | 'lg'",
+        description: 'Console size variant (sm: 44px, md: 50px, lg: 56px).',
+      },
       { name: 'showIcons', type: 'boolean', description: 'Whether to render kinetic micro-icons.' },
     ],
     codeSnippet: `import { CyberArmorNav } from '@/features/document/components/ui-library';\n\nconst items = [\n  { id: 'home', label: 'Home' },\n  { id: 'blog', label: 'Blog' },\n  { id: 'portfolio', label: 'Portfolio' },\n  { id: 'services', label: 'Services' },\n];\n\n<CyberArmorNav items={items} activeId="portfolio" onSelect={console.log} />`,
@@ -1628,12 +1638,24 @@ export function Example() {
       },
     ],
     uxPsychology: [
-      { principle: "Fitts's Law Target Sizing", detail: '44px-56px button height ensures effortless cursor targeting.' },
-      { principle: 'Visual Hierarchy & Affordance', detail: 'Stepped armor wings and active glow bar draw focal attention to location.' },
+      {
+        principle: "Fitts's Law Target Sizing",
+        detail: '44px-56px button height ensures effortless cursor targeting.',
+      },
+      {
+        principle: 'Visual Hierarchy & Affordance',
+        detail: 'Stepped armor wings and active glow bar draw focal attention to location.',
+      },
     ],
     usageGuidelines: [
-      { doItem: 'Use Royal Blue (#0056FF) glow underline for the active item.', dontItem: 'Never use circular dot style indicators.' },
-      { doItem: 'Keep button labels concise and uppercase with Sora tracking.', dontItem: 'Avoid overcrowded labels exceeding 14 characters.' },
+      {
+        doItem: 'Use Royal Blue (#0056FF) glow underline for the active item.',
+        dontItem: 'Never use circular dot style indicators.',
+      },
+      {
+        doItem: 'Keep button labels concise and uppercase with Sora tracking.',
+        dontItem: 'Avoid overcrowded labels exceeding 14 characters.',
+      },
     ],
     implementationNotes: [
       'Responsive SVG stepped armor chassis with 45° chamfers.',

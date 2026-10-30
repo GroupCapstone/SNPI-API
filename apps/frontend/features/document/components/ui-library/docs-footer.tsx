@@ -149,7 +149,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
       </div>
 
       {/* Main Curved Top Footer Capsule Container (Wiz-Style Architectural Layout) */}
-      <div className="relative mx-auto w-full max-w-[1560px] overflow-hidden rounded-t-[36px] border-t border-x border-slate-700/50 bg-[#101423] px-6 pt-12 pb-8 shadow-2xl sm:rounded-t-[44px] sm:px-10 md:rounded-t-[48px] lg:px-14">
+      <div className="relative mx-auto w-full max-w-[1560px] overflow-hidden rounded-t-[36px] border-x border-t border-slate-700/50 bg-[#101423] px-6 pt-12 pb-8 shadow-2xl sm:rounded-t-[44px] sm:px-10 md:rounded-t-[48px] lg:px-14">
         {/* Upper Navigation Section */}
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 lg:gap-12">
           {/* Brand Sparkle Mark ✦ */}

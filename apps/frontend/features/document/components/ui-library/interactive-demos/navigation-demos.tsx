@@ -513,7 +513,8 @@ export function CyberArmorNavDemo() {
             Cyber Armor Modular Navigation Bar
           </h3>
           <p className="font-sans text-xs text-slate-500">
-            Chamfered 45° stepped armor plates, physical double-seam divider lines, and luminous Royal Blue (#0056FF) active glow indicator.
+            Chamfered 45° stepped armor plates, physical double-seam divider lines, and luminous
+            Royal Blue (#0056FF) active glow indicator.
           </p>
         </div>
 

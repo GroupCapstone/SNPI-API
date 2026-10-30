@@ -31,7 +31,10 @@ export interface HangingTabsNavProps {
 function CyberChassisSvg({ className }: { className?: string }) {
   return (
     <svg
-      className={cn('pointer-events-none absolute inset-0 h-full w-full overflow-visible', className)}
+      className={cn(
+        'pointer-events-none absolute inset-0 h-full w-full overflow-visible',
+        className,
+      )}
       viewBox="0 0 1000 68"
       preserveAspectRatio="none"
       fill="none"
@@ -119,12 +122,36 @@ function CyberChassisSvg({ className }: { className?: string }) {
       />
 
       {/* Left Stepped Ear Notches */}
-      <line x1="3" y1="30" x2="3" y2="38" stroke="#CAD3F5" strokeWidth="2.5" strokeLinecap="round" />
+      <line
+        x1="3"
+        y1="30"
+        x2="3"
+        y2="38"
+        stroke="#CAD3F5"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
       <line x1="7" y1="26" x2="7" y2="42" stroke="#94A3B8" strokeWidth="1" strokeLinecap="round" />
 
       {/* Right Stepped Ear Notches */}
-      <line x1="997" y1="30" x2="997" y2="38" stroke="#CAD3F5" strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="993" y1="26" x2="993" y2="42" stroke="#94A3B8" strokeWidth="1" strokeLinecap="round" />
+      <line
+        x1="997"
+        y1="30"
+        x2="997"
+        y2="38"
+        stroke="#CAD3F5"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
+      <line
+        x1="993"
+        y1="26"
+        x2="993"
+        y2="42"
+        stroke="#94A3B8"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -209,11 +236,7 @@ export function CyberArmorNav({
                 className={cn(
                   'font-sans font-black tracking-wider uppercase transition-colors duration-150',
                   textSizes,
-                  isActive
-                    ? 'text-slate-950'
-                    : isHovered
-                      ? 'text-[#0056FF]'
-                      : 'text-slate-600',
+                  isActive ? 'text-slate-950' : isHovered ? 'text-[#0056FF]' : 'text-slate-600',
                 )}
               >
                 {tab.label}

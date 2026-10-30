@@ -789,7 +789,7 @@ console.log(payload.data);`;
                           className={cn(
                             'flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-left font-sans text-xs font-semibold transition-all',
                             isCurrentActive
-                              ? 'bg-[#0056FF] text-white font-bold'
+                              ? 'bg-[#0056FF] font-bold text-white'
                               : 'bg-white text-slate-700 hover:bg-slate-50',
                           )}
                         >

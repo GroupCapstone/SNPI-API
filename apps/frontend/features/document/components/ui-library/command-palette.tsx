@@ -581,9 +581,7 @@ export function CommandPaletteInteractiveDemo() {
       {/* Interactive Trigger Card */}
       <div className="mx-auto w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs transition-colors">
         <div className="space-y-1">
-          <h4 className="font-sans text-sm font-bold text-slate-900">
-            Universal Command Surface
-          </h4>
+          <h4 className="font-sans text-sm font-bold text-slate-900">Universal Command Surface</h4>
           <p className="font-sans text-xs text-slate-500">
             Click the trigger bar below or press {isMac ? '⌘K' : 'Ctrl+K'} anywhere on this page.
           </p>

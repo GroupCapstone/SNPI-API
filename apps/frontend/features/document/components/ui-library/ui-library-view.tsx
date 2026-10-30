@@ -127,7 +127,6 @@ export function UiLibraryView() {
     setCompDeviceModes((prev) => ({ ...prev, [id]: mode }));
   };
 
-
   // Per-component expanded canvas state
   const [compExpandedModes, setCompExpandedModes] = React.useState<Record<string, boolean>>({});
   const getCompExpanded = (id: string): boolean => compExpandedModes[id] || false;
@@ -793,91 +792,91 @@ export function UiLibraryView() {
                                   </div>
                                 )}
 
-                                  {/* Fullscreen / Maximize Toggle */}
-                                  {currentTab === 'preview' && (
-                                    <button
-                                      type="button"
-                                      onClick={() => toggleCompExpanded(comp.id)}
-                                      title={
-                                        getCompExpanded(comp.id) ? 'Collapse Stage' : 'Expand Stage'
-                                      }
-                                      className={cn(
-                                        'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
-                                        getCompExpanded(comp.id)
-                                          ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
-                                          : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900',
-                                      )}
-                                    >
-                                      <Maximize className="size-4 stroke-[1.8]" />
-                                    </button>
-                                  )}
-                                </div>
-                              </div>
-
-                              {/* TAB CONTENT: PREVIEW */}
-                              {currentTab === 'preview' && (
-                                <div className="space-y-4">
-                                  {/* Live Interactive Stage Canvas (Responsive Viewport - Strict Light Day Mode) */}
-                                  <div
+                                {/* Fullscreen / Maximize Toggle */}
+                                {currentTab === 'preview' && (
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleCompExpanded(comp.id)}
+                                    title={
+                                      getCompExpanded(comp.id) ? 'Collapse Stage' : 'Expand Stage'
+                                    }
                                     className={cn(
-                                      'relative flex w-full items-center justify-center overflow-hidden rounded-3xl border border-slate-200/90 bg-[#F8FAFC] p-4 text-slate-900 shadow-inner transition-all duration-300 sm:p-8',
-                                      getCompExpanded(comp.id) ? 'min-h-[620px]' : 'min-h-[440px]',
+                                      'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
+                                      getCompExpanded(comp.id)
+                                        ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
+                                        : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900',
                                     )}
                                   >
-                                    {/* Subtle Precision Linear Grid (Zero-Dot Design Standard) */}
-                                    <div
-                                      className="pointer-events-none absolute inset-0 opacity-40"
-                                      style={{
-                                        backgroundImage:
-                                          'linear-gradient(to right, #CAD3F5 1px, transparent 1px), linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)',
-                                        backgroundSize: '24px 24px',
-                                      }}
-                                    />
+                                    <Maximize className="size-4 stroke-[1.8]" />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
 
-                                    {getCompDevice(comp.id) === 'mobile' ? (
-                                      /* Realistic Mobile Phone Viewport Frame */
-                                      <div className="relative z-10 mx-auto w-full max-w-[380px] overflow-hidden rounded-[44px] border-[8px] border-slate-900 bg-white shadow-2xl ring-1 ring-slate-900/10">
-                                        <div className="flex justify-center bg-white pt-2.5 pb-1">
-                                          <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
-                                            <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
-                                          </div>
-                                        </div>
-                                        <div
-                                          key={`${comp.id}-mobile`}
-                                          className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/50 p-4 text-slate-900 transition-colors"
-                                        >
-                                          {renderFeedComponentDemo(comp.id, stateBundle)}
-                                        </div>
-                                        <div className="flex justify-center bg-white py-2">
-                                          <div className="h-1 w-28 rounded-full bg-slate-300" />
-                                        </div>
-                                      </div>
-                                    ) : getCompDevice(comp.id) === 'tablet' ? (
-                                      /* Realistic Tablet Viewport Frame */
-                                      <div className="relative z-10 mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-2xl">
-                                        <div className="flex justify-center bg-slate-900 py-1.5">
-                                          <div className="size-2 rounded-full bg-slate-700" />
-                                        </div>
-                                        <div
-                                          key={`${comp.id}-tablet`}
-                                          className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/40 p-6 text-slate-900 transition-colors"
-                                        >
-                                          {renderFeedComponentDemo(comp.id, stateBundle)}
+                            {/* TAB CONTENT: PREVIEW */}
+                            {currentTab === 'preview' && (
+                              <div className="space-y-4">
+                                {/* Live Interactive Stage Canvas (Responsive Viewport - Strict Light Day Mode) */}
+                                <div
+                                  className={cn(
+                                    'relative flex w-full items-center justify-center overflow-hidden rounded-3xl border border-slate-200/90 bg-[#F8FAFC] p-4 text-slate-900 shadow-inner transition-all duration-300 sm:p-8',
+                                    getCompExpanded(comp.id) ? 'min-h-[620px]' : 'min-h-[440px]',
+                                  )}
+                                >
+                                  {/* Subtle Precision Linear Grid (Zero-Dot Design Standard) */}
+                                  <div
+                                    className="pointer-events-none absolute inset-0 opacity-40"
+                                    style={{
+                                      backgroundImage:
+                                        'linear-gradient(to right, #CAD3F5 1px, transparent 1px), linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)',
+                                      backgroundSize: '24px 24px',
+                                    }}
+                                  />
+
+                                  {getCompDevice(comp.id) === 'mobile' ? (
+                                    /* Realistic Mobile Phone Viewport Frame */
+                                    <div className="relative z-10 mx-auto w-full max-w-[380px] overflow-hidden rounded-[44px] border-[8px] border-slate-900 bg-white shadow-2xl ring-1 ring-slate-900/10">
+                                      <div className="flex justify-center bg-white pt-2.5 pb-1">
+                                        <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
+                                          <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
                                         </div>
                                       </div>
-                                    ) : (
-                                      /* Desktop Monitor Stage */
                                       <div
-                                        key={`${comp.id}-desktop`}
-                                        className={cn(
-                                          'relative z-10 flex w-full flex-col items-center justify-center',
-                                          getCompExpanded(comp.id) ? 'max-w-4xl' : 'max-w-2xl',
-                                        )}
+                                        key={`${comp.id}-mobile`}
+                                        className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/50 p-4 text-slate-900 transition-colors"
                                       >
                                         {renderFeedComponentDemo(comp.id, stateBundle)}
                                       </div>
-                                    )}
-                                  </div>
+                                      <div className="flex justify-center bg-white py-2">
+                                        <div className="h-1 w-28 rounded-full bg-slate-300" />
+                                      </div>
+                                    </div>
+                                  ) : getCompDevice(comp.id) === 'tablet' ? (
+                                    /* Realistic Tablet Viewport Frame */
+                                    <div className="relative z-10 mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-2xl">
+                                      <div className="flex justify-center bg-slate-900 py-1.5">
+                                        <div className="size-2 rounded-full bg-slate-700" />
+                                      </div>
+                                      <div
+                                        key={`${comp.id}-tablet`}
+                                        className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/40 p-6 text-slate-900 transition-colors"
+                                      >
+                                        {renderFeedComponentDemo(comp.id, stateBundle)}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    /* Desktop Monitor Stage */
+                                    <div
+                                      key={`${comp.id}-desktop`}
+                                      className={cn(
+                                        'relative z-10 flex w-full flex-col items-center justify-center',
+                                        getCompExpanded(comp.id) ? 'max-w-4xl' : 'max-w-2xl',
+                                      )}
+                                    >
+                                      {renderFeedComponentDemo(comp.id, stateBundle)}
+                                    </div>
+                                  )}
+                                </div>
 
                                 {/* Supported States & Install Banner */}
                                 <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs">
