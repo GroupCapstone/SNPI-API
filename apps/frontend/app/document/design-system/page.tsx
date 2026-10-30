@@ -98,6 +98,20 @@ export default function DesignSystemPage() {
   const [bottomSheetChoice, setBottomSheetChoice] = React.useState<string>('Roster Exported');
   const [dialogDecision, setDialogDecision] = React.useState<string>('None');
 
+  // Input & Search interactive states (Capsule Pill with primary brand colors)
+  const [inputDemoText, setInputDemoText] = React.useState<string>('hello');
+  const [inputDemoVariant, setInputDemoVariant] = React.useState<
+    'outline' | 'blue' | 'azure' | 'soft-lavender' | 'black' | 'error'
+  >('blue');
+  const [inputDemoSize, setInputDemoSize] = React.useState<'sm' | 'md' | 'lg'>('md');
+  const [inputDemoLoading, setInputDemoLoading] = React.useState<boolean>(false);
+  const [inputDemoDisabled, setInputDemoDisabled] = React.useState<boolean>(false);
+
+  // Additional component state controls
+  const [cardTheme, setCardTheme] = React.useState<'light' | 'dark' | 'futurewave'>('light');
+  const [fabSpeedDialOpen, setFabSpeedDialOpen] = React.useState<boolean>(false);
+  const [tooltipPosition, setTooltipPosition] = React.useState<'top' | 'bottom'>('top');
+
   const bottomNavItems: LibraryBottomNavItem[] = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'search', label: 'Search', icon: Search },
@@ -572,25 +586,52 @@ export default function DesignSystemPage() {
 
             {/* SECTION 2: Interactive Component Playground (Real Tapable Demo) */}
             <section id="interactive-stage" className="scroll-mt-24 space-y-6">
-              <div className="flex items-center justify-between border-b-2 border-slate-200 pb-3">
+              <div className="flex flex-col gap-3 border-b-2 border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h2 className="font-sans text-2xl font-black text-slate-950">{activeDoc.name}</h2>
-                  <p className="mt-1 text-sm text-slate-600">{activeDoc.description}</p>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h2 className="font-sans text-2xl font-black text-slate-950">
+                      {activeDoc.name}
+                    </h2>
+                    <span className="rounded-full border border-[#0056FF]/30 bg-blue-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                      {activeDoc.paradigm}
+                    </span>
+                    <span className="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
+                      {activeDoc.category}
+                    </span>
+                  </div>
+                  <p className="mt-1 font-sans text-sm text-slate-600">{activeDoc.description}</p>
                 </div>
 
-                <GeometricButton
-                  variant="outline"
-                  size="sm"
-                  onClick={() => scrollToSection('component-gallery')}
-                >
-                  <span>&larr; Catalog</span>
-                </GeometricButton>
+                <div className="flex items-center gap-2">
+                  <GeometricButton
+                    variant="outline"
+                    size="sm"
+                    onClick={() => scrollToSection('component-gallery')}
+                  >
+                    <span>&larr; Catalog</span>
+                  </GeometricButton>
+                </div>
               </div>
 
               {/* Interactive Stage Card */}
-              <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40">
+              <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40">
+                {/* Stage Header Info */}
+                <div className="flex flex-wrap items-center justify-between border-b border-slate-100 bg-slate-50/80 px-4 py-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block size-2 rounded-full bg-emerald-500" />
+                    <span className="font-mono text-[11px] font-bold text-slate-700 uppercase">
+                      Interactive Live Demo & State Testing
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500">
+                    <span>Target: 44×44px hit bounds</span>
+                    <span>·</span>
+                    <span>Zero shadows</span>
+                  </div>
+                </div>
+
                 {/* Stage Body */}
-                <div className="flex min-h-[240px] items-center justify-center bg-slate-50/70 p-6 sm:p-8">
+                <div className="flex min-h-[260px] items-center justify-center bg-slate-50/50 p-6 sm:p-8">
                   {renderActivePlaygroundComponent({
                     id: activeDoc.id,
                     snackbarOpen,
@@ -626,35 +667,67 @@ export default function DesignSystemPage() {
                     setHangingNavSize,
                     hangingNavBadge,
                     setHangingNavBadge,
+                    inputDemoText,
+                    setInputDemoText,
+                    inputDemoVariant,
+                    setInputDemoVariant,
+                    inputDemoSize,
+                    setInputDemoSize,
+                    inputDemoLoading,
+                    setInputDemoLoading,
+                    inputDemoDisabled,
+                    setInputDemoDisabled,
+                    cardTheme,
+                    setCardTheme,
+                    fabSpeedDialOpen,
+                    setFabSpeedDialOpen,
+                    tooltipPosition,
+                    setTooltipPosition,
                   })}
                 </div>
 
-                {/* Action Ribbon: Code Toggle & Copy */}
-                <div className="flex items-center justify-between border-t border-slate-200/80 bg-white px-4 py-2.5">
-                  <GeometricButton
-                    size="sm"
-                    variant={showCode ? 'primary' : 'outline'}
-                    isActive={showCode}
-                    onClick={() => setShowCode(!showCode)}
-                  >
-                    <Code className="h-3.5 w-3.5" />
-                    <span>{showCode ? 'Hide Code' : 'View Code'}</span>
-                  </GeometricButton>
+                {/* Action Ribbon: Supported States & Code Controls */}
+                <div className="flex flex-col gap-3 border-t border-slate-200/80 bg-white p-3.5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="font-mono text-[10px] font-bold text-slate-400 uppercase">
+                      Supported States:
+                    </span>
+                    {activeDoc.supportedStates.map((st) => (
+                      <span
+                        key={st}
+                        className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-700"
+                      >
+                        {st}
+                      </span>
+                    ))}
+                  </div>
 
-                  {showCode && (
+                  <div className="flex items-center gap-2">
                     <GeometricButton
                       size="sm"
-                      variant="outline"
-                      onClick={() => handleCopy(activeDoc.codeSnippet)}
+                      variant={showCode ? 'primary' : 'outline'}
+                      isActive={showCode}
+                      onClick={() => setShowCode(!showCode)}
                     >
-                      {copiedCode ? (
-                        <Check className="h-3.5 w-3.5 text-emerald-600" />
-                      ) : (
-                        <Copy className="h-3.5 w-3.5" />
-                      )}
-                      <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+                      <Code className="h-3.5 w-3.5" />
+                      <span>{showCode ? 'Hide Code' : 'View Code'}</span>
                     </GeometricButton>
-                  )}
+
+                    {showCode && (
+                      <GeometricButton
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleCopy(activeDoc.codeSnippet)}
+                      >
+                        {copiedCode ? (
+                          <Check className="h-3.5 w-3.5 text-emerald-600" />
+                        ) : (
+                          <Copy className="h-3.5 w-3.5" />
+                        )}
+                        <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+                      </GeometricButton>
+                    )}
+                  </div>
                 </div>
 
                 {/* Collapsible Source Code View */}
@@ -667,10 +740,122 @@ export default function DesignSystemPage() {
                 )}
               </div>
 
-              {/* Component Props Table */}
+              {/* 1. Component Explanation */}
+              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                  <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                    1. Component Explanation & Mental Model
+                  </h3>
+                  <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                    {activeDoc.paradigm}
+                  </span>
+                </div>
+                <p className="font-sans text-xs leading-relaxed text-slate-700">
+                  {activeDoc.explanation}
+                </p>
+              </div>
+
+              {/* 2. Real-World Product Examples */}
+              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                  2. Real-World Product Examples
+                </h3>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  {activeDoc.realWorldExamples.map((ex, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col justify-between rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5"
+                    >
+                      <div className="space-y-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          Example 0{idx + 1}
+                        </span>
+                        <h4 className="font-sans text-xs font-bold text-slate-900">{ex.title}</h4>
+                        <p className="font-sans text-[11px] leading-relaxed text-slate-600">
+                          {ex.scenario}
+                        </p>
+                      </div>
+                      <div className="mt-2.5 border-t border-slate-200/60 pt-2 font-sans text-[11px] font-semibold text-slate-800">
+                        {ex.impact}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3. UX Psychology & Design Principles */}
+              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                  3. UX Psychology & Design Principles
+                </h3>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {activeDoc.uxPsychology.map((ux, idx) => (
+                    <div
+                      key={idx}
+                      className="space-y-1.5 rounded-xl border border-blue-100 bg-blue-50/40 p-3.5"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="size-2 rounded-full bg-[#0056FF]" />
+                        <h4 className="font-sans text-xs font-bold text-[#0056FF]">
+                          {ux.principle}
+                        </h4>
+                      </div>
+                      <p className="font-sans text-[11px] leading-relaxed text-slate-700">
+                        {ux.detail}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Usage Guidelines & Best Practices */}
+              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                  4. Usage Guidelines & Best Practices
+                </h3>
+                <div className="space-y-2">
+                  {activeDoc.usageGuidelines.map((g, idx) => (
+                    <div key={idx} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3">
+                        <span className="font-mono text-[10px] font-bold text-emerald-800 uppercase">
+                          [DO]
+                        </span>
+                        <p className="mt-1 font-sans text-xs leading-relaxed text-emerald-950">
+                          {g.doItem}
+                        </p>
+                      </div>
+                      <div className="rounded-xl border border-rose-200 bg-rose-50/50 p-3">
+                        <span className="font-mono text-[10px] font-bold text-rose-800 uppercase">
+                          [DON&apos;T]
+                        </span>
+                        <p className="mt-1 font-sans text-xs leading-relaxed text-rose-950">
+                          {g.dontItem}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 5. Developer Implementation Notes */}
+              <div className="space-y-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
+                <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
+                  5. Developer Implementation Notes
+                </h3>
+                <ul className="space-y-1.5 font-sans text-xs text-slate-700">
+                  {activeDoc.implementationNotes.map((note, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#0056FF]" />
+                      <span>{note}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* 6. Component Props Table */}
               <div className="space-y-2">
                 <h3 className="font-sans text-sm font-bold tracking-wider text-slate-900 uppercase">
-                  Props Interface
+                  6. Props Interface
                 </h3>
                 <div className="overflow-x-auto rounded-xl border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)] backdrop-blur-md">
                   <table className="w-full text-left font-sans text-xs">
@@ -857,75 +1042,137 @@ function renderActivePlaygroundComponent(props: {
   setHangingNavSize: (s: 'sm' | 'md' | 'lg') => void;
   hangingNavBadge: number;
   setHangingNavBadge: React.Dispatch<React.SetStateAction<number>>;
+  inputDemoText: string;
+  setInputDemoText: (t: string) => void;
+  inputDemoVariant: 'outline' | 'blue' | 'azure' | 'soft-lavender' | 'black' | 'error';
+  setInputDemoVariant: (
+    v: 'outline' | 'blue' | 'azure' | 'soft-lavender' | 'black' | 'error',
+  ) => void;
+  inputDemoSize: 'sm' | 'md' | 'lg';
+  setInputDemoSize: (s: 'sm' | 'md' | 'lg') => void;
+  inputDemoLoading: boolean;
+  setInputDemoLoading: (l: boolean) => void;
+  inputDemoDisabled: boolean;
+  setInputDemoDisabled: (d: boolean) => void;
+  cardTheme: 'light' | 'dark' | 'futurewave';
+  setCardTheme: (t: 'light' | 'dark' | 'futurewave') => void;
+  fabSpeedDialOpen: boolean;
+  setFabSpeedDialOpen: (o: boolean) => void;
+  tooltipPosition: 'top' | 'bottom';
+  setTooltipPosition: (p: 'top' | 'bottom') => void;
 }) {
   switch (props.id) {
     case 'snackbar':
       return (
         <div className="flex w-full max-w-md flex-col items-center gap-4 py-4">
+          {/* Controls Bar for State Testing */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <GeometricButton
-              variant="primary"
+              variant="blue"
+              size="sm"
               onClick={() => {
-                props.setSnackbarMsg('Student enrollment confirmed.');
+                props.setSnackbarMsg('Student enrollment confirmed for STU-2026-0891.');
                 props.setSnackbarOpen(true);
               }}
             >
-              <Check className="h-4 w-4" />
-              <span>Trigger Enrollment Notification</span>
+              <Check className="h-3.5 w-3.5" />
+              <span>Trigger Success</span>
+            </GeometricButton>
+            <GeometricButton
+              variant="orange"
+              size="sm"
+              onClick={() => {
+                props.setSnackbarMsg('Batch attendance cloud sync in progress.');
+                props.setSnackbarOpen(true);
+              }}
+            >
+              <span>Trigger Info</span>
             </GeometricButton>
             <GeometricButton
               variant="outline"
+              size="sm"
               onClick={() => {
-                props.setSnackbarMsg('Batch attendance sync completed.');
+                props.setSnackbarMsg('Payment gateway connection timed out.');
                 props.setSnackbarOpen(true);
               }}
             >
-              <span>Sync Attendance</span>
+              <span>Trigger Error</span>
+            </GeometricButton>
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                props.setSnackbarOpen(false);
+                props.setSnackbarMsg('Notification dismissed.');
+              }}
+            >
+              <span>Reset</span>
             </GeometricButton>
           </div>
 
           {/* Interactive In-Stage Snackbar Card */}
-          <div className="w-full rounded-xl border border-slate-200/90 bg-slate-900 p-3.5 text-white shadow-lg transition-all">
+          <div className="w-full rounded-2xl border border-slate-200/90 bg-slate-900 p-4 text-white shadow-lg transition-all">
             <div className="flex items-center justify-between gap-3">
-              <span className="font-sans text-xs">{props.snackbarMsg}</span>
+              <div className="flex items-center gap-2.5">
+                <span className="size-2 rounded-full bg-emerald-400" />
+                <span className="font-sans text-xs">{props.snackbarMsg}</span>
+              </div>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => props.setSnackbarMsg('Action reverted successfully.')}
-                  className="rounded px-2 py-1 font-mono text-[11px] font-bold text-[#60A5FA] uppercase transition-colors hover:bg-white/10"
+                  className="rounded-full px-2.5 py-1 font-mono text-[11px] font-bold text-[#60A5FA] uppercase transition-colors hover:bg-white/10"
                 >
                   Undo
                 </button>
                 <button
                   type="button"
                   onClick={() => props.setSnackbarOpen(false)}
-                  className="rounded p-1 text-slate-400 hover:text-white"
+                  className="rounded-full p-1 text-slate-400 hover:text-white"
                 >
-                  <span className="font-mono text-xs">Close</span>
+                  <span className="font-mono text-xs">Dismiss</span>
                 </button>
               </div>
             </div>
           </div>
-          <span className="font-mono text-[11px] text-slate-500">
-            Interactive state: {props.snackbarOpen ? 'Active (Displaying)' : 'Ready'}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>State: {props.snackbarOpen ? 'ACTIVE (DISPLAYING)' : 'READY'}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Duration: 5000ms</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Role: status</span>
+          </div>
         </div>
       );
 
     case 'bottom-sheet':
       return (
         <div className="flex w-full max-w-sm flex-col items-center gap-4 py-2">
-          <GeometricButton variant="primary" onClick={() => props.setSheetOpen(true)}>
-            <MapPin className="h-4 w-4" />
-            <span>Open Fullscreen Sheet</span>
-          </GeometricButton>
+          {/* Controls Bar for State Testing */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton variant="blue" size="sm" onClick={() => props.setSheetOpen(true)}>
+              <MapPin className="h-3.5 w-3.5" />
+              <span>Open Sheet Modal</span>
+            </GeometricButton>
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => props.setBottomSheetChoice('None Selected')}
+            >
+              <span>Reset</span>
+            </GeometricButton>
+          </div>
 
           {/* In-Stage Interactive Action Sheet Mock */}
           <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
             <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-slate-300" />
-            <h4 className="font-sans text-xs font-bold tracking-wider text-slate-400 uppercase">
-              Quick Operations
-            </h4>
+            <div className="flex items-center justify-between pb-1">
+              <h4 className="font-sans text-xs font-bold tracking-wider text-slate-400 uppercase">
+                Quick Operations
+              </h4>
+              <span className="font-mono text-[10px] text-[#0056FF]">3 Actions</span>
+            </div>
             <div className="mt-2.5 space-y-1.5 font-sans text-xs">
               {[
                 'Export Student Roster (CSV / PDF)',
@@ -937,43 +1184,61 @@ function renderActivePlaygroundComponent(props: {
                   type="button"
                   onClick={() => props.setBottomSheetChoice(opt)}
                   className={cn(
-                    'flex w-full items-center justify-between rounded-lg border p-2.5 text-left font-semibold transition-all select-none',
+                    'flex w-full items-center justify-between rounded-xl border p-2.5 text-left font-semibold transition-all select-none',
                     props.bottomSheetChoice === opt
-                      ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
+                      ? 'border-[#0056FF] bg-blue-50/70 text-[#0056FF]'
                       : 'border-slate-100 bg-slate-50 text-slate-700 hover:border-slate-200 hover:bg-white',
                   )}
                 >
                   <span>{opt}</span>
                   {props.bottomSheetChoice === opt && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#0056FF]" />
+                    <span className="size-2 rounded-full bg-[#0056FF]" />
                   )}
                 </button>
               ))}
             </div>
           </div>
-          <span className="font-mono text-[11px] text-slate-500">
-            Selected Action: {props.bottomSheetChoice}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>State: {props.sheetOpen ? 'OPEN (OVERLAY)' : 'IN-STAGE'}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Selected: {props.bottomSheetChoice}</span>
+          </div>
         </div>
       );
 
     case 'dialog':
       return (
         <div className="flex w-full max-w-md flex-col items-center gap-4 py-2">
-          <GeometricButton variant="primary" onClick={() => props.setDialogOpen(true)}>
-            <span>Open Decision Modal</span>
-          </GeometricButton>
+          {/* Controls Bar for State Testing */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton variant="blue" size="sm" onClick={() => props.setDialogOpen(true)}>
+              <span>Open Modal Dialog</span>
+            </GeometricButton>
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => props.setDialogDecision('Pending')}
+            >
+              <span>Reset</span>
+            </GeometricButton>
+          </div>
 
           {/* In-Stage Interactive Decision Dialog Container */}
           <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-5 text-left shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
-            <h4 className="font-sans text-sm font-bold text-slate-900">
-              Confirm Enrollment Deferral
-            </h4>
-            <p className="mt-1 font-sans text-xs text-slate-600">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+              <h4 className="font-sans text-sm font-bold text-slate-900">
+                Confirm Enrollment Deferral
+              </h4>
+              <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-800 uppercase">
+                Action Required
+              </span>
+            </div>
+            <p className="mt-2 font-sans text-xs leading-relaxed text-slate-600">
               This action defers student STU-2026-0891 to Academic Term 2027. Pending tuition fees
-              will be preserved.
+              will be preserved and classroom seat allocation released.
             </p>
-            <div className="mt-4 flex items-center justify-end gap-2">
+            <div className="mt-4 flex items-center justify-end gap-2 border-t border-slate-100 pt-3">
               <GeometricButton
                 size="sm"
                 variant="outline"
@@ -991,15 +1256,28 @@ function renderActivePlaygroundComponent(props: {
             </div>
           </div>
 
-          <span className="font-mono text-[11px] text-slate-500">
-            Decision Status: {props.dialogDecision}
-          </span>
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Decision: {props.dialogDecision}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Role: dialog (aria-modal)</span>
+          </div>
         </div>
       );
 
     case 'bottom-nav':
       return (
-        <div className="flex w-full max-w-sm flex-col items-center gap-3 py-4">
+        <div className="flex w-full max-w-sm flex-col items-center gap-4 py-4">
+          {/* Controls Bar for State Testing */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => props.setHangingNavBadge((b) => (b > 0 ? 0 : 8))}
+            >
+              Toggle Badge ({props.hangingNavBadge > 0 ? 'Clear' : '8'})
+            </GeometricButton>
+          </div>
+
           <div className="w-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 p-2 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
             <div className="flex items-center justify-around">
               {props.bottomNavItems.map((item) => {
@@ -1011,7 +1289,7 @@ function renderActivePlaygroundComponent(props: {
                     type="button"
                     onClick={() => props.setBottomNavTab(item.id)}
                     className={cn(
-                      'flex flex-col items-center gap-1 rounded-xl border px-4 py-2 transition-all select-none',
+                      'relative flex flex-col items-center gap-1 rounded-xl border px-4 py-2 transition-all select-none',
                       isActive
                         ? 'border-[#0056FF] bg-[#0056FF] font-bold text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),0_2px_8px_rgba(0,86,255,0.2)]'
                         : 'border-transparent text-slate-600 hover:border-slate-200 hover:text-slate-950',
@@ -1021,37 +1299,76 @@ function renderActivePlaygroundComponent(props: {
                     <span className="font-sans text-[11px] tracking-wider uppercase">
                       {item.label}
                     </span>
+                    {item.id === 'academics' && props.hangingNavBadge > 0 && (
+                      <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-rose-500 font-mono text-[10px] font-bold text-white ring-2 ring-white">
+                        {props.hangingNavBadge}
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
           </div>
-          <span className="font-mono text-[11px] text-slate-500">
-            Active Screen View: {props.bottomNavTab.toUpperCase()}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Active Screen: {props.bottomNavTab.toUpperCase()}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Badge Count: {props.hangingNavBadge}</span>
+          </div>
         </div>
       );
 
     case 'switch':
       return (
-        <div className="flex flex-col items-center gap-3 py-6">
-          <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-white px-5 py-3 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
-            <span className="font-sans text-xs font-semibold text-slate-800">
-              System Telemetry Probe
-            </span>
+        <div className="flex flex-col items-center gap-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton
+              variant="blue"
+              size="sm"
+              onClick={() => props.setSwitchState(!props.switchState)}
+            >
+              Toggle State
+            </GeometricButton>
+            <GeometricButton variant="outline" size="sm" onClick={() => props.setSwitchState(true)}>
+              Reset to Online
+            </GeometricButton>
+          </div>
+
+          <div className="flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-white px-6 py-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
+            <div className="space-y-0.5">
+              <span className="font-sans text-xs font-bold text-slate-900">
+                System Telemetry Probe
+              </span>
+              <p className="font-sans text-[11px] text-slate-500">
+                Live replica set change streams
+              </p>
+            </div>
             <LibrarySwitch checked={props.switchState} onCheckedChange={props.setSwitchState} />
           </div>
-          <span className="font-mono text-[11px] text-slate-500">
-            {props.switchState
-              ? 'ONLINE — Real-time telemetry streaming active'
-              : 'OFFLINE — Telemetry paused'}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>
+              {props.switchState ? 'STATE: ONLINE (STREAMING 120 FPS)' : 'STATE: OFFLINE (PAUSED)'}
+            </span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Role: switch (aria-checked)</span>
+          </div>
         </div>
       );
 
     case 'chip':
       return (
-        <div className="flex flex-col items-center gap-3 py-6">
+        <div className="flex flex-col items-center gap-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => props.setSelectedChip('All')}
+            >
+              Reset Filter
+            </GeometricButton>
+          </div>
+
           <div className="flex flex-wrap items-center justify-center gap-2">
             {['All', 'Academics', 'Students', 'Finance', 'Attendance', 'Graduation'].map(
               (label) => (
@@ -1065,70 +1382,164 @@ function renderActivePlaygroundComponent(props: {
               ),
             )}
           </div>
-          <span className="font-mono text-[11px] text-slate-500">
-            Active Filter: {props.selectedChip}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Selected Filter: {props.selectedChip.toUpperCase()}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Radius: 9999px (Pill)</span>
+          </div>
         </div>
       );
 
     case 'fab':
       return (
-        <div className="flex flex-col items-center justify-center gap-3 py-6">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => props.setFabSpeedDialOpen(!props.fabSpeedDialOpen)}
+            >
+              Toggle Speed Dial
+            </GeometricButton>
+            <GeometricButton variant="outline" size="sm" onClick={() => props.setFabCount(0)}>
+              Reset Counter
+            </GeometricButton>
+          </div>
+
+          <div className="relative flex items-center justify-center gap-4 py-2">
+            {props.fabSpeedDialOpen && (
+              <div className="flex items-center gap-2">
+                <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-[#0056FF]">
+                  Add Student
+                </span>
+                <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-[#0056FF]">
+                  Attendance
+                </span>
+                <span className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold text-[#0056FF]">
+                  Invoice
+                </span>
+              </div>
+            )}
+
             <LibraryFab
               label="Quick Action"
               icon={<Plus className="h-5 w-5" />}
               onClick={() => props.setFabCount((c) => c + 1)}
               className="bg-[#0056FF] text-white hover:bg-[#0040C0]"
             />
-            <GeometricButton size="sm" variant="outline" onClick={() => props.setFabCount(0)}>
-              Reset
-            </GeometricButton>
           </div>
-          <span className="font-mono text-xs text-slate-600">
-            Total Tap Events Recorded: {props.fabCount}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-xs text-slate-600">
+            <span>Tap Events Recorded: {props.fabCount}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Dimensions: 56×56px</span>
+          </div>
         </div>
       );
 
     case 'card':
       return (
-        <div className="w-full max-w-xs py-4">
-          <LibraryCard className="rounded-2xl border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md">
-            <LibraryCardMedia className="relative flex h-24 w-full items-start justify-between rounded-lg bg-gradient-to-r from-blue-100 to-[#0056FF] p-3">
-              <span className="rounded-full border border-white/40 bg-[#0056FF] px-2.5 py-0.5 font-sans text-[10px] font-bold text-white shadow-xs">
-                {props.cardEnrolled ? 'ENROLLED' : 'AVAILABLE'}
-              </span>
-            </LibraryCardMedia>
-            <LibraryCardHeader>
-              <LibraryCardTitle className="text-base font-bold text-slate-900">
-                Autonomous Robotics
-              </LibraryCardTitle>
-              <LibraryCardDescription className="text-xs text-slate-500">
-                Sensors, telemetry & embedded systems.
-              </LibraryCardDescription>
-            </LibraryCardHeader>
-            <LibraryCardFooter className="flex items-center justify-between border-t border-slate-100 pt-3">
-              <span className="font-sans text-xs font-bold text-slate-600">3 CREDITS</span>
+        <div className="flex flex-col items-center gap-4 py-4">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton
+              variant={props.cardEnrolled ? 'blue' : 'outline'}
+              size="sm"
+              onClick={() => props.setCardEnrolled(!props.cardEnrolled)}
+            >
+              Toggle Enrollment
+            </GeometricButton>
+            {(['light', 'dark', 'futurewave'] as const).map((t) => (
               <GeometricButton
+                key={t}
+                variant={props.cardTheme === t ? 'blue' : 'outline'}
                 size="sm"
-                variant={props.cardEnrolled ? 'primary' : 'outline'}
-                isActive={props.cardEnrolled}
-                onClick={() => props.setCardEnrolled(!props.cardEnrolled)}
+                isActive={props.cardTheme === t}
+                onClick={() => props.setCardTheme(t)}
               >
-                <Star className="h-3.5 w-3.5" />
-                <span>{props.cardEnrolled ? 'Enrolled' : 'Enroll'}</span>
+                {t.toUpperCase()}
               </GeometricButton>
-            </LibraryCardFooter>
-          </LibraryCard>
+            ))}
+          </div>
+
+          <div
+            className={cn(
+              'w-full max-w-xs transition-all duration-200',
+              props.cardTheme === 'dark' && 'rounded-2xl bg-slate-900 p-2 text-white',
+              props.cardTheme === 'futurewave' &&
+                'rounded-2xl bg-gradient-to-br from-[#2277FF]/20 to-[#AEC2FF]/30 p-2',
+            )}
+          >
+            <LibraryCard
+              className={cn(
+                'rounded-2xl border bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md',
+                props.cardTheme === 'dark'
+                  ? 'border-slate-800 bg-slate-900 text-white'
+                  : 'border-slate-200/80',
+              )}
+            >
+              <LibraryCardMedia className="relative flex h-24 w-full items-start justify-between rounded-lg bg-gradient-to-r from-blue-100 to-[#0056FF] p-3">
+                <span className="rounded-full border border-white/40 bg-[#0056FF] px-2.5 py-0.5 font-sans text-[10px] font-bold text-white shadow-xs">
+                  {props.cardEnrolled ? 'ENROLLED' : 'AVAILABLE'}
+                </span>
+                <span className="font-mono text-[10px] font-semibold text-white/90">TERM 1</span>
+              </LibraryCardMedia>
+              <LibraryCardHeader>
+                <LibraryCardTitle
+                  className={cn(
+                    'text-base font-bold',
+                    props.cardTheme === 'dark' ? 'text-white' : 'text-slate-900',
+                  )}
+                >
+                  Autonomous Robotics
+                </LibraryCardTitle>
+                <LibraryCardDescription
+                  className={cn(
+                    'text-xs',
+                    props.cardTheme === 'dark' ? 'text-slate-400' : 'text-slate-500',
+                  )}
+                >
+                  Sensors, telemetry & embedded micro-controllers.
+                </LibraryCardDescription>
+              </LibraryCardHeader>
+              <LibraryCardFooter className="flex items-center justify-between border-t border-slate-100 pt-3">
+                <span className="font-sans text-xs font-bold text-slate-500">3 CREDITS</span>
+                <GeometricButton
+                  size="sm"
+                  variant={props.cardEnrolled ? 'primary' : 'outline'}
+                  isActive={props.cardEnrolled}
+                  onClick={() => props.setCardEnrolled(!props.cardEnrolled)}
+                >
+                  <Star className="h-3.5 w-3.5" />
+                  <span>{props.cardEnrolled ? 'Enrolled' : 'Enroll'}</span>
+                </GeometricButton>
+              </LibraryCardFooter>
+            </LibraryCard>
+          </div>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Status: {props.cardEnrolled ? 'ENROLLED' : 'AVAILABLE'}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Theme: {props.cardTheme.toUpperCase()}</span>
+          </div>
         </div>
       );
 
     case 'dropdown':
       return (
-        <div className="flex w-full max-w-xs flex-col items-center gap-3 py-6">
+        <div className="flex w-full max-w-xs flex-col items-center gap-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <GeometricButton
+              variant="outline"
+              size="sm"
+              onClick={() => props.setDropdownValue('sora')}
+            >
+              Reset to Sora
+            </GeometricButton>
+          </div>
+
           <LibraryDropdown
-            label="Typography Engine"
+            label="Brand Typography Engine"
             value={props.dropdownValue}
             onChange={(val) => props.setDropdownValue(val)}
             options={[
@@ -1154,17 +1565,38 @@ function renderActivePlaygroundComponent(props: {
               },
             ]}
           />
-          <span className="font-mono text-[11px] text-slate-500">
-            Selected Font Token: {props.dropdownValue.toUpperCase()}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Selected Token: {props.dropdownValue.toUpperCase()}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Options: 4</span>
+          </div>
         </div>
       );
 
     case 'tooltip':
       return (
         <div className="flex flex-col items-center gap-4 py-6">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            {(['top', 'bottom'] as const).map((pos) => (
+              <GeometricButton
+                key={pos}
+                size="sm"
+                variant={props.tooltipPosition === pos ? 'blue' : 'outline'}
+                isActive={props.tooltipPosition === pos}
+                onClick={() => props.setTooltipPosition(pos)}
+              >
+                Anchor {pos.toUpperCase()}
+              </GeometricButton>
+            ))}
+          </div>
+
           <div className="flex items-center justify-center gap-3">
-            <LibraryTooltip content="Move Tool (Select & Transform)" shortcut="V">
+            <LibraryTooltip
+              content="Move Tool (Select & Transform)"
+              shortcut="V"
+              position={props.tooltipPosition}
+            >
               <button
                 type="button"
                 onClick={() => props.setActiveTool('Move Tool (V)')}
@@ -1179,7 +1611,11 @@ function renderActivePlaygroundComponent(props: {
               </button>
             </LibraryTooltip>
 
-            <LibraryTooltip content="Hand Tool (Pan Canvas)" shortcut="H">
+            <LibraryTooltip
+              content="Hand Tool (Pan Canvas)"
+              shortcut="H"
+              position={props.tooltipPosition}
+            >
               <button
                 type="button"
                 onClick={() => props.setActiveTool('Hand Tool (H)')}
@@ -1194,7 +1630,11 @@ function renderActivePlaygroundComponent(props: {
               </button>
             </LibraryTooltip>
 
-            <LibraryTooltip content="Inspect Element" shortcut="Cmd+I">
+            <LibraryTooltip
+              content="Inspect Element"
+              shortcut="Cmd+I"
+              position={props.tooltipPosition}
+            >
               <button
                 type="button"
                 onClick={() => props.setActiveTool('Inspect Element (Cmd+I)')}
@@ -1209,7 +1649,11 @@ function renderActivePlaygroundComponent(props: {
               </button>
             </LibraryTooltip>
 
-            <LibraryTooltip content="Quick Enroll Student" shortcut="E">
+            <LibraryTooltip
+              content="Quick Enroll Student"
+              shortcut="E"
+              position={props.tooltipPosition}
+            >
               <button
                 type="button"
                 onClick={() => props.setActiveTool('Quick Enroll Student (E)')}
@@ -1224,16 +1668,18 @@ function renderActivePlaygroundComponent(props: {
               </button>
             </LibraryTooltip>
           </div>
-          <span className="font-mono text-[11px] text-slate-500">
-            Active Tool Selected: {props.activeTool}
-          </span>
+
+          <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Active Tool: {props.activeTool}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Anchor: {props.tooltipPosition.toUpperCase()}</span>
+          </div>
         </div>
       );
 
     case 'hanging-tabs-nav':
       return (
         <div className="flex w-full max-w-lg flex-col items-center gap-4 py-4">
-          {/* Top Bar Ceiling with Hanging Tabs */}
           <div className="w-full rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
             <div className="rounded-t-xl border-b border-slate-300 bg-slate-100/80 px-4 pt-3 pb-0">
               <div className="flex items-center justify-between pb-2">
@@ -1264,7 +1710,6 @@ function renderActivePlaygroundComponent(props: {
             </div>
           </div>
 
-          {/* Interactive Size Controls */}
           <div className="flex items-center justify-center gap-2">
             {(['sm', 'md', 'lg'] as const).map((sz) => (
               <GeometricButton
@@ -1277,6 +1722,94 @@ function renderActivePlaygroundComponent(props: {
                 {sz.toUpperCase()}
               </GeometricButton>
             ))}
+          </div>
+        </div>
+      );
+
+    case 'input':
+      return (
+        <div className="flex w-full max-w-lg flex-col items-center gap-5 py-4">
+          {/* Controls Bar for State Testing */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="font-sans text-xs font-semibold text-slate-600">Theme:</span>
+            {(['blue', 'azure', 'soft-lavender', 'black', 'outline'] as const).map((v) => (
+              <GeometricButton
+                key={v}
+                variant={props.inputDemoVariant === v ? 'blue' : 'outline'}
+                size="sm"
+                isActive={props.inputDemoVariant === v}
+                onClick={() => props.setInputDemoVariant(v)}
+              >
+                {v === 'blue'
+                  ? 'Royal Blue'
+                  : v === 'azure'
+                    ? 'Azure'
+                    : v === 'soft-lavender'
+                      ? 'Lavender'
+                      : v === 'black'
+                        ? 'Black'
+                        : 'Outline'}
+              </GeometricButton>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span className="font-sans text-xs font-semibold text-slate-600">Size:</span>
+            {(['sm', 'md', 'lg'] as const).map((s) => (
+              <GeometricButton
+                key={s}
+                variant={props.inputDemoSize === s ? 'blue' : 'outline'}
+                size="sm"
+                isActive={props.inputDemoSize === s}
+                onClick={() => props.setInputDemoSize(s)}
+              >
+                {s.toUpperCase()}
+              </GeometricButton>
+            ))}
+
+            <GeometricButton
+              variant={props.inputDemoLoading ? 'blue' : 'outline'}
+              size="sm"
+              isActive={props.inputDemoLoading}
+              onClick={() => props.setInputDemoLoading(!props.inputDemoLoading)}
+            >
+              Loading Spinner
+            </GeometricButton>
+
+            <GeometricButton
+              variant={props.inputDemoDisabled ? 'blue' : 'outline'}
+              size="sm"
+              isActive={props.inputDemoDisabled}
+              onClick={() => props.setInputDemoDisabled(!props.inputDemoDisabled)}
+            >
+              Disabled Mode
+            </GeometricButton>
+          </div>
+
+          {/* Interactive Live Pill Input Field (Image 2 style with primary brand colors) */}
+          <div className="w-full max-w-md space-y-2">
+            <GeometricInput
+              type="search"
+              placeholder="Search components, students, or endpoints..."
+              value={props.inputDemoText}
+              onChange={(e) => props.setInputDemoText(e.target.value)}
+              clearable
+              onClear={() => props.setInputDemoText('')}
+              icon={<Search className="h-4 w-4" />}
+              variant={props.inputDemoVariant}
+              inputSize={props.inputDemoSize}
+              isLoading={props.inputDemoLoading}
+              disabled={props.inputDemoDisabled}
+            />
+          </div>
+
+          {/* Real-time State Feedback Badge */}
+          <div className="flex flex-wrap items-center justify-center gap-2 font-mono text-[11px] text-slate-500">
+            <span>Value: &quot;{props.inputDemoText}&quot;</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Variant: {props.inputDemoVariant.toUpperCase()}</span>
+            <span className="h-3 w-[1px] bg-slate-300" />
+            <span>Size: {props.inputDemoSize.toUpperCase()}</span>
           </div>
         </div>
       );

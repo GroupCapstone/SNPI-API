@@ -29,7 +29,9 @@ export interface GalleryComponentItem {
     | 'fab'
     | 'card'
     | 'dropdown'
-    | 'tooltip';
+    | 'tooltip'
+    | 'hanging-tabs-nav'
+    | 'input';
 }
 
 export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
@@ -184,6 +186,23 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     category: 'Core UI 10',
     description: 'Informative popover showing keyboard shortcuts and descriptive hints on hover.',
     iconType: 'tooltip',
+  },
+  {
+    id: 'hanging-tabs-nav',
+    name: 'Hanging Tabs Nav',
+    variantsCount: 12,
+    category: 'Core UI 10',
+    description: 'Inverted trapezoid folder tabs suspended from the ceiling.',
+    iconType: 'hanging-tabs-nav',
+  },
+  {
+    id: 'input',
+    name: 'Pill Input & Search',
+    variantsCount: 30,
+    category: 'Core UI 10',
+    description:
+      'Capsule pill text input and search bar with continuous 2px border and brand colors.',
+    iconType: 'input',
   },
 ];
 
@@ -497,9 +516,29 @@ function renderSchematicIllustration(type: GalleryComponentItem['iconType']) {
       return (
         <div className="flex flex-col items-center justify-center gap-1">
           <div className="rounded-md bg-slate-900 px-3 py-1 font-mono text-[11px] text-white shadow-md">
-            Shortcut: ⌘K
+            Shortcut: Cmd+K
           </div>
           <div className="h-2 w-2 rotate-45 bg-slate-900" />
+        </div>
+      );
+
+    case 'hanging-tabs-nav':
+      return (
+        <div className="flex items-center justify-center gap-1">
+          <div className="rounded-b-lg border-2 border-slate-300 bg-slate-100 px-3 py-1.5 text-[10px] font-bold text-slate-600">
+            Map
+          </div>
+          <div className="rounded-b-lg border-2 border-[#0056FF] bg-blue-50/60 px-3 py-1.5 text-[10px] font-bold text-[#0056FF]">
+            Newswire
+          </div>
+        </div>
+      );
+
+    case 'input':
+      return (
+        <div className="flex w-full items-center gap-2 rounded-full border-2 border-[#0056FF] bg-white px-3 py-1.5 text-xs text-slate-700 shadow-xs">
+          <span className="font-bold text-[#0056FF]">Q</span>
+          <span className="text-slate-500">Search components...</span>
         </div>
       );
 

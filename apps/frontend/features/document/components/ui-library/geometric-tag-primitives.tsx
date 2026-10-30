@@ -196,46 +196,111 @@ GeometricButton.displayName = 'GeometricButton';
  * Capsule Pill Input with Matching Button Aesthetics
  * Shares the same 2px continuous border, rounded-full pill geometry,
  * clean inline icon with zero color behind it, and focused states.
+ * Incorporates Primary Brand Colors: Royal Blue (#0056FF), Azure Blue (#2277FF),
+ * Soft Lavender (#E3E7FC), Black (#000000), and White (#FFFFFF).
  */
 export interface GeometricInputProps extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'size'
 > {
-  variant?: 'outline' | 'blue';
+  variant?: 'outline' | 'blue' | 'azure' | 'soft-lavender' | 'black' | 'error';
   inputSize?: 'sm' | 'md' | 'lg';
   icon?: React.ReactNode;
+  clearable?: boolean;
+  onClear?: () => void;
+  isLoading?: boolean;
 }
 
 export const GeometricInput = React.forwardRef<HTMLInputElement, GeometricInputProps>(
-  ({ className, variant = 'outline', inputSize = 'md', icon, disabled, ...props }, ref) => {
+  (
+    {
+      className,
+      variant = 'outline',
+      inputSize = 'md',
+      icon,
+      clearable = false,
+      onClear,
+      isLoading = false,
+      disabled,
+      value,
+      ...props
+    },
+    ref,
+  ) => {
     const sizeClasses = {
       sm: 'h-8 px-3 text-xs gap-2 rounded-full',
-      md: 'h-10 px-4 text-xs gap-2.5 rounded-full',
-      lg: 'h-12 px-5 text-sm gap-3 rounded-full',
+      md: 'h-10 px-3.5 text-xs gap-2.5 rounded-full',
+      lg: 'h-12 px-4 text-sm gap-3 rounded-full',
     }[inputSize];
+
+    const variantStyles = {
+      outline:
+        'border-2 border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus-within:border-[#0056FF] hover:border-slate-300',
+      blue: 'border-2 border-[#0056FF] bg-blue-50/40 text-slate-900 placeholder-slate-400 focus-within:border-[#0056FF] focus-within:bg-white',
+      azure:
+        'border-2 border-[#2277FF] bg-[#2277FF]/5 text-slate-900 placeholder-slate-400 focus-within:border-[#2277FF] focus-within:bg-white',
+      'soft-lavender':
+        'border-2 border-[#CAD3F5] bg-[#E3E7FC] text-[#000B26] placeholder-[#000B26]/50 focus-within:border-[#0056FF] focus-within:bg-white',
+      black:
+        'border-2 border-slate-900 bg-slate-100/80 text-slate-900 placeholder-slate-400 focus-within:border-black focus-within:bg-white',
+      error:
+        'border-2 border-rose-500 bg-rose-50/50 text-rose-950 placeholder-rose-300 focus-within:border-rose-600 focus-within:bg-white',
+    }[variant];
+
+    const iconColor = {
+      outline: 'text-slate-400 group-focus-within:text-[#0056FF]',
+      blue: 'text-[#0056FF]',
+      azure: 'text-[#2277FF]',
+      'soft-lavender': 'text-[#0056FF]',
+      black: 'text-slate-900',
+      error: 'text-rose-500',
+    }[variant];
+
+    const hasValue = value !== undefined && value !== null && String(value).length > 0;
 
     return (
       <div
         className={cn(
-          'group relative flex w-full items-center font-sans tracking-tight transition-all duration-200 select-none',
+          'group relative flex w-full items-center font-sans tracking-tight transition-all duration-150 select-none',
           sizeClasses,
-          'border-2 border-slate-300 bg-slate-50/80 text-slate-800 placeholder-slate-400',
-          'focus-within:border-[#0056FF] focus-within:bg-white',
+          variantStyles,
           disabled && 'pointer-events-none cursor-not-allowed opacity-50',
           className,
         )}
       >
         {icon && (
-          <span className="flex shrink-0 items-center justify-center bg-transparent text-slate-400 transition-colors group-focus-within:text-[#0056FF]">
+          <span
+            className={cn(
+              'flex shrink-0 items-center justify-center bg-transparent transition-colors',
+              iconColor,
+            )}
+          >
             {icon}
           </span>
         )}
         <input
           ref={ref}
           disabled={disabled}
-          className="w-full bg-transparent font-sans text-xs font-semibold text-slate-900 placeholder-slate-400 focus:outline-none"
+          value={value}
+          data-geometric="true"
+          className="geometric-input-field w-full min-w-0 bg-transparent font-sans text-xs font-semibold text-slate-900 placeholder-slate-400 focus:ring-0 focus:outline-none"
           {...props}
         />
+        {isLoading && (
+          <span className="flex shrink-0 items-center justify-center">
+            <span className="size-3.5 animate-spin rounded-full border-2 border-slate-300 border-t-[#0056FF]" />
+          </span>
+        )}
+        {clearable && hasValue && !disabled && !isLoading && (
+          <button
+            type="button"
+            onClick={onClear}
+            className="flex size-4 shrink-0 items-center justify-center rounded-full bg-slate-200/80 text-[10px] font-bold text-slate-600 transition-colors hover:bg-slate-300 hover:text-slate-900"
+            aria-label="Clear text"
+          >
+            x
+          </button>
+        )}
       </div>
     );
   },
