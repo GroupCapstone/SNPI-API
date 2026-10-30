@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "4560c0b",
+    "description": "Implement Admin Audit Health Spotlight Bento Grid with rAF-throttled pointer, border spotlight, cascading deploy log, and self-drawing sparkline"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "eee3195",
+    "description": "Synchronize real-time changelog with Interactive Data Table component"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "24f7d0f",
     "description": "Implement Interactive Data Table with tri-state sorting, sticky header, debounced search, status pills, and boundary-clamped pagination"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "c5e3dd8",
     "description": "Format AGENTS.md table style with prettier and sync changelog"
-  },
-  {
-    "version": "0.2.5",
-    "date": "30.10.2026",
-    "commitHash": "bf94507",
-    "description": "Consolidate 21 design manuals into single folder architecture (v0.2.5)"
-  },
-  {
-    "version": "0.2.4",
-    "date": "30.10.2026",
-    "commitHash": "a9859ab",
-    "description": "Synchronize real-time changelog and technical portal"
   }
 ];
