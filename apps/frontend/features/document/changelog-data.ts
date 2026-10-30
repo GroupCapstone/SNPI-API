@@ -9,7 +9,7 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
-    "commitHash": "8063feb",
+    "commitHash": "4e1fe42",
     "description": "V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes"
   },
   {

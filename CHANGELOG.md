@@ -2,7 +2,7 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.10 (31.10.2026) - `8063feb`
+### Version 0.2.10 (31.10.2026) - `4e1fe42`
 
 - V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes
 
