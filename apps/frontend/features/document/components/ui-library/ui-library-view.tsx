@@ -84,6 +84,7 @@ import {
   SkeletonLoadingScreenDemo,
   RealTimeChartDemo,
   RichTextEditorDemo,
+  ColorContrastCheckerDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2809,6 +2810,8 @@ function renderFeedComponentDemo(
       return <ToastStackDemo />;
     case 'skeleton-loading-screen':
       return <SkeletonLoadingScreenDemo />;
+    case 'color-contrast-checker':
+      return <ColorContrastCheckerDemo />;
     case 'emoji-reaction':
       return <EmojiReactionDemo />;
     case 'notification-bell':

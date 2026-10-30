@@ -1930,6 +1930,92 @@ export function Example() {
     ],
   },
   {
+    id: 'color-contrast-checker',
+    name: 'Color Contrast Checker',
+    category: 'Feedback',
+    paradigm: 'WCAG 2.1 Relative Luminance Standard',
+    description:
+      'Accessible color contrast ratio calculator with real-time WCAG 2.1 relative luminance math, AA/AAA compliance badges, and live typography preview.',
+    explanation:
+      'Calculates the exact contrast ratio between any foreground and background color pair according to WCAG 2.1 relative luminance specifications (L1 + 0.05) / (L2 + 0.05). Provides real-time verification against Normal Text AA (4.5:1), Normal Text AAA (7.0:1), Large Text AA (3.0:1), Large Text AAA (4.5:1), and UI Components (3.0:1) with a live visual typography sandbox, color swap control, and curated high-contrast presets.',
+    props: [
+      {
+        name: 'initialForeground',
+        type: 'string',
+        default: "'#000000'",
+        description: 'Initial foreground/text hex color value.',
+      },
+      {
+        name: 'initialBackground',
+        type: 'string',
+        default: "'#ffffff'",
+        description: 'Initial background hex color value.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Container UI surface theme.',
+      },
+    ],
+    codeSnippet: `import { ColorContrastChecker } from '@/features/document/components/ui-library';\n\n<ColorContrastChecker\n  initialForeground="#000000"\n  initialBackground="#ffffff"\n  theme="light"\n/>`,
+    realWorldExamples: [
+      {
+        title: 'Design System Accessibility Auditing',
+        scenario:
+          'Product designer tests brand palette tokens for dark and light theme compliance.',
+        impact:
+          'Guarantees 100% WCAG 2.1 AA/AAA compliance before shipping color variables to production.',
+      },
+      {
+        title: 'Institutional Grade Portal UI',
+        scenario: 'Academic staff review student report cards with high-contrast text rendering.',
+        impact: 'Prevents low-contrast reading fatigue across diverse ambient lighting conditions.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Weber's Law of Just Noticeable Difference",
+        detail:
+          'Users perceive luminance contrast logarithmically. High-contrast ratios (>7.0:1) dramatically accelerate comprehension speed and reduce cognitive strain.',
+      },
+      {
+        principle: 'Universal Design & Cognitive Ease',
+        detail:
+          'Accessible contrast ensures clarity for users with low vision, aging eyes, color blindness, and high glare mobile screens.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'Maintain at least 4.5:1 contrast for regular body copy and 3.0:1 for large headers and buttons.',
+        dontItem:
+          'Never use light gray text (#9ca3af) on white backgrounds or dark blue text on black.',
+      },
+      {
+        doItem: 'Strive for AAA 7.0:1 contrast on essential transactional actions and data tables.',
+        dontItem:
+          'Do not rely on color hue alone to distinguish status states without sufficient luminance contrast.',
+      },
+    ],
+    implementationNotes: [
+      '01 Mathematical Precision: sRGB linearization formula C_linear = C <= 0.04045 ? C / 12.92 : ((C + 0.055) / 1.055)^2.4.',
+      '02 Luminance Calculation: L = 0.2126 * R + 0.7152 * G + 0.0722 * B accurately weighting human eye sensitivity.',
+      '03 Contrast Formula: (L1 + 0.05) / (L2 + 0.05) : 1 yielding exact 21.00:1 for #000000 on #ffffff.',
+      '04 WCAG Criteria Matrix: Real-time evaluation against Normal Text AA/AAA, Large Text AA/AAA, and UI Components AA.',
+      '05 Interactive Sandbox: Live preview showing simulated headline, body paragraph, button badge, and card surface.',
+      '06 Swap & Presets: Instant foreground/background swap button and curated 1-click test swatches.',
+    ],
+    supportedStates: [
+      'AAA Maximum Contrast (21.00:1 #000000 / #ffffff)',
+      'AAA Enhanced Pass (>= 7.0:1)',
+      'AA Minimum Pass (>= 4.5:1)',
+      'AA Large Text Pass (>= 3.0:1)',
+      'Fail State (< 3.0:1 or < 4.5:1)',
+      'Live Hex Input & Native Color Picker Sync',
+    ],
+  },
+  {
     id: 'emoji-reaction',
     name: 'Emoji Reaction',
     category: 'Feedback',
