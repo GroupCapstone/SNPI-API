@@ -424,16 +424,13 @@ export function UiLibraryView() {
               <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)]">
                 {/* Header Ceiling Strip (Textured Slate Bar) */}
                 <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
-                  <div className="flex items-center justify-between pb-3">
+                  <div className="flex items-center pb-3">
                     <div className="flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
                       <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
                         Application Workspace Ceiling
                       </span>
                     </div>
-                    <span className="font-mono text-[11px] text-slate-500">
-                      SNPI-SMS Design Standard
-                    </span>
                   </div>
 
                   <div className="flex items-end justify-center">
