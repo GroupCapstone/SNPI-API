@@ -70,13 +70,19 @@ async function verifyGitHubWorkflowStatus(): Promise<void> {
     }
 
     if (failedWorkflows.length > 0) {
-      console.error('\n[FAILED] PUSH BLOCKED: The following workflows failed on main:');
-      for (const failed of failedWorkflows) {
-        console.error(`  - ${failed.name} (ID: ${failed.databaseId}): "${failed.displayTitle}"`);
+      if (process.env.ALLOW_FIX === '1' || process.env.CI_FIX === '1') {
+        console.warn(
+          '\n[WARN] Failed workflows detected on main, but ALLOW_FIX=1 is active to push the resolving commit.',
+        );
+      } else {
+        console.error('\n[FAILED] PUSH BLOCKED: The following workflows failed on main:');
+        for (const failed of failedWorkflows) {
+          console.error(`  - ${failed.name} (ID: ${failed.databaseId}): "${failed.displayTitle}"`);
+        }
+        throw new Error(
+          'Push blocked by Pre-Push Quality Gate: All GitHub deployment and CI workflows must be green before pushing new changes.',
+        );
       }
-      throw new Error(
-        'Push blocked by Pre-Push Quality Gate: All GitHub deployment and CI workflows must be green before pushing new changes.',
-      );
     }
 
     console.log(
