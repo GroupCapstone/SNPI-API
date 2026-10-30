@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "5179bb9",
+    "description": "Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "f35a661",
+    "description": "Synchronize real-time changelog for Searchable Dropdown"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "61896be",
     "description": "Implement Searchable Dropdown with ARIA combobox contract, active descendant, removable chips, and match highlights"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "085697d",
     "description": "Redesign native Snackbar component with bottom-center anchor, obsidian surface, progress countdown, and action recovery"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "28fa0e3",
-    "description": "Remove background outlined watermark words and clutter elements from UI Library and Open API headers"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "ca270d5",
-    "description": "Add Component Templates for Backgrounds, Text Effects, Cards, Sections, Forms, and Overlays with Rare UI capsule dock navigation copy style"
   }
 ];
