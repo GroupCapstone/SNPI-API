@@ -1484,35 +1484,117 @@ export function Example() {
   // NAVIGATION GROUP
   {
     id: 'rail-toc',
-    name: 'Rail TOC (Primary)',
+    name: 'Rail TOC',
     category: 'Navigation',
-    paradigm: 'Line Tracker Standard',
+    paradigm: 'Paper Plane Flight Rail Standard',
     description:
-      'Vertical sticky line tracker with continuous rail and section line indicators (zero dots).',
+      'A table of contents with a paper plane that flies to the section you are reading, turning at rail bends and reversing on scroll-up.',
     explanation:
-      'Line Tracker TOC anchors a continuous reading milestone rail along the container edge, lighting up precision line segments per section without circular dots.',
+      'Scroll the content and the paper plane flies along the rail between headings, turning where the rail bends. Scroll back up and it turns around. The rail behind it is solid and each heading it passes fills in; the rest stays dashed. Click any heading to scroll to it.',
     props: [
-      { name: 'sections', type: 'Array<{id, number, title}>', description: 'List of milestones.' },
-    ],
-    codeSnippet: `import { RailTocDemo } from '@/features/document/components/ui-library';\n\n<RailTocDemo />`,
-    realWorldExamples: [
       {
-        title: 'Academic Syllabus & Long Documentation',
-        scenario: 'Students and developers browse long multi-section documents.',
-        impact: 'Real-time section orientation with zero distraction.',
+        name: 'items',
+        type: '{ id: string; label: string; depth?: number }[]',
+        description: 'Headings in document order. Each id must match an element id in content.',
+      },
+      {
+        name: 'containerRef',
+        type: 'React.RefObject<HTMLElement | null>',
+        default: 'window',
+        description:
+          'Scroll container to track and scroll within. Defaults to window when omitted.',
+      },
+      {
+        name: 'offset',
+        type: 'number',
+        default: '100',
+        description: 'Distance in pixels below scroller top edge where heading counts as reached.',
+      },
+      {
+        name: 'indent',
+        type: 'number',
+        default: '16',
+        description: 'Horizontal step in pixels for each depth level.',
+      },
+      {
+        name: 'title',
+        type: 'string',
+        default: "'On this page'",
+        description: 'Text above the list and accessibility landmark label.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        description: 'Extra classes merged onto root nav with data-slot attributes.',
       },
     ],
-    uxPsychology: [{ principle: "Fitts's Law", detail: 'Edge rail is easily acquired.' }],
+    codeSnippet: `import { RailToc } from '@/features/document/components/ui-library';
+
+export function Example() {
+  return (
+    <RailToc
+      items={[
+        { id: 'installation', label: 'Installation', depth: 0 },
+        { id: 'prerequisites', label: 'Prerequisites', depth: 1 },
+        { id: 'installation-steps', label: 'Installation Steps', depth: 1 },
+        { id: 'configuration', label: 'Configuration', depth: 1 },
+        { id: 'usage', label: 'Usage', depth: 0 },
+        { id: 'customizing-content', label: 'Customizing Content', depth: 1 },
+        { id: 'submenu-content', label: 'Submenu Content', depth: 2 },
+        { id: 'features', label: 'Features', depth: 0 },
+      ]}
+      title="On this page"
+    />
+  );
+}`,
+    realWorldExamples: [
+      {
+        title: 'Developer Documentation & Technical Guides',
+        scenario: 'Developers reading multi-tier API specs and guides with nested sub-headings.',
+        impact: 'Delightful spatial feedback with intuitive scroll-driven milestone tracking.',
+      },
+      {
+        title: 'Academic Syllabus & Long Institutional Manuals',
+        scenario:
+          'Staff and students reviewing semester syllabi and multi-depth handbook sections.',
+        impact: 'Clear situational orientation without losing context across hierarchy tiers.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Spatial Wayfinding & Tangent Directionality',
+        detail:
+          'Paper plane rotates along the tangent of travel, reinforcing spatial momentum and reading flow.',
+      },
+      {
+        principle: 'Doherty Threshold & Kinetic Continuity',
+        detail:
+          'Sub-300ms spring-damped tracking keeps animation responsive to rapid scroll gestures.',
+      },
+    ],
     usageGuidelines: [
       {
-        doItem: 'Keep section titles short and readable.',
-        dontItem: 'Avoid cluttering line with circular dots.',
+        doItem: 'Use nested depth (0, 1, 2) to convey semantic heading hierarchy cleanly.',
+        dontItem: 'Exceed 3 depth levels to prevent rail cramping on narrow mobile viewports.',
+      },
+      {
+        doItem:
+          'Ensure target headings carry matching DOM element ids for smooth-scroll acquisition.',
+        dontItem: 'Render redundant floating scrollbars inside the Table of Contents rail.',
       },
     ],
     implementationNotes: [
-      'Continuous vertical rail track with active section line segment, zero-scrollbar styling, and zero circular dots.',
+      '01 Paper Plane Flight: Motion spring physics track active heading with tangent-angle alignment and 180-deg reversal on scroll-up.',
+      '02 Indented Rail Geometry: Cubic Bézier S-curves connecting headings across depth levels (depth 0, 1, 2) with smooth filleted bends.',
+      '03 Dual Stroke Rail: Solid line behind active plane, dashed stroke ahead; node circles fill in as passed.',
+      '04 Standard Button Tokens: All interactive controls enforce border-0 and rounded-[4px] subtle corner radius.',
     ],
-    supportedStates: ['Default Track', 'Active Section Line', 'Hovered'],
+    supportedStates: [
+      'Ahead of Scroller (Dashed Rail / Hollow Node)',
+      'Active Reading Head (Paper Plane Aligned)',
+      'Passed Section (Solid Rail / Filled Circle)',
+      'Scroll Reversal (Turn Around 180deg)',
+    ],
   },
   {
     id: 'bounce-sidebar',

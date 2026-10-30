@@ -76,3 +76,35 @@ In Tailwind CSS:
 2. **Single Continuous Feed**:
    - Component catalogs and documentation pages must stack content in a single continuous vertical scroll feed (`space-y-14`).
    - Sticky left sidebar navigation remains permanently pinned alongside the feed with instant scroll synchronization (`scroll-mt-24`).
+
+---
+
+## 5. Rail TOC: Paper Plane Flying Rail Standard
+
+Authoritative specification for the Paper Plane Rail TOC component:
+
+### 5.1 Overview & Interaction Mechanics
+- **Dependencies**: `motion` (`motion/react`).
+- **Kinetic Flight**: As the user scrolls content, a folded origami paper plane flies continuously along the rail between headings, rotating smoothly to match the tangent angle where the rail bends.
+- **Scroll Reversal**: When the user scrolls back up, the paper plane executes an immediate 180° turnaround along the path.
+- **Dual-Stroke Rail**:
+  - The path behind the active paper plane renders as a solid stroke (`stroke="#0056FF"`, `strokeWidth="1.8"`).
+  - The path ahead of the paper plane renders as a dashed guide (`stroke="#CBD5E1"`, `strokeDasharray="2 3"`).
+  - Heading node circles fill in (`fill="#0056FF"`) as passed, while upcoming nodes remain hollow (`fill="white"`).
+- **Indented S-Curves**: Headings with `depth` levels (0, 1, 2) bend with smooth cubic Bézier fillets calculated from `startY + dy * 0.45`.
+
+### 5.2 Component Props Contract
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `RailTocItem[]` | Required | Headings in document order (`{ id, label, depth }`). |
+| `containerRef` | `RefObject<HTMLElement>` | `window` | Scroll container to track and scroll within. |
+| `offset` | `number` | `100` | Pixels below scroller top edge where heading is reached. |
+| `indent` | `number` | `16` | Horizontal indent step in pixels per depth level. |
+| `title` | `string` | `'On this page'` | Accessible landmark title and header label. |
+| `className` | `string` | `undefined` | Custom styling merged onto root `nav`. |
+
+### 5.3 Button Geometry Standard
+- **Element Type**: Standard Button.
+- **Border Width**: `0px` (`border-0`).
+- **All Corners Radius**: `4px` (`rounded-[4px]`).
+- **Logic**: Consistent subtle rounding across all button primitives and quick jump controls.
