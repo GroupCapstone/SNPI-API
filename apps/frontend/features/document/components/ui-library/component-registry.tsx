@@ -53,8 +53,7 @@ export const COMPONENT_LIBRARY_REGISTRY: ComponentItemDoc[] = [
     name: 'Snackbar',
     category: 'Feedback & Overlays',
     paradigm: 'Gmail Paradigm',
-    description:
-      'A small message that pops up at the bottom of the screen to confirm an action, then automatically fades away after a duration. Supports an optional instant Undo action.',
+    description: 'Bottom feedback alert with optional instant Undo.',
     explanation:
       'The Snackbar provides brief, non-intrusive feedback about an operation. It appears temporarily at the bottom edge of the screen, ensuring that users stay informed without having their active workflow halted. By including an instant "Undo" recovery mechanism, it drastically reduces user error anxiety.',
     supportedStates: ['Default', 'Success', 'Error', 'Info', 'Active (Displaying)', 'Dismissed'],
@@ -178,8 +177,7 @@ export function Example() {
     name: 'Bottom Sheet',
     category: 'Feedback & Overlays',
     paradigm: 'Google Maps Paradigm',
-    description:
-      'A panel that slides up from the bottom edge to display supplementary details, action options, or forms without navigating away from the current view.',
+    description: 'Slide-up mobile panel for contextual actions.',
     explanation:
       'The Bottom Sheet is a mobile-first surface anchored to the bottom viewport edge. Modeled after Google Maps location cards, it lets users inspect supplementary details, execute contextual actions, or configure filters while preserving full situational context of the underlying view.',
     supportedStates: ['Default', 'Open (Peek)', 'Expanded', 'Action Selected', 'Dismissed'],
@@ -284,8 +282,7 @@ export function Example() {
     name: 'Dialog',
     category: 'Feedback & Overlays',
     paradigm: 'WhatsApp Paradigm',
-    description:
-      'A modal interruption that pauses user workflow to confirm high-risk, destructive, or important decisions before changes take effect.',
+    description: 'Modal confirmation for critical or irreversible actions.',
     explanation:
       'The Dialog is a focused modal overlay that temporarily suspends background operations to demand an unambiguous user confirmation. By introducing deliberate cognitive friction, it prevents catastrophic accidental deletions, academic grade alterations, or unrecoverable tenant data drops.',
     supportedStates: [
@@ -414,8 +411,7 @@ export function Example() {
     name: 'Tooltip',
     category: 'Feedback & Overlays',
     paradigm: 'Figma Paradigm',
-    description:
-      'A tiny label that appears when you hover or focus on an element, explaining what it does and displaying keyboard shortcuts.',
+    description: 'Micro hover hint for icons and shortcuts.',
     explanation:
       'The Tooltip is a transient micro-surface that emerges on pointer hover or keyboard focus. Inspired by Figma canvas inspection, it provides concise contextual explanations and reveals power-user keyboard shortcuts (e.g. "Move Tool [V]"), keeping interface toolbars minimalist and uncluttered.',
     supportedStates: [
@@ -521,8 +517,7 @@ export function Example() {
     name: 'FAB (Floating Action Button)',
     category: 'Actions',
     paradigm: 'Google Calendar Paradigm',
-    description:
-      'Floating action button: a prominent round button representing the single primary action on a screen, anchored within thumb reach.',
+    description: 'Pinned action button for the primary screen task.',
     explanation:
       'The Floating Action Button (FAB) floats continuously above the application canvas. Modeled after the Google Calendar plus-button, it acts as a visual lifebuoy that immediately signals to the user the primary productive action available in the current context.',
     supportedStates: [
@@ -624,8 +619,7 @@ export function Example() {
     name: 'Chip',
     category: 'Selection',
     paradigm: 'YouTube Paradigm',
-    description:
-      'Small tappable tags used to filter data catalogs, select options, or represent entered entities with full capsule pill geometry.',
+    description: 'Compact interactive tag for filters and selection.',
     explanation:
       'Chips are compact interactive tags shaped like poker chips. Modeled after YouTube home feed category filters, they allow users to rapidly segment extensive catalogs, switch active query parameters, or dismiss selected entities without navigating to a complex filter modal.',
     supportedStates: [
@@ -728,8 +722,7 @@ export function Example() {
     name: 'Toggle Switch',
     category: 'Selection',
     paradigm: 'iPhone Settings Paradigm',
-    description:
-      'An instant on/off control modeled after physical wall rocker switches that applies state changes immediately without a separate Save step.',
+    description: 'Instant binary toggle for settings and preferences.',
     explanation:
       'The Toggle Switch provides instantaneous binary control. Modeled after physical wall switches and iOS Settings controls, it applies configuration adjustments the exact millisecond it is flipped, completely eliminating the need for an awkward secondary "Save Changes" confirmation button.',
     supportedStates: [
@@ -824,8 +817,7 @@ export function Example() {
     name: 'Dropdown',
     category: 'Selection',
     paradigm: 'Google Docs Paradigm',
-    description:
-      'A compact menu button that unfolds a list of choices like a roller blind, conserving screen space until active selection begins.',
+    description: 'Collapsible menu for single or multi-option selection.',
     explanation:
       'The Dropdown menu tucks a list of options away under a single trigger button. Inspired by font pickers in Google Docs, it enables users to select from dozens of values without consuming permanent vertical screen real estate.',
     supportedStates: [
@@ -940,8 +932,7 @@ export function Example() {
     name: 'Bottom Nav',
     category: 'Navigation',
     paradigm: 'Spotify Paradigm',
-    description:
-      'A persistent horizontal navigation bar anchored to the bottom edge of mobile viewports for thumb-driven switching between 3 to 5 destinations.',
+    description: 'Thumb-accessible mobile destination bar.',
     explanation:
       'Bottom Navigation provides primary spatial navigation for mobile applications. Modeled after Spotify and Instagram mobile clients, it places 3 to 5 top-level destination tabs directly where the user’s thumb already rests, enabling instantaneous navigation without reaching for a hamburger menu.',
     supportedStates: [
@@ -1042,8 +1033,7 @@ export function Example() {
     name: 'Card',
     category: 'Layout & Containers',
     paradigm: 'Airbnb Paradigm',
-    description:
-      'A modular surface container that binds heterogeneous data elements into a single scannable, cohesive, and interactive rectangular unit.',
+    description: 'Structured flat container for related content.',
     explanation:
       'The Card is an all-purpose container for grouped information. Modeled after Airbnb property cards, it packages media, title, descriptive metadata, and action triggers into a single cohesive unit, establishing clear perceptual boundaries between disparate entities.',
     supportedStates: [
@@ -1144,8 +1134,7 @@ export function Example() {
     name: 'Hanging Tabs Nav',
     category: 'Navigation',
     paradigm: 'Trapezoid Ceiling Paradigm',
-    description:
-      'Inverted trapezoid folder tabs suspended from the header ceiling, built with smooth vector SVG geometry, continuous non-scaling strokes, and clean centered alignment.',
+    description: 'Inverted trapezoid tabs anchored to the top header.',
     explanation:
       'The Hanging Tabs Nav suspends navigation tabs directly from the application header baseline. Inspired by index dividers in physical filing cabinets, its inverted trapezoid geometry provides a distinctive, tactile sense of workspace organization while maintaining centered page balance.',
     supportedStates: [
@@ -1250,8 +1239,7 @@ export function Example() {
     name: 'Pill Input & Search',
     category: 'Actions',
     paradigm: 'Capsule Pill Standard',
-    description:
-      'Capsule pill text input and search bar with continuous 2px border, rounded-full geometry, clean inline icon, clear button, and primary brand color integration.',
+    description: 'Rounded search and text input with inline actions.',
     explanation:
       'The Pill Input & Search component applies capsule button aesthetics to form inputs. It features a continuous 2px border, rounded-full geometry, integrated search icon with zero background color, clear "x" button, and eliminates native browser focus rectangles for clean, unified ergonomics.',
     supportedStates: [
