@@ -80,6 +80,7 @@ import {
   CipherTextDecoderDemo,
   DatePickerDemo,
   SearchableDropdownDemo,
+  ToastStackDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2801,7 +2802,8 @@ function renderFeedComponentDemo(
     // FEEDBACK GROUP (Interactive Demos)
     // ==========================================
     case 'toast':
-      return <ToastDemo />;
+    case 'toast-stack':
+      return <ToastStackDemo />;
     case 'emoji-reaction':
       return <EmojiReactionDemo />;
     case 'notification-bell':

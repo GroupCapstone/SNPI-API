@@ -16,6 +16,7 @@ export * from './date-picker';
 export * from './searchable-dropdown';
 export * from './command-palette';
 export * from './modal-dialog';
+export * from './toast-stack';
 export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';
