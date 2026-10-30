@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `afd8591`
+
+- Implement 10-pillar Real-Time Data Chart with Canvas 60fps streaming, Bezier splines, dot grid, glow, and hover crosshair
+
+### Version 0.2.7 (30.10.2026) - `79a93d9`
+
+- Synchronize real-time changelog for Skeleton Loading Screen
+
 ### Version 0.2.7 (30.10.2026) - `c6d59c2`
 
 - Implement 8-pillar Skeleton Loading Screen with CSS-only shimmer, aspect ratios, and 3 pattern templates
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `d585ab0`
 
 - Add legal and crawl footer links, implement dynamic real-time version tracker v0.2.7, and configure sitemap and robots routes
-
-### Version 0.2.7 (30.10.2026) - `3ff6db3`
-
-- Synchronize real-time changelog with Navigation Menu component
-
-### Version 0.2.7 (30.10.2026) - `b34c2fb`
-
-- Implement Navigation Menu with Rare UI 3-island floating dock, mega menu panel, and usage specs
 
