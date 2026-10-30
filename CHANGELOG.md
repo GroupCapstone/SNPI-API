@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `bf209df`
+
+- Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack
+
+### Version 0.2.7 (30.10.2026) - `c91bd85`
+
+- Synchronize real-time changelog for Command Palette
+
 ### Version 0.2.7 (30.10.2026) - `5179bb9`
 
 - Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `b4c1332`
 
 - Design Border Beam Login Card with 4-dash SVG physics, instrument-panel telemetry, and amber glow
-
-### Version 0.2.7 (30.10.2026) - `6dae343`
-
-- Synchronize real-time changelog and technical portal
-
-### Version 0.2.7 (30.10.2026) - `085697d`
-
-- Redesign native Snackbar component with bottom-center anchor, obsidian surface, progress countdown, and action recovery
 

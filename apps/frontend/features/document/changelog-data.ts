@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "bf209df",
+    "description": "Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "c91bd85",
+    "description": "Synchronize real-time changelog for Command Palette"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "5179bb9",
     "description": "Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "b4c1332",
     "description": "Design Border Beam Login Card with 4-dash SVG physics, instrument-panel telemetry, and amber glow"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "6dae343",
-    "description": "Synchronize real-time changelog and technical portal"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "085697d",
-    "description": "Redesign native Snackbar component with bottom-center anchor, obsidian surface, progress countdown, and action recovery"
   }
 ];
