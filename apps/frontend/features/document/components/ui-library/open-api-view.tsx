@@ -8,8 +8,6 @@ import {
   GeometricButton,
   GeometricInput,
   GeometricHeaderStamp,
-  LineTrackerToc,
-  type TocHeadingItem,
 } from '@/features/document/components/ui-library';
 import { cn } from '@/lib/utils';
 
@@ -431,7 +429,7 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
   },
 ];
 
-const DOC_TOC_HEADINGS: TocHeadingItem[] = [
+const DOC_TOC_HEADINGS = [
   { id: 'open-api-head', title: 'Open API', level: 1 },
   { id: 'introduction', title: 'Introduction', level: 2 },
   { id: 'purpose', title: '1. Purpose', level: 2 },
@@ -789,18 +787,12 @@ console.log(payload.data);`;
                           type="button"
                           onClick={() => scrollToDocSection(doc.id)}
                           className={cn(
-                            'flex w-full cursor-pointer items-center gap-2.5 rounded-full border px-3.5 py-1.5 text-left font-sans text-xs font-semibold transition-all',
+                            'flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-left font-sans text-xs font-semibold transition-all',
                             isCurrentActive
-                              ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                              : 'border-slate-200/90 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                              ? 'bg-[#0056FF] text-white font-bold'
+                              : 'bg-white text-slate-700 hover:bg-slate-50',
                           )}
                         >
-                          <span
-                            className={cn(
-                              'size-1.5 rounded-full transition-colors',
-                              isCurrentActive ? 'bg-white' : 'bg-slate-400',
-                            )}
-                          />
                           <span className="truncate">{doc.label}</span>
                         </button>
                       );
@@ -1425,19 +1417,6 @@ console.log(payload.data);`;
               </div>
             </section>
           </main>
-
-          {/* COLUMN 3: Right Sticky Sidebar with Real-Time Tracking Line (Permanently Pinned Like Navbar) */}
-          <aside className="hidden w-64 shrink-0 xl:sticky xl:top-20 xl:z-30 xl:block xl:self-start">
-            <div className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              <LineTrackerToc
-                items={DOC_TOC_HEADINGS}
-                activeId={activeDocSection}
-                onSelect={scrollToDocSection}
-                onActiveChange={setActiveDocSection}
-                title="ON THIS PAGE"
-              />
-            </div>
-          </aside>
         </div>
       </div>
     </div>
