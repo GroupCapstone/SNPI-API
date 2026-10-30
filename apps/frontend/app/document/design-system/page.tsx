@@ -146,12 +146,13 @@ export default function DesignSystemPage() {
     );
   }, [searchQuery]);
 
-  // Smooth scroll helper
+  // Smooth scroll helper with header offset clearance
   const scrollToSection = (id: string) => {
     setActiveSectionId(id);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const top = element.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
@@ -163,7 +164,7 @@ export default function DesignSystemPage() {
         const item = tocHeadings[i];
         const el = document.getElementById(item.id);
         if (el) {
-          const top = el.offsetTop;
+          const top = el.getBoundingClientRect().top + window.scrollY;
           if (scrollPosition >= top) {
             setActiveSectionId(item.id);
             break;
@@ -224,7 +225,6 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      <span className="mr-1.5 font-mono font-bold">01</span>
                       <span>Catalog</span>
                     </GeometricButton>
 
@@ -238,7 +238,6 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      <span className="mr-1.5 font-mono font-bold">02</span>
                       <span>Playground</span>
                     </GeometricButton>
 
@@ -252,7 +251,6 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      <span className="mr-1.5 font-mono font-bold">03</span>
                       <span>Brand Colors</span>
                     </GeometricButton>
 
@@ -266,7 +264,6 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      <span className="mr-1.5 font-mono font-bold">04</span>
                       <span>Dual Mode UI</span>
                     </GeometricButton>
 
@@ -280,7 +277,6 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      <span className="mr-1.5 font-mono font-bold">05</span>
                       <span>Top Nav</span>
                     </GeometricButton>
                   </div>
@@ -936,6 +932,9 @@ export default function DesignSystemPage() {
               activeId={activeSectionId}
               onSelect={(id) => {
                 scrollToSection(id);
+              }}
+              onActiveChange={(id) => {
+                setActiveSectionId(id);
               }}
             />
           </aside>

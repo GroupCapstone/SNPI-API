@@ -3,23 +3,26 @@
 import * as React from 'react';
 import { usePathname } from 'next/navigation';
 import { BrandMark } from '@/components/shared/brand-mark';
-import { FileText, Layers, Newspaper, Code } from '@/components/icons';
+import { FileText, Layers, Code } from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { GeometricButton } from './geometric-tag-primitives';
 
 export interface DocsStickyHeaderProps {
-  activeTab?: 'document' | 'library' | 'changelog';
+  activeTab?: 'document' | 'library';
 }
 
 export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderProps = {}) {
   const pathname = usePathname();
-  const activeTab =
-    propActiveTab ||
-    (pathname?.includes('/design-system')
-      ? 'library'
-      : pathname?.includes('#changelogs')
-        ? 'changelog'
-        : 'document');
+  const isLibrary = pathname?.startsWith('/document/design-system');
+  const computedTab = isLibrary ? 'library' : 'document';
+  const [optimisticTab, setOptimisticTab] = React.useState<'document' | 'library' | null>(null);
+
+  // Sync optimistic tab when pathname changes
+  React.useEffect(() => {
+    setOptimisticTab(null);
+  }, [pathname]);
+
+  const activeTab = propActiveTab || optimisticTab || computedTab;
 
   const navTabs: HangingTabItem[] = [
     {
@@ -27,18 +30,14 @@ export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderP
       label: 'Open API',
       icon: FileText,
       href: '/document',
+      onClick: () => setOptimisticTab('document'),
     },
     {
       id: 'library',
       label: 'Library',
       icon: Layers,
       href: '/document/design-system',
-    },
-    {
-      id: 'changelog',
-      label: 'Changelog',
-      icon: Newspaper,
-      href: '/document#changelogs',
+      onClick: () => setOptimisticTab('library'),
     },
   ];
 

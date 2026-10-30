@@ -283,7 +283,8 @@ export const GeometricInput = React.forwardRef<HTMLInputElement, GeometricInputP
           disabled={disabled}
           value={value}
           data-geometric="true"
-          className="geometric-input-field w-full min-w-0 bg-transparent font-sans text-xs font-semibold text-slate-900 placeholder-slate-400 focus:ring-0 focus:outline-none"
+          style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
+          className="geometric-input-field w-full min-w-0 border-0 bg-transparent font-sans text-xs font-semibold text-slate-900 placeholder-slate-400 ring-0 outline-none focus:border-0 focus:ring-0 focus:outline-none focus-visible:border-0 focus-visible:ring-0 focus-visible:outline-none"
           {...props}
         />
         {isLoading && (

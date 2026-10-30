@@ -13,6 +13,7 @@ export interface LineTrackerTocProps {
   items: TocHeadingItem[];
   activeId: string;
   onSelect: (id: string) => void;
+  onActiveChange?: (id: string) => void;
   title?: string;
   className?: string;
 }
@@ -21,21 +22,27 @@ export function LineTrackerToc({
   items,
   activeId,
   onSelect,
+  onActiveChange,
   title = 'ON THIS PAGE',
   className,
 }: LineTrackerTocProps) {
   const navRef = React.useRef<HTMLDivElement>(null);
   const itemRefs = React.useRef<Map<string, HTMLButtonElement>>(new Map());
   const rafIdRef = React.useRef<number | null>(null);
+  const onActiveChangeRef = React.useRef(onActiveChange);
+
+  React.useEffect(() => {
+    onActiveChangeRef.current = onActiveChange;
+  }, [onActiveChange]);
 
   // Real-time interpolated vertical tracker progress
   const [trackerState, setTrackerState] = React.useState<{
     height: number;
-    pipTop: number;
+    indicatorTop: number;
     isReady: boolean;
   }>({
     height: 0,
-    pipTop: 0,
+    indicatorTop: 0,
     isReady: false,
   });
 
@@ -44,7 +51,7 @@ export function LineTrackerToc({
     const computeProgress = () => {
       if (!navRef.current || items.length === 0) return;
 
-      // Collect bounding positions of the section elements
+      // Collect bounding positions using real absolute page coordinates
       const sectionMetrics: { id: string; top: number; bottom: number }[] = [];
       for (const item of items) {
         const el = document.getElementById(item.id);
@@ -60,7 +67,7 @@ export function LineTrackerToc({
         const activeBtn = itemRefs.current.get(activeId);
         if (activeBtn) {
           const center = activeBtn.offsetTop + activeBtn.offsetHeight / 2;
-          setTrackerState({ height: center, pipTop: center, isReady: true });
+          setTrackerState({ height: center, indicatorTop: center - 8, isReady: true });
         }
         return;
       }
@@ -72,15 +79,12 @@ export function LineTrackerToc({
       let segmentProgress = 0;
 
       if (currentScroll <= sectionMetrics[0].top) {
-        // Before or at first section
         activeIdx = 0;
         segmentProgress = 0;
       } else if (currentScroll >= sectionMetrics[sectionMetrics.length - 1].top) {
-        // At or past the final section
         activeIdx = sectionMetrics.length - 1;
         segmentProgress = 1;
       } else {
-        // Between section i and section i + 1
         for (let i = 0; i < sectionMetrics.length - 1; i++) {
           const cur = sectionMetrics[i];
           const next = sectionMetrics[i + 1];
@@ -92,6 +96,12 @@ export function LineTrackerToc({
             break;
           }
         }
+      }
+
+      // Sync active section in real-time
+      const detectedActiveId = items[activeIdx]?.id;
+      if (detectedActiveId && onActiveChangeRef.current) {
+        onActiveChangeRef.current(detectedActiveId);
       }
 
       // Map segment progress to the TOC button vertical positions
@@ -109,7 +119,7 @@ export function LineTrackerToc({
 
         setTrackerState({
           height: Math.max(0, targetCenter),
-          pipTop: Math.max(0, targetCenter),
+          indicatorTop: Math.max(0, targetCenter - 8),
           isReady: true,
         });
       }
@@ -136,40 +146,40 @@ export function LineTrackerToc({
   }, [items, activeId]);
 
   return (
-    <div className={cn('sticky top-24 space-y-3 font-sans text-xs', className)}>
+    <div className={cn('sticky top-24 space-y-3 font-sans text-xs select-none', className)}>
       {/* Title */}
       <p className="font-mono text-[11px] font-bold tracking-wider text-slate-400 uppercase">
         {title}
       </p>
 
       {/* Real-time Dynamic Scroll Loading Tracker Rail */}
-      <div ref={navRef} className="relative pl-3.5">
-        {/* Continuous Light Gray Background Rail */}
-        <div className="absolute top-1.5 bottom-1.5 left-0 w-[2px] rounded-full bg-slate-200" />
+      <div ref={navRef} className="relative pl-3">
+        {/* Continuous Light Gray Background Rail (Sleek 1.5px) */}
+        <div className="absolute top-1 bottom-1 left-0 w-[1.5px] rounded-full bg-slate-200/80" />
 
         {/* Real-time Blue Progress Fill Line (Loads as user scrolls down) */}
         {trackerState.isReady && (
           <div
-            className="absolute top-1.5 left-0 w-[2px] rounded-full bg-[#0056FF] transition-[height] duration-75 ease-out"
+            className="absolute top-1 left-0 w-[1.5px] rounded-full bg-[#0056FF] transition-[height] duration-75 ease-out"
             style={{
-              height: `${Math.max(0, trackerState.height - 6)}px`,
+              height: `${Math.max(0, trackerState.height)}px`,
             }}
           />
         )}
 
-        {/* Real-time Sliding Indicator Pip */}
+        {/* Real-time Sleek Active Bar Indicator (Sleek 2px vertical bar beside active item) */}
         {trackerState.isReady && (
           <div
-            className="pointer-events-none absolute -left-[4px] size-2.5 rounded-full bg-[#0056FF] shadow-xs ring-2 ring-white transition-transform duration-75 ease-out"
+            className="pointer-events-none absolute -left-[0.25px] h-4 w-[2px] rounded-full bg-[#0056FF] transition-transform duration-75 ease-out"
             style={{
               top: 0,
-              transform: `translateY(${Math.max(0, trackerState.pipTop - 5)}px)`,
+              transform: `translateY(${Math.max(0, trackerState.indicatorTop)}px)`,
             }}
           />
         )}
 
         {/* Headings Navigation List */}
-        <nav className="space-y-2">
+        <nav className="space-y-1.5">
           {items.map((item) => {
             const isActive = activeId === item.id;
             const isSubItem = item.level === 2 || item.level === 3;
@@ -184,9 +194,11 @@ export function LineTrackerToc({
                 type="button"
                 onClick={() => onSelect(item.id)}
                 className={cn(
-                  'flex w-full items-start text-left transition-colors duration-150 select-none',
-                  isSubItem ? 'pl-2 text-[11px]' : 'text-xs',
-                  isActive ? 'font-bold text-[#0056FF]' : 'text-slate-600 hover:text-slate-950',
+                  'flex w-full items-start py-0.5 text-left transition-colors duration-150 select-none',
+                  isSubItem ? 'pl-2 text-[10.5px]' : 'text-[11.5px]',
+                  isActive
+                    ? 'font-bold text-[#0056FF]'
+                    : 'font-medium text-slate-600 hover:text-slate-950',
                 )}
               >
                 <span className="leading-snug">{item.title}</span>
