@@ -2,7 +2,11 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.9 (31.10.2026) - `92b5fac`
+### Version 0.2.10 (31.10.2026) - `8063feb`
+
+- V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes
+
+### Version 0.2.9 (31.10.2026) - `0963776`
 
 - V0.2.9 release checkpoint with navigation redesign and CI quality gate fixes
 
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `79a93d9`
 
 - Synchronize real-time changelog for Skeleton Loading Screen
-
-### Version 0.2.8 (30.10.2026) - `c6d59c2`
-
-- Implement 8-pillar Skeleton Loading Screen with CSS-only shimmer, aspect ratios, and 3 pattern templates
 

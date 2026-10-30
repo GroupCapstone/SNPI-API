@@ -237,4 +237,18 @@ To prevent visual fatigue and halo glare, avoid `#FFFFFF` for continuous reading
 - **Medium Emphasis Text (Body, Descriptions)**: 60% White (`#A0A0A0` / `text-zinc-400`)
 - **Disabled & Decorative Text (Hints, Icons)**: 38% White (`#6C6C6C` / `text-zinc-600`)
 
+### 7.6 Standard Button Architecture Rule (Mandatory)
+All buttons, primary CTAs, toolbar triggers, and interactive controls across the platform and documentation adhere to the subtle mathematical border radius standard:
+- **Border Width**: `0px` (`border-0` / none)
+- **All Corners Radius**: `4px` (`rounded-[4px]`)
+- **Interaction Rationale**: Delivers consistent subtle rounding with zero shadows and flat luminance depth across all states (idle, hover, active, disabled).
+
+### 7.7 Rail TOC Flight Tracker Navigation Specification
+Refer to `rail-toc-flight-tracker-manual.md` for the origami paper plane flight navigation specification:
+- Kinetic flight orientation with dynamic rotation in flight direction.
+- Continuous solid rail traversal behind plane, dashed rail ahead.
+- Solid fill node indicators for passed headings.
+- Depth indentation with smooth cubic Bézier curves.
+- Roving tabindex and screen-reader accessible `data-slot` selectors.
+
 

@@ -7,9 +7,15 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
+    "version": "0.2.10",
+    "date": "31.10.2026",
+    "commitHash": "8063feb",
+    "description": "V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes"
+  },
+  {
     "version": "0.2.9",
     "date": "31.10.2026",
-    "commitHash": "92b5fac",
+    "commitHash": "0963776",
     "description": "V0.2.9 release checkpoint with navigation redesign and CI quality gate fixes"
   },
   {
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "79a93d9",
     "description": "Synchronize real-time changelog for Skeleton Loading Screen"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "c6d59c2",
-    "description": "Implement 8-pillar Skeleton Loading Screen with CSS-only shimmer, aspect ratios, and 3 pattern templates"
   }
 ];
