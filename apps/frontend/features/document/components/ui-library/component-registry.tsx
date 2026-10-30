@@ -3098,6 +3098,114 @@ const columns: DataTableColumn<StudentRecord>[] = [
     implementationNotes: ['Real-time string masking and mirroring.'],
     supportedStates: ['Empty', 'Masked', 'Validating'],
   },
+  {
+    id: 'date-picker',
+    name: 'Date Picker & Date Range Picker',
+    category: 'Forms',
+    paradigm: 'ARIA Roving-Tabindex Calendar Standard',
+    description:
+      'An accessible calendar for single dates or start-to-end ranges, with min/max bounds, hover preview, and full ARIA keyboard support.',
+    explanation:
+      'Two instances, one component — switched by a single mode: "range" option. Both share the same keyboard model and ARIA date-grid semantics.',
+    props: [
+      {
+        name: 'mode',
+        type: "'single' | 'range'",
+        default: "'single'",
+        description: 'Toggle single day selection vs start-to-end range mode.',
+      },
+      { name: 'value', type: 'LocalDate | null', description: 'Selected date in single mode.' },
+      {
+        name: 'rangeValue',
+        type: 'DateRange',
+        description: 'Selected start and end dates in range mode.',
+      },
+      {
+        name: 'onChange',
+        type: '(date: LocalDate | null) => void',
+        description: 'Callback fired on single day selection.',
+      },
+      {
+        name: 'onRangeChange',
+        type: '(range: DateRange) => void',
+        description: 'Callback fired on date range selection.',
+      },
+      {
+        name: 'minDate',
+        type: 'LocalDate',
+        description: 'Earliest selectable local calendar date.',
+      },
+      { name: 'maxDate', type: 'LocalDate', description: 'Latest selectable local calendar date.' },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Instrument panel color palette.',
+      },
+    ],
+    codeSnippet: `import { DatePicker } from '@/features/document/components/ui-library';\n\n// Single Day Mode\n<DatePicker mode="single" value={date} onChange={setDate} />\n\n// Start-to-End Range Mode\n<DatePicker mode="range" rangeValue={range} onRangeChange={setRange} />`,
+    realWorldExamples: [
+      {
+        title: 'Admissions Examination Scheduling',
+        scenario: 'Applicant picks designated interview or test day.',
+        impact: 'Accessible popover with exact local date serialization.',
+      },
+      {
+        title: 'Academic Term & Audit Range',
+        scenario: 'Registrar selects semester attendance audit window from start to finish.',
+        impact: 'Live hover preview eliminates selection ambiguity.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Feedforward & Hover Preview',
+        detail:
+          'Live translucent range preview before clicking gives users immediate clarity on selected duration.',
+      },
+      {
+        principle: 'Fitts’s Law & Roving Focus',
+        detail:
+          'Full arrow-key grid traversal keeps keyboard users in high-speed flow state without tab clutter.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: Booking, scheduling, or reporting flows picking an exact day or start-to-end range.',
+        dontItem:
+          'NOT IDEAL WHEN: A plain input type="date" meets your need — on mobile its native wheel picker is often better.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: The native input is too restrictive (need ranges, disabled bounds, custom look).',
+        dontItem:
+          'NOT IDEAL WHEN: You only need a month or year (use a simpler select) or a recurring schedule.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Accessibility matters — need full keyboard roving-tabindex and ARIA screen reader support.',
+        dontItem:
+          'NOT IDEAL WHEN: You need full alternate calendars (lunar/hijri) or time-of-day without an extended model.',
+      },
+    ],
+    implementationNotes: [
+      '01 Trigger Field: A button with calendar icon & formatted value — aria-haspopup="dialog", aria-expanded, and aria-controls.',
+      '02 Month Header: Previous/next navigation with an aria-live month title, and edge buttons that disable at bounds.',
+      '03 ARIA Date Grid: role="grid" of role="gridcell" day buttons with a single roving tabindex (only focused day has tabIndex=0).',
+      '04 Range Band: Start/end days go solid cyan with squared inner corners; in-between days get a continuous translucent band.',
+      '05 Hover Preview: After start is picked, hovering a day previews the would-be range live before committing an end date.',
+      '06 Today Marker: Current day renders bold with a small cyan dot, plus a one-click Today shortcut in the footer.',
+      '07 Min / Max Bounds: Out-of-range days carry disabled and aria-disabled so pointer and keyboard navigation skip them.',
+      '08 Local-Date Model: Days are built and serialized in local time (never UTC-parsed), avoiding timezone off-by-one errors.',
+    ],
+    supportedStates: [
+      'Single Selected',
+      'Range Selected',
+      'Hover Preview',
+      'Disabled Out-of-Bounds',
+      'Today Active',
+    ],
+  },
   // ==========================================
   // OVERLAYS
   // ==========================================
