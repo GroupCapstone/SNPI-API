@@ -465,6 +465,10 @@ async function executeApiProbe(item: ApiDocItem) {
 }
 
 export function OpenApiView() {
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const isManualScrollRef = React.useRef<boolean>(false);
+  const scrollTimerRef = React.useRef<NodeJS.Timeout | null>(null);
+
   const [activeDocSection, setActiveDocSection] = React.useState<string>('open-api-head');
   const [expandedChangelog, setExpandedChangelog] = React.useState<boolean>(false);
   const [codeType, setCodeType] = React.useState<'curl' | 'ts' | 'json'>('curl');
@@ -472,7 +476,7 @@ export function OpenApiView() {
 
   // Search query & Category filter for Left Sidebar Navigation (Matching UI Library)
   const [searchQuery, setSearchQuery] = React.useState<string>('');
-  const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('All Modules');
 
   const categories = React.useMemo(() => {
     const counts: Record<string, number> = {};
@@ -504,15 +508,26 @@ export function OpenApiView() {
 
   const scrollToDocSection = (id: string) => {
     setActiveDocSection(id);
-    const element = document.getElementById(id);
-    if (element) {
-      const top = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
+    isManualScrollRef.current = true;
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    scrollTimerRef.current = setTimeout(() => {
+      isManualScrollRef.current = false;
+    }, 800);
+
+    requestAnimationFrame(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   };
 
   React.useEffect(() => {
     const handleScroll = () => {
+      if (!rootRef.current || rootRef.current.offsetParent === null || isManualScrollRef.current) {
+        return;
+      }
+
       const isAtBottom =
         window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
       if (isAtBottom) {
@@ -536,7 +551,10 @@ export function OpenApiView() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    };
   }, []);
 
   // Live test states
@@ -600,13 +618,16 @@ console.log(payload.data);`;
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white">
+    <div
+      ref={rootRef}
+      className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white"
+    >
       {/* Main Grid Container (Exact same max-w-[1560px] 3-column layout matching UI Library) */}
       <div className="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
-          {/* COLUMN 1: Left Sticky Sidebar Navigation */}
-          <aside className="w-full shrink-0 lg:w-60 xl:w-64">
-            <div className="sticky top-24 space-y-6">
+        <div className="flex flex-col gap-8 lg:flex-row">
+          {/* COLUMN 1: Left Sticky Sidebar Navigation (Permanently Pinned Like Navbar) */}
+          <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-60 lg:self-start xl:w-64">
+            <div className="max-h-[calc(100vh-5.5rem)] space-y-6 overflow-y-auto pr-1">
               {/* Filter Input */}
               <GeometricInput
                 inputSize="sm"
@@ -616,39 +637,81 @@ console.log(payload.data);`;
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
-              {/* Primary Nav Capsules (Matching UI Library Design Concept) */}
+              {/* Primary Nav Capsules (Strictly Light Theme - Zero Black/Dark Buttons) */}
               <div className="space-y-1.5 font-sans">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedCategory('All Modules');
-                    scrollToDocSection('endpoints-available');
-                  }}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#0056FF] bg-[#0056FF] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0047D4]"
-                >
-                  <span>All Modules</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToDocSection('endpoints-available')}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-2 text-left font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#D5DCFA]"
-                >
-                  <span>Catalog</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToDocSection('api-doc')}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-slate-200/90 bg-[#E3E7FC]/60 px-4 py-2 text-left font-sans text-xs font-bold text-slate-900 transition-all hover:bg-[#E3E7FC]"
-                >
-                  <span>Live Tester</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => scrollToDocSection('protected-endpoints')}
-                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#000B26] bg-[#000B26] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-black"
-                >
-                  <span>Protected APIs</span>
-                </button>
+                {(() => {
+                  const isAllModulesActive =
+                    (activeDocSection === 'endpoints-available' &&
+                      selectedCategory === 'All Modules') ||
+                    activeDocSection === 'open-api-head';
+                  const isCatalogActive =
+                    activeDocSection === 'endpoints-available' &&
+                    selectedCategory !== 'All Modules';
+                  const isLiveTesterActive =
+                    activeDocSection === 'api-doc' || activeDocSection === 'status-codes';
+                  const isProtectedActive = activeDocSection === 'protected-endpoints';
+
+                  return (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCategory('All Modules');
+                          setSearchQuery('');
+                          scrollToDocSection('endpoints-available');
+                        }}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
+                          isAllModulesActive
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                        )}
+                      >
+                        <span>All Modules</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCategory('All Modules');
+                          setSearchQuery('');
+                          scrollToDocSection('endpoints-available');
+                        }}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
+                          isCatalogActive
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                        )}
+                      >
+                        <span>Catalog</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => scrollToDocSection('api-doc')}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
+                          isLiveTesterActive
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                        )}
+                      >
+                        <span>Live Tester</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => scrollToDocSection('protected-endpoints')}
+                        className={cn(
+                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
+                          isProtectedActive
+                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+                        )}
+                      >
+                        <span>Protected APIs</span>
+                      </button>
+                    </>
+                  );
+                })()}
               </div>
 
               {/* Endpoint Modules / Categories with Active Highlights */}
@@ -666,6 +729,7 @@ console.log(payload.data);`;
                         type="button"
                         onClick={() => {
                           setSelectedCategory(cat.name);
+                          setSearchQuery('');
                           scrollToDocSection('endpoints-available');
                         }}
                         className={cn(
@@ -712,7 +776,12 @@ console.log(payload.data);`;
                       { id: 'status-codes', label: 'Status Codes' },
                       { id: 'changelogs', label: 'Change Logs' },
                     ].map((doc) => {
-                      const isCurrentActive = activeDocSection === doc.id;
+                      const isCurrentActive =
+                        activeDocSection === doc.id ||
+                        (doc.id === 'introduction' &&
+                          ['purpose', 'scope', 'overall-api'].includes(activeDocSection)) ||
+                        (doc.id === 'endpoints-available' &&
+                          activeDocSection === 'protected-endpoints');
                       return (
                         <button
                           key={doc.id}
@@ -743,588 +812,594 @@ console.log(payload.data);`;
 
           {/* COLUMN 2: Center Main Content Feed */}
           <main className="min-w-0 flex-1 space-y-12">
-          {/* HERO HEAD TITLE: Specific to Open API (Monumental Big As Footer Style) */}
-          <section id="open-api-head" className="scroll-mt-24 space-y-4">
-            <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50/50 to-[#E3E7FC]/30 p-6 shadow-xs sm:p-10">
-              {/* Monumental Outlined Watermark Behind Title (Echoing Footer Style) */}
-              <div className="pointer-events-none absolute right-4 -bottom-4 opacity-10 select-none">
-                <span
-                  className="font-sans text-6xl font-black tracking-tighter text-transparent select-none sm:text-8xl md:text-9xl"
-                  style={{
-                    WebkitTextStroke: '2px #0056FF',
-                    lineHeight: 1,
-                  }}
-                >
-                  OPEN API
-                </span>
-              </div>
-
-              <div className="relative z-10 space-y-4">
-                {/* Category Pills & Identity Badges */}
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-[#0056FF] bg-[#0056FF] px-3 py-1 font-mono text-[11px] font-bold text-white uppercase shadow-xs">
-                    Open API
-                  </span>
-                  <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF] uppercase">
-                    REST Endpoints
-                  </span>
-                  <span className="rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-[11px] font-semibold text-slate-700 uppercase">
-                    47 Modules · 193 APIs
+            {/* HERO HEAD TITLE: Specific to Open API (Monumental Big As Footer Style) */}
+            <section id="open-api-head" className="scroll-mt-24 space-y-4">
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50/50 to-[#E3E7FC]/30 p-6 shadow-xs sm:p-10">
+                {/* Monumental Outlined Watermark Behind Title (Echoing Footer Style) */}
+                <div className="pointer-events-none absolute right-4 -bottom-4 opacity-10 select-none">
+                  <span
+                    className="font-sans text-6xl font-black tracking-tighter text-transparent select-none sm:text-8xl md:text-9xl"
+                    style={{
+                      WebkitTextStroke: '2px #0056FF',
+                      lineHeight: 1,
+                    }}
+                  >
+                    OPEN API
                   </span>
                 </div>
 
-                {/* Monumental Head Title (Big As Footer Style) */}
-                <div className="flex flex-col gap-4 border-b border-slate-200/90 pb-6 sm:flex-row sm:items-end sm:justify-between">
-                  <div>
-                    <h1 className="font-sans text-4xl font-black tracking-tighter text-slate-950 sm:text-5xl md:text-6xl">
+                <div className="relative z-10 space-y-4">
+                  {/* Category Pills & Identity Badges */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full border border-[#0056FF] bg-[#0056FF] px-3 py-1 font-mono text-[11px] font-bold text-white uppercase shadow-xs">
                       Open API
-                    </h1>
-                    <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
-                      Unified programmatic specification for the SNPI-SMS modular monolith backend.
-                      Securely manage student lifecycles, attendance, academic schedules, exams, and
-                      fee accounting via high-performance REST endpoints.
-                    </p>
-                  </div>
-
-                  <div className="shrink-0">
-                    <GeometricHeaderStamp
-                      codeA="47"
-                      titleA="MODULES"
-                      codeB="193"
-                      titleB="ENDPOINTS"
-                    />
-                  </div>
-                </div>
-
-                {/* Quick Section Anchors for Immediate SPA Scrolling */}
-                <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                  <span className="mr-2 font-mono text-[11px] font-bold text-slate-400 uppercase">
-                    Sections:
-                  </span>
-                  {[
-                    { id: 'introduction', label: 'Introduction' },
-                    { id: 'purpose', label: 'Purpose' },
-                    { id: 'who-can-access', label: 'Access Control' },
-                    { id: 'endpoints-available', label: 'Endpoints Catalog' },
-                    { id: 'api-doc', label: 'Interactive Live Tester' },
-                    { id: 'status-codes', label: 'Status Codes' },
-                    { id: 'changelogs', label: 'Change Logs' },
-                  ].map((sec) => (
-                    <button
-                      key={sec.id}
-                      type="button"
-                      onClick={() => scrollToDocSection(sec.id)}
-                      className="cursor-pointer rounded-full border border-slate-200/80 bg-white px-2.5 py-0.5 font-sans text-[11px] font-semibold text-slate-700 transition-all hover:border-[#0056FF] hover:text-[#0056FF]"
-                    >
-                      {sec.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 1: Introduction */}
-          <section id="introduction" className="scroll-mt-24 space-y-6">
-            <h2 className="text-base font-bold tracking-tight text-slate-950">Introduction</h2>
-
-            {/* 1. Purpose */}
-            <div id="purpose" className="scroll-mt-24 space-y-2">
-              <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
-                1. Purpose
-              </h3>
-              <p className="font-sans text-xs leading-relaxed text-slate-600">
-                This document describes the technical REST API specification of the SNPI Integrated
-                Multi-Branch School Management System (SNPI-SMS). The primary audience is
-                third-party integrators, mobile developers, campus IT staff, and administrative
-                client systems.
-              </p>
-            </div>
-
-            {/* 2. Scope */}
-            <div id="scope" className="scroll-mt-24 space-y-2">
-              <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
-                2. Scope
-              </h3>
-              <p className="font-sans text-xs leading-relaxed text-slate-600">
-                Defines all accessible API surfaces, multi-branch scoping headers (X-Branch-Id), who
-                can access each resource, authentication and token refresh lifecycles, and defense
-                mechanisms safeguarding sensitive financial and academic mutations.
-              </p>
-            </div>
-
-            {/* 3. Overall API */}
-            <div id="overall-api" className="scroll-mt-24 space-y-3">
-              <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
-                3. Overall API
-              </h3>
-              <div className="grid grid-cols-1 gap-3 font-mono text-xs sm:grid-cols-2">
-                <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
-                    Base URL
-                  </span>
-                  <p className="truncate font-bold text-[#0056FF]">http://localhost:4000/api/v1</p>
-                </div>
-                <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
-                    Payload Format
-                  </span>
-                  <p className="font-bold text-slate-800">JSON (application/json)</p>
-                </div>
-                <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
-                    Authorization
-                  </span>
-                  <p className="font-bold text-[#000B26]">Bearer &lt;access_token&gt;</p>
-                </div>
-                <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                  <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
-                    Campus Isolation
-                  </span>
-                  <p className="font-bold text-[#0056FF]">X-Branch-Id: &lt;branch_id&gt;</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Section 2: Who Can Access The API (Modern Card Grid - No Table) */}
-          <section
-            id="who-can-access"
-            className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
-          >
-            <div>
-              <h2 className="text-base font-bold tracking-tight text-slate-950">
-                Who Can Access The API
-              </h2>
-              <p className="mt-1 text-xs text-slate-500">
-                Access is strictly governed by Role-Based Access Control (RBAC) and campus branch
-                boundaries.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {ACCESS_ROLES.map((role) => (
-                <div
-                  key={role.role}
-                  className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="inline-flex items-center rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF]">
-                        {role.role}
-                      </span>
-                      <span className="font-mono text-[10px] font-semibold text-slate-400 uppercase">
-                        RBAC Scope
-                      </span>
-                    </div>
-                    <p className="mt-2.5 font-sans text-xs font-semibold text-slate-800">
-                      {role.targetAudience}
-                    </p>
-                    <div className="mt-3 space-y-1.5 rounded-lg border border-slate-100 bg-slate-50/70 p-3">
-                      <div className="font-sans text-[11px] font-bold text-slate-900">
-                        {role.accessScope}
-                      </div>
-                      <p className="font-mono text-[11px] leading-relaxed text-slate-600">
-                        {role.allowedEndpoints}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-3.5 border-t border-slate-100 pt-2.5">
-                    <span className="font-sans text-[11px] text-slate-500">
-                      <strong className="font-semibold text-slate-700">Security: </strong>
-                      {role.securityMethod}
+                    </span>
+                    <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF] uppercase">
+                      REST Endpoints
+                    </span>
+                    <span className="rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-[11px] font-semibold text-slate-700 uppercase">
+                      47 Modules · 193 APIs
                     </span>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
 
-          {/* Section 3: What Other Developers Can Get (Modern Card Grid - No Table) */}
-          <section
-            id="endpoints-available"
-            className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
-          >
-            <div>
-              <h2 className="text-base font-bold tracking-tight text-slate-950">
-                What Other Developers Can Get (Read & Integration Surface)
-              </h2>
-              <p className="mt-1 text-xs text-slate-500">
-                Standardized endpoints consumable by client applications, mobile portals, and
-                reporting integrations using standard HTTP GET queries.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {filteredEndpoints.length === 0 ? (
-                <div className="col-span-full rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
-                  <p className="font-sans text-sm font-semibold text-slate-600">
-                    No matching endpoints found
-                  </p>
-                  <p className="mt-1 font-sans text-xs text-slate-400">
-                    Try searching for another keyword or select &quot;All Modules&quot;
-                  </p>
-                </div>
-              ) : (
-                filteredEndpoints.map((ep) => (
-                  <div
-                    key={ep.path + ep.method}
-                    className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
-                  >
+                  {/* Monumental Head Title (Big As Footer Style) */}
+                  <div className="flex flex-col gap-4 border-b border-slate-200/90 pb-6 sm:flex-row sm:items-end sm:justify-between">
                     <div>
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
-                          {ep.method}
-                        </span>
-                        <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-sans text-[10px] font-semibold text-slate-600">
-                          {ep.category}
-                        </span>
-                      </div>
-                      <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
-                        {ep.path}
-                      </div>
-                      <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
-                        {ep.description}
+                      <h1 className="font-sans text-4xl font-black tracking-tighter text-slate-950 sm:text-5xl md:text-6xl">
+                        Open API
+                      </h1>
+                      <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
+                        Unified programmatic specification for the SNPI-SMS modular monolith
+                        backend. Securely manage student lifecycles, attendance, academic schedules,
+                        exams, and fee accounting via high-performance REST endpoints.
                       </p>
                     </div>
-                    <div className="mt-3 border-t border-slate-100 pt-2">
-                      <span className="font-mono text-[10.5px] font-medium text-[#0056FF]">
-                        Permission: {ep.requiredPermission}
-                      </span>
+
+                    <div className="shrink-0">
+                      <GeometricHeaderStamp
+                        codeA="47"
+                        titleA="MODULES"
+                        codeB="193"
+                        titleB="ENDPOINTS"
+                      />
                     </div>
                   </div>
-                ))
-              )}
-            </div>
-          </section>
 
-          {/* Section 4: What Endpoints Must Be Protected & How (Modern Card Grid - No Table) */}
-          <section
-            id="protected-endpoints"
-            className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
-          >
-            <div>
-              <h2 className="text-base font-bold tracking-tight text-slate-950">
-                What Endpoints Must Be Protected & How
-              </h2>
-              <p className="mt-1 text-xs text-slate-500">
-                High-impact write and mutation operations enforced with multi-layer defense
-                mechanisms to prevent financial tampering and unauthorized grade alterations.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {PROTECTED_MUTATION_ENDPOINTS.map((item) => (
-                <div
-                  key={item.path + item.method}
-                  className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="inline-flex items-center rounded-md border border-slate-900 bg-[#000B26] px-2.5 py-0.5 font-mono text-[11px] font-bold text-white">
-                        {item.method}
-                      </span>
-                      <span className="font-sans text-[11px] font-bold text-slate-700">
-                        {item.domain}
-                      </span>
-                    </div>
-                    <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
-                      {item.path}
-                    </div>
-                    <p className="mt-2 font-sans text-xs leading-relaxed text-slate-600">
-                      {item.whyProtected}
-                    </p>
-                  </div>
-                  <div className="mt-3.5 rounded-lg border border-[#CAD3F5] bg-[#E3E7FC]/50 p-2.5">
-                    <p className="font-mono text-[11px] font-semibold text-[#0056FF]">
-                      {item.defenseMechanisms}
-                    </p>
+                  {/* Quick Section Anchors for Immediate SPA Scrolling */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <span className="mr-2 font-mono text-[11px] font-bold text-slate-400 uppercase">
+                      Sections:
+                    </span>
+                    {[
+                      { id: 'introduction', label: 'Introduction' },
+                      { id: 'purpose', label: 'Purpose' },
+                      { id: 'who-can-access', label: 'Access Control' },
+                      { id: 'endpoints-available', label: 'Endpoints Catalog' },
+                      { id: 'api-doc', label: 'Interactive Live Tester' },
+                      { id: 'status-codes', label: 'Status Codes' },
+                      { id: 'changelogs', label: 'Change Logs' },
+                    ].map((sec) => (
+                      <button
+                        key={sec.id}
+                        type="button"
+                        onClick={() => scrollToDocSection(sec.id)}
+                        className="cursor-pointer rounded-full border border-slate-200/80 bg-white px-2.5 py-0.5 font-sans text-[11px] font-semibold text-slate-700 transition-all hover:border-[#0056FF] hover:text-[#0056FF]"
+                      >
+                        {sec.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
+              </div>
+            </section>
 
-          {/* Section 5: Interactive API Explorer */}
-          <section id="api-doc" className="scroll-mt-24 space-y-8 border-t border-slate-200 pt-8">
-            <div>
-              <h2 className="text-base font-bold tracking-tight text-slate-950">
-                Interactive API Explorer
-              </h2>
-              <p className="mt-1 text-xs text-slate-500">
-                Select any endpoint below to inspect request/response schemas, copy terminal cURL
-                commands, or send live test requests directly to the running backend.
-              </p>
-            </div>
+            {/* Section 1: Introduction */}
+            <section id="introduction" className="scroll-mt-24 space-y-6">
+              <h2 className="text-base font-bold tracking-tight text-slate-950">Introduction</h2>
 
-            {/* Status Codes Cards (No Table) */}
-            <div id="status-codes" className="scroll-mt-24 space-y-3">
-              <div className="flex items-center justify-between">
+              {/* 1. Purpose */}
+              <div id="purpose" className="scroll-mt-24 space-y-2">
                 <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
-                  HTTP Status Codes Standard
+                  1. Purpose
                 </h3>
-                <span className="font-mono text-[11px] text-slate-400">REST RFC 9110</span>
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {STATUS_CODES.map((st) => (
-                  <div
-                    key={st.code}
-                    className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={cn(
-                          'inline-flex items-center rounded-md px-2 py-0.5 font-mono text-xs font-black',
-                          st.code.startsWith('2')
-                            ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
-                            : 'border border-slate-900 bg-[#000B26] text-white',
-                        )}
-                      >
-                        {st.code}
-                      </span>
-                      <span className="font-sans text-xs font-bold text-slate-900">
-                        {st.status}
-                      </span>
-                    </div>
-                    <p className="mt-2 font-sans text-[11.5px] leading-relaxed text-slate-600">
-                      {st.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Endpoints Cards */}
-            <div className="space-y-6 pt-2">
-              {INTERACTIVE_ITEMS.map((item) => {
-                const liveRes = testResults[item.id];
-                const isTestingThis = testingEndpointId === item.id;
-                return (
-                  <div
-                    key={item.id}
-                    id={item.id}
-                    className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40 hover:shadow-lg"
-                  >
-                    <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={cn(
-                              'rounded-md px-2 py-0.5 font-mono text-[10px] font-black tracking-wider uppercase',
-                              item.method === 'GET'
-                                ? 'border border-[#0056FF]/30 bg-[#0056FF] text-white shadow-xs'
-                                : 'border border-black bg-black text-white shadow-xs',
-                            )}
-                          >
-                            {item.method}
-                          </span>
-                          <span className="font-mono text-xs font-bold text-slate-900">
-                            {item.path}
-                          </span>
-                        </div>
-                        <p className="text-xs font-bold text-slate-800">{item.title}</p>
-                        <p className="font-sans text-xs text-slate-600">{item.summary}</p>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <GeometricButton
-                          size="sm"
-                          variant="outline"
-                          disabled={isTestingThis}
-                          onClick={() => handleTest(item)}
-                          icon={<Server className="size-3 text-[#0056FF]" />}
-                        >
-                          {isTestingThis ? 'Testing...' : 'Test Live'}
-                        </GeometricButton>
-                      </div>
-                    </div>
-
-                    {/* Metadata Badges */}
-                    <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-                      <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
-                        Permission: <strong className="text-[#0056FF]">{item.permission}</strong>
-                      </div>
-                      <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
-                        Scope Header:{' '}
-                        <strong className={item.scopeHeader ? 'text-[#0056FF]' : 'text-slate-400'}>
-                          {item.scopeHeader ? 'X-Branch-Id Required' : 'None'}
-                        </strong>
-                      </div>
-                    </div>
-
-                    {/* Live Test Output Display */}
-                    {liveRes && (
-                      <div className="space-y-1.5 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3 font-mono text-xs shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
-                        <div className="flex items-center justify-between">
-                          <span
-                            className={
-                              liveRes.status === 200
-                                ? 'font-bold text-[#0056FF]'
-                                : 'font-bold text-[#000B26]'
-                            }
-                          >
-                            Live Response: HTTP {liveRes.status}
-                          </span>
-                          <span className="text-slate-500">{liveRes.latency}ms</span>
-                        </div>
-                        <pre className="max-h-32 overflow-y-auto rounded-lg border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
-                          {JSON.stringify(liveRes.body, null, 2)}
-                        </pre>
-                      </div>
-                    )}
-
-                    {/* Code Snippet Card */}
-                    <div className="overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
-                      <div className="flex items-center justify-between border-b border-slate-200/80 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
-                        <div className="flex items-center gap-1.5">
-                          <GeometricButton
-                            size="sm"
-                            variant={codeType === 'curl' ? 'blue' : 'outline'}
-                            isActive={codeType === 'curl'}
-                            onClick={() => setCodeType('curl')}
-                          >
-                            cURL
-                          </GeometricButton>
-                          <GeometricButton
-                            size="sm"
-                            variant={codeType === 'ts' ? 'blue' : 'outline'}
-                            isActive={codeType === 'ts'}
-                            onClick={() => setCodeType('ts')}
-                          >
-                            TypeScript
-                          </GeometricButton>
-                          <GeometricButton
-                            size="sm"
-                            variant={codeType === 'json' ? 'blue' : 'outline'}
-                            isActive={codeType === 'json'}
-                            onClick={() => setCodeType('json')}
-                          >
-                            Response
-                          </GeometricButton>
-                        </div>
-
-                        <GeometricButton
-                          size="sm"
-                          variant="outline"
-                          onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
-                          icon={
-                            copiedId === item.id ? (
-                              <Check className="size-3 text-[#0056FF]" />
-                            ) : (
-                              <Copy className="size-3 text-slate-600" />
-                            )
-                          }
-                        >
-                          {copiedId === item.id ? 'Copied' : 'Copy'}
-                        </GeometricButton>
-                      </div>
-
-                      <pre className="max-h-64 overflow-x-auto bg-white p-3.5 font-mono text-xs leading-relaxed text-slate-800">
-                        <code>{generateSnippet(item, codeType)}</code>
-                      </pre>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* Section 6: Change Logs & Real-Time Releases (Placed at Bottom of Page - No Table) */}
-          <section
-            id="changelogs"
-            className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
-          >
-            <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-              <div>
-                <h2 className="text-base font-bold tracking-tight text-slate-950">
-                  Change Logs & Checkpoints
-                </h2>
-                <p className="mt-1 text-xs text-slate-500">
-                  Live repository release status, deployment checkpoints, and version ledger.
+                <p className="font-sans text-xs leading-relaxed text-slate-600">
+                  This document describes the technical REST API specification of the SNPI
+                  Integrated Multi-Branch School Management System (SNPI-SMS). The primary audience
+                  is third-party integrators, mobile developers, campus IT staff, and administrative
+                  client systems.
                 </p>
               </div>
 
-              {/* GitHub Status & Real-time Tag Badges */}
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
-                  <span className="size-1.5 animate-pulse rounded-full bg-[#0056FF]" />
-                  branch: main
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-[11px] font-bold text-slate-700">
-                  checkpoint: v0.1.12
-                </span>
-                <a
-                  href="https://github.com/shiliaiwei/SNP-SMS"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full border border-slate-900 bg-[#000B26] px-3 py-1 font-mono text-[11px] font-bold text-white transition-colors hover:bg-[#0056FF]"
-                >
-                  GitHub Status [PASSED]
-                </a>
+              {/* 2. Scope */}
+              <div id="scope" className="scroll-mt-24 space-y-2">
+                <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
+                  2. Scope
+                </h3>
+                <p className="font-sans text-xs leading-relaxed text-slate-600">
+                  Defines all accessible API surfaces, multi-branch scoping headers (X-Branch-Id),
+                  who can access each resource, authentication and token refresh lifecycles, and
+                  defense mechanisms safeguarding sensitive financial and academic mutations.
+                </p>
               </div>
-            </div>
 
-            {/* Change Log Entries (No Table: Sleek Modern Stacked Cards) */}
-            <div className="space-y-2.5">
-              {(expandedChangelog ? CHANGE_LOGS : CHANGE_LOGS.slice(0, 3)).map((log) => (
-                <div
-                  key={log.version + (log.commitHash || '')}
-                  className="flex flex-col justify-between gap-2 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC] sm:flex-row sm:items-center"
-                >
-                  <div className="flex flex-wrap items-center gap-2.5">
-                    {/* Version Badge */}
-                    <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
-                      v{log.version}
+              {/* 3. Overall API */}
+              <div id="overall-api" className="scroll-mt-24 space-y-3">
+                <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
+                  3. Overall API
+                </h3>
+                <div className="grid grid-cols-1 gap-3 font-mono text-xs sm:grid-cols-2">
+                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
+                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                      Base URL
                     </span>
+                    <p className="truncate font-bold text-[#0056FF]">
+                      http://localhost:4000/api/v1
+                    </p>
+                  </div>
+                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
+                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                      Payload Format
+                    </span>
+                    <p className="font-bold text-slate-800">JSON (application/json)</p>
+                  </div>
+                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
+                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                      Authorization
+                    </span>
+                    <p className="font-bold text-[#000B26]">Bearer &lt;access_token&gt;</p>
+                  </div>
+                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
+                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                      Campus Isolation
+                    </span>
+                    <p className="font-bold text-[#0056FF]">X-Branch-Id: &lt;branch_id&gt;</p>
+                  </div>
+                </div>
+              </div>
+            </section>
 
-                    {/* Commit Hash Badge */}
-                    {log.commitHash && (
-                      <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-700">
-                        {log.commitHash}
+            {/* Section 2: Who Can Access The API (Modern Card Grid - No Table) */}
+            <section
+              id="who-can-access"
+              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+            >
+              <div>
+                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                  Who Can Access The API
+                </h2>
+                <p className="mt-1 text-xs text-slate-500">
+                  Access is strictly governed by Role-Based Access Control (RBAC) and campus branch
+                  boundaries.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {ACCESS_ROLES.map((role) => (
+                  <div
+                    key={role.role}
+                    className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF]">
+                          {role.role}
+                        </span>
+                        <span className="font-mono text-[10px] font-semibold text-slate-400 uppercase">
+                          RBAC Scope
+                        </span>
+                      </div>
+                      <p className="mt-2.5 font-sans text-xs font-semibold text-slate-800">
+                        {role.targetAudience}
+                      </p>
+                      <div className="mt-3 space-y-1.5 rounded-lg border border-slate-100 bg-slate-50/70 p-3">
+                        <div className="font-sans text-[11px] font-bold text-slate-900">
+                          {role.accessScope}
+                        </div>
+                        <p className="font-mono text-[11px] leading-relaxed text-slate-600">
+                          {role.allowedEndpoints}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-3.5 border-t border-slate-100 pt-2.5">
+                      <span className="font-sans text-[11px] text-slate-500">
+                        <strong className="font-semibold text-slate-700">Security: </strong>
+                        {role.securityMethod}
                       </span>
-                    )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
 
-                    {/* Concise Summary (Short & Descriptionless) */}
-                    <span className="font-sans text-xs font-semibold text-slate-800">
-                      {log.description}
+            {/* Section 3: What Other Developers Can Get (Modern Card Grid - No Table) */}
+            <section
+              id="endpoints-available"
+              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+            >
+              <div>
+                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                  What Other Developers Can Get (Read & Integration Surface)
+                </h2>
+                <p className="mt-1 text-xs text-slate-500">
+                  Standardized endpoints consumable by client applications, mobile portals, and
+                  reporting integrations using standard HTTP GET queries.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                {filteredEndpoints.length === 0 ? (
+                  <div className="col-span-full rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
+                    <p className="font-sans text-sm font-semibold text-slate-600">
+                      No matching endpoints found
+                    </p>
+                    <p className="mt-1 font-sans text-xs text-slate-400">
+                      Try searching for another keyword or select &quot;All Modules&quot;
+                    </p>
+                  </div>
+                ) : (
+                  filteredEndpoints.map((ep) => (
+                    <div
+                      key={ep.path + ep.method}
+                      className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
+                            {ep.method}
+                          </span>
+                          <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-sans text-[10px] font-semibold text-slate-600">
+                            {ep.category}
+                          </span>
+                        </div>
+                        <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
+                          {ep.path}
+                        </div>
+                        <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
+                          {ep.description}
+                        </p>
+                      </div>
+                      <div className="mt-3 border-t border-slate-100 pt-2">
+                        <span className="font-mono text-[10.5px] font-medium text-[#0056FF]">
+                          Permission: {ep.requiredPermission}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </section>
+
+            {/* Section 4: What Endpoints Must Be Protected & How (Modern Card Grid - No Table) */}
+            <section
+              id="protected-endpoints"
+              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+            >
+              <div>
+                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                  What Endpoints Must Be Protected & How
+                </h2>
+                <p className="mt-1 text-xs text-slate-500">
+                  High-impact write and mutation operations enforced with multi-layer defense
+                  mechanisms to prevent financial tampering and unauthorized grade alterations.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {PROTECTED_MUTATION_ENDPOINTS.map((item) => (
+                  <div
+                    key={item.path + item.method}
+                    className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="inline-flex items-center rounded-md border border-slate-900 bg-[#000B26] px-2.5 py-0.5 font-mono text-[11px] font-bold text-white">
+                          {item.method}
+                        </span>
+                        <span className="font-sans text-[11px] font-bold text-slate-700">
+                          {item.domain}
+                        </span>
+                      </div>
+                      <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
+                        {item.path}
+                      </div>
+                      <p className="mt-2 font-sans text-xs leading-relaxed text-slate-600">
+                        {item.whyProtected}
+                      </p>
+                    </div>
+                    <div className="mt-3.5 rounded-lg border border-[#CAD3F5] bg-[#E3E7FC]/50 p-2.5">
+                      <p className="font-mono text-[11px] font-semibold text-[#0056FF]">
+                        {item.defenseMechanisms}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Section 5: Interactive API Explorer */}
+            <section id="api-doc" className="scroll-mt-24 space-y-8 border-t border-slate-200 pt-8">
+              <div>
+                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                  Interactive API Explorer
+                </h2>
+                <p className="mt-1 text-xs text-slate-500">
+                  Select any endpoint below to inspect request/response schemas, copy terminal cURL
+                  commands, or send live test requests directly to the running backend.
+                </p>
+              </div>
+
+              {/* Status Codes Cards (No Table) */}
+              <div id="status-codes" className="scroll-mt-24 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
+                    HTTP Status Codes Standard
+                  </h3>
+                  <span className="font-mono text-[11px] text-slate-400">REST RFC 9110</span>
+                </div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {STATUS_CODES.map((st) => (
+                    <div
+                      key={st.code}
+                      className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            'inline-flex items-center rounded-md px-2 py-0.5 font-mono text-xs font-black',
+                            st.code.startsWith('2')
+                              ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
+                              : 'border border-slate-900 bg-[#000B26] text-white',
+                          )}
+                        >
+                          {st.code}
+                        </span>
+                        <span className="font-sans text-xs font-bold text-slate-900">
+                          {st.status}
+                        </span>
+                      </div>
+                      <p className="mt-2 font-sans text-[11.5px] leading-relaxed text-slate-600">
+                        {st.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Endpoints Cards */}
+              <div className="space-y-6 pt-2">
+                {INTERACTIVE_ITEMS.map((item) => {
+                  const liveRes = testResults[item.id];
+                  const isTestingThis = testingEndpointId === item.id;
+                  return (
+                    <div
+                      key={item.id}
+                      id={item.id}
+                      className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40 hover:shadow-lg"
+                    >
+                      <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={cn(
+                                'rounded-md px-2 py-0.5 font-mono text-[10px] font-black tracking-wider uppercase',
+                                item.method === 'GET'
+                                  ? 'border border-[#0056FF]/30 bg-[#0056FF] text-white shadow-xs'
+                                  : 'border border-black bg-black text-white shadow-xs',
+                              )}
+                            >
+                              {item.method}
+                            </span>
+                            <span className="font-mono text-xs font-bold text-slate-900">
+                              {item.path}
+                            </span>
+                          </div>
+                          <p className="text-xs font-bold text-slate-800">{item.title}</p>
+                          <p className="font-sans text-xs text-slate-600">{item.summary}</p>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <GeometricButton
+                            size="sm"
+                            variant="outline"
+                            disabled={isTestingThis}
+                            onClick={() => handleTest(item)}
+                            icon={<Server className="size-3 text-[#0056FF]" />}
+                          >
+                            {isTestingThis ? 'Testing...' : 'Test Live'}
+                          </GeometricButton>
+                        </div>
+                      </div>
+
+                      {/* Metadata Badges */}
+                      <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                        <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                          Permission: <strong className="text-[#0056FF]">{item.permission}</strong>
+                        </div>
+                        <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                          Scope Header:{' '}
+                          <strong
+                            className={item.scopeHeader ? 'text-[#0056FF]' : 'text-slate-400'}
+                          >
+                            {item.scopeHeader ? 'X-Branch-Id Required' : 'None'}
+                          </strong>
+                        </div>
+                      </div>
+
+                      {/* Live Test Output Display */}
+                      {liveRes && (
+                        <div className="space-y-1.5 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3 font-mono text-xs shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
+                          <div className="flex items-center justify-between">
+                            <span
+                              className={
+                                liveRes.status === 200
+                                  ? 'font-bold text-[#0056FF]'
+                                  : 'font-bold text-[#000B26]'
+                              }
+                            >
+                              Live Response: HTTP {liveRes.status}
+                            </span>
+                            <span className="text-slate-500">{liveRes.latency}ms</span>
+                          </div>
+                          <pre className="max-h-32 overflow-y-auto rounded-lg border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
+                            {JSON.stringify(liveRes.body, null, 2)}
+                          </pre>
+                        </div>
+                      )}
+
+                      {/* Code Snippet Card */}
+                      <div className="overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
+                        <div className="flex items-center justify-between border-b border-slate-200/80 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
+                          <div className="flex items-center gap-1.5">
+                            <GeometricButton
+                              size="sm"
+                              variant={codeType === 'curl' ? 'blue' : 'outline'}
+                              isActive={codeType === 'curl'}
+                              onClick={() => setCodeType('curl')}
+                            >
+                              cURL
+                            </GeometricButton>
+                            <GeometricButton
+                              size="sm"
+                              variant={codeType === 'ts' ? 'blue' : 'outline'}
+                              isActive={codeType === 'ts'}
+                              onClick={() => setCodeType('ts')}
+                            >
+                              TypeScript
+                            </GeometricButton>
+                            <GeometricButton
+                              size="sm"
+                              variant={codeType === 'json' ? 'blue' : 'outline'}
+                              isActive={codeType === 'json'}
+                              onClick={() => setCodeType('json')}
+                            >
+                              Response
+                            </GeometricButton>
+                          </div>
+
+                          <GeometricButton
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
+                            icon={
+                              copiedId === item.id ? (
+                                <Check className="size-3 text-[#0056FF]" />
+                              ) : (
+                                <Copy className="size-3 text-slate-600" />
+                              )
+                            }
+                          >
+                            {copiedId === item.id ? 'Copied' : 'Copy'}
+                          </GeometricButton>
+                        </div>
+
+                        <pre className="max-h-64 overflow-x-auto bg-white p-3.5 font-mono text-xs leading-relaxed text-slate-800">
+                          <code>{generateSnippet(item, codeType)}</code>
+                        </pre>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Section 6: Change Logs & Real-Time Releases (Placed at Bottom of Page - No Table) */}
+            <section
+              id="changelogs"
+              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+            >
+              <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                <div>
+                  <h2 className="text-base font-bold tracking-tight text-slate-950">
+                    Change Logs & Checkpoints
+                  </h2>
+                  <p className="mt-1 text-xs text-slate-500">
+                    Live repository release status, deployment checkpoints, and version ledger.
+                  </p>
+                </div>
+
+                {/* GitHub Status & Real-time Tag Badges */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
+                    <span className="size-1.5 animate-pulse rounded-full bg-[#0056FF]" />
+                    branch: main
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-[11px] font-bold text-slate-700">
+                    checkpoint: v0.1.12
+                  </span>
+                  <a
+                    href="https://github.com/shiliaiwei/SNP-SMS"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center rounded-full border border-slate-900 bg-[#000B26] px-3 py-1 font-mono text-[11px] font-bold text-white transition-colors hover:bg-[#0056FF]"
+                  >
+                    GitHub Status [PASSED]
+                  </a>
+                </div>
+              </div>
+
+              {/* Change Log Entries (No Table: Sleek Modern Stacked Cards) */}
+              <div className="space-y-2.5">
+                {(expandedChangelog ? CHANGE_LOGS : CHANGE_LOGS.slice(0, 3)).map((log) => (
+                  <div
+                    key={log.version + (log.commitHash || '')}
+                    className="flex flex-col justify-between gap-2 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC] sm:flex-row sm:items-center"
+                  >
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      {/* Version Badge */}
+                      <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
+                        v{log.version}
+                      </span>
+
+                      {/* Commit Hash Badge */}
+                      {log.commitHash && (
+                        <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-700">
+                          {log.commitHash}
+                        </span>
+                      )}
+
+                      {/* Concise Summary (Short & Descriptionless) */}
+                      <span className="font-sans text-xs font-semibold text-slate-800">
+                        {log.description}
+                      </span>
+                    </div>
+
+                    {/* Date Badge */}
+                    <span className="shrink-0 font-mono text-[11px] text-slate-400">
+                      {log.date}
                     </span>
                   </div>
+                ))}
+              </div>
 
-                  {/* Date Badge */}
-                  <span className="shrink-0 font-mono text-[11px] text-slate-400">{log.date}</span>
-                </div>
-              ))}
+              {/* Dropdown Toggle: Show More / Show Less */}
+              <div className="flex justify-center pt-2">
+                <GeometricButton
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setExpandedChangelog((prev) => !prev)}
+                >
+                  {expandedChangelog
+                    ? 'Show fewer releases (Recent 3)'
+                    : `Show all changelogs (${CHANGE_LOGS.length})`}
+                </GeometricButton>
+              </div>
+            </section>
+          </main>
+
+          {/* COLUMN 3: Right Sticky Sidebar with Real-Time Tracking Line (Permanently Pinned Like Navbar) */}
+          <aside className="hidden w-64 shrink-0 xl:sticky xl:top-20 xl:z-30 xl:block xl:self-start">
+            <div className="max-h-[calc(100vh-5.5rem)] space-y-6 overflow-y-auto pr-1">
+              <LineTrackerToc
+                items={DOC_TOC_HEADINGS}
+                activeId={activeDocSection}
+                onSelect={scrollToDocSection}
+                onActiveChange={setActiveDocSection}
+                title="ON THIS PAGE"
+              />
             </div>
-
-            {/* Dropdown Toggle: Show More / Show Less */}
-            <div className="flex justify-center pt-2">
-              <GeometricButton
-                size="sm"
-                variant="outline"
-                onClick={() => setExpandedChangelog((prev) => !prev)}
-              >
-                {expandedChangelog
-                  ? 'Show fewer releases (Recent 3)'
-                  : `Show all changelogs (${CHANGE_LOGS.length})`}
-              </GeometricButton>
-            </div>
-          </section>
-        </main>
-
-        {/* COLUMN 3: Right Sticky Sidebar with Real-Time Tracking Line */}
-        <aside className="hidden w-64 shrink-0 xl:block">
-          <div className="sticky top-24 space-y-6">
-            <LineTrackerToc
-              items={DOC_TOC_HEADINGS}
-              activeId={activeDocSection}
-              onSelect={scrollToDocSection}
-              onActiveChange={setActiveDocSection}
-              title="ON THIS PAGE"
-            />
-          </div>
-        </aside>
+          </aside>
+        </div>
       </div>
     </div>
-  </div>
   );
 }
