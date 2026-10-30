@@ -82,6 +82,7 @@ import {
   SearchableDropdownDemo,
   ToastStackDemo,
   SkeletonLoadingScreenDemo,
+  RealTimeChartDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2833,6 +2834,8 @@ function renderFeedComponentDemo(
       return <FaqDemo />;
     case 'data-table':
       return <DataTableDemo />;
+    case 'real-time-chart':
+      return <RealTimeChartDemo />;
 
     // ==========================================
     // AI KIT GROUP (Interactive Demos)

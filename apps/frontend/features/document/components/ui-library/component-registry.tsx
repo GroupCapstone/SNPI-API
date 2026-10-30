@@ -2304,6 +2304,95 @@ const columns: DataTableColumn<StudentRecord>[] = [
       'Empty State Search Fallback',
     ],
   },
+  {
+    id: 'real-time-chart',
+    name: 'Real-Time Data Chart',
+    category: 'Display',
+    paradigm: 'Canvas 60FPS Streaming Telemetry Standard',
+    description: 'A streaming metrics chart built on the Canvas API, no dependencies.',
+    explanation:
+      'This is a working example of what the prompt generates — a real-time streaming chart rendering at 60fps with hover tooltips, gradient fills, and glow effects. Click the chart to pause.',
+    props: [
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Visual palette for background dot grid, axes, and glow intensity.',
+      },
+      {
+        name: 'height',
+        type: 'number',
+        default: '340',
+        description: 'Canvas height in pixels.',
+      },
+      {
+        name: 'pointsCount',
+        type: 'number',
+        default: '45',
+        description: 'Number of streaming timeline slices preserved in rolling buffer.',
+      },
+    ],
+    codeSnippet: `import { RealTimeChart } from '@/features/document/components/ui-library';\n\n<RealTimeChart theme="dark" height={340} />`,
+    realWorldExamples: [
+      {
+        title: 'Institutional API & Node Ingress Monitoring',
+        scenario:
+          'Campus DevOps monitors live CPU utilization, ingress request rates, and MongoDB write volume in 60fps real-time.',
+        impact: 'High-visibility telemetry with zero external chart library overhead.',
+      },
+      {
+        title: 'High-Frequency Exam Telemetry Stream',
+        scenario:
+          'Proctors and administrators observe simultaneous client connection spikes during nation-wide finals examination.',
+        impact: 'Crisp high-DPI canvas rendering with hovering crosshair inspection.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Doherty Threshold & 60FPS Flow',
+        detail:
+          'Hardware-accelerated continuous rendering provides visceral sensory confirmation that telemetry is actively streaming.',
+      },
+      {
+        principle: "Fitts's Law & Snapping Crosshairs",
+        detail:
+          'Snapping crosshair to the nearest timeline point removes manual fine-cursor targeting friction.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: Building dashboards or monitoring UIs that display live-updating metrics.',
+        dontItem:
+          'NOT IDEAL WHEN: Your data is static — a simpler SVG chart is lighter and more accessible.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: You need a chart without adding Chart.js, D3, or Recharts to your bundle.',
+        dontItem:
+          'NOT IDEAL WHEN: You need zoom, pan, brush selection, or other complex interactions.',
+      },
+    ],
+    implementationNotes: [
+      '01 Canvas Element: Hardware-accelerated rendering surface that scales with devicePixelRatio for crisp output on any display.',
+      '02 Dot Grid: Subtle background pattern at 40px intervals creating visual depth without competing with chart data.',
+      '03 Gridlines: Dashed horizontal reference lines for quick value estimation at a glance.',
+      '04 Bezier Curves: Cubic interpolation producing smooth, organic data lines instead of jagged point-to-point segments.',
+      '05 Gradient Fills: Semi-transparent areas beneath each curve that add visual weight and make series easier to track.',
+      '06 Glow Effects: Shadow-based luminous halos around each data line, making them pop against the dark background.',
+      '07 Axis Labels: Time markers along the bottom and percentage scale on the left edge for spatial context.',
+      '08 Legend: Live-updating series identification with color swatches and current values in the top-right corner.',
+      '09 Crosshair: Vertical tracking line with intersection dots that snaps to the nearest data point on hover.',
+      '10 Tooltip: Floating data card revealing exact values for all series at any point in the timeline.',
+    ],
+    supportedStates: [
+      'Active 60FPS Streaming',
+      'Paused Stream (Click To Resume)',
+      'Crosshair & Snapped Hover Tooltip',
+      'Dynamic Rate Modulation (0.5x, 1x, 2x)',
+      'High-DPI Retina Scaled (devicePixelRatio)',
+    ],
+  },
 
   // AI KIT GROUP
   {
