@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
+    "commitHash": "578d4f3",
+    "description": "Record e11eaf9 into changelog and documentation portal"
+  },
+  {
+    "version": "0.2.10",
+    "date": "31.10.2026",
     "commitHash": "e11eaf9",
     "description": "Implement cyber armor mecha modular navigation bar"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "7e62686",
     "description": "Bump version to 0.2.8 and standardize shared package build lifecycle in CI, Docker, and typecheck"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "0785b9c",
-    "description": "Synchronize real-time changelog for Color Contrast Checker"
   }
 ];
