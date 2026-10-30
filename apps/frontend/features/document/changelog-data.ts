@@ -7,55 +7,67 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
+    "date": "31.10.2026",
+    "commitHash": "6496ddb",
+    "description": "Format components and documentation with prettier"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
+    "commitHash": "acae232",
+    "description": "Synchronize real-time changelog for system architecture lexicon skill"
+  },
+  {
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "5c307dc",
     "description": "Author authoritative 1,111-concept system architecture lexicon & 21 standard rules"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "578d4f3",
     "description": "Record e11eaf9 into changelog and documentation portal"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "e11eaf9",
     "description": "Implement cyber armor mecha modular navigation bar"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "d085801",
     "description": "Synchronize fe39f6e to developer portal and changelog"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "fe39f6e",
     "description": "Enforce light day mode and implement Wiz-style curved atmospheric footer"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "3bc263e",
     "description": "Sync commit 1342394"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "1342394",
     "description": "Remove redundant right-sidebar TOC and line tracker from Open API page"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "fb6aa66",
     "description": "Record real-time commit checkpoint for Royal Blue brand system"
   },
   {
-    "version": "0.2.10",
+    "version": "0.2.11",
     "date": "31.10.2026",
     "commitHash": "d1b80a7",
     "description": "Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication"
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "ec5413b",
     "description": "Record line tracker navigation update and scrollbar removal in real-time changelog"
-  },
-  {
-    "version": "0.2.9",
-    "date": "30.10.2026",
-    "commitHash": "5435db2",
-    "description": "Remove toolbar gray scrollbar and implement continuous line tracker navigation without dots"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "79764a7",
-    "description": "Record v0.2.8 release checkpoint in real-time changelog and document portal"
   }
 ];
