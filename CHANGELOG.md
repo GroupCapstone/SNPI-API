@@ -2,7 +2,11 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.8 (31.10.2026) - `15a8ab5`
+### Version 0.2.8 (31.10.2026) - `19b9c63`
+
+- Upgrade hanging tabs navigation with UI Library first kinetic animations and real-time status tracker box
+
+### Version 0.2.8 (31.10.2026) - `a62fcd4`
 
 - Remove preview and prompt buttons and convert copy prompt to icon-only action
 
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `021837f`
 
 - Synchronize real-time changelog for Toast Notification Stack
-
-### Version 0.2.8 (30.10.2026) - `5d0d50c`
-
-- Implement 8-pillar Toast Notification Stack with auto-dismiss, progress bars, hover pause, and two-phase exit
 
