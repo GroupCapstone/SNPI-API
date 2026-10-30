@@ -40,6 +40,7 @@ Before modifying code, packages, or repository structure, read:
 30. `.agents/skills/snp-sms-design-standards/system-architecture-lexicon.md`: Authoritative System Architecture Lexicon (1,111 concepts: systems, concurrency, cryptography, LLM, and AI agents).
 31. `.agents/skills/snp-sms-design-standards/universal-ai-agent-prompt-manual.md`: Authoritative Universal AI Agent Prompt & MVP Component Generation Manual (procedural prompt synthesis, [Preview | Prompt] tabs, 1-click copy action, MVP component blueprints).
 32. `.agents/skills/snp-sms-design-standards/line-tracker-navigation-manual.md`: Authoritative Precision Line Tracker Navigation & Zero-Scrollbar Manual (dotless continuous vertical rail, active indicator segment, zero-scrollbar standard).
+33. `.agents/skills/snp-sms-design-standards/cyber-armor-nav-manual.md`: Authoritative Cyber Armor Modular Navigation & Aerospace Mecha HUD Console Manual (45° chamfered armor plates, double-seam milled dividers, Royal Blue luminous glow, zero dots).
 
 ---
 
@@ -188,3 +189,4 @@ Use these specific skill identifiers and command strings to instruct the agent:
 | `SKILL-ICONBAR`  | `.agents/skills/snp-sms-design-standards/icon-bar-toolbar-manual.md`           | Icon Bar Toolbar & Blueprint Precision Design Standards (Bloom label reveal, status dot, roving tabindex, r4 radii, 44px banner suite)       | `apply skill iconbar`      |
 | `SKILL-RAILTOC`  | `.agents/skills/snp-sms-design-standards/rail-toc-flight-tracker-manual.md`    | Rail TOC Flight Tracker Navigation Manual (Origami paper plane flight navigation, directional turning, solid/dashed rail states, r4 buttons) | `apply skill rail-toc`     |
 | `SKILL-ROYAL`    | `.agents/skills/snp-sms-design-standards/royal-blue-brand-system-manual.md`    | Royal Blue Brand Colors, Futurewave Gradients, Light Day First, Zero-Dot UI Standards, and Deduplicated Components Standard                    | `apply skill royal`        |
+| `SKILL-CYBER-NAV`| `.agents/skills/snp-sms-design-standards/cyber-armor-nav-manual.md`            | Cyber Armor Modular Navigation & Aerospace Mecha HUD Console Manual (45° chamfered armor plates, double-seam milled dividers, Royal Blue glow) | `apply skill cyber-nav`    |

@@ -252,4 +252,13 @@ Refer to `rail-toc-flight-tracker-manual.md` for the origami paper plane flight 
 - Depth indentation with smooth cubic Bézier curves.
 - Roving tabindex and screen-reader accessible `data-slot` selectors.
 
+### 7.8 Cyber Armor Modular Navigation Specification
+Refer to `cyber-armor-nav-manual.md` for the aerospace mecha HUD console specification:
+- Stepped armor chassis with 45° chamfered corner ear caps and dual top wings.
+- Physical double-seam dividers (1px dark border paired with 1px white highlight line).
+- Luminous Royal Blue (`#0056FF`) active indicator bar with Azure Blue (`#2277FF`) gradient and ambient glow.
+- Zero-dot strict compliance across all states.
+- Light day first metallic finish (`#FFFFFF` to `#EEF2F8` gradient with `#CAD3F5` perimeter stroke).
+
+
 
