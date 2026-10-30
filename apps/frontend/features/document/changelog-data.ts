@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "3b51193",
+    "description": "Implement Date Picker and Date Range Picker with ARIA grid roving-tabindex, hover preview, and range bands"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "ccfd501",
+    "description": "Synchronize real-time changelog for OTP PIN Input"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "93d79a9",
     "description": "Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "b56feb8",
     "description": "Apply #E3E7FC header background, remove github button, and remove design standard badge from demo"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "e1cadf4",
-    "description": "Streamline hero card with bold title, ultra-short component descriptions, and direct sidebar components list"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "cfc9d95",
-    "description": "Resolve Open API navigation glitch and hanging tabs click suppression"
   }
 ];

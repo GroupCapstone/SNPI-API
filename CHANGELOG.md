@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `3b51193`
+
+- Implement Date Picker and Date Range Picker with ARIA grid roving-tabindex, hover preview, and range bands
+
+### Version 0.2.7 (30.10.2026) - `ccfd501`
+
+- Synchronize real-time changelog for OTP PIN Input
+
 ### Version 0.2.7 (30.10.2026) - `93d79a9`
 
 - Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `b56feb8`
 
 - Apply #E3E7FC header background, remove github button, and remove design standard badge from demo
-
-### Version 0.2.7 (30.10.2026) - `e1cadf4`
-
-- Streamline hero card with bold title, ultra-short component descriptions, and direct sidebar components list
-
-### Version 0.2.7 (30.10.2026) - `cfc9d95`
-
-- Resolve Open API navigation glitch and hanging tabs click suppression
 
