@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
+    "commitHash": "ccec8cf",
+    "description": "Eliminate explicit any in data-table and remove prepare script from shared package"
+  },
+  {
+    "version": "0.2.10",
+    "date": "31.10.2026",
     "commitHash": "4e1fe42",
     "description": "V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "afd8591",
     "description": "Implement 10-pillar Real-Time Data Chart with Canvas 60fps streaming, Bezier splines, dot grid, glow, and hover crosshair"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "79a93d9",
-    "description": "Synchronize real-time changelog for Skeleton Loading Screen"
   }
 ];

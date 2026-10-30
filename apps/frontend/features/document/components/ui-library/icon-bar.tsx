@@ -140,15 +140,13 @@ export function IconBar({
                 isFocused && !isSelected && 'bg-white/[0.04] ring-1 ring-slate-700',
               )}
             >
-              {/* Status Dot Accent Indicator */}
+              {/* Status Indicator Bar (Zero-Dot Standard) */}
               {(item.hasStatusDot ?? isSelected) && (
                 <span
                   aria-hidden="true"
                   className={cn(
-                    'absolute top-1.5 right-1.5 size-1.5 rounded-full transition-transform duration-200',
-                    isSelected
-                      ? 'scale-100 bg-[#818CF8] shadow-[0_0_8px_rgba(129,140,248,0.9)]'
-                      : 'scale-75 bg-slate-500 opacity-60',
+                    'absolute right-3 bottom-1 left-3 h-0.5 rounded-[1px] transition-all duration-200',
+                    isSelected ? 'bg-[#0056FF] opacity-100' : 'bg-transparent opacity-0',
                   )}
                 />
               )}

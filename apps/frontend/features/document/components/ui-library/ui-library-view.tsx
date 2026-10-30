@@ -506,11 +506,11 @@ export function UiLibraryView() {
                               : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900',
                           )}
                         >
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-2">
                             <span
                               className={cn(
-                                'size-1.5 rounded-full transition-colors',
-                                isCategoryActive ? 'bg-[#0056FF]' : 'bg-slate-300',
+                                'h-3.5 w-1 rounded-[2px] transition-colors',
+                                isCategoryActive ? 'bg-[#0056FF]' : 'bg-transparent',
                               )}
                             />
                             <span className="uppercase">{group.category}</span>
@@ -547,7 +547,7 @@ export function UiLibraryView() {
                                 {isCurrentActive && (
                                   <span
                                     aria-hidden="true"
-                                    className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
+                                    className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-[1px] bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
                                   />
                                 )}
                                 <span className="truncate">{comp.name}</span>
@@ -600,7 +600,7 @@ export function UiLibraryView() {
                           {isCurrentActive && (
                             <span
                               aria-hidden="true"
-                              className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
+                              className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-[1px] bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
                             />
                           )}
                           <span className="truncate">{doc.label}</span>
@@ -857,20 +857,20 @@ export function UiLibraryView() {
                                       : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
                                   )}
                                 >
-                                  {/* Subtle Dot Grid */}
+                                  {/* Subtle Precision Linear Grid (Zero-Dot Design Standard) */}
                                   <div
                                     className={cn(
                                       'pointer-events-none absolute inset-0',
                                       getCompTheme(comp.id) === 'dark'
                                         ? 'opacity-20'
-                                        : 'opacity-30',
+                                        : 'opacity-40',
                                     )}
                                     style={{
                                       backgroundImage:
                                         getCompTheme(comp.id) === 'dark'
-                                          ? 'radial-gradient(circle at 1px 1px, #1E293B 1px, transparent 0)'
-                                          : 'radial-gradient(circle at 1px 1px, #CAD3F5 1px, transparent 0)',
-                                      backgroundSize: '16px 16px',
+                                          ? 'linear-gradient(to right, #1E293B 1px, transparent 1px), linear-gradient(to bottom, #1E293B 1px, transparent 1px)'
+                                          : 'linear-gradient(to right, #CAD3F5 1px, transparent 1px), linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)',
+                                      backgroundSize: '24px 24px',
                                     }}
                                   />
 
@@ -1014,10 +1014,10 @@ export function UiLibraryView() {
                                 <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0B0F19] p-5 text-slate-100 shadow-md">
                                   <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-3">
                                     <div className="flex items-center gap-2">
-                                      <div className="size-2.5 rounded-full bg-rose-500" />
-                                      <div className="size-2.5 rounded-full bg-amber-500" />
-                                      <div className="size-2.5 rounded-full bg-emerald-500" />
-                                      <span className="ml-2 font-mono text-[11px] font-semibold text-slate-400">
+                                      <span className="rounded-[3px] bg-[#0056FF]/20 px-2 py-0.5 font-mono text-[10px] font-bold text-[#CAD3F5]">
+                                        SPEC
+                                      </span>
+                                      <span className="font-mono text-[11px] font-semibold text-slate-400">
                                         {comp.id}-ai-agent-mvp-prompt.md
                                       </span>
                                     </div>
@@ -1103,7 +1103,7 @@ export function UiLibraryView() {
                                     <ul className="space-y-1 font-sans text-[11px] text-slate-700">
                                       {comp.usageGuidelines.map((g, i) => (
                                         <li key={i} className="flex items-start gap-1.5">
-                                          <span className="mt-1 size-1 shrink-0 rounded-full bg-[#0056FF]" />
+                                          <span className="mt-1.5 size-1 shrink-0 rounded-[1px] bg-[#0056FF]" />
                                           <span>{g.doItem}</span>
                                         </li>
                                       ))}
@@ -1117,7 +1117,7 @@ export function UiLibraryView() {
                                     <ul className="space-y-1 font-sans text-[11px] text-slate-700">
                                       {comp.usageGuidelines.map((g, i) => (
                                         <li key={i} className="flex items-start gap-1.5">
-                                          <span className="mt-1 size-1 shrink-0 rounded-full bg-rose-400" />
+                                          <span className="mt-1.5 size-1 shrink-0 rounded-[1px] bg-rose-400" />
                                           <span>{g.dontItem}</span>
                                         </li>
                                       ))}
@@ -2146,7 +2146,9 @@ function renderFeedComponentDemo(
             <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-5 py-3">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold text-slate-900">13:25</span>
-                <span className="size-1.5 rounded-full bg-emerald-500" />
+                <span className="py-0.2 rounded-[3px] bg-emerald-100 px-1 font-mono text-[9px] font-bold text-emerald-800">
+                  ONLINE
+                </span>
               </div>
               <span className="font-sans text-xs font-black tracking-tight text-slate-900">
                 SNPI-SMS Mobile

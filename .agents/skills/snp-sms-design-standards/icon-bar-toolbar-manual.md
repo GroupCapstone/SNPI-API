@@ -42,12 +42,12 @@ The **Icon Bar** is a compact, high-efficiency horizontal toolbar component desi
   - Timing: Sub-200ms ease-out curve (`cubic-bezier(0.16, 1, 0.3, 1)` or spring `{ stiffness: 400, damping: 28 }`).
   - Zero Layout Glitch: Non-blooming neighbor items adjust smoothly via flex flow.
 
-#### C. Status Dot Indicator
-- **Visual Cue**: A small circular accent dot (`size-1.5` / `6px`) placed at the top-right corner of the item (`top-1.5 right-1.5`).
+#### C. Active Indicator Line (Zero-Dot Standard)
+- **Visual Cue**: A clean 2px horizontal indicator bar (`h-0.5 rounded-[1px]`) positioned along the bottom edge of the active item.
 - **Color Accent**:
   - Primary / Selection: Royal Blue (`#0056FF` or `#38BDF8`).
-  - Active Tool: Indigo / Violet (`#818CF8`).
-- **Function**: Distinguishes active/pinned state and displays tool availability or notification badges.
+  - Active Tool: Indigo / Royal Blue (`#0056FF`).
+- **Function**: Distinguishes active/pinned state and displays tool selection with zero circular dot clutter.
 
 ### 1.3 Keyboard Accessibility: Roving Tabindex Protocol
 The Icon Bar implements the WAI-ARIA Toolbar pattern (`role="toolbar"`) with roving tabindex navigation:
@@ -223,7 +223,7 @@ When building or updating toolbars and layout blocks, every AI agent must verify
 - [ ] Outer container height is locked to `54px` (`h-[54px]`).
 - [ ] Inter-item gap is locked to `4px` (`gap-1`).
 - [ ] Label blooms open on hover, keyboard focus, and selection with smooth max-width expansion.
-- [ ] Status dot accent appears at top-right corner (`top-1.5 right-1.5`).
+- [ ] Active indicator line appears at bottom edge (`h-0.5 rounded-[1px]`, zero-dot standard).
 - [ ] Roving tabindex handles `ArrowLeft`/`ArrowRight`/`Home`/`End`, with `Enter` pinning and `Escape` clearing.
 - [ ] All standard buttons and control corners strictly enforce `r4` (`rounded-[4px]`).
 - [ ] Banner blocks adhere to the `44px` height standard (`ps 16 · pe 48 · py 12`).

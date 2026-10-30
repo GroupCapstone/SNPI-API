@@ -103,39 +103,39 @@ export function HangingTabsNavDemo() {
 // 1. BACKGROUNDS
 // ==========================================
 
-// 1.1 Dot Pattern Background
+// 1.1 Precision Grid Background (Zero-Dot Linear Lattice Standard)
 export function DotPatternDemo() {
-  const [dotSize, setDotSize] = React.useState(1.5);
-  const [spacing, setSpacing] = React.useState(20);
+  const [lineWidth, setLineWidth] = React.useState(1);
+  const [spacing, setSpacing] = React.useState(24);
 
   return (
     <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
       <div
-        className="pointer-events-none absolute inset-0 opacity-60"
+        className="pointer-events-none absolute inset-0 opacity-40"
         style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, #0056FF ${dotSize}px, transparent 0)`,
+          backgroundImage: `linear-gradient(to right, #0056FF ${lineWidth}px, transparent ${lineWidth}px), linear-gradient(to bottom, #0056FF ${lineWidth}px, transparent ${lineWidth}px)`,
           backgroundSize: `${spacing}px ${spacing}px`,
         }}
       />
-      <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/90 p-4 text-center shadow-lg backdrop-blur-md">
-        <h4 className="font-sans text-sm font-bold text-slate-900">Interactive Dot Pattern</h4>
+      <div className="relative z-10 space-y-2 rounded-xl border border-[#CAD3F5] bg-white/95 p-4 text-center shadow-lg backdrop-blur-md">
+        <h4 className="font-sans text-sm font-bold text-slate-900">Precision Linear Grid</h4>
         <p className="font-sans text-xs text-slate-500">
-          Math-calculated SVG radial dots with customizable pitch.
+          Pure geometric linear lattice (Zero-Dot Design Standard) with customizable pitch.
         </p>
         <div className="flex items-center justify-center gap-3 pt-2">
           <button
             type="button"
-            onClick={() => setSpacing((prev) => (prev === 20 ? 14 : 20))}
-            className="rounded-full border border-slate-200 px-3 py-1 font-mono text-[10px] font-bold text-slate-700 hover:bg-slate-50"
+            onClick={() => setSpacing((prev) => (prev === 24 ? 16 : 24))}
+            className="rounded-[4px] border border-slate-200 px-3 py-1 font-mono text-[10px] font-bold text-slate-700 hover:bg-slate-50"
           >
-            Spacing: {spacing}px
+            Grid Pitch: {spacing}px
           </button>
           <button
             type="button"
-            onClick={() => setDotSize((prev) => (prev === 1.5 ? 2.5 : 1.5))}
-            className="rounded-full border border-slate-200 px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF] hover:bg-blue-50"
+            onClick={() => setLineWidth((prev) => (prev === 1 ? 2 : 1))}
+            className="rounded-[4px] border border-[#0056FF] bg-[#E3E7FC] px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF] hover:bg-blue-50"
           >
-            Dot Size: {dotSize}px
+            Line: {lineWidth}px
           </button>
         </div>
       </div>
@@ -229,7 +229,7 @@ export function InteractiveParticlesDemo() {
         {Array.from({ length: count }).map((_, i) => (
           <div
             key={i}
-            className="absolute size-1.5 animate-pulse rounded-full bg-blue-400"
+            className="absolute size-1.5 rounded-[1px] bg-[#0056FF]"
             style={{
               top: `${((i * 19) % 90) + 5}%`,
               left: `${((i * 31) % 90) + 5}%`,
@@ -827,7 +827,7 @@ export function ConfettiCannonDemo() {
 
 // 6.3 Drawer Sheet
 export function DrawerSheetDemo() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs">

@@ -114,8 +114,8 @@ export function HangingTabsNav({
               />
             </div>
 
-            {/* Typography Label */}
-            <div className="mt-1 flex items-center gap-1">
+            {/* Typography Label (Pure Typography & Icon - Zero Dot Style) */}
+            <div className="mt-1 flex items-center justify-center">
               <span
                 className={cn(
                   'font-sans font-black tracking-tight transition-colors duration-200',
@@ -125,9 +125,6 @@ export function HangingTabsNav({
               >
                 {tab.label}
               </span>
-              {isActive && (
-                <span className="size-1.5 rounded-full bg-[#0056FF] shadow-[0_0_6px_rgba(0,86,255,0.8)]" />
-              )}
             </div>
           </div>
         );

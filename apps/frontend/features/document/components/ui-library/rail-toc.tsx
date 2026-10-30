@@ -342,22 +342,24 @@ export function RailToc({
             />
           )}
 
-          {/* 3. Heading Node Circles */}
+          {/* 3. Heading Node Ticks (Zero-Dot Line Tracker Standard) */}
           {nodeCoords.map((coord, i) => {
             const isPassed = i <= activeIntIdx;
             return (
-              <circle
+              <line
                 key={i}
-                cx={coord.x}
-                cy={coord.y}
-                r="3"
+                x1={coord.x - 3}
+                x2={coord.x + 3}
+                y1={coord.y}
+                y2={coord.y}
                 className={cn(
                   'transition-all duration-200',
                   isPassed
-                    ? 'fill-[#0056FF] stroke-[#0056FF] dark:fill-[#3B82F6] dark:stroke-[#3B82F6]'
-                    : 'fill-white stroke-slate-400 dark:fill-[#0B0F19] dark:stroke-slate-600',
+                    ? 'stroke-[#0056FF] dark:stroke-[#3B82F6]'
+                    : 'stroke-slate-300 dark:stroke-slate-700',
                 )}
                 strokeWidth="1.5"
+                strokeLinecap="square"
               />
             );
           })}

@@ -301,7 +301,7 @@ export function DualModeSystemUI({ className }: DualModeSystemUIProps) {
                     >
                       <span
                         className={cn(
-                          'h-2.5 w-2.5 rounded-full transition-colors',
+                          'h-2.5 w-2.5 rounded-[2px] transition-colors',
                           isFilled ? 'bg-slate-900' : 'bg-slate-200',
                         )}
                       />
@@ -430,7 +430,7 @@ export function DualModeSystemUI({ className }: DualModeSystemUIProps) {
                     >
                       <span
                         className={cn(
-                          'h-2.5 w-2.5 rounded-full transition-colors',
+                          'h-2.5 w-2.5 rounded-[2px] transition-colors',
                           isFilled ? 'bg-white' : 'bg-neutral-800',
                         )}
                       />

@@ -116,7 +116,9 @@ export function LibrarySnackbar({
             </span>
           )}
           {variant === 'default' && (
-            <span className="size-2 animate-pulse rounded-full bg-[#0056FF]" />
+            <span className="flex size-6 items-center justify-center rounded-lg bg-[#0056FF]/20 text-[#0056FF]">
+              <Info className="size-3.5 stroke-[2.5]" />
+            </span>
           )}
         </div>
 
@@ -244,7 +246,9 @@ export function NativeSnackbarInline({
               </span>
             )}
             {variant === 'default' && (
-              <span className="size-2 animate-pulse rounded-full bg-[#0056FF]" />
+              <span className="flex size-6 items-center justify-center rounded-lg bg-[#0056FF]/20 text-[#0056FF]">
+                <Info className="size-3.5 stroke-[2.5]" />
+              </span>
             )}
           </div>
 

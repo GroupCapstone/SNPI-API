@@ -745,7 +745,7 @@ console.log(payload.data);`;
                         {isSelected && (
                           <span
                             aria-hidden="true"
-                            className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
+                            className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-[1px] bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
                           />
                         )}
                         <span className="truncate">{cat.name}</span>
@@ -1259,10 +1259,9 @@ console.log(payload.data);`;
                   </p>
                 </div>
 
-                {/* GitHub Status & Real-time Tag Badges */}
+                {/* GitHub Status & Real-time Tag Badges (Zero Dot Style) */}
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
-                    <span className="size-1.5 animate-pulse rounded-full bg-[#0056FF]" />
                     branch: main
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-[11px] font-bold text-slate-700">

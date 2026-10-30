@@ -78,11 +78,10 @@ export function DocsStickyHeader({
             className="hidden items-center gap-2.5 rounded-[4px] border border-[#CAD3F5] bg-white/95 px-3 py-1.5 shadow-2xs backdrop-blur-md sm:flex"
             title={`SNPI-SMS Release ${version} • Commit ${commitHash} • 193 API Endpoints Active`}
           >
-            {/* Version Display with Blue Pulse Dot */}
+            {/* Version Display with Clean Badge (Zero Dot Style) */}
             <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900">
-              <span className="relative flex size-2 items-center justify-center">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-[#0056FF] opacity-75" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-[#0056FF]" />
+              <span className="rounded-[3px] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                RELEASE
               </span>
               <span>{version}</span>
             </div>
@@ -103,10 +102,9 @@ export function DocsStickyHeader({
             {/* Subtle Divider */}
             <span className="font-mono text-xs text-slate-300">|</span>
 
-            {/* API Status Badge */}
+            {/* API Status Badge (Zero Dot Style) */}
             <div className="flex items-center gap-1.5 rounded-[3px] border border-emerald-200/90 bg-emerald-50 px-2 py-0.5 font-mono text-[10.5px] font-bold text-emerald-800">
-              <span className="size-1.5 animate-pulse rounded-full bg-emerald-600" />
-              <span>API Healthy (193)</span>
+              <span>API READY (193)</span>
             </div>
           </div>
         </div>
