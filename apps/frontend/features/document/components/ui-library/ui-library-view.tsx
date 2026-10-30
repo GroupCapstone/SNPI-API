@@ -529,19 +529,6 @@ export function UiLibraryView() {
             {/* HERO HEAD TITLE: Specific to UI Library (Monumental Big As Footer Style) */}
             <section id="ui-library-head" className="scroll-mt-24 space-y-4">
               <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50/50 to-[#E3E7FC]/30 p-6 shadow-xs sm:p-10">
-                {/* Monumental Outlined Watermark Behind Title (Echoing Footer Style) */}
-                <div className="pointer-events-none absolute right-4 -bottom-4 opacity-10 select-none">
-                  <span
-                    className="font-sans text-6xl font-black tracking-tighter text-transparent select-none sm:text-8xl md:text-9xl"
-                    style={{
-                      WebkitTextStroke: '2px #0056FF',
-                      lineHeight: 1,
-                    }}
-                  >
-                    UI LIBRARY
-                  </span>
-                </div>
-
                 <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
                     <h1 className="font-sans text-5xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-8xl">

@@ -815,79 +815,20 @@ console.log(payload.data);`;
             {/* HERO HEAD TITLE: Specific to Open API (Monumental Big As Footer Style) */}
             <section id="open-api-head" className="scroll-mt-24 space-y-4">
               <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50/50 to-[#E3E7FC]/30 p-6 shadow-xs sm:p-10">
-                {/* Monumental Outlined Watermark Behind Title (Echoing Footer Style) */}
-                <div className="pointer-events-none absolute right-4 -bottom-4 opacity-10 select-none">
-                  <span
-                    className="font-sans text-6xl font-black tracking-tighter text-transparent select-none sm:text-8xl md:text-9xl"
-                    style={{
-                      WebkitTextStroke: '2px #0056FF',
-                      lineHeight: 1,
-                    }}
-                  >
-                    OPEN API
-                  </span>
-                </div>
-
-                <div className="relative z-10 space-y-4">
-                  {/* Category Pills & Identity Badges */}
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full border border-[#0056FF] bg-[#0056FF] px-3 py-1 font-mono text-[11px] font-bold text-white uppercase shadow-xs">
+                <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
+                  <div>
+                    <h1 className="font-sans text-5xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-8xl">
                       Open API
-                    </span>
-                    <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF] uppercase">
-                      REST Endpoints
-                    </span>
-                    <span className="rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-[11px] font-semibold text-slate-700 uppercase">
-                      47 Modules · 193 APIs
-                    </span>
+                    </h1>
                   </div>
 
-                  {/* Monumental Head Title (Big As Footer Style) */}
-                  <div className="flex flex-col gap-4 border-b border-slate-200/90 pb-6 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                      <h1 className="font-sans text-4xl font-black tracking-tighter text-slate-950 sm:text-5xl md:text-6xl">
-                        Open API
-                      </h1>
-                      <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
-                        Unified programmatic specification for the SNPI-SMS modular monolith
-                        backend. Securely manage student lifecycles, attendance, academic schedules,
-                        exams, and fee accounting via high-performance REST endpoints.
-                      </p>
-                    </div>
-
-                    <div className="shrink-0">
-                      <GeometricHeaderStamp
-                        codeA="47"
-                        titleA="MODULES"
-                        codeB="193"
-                        titleB="ENDPOINTS"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Quick Section Anchors for Immediate SPA Scrolling */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                    <span className="mr-2 font-mono text-[11px] font-bold text-slate-400 uppercase">
-                      Sections:
-                    </span>
-                    {[
-                      { id: 'introduction', label: 'Introduction' },
-                      { id: 'purpose', label: 'Purpose' },
-                      { id: 'who-can-access', label: 'Access Control' },
-                      { id: 'endpoints-available', label: 'Endpoints Catalog' },
-                      { id: 'api-doc', label: 'Interactive Live Tester' },
-                      { id: 'status-codes', label: 'Status Codes' },
-                      { id: 'changelogs', label: 'Change Logs' },
-                    ].map((sec) => (
-                      <button
-                        key={sec.id}
-                        type="button"
-                        onClick={() => scrollToDocSection(sec.id)}
-                        className="cursor-pointer rounded-full border border-slate-200/80 bg-white px-2.5 py-0.5 font-sans text-[11px] font-semibold text-slate-700 transition-all hover:border-[#0056FF] hover:text-[#0056FF]"
-                      >
-                        {sec.label}
-                      </button>
-                    ))}
+                  <div className="shrink-0">
+                    <GeometricHeaderStamp
+                      codeA="47"
+                      titleA="MODULES"
+                      codeB="193"
+                      titleB="ENDPOINTS"
+                    />
                   </div>
                 </div>
               </div>
