@@ -12,12 +12,12 @@ export interface DocsSpaShellProps {
 export function DocsSpaShell({ defaultTab }: DocsSpaShellProps) {
   const { activeTab, setActiveTab } = useDocsNav();
 
-  // If defaultTab is provided and differs on mount, sync it without pushing duplicate history
+  // Sync defaultTab only on mount or when defaultTab changes
   React.useEffect(() => {
-    if (defaultTab && defaultTab !== activeTab) {
+    if (defaultTab) {
       setActiveTab(defaultTab, false);
     }
-  }, [defaultTab, activeTab, setActiveTab]);
+  }, [defaultTab, setActiveTab]);
 
   return (
     <div className="w-full">
