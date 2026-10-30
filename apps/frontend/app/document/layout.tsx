@@ -30,8 +30,6 @@ export default function DocumentLayout({
         <style
           dangerouslySetInnerHTML={{
             __html: `
-              @import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
-
               .docs-root,
               .docs-root * {
                 font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;

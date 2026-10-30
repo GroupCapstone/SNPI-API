@@ -420,7 +420,8 @@ export default function DocumentPage() {
     setActiveDocSection(id);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const top = element.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
@@ -431,7 +432,7 @@ export default function DocumentPage() {
         const item = DOC_TOC_HEADINGS[i];
         const el = document.getElementById(item.id);
         if (el) {
-          const top = el.offsetTop;
+          const top = el.getBoundingClientRect().top + window.scrollY;
           if (scrollPosition >= top) {
             setActiveDocSection(item.id);
             break;
@@ -550,6 +551,7 @@ console.log(payload.data);`;
               items={DOC_TOC_HEADINGS}
               activeId={activeDocSection}
               onSelect={scrollToDocSection}
+              onActiveChange={setActiveDocSection}
               title="ON THIS PAGE"
             />
           </div>

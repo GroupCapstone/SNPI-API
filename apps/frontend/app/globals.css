@@ -55,16 +55,28 @@ textarea {
   -webkit-tap-highlight-color: transparent;
 }
 
-:where(button, a, input, select, textarea):focus-visible {
+:where(
+  button,
+  a,
+  input:not([data-geometric]):not(.geometric-input-field),
+  select,
+  textarea
+):focus-visible {
   outline: 2px solid var(--brand-secondary);
   outline-offset: 2px;
 }
 
-:where(.geometric-input-field, input[data-geometric]):focus,
-:where(.geometric-input-field, input[data-geometric]):focus-visible {
+/* Eradicate focus rectangle/outline on capsule pill geometric inputs */
+.geometric-input-field,
+.geometric-input-field:focus,
+.geometric-input-field:focus-visible,
+input[data-geometric],
+input[data-geometric]:focus,
+input[data-geometric]:focus-visible {
   outline: none !important;
   outline-offset: 0 !important;
   box-shadow: none !important;
+  border: none !important;
 }
 
 ::selection {
