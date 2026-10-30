@@ -11,6 +11,7 @@ export * from './data-table';
 export * from './spotlight-bento-grid';
 export * from './cipher-text-decoder';
 export * from './multi-step-wizard';
+export * from './otp-pin-input';
 export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';

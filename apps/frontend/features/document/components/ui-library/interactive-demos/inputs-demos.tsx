@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Clock, Key, Eye, EyeOff, Sun, Moon, Laptop, Trash, Check, Plus } from '@/components/icons';
+import { OtpPinInputInteractiveDemo } from '../otp-pin-input';
 
 // 1. Duration Picker
 export function DurationPickerDemo() {
@@ -73,75 +74,7 @@ export function DurationPickerDemo() {
 
 // 2. OTP Input (6-Digit Security PIN)
 export function OtpInputDemo() {
-  const [digits, setDigits] = React.useState(['5', '8', '2', '', '', '']);
-  const inputsRef = React.useRef<(HTMLInputElement | null)[]>([]);
-
-  const handleChange = (index: number, val: string) => {
-    if (!/^\d*$/.test(val)) return;
-    const newDigits = [...digits];
-    newDigits[index] = val.slice(-1);
-    setDigits(newDigits);
-
-    if (val && index < 5) {
-      inputsRef.current[index + 1]?.focus();
-    }
-  };
-
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !digits[index] && index > 0) {
-      inputsRef.current[index - 1]?.focus();
-    }
-  };
-
-  const isComplete = digits.every((d) => d !== '');
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <Key className="size-4 text-[#0056FF]" />
-          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-            OTP / 2FA Verification
-          </span>
-        </div>
-        <span
-          className={cn(
-            'rounded-full px-2 py-0.5 font-mono text-[10px] font-bold uppercase',
-            isComplete ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500',
-          )}
-        >
-          {isComplete ? 'Valid' : 'Pending'}
-        </span>
-      </div>
-
-      <div className="flex justify-center gap-2">
-        {digits.map((digit, idx) => (
-          <input
-            key={idx}
-            ref={(el) => {
-              inputsRef.current[idx] = el;
-            }}
-            type="text"
-            inputMode="numeric"
-            maxLength={1}
-            value={digit}
-            onChange={(e) => handleChange(idx, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(idx, e)}
-            className={cn(
-              'size-11 rounded-xl border text-center font-mono text-lg font-bold transition-all focus:outline-none',
-              digit
-                ? 'border-[#0056FF] bg-[#E3E7FC]/30 text-[#0056FF]'
-                : 'border-slate-200 bg-slate-50 text-slate-900 focus:border-[#0056FF] focus:bg-white',
-            )}
-          />
-        ))}
-      </div>
-
-      <div className="text-center font-sans text-xs text-slate-500">
-        Enter the 6-digit code sent to your authenticated mobile device.
-      </div>
-    </div>
-  );
+  return <OtpPinInputInteractiveDemo />;
 }
 
 // 3. Password Input with Live Strength Meter
