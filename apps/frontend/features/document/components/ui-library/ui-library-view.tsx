@@ -2822,9 +2822,10 @@ function renderFeedComponentDemo(
       return <InlineAiStatusDemo />;
 
     // ==========================================
-    // CAPSULE DOCK NAV (Rare UI Style)
+    // NAVIGATION MENU (Rare UI Floating 3-Island Header)
     // ==========================================
     case 'capsule-dock-nav':
+    case 'navigation-menu':
       return <CapsuleDockDemo />;
 
     // ==========================================

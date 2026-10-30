@@ -1807,18 +1807,46 @@ export function Example() {
   // ==========================================
   {
     id: 'capsule-dock-nav',
-    name: 'Capsule Dock Nav',
+    name: 'Navigation Menu (Rare UI Floating Dock)',
     category: 'Navigation',
-    paradigm: 'Rare UI Floating Capsule Standard',
-    description: 'Floating dark obsidian pill capsule dock with brand badge, links, and GitHub stars.',
-    explanation: 'Sleek rounded-full pill dock with isolated segment pills, badge indicators, and theme controls.',
-    props: [{ name: 'stars', type: 'number', description: 'GitHub stars counter.' }],
-    codeSnippet: `import { CapsuleDockDemo } from '@/features/document/components/ui-library';\n\n<CapsuleDockDemo />`,
-    realWorldExamples: [{ title: 'Public Product Page', scenario: 'Visitor navigates components and repository.', impact: 'High visual craft.' }],
-    uxPsychology: [{ principle: "Fitts's Law Floating Dock", detail: 'Centralized dock maximizes reach.' }],
-    usageGuidelines: [{ doItem: 'Use rounded-full geometry.', dontItem: 'Do not overcrowd with more than 5 links.' }],
-    implementationNotes: ['Dark obsidian pill dock with SVG logo.'],
-    supportedStates: ['Default', 'Starred', 'Active Tab'],
+    paradigm: 'Floating 3-Island Mega Menu Standard',
+    description: 'Floating 3-island header with brand pill, links pill opening mega menu panels with glyphs & summaries, and GitHub stars pill with theme circle.',
+    explanation: 'Site headers whose top level items open panels of links in a shared animated viewport. Features columns with summaries, glyphs, and a call-to-action button, mixing panel triggers with plain links.',
+    props: [
+      { name: 'viewport', type: 'boolean', description: 'Enable shared NavigationMenuViewport animation.' },
+      { name: 'asChild', type: 'boolean', description: 'Radix twin anchor delegation.' },
+      { name: 'render', type: '(props) => ReactNode', description: 'Base twin render prop delegation.' },
+    ],
+    codeSnippet: `import { RareUiNavigationMenu, NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from '@/features/document/components/ui-library';\n\n{/* Full 3-Island Rare UI Navigation Menu */}\n<RareUiNavigationMenu />`,
+    realWorldExamples: [
+      { title: 'Site Header Mega Panels', scenario: 'Top level items open panels of links for docs and components.', impact: 'Uncluttered scannability.' },
+      { title: 'Columns with Summaries & Glyphs', scenario: 'Mega menu organizes featured items with glyphs and CTA button.', impact: 'High conversion.' },
+    ],
+    uxPsychology: [
+      { principle: "Fitts's Law 3-Island Dock", detail: 'Centralized floating islands reduce eye travel distance.' },
+      { principle: 'Progressive Disclosure', detail: 'Mega panels expand only on focused intent with zero visual clutter.' },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'When to use: Site headers whose top level items open panels of links (docs, components, industry pages).',
+        dontItem: 'When not to use: Actions on the current page (edit, share, sign out): use Dropdown Menu.',
+      },
+      {
+        doItem: 'When to use: Mega menu panels laying out links with summaries in columns, glyphs, and a call to action button.',
+        dontItem: 'When not to use: Sections of a signed in app along the screen edge: use Sidebar.',
+      },
+      {
+        doItem: 'When to use: Header rows mixing panel triggers with plain top level links styled to match them.',
+        dontItem: 'When not to use: Complete pre-placed header with logo and Get Started button: use Navbar blocks.',
+      },
+    ],
+    implementationNotes: [
+      'NavigationMenuLink takes its anchor through render on the base twin and asChild on the radix twin; neither twin reads the other prop.',
+      'Every href is a hash placeholder; point each NavigationMenuLink at a real route through your router link.',
+      'The radix NavigationMenu opens panels in a shared NavigationMenuViewport unless viewport is false; base uses align.',
+      'Floating 3-island architecture: [ 🌸 Rare UI ] (Left), [ Home | Components (Mega Menu) | Sponsors ] (Center), [ 🐙 1866 ] + [ 🌓 ] (Right).',
+    ],
+    supportedStates: ['Default', 'Mega Menu Active', 'Starred', 'Dark / Light'],
   },
   // ==========================================
   // BACKGROUNDS
