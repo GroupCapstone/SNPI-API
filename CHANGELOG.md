@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `a08574e`
+
+- Upgrade 8-pillar Border Beam Card with ResizeObserver geometry, reduced-motion freeze, and tabular pricing
+
+### Version 0.2.7 (30.10.2026) - `27a419e`
+
+- Synchronize real-time changelog for Rich Text Editor
+
 ### Version 0.2.7 (30.10.2026) - `d83c8d7`
 
 - Implement 8-pillar Rich Text Editor with contenteditable surface, allowlist sanitizer, URL scheme guard, and HTML view
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `4560c0b`
 
 - Implement Admin Audit Health Spotlight Bento Grid with rAF-throttled pointer, border spotlight, cascading deploy log, and self-drawing sparkline
-
-### Version 0.2.7 (30.10.2026) - `eee3195`
-
-- Synchronize real-time changelog with Interactive Data Table component
-
-### Version 0.2.7 (30.10.2026) - `24f7d0f`
-
-- Implement Interactive Data Table with tri-state sorting, sticky header, debounced search, status pills, and boundary-clamped pagination
 

@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "a08574e",
+    "description": "Upgrade 8-pillar Border Beam Card with ResizeObserver geometry, reduced-motion freeze, and tabular pricing"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "27a419e",
+    "description": "Synchronize real-time changelog for Rich Text Editor"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "d83c8d7",
     "description": "Implement 8-pillar Rich Text Editor with contenteditable surface, allowlist sanitizer, URL scheme guard, and HTML view"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "4560c0b",
     "description": "Implement Admin Audit Health Spotlight Bento Grid with rAF-throttled pointer, border spotlight, cascading deploy log, and self-drawing sparkline"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "eee3195",
-    "description": "Synchronize real-time changelog with Interactive Data Table component"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "24f7d0f",
-    "description": "Implement Interactive Data Table with tri-state sorting, sticky header, debounced search, status pills, and boundary-clamped pagination"
   }
 ];
