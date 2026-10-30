@@ -17,3 +17,7 @@ export * from './docs-sticky-header';
 export * from './dual-mode-system-ui';
 export * from './hanging-tabs-nav';
 export * from './docs-footer';
+export * from './docs-nav-context';
+export * from './open-api-view';
+export * from './ui-library-view';
+export * from './docs-spa-shell';

@@ -6,38 +6,36 @@ import { BrandMark } from '@/components/shared/brand-mark';
 import { FileText, Layers, Code } from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { GeometricButton } from './geometric-tag-primitives';
+import { useDocsNav } from './docs-nav-context';
 
 export interface DocsStickyHeaderProps {
-  activeTab?: 'document' | 'library';
+  activeTab?: 'openapi' | 'library' | 'document';
 }
 
 export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderProps = {}) {
   const pathname = usePathname();
-  const isLibrary = pathname?.startsWith('/document/design-system');
-  const computedTab = isLibrary ? 'library' : 'document';
-  const [optimisticTab, setOptimisticTab] = React.useState<'document' | 'library' | null>(null);
+  const { activeTab: navActiveTab, setActiveTab } = useDocsNav();
 
-  // Sync optimistic tab when pathname changes
-  React.useEffect(() => {
-    setOptimisticTab(null);
-  }, [pathname]);
+  const isLibraryPath = pathname?.startsWith('/document/design-system');
+  const pathDerivedTab = isLibraryPath ? 'library' : 'openapi';
 
-  const activeTab = propActiveTab || optimisticTab || computedTab;
+  const normalizedPropTab = propActiveTab === 'document' ? 'openapi' : propActiveTab;
+  const currentTab = normalizedPropTab || navActiveTab || pathDerivedTab;
 
   const navTabs: HangingTabItem[] = [
     {
-      id: 'document',
+      id: 'openapi',
       label: 'Open API',
       icon: FileText,
       href: '/document',
-      onClick: () => setOptimisticTab('document'),
+      onClick: () => setActiveTab('openapi'),
     },
     {
       id: 'library',
-      label: 'Library',
+      label: 'UI Library',
       icon: Layers,
       href: '/document/design-system',
-      onClick: () => setOptimisticTab('library'),
+      onClick: () => setActiveTab('library'),
     },
   ];
 
@@ -60,7 +58,7 @@ export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderP
 
         {/* Center: Hanging Trapezoid Top Navigation (Centered on Page, Zero Number Labels) */}
         <div className="pointer-events-auto absolute bottom-0 left-1/2 -mb-[1px] flex -translate-x-1/2 items-end">
-          <HangingTabsNav items={navTabs} activeId={activeTab} size="sm" />
+          <HangingTabsNav items={navTabs} activeId={currentTab} size="sm" />
         </div>
 
         {/* Right: Pill Blank Link with Zero Background Behind Icon */}
