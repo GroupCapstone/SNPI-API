@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.8 (31.10.2026) - `3da80f8`
+
+- Remove top nav hanging tabs section and add universal ai agent prompt tabs and copy action
+
 ### Version 0.2.8 (31.10.2026) - `ec5413b`
 
 - Record line tracker navigation update and scrollbar removal in real-time changelog
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `3b51193`
 
 - Implement Date Picker and Date Range Picker with ARIA grid roving-tabindex, hover preview, and range bands
-
-### Version 0.2.8 (30.10.2026) - `ccfd501`
-
-- Synchronize real-time changelog for OTP PIN Input
 
