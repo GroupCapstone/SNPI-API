@@ -3,7 +3,7 @@ const API_PATH = '/api/v1';
 const getServerApiBaseUrl = (): string => {
   const requiresHttps = Boolean(process.env.VERCEL_ENV) || process.env.APP_ENV === 'production';
   const defaultUrl = requiresHttps
-    ? 'https://snpis.kesararamwithdigital.tech/api/v1'
+    ? 'https://api.kesararamwithdigital.tech/api/v1'
     : 'http://localhost:4000/api/v1';
 
   const backendUrl =
