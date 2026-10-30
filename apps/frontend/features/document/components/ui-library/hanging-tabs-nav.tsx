@@ -117,7 +117,6 @@ export function HangingTabsNav({
         );
 
         const tabProps = {
-          key: tab.id,
           onMouseEnter: () => setHoveredId(tab.id),
           onMouseLeave: () => setHoveredId(null),
           onClick: (e: React.MouseEvent) => {
