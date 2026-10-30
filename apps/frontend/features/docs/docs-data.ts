@@ -49,7 +49,7 @@ export const DOC_CATEGORIES: DocCategory[] = [
         name: 'API Overview & Standards',
         category: 'Getting Started',
         description:
-          'SNP-SMS delivers a 7-layer modular monolith API serving 47 domain modules across 193 REST endpoints. All endpoints return standardized JSON envelopes.',
+          'SNPI-SMS delivers a 7-layer modular monolith API serving 47 domain modules across 193 REST endpoints. All endpoints return standardized JSON envelopes.',
         permissionPrefix: 'None (Public)',
         layerPattern:
           'route -> controller -> service -> repository -> model -> validation -> types',
@@ -63,7 +63,7 @@ export const DOC_CATEGORIES: DocCategory[] = [
             description: 'Returns API server name, version, base path, and health endpoint link.',
             sampleResponse: {
               success: true,
-              message: 'SNP-SMS Backend API',
+              message: 'SNPI-SMS Backend API',
               version: '0.1.0',
               apiBase: '/api/v1',
               health: '/api/v1/health',
@@ -79,7 +79,7 @@ export const DOC_CATEGORIES: DocCategory[] = [
               success: true,
               message: 'Service is healthy',
               data: {
-                service: 'SNP-SMS API',
+                service: 'SNPI-SMS API',
                 status: 'healthy',
                 database: 'connected',
                 version: '0.1.0',
@@ -121,18 +121,18 @@ export const DOC_CATEGORIES: DocCategory[] = [
               },
             ],
             sampleRequest: {
-              identifier: 'admin@snp.edu.kh',
-              password: 'SuperSecurePassword123',
+              identifier: '<SERVICE_ACCOUNT_IDENTIFIER>',
+              password: '<SECURE_AUTHENTICATION_CREDENTIAL>',
             },
             sampleResponse: {
               success: true,
               message: 'Login successful',
               data: {
-                accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+                accessToken: '<JWT_ACCESS_TOKEN_SAMPLE>',
                 user: {
-                  id: '6720d...',
-                  username: 'admin_local',
-                  email: 'admin@snp.edu.kh',
+                  id: '<USER_UUID>',
+                  username: '<AUTHORIZED_OPERATOR>',
+                  email: '<AUTHORIZED_USER_EMAIL>',
                   roles: ['super_admin'],
                   permissions: ['*'],
                   branchAccess: 'all',
@@ -161,8 +161,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
               message: 'Current user profile retrieved',
               data: {
                 id: '6720d...',
-                username: 'admin_local',
-                email: 'admin@snp.edu.kh',
+                username: '<AUTHORIZED_OPERATOR>',
+                email: '<AUTHORIZED_USER_EMAIL>',
                 roles: ['super_admin'],
                 permissions: ['*'],
                 branchAccess: 'all',
@@ -224,10 +224,10 @@ export const DOC_CATEGORIES: DocCategory[] = [
               data: [
                 {
                   id: '6720d1...',
-                  code: 'SNP',
-                  nameEn: 'SNP International School',
-                  nameKh: 'សាលាអន្តរជាតិ អេសអិនភី',
-                  email: 'info@snp.edu.kh',
+                  code: 'SNPI',
+                  nameEn: 'SNPI International School',
+                  nameKh: 'សាលាអន្តរជាតិ អេសអិនភីអាយ',
+                  email: '<CONTACT_EMAIL_PLACEHOLDER>',
                   status: 'active',
                 },
               ],
@@ -242,10 +242,10 @@ export const DOC_CATEGORIES: DocCategory[] = [
             description: 'Registers a new school institutional profile.',
             permission: 'school.create.all_branches',
             sampleRequest: {
-              code: 'SNP',
-              nameEn: 'SNP International School',
-              nameKh: 'សាលាអន្តរជាតិ អេសអិនភី',
-              email: 'info@snp.edu.kh',
+              code: 'SNPI',
+              nameEn: 'SNPI International School',
+              nameKh: 'សាលាអន្តរជាតិ អេសអិនភីអាយ',
+              email: '<CONTACT_EMAIL_PLACEHOLDER>',
               phone: '+855 23 888 999',
               address: 'Phnom Penh, Cambodia',
               status: 'active',
@@ -255,8 +255,8 @@ export const DOC_CATEGORIES: DocCategory[] = [
               message: 'School created successfully',
               data: {
                 id: '6720d1...',
-                code: 'SNP',
-                nameEn: 'SNP International School',
+                code: 'SNPI',
+                nameEn: 'SNPI International School',
                 status: 'active',
               },
             },

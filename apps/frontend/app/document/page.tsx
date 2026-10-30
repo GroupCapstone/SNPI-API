@@ -11,6 +11,8 @@ import {
   GeometricHeaderStamp,
   DocsStickyHeader,
   GeometricButton,
+  LineTrackerToc,
+  type TocHeadingItem,
 } from '@/features/document/components/ui-library';
 import { cn } from '@/lib/utils';
 
@@ -281,18 +283,18 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
     permission: 'Public',
     scopeHeader: false,
     requestBody: {
-      identifier: 'admin@snp.edu.kh',
-      password: 'YourSecurePassword123',
+      identifier: '<SERVICE_ACCOUNT_IDENTIFIER>',
+      password: '<SECURE_AUTHENTICATION_CREDENTIAL>',
     },
     responseBody: {
       success: true,
       message: 'Login successful',
       data: {
-        accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+        accessToken: '<JWT_ACCESS_TOKEN_SAMPLE>',
         user: {
-          id: '6720d1a...',
-          username: 'admin_local',
-          email: 'admin@snp.edu.kh',
+          id: '<USER_UUID>',
+          username: '<AUTHORIZED_OPERATOR>',
+          email: '<AUTHORIZED_USER_EMAIL>',
           roles: ['super_admin'],
           branchAccess: 'all',
         },
@@ -384,7 +386,7 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
       success: true,
       message: 'Service is healthy',
       data: {
-        service: 'SNP-SMS API',
+        service: 'SNPI-SMS API',
         status: 'healthy',
         database: 'connected',
         version: '0.1.0',
@@ -394,10 +396,54 @@ const INTERACTIVE_ITEMS: ApiDocItem[] = [
   },
 ];
 
+const DOC_TOC_HEADINGS: TocHeadingItem[] = [
+  { id: 'changelogs', title: 'Change Logs', level: 1 },
+  { id: 'table-of-contents', title: 'Table of contents', level: 1 },
+  { id: 'introduction', title: 'Introduction', level: 1 },
+  { id: 'purpose', title: '1. Purpose', level: 2 },
+  { id: 'scope', title: '2. Scope', level: 2 },
+  { id: 'overall-api', title: '3. Overall API', level: 2 },
+  { id: 'who-can-access', title: 'Who Can Access', level: 1 },
+  { id: 'endpoints-available', title: 'Endpoints Catalog', level: 1 },
+  { id: 'protected-endpoints', title: 'Protected Endpoints', level: 2 },
+  { id: 'api-doc', title: 'API Documentation', level: 1 },
+  { id: 'status-codes', title: 'Status Codes', level: 2 },
+];
+
 export default function DocumentPage() {
   const [activeEndpointId, setActiveEndpointId] = React.useState<string>('auth-login');
+  const [activeDocSection, setActiveDocSection] = React.useState<string>('changelogs');
   const [codeType, setCodeType] = React.useState<'curl' | 'ts' | 'json'>('curl');
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
+
+  const scrollToDocSection = (id: string) => {
+    setActiveDocSection(id);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 140;
+      for (let i = DOC_TOC_HEADINGS.length - 1; i >= 0; i--) {
+        const item = DOC_TOC_HEADINGS[i];
+        const el = document.getElementById(item.id);
+        if (el) {
+          const top = el.offsetTop;
+          if (scrollPosition >= top) {
+            setActiveDocSection(item.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Live test states
   const [testingEndpointId, setTestingEndpointId] = React.useState<string | null>(null);
@@ -487,106 +533,25 @@ console.log(payload.data);`;
     <div className="flex min-h-screen flex-col bg-white text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
       {/* Main Grid: On This Page Sidebar + Body Content */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8 sm:px-6">
-        {/* Left Column: On This Page Table of Contents */}
-        <aside className="hidden w-60 shrink-0 md:block">
-          <div className="sticky top-24 space-y-4 font-mono text-xs text-slate-600">
-            <p className="text-[11px] font-bold tracking-wider text-slate-400 uppercase">
-              ON THIS PAGE
-            </p>
+        {/* Left Column: On This Page Table of Contents with Real-time Tracker Line */}
+        <aside className="hidden w-64 shrink-0 md:block">
+          <div className="sticky top-24 space-y-4">
+            <GeometricButton
+              href="/document/design-system"
+              variant="blue"
+              size="sm"
+              icon={<Layers className="size-3.5" />}
+              className="w-full justify-center"
+            >
+              UI Library
+            </GeometricButton>
 
-            <nav className="space-y-2 text-slate-600">
-              <GeometricButton
-                href="/document/design-system"
-                variant="blue"
-                size="sm"
-                icon={<Layers className="size-3.5" />}
-              >
-                UI Library
-              </GeometricButton>
-              <a href="#changelogs" className="block py-1 transition-colors hover:text-[#0056FF]">
-                Change Logs
-              </a>
-              <a
-                href="#table-of-contents"
-                className="block py-1 transition-colors hover:text-[#0056FF]"
-              >
-                Table of contents
-              </a>
-
-              <div className="pt-1">
-                <a
-                  href="#introduction"
-                  className="block py-1 font-semibold text-slate-800 hover:text-[#0056FF]"
-                >
-                  * Introduction
-                </a>
-                <div className="space-y-0.5 pl-3 text-slate-500">
-                  <a href="#purpose" className="block py-0.5 hover:text-slate-900">
-                    1. Purpose
-                  </a>
-                  <a href="#scope" className="block py-0.5 hover:text-slate-900">
-                    2. Scope
-                  </a>
-                  <a href="#overall-api" className="block py-0.5 hover:text-slate-900">
-                    3. Overall API
-                  </a>
-                </div>
-              </div>
-
-              <div className="pt-1">
-                <a
-                  href="#who-can-access"
-                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#0056FF]"
-                >
-                  * Who Can Access
-                </a>
-              </div>
-
-              <div className="pt-1">
-                <a
-                  href="#endpoints-available"
-                  className="block py-1 font-semibold text-slate-800 transition-colors hover:text-[#0056FF]"
-                >
-                  * Endpoints Catalog
-                </a>
-                <div className="space-y-0.5 pl-3 text-slate-500">
-                  <a href="#endpoints-available" className="block py-0.5 hover:text-slate-900">
-                    Available For Devs
-                  </a>
-                  <a href="#protected-endpoints" className="block py-0.5 hover:text-slate-900">
-                    Protected Endpoints
-                  </a>
-                </div>
-              </div>
-
-              <div className="pt-1">
-                <a
-                  href="#api-doc"
-                  className="block py-1 font-semibold text-slate-800 hover:text-[#0056FF]"
-                >
-                  * API Documentation
-                </a>
-                <div className="space-y-0.5 pl-3 text-slate-500">
-                  <a href="#status-codes" className="block py-0.5 hover:text-slate-900">
-                    Status Codes
-                  </a>
-                  {INTERACTIVE_ITEMS.map((item, idx) => (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      onClick={() => setActiveEndpointId(item.id)}
-                      className={`block truncate py-0.5 transition-colors ${
-                        activeEndpointId === item.id
-                          ? 'font-bold text-[#0056FF]'
-                          : 'hover:text-slate-900'
-                      }`}
-                    >
-                      {idx + 1}. {item.title.split('. ')[1] || item.title}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </nav>
+            <LineTrackerToc
+              items={DOC_TOC_HEADINGS}
+              activeId={activeDocSection}
+              onSelect={scrollToDocSection}
+              title="ON THIS PAGE"
+            />
           </div>
         </aside>
 
@@ -596,7 +561,7 @@ console.log(payload.data);`;
           <div className="space-y-3 border-b border-slate-200 pb-8">
             <div className="flex items-center gap-2">
               <span className="flex items-center gap-2 font-mono text-xl font-bold tracking-tight text-slate-950">
-                SNP-SMS Documentation
+                SNPI-SMS Documentation
               </span>
             </div>
             <p className="max-w-3xl font-sans text-sm leading-relaxed text-slate-600">
@@ -604,9 +569,9 @@ console.log(payload.data);`;
                 href="/document"
                 className="font-medium text-slate-900 transition-colors hover:text-[#0056FF]"
               >
-                SNP-SMS Open API
+                SNPI-SMS Open API
               </Link>{' '}
-              provides unified programmatic access to the SNP-SMS modular monolith backend. It
+              provides unified programmatic access to the SNPI-SMS modular monolith backend. It
               enables partner developers, mobile apps, and institutional integrations to securely
               interact with student profiles, academic calendars, attendance registries, and fee
               records through standardized REST endpoints.
@@ -733,9 +698,10 @@ console.log(payload.data);`;
             <div id="purpose" className="scroll-mt-24 space-y-2">
               <h3 className="font-mono text-xs font-bold text-slate-800">1. Purpose</h3>
               <p className="font-sans text-xs leading-relaxed text-slate-600">
-                This document describes the technical REST API specification of the SNP Integrated
-                Multi-Branch School Management System (SNP-SMS). The primary audience is third-party
-                integrators, mobile developers, campus IT staff, and administrative client systems.
+                This document describes the technical REST API specification of the SNPI Integrated
+                Multi-Branch School Management System (SNPI-SMS). The primary audience is
+                third-party integrators, mobile developers, campus IT staff, and administrative
+                client systems.
               </p>
             </div>
 

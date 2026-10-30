@@ -3,8 +3,8 @@ import { DocsStickyHeader } from '@/features/document/components/ui-library';
 
 export const metadata: Metadata = {
   title: {
-    default: 'SNP-SMS Open API & Design Library',
-    template: '%s · SNP-SMS Docs',
+    default: 'SNPI-SMS Open API & Design Library',
+    template: '%s · SNPI-SMS Docs',
   },
   description:
     'Enterprise API documentation, developer guidelines, and UI component standards with Royal Blue & Sora typography.',

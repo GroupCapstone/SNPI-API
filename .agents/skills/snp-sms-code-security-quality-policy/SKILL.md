@@ -17,6 +17,7 @@ This specification establishes the mandatory code security standards, software q
 
 ### 1.1 Cryptographic Hygiene & Zero Secret Exposure
 - **Zero Plain-Text Credentials**: API keys, JWT secrets, database connection strings, and passwords must NEVER be committed to version control.
+- **Zero Display of Concrete Credentials or Identifiers in Docs & UI**: Under no circumstances should concrete user credentials, identity IDs, real or mock staff/admin email accounts (e.g. `admin@snp.edu.kh`, `info@snp.edu.kh`), concrete passwords (`YourPassword123`), secret keys, or authentication IDs be rendered or displayed in documentation, UI examples, or client-facing mockups. All documentation and sample payloads must strictly use standardized abstract placeholder tokens: `<SERVICE_ACCOUNT_IDENTIFIER>`, `<SECURE_AUTHENTICATION_CREDENTIAL>`, `<AUTHORIZED_USER_EMAIL>`, `<CONTACT_EMAIL_PLACEHOLDER>`, `<JWT_ACCESS_TOKEN_SAMPLE>`, `<USER_UUID>`, `<BRANCH_ID>`.
 - **Placeholder Secret Prohibition**: Environments reject common placeholder values (`replace-with`, `example`, `change-me`, `your-secret`) via automated runtime Zod refinement.
 - **Constant-Time Verification**: All signature checks, webhook verifications, and token hash comparisons must execute via `crypto.timingSafeEqual` to eliminate timing side-channel attacks.
 - **Secret Differentiation**: In all runtime environments, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, and `COOKIE_SECRET` must be distinct cryptographic values of at least 32 characters.

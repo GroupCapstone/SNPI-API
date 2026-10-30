@@ -50,7 +50,7 @@ export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderP
           <BrandMark compact size={36} />
           <div className="flex items-center gap-2">
             <span className="font-sans text-lg font-black tracking-tight text-slate-950 sm:text-xl">
-              SNP-SMS
+              SNPI-SMS
             </span>
             <span className="h-4 w-[2px] bg-[#0056FF]" />
             <span className="font-sans text-xs font-bold tracking-wider text-slate-500 uppercase">
