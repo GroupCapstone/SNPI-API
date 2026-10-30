@@ -15,6 +15,7 @@ export * from './otp-pin-input';
 export * from './date-picker';
 export * from './searchable-dropdown';
 export * from './command-palette';
+export * from './modal-dialog';
 export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';

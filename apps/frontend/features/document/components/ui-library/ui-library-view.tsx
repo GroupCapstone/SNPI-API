@@ -71,6 +71,7 @@ import {
   FileDropzoneDemo,
   PaymentCardDemo,
   CommandPaletteDemo,
+  ModalDialogDemo,
   ConfettiCannonDemo,
   DrawerSheetDemo,
   ImageLightboxDemo,
@@ -2920,6 +2921,8 @@ function renderFeedComponentDemo(
     // ==========================================
     case 'command-palette':
       return <CommandPaletteDemo />;
+    case 'modal-dialog':
+      return <ModalDialogDemo />;
     case 'confetti-cannon':
       return <ConfettiCannonDemo />;
     case 'drawer-sheet':
