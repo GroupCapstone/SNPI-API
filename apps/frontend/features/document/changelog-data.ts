@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "5d0d50c",
+    "description": "Implement 8-pillar Toast Notification Stack with auto-dismiss, progress bars, hover pause, and two-phase exit"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "df74ca4",
+    "description": "Synchronize real-time changelog for Modal & Dialog"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "bf209df",
     "description": "Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "3f4322f",
     "description": "Implement Preview Code toolbar with responsive device switcher, dark mode, expand, and reset controls"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "9e8ae58",
-    "description": "Synchronize real-time changelog with Border Beam Card component"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "b4c1332",
-    "description": "Design Border Beam Login Card with 4-dash SVG physics, instrument-panel telemetry, and amber glow"
   }
 ];

@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `5d0d50c`
+
+- Implement 8-pillar Toast Notification Stack with auto-dismiss, progress bars, hover pause, and two-phase exit
+
+### Version 0.2.7 (30.10.2026) - `df74ca4`
+
+- Synchronize real-time changelog for Modal & Dialog
+
 ### Version 0.2.7 (30.10.2026) - `bf209df`
 
 - Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `3f4322f`
 
 - Implement Preview Code toolbar with responsive device switcher, dark mode, expand, and reset controls
-
-### Version 0.2.7 (30.10.2026) - `9e8ae58`
-
-- Synchronize real-time changelog with Border Beam Card component
-
-### Version 0.2.7 (30.10.2026) - `b4c1332`
-
-- Design Border Beam Login Card with 4-dash SVG physics, instrument-panel telemetry, and amber glow
 
