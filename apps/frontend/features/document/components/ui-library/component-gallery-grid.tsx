@@ -86,7 +86,7 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Breadcrumbs',
     variantsCount: 18,
     category: 'Navigation',
-    description: 'Secondary hierarchical path navigation displaying location within SNP-SMS.',
+    description: 'Secondary hierarchical path navigation displaying location within SNPI-SMS.',
     iconType: 'breadcrumbs',
   },
   {

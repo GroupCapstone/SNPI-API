@@ -107,7 +107,7 @@ export default function DesignSystemPage() {
   // Headings for Right Sidebar Line Tracker
   const tocHeadings: TocHeadingItem[] = React.useMemo(
     () => [
-      { id: 'how-it-works', title: 'SNP-SMS Design System: how it works', level: 1 },
+      { id: 'how-it-works', title: 'SNPI-SMS Design System: how it works', level: 1 },
       { id: 'architecture-flow', title: 'Architectural token flow', level: 2 },
       { id: 'top-nav-style', title: 'Top Navigation Hanging Tabs Style', level: 1 },
       { id: 'component-gallery', title: 'Component Catalog & Variants', level: 1 },
@@ -314,17 +314,17 @@ export default function DesignSystemPage() {
               <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2">
                   <h1 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-                    SNP-SMS Design System: how it works
+                    SNPI-SMS Design System: how it works
                   </h1>
                 </div>
                 <GeometricHeaderStamp codeA="20" titleA="SYSTEM" codeB="26" titleB="DOCS" />
               </div>
 
               <p className="font-sans text-sm leading-relaxed text-slate-600">
-                When you build or extend interfaces in SNP-SMS, the Design System enforces visual
+                When you build or extend interfaces in SNPI-SMS, the Design System enforces visual
                 cohesion, strict flat aesthetics, and luminance-based depth before any code reaches
                 production. It does not matter whether the view is an institutional dashboard, a
-                public verification portal, or a mobile portal. If it runs on SNP-SMS, it follows
+                public verification portal, or a mobile portal. If it runs on SNPI-SMS, it follows
                 the Royal Blue and Sora standards.
               </p>
 
@@ -410,7 +410,7 @@ export default function DesignSystemPage() {
                       </span>
                     </div>
                     <span className="font-mono text-[11px] text-slate-500">
-                      SNP-SMS Design Standard
+                      SNPI-SMS Design Standard
                     </span>
                   </div>
 
@@ -470,7 +470,7 @@ export default function DesignSystemPage() {
                     </p>
                   </div>
                   <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                    SNP-SMS Pill Standard
+                    SNPI-SMS Pill Standard
                   </span>
                 </div>
 
@@ -797,7 +797,7 @@ export default function DesignSystemPage() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
           <div className="flex items-center gap-2">
             <span className="inline-block h-2 w-2 rounded-full bg-[#0056FF]" />
-            <span>SNP-SMS Design Standards & Component Catalog · Sora Typography</span>
+            <span>SNPI-SMS Design Standards & Component Catalog · Sora Typography</span>
           </div>
           <div className="flex items-center gap-4">
             <Link
@@ -1240,7 +1240,7 @@ function renderActivePlaygroundComponent(props: {
                 <span className="font-sans text-xs font-bold tracking-wider text-slate-700 uppercase">
                   Application Header
                 </span>
-                <span className="font-mono text-[10px] text-slate-500">SNP-SMS v2.4</span>
+                <span className="font-mono text-[10px] text-slate-500">SNPI-SMS v2.4</span>
               </div>
               <div className="-mb-[1px] flex justify-center">
                 <HangingTabsNav

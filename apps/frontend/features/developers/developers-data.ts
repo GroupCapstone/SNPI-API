@@ -33,18 +33,18 @@ export const DEVELOPER_SECTIONS: DevSection[] = [
         permission: 'Public',
         scopeHeader: false,
         requestBody: {
-          identifier: 'admin@snp.edu.kh',
-          password: 'YourPassword123',
+          identifier: '<SERVICE_ACCOUNT_IDENTIFIER>',
+          password: '<SECURE_AUTHENTICATION_CREDENTIAL>',
         },
         responseBody: {
           success: true,
           message: 'Login successful',
           data: {
-            accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+            accessToken: '<JWT_ACCESS_TOKEN_SAMPLE>',
             user: {
-              id: '6720d1a...',
-              username: 'admin_local',
-              email: 'admin@snp.edu.kh',
+              id: '<USER_UUID>',
+              username: '<AUTHORIZED_OPERATOR>',
+              email: '<AUTHORIZED_USER_EMAIL>',
               roles: ['super_admin'],
               branchAccess: 'all',
             },
@@ -260,7 +260,7 @@ export const DEVELOPER_SECTIONS: DevSection[] = [
           success: true,
           message: 'Service is healthy',
           data: {
-            service: 'SNP-SMS API',
+            service: 'SNPI-SMS API',
             status: 'healthy',
             database: 'connected',
             version: '0.1.0',
