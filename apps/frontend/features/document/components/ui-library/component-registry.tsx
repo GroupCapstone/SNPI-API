@@ -2694,81 +2694,93 @@ const columns: DataTableColumn<StudentRecord>[] = [
     supportedStates: ['Thinking', 'Querying', 'Synthesizing', 'Complete'],
   },
   // ==========================================
-  // NAVIGATION (Rare UI Floating Dock)
+  // NAVIGATION (Hanging Tabs Nav)
   // ==========================================
   {
-    id: 'capsule-dock-nav',
-    name: 'Capsule Dock Nav',
-    category: 'Navigation',
-    paradigm: 'Floating 3-Island Responsive Scroll Dock',
-    description:
-      'Floating 3-island header featuring the official project logo, two direct link pills (UI Library | Open API), version indicator badge, and scroll resize animation.',
+    id: 'hanging-tabs-nav',
+    name: 'Hanging Tabs Nav',
+    category: 'Header Navigation',
+    paradigm: 'Trapezoid Ceiling Paradigm',
+    description: 'Inverted trapezoid tabs anchored to the top header baseline.',
     explanation:
-      'The Capsule Dock Nav suspends three sleek, high-contrast obsidian capsule islands above the viewport. When scrolling down, it smoothly scales down to preserve vertical reading space; when scrolling up, it expands back to full size. Active navigation items are highlighted in vivid Royal Blue (#0056FF) and white for crystal-clear readability against content scrolling behind it.',
-    props: [
-      {
-        name: 'version',
-        type: 'string',
-        default: "'v0.2.8'",
-        description: 'Version string displayed in the right island badge.',
-      },
-      {
-        name: 'className',
-        type: 'string',
-        description: 'Additional class names for root header container.',
-      },
+      'The Hanging Tabs Nav suspends navigation tabs directly from the application header baseline. Inspired by index dividers in physical filing cabinets, its inverted trapezoid geometry provides a distinctive, tactile sense of workspace organization while maintaining centered page balance.',
+    supportedStates: [
+      'Map Active',
+      'Newswire Active',
+      'Post Active',
+      'Friends Active',
+      'Size Small',
+      'Size Medium',
+      'Size Large',
     ],
-    codeSnippet: `import { CapsuleDockNav } from '@/features/document/components/ui-library';\n\n{/* Floating 3-Island Capsule Dock Navigation with Scroll Resize */}\n<CapsuleDockNav version="v0.2.8" />`,
     realWorldExamples: [
       {
-        title: 'Developer Documentation Header',
-        scenario: 'Developers toggle between UI Library and Open API references.',
-        impact:
-          'Instant zero-latency tab switching with high-contrast text and zero visual clutter.',
+        title: 'Master Developer Documentation Portal',
+        scenario:
+          'Developers switch between "Open API", "UI Library", and "Changelog" in the top bar.',
+        impact: 'Zero number labels, centered on page, with instantaneous smooth page switching.',
       },
       {
-        title: 'Adaptive Scroll Header',
-        scenario: 'User scrolls through long component feeds and API endpoint specifications.',
+        title: 'Campus Workspace Mode Selector',
+        scenario: 'Administrators switch between "Map", "Newswire", "Post", and "Friends".',
         impact:
-          'Dock scales down on scroll-down and expands on scroll-up, optimizing spatial economy.',
+          'Tactile folder metaphor anchors user attention to the current application workspace.',
       },
     ],
     uxPsychology: [
       {
-        principle: "Fitts's Law 3-Island Dock",
-        detail: 'Centralized floating islands reduce eye travel distance.',
+        principle: 'Skeuomorphic Folder Divider Familiarity',
+        detail:
+          'Draws upon decades of physical paper indexing intuition, making active tab state instantly distinguishable.',
       },
       {
-        principle: 'Kinetic Feedback on Scroll',
+        principle: 'Ceiling Anchoring & Visual Balance',
         detail:
-          'Proportional scaling responding to scroll direction provides tactile visual awareness without layout disruption.',
+          'Hanging from the header baseline creates an organized spatial ceiling, framing the content below.',
       },
     ],
     usageGuidelines: [
       {
-        doItem:
-          'Use direct two-link navigation for focused developer documentation and portal headers.',
-        dontItem:
-          'Do not overload center dock with unnecessary multi-level dropdowns when direct routes suffice.',
+        doItem: 'Center navigation on the page with zero number labels for maximal elegance.',
+        dontItem: 'Add colored background blocks behind icons or wrap tabs onto multiple lines.',
       },
       {
-        doItem:
-          'Maintain high contrast obsidian surfaces with Royal Blue highlights over scrolling backgrounds.',
+        doItem: 'Use vector-smooth non-scaling SVG geometry to ensure continuous 2px strokes.',
         dontItem:
-          'Do not use flat pure black (#000000); use deep obsidian #0A0D14 with keyline ring borders.',
+          'Use hanging tabs inside compact mobile navigation bars where horizontal space is constrained.',
       },
     ],
     implementationNotes: [
-      'Island 1: Official SNP logo image (/images/logo.png) with SNPI-SMS Docs branding.',
-      'Island 2: Direct links to UI Library and Open API with vivid Royal Blue active fill.',
-      'Island 3: Technical version display pill (v0.2.8) with active blue pulse indicator.',
-      'Scroll event listener: scales down to compact height (h-9) on scroll-down, restores (h-11) on scroll-up.',
+      'Built with smooth SVG paths featuring nonScalingStroke to preserve 2px continuous border width.',
+      'Active tab highlighted with Royal Blue (#0056FF) stroke and bold title typography.',
+      'Supports three standard sizes: sm (h-12), md (h-14), and lg (h-16).',
     ],
-    supportedStates: [
-      'Full Size (Scroll Up / Top)',
-      'Compact (Scroll Down)',
-      'UI Library Active',
-      'Open API Active',
+    codeSnippet: `import { HangingTabsNav } from '@/features/document/components/ui-library';\nimport { Newspaper, Pin, FilePlus } from '@/components/icons';\n\nexport function Example() {\n  const [tab, setTab] = React.useState('newswire');\n\n  return (\n    <HangingTabsNav\n      activeId={tab}\n      onSelect={setTab}\n      size="md"\n      items={[\n        { id: 'map', label: 'Map', icon: Pin },\n        { id: 'newswire', label: 'Newswire', icon: Newspaper },\n        { id: 'post', label: 'Post', icon: FilePlus },\n      ]}\n    />\n  );\n}`,
+    props: [
+      {
+        name: 'items',
+        type: 'HangingTabItem[]',
+        default: '[]',
+        description: 'Array of id, label, icon, and optional badge objects.',
+      },
+      {
+        name: 'activeId',
+        type: 'string',
+        default: '—',
+        description: 'Id of the currently active tab.',
+      },
+      {
+        name: 'onSelect',
+        type: '(id: string) => void',
+        default: '—',
+        description: 'Callback invoked when a tab is pressed.',
+      },
+      {
+        name: 'size',
+        type: "'sm' | 'md' | 'lg'",
+        default: "'md'",
+        description: 'Height and scale preset.',
+      },
     ],
   },
   {

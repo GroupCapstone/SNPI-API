@@ -29,16 +29,74 @@ import {
   ExternalLink,
   Sliders,
   X,
+  Newspaper,
+  Pin,
+  FilePlus,
+  Users,
 } from '@/components/icons';
 
 import { RareUiNavigationMenu } from '../navigation-menu';
-import { CapsuleDockNav } from '../capsule-dock-nav';
+import { HangingTabsNav } from '../hanging-tabs-nav';
 
 // ==========================================
-// 0. CAPSULE DOCK NAV (Floating 3-Island Navigation Menu)
+// 0. HANGING TABS NAV (Trapezoid Ceiling Navigation)
 // ==========================================
-export function CapsuleDockDemo() {
-  return <CapsuleDockNav />;
+export function HangingTabsNavDemo() {
+  const [activeTab, setActiveTab] = React.useState('newswire');
+  const [size, setSize] = React.useState<'sm' | 'md' | 'lg'>('md');
+
+  return (
+    <div className="flex w-full flex-col items-center gap-5">
+      <div className="flex items-center justify-center gap-2">
+        {(['sm', 'md', 'lg'] as const).map((sz) => (
+          <button
+            key={sz}
+            type="button"
+            onClick={() => setSize(sz)}
+            className={cn(
+              'rounded-[4px] px-3 py-1 font-sans text-xs font-bold transition-all',
+              size === sz
+                ? 'bg-[#0056FF] text-white'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+            )}
+          >
+            Size {sz.toUpperCase()}
+          </button>
+        ))}
+      </div>
+
+      <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs">
+        <div className="rounded-t-xl border-b border-slate-200 bg-slate-50 px-6 pt-4 pb-0">
+          <div className="flex items-center justify-between pb-3">
+            <span className="font-sans text-xs font-bold tracking-wider text-slate-700 uppercase">
+              Header Navigation Ceiling
+            </span>
+            <span className="font-mono text-[10px] text-slate-500">
+              SNPI-SMS Hanging Tabs Standard
+            </span>
+          </div>
+          <div className="-mb-[1px] flex justify-center">
+            <HangingTabsNav
+              activeId={activeTab}
+              onSelect={setActiveTab}
+              size={size}
+              items={[
+                { id: 'map', label: 'Map', icon: Pin },
+                { id: 'newswire', label: 'Newswire', icon: Newspaper },
+                { id: 'post', label: 'Post', icon: FilePlus },
+                { id: 'friends', label: 'Friends', icon: Users },
+              ]}
+            />
+          </div>
+        </div>
+        <div className="p-5 text-center">
+          <span className="font-mono text-xs text-slate-600">
+            Active Tab: <strong className="text-[#0056FF]">{activeTab.toUpperCase()}</strong>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // ==========================================

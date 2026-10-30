@@ -2,7 +2,11 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.8 (31.10.2026) - `79f1db2`
+### Version 0.2.8 (31.10.2026) - `f9faefe`
+
+- Revert(document): remove floating capsule dock nav and restore top hanging tabs header
+
+### Version 0.2.8 (31.10.2026) - `c53639d`
 
 - Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry
 
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `df74ca4`
 
 - Synchronize real-time changelog for Modal & Dialog
-
-### Version 0.2.8 (30.10.2026) - `bf209df`
-
-- Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack
 

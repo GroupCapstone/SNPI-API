@@ -341,7 +341,7 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
                     </a>
 
                     <a
-                      href="#comp-capsule-dock-nav"
+                      href="#comp-hanging-tabs-nav"
                       className="group/item flex items-start gap-3 rounded-xl p-2.5 transition-colors hover:bg-white/5"
                     >
                       <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-slate-800 bg-[#161B26] text-amber-400">
@@ -349,10 +349,10 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
                       </div>
                       <div>
                         <span className="font-sans text-xs font-bold text-slate-100 group-hover/item:text-white">
-                          Capsule Dock Nav
+                          Hanging Tabs Nav
                         </span>
                         <p className="font-sans text-[11px] text-slate-400">
-                          Floating 3-island header with brand pill and contrast switcher.
+                          Inverted trapezoid folder tabs suspended from the ceiling baseline.
                         </p>
                       </div>
                     </a>

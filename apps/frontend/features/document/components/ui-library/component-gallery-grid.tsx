@@ -73,11 +73,10 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     description: 'Interactive container with metrics, status pills, and sliding card layers.',
   },
   {
-    id: 'capsule-dock-nav',
-    name: 'Capsule Dock Nav',
+    id: 'hanging-tabs-nav',
+    name: 'Hanging Tabs Nav',
     category: 'Header Navigation',
-    description:
-      'Floating 3-island capsule dock with brand pill, mega menu, and contrast switcher.',
+    description: 'Inverted trapezoid folder tabs suspended from the ceiling baseline.',
   },
   {
     id: 'icon-bar',
@@ -463,20 +462,16 @@ function renderRealMiniDemo(
         </div>
       );
 
-    case 'capsule-dock-nav':
+    case 'hanging-tabs-nav':
       return (
-        <div className="flex items-center justify-center gap-1.5 pt-2">
-          <div className="flex h-7 items-center gap-1 rounded-full border border-slate-800 bg-[#0A0D14] px-2 text-[9px] text-white">
-            <span className="size-1.5 rounded-full bg-[#FF5500]" />
-            <span className="font-bold">SNP UI</span>
+        <div className="flex items-start justify-center gap-1.5 pt-1">
+          <div className="relative flex h-11 w-20 flex-col items-center justify-center rounded-b-xl border border-t-0 border-[#0056FF] bg-white pt-1">
+            <FileText className="size-3.5 text-[#0056FF]" />
+            <span className="mt-0.5 font-sans text-[9px] font-bold text-[#0056FF]">Open API</span>
           </div>
-          <div className="flex h-7 items-center gap-1 rounded-full border border-slate-800 bg-[#0A0D14] px-2 text-[8px] text-slate-300">
-            <span>Home</span>
-            <span className="text-slate-600">|</span>
-            <span className="font-bold text-white">Components ⌄</span>
-          </div>
-          <div className="flex h-7 items-center gap-1 rounded-full border border-slate-800 bg-[#0A0D14] px-2 font-mono text-[8px] text-slate-200">
-            1866
+          <div className="relative flex h-11 w-20 flex-col items-center justify-center rounded-b-xl border border-t-0 border-slate-300 bg-slate-100/80 pt-1">
+            <Layers className="size-3.5 text-slate-600" />
+            <span className="mt-0.5 font-sans text-[9px] font-bold text-slate-600">Library</span>
           </div>
         </div>
       );
