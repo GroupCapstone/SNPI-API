@@ -4,6 +4,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { SpotlightBentoGrid } from '../spotlight-bento-grid';
 import { MultiStepWizardInteractiveDemo } from '../multi-step-wizard';
+import { CommandPaletteInteractiveDemo } from '../command-palette';
 import {
   Sparkles,
   Search,
@@ -720,47 +721,7 @@ export function PaymentCardDemo() {
 
 // 6.1 Command Palette KBD
 export function CommandPaletteDemo() {
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 font-sans text-xs text-slate-500 hover:border-[#0056FF]"
-      >
-        <div className="flex items-center gap-2">
-          <Search className="size-3.5 text-[#0056FF]" />
-          <span>Quick actions & routes...</span>
-        </div>
-        <kbd className="rounded-md border border-slate-300 bg-white px-2 py-0.5 font-mono text-[10px] font-bold text-slate-600 shadow-xs">
-          ⌘K
-        </kbd>
-      </button>
-
-      {open && (
-        <div className="space-y-1.5 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-lg">
-          <span className="px-2 font-mono text-[10px] font-bold text-slate-400 uppercase">
-            Suggestions
-          </span>
-          {[
-            'Enroll new student',
-            'Issue tuition invoice',
-            'Export monthly attendance',
-            'System settings',
-          ].map((act, i) => (
-            <div
-              key={i}
-              className="flex cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 text-xs hover:bg-[#E3E7FC] hover:text-[#0056FF]"
-            >
-              <span className="font-semibold">{act}</span>
-              <ArrowRight className="size-3 text-slate-400" />
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+  return <CommandPaletteInteractiveDemo />;
 }
 
 // 6.2 Confetti Cannon

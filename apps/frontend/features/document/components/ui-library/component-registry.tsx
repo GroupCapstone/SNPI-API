@@ -3318,34 +3318,95 @@ const columns: DataTableColumn<StudentRecord>[] = [
   // ==========================================
   {
     id: 'command-palette',
-    name: 'Command Palette KBD',
+    name: 'Command Palette',
     category: 'Overlays',
     paradigm: 'Global Spotlight Search Standard',
-    description: 'Command palette modal with search input, keyboard shortcuts, and action items.',
-    explanation: 'Power-user search interface triggered via Cmd+K for zero-mouse operations.',
-    props: [{ name: 'open', type: 'boolean', description: 'Dialog presence state.' }],
-    codeSnippet: `import { CommandPaletteDemo } from '@/features/document/components/ui-library';\n\n<CommandPaletteDemo />`,
+    description: 'A Cmd+K command menu with search, grouped results, and full keyboard navigation.',
+    explanation:
+      'Click the search bar or press Cmd+K (or Ctrl+K) to open. Navigate with arrow keys, select with Enter, close with Escape. Try typing to filter results.',
+    props: [
+      { name: 'open', type: 'boolean', default: 'false', description: 'Modal presence state.' },
+      {
+        name: 'onOpenChange',
+        type: '(open: boolean) => void',
+        description: 'Callback fired when dialog open state flips.',
+      },
+      {
+        name: 'commands',
+        type: 'CommandItem[]',
+        description: 'List of executable command actions grouped by category.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Instrument panel color palette.',
+      },
+    ],
+    codeSnippet: `import { CommandPalette } from '@/features/document/components/ui-library';\n\n<CommandPalette open={open} onOpenChange={setOpen} />`,
     realWorldExamples: [
       {
-        title: 'Power User Dispatch',
-        scenario: 'Principal presses Cmd+K to jump to staff record.',
-        impact: 'Sub-second navigation.',
+        title: 'Institutional Power-User Dispatch',
+        scenario:
+          'Campus Director presses Cmd+K to jump immediately to admissions, fee invoices, or audit logs.',
+        impact: 'Sub-second task execution with zero mouse friction.',
+      },
+      {
+        title: 'Developer & SecOps Command Surface',
+        scenario:
+          'IT staff executes smoke tests, endpoint verification, or inspects cryptographic audit ledgers.',
+        impact: 'Unified action surface across all 47 domain modules.',
       },
     ],
     uxPsychology: [
       {
-        principle: 'Doherty Threshold',
-        detail: 'Instant command search sustains user flow state.',
+        principle: 'Doherty Threshold & Sub-100ms Flow',
+        detail:
+          'Instant modal popup and keyboard indexing keeps administrators in high-velocity focus state.',
+      },
+      {
+        principle: 'Recognition Over Recall (Fuzzy Cyan Matches)',
+        detail:
+          'Cyan character marks highlight exact query hits so users instantly verify search accuracy.',
       },
     ],
     usageGuidelines: [
       {
-        doItem: 'Provide prominent keyboard shortcuts.',
-        dontItem: 'Do not require mouse clicking.',
+        doItem:
+          'USE THIS WHEN: Your app has 10+ navigable pages or actions and users need fast access to any of them.',
+        dontItem:
+          'NOT IDEAL WHEN: Your site has only a few pages — a standard nav bar or search input is simpler.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Building developer tools, admin panels, or dashboards where power users expect keyboard shortcuts.',
+        dontItem:
+          'NOT IDEAL WHEN: The primary audience is non-technical and unfamiliar with Cmd+K patterns.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: You want a unified search surface that combines navigation, actions, and help in one overlay.',
+        dontItem:
+          'NOT IDEAL WHEN: You need full-text document search — this is for command/action lookup, not content indexing.',
       },
     ],
-    implementationNotes: ['Floating search list with kbd badge.'],
-    supportedStates: ['Closed', 'Open with Suggestions'],
+    implementationNotes: [
+      '01 Backdrop Overlay: Semi-transparent blurred layer that dims the page and focuses attention on the dialog.',
+      '02 Search Input: Auto-focused text field with search icon and ESC badge that filters results as you type.',
+      '03 Grouped Results: Commands organized by category with uppercase section labels for quick visual scanning.',
+      '04 Fuzzy Highlighting: Matching characters highlighted in cyan so users see exactly what their query matched.',
+      '05 Keyboard Navigation: Arrow keys, Enter, Home, End, and Escape for full keyboard-driven control without a mouse.',
+      '06 Shortcut Badges: Monospace key hints displayed on the right side of action items for quick reference.',
+      '07 Focus Trap: Tab cycling confined to the dialog, with focus restored to the trigger element on close.',
+      '08 Platform Detection: Automatic modifier key display — ⌘ on macOS, Ctrl on Windows/Linux.',
+    ],
+    supportedStates: [
+      'Closed',
+      'Open (Backdrop Dimmed)',
+      'Filtered Query',
+      'Active Item Selected',
+      'Action Executed',
+    ],
   },
   {
     id: 'confetti-cannon',
