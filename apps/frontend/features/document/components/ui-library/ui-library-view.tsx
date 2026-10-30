@@ -78,6 +78,7 @@ import {
   SpotlightBentoGridDemo,
   CipherTextDecoderDemo,
   DatePickerDemo,
+  SearchableDropdownDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2911,6 +2912,8 @@ function renderFeedComponentDemo(
       return <PaymentCardDemo />;
     case 'date-picker':
       return <DatePickerDemo />;
+    case 'searchable-dropdown':
+      return <SearchableDropdownDemo />;
 
     // ==========================================
     // OVERLAYS (Component Templates)

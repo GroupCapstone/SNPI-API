@@ -3206,6 +3206,113 @@ const columns: DataTableColumn<StudentRecord>[] = [
       'Today Active',
     ],
   },
+  {
+    id: 'searchable-dropdown',
+    name: 'Searchable Dropdown',
+    category: 'Forms',
+    paradigm: 'ARIA Combobox & Active Descendant Standard',
+    description:
+      'A custom select with type-to-filter search, single and multi-select modes, removable chips, and the full ARIA combobox keyboard contract.',
+    explanation:
+      'Two instances, one component — switched by a single multiple: true option. Both share the same keyboard model and ARIA semantics.',
+    props: [
+      {
+        name: 'options',
+        type: 'DropdownOption[]',
+        description: 'Array of selectable option objects with values, labels, and groups.',
+      },
+      {
+        name: 'multiple',
+        type: 'boolean',
+        default: 'false',
+        description: 'Switch between single selection and multi-tag chip mode.',
+      },
+      {
+        name: 'value',
+        type: 'string | string[]',
+        description: 'Current selected value or array of selected values in multi mode.',
+      },
+      {
+        name: 'onChange',
+        type: '(val: string | string[]) => void',
+        description: 'Callback fired on selection change.',
+      },
+      { name: 'placeholder', type: 'string', description: 'Custom trigger surface placeholder.' },
+      {
+        name: 'searchPlaceholder',
+        type: 'string',
+        description: 'Placeholder inside the filter input.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Instrument panel color palette.',
+      },
+    ],
+    codeSnippet: `import { SearchableDropdown } from '@/features/document/components/ui-library';\n\n// Single-Select Combobox\n<SearchableDropdown multiple={false} options={options} value={val} onChange={setVal} />\n\n// Multi-Select Tag Picker with Chips\n<SearchableDropdown multiple={true} options={options} value={tags} onChange={setTags} />`,
+    realWorldExamples: [
+      {
+        title: 'Department & Program Selection',
+        scenario: 'Applicant searches 40+ campus departments via instant keyboard filter.',
+        impact: 'Zero typing friction with cyan match highlights.',
+      },
+      {
+        title: 'Academic Specialization Tags',
+        scenario: 'Student selects multiple elective modules represented as removable pill chips.',
+        impact: 'Power-user backspace chip popping and complete ARIA combobox semantics.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Active Descendant Focus Preservation',
+        detail:
+          'Keeping physical DOM focus in the search box while moving virtual aria-activedescendant prevents screen-reader disorientation.',
+      },
+      {
+        principle: 'Recognition Over Recall (Highlighted Matches)',
+        detail:
+          'Wrapping matching substrings in high-contrast cyan marks reveals search relevance instantly.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: The list of options is too long to scan visually — 10+ items where users need search to find what they want.',
+        dontItem:
+          'NOT IDEAL WHEN: You only have 2-5 options — radio buttons, segmented controls, or the native select are simpler and more accessible.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: You need a multi-select tag picker for skills, labels, assignees, categories, or filters.',
+        dontItem:
+          'NOT IDEAL WHEN: The choice is binary (yes/no, on/off) — use a toggle switch or checkbox.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: The native select is too restrictive: you want grouped options, custom rendering, or chip-style selections.',
+        dontItem:
+          'NOT IDEAL WHEN: The user is on a mobile device and the native select full-screen wheel picker is genuinely better UX.',
+      },
+    ],
+    implementationNotes: [
+      '01 Trigger Button: The combobox surface — native button element with role="combobox", aria-haspopup="listbox", and aria-expanded.',
+      '02 Removable Chips: Multi-select selections render as pill tokens inside the trigger, each with its own labeled remove button.',
+      '03 Auto-Focused Search: Opening the panel jumps focus into the filter input so keyboard users can start typing instantly.',
+      '04 Highlighted Matches: Matching characters in option labels are wrapped in <mark> and rendered in cyan so users see query hits.',
+      '05 Grouped Options: Uppercase section labels split the listbox into categories — whole groups hide when options are filtered out.',
+      '06 Active Descendant: DOM focus stays on search input; aria-activedescendant moves to the highlighted option for AT compatibility.',
+      '07 Backspace-to-Remove: In multi mode, backspace on an empty search input pops the last chip — the gesture power users expect.',
+      '08 Hidden Native Mirror: An invisible <select> inside the root keeps form submission, autofill, and server-side handlers working unchanged.',
+    ],
+    supportedStates: [
+      'Single Selected',
+      'Multi-Chip Selected',
+      'Filtered Matches',
+      'Active Descendant Highlight',
+      'Empty State',
+    ],
+  },
   // ==========================================
   // OVERLAYS
   // ==========================================
