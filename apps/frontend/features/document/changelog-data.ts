@@ -8,6 +8,12 @@ export interface ChangeLogEntry {
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "ec5413b",
+    "description": "Record line tracker navigation update and scrollbar removal in real-time changelog"
+  },
+  {
+    "version": "0.2.8",
     "date": "30.10.2026",
     "commitHash": "5435db2",
     "description": "Remove toolbar gray scrollbar and implement continuous line tracker navigation without dots"
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "ccfd501",
     "description": "Synchronize real-time changelog for OTP PIN Input"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "93d79a9",
-    "description": "Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake"
   }
 ];

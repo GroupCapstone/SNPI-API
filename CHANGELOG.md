@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.8 (31.10.2026) - `ec5413b`
+
+- Record line tracker navigation update and scrollbar removal in real-time changelog
+
 ### Version 0.2.8 (30.10.2026) - `5435db2`
 
 - Remove toolbar gray scrollbar and implement continuous line tracker navigation without dots
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `ccfd501`
 
 - Synchronize real-time changelog for OTP PIN Input
-
-### Version 0.2.8 (30.10.2026) - `93d79a9`
-
-- Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake
 

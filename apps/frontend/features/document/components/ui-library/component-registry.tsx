@@ -53,6 +53,114 @@ export const COMPONENT_CATEGORIES = [
 
 export type ComponentCategory = (typeof COMPONENT_CATEGORIES)[number];
 
+/**
+ * Generates a complete, universal AI Agent Prompt Skill for any component.
+ * Allows any AI agent (Antigravity, Cursor, Claude, ChatGPT, Copilot, v0)
+ * to build the complete MVP component from scratch with full fidelity.
+ */
+export function generateAiAgentPrompt(comp: ComponentItemDoc): string {
+  const dos = comp.usageGuidelines.map((g) => `+ ${g.doItem}`).join('\n');
+  const donts = comp.usageGuidelines.map((g) => `- ${g.dontItem}`).join('\n');
+  const pillars =
+    comp.implementationNotes && comp.implementationNotes.length > 0
+      ? comp.implementationNotes.map((n) => `${n}`).join('\n')
+      : `01 Component Architecture: Standalone, modular, zero-leak implementation.\n02 Accessibility (a11y): Full ARIA semantic roles and keyboard contracts.\n03 Design Tokens: Mathematical spacing and zero-shadow elevation ladder.\n04 Responsive Design: Mobile, tablet, and desktop adaptive layouts.`;
+
+  const propsList =
+    comp.props && comp.props.length > 0
+      ? comp.props
+          .map(
+            (p) =>
+              `  - \`${p.name}\` (${p.type}${p.default ? `, default: ${p.default}` : ''}): ${p.description}`,
+          )
+          .join('\n')
+      : '  - Self-contained interactive component with configurable props.';
+
+  const states =
+    comp.supportedStates && comp.supportedStates.length > 0
+      ? comp.supportedStates.map((s) => `  - ${s}`).join('\n')
+      : '  - Default, Active, Hover, Focus-Visible, Disabled';
+
+  const realWorld =
+    comp.realWorldExamples && comp.realWorldExamples.length > 0
+      ? comp.realWorldExamples
+          .map((ex) => `  * ${ex.title}: ${ex.scenario} (Impact: ${ex.impact})`)
+          .join('\n')
+      : '';
+
+  const ux =
+    comp.uxPsychology && comp.uxPsychology.length > 0
+      ? comp.uxPsychology.map((u) => `  * ${u.principle}: ${u.detail}`).join('\n')
+      : '';
+
+  return `${comp.category} · Component Template
+${comp.name}
+${comp.description}
+
+Copy the prompt, paste it, ship it.
+
+---
+
+### Core Concept & Paradigm
+${comp.explanation}
+Design Paradigm: ${comp.paradigm}
+
+---
+
+### What's Inside & Architectural Pillars
+${pillars}
+
+---
+
+### Supported States & Interactions
+${states}
+
+---
+
+### Component Props & Interface Contract
+${propsList}
+
+---
+
+### Usage Guidelines
+USE THIS WHEN:
+${dos || '+ Building modern, accessible web applications and SaaS interfaces.'}
+
+DO NOT USE WHEN:
+${donts || '- A simpler native HTML element suffices without custom styling.'}
+${
+  realWorld
+    ? `
+---
+
+### Real-World Production Scenarios
+${realWorld}
+`
+    : ''
+}${
+    ux
+      ? `
+---
+
+### UX Psychology & Human Interface Laws
+${ux}
+`
+      : ''
+  }
+---
+
+### Instructions for AI Coding Agent
+Act as a Principal UI/UX Architect & Design System Engineer.
+Build the "${comp.name}" component from scratch as a clean, single-file, production-ready React component with TypeScript and Tailwind CSS.
+
+Mandatory Requirements:
+1. Self-Contained MVP: Single-file implementation with zero imaginary dependencies.
+2. Accessibility (WCAG 2.1 AA/AAA): Include all required ARIA attributes (role, aria-expanded, aria-controls, aria-live), keyboard navigation (Tab, Esc, Arrow keys, Enter/Space), and visible focus rings.
+3. Micro-Interactions: Follow the sub-300ms interface timing rule with spring physics or smooth cubic-bezier transitions. Support prefers-reduced-motion.
+4. Dual Theme: Ensure clean contrast and visual fidelity across both light (#FFFFFF / #F8FAFC) and dark (#0B0F19 / #0F172A) surfaces.
+5. Export both the primary component and an interactive demo showcase component.`;
+}
+
 export const COMPONENT_LIBRARY_REGISTRY: ComponentItemDoc[] = [
   {
     id: 'snackbar',
