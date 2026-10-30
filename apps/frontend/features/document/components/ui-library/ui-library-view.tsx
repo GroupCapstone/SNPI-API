@@ -155,7 +155,9 @@ export function UiLibraryView() {
   };
 
   // Hanging tabs demo device mode: 'mobile' | 'tablet' | 'desktop'
-  const [hangingNavDevice, setHangingNavDevice] = React.useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [hangingNavDevice, setHangingNavDevice] = React.useState<'mobile' | 'tablet' | 'desktop'>(
+    'desktop',
+  );
   const [hangingNavTheme, setHangingNavTheme] = React.useState<'light' | 'dark'>('light');
   const [hangingNavTabMode, setHangingNavTabMode] = React.useState<'preview' | 'code'>('preview');
   const [hangingNavResetKey, setHangingNavResetKey] = React.useState(0);
@@ -471,7 +473,7 @@ export function UiLibraryView() {
                         <div className="flex items-center justify-between px-1.5 py-0.5">
                           <span className="font-sans text-xs font-bold text-slate-900">
                             {category}{' '}
-                            <span className="font-mono text-[#FF5500] font-black">
+                            <span className="font-mono font-black text-[#FF5500]">
                               [{categoryComps.length}]
                             </span>
                           </span>
@@ -509,7 +511,7 @@ export function UiLibraryView() {
                                 {comp.id === 'rail-toc' && (
                                   <span
                                     className={cn(
-                                      'rounded-full px-1.5 py-0.2 font-mono text-[8px] font-bold uppercase',
+                                      'py-0.2 rounded-full px-1.5 font-mono text-[8px] font-bold uppercase',
                                       isCurrentActive
                                         ? 'bg-white text-[#0056FF]'
                                         : 'bg-[#E3E7FC] text-[#0056FF]',
@@ -605,7 +607,8 @@ export function UiLibraryView() {
                     Top Navigation Hanging Tabs Style
                   </h2>
                   <p className="font-sans text-xs text-slate-600">
-                    Inverted trapezoid tabs suspended from the top header baseline with vector-smooth SVG geometry.
+                    Inverted trapezoid tabs suspended from the top header baseline with
+                    vector-smooth SVG geometry.
                   </p>
                 </div>
 
@@ -687,8 +690,14 @@ export function UiLibraryView() {
                   {hangingNavTabMode === 'preview' && (
                     <button
                       type="button"
-                      onClick={() => setHangingNavTheme(hangingNavTheme === 'dark' ? 'light' : 'dark')}
-                      title={hangingNavTheme === 'dark' ? 'Switch to Light Stage' : 'Switch to Dark Stage'}
+                      onClick={() =>
+                        setHangingNavTheme(hangingNavTheme === 'dark' ? 'light' : 'dark')
+                      }
+                      title={
+                        hangingNavTheme === 'dark'
+                          ? 'Switch to Light Stage'
+                          : 'Switch to Dark Stage'
+                      }
                       className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-2xs transition-all hover:bg-slate-50 active:scale-95"
                     >
                       {hangingNavTheme === 'dark' ? (
@@ -727,7 +736,7 @@ export function UiLibraryView() {
               {hangingNavTabMode === 'preview' ? (
                 <div
                   className={cn(
-                    'overflow-hidden rounded-2xl border p-4 sm:p-6 transition-colors shadow-inner',
+                    'overflow-hidden rounded-2xl border p-4 shadow-inner transition-colors sm:p-6',
                     hangingNavTheme === 'dark'
                       ? 'border-slate-800 bg-[#0B0F19] text-white'
                       : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
@@ -887,7 +896,8 @@ export function UiLibraryView() {
                 Component Catalog (65 Interactive Components & Templates)
               </h2>
               <p className="font-sans text-xs text-slate-600">
-                Full-stack design systems, navigation docks, backgrounds, text effects, cards, sections, forms, and overlays.
+                Full-stack design systems, navigation docks, backgrounds, text effects, cards,
+                sections, forms, and overlays.
               </p>
             </div>
 
@@ -1002,7 +1012,11 @@ export function UiLibraryView() {
                           <button
                             type="button"
                             onClick={() => toggleCompTheme(comp.id)}
-                            title={getCompTheme(comp.id) === 'dark' ? 'Switch to Light Stage' : 'Switch to Dark Stage'}
+                            title={
+                              getCompTheme(comp.id) === 'dark'
+                                ? 'Switch to Light Stage'
+                                : 'Switch to Dark Stage'
+                            }
                             className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-2xs transition-all hover:bg-slate-50 hover:text-slate-900 active:scale-95"
                           >
                             {getCompTheme(comp.id) === 'dark' ? (
@@ -1023,7 +1037,7 @@ export function UiLibraryView() {
                               'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
                               getCompExpanded(comp.id)
                                 ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
-                                : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-2xs',
+                                : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900',
                             )}
                           >
                             <Maximize className="size-4 stroke-[1.8]" />

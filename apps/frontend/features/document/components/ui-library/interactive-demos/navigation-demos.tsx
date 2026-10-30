@@ -20,9 +20,19 @@ export function RailTocDemo() {
   const [activeSection, setActiveSection] = React.useState('architecture');
   const sections = [
     { id: 'overview', number: '01', title: 'System Overview', duration: '2 min read' },
-    { id: 'architecture', number: '02', title: 'Modular Monolith Architecture', duration: '5 min read' },
+    {
+      id: 'architecture',
+      number: '02',
+      title: 'Modular Monolith Architecture',
+      duration: '5 min read',
+    },
     { id: 'database', number: '03', title: 'Relational MongoDB Schema', duration: '4 min read' },
-    { id: 'security', number: '04', title: 'Cryptographic Security & RBAC', duration: '3 min read' },
+    {
+      id: 'security',
+      number: '04',
+      title: 'Cryptographic Security & RBAC',
+      duration: '3 min read',
+    },
     { id: 'deployment', number: '05', title: 'Vercel Serverless Gateway', duration: '2 min read' },
   ];
 
@@ -34,11 +44,13 @@ export function RailTocDemo() {
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
           <span className="size-2 rounded-full bg-[#0056FF]" />
-          <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
             Rail TOC · Primary
           </span>
         </div>
-        <span className="font-mono text-[11px] font-bold text-[#0056FF]">{progressPercent}% Read</span>
+        <span className="font-mono text-[11px] font-bold text-[#0056FF]">
+          {progressPercent}% Read
+        </span>
       </div>
 
       <div className="relative mt-4 pl-4">
@@ -89,7 +101,12 @@ export function RailTocDemo() {
                       <span className={isActive ? 'text-[#0056FF]' : 'text-slate-400'}>
                         {sec.number}
                       </span>
-                      <span className={cn('font-sans text-xs font-semibold', isActive ? 'text-[#0056FF]' : 'text-slate-800')}>
+                      <span
+                        className={cn(
+                          'font-sans text-xs font-semibold',
+                          isActive ? 'text-[#0056FF]' : 'text-slate-800',
+                        )}
+                      >
                         {sec.title}
                       </span>
                     </div>
@@ -129,7 +146,9 @@ export function BounceSidebarDemo() {
       >
         <div className="space-y-3">
           <div className="flex items-center justify-between pb-2">
-            {isOpen && <span className="font-sans text-xs font-black text-slate-900">WORKSPACE</span>}
+            {isOpen && (
+              <span className="font-sans text-xs font-black text-slate-900">WORKSPACE</span>
+            )}
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
@@ -194,7 +213,9 @@ export function HookSidebarDemo() {
         )}
       >
         <div className="space-y-2">
-          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Hook Panel</span>
+          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+            Hook Panel
+          </span>
           <div className="space-y-1 font-sans text-xs font-medium text-slate-700">
             <div className="rounded-lg bg-slate-100 p-2">Direct Ledger #09</div>
             <div className="rounded-lg bg-slate-100 p-2">Batch Transfer Gate</div>
@@ -215,11 +236,11 @@ export function HookSidebarDemo() {
         type="button"
         onClick={() => setIsHooked(!isHooked)}
         className={cn(
-          'absolute top-1/2 -translate-y-1/2 z-20 flex items-center gap-1 rounded-r-xl border border-l-0 border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-3 font-sans text-xs font-bold text-[#0056FF] shadow-xs transition-all duration-300',
+          'absolute top-1/2 z-20 flex -translate-y-1/2 items-center gap-1 rounded-r-xl border border-l-0 border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-3 font-sans text-xs font-bold text-[#0056FF] shadow-xs transition-all duration-300',
           isHooked ? 'left-48' : 'left-0',
         )}
       >
-        <Compass className="size-4 animate-spin-slow" />
+        <Compass className="animate-spin-slow size-4" />
         <span>HOOK</span>
       </button>
 
@@ -360,7 +381,9 @@ export function GooeyNavDemo() {
               onClick={() => setSelected(tab.id)}
               className={cn(
                 'relative z-10 cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all duration-200',
-                isActive ? 'bg-[#0056FF] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900',
+                isActive
+                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900',
               )}
             >
               {tab.label}

@@ -28,7 +28,7 @@ export function FolderDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Interactive Document Folder
       </span>
 
@@ -51,7 +51,9 @@ export function FolderDemo() {
                 <Folder className="size-5" />
               </div>
               <div>
-                <h4 className="font-sans text-sm font-bold text-slate-900">Academic Records / Term 1</h4>
+                <h4 className="font-sans text-sm font-bold text-slate-900">
+                  Academic Records / Term 1
+                </h4>
                 <span className="font-mono text-[10px] text-slate-500">3 Verified Documents</span>
               </div>
             </div>
@@ -61,7 +63,7 @@ export function FolderDemo() {
           </div>
 
           {isOpen && (
-            <div className="mt-3.5 space-y-1.5 border-t border-slate-200/80 pt-3 animate-in fade-in slide-in-from-top-1">
+            <div className="animate-in fade-in slide-in-from-top-1 mt-3.5 space-y-1.5 border-t border-slate-200/80 pt-3">
               {files.map((f, i) => (
                 <div
                   key={i}
@@ -118,7 +120,7 @@ export const ledgerConfig = {
         </button>
       </div>
 
-      <pre className="p-4 font-mono text-xs leading-relaxed text-slate-200 overflow-x-auto">
+      <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-slate-200">
         <code>{code}</code>
       </pre>
     </div>
@@ -133,7 +135,7 @@ export function GravityLettersDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-        <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Gravity Letters Simulation
         </span>
         <button
@@ -191,7 +193,7 @@ export function GitHubActivityDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Monorepo Git Activity Heatmap
         </span>
         <span className="font-mono text-xs font-bold text-[#0056FF]">342 Commits</span>
@@ -203,7 +205,10 @@ export function GitHubActivityDemo() {
             {week.map((level, dIdx) => (
               <div
                 key={dIdx}
-                className={cn('size-3 rounded-xs transition-transform hover:scale-125', colors[level])}
+                className={cn(
+                  'size-3 rounded-xs transition-transform hover:scale-125',
+                  colors[level],
+                )}
               />
             ))}
           </div>
@@ -231,7 +236,7 @@ export function StepPlayerDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Step Player Workflow
         </span>
         <span className="font-mono text-xs font-bold text-[#0056FF]">
@@ -296,7 +301,7 @@ export function AnimatedCounterDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Animated Metric Counter
       </span>
 
@@ -340,7 +345,7 @@ export function VoiceNoteDemo() {
       <div className="flex items-center justify-between border-b border-slate-100 pb-2">
         <div className="flex items-center gap-2">
           <Volume className="size-4 text-[#0056FF]" />
-          <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
             Voice Note Dispatch
           </span>
         </div>
@@ -353,11 +358,11 @@ export function VoiceNoteDemo() {
           onClick={() => setIsPlaying(!isPlaying)}
           className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#0056FF] text-white shadow-xs hover:bg-blue-700"
         >
-          {isPlaying ? <Pause className="size-4" /> : <Play className="size-4 ml-0.5" />}
+          {isPlaying ? <Pause className="size-4" /> : <Play className="ml-0.5 size-4" />}
         </button>
 
         {/* Waveform Bars */}
-        <div className="flex flex-1 items-center gap-1 h-10">
+        <div className="flex h-10 flex-1 items-center gap-1">
           {bars.map((h, i) => (
             <div
               key={i}
@@ -403,7 +408,7 @@ export function FaqDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Institutional FAQ Accordion
       </span>
 
@@ -411,7 +416,10 @@ export function FaqDemo() {
         {faqs.map((faq, idx) => {
           const isOpen = openIdx === idx;
           return (
-            <div key={idx} className="rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
+            <div
+              key={idx}
+              className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
+            >
               <button
                 type="button"
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
@@ -419,11 +427,14 @@ export function FaqDemo() {
               >
                 <span>{faq.q}</span>
                 <ChevronDown
-                  className={cn('size-4 text-slate-400 transition-transform duration-200', isOpen && 'rotate-180 text-[#0056FF]')}
+                  className={cn(
+                    'size-4 text-slate-400 transition-transform duration-200',
+                    isOpen && 'rotate-180 text-[#0056FF]',
+                  )}
                 />
               </button>
               {isOpen && (
-                <div className="border-t border-slate-200 bg-white p-3 font-sans text-xs leading-relaxed text-slate-600 animate-in fade-in">
+                <div className="animate-in fade-in border-t border-slate-200 bg-white p-3 font-sans text-xs leading-relaxed text-slate-600">
                   {faq.a}
                 </div>
               )}

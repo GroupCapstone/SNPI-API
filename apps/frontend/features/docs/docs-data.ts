@@ -64,7 +64,7 @@ export const DOC_CATEGORIES: DocCategory[] = [
             sampleResponse: {
               success: true,
               message: 'SNPI-SMS Backend API',
-              version: '0.1.0',
+              version: '0.2.7',
               apiBase: '/api/v1',
               health: '/api/v1/health',
             },
@@ -82,7 +82,7 @@ export const DOC_CATEGORIES: DocCategory[] = [
                 service: 'SNPI-SMS API',
                 status: 'healthy',
                 database: 'connected',
-                version: '0.1.0',
+                version: '0.2.7',
                 timestamp: '2026-10-29T12:00:00.000Z',
               },
             },

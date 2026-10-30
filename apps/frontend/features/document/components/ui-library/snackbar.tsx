@@ -88,7 +88,7 @@ export function LibrarySnackbar({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className={cn(
-        'fixed bottom-6 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-slate-800 bg-[#0F172A] text-white shadow-2xl transition-all duration-200 select-none backdrop-blur-xl',
+        'fixed bottom-6 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-slate-800 bg-[#0F172A] text-white shadow-2xl backdrop-blur-xl transition-all duration-200 select-none',
         className,
       )}
     >
@@ -116,12 +116,12 @@ export function LibrarySnackbar({
             </span>
           )}
           {variant === 'default' && (
-            <span className="size-2 rounded-full bg-[#0056FF] animate-pulse" />
+            <span className="size-2 animate-pulse rounded-full bg-[#0056FF]" />
           )}
         </div>
 
         {/* Primary Message */}
-        <p className="flex-1 font-sans text-xs font-semibold leading-relaxed text-slate-100 sm:text-sm">
+        <p className="flex-1 font-sans text-xs leading-relaxed font-semibold text-slate-100 sm:text-sm">
           {message}
         </p>
 
@@ -134,12 +134,16 @@ export function LibrarySnackbar({
               onClose();
             }}
             className={cn(
-              'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg px-3 font-mono text-xs font-bold tracking-wider uppercase transition-colors focus-visible:outline-none focus-visible:ring-2',
-              variant === 'success' && 'text-emerald-400 hover:bg-emerald-500/10 focus-visible:ring-emerald-400',
+              'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg px-3 font-mono text-xs font-bold tracking-wider uppercase transition-colors focus-visible:ring-2 focus-visible:outline-none',
+              variant === 'success' &&
+                'text-emerald-400 hover:bg-emerald-500/10 focus-visible:ring-emerald-400',
               variant === 'info' && 'text-sky-400 hover:bg-sky-500/10 focus-visible:ring-sky-400',
-              variant === 'warning' && 'text-amber-400 hover:bg-amber-500/10 focus-visible:ring-amber-400',
-              variant === 'error' && 'text-rose-400 hover:bg-rose-500/10 focus-visible:ring-rose-400',
-              variant === 'default' && 'text-[#38BDF8] hover:bg-[#38BDF8]/10 focus-visible:ring-[#38BDF8]',
+              variant === 'warning' &&
+                'text-amber-400 hover:bg-amber-500/10 focus-visible:ring-amber-400',
+              variant === 'error' &&
+                'text-rose-400 hover:bg-rose-500/10 focus-visible:ring-rose-400',
+              variant === 'default' &&
+                'text-[#38BDF8] hover:bg-[#38BDF8]/10 focus-visible:ring-[#38BDF8]',
             )}
           >
             {actionLabel}
@@ -240,12 +244,12 @@ export function NativeSnackbarInline({
               </span>
             )}
             {variant === 'default' && (
-              <span className="size-2 rounded-full bg-[#0056FF] animate-pulse" />
+              <span className="size-2 animate-pulse rounded-full bg-[#0056FF]" />
             )}
           </div>
 
           {/* Primary Text */}
-          <p className="flex-1 font-sans text-xs font-semibold leading-relaxed text-slate-100 sm:text-sm">
+          <p className="flex-1 font-sans text-xs leading-relaxed font-semibold text-slate-100 sm:text-sm">
             {message}
           </p>
 

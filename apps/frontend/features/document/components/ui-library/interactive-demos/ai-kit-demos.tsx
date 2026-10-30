@@ -2,14 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  Sparkles,
-  Search,
-  Check,
-  Globe,
-  Database,
-  Terminal,
-} from '@/components/icons';
+import { Sparkles, Search, Check, Globe, Database, Terminal } from '@/components/icons';
 
 // 1. Fluid Orb (Luminescent Morphing Gradient Sphere)
 export function FluidOrbDemo() {
@@ -18,7 +11,7 @@ export function FluidOrbDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-        <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Fluid AI Orb
         </span>
         <span className="font-mono text-[10px] font-bold text-[#0056FF]">Real-time Pulse</span>
@@ -28,7 +21,7 @@ export function FluidOrbDemo() {
         <button
           type="button"
           onClick={() => setPulse(!pulse)}
-          className="group relative flex size-28 items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95 focus:outline-none"
+          className="group relative flex size-28 items-center justify-center rounded-full transition-transform hover:scale-105 focus:outline-none active:scale-95"
         >
           {/* Outer Luminous Glow */}
           <div
@@ -39,9 +32,9 @@ export function FluidOrbDemo() {
           />
 
           {/* Morphing Inner Sphere */}
-          <div className="relative size-24 rounded-full bg-gradient-to-tr from-[#0056FF] via-[#4361EE] to-[#4CC9F0] shadow-inner flex items-center justify-center">
-            <div className="size-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-              <Sparkles className="size-8 text-white drop-shadow-md animate-spin-slow" />
+          <div className="relative flex size-24 items-center justify-center rounded-full bg-gradient-to-tr from-[#0056FF] via-[#4361EE] to-[#4CC9F0] shadow-inner">
+            <div className="flex size-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-md">
+              <Sparkles className="animate-spin-slow size-8 text-white drop-shadow-md" />
             </div>
           </div>
         </button>
@@ -67,7 +60,7 @@ export function GridRevealDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-        <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Grid Matrix Laser Reveal
         </span>
         <span className="font-mono text-[10px] font-bold text-slate-400">4 Active Nodes</span>
@@ -90,11 +83,11 @@ export function GridRevealDemo() {
             >
               {/* Scanline Beam on Active */}
               {isActive && (
-                <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[#0056FF] to-transparent animate-pulse" />
+                <div className="absolute inset-x-0 top-0 h-0.5 animate-pulse bg-gradient-to-r from-transparent via-[#0056FF] to-transparent" />
               )}
               <div className="flex items-center justify-between font-mono text-[10px] text-slate-400">
                 <span>{card.tag}</span>
-                <span className="text-[#0056FF] font-bold">{card.speed}</span>
+                <span className="font-bold text-[#0056FF]">{card.speed}</span>
               </div>
               <h5 className="mt-2 font-sans text-xs font-bold text-slate-900">{card.title}</h5>
             </button>
@@ -112,7 +105,7 @@ export function MatrixOrbDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-800 bg-slate-950 p-5 text-center text-white shadow-lg">
       <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
+        <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
           Cybernetic Telemetry Orb
         </span>
         <span className="font-mono text-[10px] font-bold text-emerald-400">ONLINE 99.8%</span>
@@ -121,8 +114,8 @@ export function MatrixOrbDemo() {
       <div className="flex min-h-[150px] items-center justify-center py-2">
         <div className="relative flex size-28 items-center justify-center">
           {/* Concentric Rotating Rings */}
-          <div className="absolute inset-0 rounded-full border border-dashed border-blue-500/40 animate-spin-slow" />
-          <div className="absolute inset-2 rounded-full border border-dotted border-cyan-400/50 animate-reverse-spin" />
+          <div className="animate-spin-slow absolute inset-0 rounded-full border border-dashed border-blue-500/40" />
+          <div className="animate-reverse-spin absolute inset-2 rounded-full border border-dotted border-cyan-400/50" />
 
           {/* Central Core */}
           <div className="flex size-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-[0_0_20px_rgba(0,180,255,0.6)]">
@@ -164,7 +157,7 @@ export function WebSearchDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Agentic Web Search & Synthesis
       </span>
 
@@ -176,7 +169,7 @@ export function WebSearchDemo() {
           placeholder="Search institutional standards..."
           className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-20 pl-9 font-sans text-xs font-semibold text-slate-900 focus:border-[#0056FF] focus:bg-white focus:outline-none"
         />
-        <Search className="absolute top-1/2 left-3 -translate-y-1/2 size-4 text-[#0056FF]" />
+        <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-[#0056FF]" />
         <button
           type="submit"
           className="absolute top-1/2 right-1.5 -translate-y-1/2 rounded-lg bg-[#0056FF] px-2.5 py-1 font-sans text-[11px] font-bold text-white hover:bg-blue-700"
@@ -221,13 +214,13 @@ export function InlineAiStatusDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-sans text-xs font-bold uppercase tracking-wider text-slate-800">
+      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Streaming Agent Status Pill
       </span>
 
       <div className="flex justify-center py-2">
         <div className="inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 shadow-xs transition-all">
-          <span className={cn('size-2 rounded-full animate-ping', current.color)} />
+          <span className={cn('size-2 animate-ping rounded-full', current.color)} />
           <span className="font-sans text-xs font-semibold text-slate-800">{current.text}</span>
         </div>
       </div>

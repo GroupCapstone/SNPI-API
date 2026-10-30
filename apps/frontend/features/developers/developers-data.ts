@@ -263,7 +263,7 @@ export const DEVELOPER_SECTIONS: DevSection[] = [
             service: 'SNPI-SMS API',
             status: 'healthy',
             database: 'connected',
-            version: '0.1.0',
+            version: '0.2.7',
             timestamp: '2026-10-29T12:00:00.000Z',
           },
         },

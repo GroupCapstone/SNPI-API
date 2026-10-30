@@ -106,8 +106,7 @@ export function NavigationMenuItem({
   );
 }
 
-export interface NavigationMenuTriggerProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface NavigationMenuTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value: string;
 }
 
@@ -140,17 +139,13 @@ export function NavigationMenuTrigger({
     >
       {children}
       <ChevronDown
-        className={cn(
-          'ml-1 size-3 transition-transform duration-200',
-          isOpen && 'rotate-180',
-        )}
+        className={cn('ml-1 size-3 transition-transform duration-200', isOpen && 'rotate-180')}
       />
     </button>
   );
 }
 
-export interface NavigationMenuLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface NavigationMenuLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   asChild?: boolean;
   render?: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => React.ReactNode;
   active?: boolean;
@@ -208,7 +203,7 @@ export function NavigationMenuContent({
         }, 200);
       }}
       className={cn(
-        'absolute top-full left-1/2 z-50 mt-3 -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-800 bg-[#0A0D14]/95 p-4 text-white shadow-2xl backdrop-blur-2xl transition-all duration-200 animate-in fade-in zoom-in-95',
+        'animate-in fade-in zoom-in-95 absolute top-full left-1/2 z-50 mt-3 -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-800 bg-[#0A0D14]/95 p-4 text-white shadow-2xl backdrop-blur-2xl transition-all duration-200',
         'w-[min(calc(100vw-2rem),520px)]',
         className,
       )}
@@ -236,21 +231,21 @@ export function NavigationMenuContent({
  * - Header rows mix panel triggers with plain links styled seamlessly.
  * - Hash placeholders ready for real router routes.
  */
-export function RareUiNavigationMenu({
-  className,
-}: {
-  className?: string;
-}) {
+export function RareUiNavigationMenu({ className }: { className?: string }) {
   const [activeTab, setActiveTab] = React.useState('components');
   const [stars, setStars] = React.useState(1866);
   const [isStarred, setIsStarred] = React.useState(false);
   const [isDark, setIsDark] = React.useState(true);
 
   return (
-    <div className={cn('relative flex w-full flex-col items-center justify-center py-6 select-none', className)}>
+    <div
+      className={cn(
+        'relative flex w-full flex-col items-center justify-center py-6 select-none',
+        className,
+      )}
+    >
       {/* Floating 3-Island Header Row */}
       <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-        
         {/* ISLAND 1: Brand Capsule Pill [ 🌸 Rare UI ] */}
         <div className="flex h-11 items-center gap-2 rounded-full border border-slate-800/90 bg-[#0A0D14] px-4 py-2 text-white shadow-2xl backdrop-blur-xl transition-transform hover:scale-[1.02]">
           {/* Rare UI Coral Flower Mark */}
@@ -286,7 +281,7 @@ export function RareUiNavigationMenu({
               <NavigationMenuTrigger
                 value="components"
                 onClick={() => setActiveTab('components')}
-                className={cn(activeTab === 'components' && 'text-white font-bold')}
+                className={cn(activeTab === 'components' && 'font-bold text-white')}
               >
                 Components
               </NavigationMenuTrigger>
@@ -298,7 +293,7 @@ export function RareUiNavigationMenu({
                   <div className="flex flex-col justify-between rounded-xl border border-slate-800 bg-gradient-to-br from-[#111622] to-[#0A0D14] p-4 sm:col-span-5">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="size-2 rounded-full bg-amber-400 animate-pulse" />
+                        <span className="size-2 animate-pulse rounded-full bg-amber-400" />
                         <span className="font-mono text-[10px] font-bold text-amber-400 uppercase">
                           Featured
                         </span>
@@ -307,7 +302,8 @@ export function RareUiNavigationMenu({
                         Border Beam Card
                       </h4>
                       <p className="mt-1 font-sans text-[11px] leading-relaxed text-slate-400">
-                        Matte instrument login card with continuous constant-velocity 4-dash amber ray.
+                        Matte instrument login card with continuous constant-velocity 4-dash amber
+                        ray.
                       </p>
                     </div>
 
@@ -334,7 +330,7 @@ export function RareUiNavigationMenu({
                           <span className="font-sans text-xs font-bold text-slate-100 group-hover/item:text-white">
                             Native Snackbar
                           </span>
-                          <span className="rounded bg-emerald-500/20 px-1 py-0.2 font-mono text-[9px] text-emerald-400">
+                          <span className="py-0.2 rounded bg-emerald-500/20 px-1 font-mono text-[9px] text-emerald-400">
                             v2
                           </span>
                         </div>
@@ -424,7 +420,7 @@ export function RareUiNavigationMenu({
           type="button"
           onClick={() => setIsDark(!isDark)}
           title={isDark ? 'Switch to Light' : 'Switch to Dark'}
-          className="flex size-11 items-center justify-center rounded-full border border-slate-800/90 bg-[#0A0D14] text-white shadow-2xl backdrop-blur-xl transition-all hover:border-slate-700 hover:scale-105 active:scale-95"
+          className="flex size-11 items-center justify-center rounded-full border border-slate-800/90 bg-[#0A0D14] text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 hover:border-slate-700 active:scale-95"
         >
           {/* Half-circle contrast icon */}
           <svg className="size-4 fill-current" viewBox="0 0 24 24">
