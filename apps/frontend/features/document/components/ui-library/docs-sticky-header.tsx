@@ -16,8 +16,8 @@ export interface DocsStickyHeaderProps {
 
 export function DocsStickyHeader({
   activeTab: propActiveTab,
-  version = 'v0.2.8',
-  commitHash = 'a62fcd4',
+  version = 'v0.2.9',
+  commitHash = 'ae44792',
 }: DocsStickyHeaderProps = {}) {
   const pathname = usePathname();
   const { activeTab: navActiveTab, setActiveTab } = useDocsNav();

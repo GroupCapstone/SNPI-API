@@ -7,73 +7,79 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
-    "commitHash": "19b9c63",
+    "commitHash": "92b5fac",
+    "description": "V0.2.9 release checkpoint with navigation redesign and CI quality gate fixes"
+  },
+  {
+    "version": "0.2.9",
+    "date": "31.10.2026",
+    "commitHash": "ae44792",
     "description": "Upgrade hanging tabs navigation with UI Library first kinetic animations and real-time status tracker box"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "a62fcd4",
     "description": "Remove preview and prompt buttons and convert copy prompt to icon-only action"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "97efab1",
     "description": "Revert(document): remove floating capsule dock nav and restore top hanging tabs header"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "c53639d",
     "description": "Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "adccb9c",
     "description": "Implement 54px icon bar with label bloom status dot and roving tabindex"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "cafb0ec",
     "description": "Arrange demos by flow group and synchronize sequential line tracker without rank jumping"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "f10e1e2",
     "description": "Apply floating capsule dock nav and purge legacy hanging tabs header"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "eef9ef6",
     "description": "Implement paper plane rail toc with motion flight and apply 0px border 4px radius button standard"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "8bc39a4",
     "description": "Record universal ai agent prompt and precision line tracker navigation standards"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "3da80f8",
     "description": "Remove top nav hanging tabs section and add universal ai agent prompt tabs and copy action"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "31.10.2026",
     "commitHash": "ec5413b",
     "description": "Record line tracker navigation update and scrollbar removal in real-time changelog"
   },
   {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "date": "30.10.2026",
     "commitHash": "5435db2",
     "description": "Remove toolbar gray scrollbar and implement continuous line tracker navigation without dots"
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "c6d59c2",
     "description": "Implement 8-pillar Skeleton Loading Screen with CSS-only shimmer, aspect ratios, and 3 pattern templates"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "021837f",
-    "description": "Synchronize real-time changelog for Toast Notification Stack"
   }
 ];

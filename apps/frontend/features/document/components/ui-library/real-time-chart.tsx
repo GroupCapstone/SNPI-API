@@ -40,6 +40,13 @@ export interface RealTimeChartProps {
 // REAL-TIME CANVAS STREAMING CHART COMPONENT
 // ============================================================================
 
+// Static series configuration for legend and identity
+const DEFAULT_SERIES_CONFIG = [
+  { id: 'cpu', name: 'CPU / Node Ingress', color: '#0056FF', unit: '%' },
+  { id: 'db', name: 'DB Throughput', color: '#10B981', unit: ' ops/s' },
+  { id: 'mem', name: 'Heap Allocation', color: '#F59E0B', unit: ' MB' },
+];
+
 export function RealTimeChart({
   theme = 'light',
   height = 340,
@@ -56,6 +63,8 @@ export function RealTimeChart({
   const [hoveredPoint, setHoveredPoint] = React.useState<{
     x: number;
     y: number;
+    tooltipLeft: number;
+    tooltipTop: number;
     index: number;
     timeLabel: string;
     values: { name: string; color: string; value: number; unit: string }[];
@@ -117,7 +126,7 @@ export function RealTimeChart({
         if (s.id === 'cpu') {
           delta += Math.sin(Date.now() / 1500) * 4;
         }
-        let next = Math.max(10, Math.min(95, last + delta));
+        const next = Math.max(10, Math.min(95, last + delta));
         s.data.push(Math.round(next * 10) / 10);
         if (s.data.length > pointsCount) {
           s.data.shift();
@@ -163,9 +172,14 @@ export function RealTimeChart({
       unit: s.unit,
     }));
 
+    const tooltipLeft = Math.min(mouseX + 12, (rect.width || 600) - 180);
+    const tooltipTop = Math.max(10, mouseY - 45);
+
     setHoveredPoint({
       x: mouseX,
       y: mouseY,
+      tooltipLeft,
+      tooltipTop,
       index: clampedIndex,
       timeLabel,
       values,
@@ -399,7 +413,7 @@ export function RealTimeChart({
 
         {/* 08 Legend: Color swatches & live values */}
         <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
-          {seriesRef.current.map((s) => (
+          {DEFAULT_SERIES_CONFIG.map((s) => (
             <div
               key={s.id}
               className={cn(
@@ -436,8 +450,8 @@ export function RealTimeChart({
         {hoveredPoint && (
           <div
             style={{
-              left: `${Math.min(hoveredPoint.x + 12, (containerRef.current?.offsetWidth || 600) - 180)}px`,
-              top: `${Math.max(10, hoveredPoint.y - 45)}px`,
+              left: `${hoveredPoint.tooltipLeft}px`,
+              top: `${hoveredPoint.tooltipTop}px`,
             }}
             className={cn(
               'pointer-events-none absolute z-20 w-44 rounded-xl border p-2.5 shadow-2xl backdrop-blur-md transition-all duration-75',

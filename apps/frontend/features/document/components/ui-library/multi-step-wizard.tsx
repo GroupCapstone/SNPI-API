@@ -168,7 +168,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
     return true;
   }, [step, errors, formData.termsAccepted]);
 
-  const handleChange = (field: keyof WizardFormData, value: any) => {
+  const handleChange = (field: keyof WizardFormData, value: WizardFormData[keyof WizardFormData]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 

@@ -15,7 +15,6 @@ import {
   LibraryFab,
   LibraryDropdown,
   LibraryTooltip,
-  HangingTabsNav,
   COMPONENT_LIBRARY_REGISTRY,
   COMPONENT_CATEGORIES,
   GeometricButton,
@@ -34,7 +33,6 @@ import {
   ThemeSelectorDemo,
   DeleteButtonDemo,
   TaskListDemo,
-  ToastDemo,
   EmojiReactionDemo,
   NotificationBellDemo,
   FolderDemo,
@@ -64,7 +62,6 @@ import {
   TiltCardDemo,
   BorderBeamDemo,
   HeroSectionDemo,
-  FeatureBentoDemo,
   PricingMatrixDemo,
   MarqueeSectionDemo,
   FloatingLabelFormDemo,
@@ -97,10 +94,6 @@ import {
   Check,
   Copy,
   Sparkles,
-  Pin,
-  Newspaper,
-  FilePlus,
-  Contacts,
   Eye,
   EyeOff,
   User,
@@ -122,13 +115,8 @@ export function UiLibraryView() {
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
   // Per-component tab view state: 'preview' | 'prompt'
-  const [componentTabs, setComponentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>(
-    {},
-  );
+  const [componentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>({});
   const getCompTab = (id: string): 'preview' | 'prompt' => componentTabs[id] || 'preview';
-  const setCompTab = (id: string, tab: 'preview' | 'prompt') => {
-    setComponentTabs((prev) => ({ ...prev, [id]: tab }));
-  };
 
   // Per-component device preview mode: 'mobile' | 'tablet' | 'desktop'
   const [compDeviceModes, setCompDeviceModes] = React.useState<
@@ -162,7 +150,6 @@ export function UiLibraryView() {
 
   // Copy tracking states
   const [copiedPromptId, setCopiedPromptId] = React.useState<string | null>(null);
-  const [copiedCodeId, setCopiedCodeId] = React.useState<string | null>(null);
   const [copiedInstallId, setCopiedInstallId] = React.useState<string | null>(null);
 
   const handleCopyPrompt = (id: string, text: string) => {
@@ -382,12 +369,6 @@ export function UiLibraryView() {
       container.scrollTop += elRect.bottom - containerRect.bottom + 45;
     }
   }, [activeSectionId]);
-
-  const handleCopyCode = (id: string, text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedCodeId(id);
-    setTimeout(() => setCopiedCodeId(null), 2000);
-  };
 
   const handleCopyInstall = (id: string, cmd: string) => {
     navigator.clipboard.writeText(cmd);

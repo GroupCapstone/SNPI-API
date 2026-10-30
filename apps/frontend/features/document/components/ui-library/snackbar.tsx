@@ -42,7 +42,7 @@ export function LibrarySnackbar({
 }: LibrarySnackbarProps) {
   const [isPaused, setIsPaused] = React.useState(false);
   const [remainingTime, setRemainingTime] = React.useState(duration);
-  const startTimeRef = React.useRef<number>(Date.now());
+  const startTimeRef = React.useRef<number>(0);
   const timerRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // Reset timer on open or message change

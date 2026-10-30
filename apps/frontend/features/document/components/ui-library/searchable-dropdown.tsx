@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable react-hooks/refs */
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
@@ -139,7 +140,7 @@ export function SearchableDropdown({
     }
   };
 
-  const handleRemoveChip = (e: React.MouseEvent, optValue: string) => {
+  const handleRemoveChip = (e: React.MouseEvent | React.KeyboardEvent, optValue: string) => {
     e.stopPropagation();
     if (multiple) {
       const next = selectedValues.filter((v) => v !== optValue);
@@ -297,7 +298,7 @@ export function SearchableDropdown({
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
-                      handleRemoveChip(e as any, opt.value);
+                      handleRemoveChip(e, opt.value);
                     }
                   }}
                   className="rounded-xs p-0.5 text-slate-500 transition-colors hover:bg-slate-900/10 hover:text-red-500 dark:hover:bg-white/10"

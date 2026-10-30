@@ -158,7 +158,7 @@ export function CommandPalette({
   React.useEffect(() => {
     if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
       const platform =
-        (navigator as any).userAgentData?.platform ||
+        (navigator as { userAgentData?: { platform?: string } }).userAgentData?.platform ||
         navigator.platform ||
         navigator.userAgent ||
         '';
@@ -560,7 +560,7 @@ export function CommandPaletteInteractiveDemo() {
   React.useEffect(() => {
     if (typeof window !== 'undefined' && typeof navigator !== 'undefined') {
       const platform =
-        (navigator as any).userAgentData?.platform ||
+        (navigator as { userAgentData?: { platform?: string } }).userAgentData?.platform ||
         navigator.platform ||
         navigator.userAgent ||
         '';
