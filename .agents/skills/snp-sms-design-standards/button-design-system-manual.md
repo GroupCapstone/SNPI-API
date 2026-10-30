@@ -12,10 +12,10 @@ This specification establishes the structural anatomy, sizing tokens, hierarchy 
 4. **Single Unified Component Architecture**: All button variants, sizes, and states must be consolidated into a single reusable component (`GeometricButton` or `Button`) using type-safe props.
 5. **Contextual Placement**: Destructive buttons must be isolated from constructive actions. Primary submit actions must sit on the trailing edge (right for LTR).
 6. **Strict 3-Tier Hierarchy**: Every view must feature at most ONE Primary action, with all secondary workflows delegated to Secondary (outline/soft) or Tertiary (ghost) buttons.
-7. **Border Radius Psychology**:
-   - `rounded-full` (Pill): Approachable, consumer-friendly, primary user actions.
-   - `rounded-xl` (12px): Enterprise balance, professional dashboards, data-dense forms.
-   - `rounded-md` (6px): Compact utility tools, code blocks, technical tables.
+7. **Border & Corner Radius Standard (MANDATORY)**:
+   - **Standard Button**: `border: 0` (`border-0`, `0px`), `border-radius: 4px` (`rounded-[4px]`).
+   - **Logic**: Consistent subtle rounding. Sets `border: 0` and `border-radius: 4px` default for all buttons across the design system.
+   - Eliminates thick borders and pill shapes for clean architectural precision.
 8. **Strict Single-Line Constraint**: Button text MUST NEVER wrap onto a second line. If text overflows on narrow viewports, it must truncate or use responsive compact labels.
 
 ---

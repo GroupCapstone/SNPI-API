@@ -14,92 +14,161 @@ import {
   ChevronLeft,
   Menu,
 } from '@/components/icons';
+import { RailToc, type RailTocItem } from '../rail-toc';
 
-// 1. Primary Component: Rail TOC (Continuous Vertical Line Tracker with Active Line Indicator - Zero Dots)
+// 1. Primary Component: Rail TOC (Paper Plane Flying Along Indented Track)
 export function RailTocDemo() {
-  const [activeSection, setActiveSection] = React.useState('architecture');
-  const sections = [
-    { id: 'overview', number: '01', title: 'System Overview', duration: '2 min read' },
-    {
-      id: 'architecture',
-      number: '02',
-      title: 'Modular Monolith Architecture',
-      duration: '5 min read',
-    },
-    { id: 'database', number: '03', title: 'Relational MongoDB Schema', duration: '4 min read' },
-    {
-      id: 'security',
-      number: '04',
-      title: 'Cryptographic Security & RBAC',
-      duration: '3 min read',
-    },
-    { id: 'deployment', number: '05', title: 'Vercel Serverless Gateway', duration: '2 min read' },
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = React.useState('installation');
+
+  const tocItems: RailTocItem[] = [
+    { id: 'installation', label: 'Installation', depth: 0 },
+    { id: 'prerequisites', label: 'Prerequisites', depth: 1 },
+    { id: 'installation-steps', label: 'Installation Steps', depth: 1 },
+    { id: 'configuration', label: 'Configuration', depth: 1 },
+    { id: 'usage', label: 'Usage', depth: 0 },
+    { id: 'customizing-content', label: 'Customizing Content', depth: 1 },
+    { id: 'submenu-content', label: 'Submenu Content', depth: 2 },
+    { id: 'features', label: 'Features', depth: 0 },
   ];
 
-  const activeIndex = sections.findIndex((s) => s.id === activeSection);
-  const progressPercent = Math.round(((activeIndex + 1) / sections.length) * 100);
+  const sectionDetails: Record<string, { summary: string; note: string }> = {
+    installation: {
+      summary: 'Get started with package installation and repository cloning.',
+      note: 'Run npm install to bootstrap monorepo workspaces and shared packages.',
+    },
+    prerequisites: {
+      summary: 'Verify runtime environments before initiating builds.',
+      note: 'Requires Node.js >= 22.13.0, npm >= 10.8, and MongoDB Replica Set (rs0).',
+    },
+    'installation-steps': {
+      summary: 'Execute the five-stage local development orchestration.',
+      note: 'Step 1: npm run build:shared. Step 2: npm run dev:backend. Step 3: npm run dev:frontend.',
+    },
+    configuration: {
+      summary: 'Define environment configurations across workspaces.',
+      note: 'Populate .env with BACKEND_INTERNAL_URL, MONGO_URI, and JWT secrets.',
+    },
+    usage: {
+      summary: 'Explore interactive components in the Developer Documentation Library.',
+      note: 'Navigate to /document/design-system to review live components, states, and prompt skills.',
+    },
+    'customizing-content': {
+      summary: 'Tailor component tokens and theme variables.',
+      note: 'Override CSS variables or pass custom variant props without touching global CSS.',
+    },
+    'submenu-content': {
+      summary: 'Configure nested navigation hierarchies and subcategories.',
+      note: 'Support multi-tier navigation trees with indented SVG rail paths and filleted bends.',
+    },
+    features: {
+      summary: 'Production enterprise pillars for the SNP-SMS platform.',
+      note: '7-layer modular monolith, constant-time crypto, and WCAG AA/AAA compliance.',
+    },
+  };
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="size-2 rounded-full bg-[#0056FF]" />
-          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-            Line Tracker TOC · Primary
+    <div className="w-full max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+      {/* Header Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
+        <div className="flex items-center gap-2.5">
+          <span className="flex size-6 items-center justify-center rounded-[4px] bg-[#0056FF] text-white">
+            <svg
+              viewBox="0 0 24 24"
+              className="size-3.5 -rotate-90 fill-current"
+              aria-hidden="true"
+            >
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
           </span>
+          <div>
+            <h3 className="font-sans text-xs font-bold text-slate-950 dark:text-white">
+              Rail TOC · Paper Plane Flight Navigator
+            </h3>
+            <p className="font-sans text-[11px] text-slate-500">
+              Plane flies along rail bends, turns around on scroll-up, and fills passed track.
+            </p>
+          </div>
         </div>
-        <span className="font-mono text-[11px] font-bold text-[#0056FF]">
-          {progressPercent}% Read
-        </span>
+
+        {/* Quick Jump Buttons with 0px border and 4px radius standard */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {tocItems.slice(0, 4).map((it) => (
+            <button
+              key={it.id}
+              type="button"
+              onClick={() => {
+                setActiveSection(it.id);
+                const el = document.getElementById(it.id);
+                if (el && containerRef.current) {
+                  const cRect = containerRef.current.getBoundingClientRect();
+                  const elRect = el.getBoundingClientRect();
+                  containerRef.current.scrollTo({
+                    top: containerRef.current.scrollTop + elRect.top - cRect.top - 20,
+                    behavior: 'smooth',
+                  });
+                }
+              }}
+              className={cn(
+                'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-sans text-[11px] font-semibold transition-all',
+                activeSection === it.id
+                  ? 'bg-[#0056FF] text-white'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
+              )}
+            >
+              {it.label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="relative mt-4">
-        {/* Continuous Left Border Rail Tracker (Zero Dots, Pure Precision Line) */}
-        <div className="relative space-y-2 border-l-2 border-slate-200/90 pl-4 dark:border-slate-800">
-          {sections.map((sec) => {
-            const isActive = activeSection === sec.id;
-            return (
-              <button
-                key={sec.id}
-                type="button"
-                onClick={() => setActiveSection(sec.id)}
-                className={cn(
-                  'group relative flex w-full cursor-pointer items-center justify-between rounded-r-xl py-2 pr-3 pl-3 text-left transition-all duration-150 select-none',
-                  isActive
-                    ? '-ml-[2px] bg-[#0056FF]/[0.07]'
-                    : 'hover:translate-x-0.5 hover:bg-slate-50',
-                )}
-              >
-                {/* Active Section Line Indicator (Precision Vertical Segment, Zero Dots) */}
-                {isActive && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
-                  />
-                )}
+      {/* Interactive Two-Column Playground */}
+      <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-12">
+        {/* Left: Scrollable Document Content Container (Tracks Scroll in Real Time) */}
+        <div
+          ref={containerRef}
+          className="no-scrollbar h-80 space-y-6 overflow-y-auto rounded-xl border border-slate-100 bg-[#F8FAFC] p-4 select-text md:col-span-7 dark:border-slate-800/80 dark:bg-[#0B0F19]"
+        >
+          {tocItems.map((item) => (
+            <section
+              key={item.id}
+              id={item.id}
+              className={cn(
+                'rounded-lg border p-3.5 transition-all',
+                activeSection === item.id
+                  ? 'border-[#0056FF]/40 bg-white shadow-2xs dark:border-[#0056FF]/50 dark:bg-slate-800/60'
+                  : 'border-slate-200/80 bg-white/60 dark:border-slate-800 dark:bg-slate-900/40',
+              )}
+            >
+              <div className="flex items-center justify-between">
+                <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+                  {item.label}
+                </h4>
+                <span className="font-mono text-[9px] font-bold text-[#0056FF]">
+                  DEPTH {item.depth || 0}
+                </span>
+              </div>
+              <p className="mt-1 font-sans text-[11px] text-slate-600 dark:text-slate-300">
+                {sectionDetails[item.id]?.summary}
+              </p>
+              <div className="mt-2 rounded-[4px] border-0 bg-slate-100/90 p-2 font-mono text-[10px] text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                {sectionDetails[item.id]?.note}
+              </div>
+            </section>
+          ))}
+        </div>
 
-                {/* Section Content */}
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 font-mono text-[11px] font-bold">
-                    <span className={isActive ? 'text-[#0056FF]' : 'text-slate-400'}>
-                      {sec.number}
-                    </span>
-                    <span
-                      className={cn(
-                        'font-sans text-xs',
-                        isActive ? 'font-bold text-[#0056FF]' : 'font-semibold text-slate-800',
-                      )}
-                    >
-                      {sec.title}
-                    </span>
-                  </div>
-                  <span className="pl-6 font-mono text-[10px] text-slate-400">{sec.duration}</span>
-                </div>
-
-                {isActive && <ChevronRight className="size-3.5 shrink-0 text-[#0056FF]" />}
-              </button>
-            );
-          })}
+        {/* Right: The Paper Plane Rail TOC (Matches User Attachment Exact Style) */}
+        <div className="flex flex-col justify-start rounded-xl border border-slate-100 bg-white p-4 md:col-span-5 dark:border-slate-800/80 dark:bg-slate-900">
+          <RailToc
+            items={tocItems}
+            containerRef={containerRef}
+            offset={20}
+            indent={16}
+            activeId={activeSection}
+            onSelect={(id) => setActiveSection(id)}
+            title="On this page"
+          />
         </div>
       </div>
     </div>
