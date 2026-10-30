@@ -16,6 +16,7 @@ import {
 } from '@/components/icons';
 import { RailToc, type RailTocItem } from '../rail-toc';
 import { IconBar } from '../icon-bar';
+import { CyberArmorNav, type HangingTabItem } from '../hanging-tabs-nav';
 
 // 1. Primary Component: Rail TOC (Paper Plane Flying Along Indented Track)
 export function RailTocDemo() {
@@ -469,6 +470,108 @@ export function IconBarDemo() {
         <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
           {selectedTool || 'None (Cleared)'}
         </span>
+      </div>
+    </div>
+  );
+}
+
+// 9. Cyber Armor Modular Nav (Aerospace / Mecha HUD Console)
+export function CyberArmorNavDemo() {
+  const [activeConsoleTab, setActiveConsoleTab] = React.useState('portfolio');
+  const [activeDocsTab, setActiveDocsTab] = React.useState('library');
+
+  // Full 8-Tab Mecha Console matching the reference image
+  const fullMechaTabs: HangingTabItem[] = [
+    { id: 'home', label: 'Home' },
+    { id: 'blog', label: 'Blog' },
+    { id: 'portfolio', label: 'Portfolio' },
+    { id: 'services', label: 'Services' },
+    { id: 'team', label: 'Team' },
+    { id: 'clients', label: 'Clients' },
+    { id: 'shop', label: 'Shop' },
+    { id: 'contact', label: 'Contact Us' },
+  ];
+
+  // 3-Tab System Documentation Navigation
+  const systemDocTabs: HangingTabItem[] = [
+    { id: 'library', label: 'UI Library', icon: Layers },
+    { id: 'openapi', label: 'Open API', icon: FileText },
+    { id: 'changelog', label: 'Changelog', icon: Code },
+  ];
+
+  return (
+    <div className="w-full space-y-8">
+      {/* Description Header */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+              Aerospace HUD Console Standard
+            </span>
+          </div>
+          <h3 className="font-sans text-sm font-bold text-slate-900">
+            Cyber Armor Modular Navigation Bar
+          </h3>
+          <p className="font-sans text-xs text-slate-500">
+            Chamfered 45° stepped armor plates, physical double-seam divider lines, and luminous Royal Blue (#0056FF) active glow indicator.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+          <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
+            45° Chamfered Wings
+          </span>
+          <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
+            Double-Seam Milled
+          </span>
+          <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 font-bold text-[#0056FF]">
+            Royal Blue Glow
+          </span>
+        </div>
+      </div>
+
+      {/* Instance 1: Full 8-Tab Mecha Console (Matching Reference Image) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+            Instance 01 &middot; 8-Segment Command Console (Full Reference Style)
+          </span>
+          <span className="font-mono text-[10px] text-slate-500">
+            Active: <strong className="text-slate-900 uppercase">{activeConsoleTab}</strong>
+          </span>
+        </div>
+
+        <div className="flex w-full items-center justify-center overflow-x-auto py-4">
+          <CyberArmorNav
+            items={fullMechaTabs}
+            activeId={activeConsoleTab}
+            onSelect={setActiveConsoleTab}
+            showIcons={false}
+            size="md"
+          />
+        </div>
+      </div>
+
+      {/* Instance 2: 3-Tab System Documentation Navigation Bar */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+            Instance 02 &middot; 3-Segment System Docs Console
+          </span>
+          <span className="font-mono text-[10px] text-slate-500">
+            Active: <strong className="text-slate-900 uppercase">{activeDocsTab}</strong>
+          </span>
+        </div>
+
+        <div className="flex w-full items-center justify-center overflow-x-auto py-4">
+          <CyberArmorNav
+            items={systemDocTabs}
+            activeId={activeDocsTab}
+            onSelect={setActiveDocsTab}
+            showIcons={true}
+            size="md"
+          />
+        </div>
       </div>
     </div>
   );

@@ -67,8 +67,8 @@ export function DocsStickyHeader({
           </div>
         </Link>
 
-        {/* Center: Creative Hanging Trapezoid Top Navigation (Hanging From Header Baseline) */}
-        <div className="pointer-events-auto absolute bottom-0 left-1/2 -mb-[1px] flex -translate-x-1/2 items-end">
+        {/* Center: Futuristic Cyber Armor Modular Nav Bar (Aerospace / Mecha HUD Console) */}
+        <div className="pointer-events-auto absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center md:flex">
           <HangingTabsNav items={navTabs} activeId={currentTab} size="md" />
         </div>
 

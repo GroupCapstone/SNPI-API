@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
+    "commitHash": "d085801",
+    "description": "Synchronize fe39f6e to developer portal and changelog"
+  },
+  {
+    "version": "0.2.10",
+    "date": "31.10.2026",
     "commitHash": "fe39f6e",
     "description": "Enforce light day mode and implement Wiz-style curved atmospheric footer"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "28735c8",
     "description": "Implement WCAG 2.1 Color Contrast Checker with relative luminance math, AA/AAA badges, and live preview"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "7696a73",
-    "description": "Synchronize real-time changelog for Border Beam Card"
   }
 ];

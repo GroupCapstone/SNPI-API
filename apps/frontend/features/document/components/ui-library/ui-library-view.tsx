@@ -26,6 +26,7 @@ import {
   ProximitySidebarDemo,
   ScrollProgressDemo,
   GooeyNavDemo,
+  CyberArmorNavDemo,
   IconBarDemo,
   DurationPickerDemo,
   OtpInputDemo,
@@ -2532,6 +2533,8 @@ function renderFeedComponentDemo(
       return <ScrollProgressDemo />;
     case 'gooey-nav':
       return <GooeyNavDemo />;
+    case 'cyber-armor-nav':
+      return <CyberArmorNavDemo />;
 
     // ==========================================
     // INPUTS GROUP (Interactive Demos)
