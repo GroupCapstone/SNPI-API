@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `24f7d0f`
+
+- Implement Interactive Data Table with tri-state sorting, sticky header, debounced search, status pills, and boundary-clamped pagination
+
 ### Version 0.2.7 (30.10.2026) - `58dacb7`
 
 - Record v0.2.7 release checkpoint in real-time changelog and document portal
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.4 (30.10.2026) - `a9859ab`
 
 - Synchronize real-time changelog and technical portal
-
-### Version 0.2.4 (30.10.2026) - `f5eb812`
-
-- Activate all sidebar navigation menus, pin sticky sidebars, and document 9 interface motion and cognitive ux skills
 
