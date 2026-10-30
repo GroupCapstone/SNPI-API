@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.10 (31.10.2026) - `d1b80a7`
+
+- Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication
+
 ### Version 0.2.10 (31.10.2026) - `ccec8cf`
 
 - Eliminate explicit any in data-table and remove prepare script from shared package
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `81b45b9`
 
 - Synchronize real-time changelog for Real-Time Data Chart
-
-### Version 0.2.8 (30.10.2026) - `afd8591`
-
-- Implement 10-pillar Real-Time Data Chart with Canvas 60fps streaming, Bezier splines, dot grid, glow, and hover crosshair
 

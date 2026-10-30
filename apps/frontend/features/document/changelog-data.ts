@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
+    "commitHash": "d1b80a7",
+    "description": "Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication"
+  },
+  {
+    "version": "0.2.10",
+    "date": "31.10.2026",
     "commitHash": "ccec8cf",
     "description": "Eliminate explicit any in data-table and remove prepare script from shared package"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "81b45b9",
     "description": "Synchronize real-time changelog for Real-Time Data Chart"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "afd8591",
-    "description": "Implement 10-pillar Real-Time Data Chart with Canvas 60fps streaming, Bezier splines, dot grid, glow, and hover crosshair"
   }
 ];
