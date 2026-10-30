@@ -9,6 +9,12 @@ export interface GeometricButtonProps extends React.ButtonHTMLAttributes<HTMLBut
     | 'primary'
     | 'outline'
     | 'blue'
+    | 'azure'
+    | 'black'
+    | 'soft-lavender'
+    | 'white'
+    | 'futurewave'
+    | 'midnight'
     | 'green'
     | 'purple'
     | 'orange'
@@ -67,37 +73,68 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
         ? 'blue'
         : variant;
 
-    // Variant style configurations (Strictly zero color behind icons or numbers)
+    // Variant style configurations (Strictly restricted to 5 brand colors & 2 gradients)
     const variantStyles = {
       blue: {
         button: isActive
           ? 'border-2 border-[#0056FF] bg-[#0056FF] text-white shadow-none'
-          : 'border-2 border-[#0056FF] bg-blue-50/70 text-[#0056FF] hover:bg-blue-100/70',
+          : 'border-2 border-[#0056FF] bg-blue-50/80 text-[#0056FF] hover:bg-blue-100/80',
       },
+      azure: {
+        button: isActive
+          ? 'border-2 border-[#2277FF] bg-[#2277FF] text-white shadow-none'
+          : 'border-2 border-[#2277FF] bg-[#2277FF]/10 text-[#2277FF] hover:bg-[#2277FF]/20',
+      },
+      black: {
+        button: isActive
+          ? 'border-2 border-black bg-black text-white shadow-none'
+          : 'border-2 border-slate-900 bg-slate-900 text-white hover:bg-black',
+      },
+      'soft-lavender': {
+        button: isActive
+          ? 'border-2 border-[#CAD3F5] bg-[#CAD3F5] text-[#000B26] shadow-none'
+          : 'border-2 border-[#CAD3F5] bg-[#E3E7FC] text-[#000B26] hover:bg-[#D5DBF9]',
+      },
+      white: {
+        button: isActive
+          ? 'border-2 border-slate-900 bg-slate-900 text-white shadow-none'
+          : 'border-2 border-slate-200 bg-white text-slate-800 hover:border-[#0056FF] hover:text-[#0056FF]',
+      },
+      futurewave: {
+        button: isActive
+          ? 'border-2 border-[#2277FF] bg-gradient-to-r from-[#2277FF] via-[#5C93FF] to-[#AEC2FF] text-white shadow-none'
+          : 'border-2 border-[#2277FF]/40 bg-gradient-to-r from-[#2277FF]/10 to-[#AEC2FF]/20 text-[#000B26] hover:border-[#2277FF]',
+      },
+      midnight: {
+        button: isActive
+          ? 'border-2 border-slate-900 bg-gradient-to-r from-[#000B26] via-[#002D8A] to-[#0056FF] text-white shadow-none'
+          : 'border-2 border-slate-900 bg-gradient-to-r from-[#000B26] to-[#002D8A] text-white hover:to-[#0056FF]',
+      },
+      // Palette-preserving aliases for legacy callers
       green: {
         button: isActive
-          ? 'border-2 border-emerald-600 bg-emerald-600 text-white shadow-none'
-          : 'border-2 border-emerald-600 bg-emerald-50/70 text-emerald-800 hover:bg-emerald-100/70',
+          ? 'border-2 border-[#2277FF] bg-[#2277FF] text-white shadow-none'
+          : 'border-2 border-[#2277FF] bg-[#2277FF]/10 text-[#2277FF] hover:bg-[#2277FF]/20',
       },
       purple: {
         button: isActive
-          ? 'border-2 border-purple-600 bg-purple-600 text-white shadow-none'
-          : 'border-2 border-purple-600 bg-purple-50/70 text-purple-800 hover:bg-purple-100/70',
+          ? 'border-2 border-[#CAD3F5] bg-[#CAD3F5] text-[#000B26] shadow-none'
+          : 'border-2 border-[#CAD3F5] bg-[#E3E7FC] text-[#000B26] hover:bg-[#D5DBF9]',
       },
       orange: {
         button: isActive
-          ? 'border-2 border-orange-500 bg-orange-500 text-white shadow-none'
-          : 'border-2 border-orange-500 bg-orange-50/70 text-orange-800 hover:bg-orange-100/70',
+          ? 'border-2 border-black bg-black text-white shadow-none'
+          : 'border-2 border-slate-900 bg-slate-900 text-white hover:bg-black',
       },
       navy: {
         button: isActive
-          ? 'border-2 border-blue-900 bg-blue-900 text-white shadow-none'
-          : 'border-2 border-blue-900 bg-blue-50/70 text-blue-950 hover:bg-blue-100/70',
+          ? 'border-2 border-slate-900 bg-gradient-to-r from-[#000B26] to-[#0056FF] text-white shadow-none'
+          : 'border-2 border-slate-900 bg-[#000B26] text-white hover:bg-black',
       },
       cyan: {
         button: isActive
-          ? 'border-2 border-cyan-500 bg-cyan-500 text-white shadow-none'
-          : 'border-2 border-cyan-500 bg-cyan-50/70 text-cyan-800 hover:bg-cyan-100/70',
+          ? 'border-2 border-[#2277FF] bg-gradient-to-r from-[#2277FF] to-[#AEC2FF] text-white shadow-none'
+          : 'border-2 border-[#2277FF]/40 bg-gradient-to-r from-[#2277FF]/10 to-[#AEC2FF]/20 text-[#000B26]',
       },
       outline: {
         button: isActive
@@ -111,7 +148,20 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
       },
     }[
       resolvedVariant as
-        'blue' | 'green' | 'purple' | 'orange' | 'navy' | 'cyan' | 'outline' | 'ghost'
+        | 'blue'
+        | 'azure'
+        | 'black'
+        | 'soft-lavender'
+        | 'white'
+        | 'futurewave'
+        | 'midnight'
+        | 'green'
+        | 'purple'
+        | 'orange'
+        | 'navy'
+        | 'cyan'
+        | 'outline'
+        | 'ghost'
     ] || {
       button: 'border-2 border-slate-300 bg-slate-50 text-slate-700',
     };

@@ -632,7 +632,7 @@ console.log(payload.data);`;
                 <li>
                   <Link
                     href="/document/design-system"
-                    className="font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
+                    className="font-semibold text-[#0056FF] transition-colors hover:text-[#2277FF]"
                   >
                     UI Component Library & Design System Showcase &rarr;
                   </Link>
@@ -737,13 +737,13 @@ console.log(payload.data);`;
                   <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                     Authorization
                   </span>
-                  <p className="font-bold text-amber-700">Bearer &lt;access_token&gt;</p>
+                  <p className="font-bold text-[#000B26]">Bearer &lt;access_token&gt;</p>
                 </div>
                 <div className="space-y-1 rounded-lg border border-slate-200 bg-white p-3 shadow-xs">
                   <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                     Campus Isolation
                   </span>
-                  <p className="font-bold text-emerald-700">X-Branch-Id: &lt;branch_id&gt;</p>
+                  <p className="font-bold text-[#0056FF]">X-Branch-Id: &lt;branch_id&gt;</p>
                 </div>
               </div>
             </div>
@@ -827,8 +827,8 @@ console.log(payload.data);`;
                         <span
                           className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${
                             ep.method === 'GET'
-                              ? 'border border-blue-200 bg-blue-50 text-[#0056FF]'
-                              : 'border border-emerald-200 bg-emerald-50 text-emerald-800'
+                              ? 'border border-[#2277FF]/40 bg-[#E3E7FC] text-[#0056FF]'
+                              : 'border border-slate-900 bg-black text-white'
                           }`}
                         >
                           {ep.method}
@@ -836,7 +836,7 @@ console.log(payload.data);`;
                       </td>
                       <td className="p-2.5 font-bold text-slate-900">{ep.path}</td>
                       <td className="p-2.5 font-sans text-xs text-slate-600">{ep.description}</td>
-                      <td className="p-2.5 font-mono text-[11px] font-medium text-amber-700">
+                      <td className="p-2.5 font-mono text-[11px] font-medium text-[#0056FF]">
                         {ep.requiredPermission}
                       </td>
                     </tr>
@@ -877,11 +877,11 @@ console.log(payload.data);`;
                     <tr key={item.path + item.method} className="hover:bg-slate-50">
                       <td className="p-2.5 font-mono font-bold text-slate-900">{item.domain}</td>
                       <td className="p-2.5 font-mono text-xs">
-                        <span className="mr-1.5 font-bold text-amber-700">{item.method}</span>
+                        <span className="mr-1.5 font-bold text-[#000B26]">{item.method}</span>
                         <span className="font-semibold text-slate-800">{item.path}</span>
                       </td>
                       <td className="p-2.5 text-xs text-slate-600">{item.whyProtected}</td>
-                      <td className="p-2.5 font-mono text-xs text-[11px] text-emerald-800">
+                      <td className="p-2.5 font-mono text-xs text-[11px] text-[#0056FF]">
                         {item.defenseMechanisms}
                       </td>
                     </tr>
@@ -919,49 +919,49 @@ console.log(payload.data);`;
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-slate-700">
                     <tr>
-                      <td className="p-2.5 font-bold text-emerald-700">200</td>
+                      <td className="p-2.5 font-bold text-[#0056FF]">200</td>
                       <td className="p-2.5">OK</td>
                       <td className="p-2.5 font-sans text-slate-600">
                         The request succeeded and returned the requested payload.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 font-bold text-emerald-700">201</td>
+                      <td className="p-2.5 font-bold text-[#2277FF]">201</td>
                       <td className="p-2.5">Created</td>
                       <td className="p-2.5 font-sans text-slate-600">
                         New entity created successfully.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 font-bold text-amber-700">400</td>
+                      <td className="p-2.5 font-bold text-[#000B26]">400</td>
                       <td className="p-2.5">Bad Request</td>
                       <td className="p-2.5 font-sans text-slate-600">
                         Payload validation failed against Zod schema.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 font-bold text-amber-700">401</td>
+                      <td className="p-2.5 font-bold text-[#000B26]">401</td>
                       <td className="p-2.5">Unauthorized</td>
                       <td className="p-2.5 font-sans text-slate-600">
                         Missing, expired, or invalid JWT Bearer token.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 font-bold text-rose-700">403</td>
+                      <td className="p-2.5 font-bold text-black">403</td>
                       <td className="p-2.5">Forbidden</td>
                       <td className="p-2.5 font-sans text-slate-600">
                         User lacks the required RBAC permission or branch scope.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 font-bold text-rose-700">404</td>
+                      <td className="p-2.5 font-bold text-black">404</td>
                       <td className="p-2.5">Not Found</td>
                       <td className="p-2.5 font-sans text-slate-600">
                         Requested route or resource identifier does not exist.
                       </td>
                     </tr>
                     <tr>
-                      <td className="p-2.5 font-bold text-amber-700">429</td>
+                      <td className="p-2.5 font-bold text-[#2277FF]">429</td>
                       <td className="p-2.5">Too Many Requests</td>
                       <td className="p-2.5 font-sans text-slate-600">
                         Rate limit exceeded (standard draft-8 headers provided).
@@ -991,7 +991,7 @@ console.log(payload.data);`;
                               'rounded-md px-2 py-0.5 font-mono text-[10px] font-black tracking-wider uppercase',
                               item.method === 'GET'
                                 ? 'border border-[#0056FF]/30 bg-[#0056FF] text-white shadow-xs'
-                                : 'border border-emerald-600/30 bg-emerald-600 text-white shadow-xs',
+                                : 'border border-black bg-black text-white shadow-xs',
                             )}
                           >
                             {item.method}
@@ -1020,7 +1020,7 @@ console.log(payload.data);`;
                     {/* Metadata Badges */}
                     <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
                       <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
-                        Permission: <strong className="text-amber-700">{item.permission}</strong>
+                        Permission: <strong className="text-[#0056FF]">{item.permission}</strong>
                       </div>
                       <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
                         Scope Header:{' '}
@@ -1037,8 +1037,8 @@ console.log(payload.data);`;
                           <span
                             className={
                               liveRes.status === 200
-                                ? 'font-bold text-emerald-700'
-                                : 'font-bold text-amber-700'
+                                ? 'font-bold text-[#0056FF]'
+                                : 'font-bold text-[#000B26]'
                             }
                           >
                             Live Response: HTTP {liveRes.status}
@@ -1087,7 +1087,7 @@ console.log(payload.data);`;
                           onClick={() => handleCopy(generateSnippet(item, codeType), item.id)}
                           icon={
                             copiedId === item.id ? (
-                              <Check className="size-3 text-emerald-600" />
+                              <Check className="size-3 text-[#0056FF]" />
                             ) : (
                               <Copy className="size-3 text-slate-600" />
                             )

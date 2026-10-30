@@ -229,7 +229,7 @@ export default function DesignSystemPage() {
                     </GeometricButton>
 
                     <GeometricButton
-                      variant="green"
+                      variant="azure"
                       size="sm"
                       isActive={activeTab === 'playground'}
                       onClick={() => {
@@ -242,7 +242,7 @@ export default function DesignSystemPage() {
                     </GeometricButton>
 
                     <GeometricButton
-                      variant="purple"
+                      variant="soft-lavender"
                       size="sm"
                       isActive={activeTab === 'blueprint'}
                       onClick={() => {
@@ -255,7 +255,7 @@ export default function DesignSystemPage() {
                     </GeometricButton>
 
                     <GeometricButton
-                      variant="orange"
+                      variant="black"
                       size="sm"
                       isActive={activeTab === 'dual-mode'}
                       onClick={() => {
@@ -268,7 +268,7 @@ export default function DesignSystemPage() {
                     </GeometricButton>
 
                     <GeometricButton
-                      variant="cyan"
+                      variant="futurewave"
                       size="sm"
                       isActive={activeTab === 'top-nav'}
                       onClick={() => {
@@ -495,9 +495,9 @@ export default function DesignSystemPage() {
                     Digital
                   </GeometricButton>
 
-                  {/* 2. Finance - Green */}
+                  {/* 2. Finance - Azure */}
                   <GeometricButton
-                    variant="green"
+                    variant="azure"
                     size="md"
                     icon={<Briefcase className="size-4" />}
                     className="w-full"
@@ -505,9 +505,9 @@ export default function DesignSystemPage() {
                     Finance
                   </GeometricButton>
 
-                  {/* 3. Simple - Purple */}
+                  {/* 3. Simple - Soft Lavender */}
                   <GeometricButton
-                    variant="purple"
+                    variant="soft-lavender"
                     size="md"
                     icon={<Wind className="size-4" />}
                     className="w-full"
@@ -515,9 +515,9 @@ export default function DesignSystemPage() {
                     Simple
                   </GeometricButton>
 
-                  {/* 4. Fast - Orange */}
+                  {/* 4. Fast - Black */}
                   <GeometricButton
-                    variant="orange"
+                    variant="black"
                     size="md"
                     icon={<Zap className="size-4" />}
                     className="w-full"
@@ -525,9 +525,9 @@ export default function DesignSystemPage() {
                     Fast
                   </GeometricButton>
 
-                  {/* 5. Secure - Navy */}
+                  {/* 5. Secure - Midnight Surge */}
                   <GeometricButton
-                    variant="navy"
+                    variant="midnight"
                     size="md"
                     icon={<ShieldCheck className="size-4" />}
                     className="w-full"
@@ -535,9 +535,9 @@ export default function DesignSystemPage() {
                     Secure
                   </GeometricButton>
 
-                  {/* 6. Fluid - Cyan */}
+                  {/* 6. Fluid - Futurewave */}
                   <GeometricButton
-                    variant="cyan"
+                    variant="futurewave"
                     size="md"
                     icon={<Droplets className="size-4" />}
                     className="w-full"
@@ -614,7 +614,7 @@ export default function DesignSystemPage() {
                 {/* Stage Header Info */}
                 <div className="flex flex-wrap items-center justify-between border-b border-slate-100 bg-slate-50/80 px-4 py-2.5">
                   <div className="flex items-center gap-2">
-                    <span className="inline-block size-2 rounded-full bg-emerald-500" />
+                    <span className="inline-block size-2 rounded-full bg-[#0056FF]" />
                     <span className="font-mono text-[11px] font-bold text-slate-700 uppercase">
                       Interactive Live Demo & State Testing
                     </span>
@@ -716,7 +716,7 @@ export default function DesignSystemPage() {
                         onClick={() => handleCopy(activeDoc.codeSnippet)}
                       >
                         {copiedCode ? (
-                          <Check className="h-3.5 w-3.5 text-emerald-600" />
+                          <Check className="h-3.5 w-3.5 text-[#0056FF]" />
                         ) : (
                           <Copy className="h-3.5 w-3.5" />
                         )}
@@ -812,19 +812,19 @@ export default function DesignSystemPage() {
                 <div className="space-y-2">
                   {activeDoc.usageGuidelines.map((g, idx) => (
                     <div key={idx} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-3">
-                        <span className="font-mono text-[10px] font-bold text-emerald-800 uppercase">
+                      <div className="rounded-xl border border-[#2277FF]/30 bg-[#E3E7FC]/40 p-3">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
                           [DO]
                         </span>
-                        <p className="mt-1 font-sans text-xs leading-relaxed text-emerald-950">
+                        <p className="mt-1 font-sans text-xs leading-relaxed text-[#000B26]">
                           {g.doItem}
                         </p>
                       </div>
-                      <div className="rounded-xl border border-rose-200 bg-rose-50/50 p-3">
-                        <span className="font-mono text-[10px] font-bold text-rose-800 uppercase">
+                      <div className="rounded-xl border border-slate-900 bg-[#000B26] p-3 text-white">
+                        <span className="font-mono text-[10px] font-bold text-white uppercase">
                           [DON&apos;T]
                         </span>
-                        <p className="mt-1 font-sans text-xs leading-relaxed text-rose-950">
+                        <p className="mt-1 font-sans text-xs leading-relaxed text-slate-300">
                           {g.dontItem}
                         </p>
                       </div>
@@ -1078,7 +1078,7 @@ function renderActivePlaygroundComponent(props: {
               <span>Trigger Success</span>
             </GeometricButton>
             <GeometricButton
-              variant="orange"
+              variant="azure"
               size="sm"
               onClick={() => {
                 props.setSnackbarMsg('Batch attendance cloud sync in progress.');
@@ -1113,7 +1113,7 @@ function renderActivePlaygroundComponent(props: {
           <div className="w-full rounded-2xl border border-slate-200/90 bg-slate-900 p-4 text-white shadow-lg transition-all">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <span className="size-2 rounded-full bg-emerald-400" />
+                <span className="size-2 rounded-full bg-[#2277FF]" />
                 <span className="font-sans text-xs">{props.snackbarMsg}</span>
               </div>
               <div className="flex items-center gap-2">
@@ -1229,7 +1229,7 @@ function renderActivePlaygroundComponent(props: {
               <h4 className="font-sans text-sm font-bold text-slate-900">
                 Confirm Enrollment Deferral
               </h4>
-              <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 font-mono text-[10px] font-bold text-amber-800 uppercase">
+              <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#000B26] uppercase">
                 Action Required
               </span>
             </div>
@@ -1299,7 +1299,7 @@ function renderActivePlaygroundComponent(props: {
                       {item.label}
                     </span>
                     {item.id === 'academics' && props.hangingNavBadge > 0 && (
-                      <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-rose-500 font-mono text-[10px] font-bold text-white ring-2 ring-white">
+                      <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-bold text-white ring-2 ring-white">
                         {props.hangingNavBadge}
                       </span>
                     )}

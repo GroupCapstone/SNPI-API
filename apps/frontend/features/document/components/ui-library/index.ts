@@ -16,3 +16,4 @@ export * from './geometric-tag-primitives';
 export * from './docs-sticky-header';
 export * from './dual-mode-system-ui';
 export * from './hanging-tabs-nav';
+export * from './docs-footer';
