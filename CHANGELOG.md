@@ -2,7 +2,11 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.8 (31.10.2026) - `8028088`
+### Version 0.2.8 (31.10.2026) - `133bba9`
+
+- Arrange demos by flow group and synchronize sequential line tracker without rank jumping
+
+### Version 0.2.8 (31.10.2026) - `f10e1e2`
 
 - Apply floating capsule dock nav and purge legacy hanging tabs header
 
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `5179bb9`
 
 - Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap
-
-### Version 0.2.8 (30.10.2026) - `f35a661`
-
-- Synchronize real-time changelog for Searchable Dropdown
 

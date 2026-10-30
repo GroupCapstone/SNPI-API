@@ -9,7 +9,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
-    "commitHash": "8028088",
+    "commitHash": "133bba9",
+    "description": "Arrange demos by flow group and synchronize sequential line tracker without rank jumping"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "f10e1e2",
     "description": "Apply floating capsule dock nav and purge legacy hanging tabs header"
   },
   {
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "5179bb9",
     "description": "Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "f35a661",
-    "description": "Synchronize real-time changelog for Searchable Dropdown"
   }
 ];

@@ -161,7 +161,7 @@ Mandatory Requirements:
 5. Export both the primary component and an interactive demo showcase component.`;
 }
 
-export const COMPONENT_LIBRARY_REGISTRY: ComponentItemDoc[] = [
+const RAW_COMPONENT_REGISTRY: ComponentItemDoc[] = [
   {
     id: 'snackbar',
     name: 'Snackbar',
@@ -4205,3 +4205,19 @@ const columns: DataTableColumn<StudentRecord>[] = [
     supportedStates: ['Thumbnail', 'Lightbox Expanded'],
   },
 ];
+
+const categoryOrderMap = new Map<string, number>();
+COMPONENT_CATEGORIES.forEach((cat, idx) => categoryOrderMap.set(cat, idx));
+
+/**
+ * Master UI Component Library Registry
+ * Guaranteed 100% sorted in strict linear flow order matching COMPONENT_CATEGORIES.
+ * Prevents rank jumping and ensures sequential step-by-step scrolling.
+ */
+export const COMPONENT_LIBRARY_REGISTRY: ComponentItemDoc[] = [...RAW_COMPONENT_REGISTRY].sort(
+  (a, b) => {
+    const orderA = categoryOrderMap.get(a.category) ?? 999;
+    const orderB = categoryOrderMap.get(b.category) ?? 999;
+    return orderA - orderB;
+  },
+);
