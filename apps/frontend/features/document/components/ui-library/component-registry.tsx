@@ -1832,6 +1832,104 @@ export function Example() {
     ],
   },
   {
+    id: 'skeleton-loading-screen',
+    name: 'Skeleton Loading Screen',
+    category: 'Feedback',
+    paradigm: 'CSS Shimmer Placeholder Standard',
+    description: 'CSS-only animated loading placeholders with shimmer gradients, no JavaScript.',
+    explanation:
+      'Three common skeleton patterns — profile header, card grid, and content list — all animated with a single CSS keyframe. Click the preview to toggle the loaded state.',
+    props: [
+      {
+        name: 'variant',
+        type: "'rect' | 'circle' | 'text'",
+        default: "'rect'",
+        description: 'Placeholder geometric shape for avatars, text lines, or media cards.',
+      },
+      {
+        name: 'width',
+        type: 'string | number',
+        description: 'Explicit width dimension to preserve exact layout geometry.',
+      },
+      {
+        name: 'height',
+        type: 'string | number',
+        description: 'Explicit height dimension preventing cumulative layout shift (CLS).',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Design token colorway configuring base surface and shimmer contrast.',
+      },
+    ],
+    codeSnippet: `import { Skeleton } from '@/features/document/components/ui-library';\n\n// Avatar circle and text line placeholders\n<Skeleton variant=\"circle\" className=\"size-16\" />\n<Skeleton variant=\"text\" className=\"w-48 h-5\" />\n<Skeleton className=\"w-full aspect-video rounded-xl\" />`,
+    realWorldExamples: [
+      {
+        title: 'Asynchronous Institutional Feeds & Dashboards',
+        scenario:
+          'Dashboard displays instant layout structure while backend aggregation queries compute student statistics.',
+        impact: 'Eliminates Cumulative Layout Shift (CLS = 0) and reduces perceived latency.',
+      },
+      {
+        title: 'Curriculum & Syllabi Media Grid Pre-Rendering',
+        scenario:
+          'Media cards preserve strict 16:9 aspect ratios before image assets stream from CDN storage.',
+        impact: 'Maintains page stability without content jumpiness.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Perceived Performance & Cognitive Readiness',
+        detail:
+          'Skeleton screens anticipate incoming content layout, making wait times feel 30% shorter than blank spinner states.',
+      },
+      {
+        principle: "Miller's Law & Chunked Layout Delivery",
+        detail:
+          'Pre-rendering recognizable UI regions lets users visually orient their attention before data arrives.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: Content-heavy pages where data arrives asynchronously — feeds, dashboards, profiles.',
+        dontItem:
+          'NOT IDEAL WHEN: Content loads in under 200ms — skeletons will flash awkwardly before disappearing.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: You want layout-aware placeholders instead of generic spinners for better perceived performance.',
+        dontItem:
+          'NOT IDEAL WHEN: A progress bar or inline spinner communicates the action more clearly.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Pre-rendering page structure to prevent cumulative layout shift on load.',
+        dontItem:
+          'NOT IDEAL WHEN: Critical above-the-fold content that should be server-rendered or statically generated.',
+      },
+    ],
+    implementationNotes: [
+      '01 Shimmer Gradient: Animated linear gradient that sweeps left to right, creating the illusion of content loading in.',
+      '02 Placeholder Shapes: Rounded rectangles and circles sized to match your final content — text lines, avatars, images.',
+      '03 Aspect Ratios: Proportional sizing on image placeholders that prevents layout shift when real content loads.',
+      '04 Color Palette: Subtle base and shimmer tones that read as "loading" without competing with content arrival.',
+      '05 CSS Custom Properties: Centralized design tokens for base color, shimmer intensity, and speed — swap themes in two lines.',
+      '06 Pseudo-element Layer: Shimmer lives on ::after to avoid interfering with element sizing or layout flow.',
+      '07 Animation Timing: Smooth 1.8s ease-in-out loop — fast enough to feel alive, slow enough to avoid distraction.',
+      '08 Reduced Motion: prefers-reduced-motion query disables shimmer for users who opt out of animation.',
+    ],
+    supportedStates: [
+      'Loading (1.8s Shimmer Active)',
+      'Loaded (Smooth Content Reveal)',
+      'Reduced Motion (Static Placeholder)',
+      'Profile Header Pattern',
+      'Card Grid Pattern (16:9 Media)',
+      'Content List Pattern',
+    ],
+  },
+  {
     id: 'emoji-reaction',
     name: 'Emoji Reaction',
     category: 'Feedback',

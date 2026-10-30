@@ -81,6 +81,7 @@ import {
   DatePickerDemo,
   SearchableDropdownDemo,
   ToastStackDemo,
+  SkeletonLoadingScreenDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2804,6 +2805,8 @@ function renderFeedComponentDemo(
     case 'toast':
     case 'toast-stack':
       return <ToastStackDemo />;
+    case 'skeleton-loading-screen':
+      return <SkeletonLoadingScreenDemo />;
     case 'emoji-reaction':
       return <EmojiReactionDemo />;
     case 'notification-bell':
