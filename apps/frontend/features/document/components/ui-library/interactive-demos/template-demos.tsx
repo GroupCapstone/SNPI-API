@@ -559,47 +559,11 @@ export function TiltCardDemo() {
   );
 }
 
-// 3.4 Border Beam Card
-export function BorderBeamDemo() {
-  const [active, setActive] = React.useState(true);
+import { BorderBeamInteractiveShowcase } from '../border-beam-card';
 
-  return (
-    <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-slate-800 bg-[#0B0F19] p-6 text-white shadow-2xl">
-      {/* Animated Laser Border Beam */}
-      {active && (
-        <div
-          className="pointer-events-none absolute inset-0 rounded-2xl"
-          style={{
-            border: '2px solid transparent',
-            background: 'linear-gradient(90deg, #0056FF, #FF5500, #0056FF) border-box',
-            WebkitMask:
-              'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
-            WebkitMaskComposite: 'destination-out',
-            maskComposite: 'exclude',
-          }}
-        />
-      )}
-      <div className="relative z-10 space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-xs font-bold text-[#FF5500] uppercase">
-            Laser Perimeter Beam
-          </span>
-          <span className="size-2 rounded-full bg-emerald-400 animate-ping" />
-        </div>
-        <h4 className="font-sans text-lg font-black text-white">Quantum Border Ray</h4>
-        <p className="font-sans text-xs text-slate-400">
-          Continuous infinite gradient ray circulating the perimeter of the component card.
-        </p>
-        <button
-          type="button"
-          onClick={() => setActive(!active)}
-          className="mt-2 rounded-full border border-slate-700 bg-slate-800 px-3 py-1 font-mono text-[10px] font-bold text-slate-300"
-        >
-          {active ? 'Beam Active' : 'Beam Paused'}
-        </button>
-      </div>
-    </div>
-  );
+// 3.4 Border Beam Card (Official Native Instrument Panel & 4-Dash SVG Physics)
+export function BorderBeamDemo() {
+  return <BorderBeamInteractiveShowcase />;
 }
 
 // ==========================================

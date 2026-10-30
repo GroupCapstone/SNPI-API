@@ -6,6 +6,7 @@ import {
   LibrarySnackbar,
   NativeSnackbarInline,
   type SnackbarVariant,
+  BorderBeamInteractiveShowcase,
   LibraryBottomSheet,
   LibraryDialog,
   type LibraryBottomNavItem,
@@ -206,9 +207,9 @@ export function UiLibraryView() {
   ];
 
   // 10. Card interactive states (Folder mode & Metrics mode)
-  const [cardPresentationMode, setCardPresentationMode] = React.useState<'folder' | 'metrics'>(
-    'folder',
-  );
+  const [cardPresentationMode, setCardPresentationMode] = React.useState<
+    'border-beam' | 'folder' | 'metrics'
+  >('border-beam');
   const [cardRevealed, setCardRevealed] = React.useState(false);
   const [cardSlidOut, setCardSlidOut] = React.useState(false);
   const [metricsTimeRange, setMetricsTimeRange] = React.useState<'30D' | '90D' | '1Y' | 'All'>(
@@ -1098,8 +1099,8 @@ function renderFeedComponentDemo(
     bottomNavBadge: number;
     setBottomNavBadge: React.Dispatch<React.SetStateAction<number>>;
     bottomNavItems: LibraryBottomNavItem[];
-    cardPresentationMode: 'folder' | 'metrics';
-    setCardPresentationMode: (m: 'folder' | 'metrics') => void;
+    cardPresentationMode: 'border-beam' | 'folder' | 'metrics';
+    setCardPresentationMode: (m: 'border-beam' | 'folder' | 'metrics') => void;
     cardRevealed: boolean;
     setCardRevealed: (r: boolean) => void;
     cardSlidOut: boolean;
@@ -2120,7 +2121,19 @@ function renderFeedComponentDemo(
       return (
         <div className="flex w-full flex-col items-center gap-5">
           {/* Card Presentation Mode Switcher */}
-          <div className="flex items-center rounded-full border border-slate-200 bg-white p-1 shadow-xs">
+          <div className="flex flex-wrap items-center justify-center rounded-full border border-slate-200 bg-white p-1 shadow-xs">
+            <button
+              type="button"
+              onClick={() => state.setCardPresentationMode('border-beam')}
+              className={cn(
+                'cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all',
+                state.cardPresentationMode === 'border-beam'
+                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900',
+              )}
+            >
+              Border Beam Card
+            </button>
             <button
               type="button"
               onClick={() => state.setCardPresentationMode('folder')}
@@ -2147,8 +2160,10 @@ function renderFeedComponentDemo(
             </button>
           </div>
 
-          {/* MODE 1: Interactive Card Folder (User Reference Style) */}
-          {state.cardPresentationMode === 'folder' ? (
+          {/* MODE 1: Border Beam Card (Instrument Panel & 4-Dash Constant Velocity Physics) */}
+          {state.cardPresentationMode === 'border-beam' ? (
+            <BorderBeamInteractiveShowcase />
+          ) : state.cardPresentationMode === 'folder' ? (
             <div className="relative w-full max-w-lg pt-6 select-none">
               {/* Sliding Credit / Student Card */}
               <div
