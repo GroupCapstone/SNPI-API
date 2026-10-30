@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `0fcfaf0`
+
+- V0.2.11 release checkpoint with system architecture lexicon, cyber armor nav, and royal blue brand system
+
 ### Version 0.2.11 (31.10.2026) - `6496ddb`
 
 - Format components and documentation with prettier
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `3da80f8`
 
 - Remove top nav hanging tabs section and add universal ai agent prompt tabs and copy action
-
-### Version 0.2.9 (31.10.2026) - `ec5413b`
-
-- Record line tracker navigation update and scrollbar removal in real-time changelog
 

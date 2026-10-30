@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "0fcfaf0",
+    "description": "V0.2.11 release checkpoint with system architecture lexicon, cyber armor nav, and royal blue brand system"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "6496ddb",
     "description": "Format components and documentation with prettier"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "3da80f8",
     "description": "Remove top nav hanging tabs section and add universal ai agent prompt tabs and copy action"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "ec5413b",
-    "description": "Record line tracker navigation update and scrollbar removal in real-time changelog"
   }
 ];
