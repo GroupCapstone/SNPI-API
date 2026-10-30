@@ -751,59 +751,29 @@ export function UiLibraryView() {
                               </div>
 
                               <div className="flex flex-wrap items-center gap-2">
-                                {/* 1. Preview | Prompt Segmented Pill */}
-                                <div className="flex items-center rounded-xl bg-[#F1F5F9] p-1 shadow-2xs">
-                                  <button
-                                    type="button"
-                                    onClick={() => setCompTab(comp.id, 'preview')}
-                                    className={cn(
-                                      'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
-                                      currentTab === 'preview'
-                                        ? 'bg-white text-slate-900 shadow-xs'
-                                        : 'text-slate-500 hover:text-slate-900',
-                                    )}
-                                  >
-                                    Preview
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => setCompTab(comp.id, 'prompt')}
-                                    className={cn(
-                                      'flex cursor-pointer items-center gap-1.5 rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
-                                      currentTab === 'prompt'
-                                        ? 'bg-[#0056FF] text-white shadow-xs'
-                                        : 'text-slate-500 hover:text-slate-900',
-                                    )}
-                                  >
-                                    <Sparkles className="size-3 stroke-[2]" />
-                                    <span>Prompt</span>
-                                  </button>
-                                </div>
-
-                                {/* 2. Direct 1-Click Copy AI Agent Prompt Button */}
+                                {/* 1. Direct 1-Click Copy AI Agent Prompt Button (Icons Only) */}
                                 <button
                                   type="button"
                                   onClick={() =>
                                     handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
                                   }
-                                  title="Copy complete MVP specification prompt to clipboard for any AI agent"
+                                  title={
+                                    copiedPromptId === comp.id
+                                      ? 'Prompt Copied to Clipboard!'
+                                      : 'Copy AI Agent MVP Prompt'
+                                  }
+                                  aria-label="Copy AI Agent MVP Prompt"
                                   className={cn(
-                                    'flex cursor-pointer items-center gap-1.5 rounded-xl border px-3 py-1.5 font-sans text-xs font-bold transition-all active:scale-95',
+                                    'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
                                     copiedPromptId === comp.id
                                       ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-2xs'
                                       : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
                                   )}
                                 >
                                   {copiedPromptId === comp.id ? (
-                                    <>
-                                      <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
-                                      <span>Prompt Copied!</span>
-                                    </>
+                                    <Check className="size-4 stroke-[2.2] text-emerald-600" />
                                   ) : (
-                                    <>
-                                      <Copy className="size-3.5 stroke-[2]" />
-                                      <span>Copy Prompt</span>
-                                    </>
+                                    <Copy className="size-4 stroke-[2]" />
                                   )}
                                 </button>
 
