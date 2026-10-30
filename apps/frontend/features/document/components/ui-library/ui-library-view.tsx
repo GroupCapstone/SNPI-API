@@ -281,65 +281,6 @@ export function UiLibraryView() {
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
-              {/* Primary Nav Capsules (Strictly Light Theme - Zero Black/Dark Buttons) */}
-              <div className="space-y-1.5 font-sans">
-                {(() => {
-                  const isCatalogActive =
-                    activeSectionId === 'interactive-feed' ||
-                    activeSectionId === 'ui-library-head' ||
-                    activeSectionId === 'top-nav-style';
-                  const isPlaygroundActive = activeSectionId.startsWith('comp-');
-                  const isBrandColorsActive = activeSectionId === 'brand-blueprint';
-
-                  return (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchQuery('');
-                          scrollToSection('interactive-feed');
-                        }}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          isCatalogActive
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Catalog</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchQuery('');
-                          scrollToSection('comp-snackbar');
-                        }}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          isPlaygroundActive
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Playground</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection('brand-blueprint')}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          isBrandColorsActive
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Brand Colors</span>
-                      </button>
-                    </>
-                  );
-                })()}
-              </div>
-
               {/* 12 Core UI Components List with Active Highlights */}
               <div className="space-y-4 font-sans text-xs">
                 <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
@@ -443,58 +384,20 @@ export function UiLibraryView() {
                   </span>
                 </div>
 
-                <div className="relative z-10 space-y-4">
-                  {/* Category Pills & Identity Badges */}
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full border border-[#0056FF] bg-[#0056FF] px-3 py-1 font-mono text-[11px] font-bold text-white uppercase shadow-xs">
+                <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
+                  <div>
+                    <h1 className="font-sans text-5xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-8xl">
                       UI Library
-                    </span>
-                    <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF] uppercase">
-                      12 Core Components
-                    </span>
-                    <span className="rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-[11px] font-semibold text-slate-700 uppercase">
-                      Single Feed SPA
-                    </span>
+                    </h1>
                   </div>
 
-                  {/* Monumental Head Title (Big As Footer Style) */}
-                  <div className="flex flex-col gap-4 border-b border-slate-200/90 pb-6 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                      <h1 className="font-sans text-4xl font-black tracking-tighter text-slate-950 sm:text-5xl md:text-6xl">
-                        UI Library
-                      </h1>
-                      <p className="mt-3 max-w-2xl font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
-                        Interactive component catalog and design tokens for SNPI-SMS. Crafted with
-                        single-folder flat aesthetics, luminance surface depth, zero shadows, and
-                        44x44px touch-target standards.
-                      </p>
-                    </div>
-
-                    <div className="shrink-0">
-                      <GeometricHeaderStamp
-                        codeA="12"
-                        titleA="COMPONENTS"
-                        codeB="100%"
-                        titleB="INTERACTIVE"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Quick Jump Pills for Immediate SPA Scrolling */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                    <span className="mr-2 font-mono text-[11px] font-bold text-slate-400 uppercase">
-                      Jump To:
-                    </span>
-                    {filteredComponents.map((c) => (
-                      <button
-                        key={c.id}
-                        type="button"
-                        onClick={() => scrollToSection(`comp-${c.id}`)}
-                        className="cursor-pointer rounded-full border border-slate-200/80 bg-white px-2.5 py-0.5 font-sans text-[11px] font-semibold text-slate-700 transition-all hover:border-[#0056FF] hover:text-[#0056FF]"
-                      >
-                        {c.name}
-                      </button>
-                    ))}
+                  <div className="shrink-0">
+                    <GeometricHeaderStamp
+                      codeA="12"
+                      titleA="COMPONENTS"
+                      codeB="100%"
+                      titleB="INTERACTIVE"
+                    />
                   </div>
                 </div>
               </div>
@@ -512,10 +415,8 @@ export function UiLibraryView() {
                 <h2 className="font-sans text-xl font-bold text-slate-950 sm:text-2xl">
                   Top Navigation Hanging Tabs Style
                 </h2>
-                <p className="font-sans text-sm leading-relaxed text-slate-600">
-                  Inverted trapezoid folder tabs suspended from the top header baseline. Built with
-                  vector-smooth SVG geometry, non-scaling continuous strokes, stacked icon and title
-                  hierarchy, and circular notification badges.
+                <p className="font-sans text-xs text-slate-600">
+                  Inverted trapezoid tabs suspended from the top header baseline with vector-smooth SVG geometry.
                 </p>
               </div>
 
@@ -592,10 +493,8 @@ export function UiLibraryView() {
               <h2 className="font-sans text-xl font-black tracking-tight text-slate-950 sm:text-2xl">
                 Component Catalog (12 Core UI)
               </h2>
-              <p className="font-sans text-xs leading-relaxed text-slate-600">
-                Scroll through the complete interactive component feed. Every component is fully
-                tapable with real states, realistic content, accessibility targets, and copyable
-                code.
+              <p className="font-sans text-xs text-slate-600">
+                12 interactive components with live states, preview stages, and code.
               </p>
             </div>
 
