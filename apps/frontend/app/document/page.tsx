@@ -485,9 +485,6 @@ console.log(payload.data);`;
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
-      {/* Sticky Header with Open API & Library Switcher */}
-      <DocsStickyHeader activeTab="document" />
-
       {/* Main Grid: On This Page Sidebar + Body Content */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8 sm:px-6">
         {/* Left Column: On This Page Table of Contents */}

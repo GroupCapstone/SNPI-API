@@ -1,16 +1,26 @@
 'use client';
 
 import * as React from 'react';
+import { usePathname } from 'next/navigation';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { FileText, Layers, Newspaper, Code } from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { GeometricButton } from './geometric-tag-primitives';
 
 export interface DocsStickyHeaderProps {
-  activeTab: 'document' | 'library' | 'changelog';
+  activeTab?: 'document' | 'library' | 'changelog';
 }
 
-export function DocsStickyHeader({ activeTab }: DocsStickyHeaderProps) {
+export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderProps = {}) {
+  const pathname = usePathname();
+  const activeTab =
+    propActiveTab ||
+    (pathname?.includes('/design-system')
+      ? 'library'
+      : pathname?.includes('#changelogs')
+        ? 'changelog'
+        : 'document');
+
   const navTabs: HangingTabItem[] = [
     {
       id: 'document',
@@ -54,15 +64,15 @@ export function DocsStickyHeader({ activeTab }: DocsStickyHeaderProps) {
           <HangingTabsNav items={navTabs} activeId={activeTab} size="sm" />
         </div>
 
-        {/* Right: Pill Link in Image 2 Style */}
+        {/* Right: Pill Blank Link with Zero Background Behind Icon */}
         <div className="z-10 hidden items-center gap-2 sm:flex">
           <GeometricButton
             href="https://github.com/shiliaiwei/SNP-SMS"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             variant="outline"
             size="sm"
-            icon={<Code className="size-3" />}
+            icon={<Code className="size-3.5" />}
           >
             GitHub
           </GeometricButton>

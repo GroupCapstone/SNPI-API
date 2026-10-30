@@ -28,6 +28,7 @@ import {
   HangingTabsNav,
   COMPONENT_LIBRARY_REGISTRY,
   GeometricButton,
+  GeometricInput,
   GeometricHeaderStamp,
   DocsStickyHeader,
 } from '@/features/document/components/ui-library';
@@ -180,26 +181,20 @@ export default function DesignSystemPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white text-slate-900 antialiased selection:bg-[#0056FF] selection:text-white">
-      {/* Sticky Header with Open API & Library Switcher */}
-      <DocsStickyHeader activeTab="library" />
-
       {/* 3-Column Documentation Grid (Cloudflare Docs Layout from Image 2) */}
       <div className="mx-auto flex w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">
         <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-12">
           {/* COLUMN 1: Left Navigation Sidebar Menu */}
           <aside className="lg:col-span-3">
             <div className="sticky top-24 space-y-6">
-              {/* Filter Input */}
-              <div className="relative">
-                <Search className="absolute top-2.5 left-3 h-4 w-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Filter components..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-9 w-full rounded-lg border-2 border-slate-200 bg-white pr-4 pl-9 font-sans text-xs text-slate-900 placeholder-slate-400 focus:border-[#0056FF] focus:outline-none"
-                />
-              </div>
+              {/* Filter Input using GeometricInput */}
+              <GeometricInput
+                inputSize="sm"
+                placeholder="Filter components..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                icon={<Search className="h-3.5 w-3.5" />}
+              />
 
               {/* Navigation Links */}
               <div className="space-y-4 font-sans text-xs">
@@ -208,7 +203,6 @@ export default function DesignSystemPage() {
                     <GeometricButton
                       variant="blue"
                       size="sm"
-                      attachedTag="01"
                       isActive={activeTab === 'catalog'}
                       onClick={() => {
                         setActiveTab('catalog');
@@ -216,13 +210,13 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      Catalog
+                      <span className="mr-1.5 font-mono font-bold">01</span>
+                      <span>Catalog</span>
                     </GeometricButton>
 
                     <GeometricButton
                       variant="green"
                       size="sm"
-                      attachedTag="02"
                       isActive={activeTab === 'playground'}
                       onClick={() => {
                         setActiveTab('playground');
@@ -230,13 +224,13 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      Playground
+                      <span className="mr-1.5 font-mono font-bold">02</span>
+                      <span>Playground</span>
                     </GeometricButton>
 
                     <GeometricButton
                       variant="purple"
                       size="sm"
-                      attachedTag="03"
                       isActive={activeTab === 'blueprint'}
                       onClick={() => {
                         setActiveTab('blueprint');
@@ -244,13 +238,13 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      Brand Colors
+                      <span className="mr-1.5 font-mono font-bold">03</span>
+                      <span>Brand Colors</span>
                     </GeometricButton>
 
                     <GeometricButton
                       variant="orange"
                       size="sm"
-                      attachedTag="04"
                       isActive={activeTab === 'dual-mode'}
                       onClick={() => {
                         setActiveTab('dual-mode');
@@ -258,13 +252,13 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      Dual Mode UI
+                      <span className="mr-1.5 font-mono font-bold">04</span>
+                      <span>Dual Mode UI</span>
                     </GeometricButton>
 
                     <GeometricButton
                       variant="cyan"
                       size="sm"
-                      attachedTag="05"
                       isActive={activeTab === 'top-nav'}
                       onClick={() => {
                         setActiveTab('top-nav');
@@ -272,7 +266,8 @@ export default function DesignSystemPage() {
                       }}
                       className="w-full justify-start"
                     >
-                      Top Nav
+                      <span className="mr-1.5 font-mono font-bold">05</span>
+                      <span>Top Nav</span>
                     </GeometricButton>
                   </div>
                 </div>
@@ -300,14 +295,6 @@ export default function DesignSystemPage() {
                               scrollToSection('interactive-stage');
                             }}
                             className="w-full justify-start text-[11px]"
-                            icon={
-                              <span
-                                className={cn(
-                                  'size-1.5 rounded-full',
-                                  isSelected ? 'bg-white' : 'bg-slate-400',
-                                )}
-                              />
-                            }
                           >
                             {comp.name}
                           </GeometricButton>
@@ -565,9 +552,11 @@ export default function DesignSystemPage() {
                   </p>
                 </div>
                 <div className="rounded-xl border border-slate-200/80 bg-white p-3.5">
-                  <h4 className="text-xs font-bold text-slate-900 uppercase">Notification Badge</h4>
+                  <h4 className="text-xs font-bold text-slate-900 uppercase">
+                    Zero Badge & Label Box
+                  </h4>
                   <p className="mt-1 font-mono text-[11px] text-slate-500">
-                    bg-[#0284C7] ring-2 ring-white floating on top-right of icon
+                    Pure flat typography and bare vector icons with zero background patches
                   </p>
                 </div>
               </div>

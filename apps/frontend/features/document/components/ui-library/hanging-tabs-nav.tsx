@@ -27,28 +27,23 @@ export interface HangingTabsNavProps {
  * Hanging Trapezoid Tab Background SVG
  * Smooth continuous trapezoid with rounded bottom corners and zero border clipping
  */
-function TabShape({ isActive, isHovered }: { isActive: boolean; isHovered: boolean }) {
+const TabShape = React.memo(function TabShape({
+  isActive,
+  isHovered,
+}: {
+  isActive: boolean;
+  isHovered: boolean;
+}) {
   const fillColor = isActive ? '#FFFFFF' : isHovered ? '#F8FAFC' : '#EDF2F7';
-
   const strokeColor = isActive ? '#0056FF' : isHovered ? '#94A3B8' : '#CBD5E1';
 
   return (
     <svg
-      className="pointer-events-none absolute inset-0 h-full w-full overflow-visible transition-colors duration-200"
+      className="pointer-events-none absolute inset-0 h-full w-full overflow-visible transition-colors duration-150"
       viewBox="0 0 100 52"
       preserveAspectRatio="none"
       fill="none"
     >
-      {/* 
-        Path coordinates:
-        (0,0) -> top-left
-        (100,0) -> top-right
-        (88,44) -> slanted down-right
-        Q (85,50) (78,50) -> bottom-right rounded corner
-        (22,50) -> bottom-left flat edge
-        Q (15,50) (12,44) -> bottom-left rounded corner
-        Z -> close to (0,0)
-      */}
       <path
         d="M 0,0 L 100,0 L 88,44 Q 85,50 78,50 L 22,50 Q 15,50 12,44 Z"
         fill={fillColor}
@@ -58,7 +53,7 @@ function TabShape({ isActive, isHovered }: { isActive: boolean; isHovered: boole
       />
     </svg>
   );
-}
+});
 
 export function HangingTabsNav({
   items,
@@ -91,13 +86,6 @@ export function HangingTabsNav({
         const isHovered = hoveredId === tab.id;
         const Icon = tab.icon;
 
-        const badgeBg = {
-          blue: 'bg-[#0284C7]',
-          red: 'bg-red-600',
-          emerald: 'bg-emerald-600',
-          amber: 'bg-amber-600',
-        }[tab.badgeColor || 'blue'];
-
         const content = (
           <div
             className={cn(
@@ -105,7 +93,7 @@ export function HangingTabsNav({
               isActive ? 'translate-y-0.5' : '',
             )}
           >
-            {/* Icon + Floating Notification Badge */}
+            {/* Bare Icon (Strictly Zero Color, Badge, or Box Behind) */}
             <div className="relative flex items-center justify-center">
               <Icon
                 className={cn(
@@ -114,18 +102,6 @@ export function HangingTabsNav({
                   isActive ? 'text-[#0056FF]' : isHovered ? 'text-slate-900' : 'text-slate-600',
                 )}
               />
-
-              {/* Circular Badge with White Ring */}
-              {tab.badge !== undefined && (
-                <span
-                  className={cn(
-                    'absolute -top-1.5 -right-3 flex h-4 min-w-[16px] items-center justify-center rounded-full px-1 font-mono text-[9px] font-bold text-white ring-2 ring-white',
-                    badgeBg,
-                  )}
-                >
-                  {tab.badge}
-                </span>
-              )}
             </div>
 
             {/* Label Underneath */}
@@ -149,7 +125,7 @@ export function HangingTabsNav({
             onSelect?.(tab.id);
           },
           className: cn(
-            'group relative flex items-center justify-center focus-visible:outline-none',
+            'group relative flex items-center justify-center focus-visible:outline-none cursor-pointer select-none',
             sizeClasses,
             isActive ? 'z-20' : 'z-10',
           ),
@@ -157,7 +133,7 @@ export function HangingTabsNav({
 
         if (tab.href) {
           return (
-            <Link href={tab.href} {...tabProps}>
+            <Link href={tab.href} prefetch={true} {...tabProps}>
               <TabShape isActive={isActive} isHovered={isHovered} />
               {content}
             </Link>
