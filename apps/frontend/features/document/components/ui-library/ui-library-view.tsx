@@ -264,6 +264,38 @@ export function UiLibraryView() {
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
+              {/* Primary Nav Capsules (Exact Match to Design Specs) */}
+              <div className="space-y-1.5 font-sans">
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('interactive-feed')}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#0056FF] bg-[#0056FF] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0047D4]"
+                >
+                  <span>Catalog</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('comp-snackbar')}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-2 text-left font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#D5DCFA]"
+                >
+                  <span>Playground</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('brand-blueprint')}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-slate-200/90 bg-[#E3E7FC]/60 px-4 py-2 text-left font-sans text-xs font-bold text-slate-900 transition-all hover:bg-[#E3E7FC]"
+                >
+                  <span>Brand Colors</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('dual-mode-system')}
+                  className="flex w-full cursor-pointer items-center justify-between rounded-full border border-[#000B26] bg-[#000B26] px-4 py-2 text-left font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-black"
+                >
+                  <span>Dual Mode UI</span>
+                </button>
+              </div>
+
               {/* 12 Core UI Components List with Active Highlights */}
               <div className="space-y-4 font-sans text-xs">
                 <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">

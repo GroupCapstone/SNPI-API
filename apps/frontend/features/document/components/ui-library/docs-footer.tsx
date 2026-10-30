@@ -44,7 +44,7 @@ export function DocsFooter({ theme = 'light', className }: DocsFooterProps) {
         className,
       )}
     >
-      <div className="mx-auto flex max-w-7xl flex-col px-4 pt-8 pb-6 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-[1560px] flex-col px-4 pt-8 pb-6 sm:px-6 lg:px-8">
         {/* Top: Brand Identity Header */}
         <div className="flex items-center gap-3">
           <BrandMark compact size={28} />

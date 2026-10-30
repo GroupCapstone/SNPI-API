@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { X } from '@/components/icons';
-import { cn } from '@/lib/utils';
 import { GeometricButton } from './geometric-tag-primitives';
 
 export interface LibraryDialogProps {
