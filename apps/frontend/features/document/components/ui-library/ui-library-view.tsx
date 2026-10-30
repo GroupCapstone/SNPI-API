@@ -83,6 +83,7 @@ import {
   ToastStackDemo,
   SkeletonLoadingScreenDemo,
   RealTimeChartDemo,
+  RichTextEditorDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2923,6 +2924,8 @@ function renderFeedComponentDemo(
       return <DatePickerDemo />;
     case 'searchable-dropdown':
       return <SearchableDropdownDemo />;
+    case 'rich-text-editor':
+      return <RichTextEditorDemo />;
 
     // ==========================================
     // OVERLAYS (Component Templates)
