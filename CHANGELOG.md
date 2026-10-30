@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `4986f81`
+
+- Implement Cipher Decode Nav & Headline with per-character timeline, throttled glyph shimmer, and live lock counter
+
+### Version 0.2.7 (30.10.2026) - `6d0689e`
+
+- Synchronize real-time changelog for Spotlight Bento Grid implementation
+
 ### Version 0.2.7 (30.10.2026) - `4560c0b`
 
 - Implement Admin Audit Health Spotlight Bento Grid with rAF-throttled pointer, border spotlight, cascading deploy log, and self-drawing sparkline
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `10b3646`
 
 - Ignore .vercel directory for clean teardown
-
-### Version 0.2.6 (30.10.2026) - `847e12b`
-
-- Remove verify and portal subdomains, proxy routes, and /verify web page
-
-### Version 0.2.6 (30.10.2026) - `c5e3dd8`
-
-- Format AGENTS.md table style with prettier and sync changelog
 

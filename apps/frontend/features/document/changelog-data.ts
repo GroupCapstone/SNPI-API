@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "4986f81",
+    "description": "Implement Cipher Decode Nav & Headline with per-character timeline, throttled glyph shimmer, and live lock counter"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "6d0689e",
+    "description": "Synchronize real-time changelog for Spotlight Bento Grid implementation"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "4560c0b",
     "description": "Implement Admin Audit Health Spotlight Bento Grid with rAF-throttled pointer, border spotlight, cascading deploy log, and self-drawing sparkline"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "10b3646",
     "description": "Ignore .vercel directory for clean teardown"
-  },
-  {
-    "version": "0.2.6",
-    "date": "30.10.2026",
-    "commitHash": "847e12b",
-    "description": "Remove verify and portal subdomains, proxy routes, and /verify web page"
-  },
-  {
-    "version": "0.2.6",
-    "date": "30.10.2026",
-    "commitHash": "c5e3dd8",
-    "description": "Format AGENTS.md table style with prettier and sync changelog"
   }
 ];
