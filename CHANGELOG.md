@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `d585ab0`
+
+- Add legal and crawl footer links, implement dynamic real-time version tracker v0.2.7, and configure sitemap and robots routes
+
 ### Version 0.2.7 (30.10.2026) - `3ff6db3`
 
 - Synchronize real-time changelog with Navigation Menu component
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.4 (30.10.2026) - `e5aed2f`
 
 - Unify design concept, 3-column layout, and capsule nav across Open API and UI Library views
-
-### Version 0.2.3 (30.10.2026) - `c5e7337`
-
-- Sync changelog and build types prior to push checkpoint
 
