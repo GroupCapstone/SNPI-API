@@ -436,7 +436,6 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
 // ============================================================================
 
 export function SkeletonLoadingScreenDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
   const [activeTab, setActiveTab] = React.useState<'all' | 'profile' | 'grid' | 'list'>('all');
 
@@ -445,40 +444,9 @@ export function SkeletonLoadingScreenDemo() {
       {/* Inject self-contained pure CSS keyframes & shimmer styles */}
       <style dangerouslySetInnerHTML={{ __html: SKELETON_STYLES }} />
 
-      {/* Control Bar: Theme, Active State Toggle, Pattern Switcher */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800">
+      {/* Control Bar: Active State Toggle, Pattern Switcher */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div className="flex flex-wrap items-center gap-4">
-          {/* Theme switcher */}
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-              Theme:
-            </span>
-            <button
-              type="button"
-              onClick={() => setTheme('light')}
-              className={cn(
-                'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-                theme === 'light'
-                  ? 'bg-[#0056FF] text-white'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-              )}
-            >
-              Light
-            </button>
-            <button
-              type="button"
-              onClick={() => setTheme('dark')}
-              className={cn(
-                'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-                theme === 'dark'
-                  ? 'bg-slate-900 text-white'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-              )}
-            >
-              Dark
-            </button>
-          </div>
-
           {/* Pattern filter tabs */}
           <div className="flex items-center gap-1.5">
             <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
@@ -552,7 +520,7 @@ export function SkeletonLoadingScreenDemo() {
               Avatar Circle + Typography Lines + Action Badges
             </span>
           </div>
-          <ProfileHeaderPattern isLoaded={isLoaded} theme={theme} />
+          <ProfileHeaderPattern isLoaded={isLoaded} theme="light" />
         </div>
       )}
 
@@ -567,7 +535,7 @@ export function SkeletonLoadingScreenDemo() {
               16:9 Media Aspect Ratio + Title + Author Row
             </span>
           </div>
-          <CardGridPattern isLoaded={isLoaded} theme={theme} />
+          <CardGridPattern isLoaded={isLoaded} theme="light" />
         </div>
       )}
 
@@ -582,7 +550,7 @@ export function SkeletonLoadingScreenDemo() {
               40x40 Thumbnail Icon + Two-Line Text + Status Badge
             </span>
           </div>
-          <ContentListPattern isLoaded={isLoaded} theme={theme} />
+          <ContentListPattern isLoaded={isLoaded} theme="light" />
         </div>
       )}
     </div>

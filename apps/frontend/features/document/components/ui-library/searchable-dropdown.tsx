@@ -489,64 +489,20 @@ const SAMPLE_INSTITUTIONAL_OPTIONS: DropdownOption[] = [
  * Interactive documentation library preview showcasing both Single and Multi-Select instances.
  */
 export function SearchableDropdownDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const [singleValue, setSingleValue] = React.useState<string>('cs-ai');
   const [multiValue, setMultiValue] = React.useState<string[]>(['cyber-sec', 'ui-ux', 'fintech']);
 
   return (
     <div className="w-full space-y-6">
-      {/* Mode bar */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Mode:
-          </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
-        </div>
-
-        <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <Check className="size-3 text-emerald-500" />
-          <span>Active Descendant & Removable Chips</span>
-        </div>
-      </div>
-
       {/* Two Instances: Single-Select & Multi-Select side by side */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Instance 1: Single-Select Mode */}
-        <div
-          className={cn(
-            'space-y-4 rounded-2xl border p-5',
-            theme === 'dark' ? 'border-slate-800 bg-[#000B26]' : 'border-slate-200 bg-white',
-          )}
-        >
+        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
           <div className="space-y-1">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase dark:text-[#38BDF8]">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
               Instance 01 &middot; Single-Select
             </span>
-            <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+            <h4 className="font-sans text-xs font-bold text-slate-900">
               Primary Academic Department
             </h4>
           </div>
@@ -557,29 +513,24 @@ export function SearchableDropdownDemo() {
             value={singleValue}
             onChange={(val) => setSingleValue(val as string)}
             placeholder="Choose Department..."
-            theme={theme}
+            theme="light"
           />
 
           <div className="font-mono text-[11px] text-slate-400">
             Selected ID:{' '}
-            <span className="font-bold text-slate-900 dark:text-white">
+            <span className="font-bold text-slate-900">
               {singleValue || 'None'}
             </span>
           </div>
         </div>
 
         {/* Instance 2: Multi-Select Mode with Removable Chips */}
-        <div
-          className={cn(
-            'space-y-4 rounded-2xl border p-5',
-            theme === 'dark' ? 'border-slate-800 bg-[#000B26]' : 'border-slate-200 bg-white',
-          )}
-        >
+        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
           <div className="space-y-1">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase dark:text-[#38BDF8]">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
               Instance 02 &middot; Multi-Select Chips
             </span>
-            <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+            <h4 className="font-sans text-xs font-bold text-slate-900">
               Specialization Electives & Skill Tags
             </h4>
           </div>
@@ -590,12 +541,12 @@ export function SearchableDropdownDemo() {
             value={multiValue}
             onChange={(val) => setMultiValue(val as string[])}
             placeholder="Select specializations..."
-            theme={theme}
+            theme="light"
           />
 
           <div className="font-mono text-[11px] text-slate-400">
             Selected Tags ({multiValue.length}):{' '}
-            <span className="font-bold text-slate-900 dark:text-white">
+            <span className="font-bold text-slate-900">
               {multiValue.join(', ') || 'None'}
             </span>
           </div>

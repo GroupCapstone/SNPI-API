@@ -552,7 +552,6 @@ export function CommandPalette({
  */
 export function CommandPaletteInteractiveDemo() {
   const [open, setOpen] = React.useState<boolean>(false);
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const [executedAction, setExecutedAction] = React.useState<string | null>(null);
 
   // Platform detection for trigger preview
@@ -579,55 +578,10 @@ export function CommandPaletteInteractiveDemo() {
 
   return (
     <div className="w-full space-y-4">
-      {/* Mode bar */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Mode:
-          </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
-        </div>
-
-        <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <Check className="size-3 text-emerald-500" />
-          <span>Cmd+K / Ctrl+K Global Hotkey Active</span>
-        </div>
-      </div>
-
       {/* Interactive Trigger Card */}
-      <div
-        className={cn(
-          'mx-auto w-full max-w-lg space-y-4 rounded-2xl border p-6 text-center transition-colors',
-          theme === 'dark'
-            ? 'border-slate-800 bg-[#000B26]'
-            : 'border-slate-200 bg-white shadow-xs',
-        )}
-      >
+      <div className="mx-auto w-full max-w-lg space-y-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs transition-colors">
         <div className="space-y-1">
-          <h4 className="font-sans text-sm font-bold text-slate-900 dark:text-white">
+          <h4 className="font-sans text-sm font-bold text-slate-900">
             Universal Command Surface
           </h4>
           <p className="font-sans text-xs text-slate-500">
@@ -639,28 +593,15 @@ export function CommandPaletteInteractiveDemo() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className={cn(
-            'flex w-full items-center justify-between rounded-xl border px-4 py-2.5 font-sans text-xs transition-all outline-none',
-            'focus-visible:ring-2 focus-visible:ring-[#0056FF]',
-            theme === 'dark'
-              ? 'border-slate-700 bg-slate-900/80 text-slate-400 hover:border-slate-600 hover:text-white'
-              : 'border-slate-300 bg-slate-50/80 text-slate-500 hover:border-[#0056FF] hover:bg-white',
-          )}
+          className="flex w-full items-center justify-between rounded-xl border border-slate-300 bg-slate-50/80 px-4 py-2.5 font-sans text-xs text-slate-500 transition-all outline-none hover:border-[#0056FF] hover:bg-white focus-visible:ring-2 focus-visible:ring-[#0056FF]"
         >
           <div className="flex items-center gap-2.5">
-            <Search className="size-3.5 text-[#0056FF] dark:text-[#38BDF8]" />
+            <Search className="size-3.5 text-[#0056FF]" />
             <span>Search commands, routes, actions...</span>
           </div>
 
           <div className="flex items-center gap-1 font-mono text-[10px]">
-            <kbd
-              className={cn(
-                'rounded-md border px-1.5 py-0.5 font-bold',
-                theme === 'dark'
-                  ? 'border-slate-700 bg-slate-800 text-slate-300'
-                  : 'border-slate-300 bg-white text-slate-600 shadow-xs',
-              )}
-            >
+            <kbd className="rounded-md border border-slate-300 bg-white px-1.5 py-0.5 font-bold text-slate-600 shadow-xs">
               {isMac ? '⌘K' : 'Ctrl+K'}
             </kbd>
           </div>
@@ -696,14 +637,7 @@ export function CommandPaletteInteractiveDemo() {
 
         {/* Live Execution Feedback */}
         {executedAction && (
-          <div
-            className={cn(
-              'flex items-center justify-center gap-2 rounded-xl border p-2.5 font-mono text-xs',
-              theme === 'dark'
-                ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400'
-                : 'border-emerald-200 bg-emerald-50 text-emerald-700',
-            )}
-          >
+          <div className="flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-2.5 font-mono text-xs text-emerald-700">
             <Check className="size-3.5" />
             <span>Executed: &ldquo;{executedAction}&rdquo;</span>
           </div>
@@ -715,7 +649,7 @@ export function CommandPaletteInteractiveDemo() {
         open={open}
         onOpenChange={setOpen}
         commands={commandsWithHandler}
-        theme={theme}
+        theme="light"
       />
     </div>
   );

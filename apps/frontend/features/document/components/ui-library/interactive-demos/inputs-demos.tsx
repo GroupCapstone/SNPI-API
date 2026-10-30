@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Clock, Key, Eye, EyeOff, Sun, Moon, Laptop, Trash, Check, Plus } from '@/components/icons';
+import { Clock, Key, Eye, EyeOff, Sun, Laptop, Trash, Check, Plus } from '@/components/icons';
 import { OtpPinInputInteractiveDemo } from '../otp-pin-input';
 
 // 1. Duration Picker
@@ -164,20 +164,20 @@ export function PasswordInputDemo() {
   );
 }
 
-// 4. Theme Selector
+// 4. Theme Selector (Strict Light Day Focus)
 export function ThemeSelectorDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark' | 'system'>('light');
+  const [theme, setTheme] = React.useState<'day' | 'lavender' | 'system'>('day');
 
   const options = [
-    { id: 'light', label: 'Light', icon: Sun, desc: 'Pure white canvas' },
-    { id: 'dark', label: 'Dark', icon: Moon, desc: 'Luminance depth' },
-    { id: 'system', label: 'System', icon: Laptop, desc: 'Auto OS match' },
+    { id: 'day', label: 'Day Pure', icon: Sun, desc: 'Pure white canvas' },
+    { id: 'lavender', label: 'Soft Tint', icon: Sun, desc: 'Lavender #E3E7FC' },
+    { id: 'system', label: 'System Day', icon: Laptop, desc: 'Auto light match' },
   ] as const;
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Theme Selector
+        Theme Selector (Light Day Standard)
       </span>
 
       <div className="grid grid-cols-3 gap-2.5">

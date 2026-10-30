@@ -25,7 +25,6 @@ import {
   Shield,
   Star,
   Sun,
-  Moon,
   ExternalLink,
   Sliders,
   X,

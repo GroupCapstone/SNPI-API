@@ -437,39 +437,11 @@ export function OtpPinInput({
  * Interactive documentation library preview wrapper with light/dark toggle.
  */
 export function OtpPinInputInteractiveDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-
   return (
     <div className="w-full space-y-4">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Mode:
-          </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
+        <div className="flex items-center gap-2 font-mono text-xs font-bold text-slate-500 uppercase">
+          <span>6-Digit Institutional Passcode</span>
         </div>
 
         <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
@@ -479,7 +451,7 @@ export function OtpPinInputInteractiveDemo() {
       </div>
 
       <div className="flex justify-center py-4">
-        <OtpPinInput theme={theme} />
+        <OtpPinInput theme="light" />
       </div>
     </div>
   );

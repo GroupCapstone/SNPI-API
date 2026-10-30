@@ -1012,48 +1012,22 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
  * Demo wrapper featuring theme toggle, persistence reset, and status header.
  */
 export function MultiStepWizardInteractiveDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-
   return (
     <div className="w-full space-y-4">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Mode:
-          </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
+        <div className="flex items-center gap-2 font-mono text-xs font-bold text-slate-500 uppercase">
+          <span>Candidate Enrollment Pipeline</span>
         </div>
 
         <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <span className="size-2 animate-pulse rounded-full bg-emerald-500" />
+          <span className="inline-flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+            SESSION ACTIVE
+          </span>
           <span>sessionStorage Persistence Active</span>
         </div>
       </div>
 
-      <MultiStepWizard theme={theme} />
+      <MultiStepWizard theme="light" />
     </div>
   );
 }

@@ -317,50 +317,12 @@ export function ModalDialog({
  * 2. Nested / Stacked Sub-Dialog demonstrating Open Stack reference-counting & focus trap.
  */
 export function ModalDialogDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const [parentOpen, setParentOpen] = React.useState<boolean>(false);
   const [nestedOpen, setNestedOpen] = React.useState<boolean>(false);
   const [lastAction, setLastAction] = React.useState<string | null>(null);
 
   return (
     <div className="w-full space-y-6">
-      {/* Mode Bar */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Mode:
-          </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
-        </div>
-
-        <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <Check className="size-3 text-emerald-500" />
-          <span>Focus Trap & Stack Reference-Counted</span>
-        </div>
-      </div>
 
       {/* Live In-Stage Modal Dialog Surface (Say Less Show More Result - Never Hidden) */}
       <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-6 text-left shadow-md">
@@ -410,19 +372,12 @@ export function ModalDialogDemo() {
       {/* Two Instances Trigger Showcase */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Instance 1: Primary Confirmation Dialog */}
-        <div
-          className={cn(
-            'space-y-4 rounded-2xl border p-5 transition-colors',
-            theme === 'dark'
-              ? 'border-slate-800 bg-[#000B26]'
-              : 'border-slate-200 bg-white shadow-xs',
-          )}
-        >
+        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-colors">
           <div className="space-y-1">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase dark:text-[#38BDF8]">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
               Instance 01 &middot; Primary Dialog
             </span>
-            <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+            <h4 className="font-sans text-xs font-bold text-slate-900">
               Commit Ledger Transaction
             </h4>
             <p className="font-sans text-xs text-slate-500">
@@ -442,19 +397,12 @@ export function ModalDialogDemo() {
         </div>
 
         {/* Instance 2: Direct Authorization Dialog */}
-        <div
-          className={cn(
-            'space-y-4 rounded-2xl border p-5 transition-colors',
-            theme === 'dark'
-              ? 'border-slate-800 bg-[#000B26]'
-              : 'border-slate-200 bg-white shadow-xs',
-          )}
-        >
+        <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs transition-colors">
           <div className="space-y-1">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-amber-600 uppercase dark:text-amber-400">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-amber-600 uppercase">
               Instance 02 &middot; Security Override
             </span>
-            <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+            <h4 className="font-sans text-xs font-bold text-slate-900">
               Root Authority Key Rotation
             </h4>
             <p className="font-sans text-xs text-slate-500">
@@ -466,7 +414,7 @@ export function ModalDialogDemo() {
           <button
             type="button"
             onClick={() => setNestedOpen(true)}
-            className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 font-mono text-xs font-bold text-red-600 transition-colors hover:bg-red-500/20 dark:text-red-400"
+            className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2 font-mono text-xs font-bold text-red-600 transition-colors hover:bg-red-500/20"
           >
             <ShieldAlert className="size-3.5" />
             <span>OPEN SECURITY OVERRIDE</span>
@@ -476,7 +424,7 @@ export function ModalDialogDemo() {
 
       {/* Action Execution Indicator */}
       {lastAction && (
-        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">
+        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-center font-mono text-xs font-bold text-emerald-600">
           Action Executed: {lastAction}
         </div>
       )}
@@ -491,20 +439,13 @@ export function ModalDialogDemo() {
         description="Verify cryptographic hash commitments for candidate term enrollment batch TX-842910."
         confirmLabel="Commit Batch"
         onConfirm={() => setLastAction('ACID Ledger TX-842910 Committed')}
-        theme={theme}
+        theme="light"
       >
         <div className="space-y-3">
-          <div
-            className={cn(
-              'space-y-1 rounded-xl border p-3 font-mono text-xs',
-              theme === 'dark'
-                ? 'border-slate-800 bg-slate-900/60'
-                : 'border-slate-200 bg-slate-50',
-            )}
-          >
+          <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
             <div className="flex items-center justify-between">
               <span className="text-slate-400">BATCH TX:</span>
-              <span className="font-bold text-[#0056FF] dark:text-[#38BDF8]">
+              <span className="font-bold text-[#0056FF]">
                 sha256:7f8a92e4b102
               </span>
             </div>
@@ -519,7 +460,7 @@ export function ModalDialogDemo() {
             <button
               type="button"
               onClick={() => setNestedOpen(true)}
-              className="flex items-center gap-1.5 font-mono text-xs font-bold text-[#0056FF] hover:underline dark:text-[#38BDF8]"
+              className="flex items-center gap-1.5 font-mono text-xs font-bold text-[#0056FF] hover:underline"
             >
               <span>Need elevated security authorization? Open sub-dialog</span>
               <ArrowRight className="size-3" />
@@ -540,12 +481,12 @@ export function ModalDialogDemo() {
         cancelLabel="Dismiss"
         isDestructive={true}
         onConfirm={() => setLastAction('Security Authority Override Approved')}
-        theme={theme}
+        theme="light"
       >
         <div className="space-y-3">
           <p className="font-sans text-xs text-slate-500">
             Pressing{' '}
-            <kbd className="font-mono font-bold text-slate-800 dark:text-slate-200">Escape</kbd>{' '}
+            <kbd className="font-mono font-bold text-slate-800">Escape</kbd>{' '}
             right now will close <em>only this nested dialog</em> while preserving the parent dialog
             beneath it.
           </p>
@@ -553,12 +494,7 @@ export function ModalDialogDemo() {
           <input
             type="password"
             placeholder="Enter supervisor PIN..."
-            className={cn(
-              'w-full rounded-xl border px-3.5 py-2 font-mono text-xs transition-colors outline-none',
-              theme === 'dark'
-                ? 'border-slate-700 bg-slate-900 text-white placeholder-slate-500 focus:border-[#38BDF8]'
-                : 'border-slate-300 bg-white text-slate-900 placeholder-slate-400 focus:border-[#0056FF]',
-            )}
+            className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 font-mono text-xs text-slate-900 placeholder-slate-400 transition-colors outline-none focus:border-[#0056FF]"
           />
         </div>
       </ModalDialog>

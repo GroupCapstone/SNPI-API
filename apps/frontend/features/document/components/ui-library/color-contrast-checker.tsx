@@ -450,40 +450,12 @@ export function ColorContrastChecker({
 // ============================================================================
 
 export function ColorContrastCheckerDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-
   return (
     <div className="w-full space-y-6">
       {/* Control Header */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Theme:
-          </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div className="flex items-center gap-2 font-mono text-xs font-bold text-slate-500 uppercase">
+          <span>Brand Luminance Matrix</span>
         </div>
 
         <div className="flex items-center gap-1.5 font-mono text-xs text-slate-500">
@@ -493,7 +465,7 @@ export function ColorContrastCheckerDemo() {
       </div>
 
       {/* Instance with #000000 on #ffffff (21.00:1 AAA Pass) */}
-      <ColorContrastChecker theme={theme} initialForeground="#000000" initialBackground="#ffffff" />
+      <ColorContrastChecker theme="light" initialForeground="#000000" initialBackground="#ffffff" />
     </div>
   );
 }
