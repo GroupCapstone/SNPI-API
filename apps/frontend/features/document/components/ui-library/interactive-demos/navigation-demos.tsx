@@ -15,7 +15,7 @@ import {
   Menu,
 } from '@/components/icons';
 
-// 1. Primary Component: Rail TOC (Vertical Rail with Active Indicator & Milestone Pips)
+// 1. Primary Component: Rail TOC (Continuous Vertical Line Tracker with Active Line Indicator - Zero Dots)
 export function RailTocDemo() {
   const [activeSection, setActiveSection] = React.useState('architecture');
   const sections = [
@@ -45,7 +45,7 @@ export function RailTocDemo() {
         <div className="flex items-center gap-2">
           <span className="size-2 rounded-full bg-[#0056FF]" />
           <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-            Rail TOC · Primary
+            Line Tracker TOC · Primary
           </span>
         </div>
         <span className="font-mono text-[11px] font-bold text-[#0056FF]">
@@ -53,16 +53,9 @@ export function RailTocDemo() {
         </span>
       </div>
 
-      <div className="relative mt-4 pl-4">
-        {/* Continuous Background Rail Track */}
-        <div className="absolute top-2 bottom-2 left-6 w-[2px] bg-slate-200" />
-        {/* Dynamic Active Fill Track */}
-        <div
-          className="absolute top-2 left-6 w-[2px] bg-[#0056FF] transition-all duration-300"
-          style={{ height: `${(activeIndex / (sections.length - 1)) * 82}%` }}
-        />
-
-        <div className="space-y-3.5">
+      <div className="relative mt-4">
+        {/* Continuous Left Border Rail Tracker (Zero Dots, Pure Precision Line) */}
+        <div className="relative space-y-2 border-l-2 border-slate-200/90 pl-4 dark:border-slate-800">
           {sections.map((sec) => {
             const isActive = activeSection === sec.id;
             return (
@@ -70,50 +63,40 @@ export function RailTocDemo() {
                 key={sec.id}
                 type="button"
                 onClick={() => setActiveSection(sec.id)}
-                className="group relative flex w-full cursor-pointer items-start gap-4 text-left focus:outline-none"
+                className={cn(
+                  'group relative flex w-full cursor-pointer items-center justify-between rounded-r-xl py-2 pr-3 pl-3 text-left transition-all duration-150 select-none',
+                  isActive
+                    ? '-ml-[2px] bg-[#0056FF]/[0.07]'
+                    : 'hover:translate-x-0.5 hover:bg-slate-50',
+                )}
               >
-                {/* Milestone Pip Pip */}
-                <div
-                  className={cn(
-                    'relative z-10 flex size-5 shrink-0 items-center justify-center rounded-full border-2 bg-white transition-all duration-200',
-                    isActive
-                      ? 'border-[#0056FF] bg-[#0056FF] shadow-xs'
-                      : 'border-slate-300 group-hover:border-slate-400',
-                  )}
-                >
+                {/* Active Section Line Indicator (Precision Vertical Segment, Zero Dots) */}
+                {isActive && (
                   <span
-                    className={cn(
-                      'size-1.5 rounded-full transition-colors',
-                      isActive ? 'bg-white' : 'bg-transparent',
-                    )}
+                    aria-hidden="true"
+                    className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-full bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
                   />
-                </div>
+                )}
 
                 {/* Section Content */}
-                <div
-                  className={cn(
-                    'flex flex-1 items-center justify-between rounded-xl px-3 py-1.5 transition-colors',
-                    isActive ? 'bg-[#E3E7FC]/60 text-[#0056FF]' : 'hover:bg-slate-50',
-                  )}
-                >
-                  <div>
-                    <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold">
-                      <span className={isActive ? 'text-[#0056FF]' : 'text-slate-400'}>
-                        {sec.number}
-                      </span>
-                      <span
-                        className={cn(
-                          'font-sans text-xs font-semibold',
-                          isActive ? 'text-[#0056FF]' : 'text-slate-800',
-                        )}
-                      >
-                        {sec.title}
-                      </span>
-                    </div>
-                    <span className="font-mono text-[10px] text-slate-400">{sec.duration}</span>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 font-mono text-[11px] font-bold">
+                    <span className={isActive ? 'text-[#0056FF]' : 'text-slate-400'}>
+                      {sec.number}
+                    </span>
+                    <span
+                      className={cn(
+                        'font-sans text-xs',
+                        isActive ? 'font-bold text-[#0056FF]' : 'font-semibold text-slate-800',
+                      )}
+                    >
+                      {sec.title}
+                    </span>
                   </div>
-                  {isActive && <ChevronRight className="size-3.5 text-[#0056FF]" />}
+                  <span className="pl-6 font-mono text-[10px] text-slate-400">{sec.duration}</span>
                 </div>
+
+                {isActive && <ChevronRight className="size-3.5 shrink-0 text-[#0056FF]" />}
               </button>
             );
           })}
