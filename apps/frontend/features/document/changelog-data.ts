@@ -9,7 +9,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
-    "commitHash": "f9faefe",
+    "commitHash": "15a8ab5",
+    "description": "Remove preview and prompt buttons and convert copy prompt to icon-only action"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "97efab1",
     "description": "Revert(document): remove floating capsule dock nav and restore top hanging tabs header"
   },
   {
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "5d0d50c",
     "description": "Implement 8-pillar Toast Notification Stack with auto-dismiss, progress bars, hover pause, and two-phase exit"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "df74ca4",
-    "description": "Synchronize real-time changelog for Modal & Dialog"
   }
 ];
