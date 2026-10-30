@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { SpotlightBentoGrid } from '../spotlight-bento-grid';
 import {
   Sparkles,
   Search,
@@ -499,27 +500,11 @@ export function HeroSectionDemo() {
   );
 }
 
-// 4.2 Feature Bento Section
+// 4.2 Feature Bento Section (Admin Audit & Health Spotlight Bento Grid)
 export function FeatureBentoDemo() {
   return (
-    <div className="w-full max-w-2xl space-y-3">
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
-          <span className="font-mono text-xs font-bold text-[#0056FF]">01. SPEED</span>
-          <h5 className="mt-1 font-sans text-sm font-bold text-slate-900">&lt; 300ms SLA</h5>
-          <p className="mt-0.5 font-sans text-xs text-slate-500">Sub-second responsive UI.</p>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
-          <span className="font-mono text-xs font-bold text-[#0056FF]">02. MULTI-CAMPUS</span>
-          <h5 className="mt-1 font-sans text-sm font-bold text-slate-900">Partitioned Data</h5>
-          <p className="mt-0.5 font-sans text-xs text-slate-500">Strict schoolId scoping.</p>
-        </div>
-        <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
-          <span className="font-mono text-xs font-bold text-[#0056FF]">03. AUDIT TRAIL</span>
-          <h5 className="mt-1 font-sans text-sm font-bold text-slate-900">100% Immutable</h5>
-          <p className="mt-0.5 font-sans text-xs text-slate-500">Every write logged.</p>
-        </div>
-      </div>
+    <div className="w-full space-y-4">
+      <SpotlightBentoGrid />
     </div>
   );
 }

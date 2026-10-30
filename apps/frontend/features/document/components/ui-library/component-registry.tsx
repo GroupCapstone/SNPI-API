@@ -2628,28 +2628,89 @@ const columns: DataTableColumn<StudentRecord>[] = [
   },
   {
     id: 'feature-bento',
-    name: 'Feature Bento Section',
+    name: 'Admin Audit & Health Spotlight Bento Grid',
     category: 'Sections',
-    paradigm: '3-Pillar Architecture Standard',
-    description: 'Three-pillar modular feature showcase with numeric indicators.',
-    explanation: 'Clean horizontal bento section grouping system capabilities.',
-    props: [{ name: 'columns', type: 'number', description: 'Grid columns.' }],
-    codeSnippet: `import { FeatureBentoDemo } from '@/features/document/components/ui-library';\n\n<FeatureBentoDemo />`,
+    paradigm: 'Named Grid Areas & rAF-Throttled Border Spotlight Standard',
+    description:
+      'Move pointer across the grid to light the borders. Features 4 named grid areas, border spotlight, inner wash, 6s cascading deploy stream, self-drawing sparkline, and git branch topology.',
+    explanation:
+      'High-performance zero-image interactive bento showcase. Features rAF-throttled pointer tracking across every tile simultaneously, dual radial gradient masks (1px border spotlight ring + subtle surface inner wash), cascading 6s deploy telemetry stream, self-drawing SVG sparkline with pathLength="1", and hand-placed git branch topology diagram with live pulsing beacon.',
+    props: [
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Surface color mode.',
+      },
+      { name: 'className', type: 'string', description: 'Additional container class overrides.' },
+    ],
+    codeSnippet: `import { SpotlightBentoGrid } from '@/features/document/components/ui-library';
+
+// Admin audit view health system interactive bento grid
+<SpotlightBentoGrid theme="light" />`,
     realWorldExamples: [
       {
-        title: 'Product Overview',
-        scenario: 'School board reviews system modules.',
-        impact: 'Scannable benefits.',
+        title: 'Admin Health & Audit Dashboard',
+        scenario:
+          'System architects inspect real-time SLA metrics, ACID ledger proofs, and Git release topology.',
+        impact: 'Comprehensive at-a-glance health oversight.',
+      },
+      {
+        title: 'Security Operations Center',
+        scenario:
+          'DevOps team monitors live deployment streams, memory RSS, and cluster node states.',
+        impact: 'Immediate telemetry feedback.',
+      },
+      {
+        title: 'Enterprise Product Landing Page',
+        scenario:
+          'Prospective institutions explore platform reliability, uptime records, and zero-downtime architecture.',
+        impact: 'High-conversion interactive proof.',
       },
     ],
     uxPsychology: [
-      { principle: 'Rule of Threes', detail: 'Trio of cards is proven most memorable.' },
+      {
+        principle: 'Doherty Threshold (<400ms)',
+        detail:
+          'rAF-throttled pointer coalescing updates only two CSS custom properties per tile, maintaining zero-lag 120Hz responsiveness.',
+      },
+      {
+        principle: 'Law of Proximity',
+        detail:
+          'Named grid areas group interrelated health, audit, deploy, and git topology components into cohesive clusters.',
+      },
+      {
+        principle: 'Progressive Visual Feedback',
+        detail:
+          'Dual-layer spotlight (1px border ring + faint inner wash) simulates physical directional illumination.',
+      },
     ],
     usageGuidelines: [
-      { doItem: 'Keep text under 2 lines per card.', dontItem: 'Avoid uneven card heights.' },
+      {
+        doItem:
+          'USE THIS WHEN: A landing page or dashboard needs to present four to eight features at a glance, each feature can be shown with a small concrete visual, and you want one section that feels interactive without scroll animation.',
+        dontItem:
+          'NOT IDEAL WHEN: Features need long explanations (use a list or comparison table), you have only two or three features (bento grid will look sparse), or most visitors are on touch devices.',
+      },
     ],
-    implementationNotes: ['Responsive grid with sm:grid-cols-3.'],
-    supportedStates: ['Default', 'Selected'],
+    implementationNotes: [
+      '01 Named Grid Areas: Four columns with grid-template-areas, re-mapped at two breakpoints so no layout ever leaves an empty cell.',
+      '02 Border Spotlight: A radial gradient masked down to the 1px border ring follows the pointer across every tile at once.',
+      '03 Inner Wash: A second, much fainter gradient lights the tile surface so the spotlight feels like light, not an outline.',
+      '04 rAF-Throttled Pointer: Pointer moves are coalesced into one update per frame, and only two custom properties change per tile.',
+      '05 Deploy Log: Five lines cascade in on a 6s loop with a progress bar, showing a preview deploy in the time it takes to read it.',
+      '06 Self-Drawing Sparkline: A path with pathLength="1" draws itself once, then the area and end dot fade in.',
+      '07 Git Branch Diagram: Hand-placed SVG curves and nodes. The live branch pulses; the rest stays still.',
+      '08 Final-State Fallback: Reduced motion skips every loop and shows each visual already finished.',
+    ],
+    supportedStates: [
+      'Pointer Border Spotlight',
+      'Surface Inner Wash',
+      'Cascading Deploy Stream',
+      'Self-Drawing Sparkline',
+      'Live Git Node Pulse',
+      'Reduced Motion Fallback',
+    ],
   },
   {
     id: 'pricing-matrix',
