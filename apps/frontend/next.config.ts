@@ -8,7 +8,11 @@ const defaultBackendUrl =
   (requiresHttpsBackend
     ? 'https://api.kesararamwithdigital.tech/api/v1'
     : 'http://localhost:4000/api/v1');
-const backendUrl = process.env.BACKEND_INTERNAL_URL ?? defaultBackendUrl;
+const configuredBackendUrl = process.env.BACKEND_INTERNAL_URL;
+const backendUrl =
+  requiresHttpsBackend && configuredBackendUrl?.startsWith('http://')
+    ? defaultBackendUrl
+    : (configuredBackendUrl ?? defaultBackendUrl);
 
 let backendDestination: string;
 try {
