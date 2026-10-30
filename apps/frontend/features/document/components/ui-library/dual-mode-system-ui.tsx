@@ -8,6 +8,77 @@ export interface DualModeSystemUIProps {
   className?: string;
 }
 
+// Weather Icon Component (Pure SVG Vector Paths, Zero Emojis)
+function WeatherIcon({ type, isDark }: { type: 'rain' | 'cloud'; isDark?: boolean }) {
+  const strokeColor = isDark ? '#FFFFFF' : '#0F172A';
+  if (type === 'rain') {
+    return (
+      <svg
+        className="size-7"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={strokeColor}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+        <path d="M16 14v6" />
+        <path d="M8 14v6" />
+        <path d="M12 16v6" />
+      </svg>
+    );
+  }
+  return (
+    <svg
+      className="size-7"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={strokeColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+    </svg>
+  );
+}
+
+function MiniWeatherIcon({ type, isDark }: { type: string; isDark?: boolean }) {
+  const strokeColor = isDark ? '#94A3B8' : '#64748B';
+  if (type === 'rain') {
+    return (
+      <svg
+        className="size-4"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={strokeColor}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+        <path d="M16 15v3" />
+        <path d="M8 15v3" />
+        <path d="M12 17v3" />
+      </svg>
+    );
+  }
+  return (
+    <svg
+      className="size-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={strokeColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+    </svg>
+  );
+}
+
 export function DualModeSystemUI({ className }: DualModeSystemUIProps) {
   // Interactive widget states
   const [selectedHour, setSelectedHour] = React.useState<string>('4 PM');
@@ -48,77 +119,6 @@ export function DualModeSystemUI({ className }: DualModeSystemUIProps) {
       ...prev,
       [id]: !prev[id],
     }));
-  };
-
-  // Weather Icon Component (Pure SVG Vector Paths, Zero Emojis)
-  const WeatherIcon = ({ type, isDark }: { type: 'rain' | 'cloud'; isDark?: boolean }) => {
-    const strokeColor = isDark ? '#FFFFFF' : '#0F172A';
-    if (type === 'rain') {
-      return (
-        <svg
-          className="size-7"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-          <path d="M16 14v6" />
-          <path d="M8 14v6" />
-          <path d="M12 16v6" />
-        </svg>
-      );
-    }
-    return (
-      <svg
-        className="size-7"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={strokeColor}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
-      </svg>
-    );
-  };
-
-  const MiniWeatherIcon = ({ type, isDark }: { type: string; isDark?: boolean }) => {
-    const strokeColor = isDark ? '#94A3B8' : '#64748B';
-    if (type === 'rain') {
-      return (
-        <svg
-          className="size-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-          <path d="M16 15v3" />
-          <path d="M8 15v3" />
-          <path d="M12 17v3" />
-        </svg>
-      );
-    }
-    return (
-      <svg
-        className="size-4"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke={strokeColor}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
-      </svg>
-    );
   };
 
   // 48 Dots Matrix (4 rows of 12)

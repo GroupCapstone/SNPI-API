@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 import {
   BrandConceptBlueprint,
   LineTrackerToc,
@@ -9,7 +8,6 @@ import {
   LibrarySnackbar,
   LibraryBottomSheet,
   LibraryDialog,
-  LibraryBottomNav,
   type LibraryBottomNavItem,
   LibrarySwitch,
   LibraryChip,
@@ -30,9 +28,7 @@ import {
   Plus,
   MapPin,
   Check,
-  Code,
   Copy,
-  Layers,
   Pin,
   Newspaper,
   FilePlus,
@@ -40,8 +36,6 @@ import {
   Eye,
   EyeOff,
   User,
-  SlidersHorizontal,
-  ChevronDown,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 

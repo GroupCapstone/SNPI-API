@@ -136,7 +136,7 @@ export function HangingTabsNav({
 
         if (tab.href) {
           return (
-            <Link href={tab.href} prefetch={true} {...tabProps}>
+            <Link key={tab.id} href={tab.href} prefetch={true} {...tabProps}>
               <TabShape isActive={isActive} isHovered={isHovered} />
               {content}
             </Link>
@@ -144,7 +144,7 @@ export function HangingTabsNav({
         }
 
         return (
-          <button type="button" {...tabProps}>
+          <button key={tab.id} type="button" {...tabProps}>
             <TabShape isActive={isActive} isHovered={isHovered} />
             {content}
           </button>
