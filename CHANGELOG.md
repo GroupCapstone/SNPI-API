@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `61896be`
+
+- Implement Searchable Dropdown with ARIA combobox contract, active descendant, removable chips, and match highlights
+
+### Version 0.2.7 (30.10.2026) - `2e43da5`
+
+- Synchronize real-time changelog for Date Picker component
+
 ### Version 0.2.7 (30.10.2026) - `3b51193`
 
 - Implement Date Picker and Date Range Picker with ARIA grid roving-tabindex, hover preview, and range bands
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `ca270d5`
 
 - Add Component Templates for Backgrounds, Text Effects, Cards, Sections, Forms, and Overlays with Rare UI capsule dock navigation copy style
-
-### Version 0.2.7 (30.10.2026) - `f03bb47`
-
-- Add 28 interactive components across 5 categories with responsive Web/Phone preview
-
-### Version 0.2.7 (30.10.2026) - `b56feb8`
-
-- Apply #E3E7FC header background, remove github button, and remove design standard badge from demo
 

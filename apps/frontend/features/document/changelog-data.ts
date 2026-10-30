@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "61896be",
+    "description": "Implement Searchable Dropdown with ARIA combobox contract, active descendant, removable chips, and match highlights"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "2e43da5",
+    "description": "Synchronize real-time changelog for Date Picker component"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "3b51193",
     "description": "Implement Date Picker and Date Range Picker with ARIA grid roving-tabindex, hover preview, and range bands"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "ca270d5",
     "description": "Add Component Templates for Backgrounds, Text Effects, Cards, Sections, Forms, and Overlays with Rare UI capsule dock navigation copy style"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "f03bb47",
-    "description": "Add 28 interactive components across 5 categories with responsive Web/Phone preview"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "b56feb8",
-    "description": "Apply #E3E7FC header background, remove github button, and remove design standard badge from demo"
   }
 ];
