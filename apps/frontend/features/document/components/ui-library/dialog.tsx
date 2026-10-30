@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { X } from '@/components/icons';
 import { cn } from '@/lib/utils';
+import { GeometricButton } from './geometric-tag-primitives';
 
 export interface LibraryDialogProps {
   open: boolean;
@@ -78,26 +79,19 @@ export function LibraryDialog({
         {children && <div className="mt-4">{children}</div>}
 
         <div className="mt-6 flex items-center justify-end gap-3">
-          <button
-            type="button"
-            onClick={() => onOpenChange(false)}
-            className="min-h-[44px] rounded-lg border border-slate-200 bg-white px-4 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50"
-          >
+          <GeometricButton variant="outline" size="sm" onClick={() => onOpenChange(false)}>
             {cancelLabel}
-          </button>
-          <button
-            type="button"
+          </GeometricButton>
+          <GeometricButton
+            variant={isDestructive ? 'orange' : 'blue'}
+            size="sm"
             onClick={() => {
               onConfirm?.();
               onOpenChange(false);
             }}
-            className={cn(
-              'min-h-[44px] rounded-lg px-4 text-xs font-semibold text-white transition-colors',
-              isDestructive ? 'bg-red-600 hover:bg-red-700' : 'bg-[#0056FF] hover:bg-[#0040C0]',
-            )}
           >
             {confirmLabel}
-          </button>
+          </GeometricButton>
         </div>
       </div>
     </div>
