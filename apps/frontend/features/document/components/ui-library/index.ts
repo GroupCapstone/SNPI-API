@@ -9,6 +9,7 @@ export * from './card';
 export * from './border-beam-card';
 export * from './data-table';
 export * from './spotlight-bento-grid';
+export * from './cipher-text-decoder';
 export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';

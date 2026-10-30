@@ -2450,6 +2450,95 @@ const columns: DataTableColumn<StudentRecord>[] = [
     implementationNotes: ['CSS blur-in animation.'],
     supportedStates: ['Blurring', 'Focused'],
   },
+  {
+    id: 'cipher-decode',
+    name: 'Cipher Decode Navigation & Headline',
+    category: 'Text Effects',
+    paradigm: 'Per-Character Timeline Cipher Standard',
+    description:
+      'Hover or tab through nav links to decode them in place. The headline cycles four phrases; the footer counts characters as they lock.',
+    explanation:
+      'High-precision 8-pillar cryptographic text decoding engine featuring per-character timelines with stagger and jitter, 50ms throttled glyph shimmer, space-aware layout preservation, and screen-reader accessibility.',
+    props: [
+      { name: 'text', type: 'string', description: 'Target string to decode or headline phrase.' },
+      {
+        name: 'staggerMs',
+        type: 'number',
+        description: 'Wave delay per character in ms (default 24ms).',
+      },
+      {
+        name: 'jitterMs',
+        type: 'number',
+        description: 'Random start offset variance in ms (default 35ms).',
+      },
+      {
+        name: 'durationMs',
+        type: 'number',
+        description: 'Total character resolve duration in ms (default 400ms).',
+      },
+      {
+        name: 'throttleMs',
+        type: 'number',
+        description: 'Maximum glyph re-roll frequency (default 50ms).',
+      },
+      { name: 'theme', type: "'light' | 'dark'", description: 'Instrument panel color palette.' },
+    ],
+    codeSnippet: `import { CipherTextDecoder } from '@/features/document/components/ui-library';\n\n<CipherTextDecoder theme="light" />`,
+    realWorldExamples: [
+      {
+        title: 'Security Portal Keynote',
+        scenario:
+          'SecOps dashboard cycles cryptographic status phrases while allowing interactive nav link decoding.',
+        impact: 'Memorable brand signature with zero layout shift.',
+      },
+      {
+        title: 'Developer Documentation Hub',
+        scenario:
+          'Hero banner introduces new API architecture while live telemetry counts locked characters.',
+        impact: 'Engaging physical instrument-panel feel.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Per-Character Wave Perception',
+        detail:
+          'Staggered wave reading left-to-right matches natural eye scanning saccades without mechanical sterility.',
+      },
+      {
+        principle: 'Cognitive Anchoring (Space-Awareness)',
+        detail:
+          'Immediate resolution of spaces exposes word boundaries instantly, letting the mind pre-parse grammar before letters resolve.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: A portfolio, studio, or developer brand wants a typographic signature.',
+        dontItem: 'NOT IDEAL WHEN: Body copy or anything people need to read quickly.',
+      },
+      {
+        doItem: 'USE THIS WHEN: Short headlines or menu labels, roughly 30 characters or fewer.',
+        dontItem:
+          'NOT IDEAL WHEN: Text that must be translated into scripts without a monospace face.',
+      },
+      {
+        doItem: 'USE THIS WHEN: The design is monospace or can carry a monospace display line.',
+        dontItem:
+          'NOT IDEAL WHEN: Interfaces where motion would distract from a task, like checkout or forms.',
+      },
+    ],
+    implementationNotes: [
+      '01 Per-Character Timeline: Every character gets its own start and end time with small stagger plus random jitter.',
+      '02 Throttled Glyphs: Resolving characters re-roll at most every 50ms, so the cipher shimmers instead of strobing.',
+      '03 Monospace Lock: Every glyph has equal width (font-mono tabular-nums), ensuring zero layout shift during decode.',
+      '04 Stable Lines: Headline block has fixed min-height, preventing layout collapse mid-decode.',
+      '05 Space-Aware: Spaces in the target resolve to spaces immediately, revealing word shapes first.',
+      '06 No HTML Strings: Virtual DOM spans and text nodes only; nothing is ever parsed as HTML strings.',
+      '07 Quiet for Screen Readers: Plain semantic sr-only headline text; animated layer is aria-hidden.',
+      '08 Pause and Fallback: Pauses while tab is hidden, reduced motion renders target text statically.',
+    ],
+    supportedStates: ['Decoding', 'Locked', 'Paused', 'Hover In-Place'],
+  },
   // ==========================================
   // CARDS
   // ==========================================

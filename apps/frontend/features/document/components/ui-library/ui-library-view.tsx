@@ -76,6 +76,7 @@ import {
   ImageLightboxDemo,
   DataTableDemo,
   SpotlightBentoGridDemo,
+  CipherTextDecoderDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2869,6 +2870,8 @@ function renderFeedComponentDemo(
       return <GlitchTextDemo />;
     case 'blur-in':
       return <BlurInDemo />;
+    case 'cipher-decode':
+      return <CipherTextDecoderDemo />;
 
     // ==========================================
     // CARDS (Component Templates)
