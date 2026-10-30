@@ -1,33 +1,182 @@
 # SNP-SMS Software Engineering, System Architecture & AI Agents Technical Lexicon
 
-This document serves as the authoritative 1,111-concept technical lexicon for software engineering, modular monolith architecture, distributed systems, cryptography, testing, and autonomous AI agent runtimes across the SNP-SMS platform.
+This specification establishes the authoritative **1,111-concept technical lexicon** and **normative architectural rules** for software engineering, modular monolith architecture, distributed systems, cryptography, testing, and autonomous AI agent runtimes across the SNP-SMS platform.
 
 ---
 
-## Technical Domain Taxonomy
+## Technical Domain Taxonomy Overview
 
 ```
-+--------------------------------------------------------------------------+
-| Section 1: Foundational Systems Engineering (Concepts 1 - 111)           |
-| Section 2: Advanced Domain Engineering (Concepts 112 - 1,111)            |
-|   - Language Design & Type Systems       - Concurrency & Parallelism     |
-|   - Advanced Algorithms & Data Structs   - Distributed Systems & Consensus|
-|   - Messaging & Streaming Platforms      - API & Protocol Engineering    |
-|   - Identity, Access & App Security      - Cryptography & Privacy        |
-|   - Network Architecture & Traffic       - Storage Systems & Filesystems |
-|   - Observability & Incident Mgmt        - Testing & Verification        |
-|   - Build Systems & Tooling              - Architecture & Domain Modeling|
-|   - Enterprise Workflows & Integration   - Data Engineering & Analytics  |
-|   - Machine Learning Engineering         - LLM Architecture & Inference  |
-|   - AI Agent Runtime & Control           - Agent Planning & Reasoning    |
-+--------------------------------------------------------------------------+
++------------------------------------------------------------------------------------------------+
+|                                1,111 TECHNICAL CONCEPTS TAXONOMY                               |
++------------------------------------------------------------------------------------------------+
+| Section 01: Foundational Systems Engineering & Reliability (1 - 111)                           |
+| Section 02: Programming Language Design & Type Systems (112 - 162)                             |
+| Section 03: Concurrency & Parallel Programming (163 - 212)                                     |
+| Section 04: Advanced Algorithms & Data Structures (213 - 262)                                  |
+| Section 05: Distributed Systems & Coordination (263 - 312)                                     |
+| Section 06: Messaging & Streaming Platforms (313 - 362)                                        |
+| Section 07: API & Protocol Engineering (363 - 412)                                             |
+| Section 08: Identity, Access & Application Security (413 - 462)                                |
+| Section 09: Cryptography & Privacy Engineering (463 - 512)                                     |
+| Section 10: Network Architecture & Traffic Management (513 - 562)                              |
+| Section 11: Storage Systems & Filesystems (563 - 613)                                          |
+| Section 12: Observability & Incident Management (614 - 664)                                     |
+| Section 13: Testing & Verification Engineering (665 - 715)                                     |
+| Section 14: Build Systems & Developer Tooling (716 - 766)                                      |
+| Section 15: Software Architecture & Domain Modeling (767 - 816)                                |
+| Section 16: Enterprise Integration & Workflows (817 - 866)                                     |
+| Section 17: Data Engineering & Analytics (867 - 917)                                           |
+| Section 18: Machine Learning Engineering (MLOps) (918 - 968)                                   |
+| Section 19: LLM Architecture & Inference (969 - 1018)                                          |
+| Section 20: AI Agent Runtime & Control (1019 - 1068)                                           |
+| Section 21: Agent Planning & Reasoning (1069 - 1111)                                           |
++------------------------------------------------------------------------------------------------+
 ```
 
 ---
 
+## PART 1: SYSTEM ARCHITECTURE & AI AGENTS STANDARD RULES
 
+Every engineer, module author, and autonomous AI coding agent operating in SNP-SMS must strictly adhere to the following 21 domain architectural standards:
 
-## SECTION 1 — ORIGINAL 111 CONCEPTS
+### Standard Rule 01: Foundational Systems Engineering & Reliability (Concepts 1 - 111)
+
+- **Rate Limiting Invariant**: Ingress endpoints must enforce Token Bucket or Leaky Bucket limits; return HTTP 429 with Retry-After header upon budget exhaustion.
+- **Caching Hierarchy Invariant**: Explicit TTL on all cache entries; prevent cache stampedes via Singleflight mutex locking or probabilistic early expiration (XFetch).
+- **Circuit Breaker Invariant**: Outbound integration clients must implement 3-state state machine (Closed -> Open -> Half-Open) with exponential backoff and jitter.
+- **Idempotency Invariant**: Mutating HTTP requests (POST, PUT, PATCH) must support Idempotency-Key headers with >= 24h replay protection.
+- **Saga Orchestration Invariant**: Distributed multi-service mutations must execute via coordinated Sagas with deterministic compensating rollback transactions.
+
+### Standard Rule 02: Programming Language Design and Type Systems (Concepts 112 - 162)
+
+- **Soundness Invariant**: Static type checking must eliminate unchecked downcasting (`any`, `as unknown as T`) on domain boundaries.
+- **Algebraic Data Type Invariant**: State spaces must be modeled via discriminated unions (Sum Types) with exhaustive compile-time pattern matching.
+- **Null Safety Invariant**: Absence must be represented via Option/Result types; zero unchecked runtime null pointer dereferences.
+- **RAII Invariant**: System resources (database sessions, sockets, locks, file handles) must be scoped within deterministic disposal lifecycle wrappers.
+
+### Standard Rule 03: Concurrency and Parallel Programming (Concepts 163 - 212)
+
+- **Structured Concurrency Invariant**: Child async tasks must be bounded to supervised nursery scopes; zero orphan detached threads.
+- **Cancellation Propagation Invariant**: All asynchronous functions must accept and propagate AbortSignal / cancellation tokens.
+- **Memory Ordering Invariant**: Lock-free algorithms must enforce explicit memory barriers and atomic Compare-And-Swap (CAS) operations.
+- **Cache Contention Invariant**: High-frequency shared mutable state must be padded to 64 bytes to eliminate false sharing across CPU cores.
+
+### Standard Rule 04: Advanced Algorithms and Data Structures (Concepts 213 - 262)
+
+- **Complexity Budget Invariant**: Hot-path lookups must be O(1) amortized or O(log N); nested unbounded loops yielding O(N^2) are strictly prohibited.
+- **Probabilistic Scaling Invariant**: Use HyperLogLog for cardinality estimation (error < 1%) and Bloom/Cuckoo filters for sub-millisecond membership tests.
+- **Cycle Prevention Invariant**: Dependency and permission hierarchies must be modeled as Directed Acyclic Graphs (DAGs) verified via topological sorting.
+
+### Standard Rule 05: Distributed Systems and Coordination (Concepts 263 - 312)
+
+- **Quorum Intersection Invariant**: Replicated state machines must satisfy R + W > N and W > N/2 to guarantee read-write overlap on at least one current replica.
+- **Fencing Token Invariant**: Distributed locks must issue monotonically increasing fencing tokens; storage nodes must reject tokens k < k_current.
+- **Phi Accrual Invariant**: Cluster failure detection must use adaptive Phi accrual detectors rather than static heartbeat timeouts.
+
+### Standard Rule 06: Messaging and Streaming Platforms (Concepts 313 - 362)
+
+- **At-Least-Once Delivery Invariant**: Message consumers must be idempotent and deduplicate incoming events using unique message UUIDs.
+- **Poison Message Quarantine Invariant**: Failures exceeding retry limits must be isolated into Dead Letter Queues (DLQ) with origin metadata and stack traces.
+- **Schema Evolution Invariant**: Payload schemas (Protobuf/Avro) must maintain forward and backward compatibility; field tags must never be re-used.
+
+### Standard Rule 07: API and Protocol Engineering (Concepts 363 - 412)
+
+- **Zero Breaking Changes Invariant**: REST and gRPC contracts must evolve additively; breaking schema modifications require new major version prefixes (/api/v2/).
+- **Streaming Backpressure Invariant**: High-throughput data feeds (WebSockets, SSE, gRPC) must implement reactive streams flow control to prevent buffer exhaustion.
+- **Deprecation Invariant**: Deprecated APIs must send Deprecation and Sunset HTTP headers with minimum 90-day transition windows.
+
+### Standard Rule 08: Identity, Access, and Application Security (Concepts 413 - 462)
+
+- **Zero Trust Invariant**: Every incoming request must be authenticated and authorized at the perimeter and reverified at service boundaries.
+- **Multi-Tenant Isolation Invariant**: Every database query and write must strictly enforce server-derived schoolId and branchId filters.
+- **Zero Concrete Credentials Invariant**: Never embed concrete usernames, passwords, API tokens, or actual emails in documentation, logs, or UI code.
+
+### Standard Rule 09: Cryptography and Privacy Engineering (Concepts 463 - 512)
+
+- **Constant-Time Invariant**: Token comparisons, HMAC checks, and cryptographic signatures must execute via crypto.timingSafeEqual.
+- **Authenticated Encryption Invariant**: Data at rest must use AEAD ciphers (AES-256-GCM or ChaCha20-Poly1305) with 96-bit unique nonces.
+- **High-Entropy Invariant**: Cryptographic secrets, salt tokens, and nonces must be sourced from a cryptographically secure pseudo-random number generator (CSPRNG).
+
+### Standard Rule 10: Network Architecture and Traffic Management (Concepts 513 - 562)
+
+- **Edge Termination Invariant**: TLS 1.3 termination with perfect forward secrecy (ECDHE) and HSTS max-age=31536000; includeSubDomains; preload.
+- **Connection Hygiene Invariant**: Database and upstream HTTP clients must use connection pools with idle timeout <= 60s and TCP keepalive probes.
+- **Buffer Sizing Invariant**: Socket buffers must be tuned to Bandwidth-Delay Product (BDP = Bandwidth * RTT).
+
+### Standard Rule 11: Storage Systems and Filesystems (Concepts 563 - 613)
+
+- **Write-Ahead Logging Invariant**: State mutations must append to an fsynced Write-Ahead Log (WAL) prior to modifying in-memory pages.
+- **Isolation Level Invariant**: Default to Snapshot Isolation for transactional queries; financial ledgers mandate Serializable isolation or atomic row locks.
+- **Compaction Invariant**: LSM-tree stores must schedule leveled compaction to bound read amplification while capping write stalls.
+
+### Standard Rule 12: Observability and Incident Management (Concepts 614 - 664)
+
+- **Distributed Context Invariant**: Propagate W3C TraceContext headers (traceparent) across all service boundaries; emit structured JSON logs with trace_id.
+- **SLO Burn-Rate Invariant**: Alerts must be triggered on Multi-Window Multi-Burn-Rate consumption of Error Budgets, not transient metric spikes.
+- **Blameless Postmortem Invariant**: P0/P1 incidents mandate a blameless postmortem published within 48 hours containing timeline and root cause analysis.
+
+### Standard Rule 13: Testing and Verification Engineering (Concepts 665 - 715)
+
+- **Verification-First Invariant**: Code changes must pass unit, integration, and typecheck gates with zero regressions prior to committing.
+- **Property-Based Invariant**: Core domain calculations, state machines, and parsers must be verified using property-based fuzzing across randomized inputs.
+- **Deterministic Isolation Invariant**: Tests must execute against isolated, transactional database fixtures with zero cross-test state leakage.
+
+### Standard Rule 14: Build Systems and Developer Tooling (Concepts 716 - 766)
+
+- **Hermetic Build Invariant**: Monorepo build steps must produce deterministic outputs for given git commit hashes using pinned lockfiles (npm ci).
+- **Content-Addressable Invariant**: Leverage remote build caching keyed by file content hashes; prune dead exports via AST tree-shaking.
+- **Dependency Hygiene Invariant**: Zero unpinned dependencies; automated Dependabot security scanning for critical vulnerabilities.
+
+### Standard Rule 15: Software Architecture and Domain Modeling (Concepts 767 - 816)
+
+- **Bounded Context Invariant**: Domain entities must be scoped within strict bounded contexts; aggregate roots enforce all business invariants.
+- **Hexagonal Decoupling Invariant**: Domain services must have zero dependency on HTTP frameworks or database drivers; inject via port interfaces.
+- **CQRS Invariant**: Where read and write throughput diverge, separate write domain commands from optimized read query models.
+
+### Standard Rule 16: Enterprise Integration and Workflows (Concepts 817 - 866)
+
+- **EIP Compliance Invariant**: Asynchronous integration must adhere to Gregor Hohpe Enterprise Integration Patterns (Message Router, Splitter, Aggregator).
+- **Durable Execution Invariant**: Long-running business processes must be modeled as stateful, restartable workflows with persistent checkpoints.
+- **Compensating Activity Invariant**: Every non-idempotent workflow step must define an automated compensating action for failure rollbacks.
+
+### Standard Rule 17: Data Engineering and Analytics (Concepts 867 - 917)
+
+- **Medallion Architecture Invariant**: Data flows from Bronze (raw immutable) to Silver (cleansed/deduplicated) to Gold (aggregated business models).
+- **Open Table Invariant**: Analytical data must be stored in columnar formats (Parquet) governed by open metadata tables (Iceberg) with partition pruning.
+- **Data Contract Invariant**: Upstream operational services must publish explicit data schemas; breaking changes block ingestion pipelines.
+
+### Standard Rule 18: Machine Learning Engineering (Concepts 918 - 968)
+
+- **Feature Parity Invariant**: Training datasets and real-time inference pipelines must source from a unified Feature Store to prevent train-serve skew.
+- **Model Registry Invariant**: Production models must have immutable version hashes, dataset lineage, and environment metadata recorded in a central registry.
+- **Drift Monitoring Invariant**: Continuously calculate Population Stability Index (PSI) and data drift; alert when PSI >= 0.2.
+
+### Standard Rule 19: LLM Architecture and Inference (Concepts 969 - 1018)
+
+- **PagedAttention Invariant**: High-throughput inference engines must allocate KV cache memory in non-contiguous pages to prevent fragmentation.
+- **Continuous Batching Invariant**: Iteration-level scheduling must dynamically batch requests to maximize GPU compute saturation.
+- **Quantization Calibration Invariant**: Model quantization (AWQ, GPTQ, FP8) must maintain perplexity degradation below 1% relative to FP16 baselines.
+
+### Standard Rule 20: AI Agent Runtime and Control (Concepts 1019 - 1068)
+
+- **Triple-Budget Invariant**: Every agent loop must enforce hard ceilings on Step Budget (<= 30), Time Budget (<= 300s), and Token Budget; terminate safely upon exhaustion.
+- **Action Precondition Invariant**: Agents must evaluate explicit state preconditions prior to executing side-effecting tools.
+- **Reversibility & Rollback Invariant**: Stateful mutations executed by agents must record compensating actions for automated rollback.
+- **Sandbox Isolation Invariant**: Agent tool executions involving shell commands, code generation, or filesystem mutations must run within isolated microVMs or container sandboxes.
+
+### Standard Rule 21: Agent Planning and Reasoning (Concepts 1069 - 1111)
+
+- **DAG Plan Decomposition Invariant**: Complex tasks must be decomposed into a Directed Acyclic Graph (DAG) with verified subgoal satisfaction criteria.
+- **Receding-Horizon Invariant**: Formulate plans over full horizon, execute immediate horizon, observe world state, and trigger replanning when delta(W_exp, W_obs) > epsilon.
+- **EVOI Optimization Invariant**: Tool selection and exploratory queries must maximize the Expected Value of Information (EVOI) against task success probability.
+
+---
+
+## PART 2: THE COMPLETE 1,111 NUMBERED TECHNICAL LEXICON
+
+## SECTION 1 — FOUNDATIONAL SYSTEMS ENGINEERING (CONCEPTS 1 - 111)
+
 1. Rate Limiting
 2. Caching
 3. Load Balancing
@@ -140,11 +289,10 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 110. On-Call
 111. Postmortems
 
-
 ## SECTION 2 — 1,000 ADDITIONAL CONCEPTS
 
-
 ### PROGRAMMING LANGUAGE DESIGN AND TYPE SYSTEMS
+
 112. Static Typing
 113. Dynamic Typing
 114. Strong Typing
@@ -197,8 +345,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 161. Static Dispatch
 162. Virtual Method Tables
 
-
 ### CONCURRENCY AND PARALLEL PROGRAMMING
+
 163. Concurrency Model
 164. Parallel Computing
 165. Asynchronous Programming
@@ -250,8 +398,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 211. Parallel I/O
 212. Concurrency Testing
 
-
 ### ADVANCED ALGORITHMS AND DATA STRUCTURES
+
 213. Big-O Notation
 214. Amortized Analysis
 215. Time Complexity
@@ -303,8 +451,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 261. Approximation Algorithm
 262. Randomized Algorithm
 
-
 ### DISTRIBUTED SYSTEMS AND COORDINATION
+
 263. Distributed System Model
 264. Failure Detector
 265. Partial Synchrony
@@ -356,8 +504,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 311. Distributed Configuration Store
 312. Coordination Service
 
-
 ### MESSAGING AND STREAMING PLATFORMS
+
 313. Broker-Based Messaging
 314. Brokerless Messaging
 315. Message Broker
@@ -409,8 +557,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 361. Message Deduplication
 362. Stream Partition Key
 
-
 ### API AND PROTOCOL ENGINEERING
+
 363. API First Design
 364. Contract-First Development
 365. Consumer-Driven Contract
@@ -462,8 +610,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 411. GraphQL Complexity Limit
 412. GraphQL Depth Limit
 
-
 ### IDENTITY, ACCESS, AND APPLICATION SECURITY
+
 413. Identity Lifecycle Management
 414. Identity Proofing
 415. Federated Identity
@@ -515,8 +663,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 461. Account Recovery
 462. Credential Vault
 
-
 ### CRYPTOGRAPHY AND PRIVACY ENGINEERING
+
 463. Authenticated Encryption
 464. AES-GCM
 465. ChaCha20-Poly1305
@@ -568,8 +716,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 511. Re-identification Risk
 512. Privacy-Preserving Analytics
 
-
 ### NETWORK ARCHITECTURE AND TRAFFIC MANAGEMENT
+
 513. Network Topology
 514. Spine-Leaf Network
 515. Overlay Network
@@ -621,8 +769,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 561. Ingress Gateway
 562. Network Observability
 
-
 ### STORAGE SYSTEMS AND FILESYSTEMS
+
 563. Storage Engine
 564. Page Cache
 565. Direct I/O
@@ -675,8 +823,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 612. Object Versioning
 613. Multipart Object Upload
 
-
 ### OBSERVABILITY AND INCIDENT MANAGEMENT
+
 614. Telemetry Pipeline
 615. Telemetry Collector
 616. Metric Cardinality
@@ -729,8 +877,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 663. Toil Reduction
 664. Reliability Review
 
-
 ### TESTING AND VERIFICATION ENGINEERING
+
 665. Test-Driven Development (TDD)
 666. Behavior-Driven Development (BDD)
 667. Acceptance Test-Driven Development (ATDD)
@@ -783,8 +931,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 714. ThreadSanitizer
 715. UndefinedBehaviorSanitizer
 
-
 ### BUILD SYSTEMS AND DEVELOPER TOOLING
+
 716. Build Graph
 717. Incremental Build
 718. Remote Build Execution
@@ -837,8 +985,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 765. Internal Developer Platform
 766. Golden Path Template
 
-
 ### SOFTWARE ARCHITECTURE AND DOMAIN MODELING
+
 767. Layered Architecture
 768. N-Tier Architecture
 769. Onion Architecture
@@ -890,8 +1038,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 815. Composite Pattern
 816. Dependency Rule
 
-
 ### ENTERPRISE INTEGRATION AND WORKFLOWS
+
 817. Enterprise Service Bus (ESB)
 818. Integration Platform as a Service (iPaaS)
 819. Message Transformation
@@ -943,8 +1091,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 865. Durable Timer
 866. Distributed Cron Scheduler
 
-
 ### DATA ENGINEERING AND ANALYTICS
+
 867. Extract Transform Load (ETL)
 868. Extract Load Transform (ELT)
 869. Batch Data Pipeline
@@ -997,8 +1145,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 916. Analytical Query Engine
 917. Columnar Storage
 
-
 ### MACHINE LEARNING ENGINEERING
+
 918. Machine Learning Operations (MLOps)
 919. Model Lifecycle Management
 920. Experiment Tracking
@@ -1051,8 +1199,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 967. OOD Detection
 968. Uncertainty Estimation
 
-
 ### LLM ARCHITECTURE AND INFERENCE
+
 969. Transformer Block
 970. Self-Attention
 971. Cross-Attention
@@ -1104,8 +1252,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 1017. GGUF Model Format
 1018. Quantization Calibration
 
-
 ### AI AGENT RUNTIME AND CONTROL
+
 1019. Agent Execution Engine
 1020. Agent Control Loop
 1021. Agent Policy
@@ -1157,8 +1305,8 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 1067. Agent Replay
 1068. Agent Determinism Boundary
 
-
 ### AGENT PLANNING AND REASONING
+
 1069. Task Graph
 1070. Plan Graph
 1071. Dependency-Aware Planning
@@ -1203,3 +1351,15 @@ This document serves as the authoritative 1,111-concept technical lexicon for so
 1110. Action Ranking
 1111. Expected Value of Information
 
+---
+
+## PART 3: AUTONOMOUS AI AGENT EXECUTION POLICY
+
+All autonomous AI coding agents (Antigravity, Claude, Copilot, Codex, subagents) must enforce these operational invariants:
+
+- **Verification-First Mandate**: Execute live verification commands (`npm run typecheck`, `npm run test`, `npm run smoke`) before claiming task completion.
+- **Zero Hallucination of Credentials**: Never invent fake API keys, environment variables, or mock endpoints. Use `@snp/shared` and `apps/backend/src/config/`.
+- **Non-Destructive Operations Guard**: Never run destructive shell commands (`rm -rf /`, `git reset --hard` on uncommitted user work, unseeded database drops).
+- **Contract Preservation**: Never alter existing REST API paths, query parameters, status codes, or payload schemas without explicit user direction.
+- **Mandatory Local-Only Commits**: AI agents are strictly permitted to make local git commits only. NEVER execute `git push` without direct explicit user command.
+- **Strict Zero-Emoji Rule**: Under no circumstances should emojis be used in code, comments, docstrings, commit messages, or agent responses.
