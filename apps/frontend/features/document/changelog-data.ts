@@ -9,7 +9,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
-    "commitHash": "15a8ab5",
+    "commitHash": "19b9c63",
+    "description": "Upgrade hanging tabs navigation with UI Library first kinetic animations and real-time status tracker box"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "a62fcd4",
     "description": "Remove preview and prompt buttons and convert copy prompt to icon-only action"
   },
   {
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "021837f",
     "description": "Synchronize real-time changelog for Toast Notification Stack"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "5d0d50c",
-    "description": "Implement 8-pillar Toast Notification Stack with auto-dismiss, progress bars, hover pause, and two-phase exit"
   }
 ];
