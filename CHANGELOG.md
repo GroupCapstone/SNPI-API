@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `58dacb7`
+
+- Record v0.2.7 release checkpoint in real-time changelog and document portal
+
 ### Version 0.2.7 (30.10.2026) - `d585ab0`
 
 - Add legal and crawl footer links, implement dynamic real-time version tracker v0.2.7, and configure sitemap and robots routes
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.4 (30.10.2026) - `f5eb812`
 
 - Activate all sidebar navigation menus, pin sticky sidebars, and document 9 interface motion and cognitive ux skills
-
-### Version 0.2.4 (30.10.2026) - `e5aed2f`
-
-- Unify design concept, 3-column layout, and capsule nav across Open API and UI Library views
 
