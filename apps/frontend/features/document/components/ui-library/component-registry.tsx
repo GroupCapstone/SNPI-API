@@ -2469,7 +2469,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
       '03 Sortable Header: Keyboard-focusable column header with a tri-state click cycle: none, ascending, descending.',
       '04 Sort Indicator: Animated caret in the active column that rotates to flip direction without re-rendering.',
       '05 Comparator: Type-aware comparison for strings, numbers, and dates. Stable so equal rows keep insertion order.',
-      '06 Status Pill: Colored badge with a leading dot for at-a-glance scanning of categorical values.',
+      '06 Status Pill: Colored badge with clean typography (Zero-Dot Standard) for at-a-glance scanning of categorical values.',
       '07 Sticky Header: Headers stay pinned while the body scrolls. A subtle shadow appears once the user has scrolled.',
       '08 Pagination Nav: First, last, and a window around the current page with ellipses. Disabled at boundaries.',
       '09 Page Size: Selector for rows per page that re-clamps the current page so the visible window stays valid.',
@@ -2690,7 +2690,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
     usageGuidelines: [
       { doItem: 'Use ping animation.', dontItem: 'Do not use ambiguous loading text.' },
     ],
-    implementationNotes: ['Pill with animated ping dot.'],
+    implementationNotes: ['Pill with active text badge (Zero-Dot Standard).'],
     supportedStates: ['Thinking', 'Querying', 'Synthesizing', 'Complete'],
   },
   // ==========================================
@@ -2789,7 +2789,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
     category: 'Navigation',
     paradigm: 'Bloom Toolbar Paradigm',
     description:
-      'A horizontal toolbar of icon buttons with bloom-open label reveal on hover/selection, accent dot indicator, and roving tabindex.',
+      'A horizontal toolbar of icon buttons with bloom-open label reveal on hover/selection, accent indicator bar, and roving tabindex.',
     explanation:
       'The Icon Bar is a compact 54px horizontal toolbar engineered for editing canvases, drawing environments, and workspace tool selectors. By keeping tools compact as vector glyphs by default and blooming labels open horizontally on hover or keyboard focus, it provides maximum canvas efficiency without sacrificing discoverability.',
     supportedStates: [
@@ -2797,7 +2797,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
       'Hovered (Bloomed)',
       'Selected (Pinned Fill)',
       'Focused',
-      'Status Dot Active',
+      'Active Indicator Line',
     ],
     realWorldExamples: [
       {
@@ -2833,14 +2833,15 @@ const columns: DataTableColumn<StudentRecord>[] = [
           'Do not use for destructive permanent actions (like Delete Account) without a confirmation step.',
       },
       {
-        doItem: 'Provide a status dot on active or pinned tools to maintain spatial orientation.',
+        doItem:
+          'Provide an active indicator bar on active or pinned tools to maintain spatial orientation.',
         dontItem:
           'Avoid vertical text bloom; always bloom labels horizontally with overflow containment.',
       },
     ],
     implementationNotes: [
       'Outer height strictly locked to 54px (h-[54px]) with 4px gap (gap-1) between items.',
-      'Selected tool gains filled surface background and accent status dot at top-right corner.',
+      'Selected tool gains filled surface background and accent indicator bar at bottom edge (Zero-Dot Standard).',
       'Full roving tabindex: ArrowRight/Down, ArrowLeft/Up, Home, End, Enter to pin, Escape to clear.',
       'Strict r4 corner radius standard enforced across controls.',
     ],
@@ -2849,7 +2850,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
         name: 'items',
         type: 'IconBarItemData[]',
         default: 'DEFAULT_ICON_BAR_ITEMS',
-        description: 'Array of tool items with id, label, icon component, and optional status dot.',
+        description:
+          'Array of tool items with id, label, icon component, and optional active state.',
       },
       {
         name: 'selectedId',
@@ -2876,27 +2878,35 @@ const columns: DataTableColumn<StudentRecord>[] = [
   // ==========================================
   {
     id: 'dot-pattern',
-    name: 'Dot Pattern',
+    name: 'Precision Linear Grid',
     category: 'Backgrounds',
-    paradigm: 'SVG Radial Grid Standard',
-    description: 'Interactive dot matrix canvas with customizable radial size and pitch.',
-    explanation: 'Mathematical radial dot grid providing structural depth for canvas cards.',
-    props: [{ name: 'spacing', type: 'number', description: 'Distance between dots in px.' }],
+    paradigm: 'Linear Lattice Grid Standard',
+    description:
+      'Pure geometric linear lattice (Zero-Dot Design Standard) with customizable pitch.',
+    explanation:
+      'Mathematical linear mesh grid providing clean structural depth for day-light canvas cards.',
+    props: [{ name: 'spacing', type: 'number', description: 'Distance between grid lines in px.' }],
     codeSnippet: `import { DotPatternDemo } from '@/features/document/components/ui-library';\n\n<DotPatternDemo />`,
     realWorldExamples: [
       {
         title: 'Admissions Canvas',
         scenario: 'Applicant reviews admission roadmap.',
-        impact: 'Structured canvas texture.',
+        impact: 'Structured canvas texture without circular dots.',
       },
     ],
     uxPsychology: [
-      { principle: 'Subtle Grounding', detail: 'Dots ground floating cards without visual noise.' },
+      {
+        principle: 'Subtle Grounding',
+        detail: 'Crisp linear grids ground floating cards without visual noise.',
+      },
     ],
     usageGuidelines: [
-      { doItem: 'Keep opacity under 40%.', dontItem: 'Never use dark opaque dots on white.' },
+      {
+        doItem: 'Keep opacity under 40%.',
+        dontItem: 'Never use circular dot styles anywhere in interface.',
+      },
     ],
-    implementationNotes: ['CSS radial-gradient pattern.'],
+    implementationNotes: ['CSS linear-gradient mesh pattern.'],
     supportedStates: ['Default', 'Dense', 'Spaced'],
   },
   {
@@ -3768,7 +3778,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
       '03 ARIA Date Grid: role="grid" of role="gridcell" day buttons with a single roving tabindex (only focused day has tabIndex=0).',
       '04 Range Band: Start/end days go solid cyan with squared inner corners; in-between days get a continuous translucent band.',
       '05 Hover Preview: After start is picked, hovering a day previews the would-be range live before committing an end date.',
-      '06 Today Marker: Current day renders bold with a small cyan dot, plus a one-click Today shortcut in the footer.',
+      '06 Today Marker: Current day renders bold with a small underline bar (Zero-Dot Standard), plus a one-click Today shortcut in the footer.',
       '07 Min / Max Bounds: Out-of-range days carry disabled and aria-disabled so pointer and keyboard navigation skip them.',
       '08 Local-Date Model: Days are built and serialized in local time (never UTC-parsed), avoiding timezone off-by-one errors.',
     ],

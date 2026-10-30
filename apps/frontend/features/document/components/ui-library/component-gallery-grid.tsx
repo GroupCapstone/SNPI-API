@@ -227,7 +227,7 @@ function renderRealMiniDemo(
       return (
         <div className="flex w-full items-center justify-between rounded-xl border border-slate-900 bg-[#000B26] px-3 py-2 text-white shadow-md">
           <div className="flex items-center gap-2">
-            <span className="size-1.5 animate-pulse rounded-full bg-[#0056FF]" />
+            <span className="h-3 w-1 rounded-[1px] bg-[#0056FF]" />
             <span className="font-sans text-[11px] font-medium text-slate-200">
               {state.miniSnackbarUndone ? 'Action undone' : 'STU-2026 enrolled'}
             </span>
@@ -270,7 +270,7 @@ function renderRealMiniDemo(
       return (
         <div className="w-full rounded-xl border border-slate-200/90 bg-white p-3 shadow-sm">
           <div className="flex items-center gap-1.5 font-sans text-xs font-bold text-slate-950">
-            <span className="size-2 rounded-full bg-[#0056FF]" />
+            <span className="h-3 w-1 rounded-[1px] bg-[#0056FF]" />
             <span>Revoke enrollment?</span>
           </div>
           <p className="mt-1 font-sans text-[10.5px] text-slate-600">
@@ -481,7 +481,6 @@ function renderRealMiniDemo(
         <div className="flex items-center justify-center pt-2">
           <div className="flex h-8 items-center gap-1 rounded-xl border border-slate-800 bg-[#0A0D14] px-2 text-[10px] text-white">
             <span className="relative flex items-center gap-1 rounded-lg bg-white/10 px-2 py-0.5 font-bold">
-              <span className="size-1 rounded-full bg-[#818CF8]" />
               <span>Pen</span>
             </span>
             <span className="px-1 font-mono text-slate-500">Eraser</span>

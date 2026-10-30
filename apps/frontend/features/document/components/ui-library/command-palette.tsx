@@ -666,6 +666,34 @@ export function CommandPaletteInteractiveDemo() {
           </div>
         </button>
 
+        {/* Direct In-Stage Interactive Commands (Say Less Show More Result - Never Hidden) */}
+        <div className="space-y-1.5 pt-2 text-left">
+          <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
+            <span>Instant Actions</span>
+            <span>Click to Execute</span>
+          </div>
+          {commandsWithHandler.slice(0, 3).map((cmd) => (
+            <button
+              key={cmd.id}
+              type="button"
+              onClick={() => cmd.onSelect()}
+              className="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2 text-left font-sans text-xs transition-colors hover:border-[#0056FF] hover:bg-[#E3E7FC]/40"
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-slate-900">{cmd.title}</span>
+                {cmd.description && (
+                  <span className="text-[11px] text-slate-500">— {cmd.description}</span>
+                )}
+              </div>
+              {cmd.shortcut && (
+                <kbd className="rounded-[3px] border border-slate-200 bg-slate-50 px-1.5 py-0.5 font-mono text-[10px] text-slate-600">
+                  {cmd.shortcut}
+                </kbd>
+              )}
+            </button>
+          ))}
+        </div>
+
         {/* Live Execution Feedback */}
         {executedAction && (
           <div

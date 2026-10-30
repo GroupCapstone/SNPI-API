@@ -263,11 +263,6 @@ export function ScrambleNavLink({
           </span>
         ))}
       </span>
-
-      {/* Decoding active indicator dot */}
-      {isDecoding && (
-        <span className="absolute -top-1 -right-1 size-1.5 animate-pulse rounded-full bg-[#0056FF]" />
-      )}
     </a>
   );
 }

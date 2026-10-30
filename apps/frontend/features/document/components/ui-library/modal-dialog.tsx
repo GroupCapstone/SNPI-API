@@ -362,6 +362,51 @@ export function ModalDialogDemo() {
         </div>
       </div>
 
+      {/* Live In-Stage Modal Dialog Surface (Say Less Show More Result - Never Hidden) */}
+      <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-6 text-left shadow-md">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h4 className="font-sans text-sm font-bold text-slate-900">
+              Commit ACID Ledger Transaction
+            </h4>
+            <p className="font-sans text-xs text-slate-500">
+              Verify cryptographic hash commitments for candidate term enrollment batch TX-842910.
+            </p>
+          </div>
+          <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+            ACTIVE
+          </span>
+        </div>
+        <div className="mt-4 space-y-3">
+          <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400">BATCH TX:</span>
+              <span className="font-bold text-[#0056FF]">sha256:7f8a92e4b102</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400">ENROLLED CANDIDATES:</span>
+              <span className="font-bold text-slate-900">48 Students</span>
+            </div>
+          </div>
+          <div className="flex items-center justify-end gap-2 pt-2">
+            <button
+              type="button"
+              onClick={() => setLastAction('Ledger Commit Cancelled')}
+              className="rounded-[4px] border border-slate-200 bg-white px-3 py-1.5 font-sans text-xs font-semibold text-slate-700 hover:bg-slate-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={() => setLastAction('ACID Ledger TX-842910 Committed')}
+              className="rounded-[4px] bg-[#0056FF] px-3.5 py-1.5 font-sans text-xs font-bold text-white hover:bg-blue-700"
+            >
+              Commit Batch
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Two Instances Trigger Showcase */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Instance 1: Primary Confirmation Dialog */}

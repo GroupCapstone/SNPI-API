@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import * as React from 'react';
@@ -6,17 +7,17 @@ import { Search, X, ChevronDown, ChevronLeft, ChevronRight } from '@/components/
 
 export type SortDirection = 'asc' | 'desc' | 'none';
 
-export interface DataTableColumn<T> {
+export interface DataTableColumn<T = any> {
   key: keyof T | string;
   header: string;
   sortable?: boolean;
   type?: 'string' | 'number' | 'date';
   align?: 'left' | 'center' | 'right';
   width?: string;
-  render?: (value: unknown, row: T) => React.ReactNode;
+  render?: (value: any, row: T) => React.ReactNode;
 }
 
-export interface DataTableProps<T> {
+export interface DataTableProps<T = any> {
   data: T[];
   columns: DataTableColumn<T>[];
   initialPageSize?: number;
@@ -53,17 +54,16 @@ export function StatusPill({ status }: { status: string }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-sans text-xs font-semibold select-none',
+        'inline-flex items-center rounded-full border px-2.5 py-0.5 font-sans text-xs font-bold select-none',
         pillClasses,
       )}
     >
-      <span className={cn('size-1.5 shrink-0 rounded-full', dotColor)} />
       {status}
     </span>
   );
 }
 
-export function DataTable<T extends Record<string, unknown>>({
+export function DataTable<T extends Record<string, any>>({
   data,
   columns,
   initialPageSize = 10,
@@ -110,7 +110,7 @@ export function DataTable<T extends Record<string, unknown>>({
   };
 
   // 05 Comparator: Type-aware and Stable
-  const getNestedValue = (obj: Record<string, unknown>, key: string) => {
+  const getNestedValue = (obj: any, key: string): any => {
     if (!obj) return '';
     return obj[key];
   };
@@ -453,7 +453,7 @@ export function DataTable<T extends Record<string, unknown>>({
             {paginatedData.length > 0
               ? paginatedData.map((row, idx) => (
                   <tr
-                    key={row.id || idx}
+                    key={String(row.id || idx)}
                     className={cn(
                       'transition-colors duration-100',
                       isDark ? 'hover:bg-slate-900/60' : 'hover:bg-[#E3E7FC]/25',
@@ -478,7 +478,7 @@ export function DataTable<T extends Record<string, unknown>>({
                           {col.render ? (
                             col.render(val, row)
                           ) : col.type === 'number' ? (
-                            <span className="font-mono tabular-nums">{val}</span>
+                            <span className="font-mono tabular-nums">{String(val ?? '')}</span>
                           ) : (
                             String(val ?? '')
                           )}
@@ -656,6 +656,7 @@ export function DataTable<T extends Record<string, unknown>>({
 // ==========================================
 
 export interface StudentRecord {
+  [key: string]: any;
   id: string;
   code: string;
   name: string;

@@ -638,14 +638,14 @@ export function DatePicker({
                     >
                       {dayNum}
 
-                      {/* 06 Today Marker: small cyan dot under current day */}
+                      {/* 06 Today Marker: small underline bar under current day (Zero-Dot Standard) */}
                       {isToday && (
                         <span
                           className={cn(
-                            'absolute bottom-1 size-1 rounded-full',
+                            'absolute bottom-1 h-0.5 w-3 rounded-[1px]',
                             isSingleSelected || isRangeStart || isRangeEnd
                               ? 'bg-white'
-                              : 'bg-cyan-500',
+                              : 'bg-[#0056FF]',
                           )}
                         />
                       )}
@@ -666,7 +666,6 @@ export function DatePicker({
               className="flex items-center gap-1 font-bold text-[#0056FF] hover:underline dark:text-[#38BDF8]"
             >
               <span>Today</span>
-              <span className="size-1 rounded-full bg-cyan-500" />
             </button>
 
             <span className="text-slate-400">{isRange ? 'Range Mode' : 'Single Mode'}</span>

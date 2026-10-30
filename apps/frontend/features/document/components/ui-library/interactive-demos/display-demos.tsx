@@ -105,10 +105,10 @@ export const ledgerConfig = {
     <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-left shadow-lg">
       <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/80 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <span className="size-2.5 rounded-full bg-rose-500" />
-          <span className="size-2.5 rounded-full bg-amber-500" />
-          <span className="size-2.5 rounded-full bg-emerald-500" />
-          <span className="ml-2 font-mono text-[10px] font-bold text-slate-400">ledger.ts</span>
+          <span className="rounded-[3px] bg-slate-800 px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#CAD3F5]">
+            CODE
+          </span>
+          <span className="font-mono text-[10px] font-bold text-slate-400">ledger.ts</span>
         </div>
         <button
           type="button"
