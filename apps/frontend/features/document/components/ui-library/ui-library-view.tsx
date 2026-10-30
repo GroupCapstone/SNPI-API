@@ -2895,6 +2895,7 @@ function renderFeedComponentDemo(
     case 'tilt-card':
       return <TiltCardDemo />;
     case 'border-beam':
+    case 'border-beam-card':
       return <BorderBeamDemo />;
 
     // ==========================================

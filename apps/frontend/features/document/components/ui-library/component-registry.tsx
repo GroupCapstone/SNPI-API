@@ -2969,71 +2969,101 @@ const columns: DataTableColumn<StudentRecord>[] = [
     supportedStates: ['Flat', 'Tilted'],
   },
   {
-    id: 'border-beam',
+    id: 'border-beam-card',
     name: 'Border Beam Card',
     category: 'Cards',
-    paradigm: 'Instrument Panel & 4-Dash SVG Physics',
+    paradigm: 'Instrument Panel & 4-Dash SVG Physics Standard',
     description:
-      'Matte graphite card with one short amber beam tracing its perimeter at constant speed. Quiet until you look at it; hover to brighten.',
+      'A matte pricing card with one short amber beam tracing its border at a constant speed. Quiet until you look at it.',
     explanation:
-      'Constructed from four stacked SVG dashes on a single pathLength="100" path so the head always leads the tail and speed never changes at the corners. Features instrument-panel telemetry, tabular numerals, and document brand palette.',
+      'Hover the card to brighten the beam. It is four stacked SVG dashes on one path, so the head always leads the tail and the speed never changes at the corners.',
     props: [
       {
         name: 'color',
         type: "'amber' | 'blue' | 'emerald' | 'rose'",
+        default: "'amber'",
         description: 'Beam color token (amber default or docs royal blue).',
       },
       {
         name: 'duration',
         type: 'number',
-        description: 'Seconds per perimeter loop (default: 7s constant velocity).',
+        default: '7',
+        description: 'Seconds per perimeter loop (constant velocity pathLength="100").',
       },
       {
-        name: 'onAuthenticate',
-        type: '(role, id) => void',
-        description: 'Authentication callback for Login mode.',
+        name: 'rx',
+        type: 'number',
+        default: '24',
+        description: 'Border radius x-axis for measured rounded-rectangle path.',
+      },
+      {
+        name: 'forceBright',
+        type: 'boolean',
+        default: 'false',
+        description: 'Override quiet state (35%) to full hover luminance (100%).',
       },
     ],
-    codeSnippet: `import { BorderBeamLoginCard, BorderBeamPricingCard } from '@/features/document/components/ui-library';\n\n{/* Instrument Login Card */}\n<BorderBeamLoginCard color="amber" duration={7} />\n\n{/* Instrument Pricing Card */}\n<BorderBeamPricingCard color="amber" duration={7} />`,
+    codeSnippet: `import { BorderBeamPricingCard, BorderBeamLoginCard } from '@/features/document/components/ui-library';\n\n{/* Matte Pricing Card with Amber Border Beam */}\n<BorderBeamPricingCard color="amber" duration={7} />\n\n{/* Instrument Terminal Card */}\n<BorderBeamLoginCard color="amber" duration={7} />`,
     realWorldExamples: [
       {
-        title: 'Operator Zero-Trust Gateway',
-        scenario: 'Admin authenticates session into cluster terminal.',
-        impact: 'Uncompromising instrument precision.',
+        title: 'Cluster Infrastructure Dedicated Tier',
+        scenario:
+          'Enterprises compare multi-tenant shared nodes versus isolated dedicated MongoDB replica sets.',
+        impact: 'Quiet, premium visual hierarchy without layout movement.',
       },
       {
-        title: 'Cluster Infrastructure Tier',
-        scenario: 'Institutions evaluate high-throughput dedicated nodes.',
-        impact: 'Quiet, premium visual signature.',
+        title: 'Operator Zero-Trust Gateway Console',
+        scenario:
+          'SuperAdmin authenticates cryptographic session key into institutional cluster terminal.',
+        impact: 'Uncompromising instrument precision with live tabular clock telemetry.',
       },
     ],
     uxPsychology: [
       {
-        principle: 'Preattentive Attention',
+        principle: 'Preattentive Visual Hierarchy',
         detail:
-          'The quiet beam sits below distraction threshold until focused, whereupon it brightens to guide intent.',
+          'The quiet beam sits below distraction threshold at 35% opacity until hovered or focused, immediately drawing intent.',
       },
       {
-        principle: 'Perceptual Constancy',
+        principle: 'Perceptual Constancy & Uniform Velocity',
         detail:
-          'Single path length normalization preserves linear speed through 24px rounded corners.',
+          'Arc-length normalization via pathLength="100" guarantees speed never distorts or accelerates through rounded corners.',
       },
     ],
     usageGuidelines: [
       {
-        doItem: 'Pair with matte graphite (#0B0F17) and hairline borders.',
-        dontItem: 'Do not use uneven multi-path gradients that accelerate around corners.',
+        doItem: 'USE THIS WHEN: One plan, card, or panel needs to stand out from its siblings.',
+        dontItem:
+          'NOT IDEAL WHEN: Several cards on one screen would each get a beam — multi-beam screens cause visual exhaustion.',
+      },
+      {
+        doItem: 'USE THIS WHEN: You want motion that draws the eye without moving the layout.',
+        dontItem:
+          'NOT IDEAL WHEN: The card holds content people read for a long time, like long text or forms.',
+      },
+      {
+        doItem: 'USE THIS WHEN: The interface is dark, technical, and restrained.',
+        dontItem:
+          'NOT IDEAL WHEN: The design system is light and soft; the beam requires a dark surface to radiate.',
       },
     ],
     implementationNotes: [
-      'Four stacked SVG dashes on single continuous rect with pathLength="100".',
-      'Dash 1: Incandescent core tip (2% arc, strokeWidth 1.5).',
-      'Dash 2: Saturated body beam (6% arc, strokeWidth 2.5).',
-      'Dash 3: Trailing tail glow (12% arc, strokeWidth 4).',
-      'Dash 4: Blurred ambient aura (20% arc, feGaussianBlur).',
-      'CSS linear keyframes from stroke-dashoffset 0 to -100.',
+      '01 Constant-Speed Path: The beam rides a rounded-rectangle path with pathLength="100", so dash values are percentages of the perimeter and speed is even everywhere.',
+      '02 Four-Layer Beam: Bloom, tail, near tail, and head are four dashes that end at the same point. Stacking them fakes a gradient along the stroke.',
+      '03 Locked Offsets: Every layer animates its own dash offset by exactly 100 over the same 6 seconds, so the head never drifts off the tail.',
+      '04 Measured Geometry: A ResizeObserver rebuilds the path whenever the card changes size. The beam stays on the 1px border at any width.',
+      '05 Bloom Filter: A blurred 6px dash behind the beam adds the glow, scoped to the beam instead of the whole card.',
+      '06 Tabular Pricing: Tabular numerals, a baseline-aligned period, and a screen-reader price that reads as one phrase.',
+      '07 Single Accent: Amber appears only in the beam, the pill, and the checks. Everything else is graphite and paper white.',
+      '08 Reduced Motion: The beam freezes just past the top-right corner, so the card still reads as highlighted.',
     ],
-    supportedStates: ['Quiet (35%)', 'Hovered (100%)', 'Amber Beam', 'Docs Blue Beam'],
+    supportedStates: [
+      'Quiet Ambient State (35% Opacity)',
+      'Hovered / Focused State (100% Incandescent)',
+      'Tabular Pricing Mode ($1,240.00 / month)',
+      'Operator Access Console Mode',
+      'Reduced Motion State (Frozen Top-Right Accent)',
+    ],
   },
   // ==========================================
   // SECTIONS

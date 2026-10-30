@@ -48,6 +48,28 @@ export function BorderBeamSvg({
   className,
   forceBright = false,
 }: BorderBeamSvgProps) {
+  const svgRef = React.useRef<SVGSVGElement>(null);
+  const [dims, setDims] = React.useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
+
+  // 04 Measured Geometry: ResizeObserver rebuilds path coordinates whenever card resizes
+  React.useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (width > 0 && height > 0) {
+          setDims({ width, height });
+        }
+      }
+    });
+    observer.observe(svg);
+    return () => observer.disconnect();
+  }, []);
+
   // Color configuration profiles
   const colorMap = {
     amber: {
@@ -85,9 +107,12 @@ export function BorderBeamSvg({
   }[color];
 
   const filterId = React.useId();
+  const rectW = dims.width > 0 ? Math.max(0, dims.width - 1) : 'calc(100% - 1px)';
+  const rectH = dims.height > 0 ? Math.max(0, dims.height - 1) : 'calc(100% - 1px)';
 
   return (
     <svg
+      ref={svgRef}
       className={cn(
         'pointer-events-none absolute inset-0 size-full overflow-visible transition-opacity duration-300',
         forceBright
@@ -98,12 +123,12 @@ export function BorderBeamSvg({
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        {/* Diffuse Gaussian Blur for Dash 4 Aura */}
+        {/* 05 Bloom Filter: Diffuse Gaussian Blur for glow halo */}
         <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="4" result="auraBlur" />
         </filter>
 
-        {/* Animated Keyframes for constant-speed perimeter tracing */}
+        {/* 01 Constant-Speed Path & 03 Locked Offsets: keyframe animation with 08 Reduced Motion */}
         <style>{`
           @keyframes borderBeamTrack_${color} {
             0% {
@@ -116,20 +141,26 @@ export function BorderBeamSvg({
           .beam-dash-animate-${color} {
             animation: borderBeamTrack_${color} ${duration}s linear infinite;
           }
+          @media (prefers-reduced-motion: reduce) {
+            .beam-dash-animate-${color} {
+              animation: none !important;
+              stroke-dashoffset: 25 !important;
+            }
+          }
         `}</style>
       </defs>
 
-      {/* DASH 4: Wide Diffuse Aura Glow (20% arc, blurred) */}
+      {/* 02 Four-Layer Beam: DASH 4 - Bloom Filter Halo (6px blurred dash) */}
       <rect
         x="0.5"
         y="0.5"
-        width="calc(100% - 1px)"
-        height="calc(100% - 1px)"
+        width={rectW}
+        height={rectH}
         rx={rx}
         ry={ry}
         fill="none"
         stroke={colorMap.aura}
-        strokeWidth="8"
+        strokeWidth="6"
         strokeDasharray="20 80"
         pathLength="100"
         filter={`url(#${filterId})`}
@@ -140,12 +171,12 @@ export function BorderBeamSvg({
         style={{ strokeDashoffset: '4' }}
       />
 
-      {/* DASH 3: Trailing Tail Glow (12% arc, strokeWidth 4) */}
+      {/* 02 Four-Layer Beam: DASH 3 - Trailing Tail Glow (12% arc, strokeWidth 4) */}
       <rect
         x="0.5"
         y="0.5"
-        width="calc(100% - 1px)"
-        height="calc(100% - 1px)"
+        width={rectW}
+        height={rectH}
         rx={rx}
         ry={ry}
         fill="none"
@@ -161,12 +192,12 @@ export function BorderBeamSvg({
         style={{ strokeDashoffset: '2.5' }}
       />
 
-      {/* DASH 2: Leading Body Beam (6% arc, strokeWidth 2.5) */}
+      {/* 02 Four-Layer Beam: DASH 2 - Leading Near Tail / Body (6% arc, strokeWidth 2.5) */}
       <rect
         x="0.5"
         y="0.5"
-        width="calc(100% - 1px)"
-        height="calc(100% - 1px)"
+        width={rectW}
+        height={rectH}
         rx={rx}
         ry={ry}
         fill="none"
@@ -182,12 +213,12 @@ export function BorderBeamSvg({
         style={{ strokeDashoffset: '1.2' }}
       />
 
-      {/* DASH 1: Sharp Core Incandescent Tip (2% arc, strokeWidth 1.5) */}
+      {/* 02 Four-Layer Beam: DASH 1 - Sharp Incandescent Head Core (2% arc, strokeWidth 1.5) */}
       <rect
         x="0.5"
         y="0.5"
-        width="calc(100% - 1px)"
-        height="calc(100% - 1px)"
+        width={rectW}
+        height={rectH}
         rx={rx}
         ry={ry}
         fill="none"
@@ -477,21 +508,23 @@ export function BorderBeamPricingCard({
         <span className="font-mono text-[10px] text-slate-500 tabular-nums">99.99% SLA</span>
       </div>
 
-      {/* Pricing Header */}
+      {/* 06 Tabular Pricing: Tabular numerals, baseline-aligned period, screen-reader phrase */}
       <div className="relative z-10 mb-6">
-        <div className="flex items-baseline gap-2">
-          <span className="font-mono text-4xl font-extrabold tracking-tight text-white tabular-nums">
-            $1,240.00
+        <div className="flex items-baseline font-mono tabular-nums" aria-label="$1,240 per month">
+          <span className="text-4xl font-extrabold tracking-tight text-white">$1,240</span>
+          <span className="text-2xl font-bold text-slate-300">.00</span>
+          <span className="ml-2 font-mono text-xs font-semibold text-slate-400 uppercase">
+            / month
           </span>
-          <span className="font-mono text-xs font-semibold text-slate-400 uppercase">/ Month</span>
+          <span className="sr-only">$1,240 per month</span>
         </div>
         <p className="mt-1 font-sans text-xs text-slate-400">
           Dedicated MongoDB replica set (rs0), 47 domain modules, zero rate limits.
         </p>
       </div>
 
-      {/* Instrument Spec Matrix */}
-      <div className="relative z-10 mb-6 space-y-2 border-y border-slate-800/80 py-4 font-mono text-xs">
+      {/* 07 Single Accent: Amber checks and pill, matte graphite surface */}
+      <div className="relative z-10 mb-6 space-y-2.5 border-y border-slate-800/80 py-4 font-mono text-xs">
         {[
           { label: 'Domain Modules', val: '47 Monolith APIs' },
           { label: 'REST Endpoints', val: '193 Unified Routes' },
@@ -501,7 +534,7 @@ export function BorderBeamPricingCard({
         ].map((item, i) => (
           <div key={i} className="flex items-center justify-between text-slate-300">
             <div className="flex items-center gap-2">
-              <span className="size-1.5 rounded-full bg-amber-500" />
+              <Check className="size-3.5 shrink-0 stroke-[2.5] text-amber-500" />
               <span>{item.label}</span>
             </div>
             <span className="font-bold text-white tabular-nums">{item.val}</span>
