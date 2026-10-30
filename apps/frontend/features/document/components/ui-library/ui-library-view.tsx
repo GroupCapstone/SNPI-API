@@ -27,6 +27,7 @@ import {
   ProximitySidebarDemo,
   ScrollProgressDemo,
   GooeyNavDemo,
+  IconBarDemo,
   DurationPickerDemo,
   OtpInputDemo,
   PasswordInputDemo,
@@ -2705,6 +2706,8 @@ function renderFeedComponentDemo(
     case 'capsule-dock-nav':
     case 'navigation-menu':
       return <CapsuleDockDemo />;
+    case 'icon-bar':
+      return <IconBarDemo />;
 
     // ==========================================
     // BACKGROUNDS (Component Templates)

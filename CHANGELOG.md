@@ -2,7 +2,11 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.8 (31.10.2026) - `133bba9`
+### Version 0.2.8 (31.10.2026) - `8f6cfe6`
+
+- Implement 54px icon bar with label bloom status dot and roving tabindex
+
+### Version 0.2.8 (31.10.2026) - `cafb0ec`
 
 - Arrange demos by flow group and synchronize sequential line tracker without rank jumping
 
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `c91bd85`
 
 - Synchronize real-time changelog for Command Palette
-
-### Version 0.2.8 (30.10.2026) - `5179bb9`
-
-- Implement 8-pillar Command Palette with blurred backdrop, fuzzy cyan matches, shortcut badges, and focus trap
 
