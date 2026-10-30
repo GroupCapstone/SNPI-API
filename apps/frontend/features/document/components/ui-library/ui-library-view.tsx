@@ -46,6 +46,31 @@ import {
   MatrixOrbDemo,
   WebSearchDemo,
   InlineAiStatusDemo,
+  CapsuleDockDemo,
+  DotPatternDemo,
+  RetroGridDemo,
+  AuroraWavesDemo,
+  InteractiveParticlesDemo,
+  TextShimmerDemo,
+  NumberTickerDemo,
+  GlitchTextDemo,
+  BlurInDemo,
+  SpotlightCardDemo,
+  BentoCardDemo,
+  TiltCardDemo,
+  BorderBeamDemo,
+  HeroSectionDemo,
+  FeatureBentoDemo,
+  PricingMatrixDemo,
+  MarqueeSectionDemo,
+  FloatingLabelFormDemo,
+  MultiStepWizardDemo,
+  FileDropzoneDemo,
+  PaymentCardDemo,
+  CommandPaletteDemo,
+  ConfettiCannonDemo,
+  DrawerSheetDemo,
+  ImageLightboxDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -400,10 +425,12 @@ export function UiLibraryView() {
 
                     return (
                       <div key={category} className="space-y-1.5 pt-1">
-                        <div className="flex items-center justify-between px-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                          <span className="text-slate-800">{category}</span>
-                          <span className="rounded-full border border-slate-200 bg-slate-100 px-1.5 py-0.2 font-mono text-[9px] text-[#0056FF]">
-                            {categoryComps.length}
+                        <div className="flex items-center justify-between px-1.5 py-0.5">
+                          <span className="font-sans text-xs font-bold text-slate-900">
+                            {category}{' '}
+                            <span className="font-mono text-[#FF5500] font-black">
+                              [{categoryComps.length}]
+                            </span>
                           </span>
                         </div>
                         <div className="space-y-1">
@@ -524,7 +551,7 @@ export function UiLibraryView() {
 
                   <div className="shrink-0">
                     <GeometricHeaderStamp
-                      codeA="40"
+                      codeA="65"
                       titleA="COMPONENTS"
                       codeB="100%"
                       titleB="INTERACTIVE"
@@ -666,7 +693,7 @@ export function UiLibraryView() {
               </div>
             </section>
 
-            {/* SECTION 3: 40 Interactive UI Components Single Scroll Feed */}
+            {/* SECTION 3: 65 Interactive UI Components & Templates Single Scroll Feed */}
             <div
               id="interactive-feed"
               className="scroll-mt-24 space-y-2 border-t border-slate-200/80 pt-8 pb-2"
@@ -676,14 +703,14 @@ export function UiLibraryView() {
                   Single Feed Mode
                 </span>
                 <span className="font-mono text-[11px] text-slate-400">
-                  40 Interactive Demos · Live Keyboard Ready
+                  65 Interactive Demos & Templates · Live Keyboard Ready
                 </span>
               </div>
               <h2 className="font-sans text-xl font-black tracking-tight text-slate-950 sm:text-2xl">
-                Component Catalog (40 Interactive UI Components)
+                Component Catalog (65 Interactive Components & Templates)
               </h2>
               <p className="font-sans text-xs text-slate-600">
-                40 interactive components with live states, preview stages, and code.
+                Full-stack design systems, navigation docks, backgrounds, text effects, cards, sections, forms, and overlays.
               </p>
             </div>
 
@@ -2506,6 +2533,84 @@ function renderFeedComponentDemo(
       return <WebSearchDemo />;
     case 'inline-ai-status':
       return <InlineAiStatusDemo />;
+
+    // ==========================================
+    // CAPSULE DOCK NAV (Rare UI Style)
+    // ==========================================
+    case 'capsule-dock-nav':
+      return <CapsuleDockDemo />;
+
+    // ==========================================
+    // BACKGROUNDS (Component Templates)
+    // ==========================================
+    case 'dot-pattern':
+      return <DotPatternDemo />;
+    case 'retro-grid':
+      return <RetroGridDemo />;
+    case 'aurora-waves':
+      return <AuroraWavesDemo />;
+    case 'interactive-particles':
+      return <InteractiveParticlesDemo />;
+
+    // ==========================================
+    // TEXT EFFECTS (Component Templates)
+    // ==========================================
+    case 'text-shimmer':
+      return <TextShimmerDemo />;
+    case 'number-ticker':
+      return <NumberTickerDemo />;
+    case 'glitch-text':
+      return <GlitchTextDemo />;
+    case 'blur-in':
+      return <BlurInDemo />;
+
+    // ==========================================
+    // CARDS (Component Templates)
+    // ==========================================
+    case 'spotlight-card':
+      return <SpotlightCardDemo />;
+    case 'bento-card':
+      return <BentoCardDemo />;
+    case 'tilt-card':
+      return <TiltCardDemo />;
+    case 'border-beam':
+      return <BorderBeamDemo />;
+
+    // ==========================================
+    // SECTIONS (Component Templates)
+    // ==========================================
+    case 'hero-section':
+      return <HeroSectionDemo />;
+    case 'feature-bento':
+      return <FeatureBentoDemo />;
+    case 'pricing-matrix':
+      return <PricingMatrixDemo />;
+    case 'marquee-section':
+      return <MarqueeSectionDemo />;
+
+    // ==========================================
+    // FORMS (Component Templates)
+    // ==========================================
+    case 'floating-label-form':
+      return <FloatingLabelFormDemo />;
+    case 'multi-step-wizard':
+      return <MultiStepWizardDemo />;
+    case 'file-dropzone':
+      return <FileDropzoneDemo />;
+    case 'payment-card':
+      return <PaymentCardDemo />;
+
+    // ==========================================
+    // OVERLAYS (Component Templates)
+    // ==========================================
+    case 'command-palette':
+      return <CommandPaletteDemo />;
+    case 'confetti-cannon':
+      return <ConfettiCannonDemo />;
+    case 'drawer-sheet':
+      return <DrawerSheetDemo />;
+    case 'image-lightbox':
+      return <ImageLightboxDemo />;
 
     default:
       return null;
