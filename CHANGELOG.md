@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.10 (31.10.2026) - `1342394`
+
+- Remove redundant right-sidebar TOC and line tracker from Open API page
+
 ### Version 0.2.10 (31.10.2026) - `fb6aa66`
 
 - Record real-time commit checkpoint for Royal Blue brand system
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `27a419e`
 
 - Synchronize real-time changelog for Rich Text Editor
-
-### Version 0.2.8 (30.10.2026) - `d83c8d7`
-
-- Implement 8-pillar Rich Text Editor with contenteditable surface, allowlist sanitizer, URL scheme guard, and HTML view
 

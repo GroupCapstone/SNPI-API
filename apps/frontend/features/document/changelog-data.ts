@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
+    "commitHash": "1342394",
+    "description": "Remove redundant right-sidebar TOC and line tracker from Open API page"
+  },
+  {
+    "version": "0.2.10",
+    "date": "31.10.2026",
     "commitHash": "fb6aa66",
     "description": "Record real-time commit checkpoint for Royal Blue brand system"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "27a419e",
     "description": "Synchronize real-time changelog for Rich Text Editor"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "d83c8d7",
-    "description": "Implement 8-pillar Rich Text Editor with contenteditable surface, allowlist sanitizer, URL scheme guard, and HTML view"
   }
 ];
