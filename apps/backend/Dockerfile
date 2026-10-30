@@ -13,7 +13,8 @@ RUN npm ci --workspace=apps/backend --include-workspace-root
 # Copy backend application source
 COPY apps/backend/ ./apps/backend/
 
-# Build backend TypeScript
+# Build shared packages and backend TypeScript
+RUN npm run build --workspace=@snp/shared
 RUN npm run build --workspace=apps/backend
 
 FROM node:22-alpine AS production
@@ -26,6 +27,7 @@ COPY apps/backend/package.json ./apps/backend/
 
 RUN npm ci --omit=dev --workspace=apps/backend --include-workspace-root
 
+COPY --from=base /app/packages/shared/dist ./packages/shared/dist
 COPY --from=base /app/apps/backend/dist ./apps/backend/dist
 
 USER node

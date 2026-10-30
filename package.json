@@ -1,20 +1,22 @@
 {
   "name": "snp-sms-monorepo",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "private": true,
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
+    "prepare": "npm run build --workspace=@snp/shared",
+    "build:shared": "npm run build --workspace=@snp/shared",
     "dev": "npm run dev --workspaces --if-present",
     "dev:backend": "npm run dev --workspace=apps/backend",
     "dev:frontend": "npm run dev --workspace=apps/frontend",
     "dev:proxy": "tsx scripts/local-proxy.ts",
-    "build": "npm run build --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
+    "build": "npm run build:shared && npm run build --workspaces --if-present",
+    "test": "npm run build:shared && npm run test --workspaces --if-present",
+    "lint": "npm run build:shared && npm run lint --workspaces --if-present",
+    "typecheck": "npm run build:shared && npm run typecheck --workspaces --if-present",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "smoke": "tsx scripts/monorepo-smoke.ts",

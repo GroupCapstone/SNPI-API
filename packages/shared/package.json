@@ -1,6 +1,6 @@
 {
   "name": "@snp/shared",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,6 +28,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "prepare": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
