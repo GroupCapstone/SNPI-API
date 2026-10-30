@@ -3409,6 +3409,129 @@ const columns: DataTableColumn<StudentRecord>[] = [
     ],
   },
   {
+    id: 'modal-dialog',
+    name: 'Modal & Dialog',
+    category: 'Overlays',
+    paradigm: 'Accessible Modal Dialog Standard',
+    description:
+      'An accessible modal dialog with a real focus trap, Escape to close, scroll lock, and focus restoration.',
+    explanation:
+      'Two dialogs, one component. Open either, then press Tab to feel the focus trap, Esc to close, or click the dimmed backdrop. Focus returns to the button you came from.',
+    props: [
+      {
+        name: 'open',
+        type: 'boolean',
+        default: 'false',
+        description: 'Visibility state of the modal dialog.',
+      },
+      {
+        name: 'onOpenChange',
+        type: '(open: boolean) => void',
+        description: 'Callback invoked when the dialog requests open state changes.',
+      },
+      { name: 'title', type: 'string', description: 'Dialog heading, bound via aria-labelledby.' },
+      {
+        name: 'description',
+        type: 'string',
+        description: 'Optional descriptive body copy, bound via aria-describedby.',
+      },
+      {
+        name: 'children',
+        type: 'React.ReactNode',
+        description: 'Dialog body contents and interactive controls.',
+      },
+      {
+        name: 'confirmLabel',
+        type: 'string',
+        default: "'Confirm Action'",
+        description: 'Primary action button text.',
+      },
+      {
+        name: 'cancelLabel',
+        type: 'string',
+        default: "'Cancel'",
+        description: 'Dismiss action button text.',
+      },
+      {
+        name: 'onConfirm',
+        type: '() => void',
+        description: 'Callback executed upon primary confirmation.',
+      },
+      {
+        name: 'isDestructive',
+        type: 'boolean',
+        default: 'false',
+        description: 'Applies warning colorway and elevated security cues.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Visual color mode for modal surface and backdrop.',
+      },
+    ],
+    codeSnippet: `import { ModalDialog } from '@/features/document/components/ui-library';\n\n<ModalDialog\n  open={open}\n  onOpenChange={setOpen}\n  title=\"Commit Ledger Transaction\"\n  description=\"Verify cryptographic hash commitments.\"\n  onConfirm={() => commitBatch()}\n>\n  <div>Transaction details...</div>\n</ModalDialog>`,
+    realWorldExamples: [
+      {
+        title: 'ACID Ledger Commitment Confirmation',
+        scenario:
+          'Administrator authorizes high-volume candidate tuition batch transactions with immutable hash auditing.',
+        impact:
+          'Prevents accidental ledger commits with strict keyboard focus trapping and explicit confirmation.',
+      },
+      {
+        title: 'Root Security Authority Override',
+        scenario:
+          'Campus SuperAdmin rotates cryptographic signing keys or overrides RBAC role policies in nested dialogs.',
+        impact:
+          'Reference-counted modal stack enables multi-layer confirmation without losing context or scroll position.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Fitts's Law & Strict Focus Boundary",
+        detail:
+          'Trapping keyboard focus strictly inside dialog boundaries eliminates errant clicks on background application state.',
+      },
+      {
+        principle: "Tesler's Law & Open Stack State Machine",
+        detail:
+          'Managing scrollbar-width compensation and stacked modal dismissal preserves cognitive context during multi-step authorizations.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: You need a confirmation, a focused form, or any flow that should block the page until the user decides.',
+        dontItem:
+          'NOT IDEAL WHEN: The native <dialog> or a non-blocking toast/snackbar suffices without trapping user interaction.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Preventing accidental data loss or destructive actions that require explicit multi-sig or supervisory confirmation.',
+        dontItem:
+          'NOT IDEAL WHEN: Showing non-critical background information that does not require immediate user action.',
+      },
+    ],
+    implementationNotes: [
+      '01 Trigger Button: The control that opens the dialog and the element focus returns to on close — stored as document.activeElement at open time.',
+      '02 Backdrop Overlay: A dimmed, blurred full-screen layer. A click on the backdrop itself (not its children) dismisses the dialog.',
+      '03 Dialog Container: role="dialog" with aria-modal="true", labelled by its title and described by its body text for assistive tech.',
+      "04 Focus Trap: Tab and Shift+Tab cycle only among the dialog's focusable elements, wrapping at each end so focus never escapes.",
+      '05 Scroll Lock: Background scrolling is disabled while open, with scrollbar-width compensation so the page never shifts.',
+      '06 Close Affordances: A header × button, any data-md-close element, the Escape key, and a backdrop click all dismiss the dialog.',
+      '07 Focus Restoration: On close, focus() is called on the element that opened the dialog, so keyboard users land exactly where they were.',
+      '08 Open Stack: Stacked dialogs are reference-counted so Escape closes only the topmost and the scroll lock releases at the right time.',
+    ],
+    supportedStates: [
+      'Closed',
+      'Open (Focus Trapped, Scroll Locked)',
+      'Stacked / Nested Child Dialog Open',
+      'Escape Key Dismissal',
+      'Action Confirmed & Focus Restored',
+    ],
+  },
+  {
     id: 'confetti-cannon',
     name: 'Confetti Cannon',
     category: 'Overlays',
