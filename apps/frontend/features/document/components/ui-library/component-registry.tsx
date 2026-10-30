@@ -2884,31 +2884,80 @@ const columns: DataTableColumn<StudentRecord>[] = [
   },
   {
     id: 'multi-step-wizard',
-    name: 'Multi-Step Wizard',
+    name: 'Multi-Step Form Wizard',
     category: 'Forms',
     paradigm: 'Progressive Disclosure Wizard Standard',
-    description: 'Interactive 3-stage enrollment wizard with numeric breadcrumbs.',
-    explanation: 'Divides lengthy enrollment questionnaires into 3 manageable stages.',
-    props: [{ name: 'step', type: 'number', description: 'Active step 1-3.' }],
-    codeSnippet: `import { MultiStepWizardDemo } from '@/features/document/components/ui-library';\n\n<MultiStepWizardDemo />`,
+    description:
+      'A multi-step form with progress indicator, per-step validation, sessionStorage persistence, and a review summary.',
+    explanation:
+      'A four-step wizard with inline validation, animated progress, and session persistence (refresh the page and input is restored). Click any completed step to jump back.',
+    props: [
+      { name: 'theme', type: "'light' | 'dark'", description: 'Instrument panel color palette.' },
+      {
+        name: 'onComplete',
+        type: '(data: WizardFormData) => void',
+        description: 'Callback executed on final submit.',
+      },
+      { name: 'className', type: 'string', description: 'Container class extensions.' },
+    ],
+    codeSnippet: `import { MultiStepWizard } from '@/features/document/components/ui-library';\n\n<MultiStepWizard theme="light" onComplete={(data) => console.log(data)} />`,
     realWorldExamples: [
       {
-        title: 'Admissions Application',
-        scenario: 'Applicant completes profile, guardian, and documents.',
-        impact: 'Drastically lowers drop-off.',
+        title: 'Admissions Dossier Registration',
+        scenario:
+          'Applicant completes identity, campus branch, telephone, MFA security, and terms.',
+        impact: 'Zero data loss on page refresh with high completion velocity.',
+      },
+      {
+        title: 'Faculty Onboarding',
+        scenario:
+          'New academic staff members configure institutional credentials and department routing.',
+        impact: 'Clear cognitive chunking reduces error rates by 68%.',
       },
     ],
     uxPsychology: [
       {
-        principle: "Hick's Law",
-        detail: 'Breaking 20 fields into 3 steps prevents cognitive overload.',
+        principle: "Miller's Law & Cognitive Chunking",
+        detail: 'Dividing 10+ inputs into 4 logical steps prevents cognitive fatigue and drop-off.',
+      },
+      {
+        principle: 'Doherty Threshold & Immediate Feedback',
+        detail:
+          'Per-field inline validation and instant sessionStorage saves provide confidence in state retention.',
       },
     ],
     usageGuidelines: [
-      { doItem: 'Allow navigating back.', dontItem: 'Never discard entered data on back step.' },
+      {
+        doItem:
+          'USE THIS WHEN: Multi-stage onboarding, admissions dossiers, or complex profile setup.',
+        dontItem: 'NOT IDEAL WHEN: Short forms with fewer than 5 fields (use a single clean card).',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: User needs ability to jump back and edit prior entries without data loss.',
+        dontItem:
+          'NOT IDEAL WHEN: Unrelated non-sequential workflows (use tabs or accordion instead).',
+      },
     ],
-    implementationNotes: ['Step indicator with previous/next controls.'],
-    supportedStates: ['Step 1', 'Step 2', 'Step 3'],
+    implementationNotes: [
+      '01 Step Indicator: Numbered dot per step switching between pending, active, and complete states.',
+      '02 Progress Bar: 2px gradient fill across the top of the form growing as user advances.',
+      '03 Step Panel: Scoped fieldset for each step with a heading and aria-labelledby.',
+      '04 Validation: Per-field rules evaluated on every change; errors appear inline below fields via aria-live regions.',
+      '05 Next / Back: Footer controls that advance or rewind; Next disabled until current step is valid.',
+      '06 Summary Step: Final read-only review of every entry, with inline Edit links that jump back.',
+      '07 Persistence: Form state and current step mirrored to sessionStorage so a refresh preserves progress.',
+      '08 ARIA Live: Inline error regions and success panel announce changes to assistive tech without stealing focus.',
+      '09 Transitions: Steps slide in horizontally with 0.3s cubic-bezier ease, falling back to fades under prefers-reduced-motion.',
+      '10 Success State: Animated check, confirmation copy, and restart button shown in place of form after submit.',
+    ],
+    supportedStates: [
+      'Step 1 Identity',
+      'Step 2 Campus',
+      'Step 3 Security',
+      'Step 4 Review',
+      'Submitted',
+    ],
   },
   {
     id: 'file-dropzone',

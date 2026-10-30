@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { SpotlightBentoGrid } from '../spotlight-bento-grid';
+import { MultiStepWizardInteractiveDemo } from '../multi-step-wizard';
 import {
   Sparkles,
   Search,
@@ -640,66 +641,7 @@ export function FloatingLabelFormDemo() {
 
 // 5.2 Multi-Step Wizard
 export function MultiStepWizardDemo() {
-  const [step, setStep] = React.useState(1);
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-      {/* Step Indicators */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        {[1, 2, 3].map((s) => (
-          <div key={s} className="flex items-center gap-2">
-            <span
-              className={cn(
-                'flex size-6 items-center justify-center rounded-full font-mono text-xs font-bold',
-                step >= s ? 'bg-[#0056FF] text-white' : 'bg-slate-100 text-slate-500',
-              )}
-            >
-              {s}
-            </span>
-            <span className="font-sans text-xs font-semibold text-slate-700">
-              {s === 1 ? 'Profile' : s === 2 ? 'Guardian' : 'Confirm'}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="min-h-[70px] py-2">
-        {step === 1 && (
-          <p className="font-sans text-xs text-slate-600">
-            Step 1: Enter applicant legal name & DOB.
-          </p>
-        )}
-        {step === 2 && (
-          <p className="font-sans text-xs text-slate-600">
-            Step 2: Enter legal guardian phone & emergency contact.
-          </p>
-        )}
-        {step === 3 && (
-          <p className="font-sans text-xs text-slate-600">
-            Step 3: Review admissions documents & biometric authorization.
-          </p>
-        )}
-      </div>
-
-      <div className="flex items-center justify-between border-t border-slate-100 pt-3">
-        <button
-          type="button"
-          disabled={step === 1}
-          onClick={() => setStep((s) => s - 1)}
-          className="rounded-full border border-slate-200 px-3.5 py-1.5 font-sans text-xs font-bold text-slate-600 disabled:opacity-40"
-        >
-          Previous
-        </button>
-        <button
-          type="button"
-          onClick={() => setStep((s) => (s === 3 ? 1 : s + 1))}
-          className="rounded-full bg-[#0056FF] px-4 py-1.5 font-sans text-xs font-bold text-white shadow-xs hover:bg-blue-700"
-        >
-          {step === 3 ? 'Restart' : 'Next Step'}
-        </button>
-      </div>
-    </div>
-  );
+  return <MultiStepWizardInteractiveDemo />;
 }
 
 // 5.3 File Dropzone
