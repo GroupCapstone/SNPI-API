@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `c6d59c2`
+
+- Implement 8-pillar Skeleton Loading Screen with CSS-only shimmer, aspect ratios, and 3 pattern templates
+
+### Version 0.2.7 (30.10.2026) - `021837f`
+
+- Synchronize real-time changelog for Toast Notification Stack
+
 ### Version 0.2.7 (30.10.2026) - `5d0d50c`
 
 - Implement 8-pillar Toast Notification Stack with auto-dismiss, progress bars, hover pause, and two-phase exit
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `b34c2fb`
 
 - Implement Navigation Menu with Rare UI 3-island floating dock, mega menu panel, and usage specs
-
-### Version 0.2.7 (30.10.2026) - `7c76801`
-
-- Synchronize real-time changelog with Preview Code toolbar feature
-
-### Version 0.2.7 (30.10.2026) - `3f4322f`
-
-- Implement Preview Code toolbar with responsive device switcher, dark mode, expand, and reset controls
 
