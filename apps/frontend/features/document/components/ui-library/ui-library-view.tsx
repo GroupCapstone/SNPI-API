@@ -85,6 +85,7 @@ import {
   RealTimeChartDemo,
   RichTextEditorDemo,
   ColorContrastCheckerDemo,
+  generateAiAgentPrompt,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -94,6 +95,7 @@ import {
   MapPin,
   Check,
   Copy,
+  Sparkles,
   Pin,
   Newspaper,
   FilePlus,
@@ -107,7 +109,6 @@ import {
   Moon,
   Sun,
   Maximize,
-  RotateCcw,
 } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
@@ -119,10 +120,12 @@ export function UiLibraryView() {
   // Search query to filter components
   const [searchQuery, setSearchQuery] = React.useState<string>('');
 
-  // Per-component tab view state: 'preview' | 'code'
-  const [componentTabs, setComponentTabs] = React.useState<Record<string, 'preview' | 'code'>>({});
-  const getCompTab = (id: string): 'preview' | 'code' => componentTabs[id] || 'preview';
-  const setCompTab = (id: string, tab: 'preview' | 'code') => {
+  // Per-component tab view state: 'preview' | 'prompt'
+  const [componentTabs, setComponentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>(
+    {},
+  );
+  const getCompTab = (id: string): 'preview' | 'prompt' => componentTabs[id] || 'preview';
+  const setCompTab = (id: string, tab: 'preview' | 'prompt') => {
     setComponentTabs((prev) => ({ ...prev, [id]: tab }));
   };
 
@@ -153,33 +156,21 @@ export function UiLibraryView() {
     setCompExpandedModes((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // Per-component reset keys for re-mounting and tactile refresh
-  const [compResetKeys, setCompResetKeys] = React.useState<Record<string, number>>({});
-  const [compSpinning, setCompSpinning] = React.useState<Record<string, boolean>>({});
-  const getCompResetKey = (id: string): number => compResetKeys[id] || 0;
-  const resetComp = (id: string) => {
-    setCompResetKeys((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
-    setCompSpinning((prev) => ({ ...prev, [id]: true }));
-    setTimeout(() => {
-      setCompSpinning((prev) => ({ ...prev, [id]: false }));
-    }, 600);
-  };
-
-  // Hanging tabs demo device mode: 'mobile' | 'tablet' | 'desktop'
-  const [hangingNavDevice, setHangingNavDevice] = React.useState<'mobile' | 'tablet' | 'desktop'>(
-    'desktop',
-  );
-  const [hangingNavTheme, setHangingNavTheme] = React.useState<'light' | 'dark'>('light');
-  const [hangingNavTabMode, setHangingNavTabMode] = React.useState<'preview' | 'code'>('preview');
-  const [hangingNavResetKey, setHangingNavResetKey] = React.useState(0);
-  const [hangingNavSpinning, setHangingNavSpinning] = React.useState(false);
-
   // Active section for Line Tracker
   const [activeSectionId, setActiveSectionId] = React.useState<string>('interactive-feed');
 
   // Copy tracking states
+  const [copiedPromptId, setCopiedPromptId] = React.useState<string | null>(null);
   const [copiedCodeId, setCopiedCodeId] = React.useState<string | null>(null);
   const [copiedInstallId, setCopiedInstallId] = React.useState<string | null>(null);
+
+  const handleCopyPrompt = (id: string, text: string) => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedPromptId(id);
+      setTimeout(() => setCopiedPromptId(null), 2500);
+    }
+  };
 
   // --- Interactive State for Real Demos in the Feed ---
 
@@ -283,7 +274,6 @@ export function UiLibraryView() {
   const scrollSectionIds = React.useMemo(
     () => [
       'ui-library-head',
-      'top-nav-style',
       'interactive-feed',
       ...COMPONENT_LIBRARY_REGISTRY.map((c) => `comp-${c.id}`),
       'brand-blueprint',
@@ -604,293 +594,7 @@ export function UiLibraryView() {
               </div>
             </section>
 
-            {/* SECTION 2: Top Navigation Hanging Tabs Style */}
-            <section
-              id="top-nav-style"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
-            >
-              <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
-                <div className="flex flex-col gap-1">
-                  <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                    Header Navigation Architecture
-                  </span>
-                  <h2 className="font-sans text-xl font-bold text-slate-950 sm:text-2xl">
-                    Top Navigation Hanging Tabs Style
-                  </h2>
-                  <p className="font-sans text-xs text-slate-600">
-                    Inverted trapezoid tabs suspended from the top header baseline with
-                    vector-smooth SVG geometry.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  {/* 1. Preview | Code Segmented Pill */}
-                  <div className="flex items-center rounded-xl bg-[#F1F5F9] p-1 shadow-2xs">
-                    <button
-                      type="button"
-                      onClick={() => setHangingNavTabMode('preview')}
-                      className={cn(
-                        'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
-                        hangingNavTabMode === 'preview'
-                          ? 'bg-white text-slate-900 shadow-xs'
-                          : 'text-slate-500 hover:text-slate-900',
-                      )}
-                    >
-                      Preview
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setHangingNavTabMode('code')}
-                      className={cn(
-                        'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
-                        hangingNavTabMode === 'code'
-                          ? 'bg-white text-slate-900 shadow-xs'
-                          : 'text-slate-500 hover:text-slate-900',
-                      )}
-                    >
-                      Code
-                    </button>
-                  </div>
-
-                  {/* 2. Device Viewport Switcher */}
-                  {hangingNavTabMode === 'preview' && (
-                    <div className="flex items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs">
-                      <button
-                        type="button"
-                        onClick={() => setHangingNavDevice('mobile')}
-                        title="Mobile Phone Viewport (380px)"
-                        className={cn(
-                          'flex size-7 items-center justify-center rounded-lg transition-all',
-                          hangingNavDevice === 'mobile'
-                            ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                            : 'text-slate-500 hover:text-slate-900',
-                        )}
-                      >
-                        <Smartphone className="size-4 stroke-[1.8]" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setHangingNavDevice('tablet')}
-                        title="Tablet Viewport (680px)"
-                        className={cn(
-                          'flex size-7 items-center justify-center rounded-lg transition-all',
-                          hangingNavDevice === 'tablet'
-                            ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                            : 'text-slate-500 hover:text-slate-900',
-                        )}
-                      >
-                        <Tablet className="size-4 stroke-[1.8]" />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setHangingNavDevice('desktop')}
-                        title="Desktop Monitor"
-                        className={cn(
-                          'flex size-7 items-center justify-center rounded-lg transition-all',
-                          hangingNavDevice === 'desktop'
-                            ? 'bg-slate-100 text-slate-900 shadow-2xs'
-                            : 'text-slate-500 hover:text-slate-900',
-                        )}
-                      >
-                        <Monitor className="size-4 stroke-[1.8]" />
-                      </button>
-                    </div>
-                  )}
-
-                  {/* 3. Dark / Light Mode Toggle */}
-                  {hangingNavTabMode === 'preview' && (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setHangingNavTheme(hangingNavTheme === 'dark' ? 'light' : 'dark')
-                      }
-                      title={
-                        hangingNavTheme === 'dark'
-                          ? 'Switch to Light Stage'
-                          : 'Switch to Dark Stage'
-                      }
-                      className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-2xs transition-all hover:bg-slate-50 active:scale-95"
-                    >
-                      {hangingNavTheme === 'dark' ? (
-                        <Sun className="size-4 stroke-[1.8] text-amber-500" />
-                      ) : (
-                        <Moon className="size-4 stroke-[1.8]" />
-                      )}
-                    </button>
-                  )}
-
-                  {/* 4. Reset Button */}
-                  {hangingNavTabMode === 'preview' && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setHangingNavResetKey((k) => k + 1);
-                        setHangingNavTab('newswire');
-                        setHangingNavSpinning(true);
-                        setTimeout(() => setHangingNavSpinning(false), 600);
-                      }}
-                      title="Reset Navigation State"
-                      className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-700 shadow-2xs ring-2 ring-slate-200/60 transition-all hover:bg-slate-50 active:scale-95"
-                    >
-                      <RotateCcw
-                        className={cn(
-                          'size-4 stroke-[2] transition-transform duration-500',
-                          hangingNavSpinning && 'rotate-[-360deg]',
-                        )}
-                      />
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* Live Interactive Header Bar Stage */}
-              {hangingNavTabMode === 'preview' ? (
-                <div
-                  className={cn(
-                    'overflow-hidden rounded-2xl border p-4 shadow-inner transition-colors sm:p-6',
-                    hangingNavTheme === 'dark'
-                      ? 'border-slate-800 bg-[#0B0F19] text-white'
-                      : 'border-slate-200/90 bg-[#F8FAFC] text-slate-900',
-                  )}
-                >
-                  {hangingNavDevice === 'mobile' ? (
-                    <div className="mx-auto w-full max-w-[390px] overflow-hidden rounded-[38px] border-[6px] border-slate-900 bg-white shadow-xl">
-                      <div className="flex justify-center bg-white pt-2.5 pb-1">
-                        <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
-                          <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
-                        </div>
-                      </div>
-                      {/* Header Ceiling Strip (Textured Slate Bar) */}
-                      <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-3 pt-3 pb-0">
-                        <div className="flex items-center pb-2">
-                          <div className="flex items-center gap-1.5">
-                            <span className="h-2 w-2 rounded-full bg-[#0056FF]" />
-                            <span className="font-sans text-[10px] font-bold tracking-wider text-slate-800 uppercase">
-                              Workspace Ceiling
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-end justify-center overflow-x-auto pb-0">
-                          <HangingTabsNav
-                            items={[
-                              { id: 'map', label: 'Map', icon: MapPin },
-                              { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                              { id: 'post', label: 'Post', icon: FilePlus },
-                              { id: 'friends', label: 'Friends', icon: Contacts },
-                            ]}
-                            activeId={hangingNavTab}
-                            onSelect={(tabId) => setHangingNavTab(tabId)}
-                            size="sm"
-                          />
-                        </div>
-                      </div>
-                      {/* Phone Screen Area */}
-                      <div className="min-h-[140px] bg-slate-50 p-4 text-center">
-                        <span className="font-mono text-xs text-slate-500">Active View: </span>
-                        <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
-                          {hangingNavTab}
-                        </span>
-                      </div>
-                      <div className="flex justify-center bg-white py-2">
-                        <div className="h-1 w-28 rounded-full bg-slate-300" />
-                      </div>
-                    </div>
-                  ) : hangingNavDevice === 'tablet' ? (
-                    <div className="mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-xl">
-                      <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-5 pt-3.5 pb-0">
-                        <div className="flex items-center pb-2.5">
-                          <div className="flex items-center gap-1.5">
-                            <span className="h-2 w-2 rounded-full bg-[#0056FF]" />
-                            <span className="font-sans text-[11px] font-bold tracking-wider text-slate-800 uppercase">
-                              Tablet Workspace Ceiling
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-end justify-center">
-                          <HangingTabsNav
-                            items={[
-                              { id: 'map', label: 'Map', icon: MapPin },
-                              { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                              { id: 'post', label: 'Post', icon: FilePlus },
-                              { id: 'friends', label: 'Friends', icon: Contacts },
-                            ]}
-                            activeId={hangingNavTab}
-                            onSelect={(tabId) => setHangingNavTab(tabId)}
-                            size="md"
-                          />
-                        </div>
-                      </div>
-                      <div className="min-h-[160px] bg-slate-50 p-6 text-center">
-                        <span className="font-mono text-xs text-slate-500">Active View: </span>
-                        <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
-                          {hangingNavTab}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-xs">
-                      {/* Header Ceiling Strip (Textured Slate Bar) */}
-                      <div className="border-b border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/90 px-6 pt-4 pb-0">
-                        <div className="flex items-center pb-3">
-                          <div className="flex items-center gap-2">
-                            <span className="h-2.5 w-2.5 rounded-full bg-[#0056FF]" />
-                            <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-                              Application Workspace Ceiling
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="flex items-end justify-center">
-                          <HangingTabsNav
-                            items={[
-                              { id: 'map', label: 'Map', icon: MapPin },
-                              { id: 'newswire', label: 'Newswire', icon: Newspaper },
-                              { id: 'post', label: 'Post', icon: FilePlus },
-                              { id: 'friends', label: 'Friends', icon: Contacts },
-                            ]}
-                            activeId={hangingNavTab}
-                            onSelect={(tabId) => setHangingNavTab(tabId)}
-                            size={hangingNavSize}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Sub-bar Controls */}
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3 font-sans">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs text-slate-500">Active Tab:</span>
-                      <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF] uppercase">
-                        {hangingNavTab}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2 font-mono text-xs text-slate-500">
-                      <span>Interactive Tabs: Map, Newswire, Post, Friends</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 p-4 text-slate-800 shadow-xs">
-                  <pre className="max-h-72 overflow-auto font-mono text-xs leading-relaxed text-slate-800">
-                    <code>{`<HangingTabsNav
-  items={[
-    { id: 'map', label: 'Map', icon: MapPin },
-    { id: 'newswire', label: 'Newswire', icon: Newspaper },
-    { id: 'post', label: 'Post', icon: FilePlus },
-    { id: 'friends', label: 'Friends', icon: Contacts },
-  ]}
-  activeId={activeTab}
-  onSelect={(id) => setActiveTab(id)}
-  size="md"
-/>`}</code>
-                  </pre>
-                </div>
-              )}
-            </section>
-
-            {/* SECTION 3: 65 Interactive UI Components & Templates Single Scroll Feed */}
+            {/* SECTION 2: 65 Interactive UI Components & Templates Single Scroll Feed */}
             <div
               id="interactive-feed"
               className="scroll-mt-24 space-y-2 border-t border-slate-200/80 pt-8 pb-2"
@@ -945,7 +649,7 @@ export function UiLibraryView() {
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2">
-                        {/* 1. Preview | Code Segmented Pill (User Screenshot Style) */}
+                        {/* 1. Preview | Prompt Segmented Pill */}
                         <div className="flex items-center rounded-xl bg-[#F1F5F9] p-1 shadow-2xs">
                           <button
                             type="button"
@@ -961,19 +665,45 @@ export function UiLibraryView() {
                           </button>
                           <button
                             type="button"
-                            onClick={() => setCompTab(comp.id, 'code')}
+                            onClick={() => setCompTab(comp.id, 'prompt')}
                             className={cn(
-                              'cursor-pointer rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
-                              currentTab === 'code'
-                                ? 'bg-white text-slate-900 shadow-xs'
+                              'flex cursor-pointer items-center gap-1.5 rounded-lg px-3.5 py-1 font-sans text-xs font-bold transition-all',
+                              currentTab === 'prompt'
+                                ? 'bg-[#0056FF] text-white shadow-xs'
                                 : 'text-slate-500 hover:text-slate-900',
                             )}
                           >
-                            Code
+                            <Sparkles className="size-3 stroke-[2]" />
+                            <span>Prompt</span>
                           </button>
                         </div>
 
-                        {/* 2. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
+                        {/* 2. Direct 1-Click Copy AI Agent Prompt Button */}
+                        <button
+                          type="button"
+                          onClick={() => handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))}
+                          title="Copy complete MVP specification prompt to clipboard for any AI agent"
+                          className={cn(
+                            'flex cursor-pointer items-center gap-1.5 rounded-xl border px-3 py-1.5 font-sans text-xs font-bold transition-all active:scale-95',
+                            copiedPromptId === comp.id
+                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-2xs'
+                              : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
+                          )}
+                        >
+                          {copiedPromptId === comp.id ? (
+                            <>
+                              <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
+                              <span>Prompt Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="size-3.5 stroke-[2]" />
+                              <span>Copy Prompt</span>
+                            </>
+                          )}
+                        </button>
+
+                        {/* 3. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
                         {currentTab === 'preview' && (
                           <div className="flex items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs">
                             <button
@@ -1018,7 +748,7 @@ export function UiLibraryView() {
                           </div>
                         )}
 
-                        {/* 3. Dark / Light Mode Toggle */}
+                        {/* 4. Dark / Light Mode Toggle */}
                         {currentTab === 'preview' && (
                           <button
                             type="button"
@@ -1038,7 +768,7 @@ export function UiLibraryView() {
                           </button>
                         )}
 
-                        {/* 4. Fullscreen / Maximize Toggle */}
+                        {/* 5. Fullscreen / Maximize Toggle */}
                         {currentTab === 'preview' && (
                           <button
                             type="button"
@@ -1052,23 +782,6 @@ export function UiLibraryView() {
                             )}
                           >
                             <Maximize className="size-4 stroke-[1.8]" />
-                          </button>
-                        )}
-
-                        {/* 5. Reset / Reload Button */}
-                        {currentTab === 'preview' && (
-                          <button
-                            type="button"
-                            onClick={() => resetComp(comp.id)}
-                            title="Reset Component State"
-                            className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-300 bg-white text-slate-700 shadow-2xs ring-2 ring-slate-200/60 transition-all hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 active:scale-95"
-                          >
-                            <RotateCcw
-                              className={cn(
-                                'size-4 stroke-[2] transition-transform duration-500',
-                                compSpinning[comp.id] && 'rotate-[-360deg]',
-                              )}
-                            />
                           </button>
                         )}
                       </div>
@@ -1111,7 +824,7 @@ export function UiLibraryView() {
                                 </div>
                               </div>
                               <div
-                                key={getCompResetKey(comp.id)}
+                                key={`${comp.id}-mobile`}
                                 className={cn(
                                   'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-4 transition-colors',
                                   getCompTheme(comp.id) === 'dark'
@@ -1132,7 +845,7 @@ export function UiLibraryView() {
                                 <div className="size-2 rounded-full bg-slate-700" />
                               </div>
                               <div
-                                key={getCompResetKey(comp.id)}
+                                key={`${comp.id}-mobile`}
                                 className={cn(
                                   'flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto p-6 transition-colors',
                                   getCompTheme(comp.id) === 'dark'
@@ -1146,7 +859,7 @@ export function UiLibraryView() {
                           ) : (
                             /* Desktop Monitor Stage */
                             <div
-                              key={getCompResetKey(comp.id)}
+                              key={`${comp.id}-desktop`}
                               className={cn(
                                 'relative z-10 flex w-full flex-col items-center justify-center',
                                 getCompExpanded(comp.id) ? 'max-w-4xl' : 'max-w-2xl',
@@ -1189,33 +902,99 @@ export function UiLibraryView() {
                       </div>
                     )}
 
-                    {/* TAB CONTENT: CODE (With Props Specifications & Mental Model) */}
-                    {currentTab === 'code' && (
+                    {/* TAB CONTENT: PROMPT (Universal AI Agent MVP Specification Skill) */}
+                    {currentTab === 'prompt' && (
                       <div className="space-y-4 pt-2">
-                        <div className="flex items-center justify-between">
-                          <span className="font-mono text-xs font-bold text-slate-700">
-                            React / TypeScript Source
-                          </span>
-                          <GeometricButton
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleCopyCode(comp.id, comp.codeSnippet)}
-                            icon={
-                              copiedCodeId === comp.id ? (
-                                <Check className="size-3 text-[#0056FF]" />
-                              ) : (
-                                <Copy className="size-3 text-slate-600" />
-                              )
-                            }
-                          >
-                            {copiedCodeId === comp.id ? 'Copied' : 'Copy Code'}
-                          </GeometricButton>
+                        {/* Prompt Header & 1-Click Copy Banner */}
+                        <div className="flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 sm:flex-row sm:items-center sm:justify-between">
+                          <div className="flex items-center gap-3">
+                            <span className="flex size-9 items-center justify-center rounded-xl bg-[#0056FF] text-white shadow-xs">
+                              <Sparkles className="size-4 stroke-[2]" />
+                            </span>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <h3 className="font-sans text-xs font-bold text-slate-900">
+                                  Universal AI Agent MVP Prompt Skill
+                                </h3>
+                                <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                                  {comp.category}
+                                </span>
+                              </div>
+                              <p className="font-sans text-[11px] text-slate-500">
+                                Direct MVP instructions for Antigravity, Cursor, Claude 3.5,
+                                ChatGPT, Copilot, or v0.
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <GeometricButton
+                              size="sm"
+                              variant={copiedPromptId === comp.id ? 'blue' : 'outline'}
+                              onClick={() => handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))}
+                              icon={
+                                copiedPromptId === comp.id ? (
+                                  <Check className="size-3 stroke-[2.2] text-white" />
+                                ) : (
+                                  <Copy className="size-3 stroke-[2] text-slate-600" />
+                                )
+                              }
+                            >
+                              {copiedPromptId === comp.id ? 'Prompt Copied!' : 'Copy AI Prompt'}
+                            </GeometricButton>
+                          </div>
                         </div>
 
-                        <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 p-4 text-slate-800 shadow-xs">
-                          <pre className="max-h-80 overflow-auto font-mono text-xs leading-relaxed text-slate-800">
-                            <code>{comp.codeSnippet}</code>
+                        {/* Complete Monospace Prompt Box */}
+                        <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0B0F19] p-5 text-slate-100 shadow-md">
+                          <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div className="flex items-center gap-2">
+                              <div className="size-2.5 rounded-full bg-rose-500" />
+                              <div className="size-2.5 rounded-full bg-amber-500" />
+                              <div className="size-2.5 rounded-full bg-emerald-500" />
+                              <span className="ml-2 font-mono text-[11px] font-semibold text-slate-400">
+                                {comp.id}-ai-agent-mvp-prompt.md
+                              </span>
+                            </div>
+                            <span className="rounded-md border border-slate-700 bg-slate-800/80 px-2.5 py-0.5 font-mono text-[10px] text-cyan-400">
+                              Universal AI Prompt
+                            </span>
+                          </div>
+
+                          <pre className="max-h-96 [scrollbar-width:thin] overflow-auto font-mono text-xs leading-relaxed text-slate-200 select-all">
+                            <code>{generateAiAgentPrompt(comp)}</code>
                           </pre>
+                        </div>
+
+                        {/* 3 Step Workflow */}
+                        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+                          <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
+                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                              01. 1-Click Copy
+                            </span>
+                            <p className="mt-1 font-sans text-[11px] text-slate-600">
+                              Copy the complete structured prompt with full interface contract and
+                              behavioral rules.
+                            </p>
+                          </div>
+                          <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
+                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                              02. Paste to Any Agent
+                            </span>
+                            <p className="mt-1 font-sans text-[11px] text-slate-600">
+                              Paste directly into Antigravity, Cursor, Claude 3.5, ChatGPT, Copilot,
+                              or v0 without modification.
+                            </p>
+                          </div>
+                          <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
+                            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                              03. Ship Instant MVP
+                            </span>
+                            <p className="mt-1 font-sans text-[11px] text-slate-600">
+                              The AI agent generates the complete standalone component with states,
+                              a11y, and zero shadows.
+                            </p>
+                          </div>
                         </div>
 
                         {/* Mental Model & Specs */}
