@@ -21,3 +21,4 @@ export * from './docs-nav-context';
 export * from './open-api-view';
 export * from './ui-library-view';
 export * from './docs-spa-shell';
+export * from './interactive-demos';
