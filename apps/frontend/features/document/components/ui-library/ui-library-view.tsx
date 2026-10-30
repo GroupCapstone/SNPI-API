@@ -77,6 +77,7 @@ import {
   DataTableDemo,
   SpotlightBentoGridDemo,
   CipherTextDecoderDemo,
+  DatePickerDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -2908,6 +2909,8 @@ function renderFeedComponentDemo(
       return <FileDropzoneDemo />;
     case 'payment-card':
       return <PaymentCardDemo />;
+    case 'date-picker':
+      return <DatePickerDemo />;
 
     // ==========================================
     // OVERLAYS (Component Templates)
