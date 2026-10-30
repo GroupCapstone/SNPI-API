@@ -682,7 +682,6 @@ export function DatePicker({
  * Interactive documentation library preview showcasing both Single and Range instances.
  */
 export function DatePickerDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const [singleDate, setSingleDate] = React.useState<LocalDate | null>({
     year: 2026,
     month: 10,
@@ -696,84 +695,36 @@ export function DatePickerDemo() {
 
   return (
     <div className="w-full space-y-6">
-      {/* Mode bar */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Mode:
-          </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
-        </div>
-
-        <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <Check className="size-3 text-emerald-500" />
-          <span>Local-Date Model & ARIA Grid</span>
-        </div>
-      </div>
-
       {/* Two Instances: Single Date & Date Range side by side */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Instance 1: Single Date Picker */}
-        <div
-          className={cn(
-            'space-y-3 rounded-2xl border p-5',
-            theme === 'dark' ? 'border-slate-800 bg-[#000B26]' : 'border-slate-200 bg-white',
-          )}
-        >
+        <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
           <div className="space-y-1">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase dark:text-[#38BDF8]">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
               Instance 01 &middot; Single Date
             </span>
-            <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+            <h4 className="font-sans text-xs font-bold text-slate-900">
               Admissions Examination Date
             </h4>
           </div>
 
-          <DatePicker mode="single" value={singleDate} onChange={setSingleDate} theme={theme} />
+          <DatePicker mode="single" value={singleDate} onChange={setSingleDate} theme="light" />
 
           <div className="font-mono text-[11px] text-slate-400">
             Selected:{' '}
-            <span className="font-bold text-slate-900 dark:text-white">
+            <span className="font-bold text-slate-900">
               {singleDate ? formatLocalDate(singleDate) : 'None'}
             </span>
           </div>
         </div>
 
         {/* Instance 2: Date Range Picker */}
-        <div
-          className={cn(
-            'space-y-3 rounded-2xl border p-5',
-            theme === 'dark' ? 'border-slate-800 bg-[#000B26]' : 'border-slate-200 bg-white',
-          )}
-        >
+        <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
           <div className="space-y-1">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase dark:text-[#38BDF8]">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
               Instance 02 &middot; Date Range
             </span>
-            <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+            <h4 className="font-sans text-xs font-bold text-slate-900">
               Academic Attendance Audit Window
             </h4>
           </div>
@@ -782,12 +733,12 @@ export function DatePickerDemo() {
             mode="range"
             rangeValue={dateRange}
             onRangeChange={setDateRange}
-            theme={theme}
+            theme="light"
           />
 
           <div className="font-mono text-[11px] text-slate-400">
             Range:{' '}
-            <span className="font-bold text-slate-900 dark:text-white">
+            <span className="font-bold text-slate-900">
               {formatLocalDateRange(dateRange) || 'None'}
             </span>
           </div>

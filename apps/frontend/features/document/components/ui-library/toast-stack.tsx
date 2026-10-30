@@ -486,7 +486,6 @@ export function ToastContainer({
 // ============================================================================
 
 export function ToastStackDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const [containerMode, setContainerMode] = React.useState<'inline' | 'fixed'>('inline');
   const { toasts, dismiss, dismissAll } = useToast();
 
@@ -551,40 +550,9 @@ export function ToastStackDemo() {
 
   return (
     <div className="w-full space-y-6">
-      {/* Control Bar: Theme & Position Mode */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800">
+      {/* Control Bar: Position Mode */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div className="flex flex-wrap items-center gap-4">
-          {/* Theme switcher */}
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-              Theme:
-            </span>
-            <button
-              type="button"
-              onClick={() => setTheme('light')}
-              className={cn(
-                'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-                theme === 'light'
-                  ? 'bg-[#0056FF] text-white'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-              )}
-            >
-              Light
-            </button>
-            <button
-              type="button"
-              onClick={() => setTheme('dark')}
-              className={cn(
-                'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-                theme === 'dark'
-                  ? 'bg-slate-900 text-white'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-              )}
-            >
-              Dark
-            </button>
-          </div>
-
           {/* Container placement mode */}
           <div className="flex items-center gap-1.5">
             <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
@@ -596,8 +564,8 @@ export function ToastStackDemo() {
               className={cn(
                 'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
                 containerMode === 'inline'
-                  ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400',
+                  ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
+                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
               )}
             >
               In-Demo Sandbox
@@ -608,8 +576,8 @@ export function ToastStackDemo() {
               className={cn(
                 'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
                 containerMode === 'fixed'
-                  ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400',
+                  ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
+                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
               )}
             >
               Screen Viewport Fixed
@@ -722,7 +690,7 @@ export function ToastStackDemo() {
         <button
           type="button"
           onClick={fireRapidBurst}
-          className="flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
+          className="flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-slate-800"
         >
           <Play className="size-3.5" />
           <span>FIRE RAPID BURST (5 TOASTS)</span>
@@ -730,38 +698,31 @@ export function ToastStackDemo() {
       </div>
 
       {/* Interactive Preview Canvas with Toast Container */}
-      <div
-        className={cn(
-          'relative min-h-[360px] w-full overflow-hidden rounded-2xl border p-6 transition-colors',
-          theme === 'dark'
-            ? 'border-slate-800 bg-[#00081C]'
-            : 'border-slate-200 bg-slate-50/50 shadow-inner',
-        )}
-      >
+      <div className="relative min-h-[360px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/50 p-6 shadow-inner transition-colors">
         <div className="max-w-md space-y-3">
-          <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase dark:text-[#38BDF8]">
+          <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
             Sandbox Viewport &middot; Hover To Freeze Countdown
           </span>
-          <h3 className="font-sans text-base font-bold text-slate-900 dark:text-white">
+          <h3 className="font-sans text-base font-bold text-slate-900">
             Live Stacked Notification Canvas
           </h3>
-          <p className="font-sans text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+          <p className="font-sans text-xs leading-relaxed text-slate-500">
             Hover any toast to freeze its 2px progress bar strip and countdown timer. Toasts enter
             with a spring-bounce slide from the right and exit via two-phase fade-slide followed by
             height collapse.
           </p>
 
           <div className="flex flex-wrap gap-2 pt-2 font-mono text-[11px] text-slate-500">
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
               01 Top-Right Stack
             </span>
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
               04 Progress Strip
             </span>
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
               06 Two-Phase Exit
             </span>
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
               07 Hover Freeze
             </span>
           </div>
@@ -769,7 +730,7 @@ export function ToastStackDemo() {
 
         {/* The Toast Stack Container (Inline in demo or Fixed viewport) */}
         <ToastContainer
-          theme={theme}
+          theme="light"
           position={containerMode}
           toasts={toasts}
           onDismiss={dismiss}

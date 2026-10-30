@@ -639,7 +639,6 @@ export function RichTextEditor({
 // ============================================================================
 
 export function RichTextEditorDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
   const [editorContent, setEditorContent] = React.useState<string>(
     '<h2>SNP-SMS Academic Ledger Protocol</h2><p>Student evaluations and credit transfers are authenticated using <strong>constant-time cryptographic checks</strong>. Never store plaintext credentials or allow unsanitized input in institutional archives.</p><ul><li>Automatic allowlist filtering</li><li>Scheme rejection for <code>javascript:</code> and <code>data:</code></li><li>Preserved caret selection on toolbar clicks</li></ul>',
   );
@@ -662,42 +661,21 @@ export function RichTextEditorDemo() {
   return (
     <div className="w-full space-y-6">
       {/* Control Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Theme:
+            Security Status:
           </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
+          <span className="inline-flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+            Allowlist Active
+          </span>
         </div>
 
         {/* Security Test Button */}
         <button
           type="button"
           onClick={simulateMaliciousPaste}
-          className="flex items-center gap-1.5 rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-xs font-bold text-red-600 transition-colors hover:bg-red-500/20 dark:text-red-400"
+          className="flex items-center gap-1.5 rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-xs font-bold text-red-600 transition-colors hover:bg-red-500/20"
         >
           <ShieldCheck className="size-3.5" />
           <span>Simulate Dirty Paste (Strip Scripts)</span>
@@ -706,7 +684,7 @@ export function RichTextEditorDemo() {
 
       {/* The Rich Text Editor Instance */}
       <RichTextEditor
-        theme={theme}
+        theme="light"
         initialContent={editorContent}
         onChange={setEditorContent}
         minHeight={200}
@@ -714,43 +692,43 @@ export function RichTextEditorDemo() {
 
       {/* Feature & Security Architecture Grid */}
       <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-4">
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/40">
-          <span className="font-mono text-[10px] font-bold text-[#0056FF] dark:text-[#38BDF8]">
+        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
+          <span className="font-mono text-[10px] font-bold text-[#0056FF]">
             01 Surface
           </span>
-          <p className="font-bold text-slate-800 dark:text-slate-200">contenteditable</p>
+          <p className="font-bold text-slate-800">contenteditable</p>
           <p className="text-[11px] text-slate-500">
             Native DOM surface with role=&quot;textbox&quot;, no iframe.
           </p>
         </div>
 
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/40">
-          <span className="font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
+          <span className="font-mono text-[10px] font-bold text-emerald-600">
             04 Sanitizer
           </span>
-          <p className="font-bold text-slate-800 dark:text-slate-200">Detached Allowlist</p>
+          <p className="font-bold text-slate-800">Detached Allowlist</p>
           <p className="text-[11px] text-slate-500">
             Strips script, style, and unknown tags on paste.
           </p>
         </div>
 
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/40">
-          <span className="font-mono text-[10px] font-bold text-amber-600 dark:text-amber-400">
+        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
+          <span className="font-mono text-[10px] font-bold text-amber-600">
             05 URL Guard
           </span>
-          <p className="font-bold text-slate-800 dark:text-slate-200">Scheme Shield</p>
+          <p className="font-bold text-slate-800">Scheme Shield</p>
           <p className="text-[11px] text-slate-500">
             Rejects javascript: & data:; appends noopener.
           </p>
         </div>
 
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900/40">
-          <span className="font-mono text-[10px] font-bold text-purple-600 dark:text-purple-400">
+        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
+          <span className="font-mono text-[10px] font-bold text-purple-600">
             07 Selection
           </span>
-          <p className="font-bold text-slate-800 dark:text-slate-200">Safe Toolbar</p>
+          <p className="font-bold text-slate-800">Caret Retention</p>
           <p className="text-[11px] text-slate-500">
-            preventDefault on mousedown preserves selection range.
+            Preserves selection range across toolbar clicks.
           </p>
         </div>
       </div>

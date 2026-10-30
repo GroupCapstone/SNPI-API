@@ -541,92 +541,69 @@ export function RealTimeChart({
 // ============================================================================
 
 export function RealTimeChartDemo() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-
   return (
     <div className="w-full space-y-6">
       {/* Control Header */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Theme:
+            Telemetry Feed:
           </span>
-          <button
-            type="button"
-            onClick={() => setTheme('light')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'light'
-                ? 'bg-[#0056FF] text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Light
-          </button>
-          <button
-            type="button"
-            onClick={() => setTheme('dark')}
-            className={cn(
-              'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
-              theme === 'dark'
-                ? 'bg-slate-900 text-white'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
-            )}
-          >
-            Dark
-          </button>
+          <span className="inline-flex items-center rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+            LIVE 60FPS
+          </span>
         </div>
 
         <div className="flex items-center gap-1.5 font-mono text-xs text-slate-500">
-          <Sparkles className="size-3.5 text-[#0056FF] dark:text-[#38BDF8]" />
+          <Sparkles className="size-3.5 text-[#0056FF]" />
           <span>Hardware Canvas Rendering &middot; Zero D3 / Chart.js</span>
         </div>
       </div>
 
       {/* The Real-Time Chart Instance */}
-      <RealTimeChart theme={theme} height={340} />
+      <RealTimeChart theme="light" height={340} />
 
       {/* 10 Architectural Feature Badges */}
       <div className="grid grid-cols-2 gap-2.5 text-center font-mono text-[11px] sm:grid-cols-5">
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">01</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Canvas Surface</p>
+          <p className="font-bold text-slate-700">Canvas Surface</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">02</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">40px Dot Grid</p>
+          <p className="font-bold text-slate-700">40px Linear Grid</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">03</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Dashed Lines</p>
+          <p className="font-bold text-slate-700">Dashed Lines</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">04</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Bezier Splines</p>
+          <p className="font-bold text-slate-700">Bezier Splines</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">05</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Gradient Fills</p>
+          <p className="font-bold text-slate-700">Gradient Fills</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">06</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Glow Halos</p>
+          <p className="font-bold text-slate-700">Glow Halos</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">07</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Dynamic Axes</p>
+          <p className="font-bold text-slate-700">Dynamic Axes</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">08</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Live Legend</p>
+          <p className="font-bold text-slate-700">Live Legend</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">09</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Crosshair Snap</p>
+          <p className="font-bold text-slate-700">Crosshair Snap</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-2 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">10</span>
-          <p className="font-bold text-slate-700 dark:text-slate-300">Float Tooltip</p>
+          <p className="font-bold text-slate-700">Float Tooltip</p>
         </div>
       </div>
     </div>

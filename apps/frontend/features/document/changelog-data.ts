@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.10",
     "date": "31.10.2026",
+    "commitHash": "3bc263e",
+    "description": "Sync commit 1342394"
+  },
+  {
+    "version": "0.2.10",
+    "date": "31.10.2026",
     "commitHash": "1342394",
     "description": "Remove redundant right-sidebar TOC and line tracker from Open API page"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "a08574e",
     "description": "Upgrade 8-pillar Border Beam Card with ResizeObserver geometry, reduced-motion freeze, and tabular pricing"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "27a419e",
-    "description": "Synchronize real-time changelog for Rich Text Editor"
   }
 ];

@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.10 (31.10.2026) - `3bc263e`
+
+- Sync commit 1342394
+
 ### Version 0.2.10 (31.10.2026) - `1342394`
 
 - Remove redundant right-sidebar TOC and line tracker from Open API page
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `a08574e`
 
 - Upgrade 8-pillar Border Beam Card with ResizeObserver geometry, reduced-motion freeze, and tabular pricing
-
-### Version 0.2.8 (30.10.2026) - `27a419e`
-
-- Synchronize real-time changelog for Rich Text Editor
 
