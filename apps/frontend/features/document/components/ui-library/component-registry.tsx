@@ -2700,23 +2700,17 @@ const columns: DataTableColumn<StudentRecord>[] = [
     id: 'capsule-dock-nav',
     name: 'Capsule Dock Nav',
     category: 'Navigation',
-    paradigm: 'Floating 3-Island Mega Menu Standard',
+    paradigm: 'Floating 3-Island Responsive Scroll Dock',
     description:
-      'Floating 3-island header with brand pill, links pill opening mega menu panels with glyphs & summaries, and GitHub stars pill with theme circle.',
+      'Floating 3-island header featuring the official project logo, two direct link pills (UI Library | Open API), version indicator badge, and scroll resize animation.',
     explanation:
-      'Site headers whose top level items open panels of links in a shared animated viewport. Features columns with summaries, glyphs, and a call-to-action button, mixing panel triggers with plain links.',
+      'The Capsule Dock Nav suspends three sleek, high-contrast obsidian capsule islands above the viewport. When scrolling down, it smoothly scales down to preserve vertical reading space; when scrolling up, it expands back to full size. Active navigation items are highlighted in vivid Royal Blue (#0056FF) and white for crystal-clear readability against content scrolling behind it.',
     props: [
       {
-        name: 'repoUrl',
+        name: 'version',
         type: 'string',
-        default: "'https://github.com/shiliaiwei/SNP-SMS'",
-        description: 'Target GitHub repository URL for the stars pill.',
-      },
-      {
-        name: 'starsCount',
-        type: 'number',
-        default: '1866',
-        description: 'Numeric star badge displayed inside the right island.',
+        default: "'v0.2.8'",
+        description: 'Version string displayed in the right island badge.',
       },
       {
         name: 'className',
@@ -2724,17 +2718,19 @@ const columns: DataTableColumn<StudentRecord>[] = [
         description: 'Additional class names for root header container.',
       },
     ],
-    codeSnippet: `import { CapsuleDockNav } from '@/features/document/components/ui-library';\n\n{/* Floating 3-Island Capsule Dock Navigation */}\n<CapsuleDockNav starsCount={1866} />`,
+    codeSnippet: `import { CapsuleDockNav } from '@/features/document/components/ui-library';\n\n{/* Floating 3-Island Capsule Dock Navigation with Scroll Resize */}\n<CapsuleDockNav version="v0.2.8" />`,
     realWorldExamples: [
       {
-        title: 'Site Header Mega Panels',
-        scenario: 'Top level items open panels of links for docs and components.',
-        impact: 'Uncluttered scannability.',
+        title: 'Developer Documentation Header',
+        scenario: 'Developers toggle between UI Library and Open API references.',
+        impact:
+          'Instant zero-latency tab switching with high-contrast text and zero visual clutter.',
       },
       {
-        title: 'Columns with Summaries & Glyphs',
-        scenario: 'Mega menu organizes featured items with glyphs and CTA button.',
-        impact: 'High conversion.',
+        title: 'Adaptive Scroll Header',
+        scenario: 'User scrolls through long component feeds and API endpoint specifications.',
+        impact:
+          'Dock scales down on scroll-down and expands on scroll-up, optimizing spatial economy.',
       },
     ],
     uxPsychology: [
@@ -2743,37 +2739,37 @@ const columns: DataTableColumn<StudentRecord>[] = [
         detail: 'Centralized floating islands reduce eye travel distance.',
       },
       {
-        principle: 'Progressive Disclosure',
-        detail: 'Mega panels expand only on focused intent with zero visual clutter.',
+        principle: 'Kinetic Feedback on Scroll',
+        detail:
+          'Proportional scaling responding to scroll direction provides tactile visual awareness without layout disruption.',
       },
     ],
     usageGuidelines: [
       {
         doItem:
-          'When to use: Site headers whose top level items open panels of links (docs, components, industry pages).',
+          'Use direct two-link navigation for focused developer documentation and portal headers.',
         dontItem:
-          'When not to use: Actions on the current page (edit, share, sign out): use Dropdown Menu.',
+          'Do not overload center dock with unnecessary multi-level dropdowns when direct routes suffice.',
       },
       {
         doItem:
-          'When to use: Mega menu panels laying out links with summaries in columns, glyphs, and a call to action button.',
+          'Maintain high contrast obsidian surfaces with Royal Blue highlights over scrolling backgrounds.',
         dontItem:
-          'When not to use: Sections of a signed in app along the screen edge: use Sidebar.',
-      },
-      {
-        doItem:
-          'When to use: Header rows mixing panel triggers with plain top level links styled to match them.',
-        dontItem:
-          'When not to use: Complete pre-placed header with logo and Get Started button: use Navbar blocks.',
+          'Do not use flat pure black (#000000); use deep obsidian #0A0D14 with keyline ring borders.',
       },
     ],
     implementationNotes: [
-      'NavigationMenuLink takes its anchor through render on the base twin and asChild on the radix twin; neither twin reads the other prop.',
-      'Every href is a hash placeholder; point each NavigationMenuLink at a real route through your router link.',
-      'The radix NavigationMenu opens panels in a shared NavigationMenuViewport unless viewport is false; base uses align.',
-      'Floating 3-island architecture: [ 🌸 Rare UI ] (Left), [ Home | Components (Mega Menu) | Sponsors ] (Center), [ 🐙 1866 ] + [ 🌓 ] (Right).',
+      'Island 1: Official SNP logo image (/images/logo.png) with SNPI-SMS Docs branding.',
+      'Island 2: Direct links to UI Library and Open API with vivid Royal Blue active fill.',
+      'Island 3: Technical version display pill (v0.2.8) with active blue pulse indicator.',
+      'Scroll event listener: scales down to compact height (h-9) on scroll-down, restores (h-11) on scroll-up.',
     ],
-    supportedStates: ['Default', 'Mega Menu Active', 'Starred', 'Dark / Light'],
+    supportedStates: [
+      'Full Size (Scroll Up / Top)',
+      'Compact (Scroll Down)',
+      'UI Library Active',
+      'Open API Active',
+    ],
   },
   {
     id: 'icon-bar',

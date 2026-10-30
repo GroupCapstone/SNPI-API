@@ -2,7 +2,11 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.8 (31.10.2026) - `8f6cfe6`
+### Version 0.2.8 (31.10.2026) - `79f1db2`
+
+- Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry
+
+### Version 0.2.8 (31.10.2026) - `adccb9c`
 
 - Implement 54px icon bar with label bloom status dot and roving tabindex
 
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.8 (30.10.2026) - `bf209df`
 
 - Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack
-
-### Version 0.2.8 (30.10.2026) - `c91bd85`
-
-- Synchronize real-time changelog for Command Palette
 

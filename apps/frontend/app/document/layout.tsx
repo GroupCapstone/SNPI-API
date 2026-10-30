@@ -92,6 +92,26 @@ export default function DocumentLayout({
               .docs-root table td {
                 font-size: 0.875rem !important;
               }
+
+              /* Zero Gray Scrollbars Across Entire Docs Subdomain */
+              .docs-root * {
+                scrollbar-width: none !important;
+                -ms-overflow-style: none !important;
+              }
+              .docs-root *::-webkit-scrollbar {
+                display: none !important;
+                width: 0px !important;
+                height: 0px !important;
+              }
+
+              /* Mandatory Standard Button & Input Geometry: border: 0 and border-radius: 4px */
+              .docs-root button:not([data-dock-pill]):not([data-nav-pill]):not(.rounded-full),
+              .docs-root input:not([type="checkbox"]):not([type="radio"]),
+              .docs-root select,
+              .docs-root textarea {
+                border: 0 !important;
+                border-radius: 4px !important;
+              }
             `,
           }}
         />

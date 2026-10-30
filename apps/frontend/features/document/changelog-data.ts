@@ -9,7 +9,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
-    "commitHash": "8f6cfe6",
+    "commitHash": "79f1db2",
+    "description": "Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "adccb9c",
     "description": "Implement 54px icon bar with label bloom status dot and roving tabindex"
   },
   {
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "bf209df",
     "description": "Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "c91bd85",
-    "description": "Synchronize real-time changelog for Command Palette"
   }
 ];
