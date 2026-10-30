@@ -693,7 +693,7 @@ export function BorderBeamInteractiveShowcase() {
       <div className="flex max-w-xl items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2.5 font-mono text-[11px] text-slate-600 shadow-xs">
         <span className="flex items-center gap-1.5">
           <span className="size-2 animate-pulse rounded-full bg-amber-500" />
-          <span>Architecture: 4 stacked SVG dashes on single pathLength="100"</span>
+          <span>Architecture: 4 stacked SVG dashes on single pathLength=&quot;100&quot;</span>
         </span>
         <span className="h-3 w-[1px] bg-slate-200" />
         <span>Corners: Uniform Velocity</span>

@@ -275,14 +275,14 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
   // 07 Hover Pause: Tracking remaining time and hover state
   const [isHovered, setIsHovered] = React.useState(false);
   const [remainingTime, setRemainingTime] = React.useState(item.duration);
-  const lastTickRef = React.useRef<number>(Date.now());
-  const itemHeightRef = React.useRef<number>(84);
+  const lastTickRef = React.useRef<number>(0);
+  const [itemHeight, setItemHeight] = React.useState<number>(84);
   const cardRef = React.useRef<HTMLDivElement>(null);
 
   // Measure initial natural height for smooth Phase 2 collapse
   React.useEffect(() => {
     if (cardRef.current) {
-      itemHeightRef.current = cardRef.current.offsetHeight || 84;
+      setItemHeight(cardRef.current.offsetHeight || 84);
     }
   }, []);
 
@@ -293,6 +293,19 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
     });
     return () => cancelAnimationFrame(enterTimer);
   }, []);
+
+  // 06 Exit & Collapse: Two-phase removal sequence
+  const triggerExit = React.useCallback(() => {
+    if (phase === 'exiting' || phase === 'collapsing') return;
+    setPhase('exiting'); // Phase 1: fade-slide out (200ms)
+
+    setTimeout(() => {
+      setPhase('collapsing'); // Phase 2: height collapse (200ms)
+      setTimeout(() => {
+        onDismiss(item.id);
+      }, 220);
+    }, 200);
+  }, [phase, onDismiss, item.id]);
 
   // 04 Progress Bar & 07 Hover Pause timer loop
   React.useEffect(() => {
@@ -320,20 +333,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
     }, 25);
 
     return () => clearInterval(interval);
-  }, [isHovered, phase]);
-
-  // 06 Exit & Collapse: Two-phase removal sequence
-  const triggerExit = React.useCallback(() => {
-    if (phase === 'exiting' || phase === 'collapsing') return;
-    setPhase('exiting'); // Phase 1: fade-slide out (200ms)
-
-    setTimeout(() => {
-      setPhase('collapsing'); // Phase 2: height collapse (200ms)
-      setTimeout(() => {
-        onDismiss(item.id);
-      }, 220);
-    }, 200);
-  }, [phase, onDismiss, item.id]);
+  }, [isHovered, phase, triggerExit]);
 
   // Percentage for 04 Progress Bar strip
   const progressPercent = Math.max(0, Math.min(100, (remainingTime / item.duration) * 100));
@@ -341,7 +341,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
   return (
     <div
       style={{
-        maxHeight: phase === 'collapsing' ? '0px' : `${itemHeightRef.current + 20}px`,
+        maxHeight: phase === 'collapsing' ? '0px' : `${itemHeight + 20}px`,
         opacity: phase === 'exiting' ? 0 : phase === 'entering' ? 0 : 1,
         transform:
           phase === 'entering'

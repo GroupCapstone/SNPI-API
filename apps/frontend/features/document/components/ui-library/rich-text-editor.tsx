@@ -94,7 +94,7 @@ export function sanitizeHtmlAllowlist(rawHtml: string): string {
       Array.from(el.attributes).forEach((attr) => {
         const attrName = attr.name.toLowerCase();
         if (allowedAttrSet.has(attrName)) {
-          let val = attr.value;
+          const val = attr.value;
           if (attrName === 'href') {
             // 05 URL Scheme Guard: reject javascript:, data:, vbscript:
             const cleanVal = val.trim().toLowerCase();
@@ -720,7 +720,7 @@ export function RichTextEditorDemo() {
           </span>
           <p className="font-bold text-slate-800 dark:text-slate-200">contenteditable</p>
           <p className="text-[11px] text-slate-500">
-            Native DOM surface with role="textbox", no iframe.
+            Native DOM surface with role=&quot;textbox&quot;, no iframe.
           </p>
         </div>
 
