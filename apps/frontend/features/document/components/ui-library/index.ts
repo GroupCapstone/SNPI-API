@@ -24,7 +24,6 @@ export * from './color-contrast-checker';
 export * from './dropdown';
 export * from './tooltip';
 export * from './rail-toc';
-export * from './capsule-dock-nav';
 export * from './icon-bar';
 export * from './component-registry';
 export * from './brand-concept-blueprint';

@@ -9,7 +9,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
-    "commitHash": "79f1db2",
+    "commitHash": "f9faefe",
+    "description": "Revert(document): remove floating capsule dock nav and restore top hanging tabs header"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
+    "commitHash": "c53639d",
     "description": "Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry"
   },
   {
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "df74ca4",
     "description": "Synchronize real-time changelog for Modal & Dialog"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "bf209df",
-    "description": "Implement 8-pillar Modal & Dialog with real focus trap, scroll lock, close affordances, and open stack"
   }
 ];

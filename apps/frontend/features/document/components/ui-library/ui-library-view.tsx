@@ -50,7 +50,7 @@ import {
   MatrixOrbDemo,
   WebSearchDemo,
   InlineAiStatusDemo,
-  CapsuleDockDemo,
+  HangingTabsNavDemo,
   DotPatternDemo,
   RetroGridDemo,
   AuroraWavesDemo,
@@ -2701,11 +2701,11 @@ function renderFeedComponentDemo(
       return <InlineAiStatusDemo />;
 
     // ==========================================
-    // NAVIGATION MENU (Rare UI Floating 3-Island Header)
+    // NAVIGATION (Hanging Tabs & Navigation)
     // ==========================================
-    case 'capsule-dock-nav':
+    case 'hanging-tabs-nav':
     case 'navigation-menu':
-      return <CapsuleDockDemo />;
+      return <HangingTabsNavDemo />;
     case 'icon-bar':
       return <IconBarDemo />;
 
