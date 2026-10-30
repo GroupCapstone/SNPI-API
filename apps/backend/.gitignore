@@ -22,3 +22,5 @@ coverage/
 *.aac
 *.db
 
+.vercel
+.env*
