@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
 
 import { Check, Copy, Server, Layers } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
@@ -446,6 +445,25 @@ const DOC_TOC_HEADINGS: TocHeadingItem[] = [
   { id: 'changelogs', title: 'Change Logs', level: 1 },
 ];
 
+async function executeApiProbe(item: ApiDocItem) {
+  const start = performance.now();
+  try {
+    if (item.path === '/api/v1/health') {
+      const res = await fetch('http://localhost:4000/api/v1/health');
+      const data = await res.json();
+      const latency = Math.round(performance.now() - start);
+      return { status: res.status, latency, body: data };
+    } else {
+      await new Promise((r) => setTimeout(r, 180));
+      const latency = Math.round(performance.now() - start);
+      return { status: 200, latency, body: item.responseBody };
+    }
+  } catch {
+    const latency = Math.round(performance.now() - start);
+    return { status: 200, latency, body: item.responseBody };
+  }
+}
+
 export function OpenApiView() {
   const { setActiveTab } = useDocsNav();
   const [activeDocSection, setActiveDocSection] = React.useState<string>('open-api-head');
@@ -504,29 +522,11 @@ export function OpenApiView() {
 
   const handleTest = async (item: ApiDocItem) => {
     setTestingEndpointId(item.id);
-    const start = performance.now();
     try {
-      if (item.path === '/api/v1/health') {
-        const res = await fetch('http://localhost:4000/api/v1/health');
-        const data = await res.json();
-        const latency = Math.round(performance.now() - start);
-        setTestResults((prev) => ({
-          ...prev,
-          [item.id]: { status: res.status, latency, body: data },
-        }));
-      } else {
-        await new Promise((r) => setTimeout(r, 180));
-        const latency = Math.round(performance.now() - start);
-        setTestResults((prev) => ({
-          ...prev,
-          [item.id]: { status: 200, latency, body: item.responseBody },
-        }));
-      }
-    } catch {
-      const latency = Math.round(performance.now() - start);
+      const result = await executeApiProbe(item);
       setTestResults((prev) => ({
         ...prev,
-        [item.id]: { status: 200, latency, body: item.responseBody },
+        [item.id]: result,
       }));
     } finally {
       setTestingEndpointId(null);
