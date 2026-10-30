@@ -60,6 +60,13 @@ textarea {
   outline-offset: 2px;
 }
 
+:where(.geometric-input-field, input[data-geometric]):focus,
+:where(.geometric-input-field, input[data-geometric]):focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
 ::selection {
   background: #cbd5e1;
   color: #0f172a;
