@@ -75,6 +75,7 @@ import {
   DrawerSheetDemo,
   ImageLightboxDemo,
   DataTableDemo,
+  SpotlightBentoGridDemo,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -584,7 +585,7 @@ export function UiLibraryView() {
 
                   <div className="shrink-0">
                     <GeometricHeaderStamp
-                      codeA="65"
+                      codeA={String(COMPONENT_LIBRARY_REGISTRY.length)}
                       titleA="COMPONENTS"
                       codeB="100%"
                       titleB="INTERACTIVE"
@@ -2887,7 +2888,7 @@ function renderFeedComponentDemo(
     case 'hero-section':
       return <HeroSectionDemo />;
     case 'feature-bento':
-      return <FeatureBentoDemo />;
+      return <SpotlightBentoGridDemo />;
     case 'pricing-matrix':
       return <PricingMatrixDemo />;
     case 'marquee-section':
