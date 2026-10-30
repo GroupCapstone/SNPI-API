@@ -76,7 +76,5 @@ server.listen(PROXY_PORT, () => {
   console.log('  - http://api.snpi.edu.kh       -> localhost:4000 (Backend API)');
   console.log('  - http://dashboard.snpi.edu.kh -> localhost:3000 (School Dashboard)');
   console.log('  - http://docs.snpi.edu.kh      -> localhost:3000 (Developer Portal & UI Library)');
-  console.log('  - http://verify.snpi.edu.kh    -> localhost:3000 (Certificate Verification)');
-  console.log('  - http://portal.snpi.edu.kh    -> localhost:3000 (Student & Parent Portal)');
   console.log('======================================================');
 });

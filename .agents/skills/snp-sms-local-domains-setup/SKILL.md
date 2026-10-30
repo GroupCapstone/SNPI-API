@@ -17,10 +17,9 @@ This skill is the authoritative architectural specification and operational hand
 
 Local custom domains bridge the parity gap between local development and production environments:
 
-- **Subdomain Routing Realism**: Mirrors real-world production topology (`dashboard.`, `api.`, `docs.`, `verify.`, `portal.`).
+- **Subdomain Routing Realism**: Mirrors real-world production topology (`dashboard.`, `api.`, `docs.`).
 - **Cookie & Session Scoping**: Allows testing cross-subdomain cookies (`Domain=.snpi.edu.kh`), SameSite policies, and authentication headers locally.
 - **CORS & Origin Hardening**: Validates that the Express backend accurately enforces strict CORS origin checks for internal school subdomains.
-- **QR Code & Public Ledger Verification**: Permits scanning and testing certificate verification URLs printed on student diplomas and transcripts.
 - **Zero Emojis Policy**: All output, logs, and documentation must strictly use textual badges: `[PASSED]`, `[FAILED]`, `[INFO]`, `[COMPLETED]`.
 
 ---
@@ -33,8 +32,6 @@ Local custom domains bridge the parity gap between local development and product
 | **`dashboard.snpi.edu.kh`** | Frontend Next.js | `:3000` | School Management Dashboard (`/(dashboard)/*`) for Admins, Teachers, Cashiers |
 | **`api.snpi.edu.kh`** | Backend Express API | `:4000` | 193 REST API endpoints, Swagger OpenAPI docs, biometric sync, health probes |
 | **`docs.snpi.edu.kh`** | Frontend Next.js | `:3000` | Public Developer Documentation (`/document`) and UI Component Library |
-| **`verify.snpi.edu.kh`** | Frontend Next.js | `:3000` | Public Certificate & Diploma Verification Ledger (`/verify`) |
-| **`portal.snpi.edu.kh`** | Frontend Next.js | `:3000` | Student & Parent Grade / Attendance Self-Service Portal |
 
 ---
 
@@ -46,21 +43,21 @@ AI agents can execute the local domain setup automatically on behalf of the user
 On macOS, agents invoke native privileged execution using `osascript`. This prompts the user with the standard macOS TouchID / administrator dialog:
 
 ```bash
-osascript -e 'do shell script "printf \"\n# SNP-SMS Local Development Subdomains\n127.0.0.1 snpi.edu.kh\n127.0.0.1 dashboard.snpi.edu.kh\n127.0.0.1 api.snpi.edu.kh\n127.0.0.1 docs.snpi.edu.kh\n127.0.0.1 verify.snpi.edu.kh\n127.0.0.1 portal.snpi.edu.kh\n\" >> /etc/hosts && dscacheutil -flushcache && killall -HUP mDNSResponder" with administrator privileges'
+osascript -e 'do shell script "printf \"\n# SNP-SMS Local Development Subdomains\n127.0.0.1 snpi.edu.kh\n127.0.0.1 dashboard.snpi.edu.kh\n127.0.0.1 api.snpi.edu.kh\n127.0.0.1 docs.snpi.edu.kh\n\" >> /etc/hosts && dscacheutil -flushcache && killall -HUP mDNSResponder" with administrator privileges'
 ```
 
 ### 3.2 Windows Agent Automated Setup
 On Windows, agents invoke privileged execution using elevated PowerShell (`RunAs` verb):
 
 ```powershell
-Start-Process powershell -Verb RunAs -ArgumentList '-NoProfile', '-Command', 'Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n# SNP-SMS Local Development Subdomains`n127.0.0.1 snpi.edu.kh`n127.0.0.1 dashboard.snpi.edu.kh`n127.0.0.1 api.snpi.edu.kh`n127.0.0.1 docs.snpi.edu.kh`n127.0.0.1 verify.snpi.edu.kh`n127.0.0.1 portal.snpi.edu.kh"; Clear-DnsClientCache'
+Start-Process powershell -Verb RunAs -ArgumentList '-NoProfile', '-Command', 'Add-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Value "`n# SNP-SMS Local Development Subdomains`n127.0.0.1 snpi.edu.kh`n127.0.0.1 dashboard.snpi.edu.kh`n127.0.0.1 api.snpi.edu.kh`n127.0.0.1 docs.snpi.edu.kh"; Clear-DnsClientCache'
 ```
 
 ### 3.3 Linux Agent Automated Setup
 On Ubuntu / Debian / Fedora:
 
 ```bash
-sudo sh -c 'printf "\n# SNP-SMS Local Development Subdomains\n127.0.0.1 snpi.edu.kh\n127.0.0.1 dashboard.snpi.edu.kh\n127.0.0.1 api.snpi.edu.kh\n127.0.0.1 docs.snpi.edu.kh\n127.0.0.1 verify.snpi.edu.kh\n127.0.0.1 portal.snpi.edu.kh\n" >> /etc/hosts && (resolvectl flush-caches || systemd-resolve --flush-caches || true)'
+sudo sh -c 'printf "\n# SNP-SMS Local Development Subdomains\n127.0.0.1 snpi.edu.kh\n127.0.0.1 dashboard.snpi.edu.kh\n127.0.0.1 api.snpi.edu.kh\n127.0.0.1 docs.snpi.edu.kh\n" >> /etc/hosts && (resolvectl flush-caches || systemd-resolve --flush-caches || true)'
 ```
 
 ---
@@ -82,8 +79,6 @@ Developers setting up their machines manually should follow these operating syst
    127.0.0.1  dashboard.snpi.edu.kh
    127.0.0.1  api.snpi.edu.kh
    127.0.0.1  docs.snpi.edu.kh
-   127.0.0.1  verify.snpi.edu.kh
-   127.0.0.1  portal.snpi.edu.kh
    EOF'
    ```
 2. Flush local DNS cache:
@@ -104,8 +99,6 @@ Developers setting up their machines manually should follow these operating syst
    127.0.0.1  dashboard.snpi.edu.kh
    127.0.0.1  api.snpi.edu.kh
    127.0.0.1  docs.snpi.edu.kh
-   127.0.0.1  verify.snpi.edu.kh
-   127.0.0.1  portal.snpi.edu.kh
    ```
 4. Save the file (`Ctrl + S`).
 5. Open Command Prompt or PowerShell and flush DNS:
@@ -124,7 +117,6 @@ Access services directly via their development ports:
 - **Dashboard**: `http://dashboard.snpi.edu.kh:3000`
 - **Developer Documentation**: `http://docs.snpi.edu.kh:3000`
 - **UI Design System**: `http://docs.snpi.edu.kh:3000/design-system`
-- **Certificate Verification Gateway**: `http://verify.snpi.edu.kh:3000`
 - **Backend API**: `http://api.snpi.edu.kh:4000/api/v1/health`
 
 ### Mode 2: Clean URL Mode (Port 80 Local Reverse Proxy)
@@ -139,7 +131,6 @@ npm run dev:proxy
 Clean endpoints active:
 - `http://dashboard.snpi.edu.kh` &rarr; proxies to `localhost:3000`
 - `http://docs.snpi.edu.kh` &rarr; proxies to `localhost:3000`
-- `http://verify.snpi.edu.kh` &rarr; proxies to `localhost:3000`
 - `http://api.snpi.edu.kh` &rarr; proxies to `localhost:4000`
 
 ---
@@ -150,7 +141,6 @@ Clean endpoints active:
 The frontend uses Next.js middleware to inspect incoming `Host` headers and perform internal rewrites:
 - `docs.snpi.edu.kh` with path `/` &rarr; rewrites to `/document`
 - `docs.snpi.edu.kh` with path `/design-system` &rarr; rewrites to `/document/design-system`
-- `verify.snpi.edu.kh` with path `/` &rarr; rewrites to `/verify`
 
 ### 6.2 Backend CORS Whitelist (`apps/backend/src/middleware/security.ts`)
 The Express backend explicitly allows local requests originating from `snpi.edu.kh`:
