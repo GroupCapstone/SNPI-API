@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export type DocsTab = 'openapi' | 'library';
 
@@ -20,6 +20,7 @@ export function DocsNavProvider({
   defaultTab?: DocsTab;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const isLibraryPath = pathname?.startsWith('/document/design-system');
   const pathDerivedTab: DocsTab = isLibraryPath ? 'library' : 'openapi';
 
@@ -40,15 +41,18 @@ export function DocsNavProvider({
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const setActiveTab = React.useCallback((tab: DocsTab, updateHistory = true) => {
-    setActiveTabState(tab);
-    if (updateHistory && typeof window !== 'undefined') {
-      const targetPath = tab === 'library' ? '/document/design-system' : '/document';
-      if (window.location.pathname !== targetPath) {
-        window.history.pushState(null, '', targetPath);
+  const setActiveTab = React.useCallback(
+    (tab: DocsTab, updateHistory = true) => {
+      setActiveTabState(tab);
+      if (updateHistory) {
+        const targetPath = tab === 'library' ? '/document/design-system' : '/document';
+        if (pathname !== targetPath) {
+          router.push(targetPath);
+        }
       }
-    }
-  }, []);
+    },
+    [pathname, router],
+  );
 
   const value = React.useMemo(() => ({ activeTab, setActiveTab }), [activeTab, setActiveTab]);
 

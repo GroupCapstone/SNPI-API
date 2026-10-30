@@ -121,7 +121,9 @@ export function HangingTabsNav({
           onMouseLeave: () => setHoveredId(null),
           onClick: (e: React.MouseEvent) => {
             if (tab.onClick) {
-              e.preventDefault();
+              if (!tab.href) {
+                e.preventDefault();
+              }
               tab.onClick();
             }
             onSelect?.(tab.id);

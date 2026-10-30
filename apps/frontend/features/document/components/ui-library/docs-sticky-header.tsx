@@ -28,14 +28,14 @@ export function DocsStickyHeader({ activeTab: propActiveTab }: DocsStickyHeaderP
       label: 'Open API',
       icon: FileText,
       href: '/document',
-      onClick: () => setActiveTab('openapi'),
+      onClick: () => setActiveTab('openapi', false),
     },
     {
       id: 'library',
       label: 'UI Library',
       icon: Layers,
       href: '/document/design-system',
-      onClick: () => setActiveTab('library'),
+      onClick: () => setActiveTab('library', false),
     },
   ];
 
