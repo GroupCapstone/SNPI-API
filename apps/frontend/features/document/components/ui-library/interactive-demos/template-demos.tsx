@@ -28,116 +28,13 @@ import {
   X,
 } from '@/components/icons';
 
+import { RareUiNavigationMenu } from '../navigation-menu';
+
 // ==========================================
-// 0. CAPSULE DOCK NAV (Rare UI Copy Style)
+// 0. CAPSULE DOCK NAV (Rare UI Floating 3-Island Navigation Menu)
 // ==========================================
 export function CapsuleDockDemo() {
-  const [activeTab, setActiveTab] = React.useState('components');
-  const [stars, setStars] = React.useState(1864);
-  const [starred, setStarred] = React.useState(false);
-  const [isDark, setIsDark] = React.useState(true);
-
-  return (
-    <div className="flex w-full flex-col items-center justify-center gap-6 py-6">
-      {/* Floating Pill Capsule Dock */}
-      <nav className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-[#0A0D14] p-1.5 text-white shadow-2xl backdrop-blur-xl">
-        {/* Brand Capsule Pill */}
-        <div className="flex items-center gap-2 rounded-full bg-[#161B26] px-3.5 py-1.5 font-sans text-xs font-bold text-white shadow-inner">
-          <svg
-            className="size-4 fill-[#FF5500] text-[#FF5500]"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M12 2a3 3 0 0 0-3 3c0 .54.14 1.05.39 1.49C8.07 6.18 6.7 6.64 5.76 7.76A3 3 0 0 0 5 12a3 3 0 0 0 2.24 2.89c-.66.86-.96 1.95-.76 3.03.35 1.83 1.96 3.1 3.82 2.98 1.03-.07 1.96-.58 2.55-1.37.59.79 1.52 1.3 2.55 1.37 1.86.12 3.47-1.15 3.82-2.98.2-1.08-.1-2.17-.76-3.03A3 3 0 0 0 21 12a3 3 0 0 0-.76-4.24c-.94-1.12-2.31-1.58-3.63-1.27.25-.44.39-.95.39-1.49a3 3 0 0 0-5-2z" />
-          </svg>
-          <span className="tracking-tight">Rare UI</span>
-        </div>
-
-        {/* Links Capsule */}
-        <div className="flex items-center rounded-full bg-[#111622] px-3 py-1 font-sans text-xs text-slate-300">
-          <button
-            type="button"
-            onClick={() => setActiveTab('home')}
-            className={cn(
-              'px-2 py-0.5 transition-colors hover:text-white',
-              activeTab === 'home' && 'font-bold text-white',
-            )}
-          >
-            Home
-          </button>
-          <span className="text-slate-700">|</span>
-          <button
-            type="button"
-            onClick={() => setActiveTab('components')}
-            className={cn(
-              'px-2 py-0.5 transition-colors hover:text-white',
-              activeTab === 'components' && 'font-bold text-white',
-            )}
-          >
-            Components
-          </button>
-          <span className="text-slate-700">|</span>
-          <button
-            type="button"
-            onClick={() => setActiveTab('sponsors')}
-            className={cn(
-              'px-2 py-0.5 transition-colors hover:text-white',
-              activeTab === 'sponsors' && 'font-bold text-white',
-            )}
-          >
-            Sponsors
-          </button>
-        </div>
-
-        {/* GitHub Stars Capsule */}
-        <button
-          type="button"
-          onClick={() => {
-            setStarred(!starred);
-            setStars((prev) => (starred ? prev - 1 : prev + 1));
-          }}
-          className={cn(
-            'flex items-center gap-1.5 rounded-full px-3 py-1.5 font-mono text-xs font-semibold transition-all',
-            starred
-              ? 'bg-[#FF5500]/20 text-[#FF5500]'
-              : 'bg-[#111622] text-slate-300 hover:text-white',
-          )}
-        >
-          <svg className="size-3.5 fill-current" viewBox="0 0 24 24">
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-            />
-          </svg>
-          <span>{stars}</span>
-        </button>
-
-        {/* Theme Contrast Circle */}
-        <button
-          type="button"
-          onClick={() => setIsDark(!isDark)}
-          className="flex size-7 items-center justify-center rounded-full bg-[#111622] text-slate-300 transition-colors hover:bg-slate-800 hover:text-white"
-          title="Toggle Contrast"
-        >
-          {isDark ? (
-            <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2a10 10 0 0 0 0 20V2z" />
-            </svg>
-          ) : (
-            <Sun className="size-3.5" />
-          )}
-        </button>
-      </nav>
-
-      <div className="flex items-center gap-2 font-mono text-xs text-slate-500">
-        <span>Active Tab:</span>
-        <span className="font-bold text-[#0056FF] uppercase">{activeTab}</span>
-        <span>·</span>
-        <span>Stars: {stars}</span>
-      </div>
-    </div>
-  );
+  return <RareUiNavigationMenu />;
 }
 
 // ==========================================

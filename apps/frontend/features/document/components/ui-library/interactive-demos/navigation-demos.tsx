@@ -333,6 +333,8 @@ export function ScrollProgressDemo() {
   );
 }
 
+import { RareUiNavigationMenu } from '../navigation-menu';
+
 // 6. Gooey Navigation (Fluid Sliding Capsule Pill)
 export function GooeyNavDemo() {
   const [selected, setSelected] = React.useState('day');
@@ -371,4 +373,9 @@ export function GooeyNavDemo() {
       </div>
     </div>
   );
+}
+
+// 7. Navigation Menu (Rare UI Floating 3-Island Header & Mega Menu)
+export function NavigationMenuDemo() {
+  return <RareUiNavigationMenu />;
 }
