@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `d83c8d7`
+
+- Implement 8-pillar Rich Text Editor with contenteditable surface, allowlist sanitizer, URL scheme guard, and HTML view
+
+### Version 0.2.7 (30.10.2026) - `81b45b9`
+
+- Synchronize real-time changelog for Real-Time Data Chart
+
 ### Version 0.2.7 (30.10.2026) - `afd8591`
 
 - Implement 10-pillar Real-Time Data Chart with Canvas 60fps streaming, Bezier splines, dot grid, glow, and hover crosshair
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `24f7d0f`
 
 - Implement Interactive Data Table with tri-state sorting, sticky header, debounced search, status pills, and boundary-clamped pagination
-
-### Version 0.2.7 (30.10.2026) - `58dacb7`
-
-- Record v0.2.7 release checkpoint in real-time changelog and document portal
-
-### Version 0.2.7 (30.10.2026) - `d585ab0`
-
-- Add legal and crawl footer links, implement dynamic real-time version tracker v0.2.7, and configure sitemap and robots routes
 
