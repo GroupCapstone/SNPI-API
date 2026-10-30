@@ -1734,27 +1734,102 @@ export function Example() {
 
   // FEEDBACK GROUP
   {
-    id: 'toast',
-    name: 'Toast',
+    id: 'toast-stack',
+    name: 'Toast Notification Stack',
     category: 'Feedback',
-    paradigm: 'Floating Stack Standard',
-    description: 'Stackable micro-toasts with variant states and auto-dismiss countdown.',
-    explanation: 'Transient floating alert banner notifying users of asynchronous background jobs.',
-    props: [{ name: 'toasts', type: 'Array<{id, title, type}>', description: 'Toast items.' }],
-    codeSnippet: `import { ToastDemo } from '@/features/document/components/ui-library';\n\n<ToastDemo />`,
+    paradigm: 'Stacked Notifications Standard',
+    description:
+      'Stacked notifications with auto-dismiss, progress bars, and smooth enter/exit animations.',
+    explanation:
+      'Click any button to fire a toast notification. Toasts stack vertically, auto-dismiss with a progress bar countdown, and can be manually closed.',
+    props: [
+      {
+        name: 'toasts',
+        type: 'ToastItemData[]',
+        description: 'Active stack of notifications currently rendered in DOM.',
+      },
+      {
+        name: 'position',
+        type: "'fixed' | 'inline'",
+        default: "'fixed'",
+        description: 'Fixed viewport anchor (top-right) or relative container sandbox.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Color theme for notification surfaces and backdrop blur.',
+      },
+      {
+        name: 'onDismiss',
+        type: '(id: string) => void',
+        description: 'Callback invoked when a toast is closed manually or via timeout.',
+      },
+    ],
+    codeSnippet: `import { toast, ToastContainer } from '@/features/document/components/ui-library';\n\n// Fire notifications programmatically\ntoast.success('Batch transaction committed successfully.', {\n  title: 'Ledger Hash Verified',\n  duration: 4500,\n});\n\n// Mount global or local container\n<ToastContainer position="fixed" />`,
     realWorldExamples: [
       {
-        title: 'Background Sync',
-        scenario: 'Cloud MongoDB sync completes.',
-        impact: 'Non-blocking confirmation.',
+        title: 'Asynchronous Ledger Commit Notification',
+        scenario:
+          'Registrar executes high-volume student batch fee processing; background worker reports completed commits.',
+        impact: 'Non-blocking confirmation with 18px status icons and countdown strip.',
+      },
+      {
+        title: 'Security & Audit Token Rejection Alert',
+        scenario:
+          'Security monitoring detects unauthorized token signature and alerts administrator without page reload.',
+        impact: 'High-contrast rose-red error toast with hover pause and manual dismissal.',
       },
     ],
     uxPsychology: [
-      { principle: 'Non-intrusive Alerts', detail: 'Fades away without user effort.' },
+      {
+        principle: 'Doherty Threshold & Physical Feedback',
+        detail:
+          'Slide-in animation with subtle scale bounce gives feedback immediate physical responsiveness under 300ms.',
+      },
+      {
+        principle: "Postel's Law & Hover Pause",
+        detail:
+          'Users are given full control to pause the auto-dismiss timer on hover, preventing premature dismissal of complex text.',
+      },
     ],
-    usageGuidelines: [{ doItem: 'Auto-dismiss in 4s.', dontItem: 'Never block navigation.' }],
-    implementationNotes: ['Stack array with timeout filters.'],
-    supportedStates: ['Success', 'Warning', 'Info'],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: Confirming user actions like form submissions, saves, or deletions with non-blocking feedback.',
+        dontItem:
+          'NOT IDEAL WHEN: The message requires user action — use a modal or inline alert instead.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Surfacing background events — API responses, sync status, or incoming updates.',
+        dontItem:
+          'NOT IDEAL WHEN: Showing inline form validation errors that should appear next to the field.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Building SaaS dashboards or admin panels that need a polished notification layer.',
+        dontItem:
+          'NOT IDEAL WHEN: Critical destructive confirmations where the user must explicitly acknowledge.',
+      },
+    ],
+    implementationNotes: [
+      '01 Toast Container: Fixed-position stack anchored to the top-right, holding up to 5 toasts with automatic overflow management.',
+      '02 Type Variants: Four distinct types — success, error, warning, info — each with a unique color and icon for instant recognition.',
+      '03 Icon System: Inline SVG icons sized at 18px with color inherited from the toast type for consistent visual language.',
+      '04 Progress Bar: A 2px countdown strip that visually communicates remaining time before auto-dismiss.',
+      '05 Enter Animation: Slide-in from the right with a subtle scale bounce, giving toasts a physical, responsive feel.',
+      '06 Exit & Collapse: Two-phase removal: fade-slide out, then collapse height so remaining toasts reflow smoothly.',
+      '07 Hover Pause: Hovering a toast freezes its countdown timer and progress bar so users have time to read.',
+      '08 Programmatic API: Simple show/dismiss interface returning unique IDs for full control from application code.',
+    ],
+    supportedStates: [
+      'Idle (Stack Empty)',
+      'Entering (Right Slide & Bounce)',
+      'Counting Down (Progress Strip Active)',
+      'Hover Paused',
+      'Two-Phase Exit & Collapsing',
+    ],
   },
   {
     id: 'emoji-reaction',
