@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.7 (30.10.2026) - `4b93117`
+
+- Implement 10-point Multi-Step Form Wizard with per-step validation, sessionStorage persistence, and summary review
+
+### Version 0.2.7 (30.10.2026) - `6b6061c`
+
+- Synchronize real-time changelog for Cipher Decode component
+
 ### Version 0.2.7 (30.10.2026) - `4986f81`
 
 - Implement Cipher Decode Nav & Headline with per-character timeline, throttled glyph shimmer, and live lock counter
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.7 (30.10.2026) - `71edb9e`
 
 - Resolve production vercel builds for frontend and backend with shared package compilation
-
-### Version 0.2.7 (30.10.2026) - `ee6ae19`
-
-- Configure app.kesararamwithdigital.tech and api.kesararamwithdigital.tech temporary domains
-
-### Version 0.2.7 (30.10.2026) - `10b3646`
-
-- Ignore .vercel directory for clean teardown
 
