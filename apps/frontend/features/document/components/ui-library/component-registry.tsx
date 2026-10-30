@@ -3575,6 +3575,111 @@ const columns: DataTableColumn<StudentRecord>[] = [
       'Empty State',
     ],
   },
+  {
+    id: 'rich-text-editor',
+    name: 'Rich Text Editor',
+    category: 'Forms',
+    paradigm: 'Zero-Dependency Contenteditable & Sanitized Allowlist Standard',
+    description:
+      'A lightweight WYSIWYG editor with a formatting toolbar, sanitized paste, an HTML source view, and keyboard shortcuts.',
+    explanation:
+      'Try pasting rich content from another page — scripts, inline styles, and unknown tags are stripped to a safe allowlist before they ever hit the document.',
+    props: [
+      {
+        name: 'initialContent',
+        type: 'string',
+        description: 'Initial HTML string pre-populated into the contenteditable surface.',
+      },
+      {
+        name: 'onChange',
+        type: '(html: string) => void',
+        description: 'Callback fired whenever content or formatting updates.',
+      },
+      {
+        name: 'placeholder',
+        type: 'string',
+        default: "'Type your formatted content here...'",
+        description: 'Placeholder copy rendered when contenteditable is empty.',
+      },
+      {
+        name: 'minHeight',
+        type: 'number',
+        default: '180',
+        description: 'Minimum editor surface height in pixels.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Instrument panel color palette for toolbar and text surface.',
+      },
+    ],
+    codeSnippet: `import { RichTextEditor } from '@/features/document/components/ui-library';\n\n<RichTextEditor\n  initialContent=\"<p>Formatted announcement...</p>\"\n  onChange={(html) => saveDocument(html)}\n  theme=\"dark\"\n/>`,
+    realWorldExamples: [
+      {
+        title: 'Institutional Curriculum Syllabus Composer',
+        scenario:
+          'Faculty members draft course descriptions with bold headings, lists, and external portal links without markdown complexity.',
+        impact: 'Zero external bundle weight with automatic XSS sanitation.',
+      },
+      {
+        title: 'Student Conduct & Audit Incident Records',
+        scenario:
+          'Campus directors record disciplinary or examination incident notes, pasting excerpts from external emails.',
+        impact:
+          'Dangerous inline scripts, styles, and iframes are stripped immediately before hitting the page.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Direct Manipulation (WYSIWYG)',
+        detail:
+          'In-place visual formatting provides instant cognitive feedback without requiring mental markdown translation.',
+      },
+      {
+        principle: 'Selection Preservation & Zero Friction',
+        detail:
+          'Preventing default on toolbar mousedown preserves active selection range so clicking formatting never collapses the caret.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: You need formatted input — comments, descriptions, notes, or a message composer — where Markdown would be a hurdle for non-technical users.',
+        dontItem:
+          'NOT IDEAL WHEN: You need collaborative editing, tables, image uploads, comments, or track-changes — reach for ProseMirror, Lexical, or TipTap instead.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: You want a tiny, dependency-free editor you fully control, rather than shipping a 100 KB+ library for a handful of formatting buttons.',
+        dontItem:
+          'NOT IDEAL WHEN: Your content is genuinely plain text — a styled textarea (optionally with Markdown) is simpler and more robust.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Output is stored as HTML and you can sanitize it again on the server before rendering it back.',
+        dontItem:
+          'NOT IDEAL WHEN: You cannot run server-side sanitization — never trust client-sanitized HTML alone before rendering it to other users.',
+      },
+    ],
+    implementationNotes: [
+      '01 Contenteditable Surface: One element with contenteditable="true", role="textbox", and aria-multiline does all the editing — no iframe, no shadow DOM.',
+      '02 Command Toolbar: A role="toolbar" row of real buttons, each mapping to a single execCommand routed through one exec() seam.',
+      '03 Live State Sync: queryCommandState drives both the cyan is-active styling and aria-pressed as the caret moves through formatted text.',
+      '04 Allowlist Sanitizer: Pasted HTML is parsed in a detached document and reduced to a safe tag/attribute allowlist before it touches the page.',
+      '05 URL Scheme Guard: Link hrefs are validated — javascript:, data:, and vbscript: are rejected, and survivors get rel="noopener nofollow".',
+      '06 HTML Source View: Toggle the surface for a textarea of clean HTML; switching back re-sanitizes whatever was hand-typed.',
+      "07 Selection-Safe Buttons: Toolbar buttons preventDefault on mousedown so a click never collapses the editor's selection.",
+      '08 Keyboard Shortcuts: Ctrl/Cmd+B, I, and U map to bold, italic, and underline; Enter and caret movement stay native.',
+    ],
+    supportedStates: [
+      'Visual WYSIWYG Editing',
+      'Active Command State Highlight (Cyan Pill)',
+      'Sanitized Allowlist Paste Interception',
+      'Guarded External Hyperlink (rel=noopener)',
+      'Raw HTML Source View Toggle',
+    ],
+  },
   // ==========================================
   // OVERLAYS
   // ==========================================

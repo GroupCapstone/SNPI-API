@@ -19,6 +19,7 @@ export * from './modal-dialog';
 export * from './toast-stack';
 export * from './skeleton-loading-screen';
 export * from './real-time-chart';
+export * from './rich-text-editor';
 export * from './dropdown';
 export * from './tooltip';
 export * from './component-registry';
