@@ -1533,26 +1533,112 @@ export function Example() {
   },
   {
     id: 'otp-input',
-    name: 'OTP Input',
+    name: 'OTP / PIN Code Input',
     category: 'Inputs',
     paradigm: 'Multi-Cell 2FA Standard',
-    description: '6-digit one-time code inputs with auto-advance and backspace handling.',
-    explanation: 'Automates focus forwarding and backspace deletion across PIN cells.',
-    props: [{ name: 'length', type: 'number', default: '6', description: 'Number of digits.' }],
-    codeSnippet: `import { OtpInputDemo } from '@/features/document/components/ui-library';\n\n<OtpInputDemo />`,
-    realWorldExamples: [
+    description:
+      'Six segmented fields with auto-advance, smart paste, backspace navigation, and a satisfying error shake.',
+    explanation:
+      'Type a digit to advance, paste a 6-digit code to fill all cells, backspace to step back. Wrong codes shake; the right one auto-submits.',
+    props: [
       {
-        title: 'Account Verification',
-        scenario: 'Director confirms privileged login.',
-        impact: 'Zero typing friction.',
+        name: 'length',
+        type: 'number',
+        default: '6',
+        description: 'Number of segmented digit cells.',
+      },
+      {
+        name: 'expectedPin',
+        type: 'string',
+        default: "'842910'",
+        description: 'Valid verification code for authentication approval.',
+      },
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        default: "'light'",
+        description: 'Instrument panel color palette.',
+      },
+      {
+        name: 'autoFocus',
+        type: 'boolean',
+        default: 'false',
+        description: 'Focus first empty cell on mount.',
+      },
+      {
+        name: 'onComplete',
+        type: '(pin: string) => void',
+        description: 'Callback fired on auto-submit verification.',
+      },
+      {
+        name: 'onError',
+        type: '(pin: string) => void',
+        description: 'Callback fired when submitted code fails verification.',
       },
     ],
-    uxPsychology: [{ principle: 'Immediate Feedback', detail: 'Auto-advance signals success.' }],
-    usageGuidelines: [
-      { doItem: 'Handle paste event.', dontItem: 'Do not allow non-numeric input.' },
+    codeSnippet: `import { OtpPinInput } from '@/features/document/components/ui-library';\n\n<OtpPinInput length={6} expectedPin="842910" onComplete={(pin) => console.log('Approved:', pin)} />`,
+    realWorldExamples: [
+      {
+        title: 'Two-Factor Auth Verification',
+        scenario: 'Campus Director enters 6-digit SMS verification code to sign in.',
+        impact: 'Zero typing friction with instant auto-submit upon 6th digit.',
+      },
+      {
+        title: 'Tuition Disbursement PIN',
+        scenario:
+          'Bursar confirms high-value campus treasury transaction with numeric security PIN.',
+        impact: 'Immediate tactile error shake alerts user if wrong PIN is entered.',
+      },
     ],
-    implementationNotes: ['Ref array with auto-focus next.'],
-    supportedStates: ['Incomplete', 'Valid'],
+    uxPsychology: [
+      {
+        principle: 'Doherty Threshold & Auto-Advance',
+        detail:
+          'Instantaneous focus forwarding keeps user typing rhythm uninterrupted below 100ms.',
+      },
+      {
+        principle: 'Visual Progress & Cognitive Load',
+        detail:
+          'Subtle cyan tint on filled cells gives immediate peripheral visual feedback on completion progress.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem:
+          'USE THIS WHEN: Verifying a one-time code from email or SMS for sign-in, password reset, or 2FA.',
+        dontItem:
+          'NOT IDEAL WHEN: The code contains letters or symbols — use a single text input with monospace font instead.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Confirming a payment, transaction, or destructive action with a short numeric PIN.',
+        dontItem:
+          'NOT IDEAL WHEN: The code is longer than 8 characters — segmented cells become cramped and easy to misread.',
+      },
+      {
+        doItem:
+          'USE THIS WHEN: Onboarding flows that need to confirm phone or email ownership before account creation.',
+        dontItem:
+          'NOT IDEAL WHEN: The user needs to memorize and type the same code repeatedly — a normal password field is friendlier.',
+      },
+    ],
+    implementationNotes: [
+      '01 Segmented Cells: Six independent inputs in a row, each holding exactly one numeric character with stable tabular widths.',
+      '02 Auto-Advance: Typing a digit instantly forwards focus to the next empty cell — no extra clicks, no Tab presses.',
+      '03 Smart Paste: Pasting a 6-digit code anywhere in the row strips non-digits and distributes one character per cell.',
+      '04 Backspace Step-Back: Backspace on an empty cell jumps focus to the previous one and clears it — the gesture every user expects.',
+      '05 Filled vs. Empty: Filled cells get a subtle cyan tint so partial progress is obvious at a glance.',
+      '06 Error Shake: A 500ms horizontal shake plus red recolor signals invalid codes without disrupting the page layout.',
+      '07 SMS Auto-Fill: autocomplete="one-time-code" lets iOS, Safari, and Chrome offer SMS codes inline above the keyboard.',
+      '08 Live Status Region: An aria-live polite status line announces success or error to screen readers without stealing focus.',
+    ],
+    supportedStates: [
+      'Empty',
+      'In Progress (Cyan Tint)',
+      'Validating',
+      'Success (Auto-Submit)',
+      'Error (Shake)',
+    ],
   },
   {
     id: 'password-input',
