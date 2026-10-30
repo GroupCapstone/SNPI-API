@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.7",
     "date": "30.10.2026",
+    "commitHash": "c6d59c2",
+    "description": "Implement 8-pillar Skeleton Loading Screen with CSS-only shimmer, aspect ratios, and 3 pattern templates"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
+    "commitHash": "021837f",
+    "description": "Synchronize real-time changelog for Toast Notification Stack"
+  },
+  {
+    "version": "0.2.7",
+    "date": "30.10.2026",
     "commitHash": "5d0d50c",
     "description": "Implement 8-pillar Toast Notification Stack with auto-dismiss, progress bars, hover pause, and two-phase exit"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "b34c2fb",
     "description": "Implement Navigation Menu with Rare UI 3-island floating dock, mega menu panel, and usage specs"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "7c76801",
-    "description": "Synchronize real-time changelog with Preview Code toolbar feature"
-  },
-  {
-    "version": "0.2.7",
-    "date": "30.10.2026",
-    "commitHash": "3f4322f",
-    "description": "Implement Preview Code toolbar with responsive device switcher, dark mode, expand, and reset controls"
   }
 ];
