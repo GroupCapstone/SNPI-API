@@ -4,6 +4,8 @@ import * as React from 'react';
 import {
   BrandConceptBlueprint,
   LibrarySnackbar,
+  NativeSnackbarInline,
+  type SnackbarVariant,
   LibraryBottomSheet,
   LibraryDialog,
   type LibraryBottomNavItem,
@@ -135,6 +137,7 @@ export function UiLibraryView() {
   const [snackbarMsg, setSnackbarMsg] = React.useState(
     'Student enrollment confirmed for STU-2026-0891.',
   );
+  const [snackbarVariant, setSnackbarVariant] = React.useState<SnackbarVariant>('success');
 
   // 2. Bottom Sheet state
   const [sheetOpen, setSheetOpen] = React.useState(false);
@@ -321,6 +324,8 @@ export function UiLibraryView() {
     setSnackbarOpen,
     snackbarMsg,
     setSnackbarMsg,
+    snackbarVariant,
+    setSnackbarVariant,
     sheetOpen,
     setSheetOpen,
     bottomSheetChoice,
@@ -1000,6 +1005,7 @@ export function UiLibraryView() {
       <LibrarySnackbar
         open={snackbarOpen}
         message={snackbarMsg}
+        variant={snackbarVariant}
         actionLabel="Undo"
         onAction={() => setSnackbarOpen(false)}
         onClose={() => setSnackbarOpen(false)}
@@ -1048,6 +1054,8 @@ function renderFeedComponentDemo(
     setSnackbarOpen: (o: boolean) => void;
     snackbarMsg: string;
     setSnackbarMsg: (m: string) => void;
+    snackbarVariant: SnackbarVariant;
+    setSnackbarVariant: (v: SnackbarVariant) => void;
     sheetOpen: boolean;
     setSheetOpen: (o: boolean) => void;
     bottomSheetChoice: string;
@@ -1117,7 +1125,7 @@ function renderFeedComponentDemo(
   switch (id) {
     case 'snackbar':
       return (
-        <div className="flex w-full flex-col items-center gap-5">
+        <div className="flex w-full flex-col items-center gap-6">
           {/* Controls Bar */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <GeometricButton
@@ -1125,17 +1133,19 @@ function renderFeedComponentDemo(
               size="sm"
               onClick={() => {
                 state.setSnackbarMsg('Student enrollment confirmed for STU-2026-0891.');
+                state.setSnackbarVariant('success');
                 state.setSnackbarOpen(true);
               }}
             >
               <Check className="h-3.5 w-3.5" />
-              <span>Trigger Success</span>
+              <span>Trigger Success (Undo)</span>
             </GeometricButton>
             <GeometricButton
               variant="azure"
               size="sm"
               onClick={() => {
                 state.setSnackbarMsg('Batch telemetry sync active across 4 MongoDB cluster nodes.');
+                state.setSnackbarVariant('info');
                 state.setSnackbarOpen(true);
               }}
             >
@@ -1146,6 +1156,7 @@ function renderFeedComponentDemo(
               size="sm"
               onClick={() => {
                 state.setSnackbarMsg('Security authentication token will expire in 5 minutes.');
+                state.setSnackbarVariant('warning');
                 state.setSnackbarOpen(true);
               }}
             >
@@ -1156,6 +1167,7 @@ function renderFeedComponentDemo(
               size="sm"
               onClick={() => {
                 state.setSnackbarMsg('Tuition payment gateway timed out (HTTP 504 Gateway Error).');
+                state.setSnackbarVariant('error');
                 state.setSnackbarOpen(true);
               }}
             >
@@ -1169,57 +1181,34 @@ function renderFeedComponentDemo(
                 state.setSnackbarMsg('Notification dismissed.');
               }}
             >
-              <span>Reset</span>
+              <span>Dismiss</span>
             </GeometricButton>
           </div>
 
-          {/* Interactive In-Stage Real-Time Toast Banner (Light Surface) */}
-          <div className="w-full max-w-xl rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC]/40 p-5 text-slate-900 shadow-xs transition-all">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-3">
-                <span className="size-2.5 animate-pulse rounded-full bg-[#0056FF]" />
-                <div>
-                  <span className="block font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
-                    SNPI Notification Hub
-                  </span>
-                  <span className="font-sans text-xs font-semibold text-slate-800">
-                    {state.snackbarMsg}
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 self-end sm:self-center">
-                <button
-                  type="button"
-                  onClick={() =>
-                    state.setSnackbarMsg('Action reverted successfully. Record restored.')
-                  }
-                  className="rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-xs font-bold text-[#0056FF] shadow-xs transition-all hover:bg-[#E3E7FC] active:scale-95"
-                >
-                  Undo
-                </button>
-                <button
-                  type="button"
-                  onClick={() => state.setSnackbarOpen(false)}
-                  className="cursor-pointer rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-xs font-semibold text-slate-700 shadow-xs transition-all hover:border-slate-300 hover:bg-slate-50"
-                >
-                  Dismiss
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* Official Native Snackbar In-Stage Demo (Obsidian Surface & Material Standards) */}
+          <NativeSnackbarInline
+            message={state.snackbarMsg}
+            variant={state.snackbarVariant}
+            actionLabel="Undo"
+            onAction={() => {
+              state.setSnackbarMsg('Enrollment action reverted successfully.');
+              state.setSnackbarVariant('info');
+            }}
+            onClose={() => state.setSnackbarOpen(false)}
+          />
 
           {/* Real-time Status Card */}
-          <div className="flex w-full max-w-xl items-center justify-between rounded-xl border border-slate-200/90 bg-white px-4 py-2.5 font-mono text-[11px] text-slate-600 shadow-xs">
+          <div className="flex w-full max-w-lg items-center justify-between rounded-xl border border-slate-200/90 bg-white px-4 py-2.5 font-mono text-[11px] text-slate-600 shadow-xs">
             <span>
-              Status:{' '}
+              Global State:{' '}
               <strong className="text-[#0056FF]">
-                {state.snackbarOpen ? 'ACTIVE (OPEN)' : 'IDLE (DISMISSED)'}
+                {state.snackbarOpen ? 'ACTIVE (BOTTOM-CENTER)' : 'IDLE (DISMISSED)'}
               </strong>
             </span>
             <span className="h-3 w-[1px] bg-slate-200" />
-            <span>Target: 44×44px hit bounds</span>
+            <span>Surface: Level 2 Obsidian (#0F172A)</span>
             <span className="h-3 w-[1px] bg-slate-200" />
-            <span>Auto Dismiss: 6000ms</span>
+            <span>Touch: ≥ 44×44px</span>
           </div>
         </div>
       );
