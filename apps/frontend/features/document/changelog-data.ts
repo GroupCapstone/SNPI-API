@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "31.10.2026",
+    "commitHash": "3da80f8",
+    "description": "Remove top nav hanging tabs section and add universal ai agent prompt tabs and copy action"
+  },
+  {
+    "version": "0.2.8",
+    "date": "31.10.2026",
     "commitHash": "ec5413b",
     "description": "Record line tracker navigation update and scrollbar removal in real-time changelog"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "3b51193",
     "description": "Implement Date Picker and Date Range Picker with ARIA grid roving-tabindex, hover preview, and range bands"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "ccfd501",
-    "description": "Synchronize real-time changelog for OTP PIN Input"
   }
 ];

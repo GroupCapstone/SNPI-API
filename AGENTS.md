@@ -38,6 +38,8 @@ Before modifying code, packages, or repository structure, read:
 28. `.agents/skills/snp-sms-design-standards/ux-ui-laws-manual.md`: Authoritative Foundational UX/UI Laws (Jakob's, Fitts's, Miller's, Hick's, Proximity, and Tesler's Laws).
 29. `.agents/skills/snp-sms-design-standards/interactive-effects-manual.md`: Authoritative Interactive Effects Catalog (18+ effect styles: kinetic hook, gravity drop, NLE timeline, jiggle delete).
 30. `.agents/skills/snp-sms-design-standards/system-architecture-lexicon.md`: Authoritative System Architecture Lexicon (1,111 concepts: systems, concurrency, cryptography, LLM, and AI agents).
+31. `.agents/skills/snp-sms-design-standards/universal-ai-agent-prompt-manual.md`: Authoritative Universal AI Agent Prompt & MVP Component Generation Manual (procedural prompt synthesis, [Preview | Prompt] tabs, 1-click copy action, MVP component blueprints).
+32. `.agents/skills/snp-sms-design-standards/line-tracker-navigation-manual.md`: Authoritative Precision Line Tracker Navigation & Zero-Scrollbar Manual (dotless continuous vertical rail, active indicator segment, zero-scrollbar standard).
 
 ---
 
@@ -181,3 +183,5 @@ Use these specific skill identifiers and command strings to instruct the agent:
 | `SKILL-UXLAW`    | `.agents/skills/snp-sms-design-standards/ux-ui-laws-manual.md`                 | Foundational UX/UI Laws Framework (Jakob's, Fitts's, Miller's, Hick's, Proximity, and Tesler's Laws)                                 | `apply skill ux-law`       |
 | `SKILL-EFFECT`   | `.agents/skills/snp-sms-design-standards/interactive-effects-manual.md`        | Interactive Effects Catalog (18+ effect styles: kinetic hook, gravity drop, NLE timeline, jiggle delete)                             | `apply skill effect`       |
 | `SKILL-LEXICON`  | `.agents/skills/snp-sms-design-standards/system-architecture-lexicon.md`       | System Architecture Lexicon (1,111 concepts: systems, concurrency, cryptography, LLM, and AI agents)                                 | `apply skill lexicon`      |
+| `SKILL-PROMPT`   | `.agents/skills/snp-sms-design-standards/universal-ai-agent-prompt-manual.md` | Universal AI Agent Prompt Manual (Procedural prompt synthesis, [Preview \| Prompt] tabs, 1-click copy action, MVP blueprints)         | `apply skill prompt`       |
+| `SKILL-TRACKER`  | `.agents/skills/snp-sms-design-standards/line-tracker-navigation-manual.md`    | Precision Line Tracker Navigation Manual (Dotless continuous vertical rail, active indicator segment, zero-scrollbar standard)      | `apply skill tracker`      |

@@ -39,6 +39,8 @@ All design standards, specifications, and component guides must strictly reside 
 - **Foundational UX/UI Laws Manual**: `.agents/skills/snp-sms-design-standards/ux-ui-laws-manual.md` (Jakob's, Fitts's, Miller's, Hick's, Proximity, and Tesler's Laws)
 - **Interactive Effects Catalog**: `.agents/skills/snp-sms-design-standards/interactive-effects-manual.md` (18+ effect styles: kinetic hook, gravity drop, NLE timeline, jiggle delete)
 - **System Architecture Lexicon**: `.agents/skills/snp-sms-design-standards/system-architecture-lexicon.md` (1,111 concepts: systems, concurrency, cryptography, LLM, and AI agents)
+- **Universal AI Agent Prompt Manual**: `.agents/skills/snp-sms-design-standards/universal-ai-agent-prompt-manual.md` (Procedural prompt synthesis, [Preview | Prompt] tabs, 1-click copy action, MVP component blueprints)
+- **Precision Line Tracker Navigation Manual**: `.agents/skills/snp-sms-design-standards/line-tracker-navigation-manual.md` (Dotless continuous vertical rail, active indicator segment, zero-scrollbar standard)
 
 Do not fragment design rules across multiple folders. Maintain all design documentation in this single location.
 
