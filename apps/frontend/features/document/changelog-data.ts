@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.8",
     "date": "30.10.2026",
+    "commitHash": "5435db2",
+    "description": "Remove toolbar gray scrollbar and implement continuous line tracker navigation without dots"
+  },
+  {
+    "version": "0.2.8",
+    "date": "30.10.2026",
+    "commitHash": "79764a7",
+    "description": "Record v0.2.8 release checkpoint in real-time changelog and document portal"
+  },
+  {
+    "version": "0.2.8",
+    "date": "30.10.2026",
     "commitHash": "7e62686",
     "description": "Bump version to 0.2.8 and standardize shared package build lifecycle in CI, Docker, and typecheck"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "30.10.2026",
     "commitHash": "93d79a9",
     "description": "Implement 8-pillar OTP PIN Code Input with auto-advance, smart paste, backspace navigation, and error shake"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "545c574",
-    "description": "Synchronize real-time changelog for Multi-Step Form Wizard"
-  },
-  {
-    "version": "0.2.8",
-    "date": "30.10.2026",
-    "commitHash": "4b93117",
-    "description": "Implement 10-point Multi-Step Form Wizard with per-step validation, sessionStorage persistence, and summary review"
   }
 ];
