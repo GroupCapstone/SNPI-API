@@ -39,7 +39,7 @@ jobs:
         run: |
           # 1. Resolve Version from package.json
           PKG_VERSION=$(node -p "require('./package.json').version || '0.0.0'")
-          
+
           # 2. Resolve Developer & Commit Info
           COMMIT_HASH="${{ github.sha }}"
           SHORT_HASH="${COMMIT_HASH:0:7}"
@@ -63,7 +63,7 @@ jobs:
 
           # 5. Determine Event Type & Format Payload
           EVENT_NAME="${{ github.event_name }}"
-          
+
           if [ "$EVENT_NAME" = "release" ]; then
             TAG_NAME="${{ github.event.release.tag_name || github.ref_name }}"
             MESSAGE="<b>[SNPI · RELEASE] ${TAG_NAME}</b>%0A<b>Production Checkpoint Published</b>%0A%0A• <b>Developer:</b> ${DEV_NAME}%0A• <b>Package:</b> <code>v${PKG_VERSION}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Tracker:</b> <a href=\"https://github.com/${{ github.repository }}/releases/tag/${TAG_NAME}\">View Release Notes</a>%0A• <b>Time:</b> ${HUMAN_TIME}"
