@@ -13,12 +13,12 @@ import {
   Code,
   Layers,
   Radio,
-  ShieldCheck,
   ChevronRight,
   ArrowRight,
   Terminal,
   FileText,
   Info,
+  ShieldCheck,
 } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import { cn } from '@/lib/utils';
@@ -330,11 +330,11 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
 
                 {/* Less Description: Concise, punchy, high-impact */}
                 <p className="max-w-xl text-sm leading-relaxed font-medium text-[#0A1A4A]/75 sm:text-base">
-                  Free public REST APIs and live feeds for campus announcements, course schedules,
-                  and certificate verification.
+                  Free public REST APIs and live feeds for campus announcements and course
+                  schedules.
                 </p>
 
-                {/* 3 Quick Value Chips */}
+                {/* Quick Value Chips */}
                 <div className="flex flex-wrap items-center gap-2 pt-1">
                   <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
                     <Check className="size-3.5 text-[#0056FF]" />
@@ -343,10 +343,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
                     <Check className="size-3.5 text-[#0056FF]" />
                     <span>Live Campus Feeds</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
-                    <Check className="size-3.5 text-[#0056FF]" />
-                    <span>Tamper-Proof Verification</span>
                   </div>
                 </div>
               </div>
@@ -358,7 +354,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   onClick={() => scrollToSection('available-services')}
                   className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] py-3.5 text-xs font-bold text-[#0056FF] shadow-xs transition-all hover:bg-[#EFF5FF] active:scale-[0.99] sm:w-auto sm:px-8"
                 >
-                  <span>Explore 4 Core Services</span>
+                  <span>Explore Core Services</span>
                   <ArrowRight className="size-4 rotate-90 sm:rotate-0" />
                 </button>
               </div>
@@ -366,14 +362,14 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           </section>
 
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 2: 4 CORE SERVICES OVERVIEW (SCREEN TWO ON MOBILE)        */}
+          {/* SECTION 2: CORE SERVICES OVERVIEW (SCREEN TWO ON MOBILE)          */}
           {/* ----------------------------------------------------------------- */}
           <section id="available-services" className="scroll-mt-24 space-y-3 pt-4 sm:pt-6">
             <div className="flex items-center justify-between px-1">
               <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
                 Available Services & Endpoints
               </span>
-              <span className="text-[11px] font-medium text-[#0A1A4A]/60">3 Core Services</span>
+              <span className="text-[11px] font-medium text-[#0A1A4A]/60">2 Core Services</span>
             </div>
 
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
@@ -458,58 +454,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
                   <span className="font-mono text-[11px] text-[#0056FF]">GET /api/v1/classes</span>
                   <span className="text-[10px] font-semibold text-[#0A1A4A]/60">Live Seats</span>
-                </div>
-              </button>
-
-              {/* Card 03: Certificate Ledger API */}
-              <button
-                onClick={() =>
-                  handleCopy(
-                    'https://api.snp.edu.kh/api/v1/reports/certificates/verify/:code',
-                    'card-certs',
-                  )
-                }
-                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
-              >
-                <div className="flex w-full items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ShieldCheck className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          03 · Ledger
-                        </span>
-                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
-                          SHA-256 Ledger
-                        </span>
-                      </div>
-                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                        Certificate Verification
-                      </h3>
-                    </div>
-                  </div>
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    {copiedId === 'card-certs' ? (
-                      <Check className="size-3.5" />
-                    ) : (
-                      <Copy className="size-3.5 transition-transform group-hover:scale-110" />
-                    )}
-                  </div>
-                </div>
-
-                <p className="mt-1 truncate text-xs text-[#0A1A4A]/70">
-                  Tamper-proof student diploma validation.
-                </p>
-
-                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                  <span className="font-mono text-[11px] text-[#0056FF]">
-                    GET /reports/certificates/verify/:code
-                  </span>
-                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
-                    Proof Verified
-                  </span>
                 </div>
               </button>
             </div>

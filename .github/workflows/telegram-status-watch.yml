@@ -53,23 +53,30 @@ jobs:
           if command -v gh >/dev/null 2>&1; then
             OPEN_ALERTS=$(gh api "repos/${{ github.repository }}/dependabot/alerts" --jq '[.[] | select(.state=="open")] | length' 2>/dev/null || echo "0")
           fi
+          SEC_SUMMARY="${OPEN_ALERTS} open advisories"
+          if [ "$OPEN_ALERTS" -eq 0 ]; then
+            SEC_SUMMARY="0 alerts (clean)"
+          fi
 
-          # 4. Determine Event Type & Format Payload
+          # 4. Human-readable timestamp
+          HUMAN_TIME=$(date -u +'%d %b %Y, %I:%M %p UTC')
+
+          # 5. Determine Event Type & Format Payload
           EVENT_NAME="${{ github.event_name }}"
           
           if [ "$EVENT_NAME" = "release" ]; then
             TAG_NAME="${{ github.event.release.tag_name || github.ref_name }}"
-            MESSAGE="<b>[SNPI NEW VERSION RELEASE]</b>%0A<b>Release Tag:</b> ${TAG_NAME}%0A<b>Package Version:</b> v${PKG_VERSION}%0A<b>Publisher:</b> ${DEV_NAME}%0A<b>URL:</b> https://github.com/${{ github.repository }}/releases/tag/${TAG_NAME}%0A<b>Security Status:</b> ${OPEN_ALERTS} open alerts%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            MESSAGE="<b>[RELEASE] ${TAG_NAME}</b>%0A<b>SNP-SMS Production Checkpoint</b>%0A%0A• <b>Publisher:</b> ${DEV_NAME}%0A• <b>Package:</b> <code>v${PKG_VERSION}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Release:</b> <a href=\"https://github.com/${{ github.repository }}/releases/tag/${TAG_NAME}\">View GitHub Release</a>%0A• <b>Time:</b> ${HUMAN_TIME}"
           elif [ "$EVENT_NAME" = "pull_request" ]; then
             PR_NUM="${{ github.event.pull_request.number }}"
             PR_TITLE="${{ github.event.pull_request.title }}"
             PR_ACTION="${{ github.event.action }}"
-            MESSAGE="<b>[SNPI PULL REQUEST ${PR_ACTION^^}]</b>%0A<b>PR:</b> #${PR_NUM} ${PR_TITLE}%0A<b>Author:</b> ${{ github.event.pull_request.user.login }}%0A<b>Base:</b> ${{ github.event.pull_request.base.ref }} &larr; ${{ github.event.pull_request.head.ref }}%0A<b>URL:</b> https://github.com/${{ github.repository }}/pull/${PR_NUM}%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            MESSAGE="<b>[PR #${PR_NUM}] ${PR_ACTION^^}</b>%0A<b>${PR_TITLE}</b>%0A%0A• <b>Author:</b> ${{ github.event.pull_request.user.login }}%0A• <b>Branch:</b> <code>${{ github.event.pull_request.head.ref }}</code> &rarr; <code>${{ github.event.pull_request.base.ref }}</code>%0A• <b>Link:</b> <a href=\"https://github.com/${{ github.repository }}/pull/${PR_NUM}\">View Pull Request</a>%0A• <b>Time:</b> ${HUMAN_TIME}"
           elif [ "$EVENT_NAME" = "workflow_run" ]; then
             CONCLUSION="${{ github.event.workflow_run.conclusion }}"
-            MESSAGE="<b>[SNPI SECURITY &amp; CI AUDIT COMPLETED]</b>%0A<b>Workflow:</b> ${{ github.event.workflow_run.name }}%0A<b>Result:</b> ${CONCLUSION}%0A<b>Dependabot Open Alerts:</b> ${OPEN_ALERTS}%0A<b>Commit:</b> <code>${SHORT_HASH}</code>%0A<b>Developer:</b> ${DEV_NAME}%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            MESSAGE="<b>[CI ${CONCLUSION^^}] ${{ github.event.workflow_run.name }}</b>%0A<b>Monorepo Automated Verification Gate</b>%0A%0A• <b>Commit:</b> <code>${SHORT_HASH}</code> by ${DEV_NAME}%0A• <b>Dependabot:</b> ${SEC_SUMMARY}%0A• <b>Time:</b> ${HUMAN_TIME}"
           else
-            MESSAGE="<b>[SNPI REPO PUSH &amp; FIX ALERT]</b>%0A<b>Developer:</b> ${DEV_NAME} &lt;${DEV_EMAIL}&gt;%0A<b>Branch:</b> <code>${{ github.ref_name }}</code>%0A<b>Commit:</b> <code>${SHORT_HASH}</code>%0A<b>Message:</b> ${COMMIT_MSG}%0A<b>System Version:</b> v${PKG_VERSION}%0A<b>Security Quality:</b> ${OPEN_ALERTS} open alerts%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            MESSAGE="<b>[PUSH · FIX]</b> <code>${{ github.ref_name }}</code> · <b>v${PKG_VERSION}</b>%0A<b>${COMMIT_MSG}</b>%0A%0A• <b>Author:</b> ${DEV_NAME}%0A• <b>Commit:</b> <code>${SHORT_HASH}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Time:</b> ${HUMAN_TIME}"
           fi
 
           # 5. Dispatch to Telegram

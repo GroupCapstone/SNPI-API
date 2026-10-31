@@ -370,18 +370,19 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
   // 1. Check for New Commit / Push Fix by Developer
   const isNewCommit = cache.lastCommitHash !== commit.hash;
   if (isNewCommit || options.forceAlert) {
-    const filesPreview =
-      commit.changedFiles.length > 0
-        ? `\n<b>Files Changed (${commit.changedFiles.length}):</b>\n<code>${commit.changedFiles.slice(0, 5).join('\n')}${commit.changedFiles.length > 5 ? `\n...and ${commit.changedFiles.length - 5} more` : ''}</code>`
-        : '';
+    const authorDisplay = formatAuthor(commit.author, commit.email);
+    const diffSummary = formatDiffSummary(commit.diffStat, commit.changedFiles);
+    const securitySummary =
+      security.totalAlerts > 0 ? `${security.totalAlerts} open advisories` : '0 alerts (clean)';
 
-    const pushMessage = `<b>[SNPI REPO PUSH &amp; FIX ALERT]</b>
-<b>Developer:</b> ${commit.author} &lt;${commit.email}&gt;
-<b>Branch:</b> <code>${commit.branch}</code>
-<b>Commit:</b> <code>${commit.hash}</code>
-<b>Message:</b> ${commit.message}${filesPreview}
-<b>System Version:</b> v${packageVersion}
-<b>Timestamp:</b> ${new Date().toISOString()}`;
+    const pushMessage = `<b>[PUSH · FIX]</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${escapeHtml(packageVersion)}</b>
+<b>${escapeHtml(commit.message)}</b>
+
+• <b>Author:</b> ${escapeHtml(authorDisplay)}
+• <b>Commit:</b> <code>${escapeHtml(commit.hash)}</code>
+• <b>Changes:</b> ${diffSummary}
+• <b>Security:</b> ${securitySummary}
+• <b>Time:</b> ${formatHumanTime()}`;
 
     await sendTelegramMessage(chatId, pushMessage);
     cache.lastCommitHash = commit.hash;
@@ -391,12 +392,15 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
   // 2. Check for New Version Release
   const isNewRelease = cache.lastReleaseVersion !== packageVersion;
   if (isNewRelease && !options.forceAlert) {
-    const releaseMessage = `<b>[SNPI NEW VERSION RELEASE]</b>
-<b>Release Tag:</b> ${latestTag || `v${packageVersion}`}
-<b>Package Version:</b> v${packageVersion}
-<b>Developer:</b> ${commit.author}
-<b>Changelog:</b> <a href="https://github.com/${getRepoSlug()}/releases">GitHub Releases</a>
-<b>Summary:</b> Enterprise monorepo updated with latest build checkpoints.`;
+    const authorDisplay = formatAuthor(commit.author, commit.email);
+    const releaseTag = latestTag || `v${packageVersion}`;
+    const releaseMessage = `<b>[RELEASE] ${escapeHtml(releaseTag)}</b>
+<b>SNP-SMS Production Checkpoint</b>
+
+• <b>Publisher:</b> ${escapeHtml(authorDisplay)}
+• <b>Tag:</b> <code>${escapeHtml(releaseTag)}</code> · Branch: <code>${escapeHtml(commit.branch)}</code>
+• <b>Notes:</b> <a href="https://github.com/${getRepoSlug()}/releases/tag/${encodeURIComponent(releaseTag)}">View GitHub Release</a>
+• <b>Time:</b> ${formatHumanTime()}`;
 
     await sendTelegramMessage(chatId, releaseMessage);
     cache.lastReleaseVersion = packageVersion;
@@ -409,19 +413,14 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
     cache.lastSecurityAlertCount !== security.totalAlerts;
 
   if ((isSecurityChanged || options.forceAlert) && security.totalAlerts > 0) {
-    const alertList = security.openAlerts
-      .slice(0, 3)
-      .map(
-        (a) =>
-          `• <b>${a.package}</b> (${a.severity.toUpperCase()}): ${a.summary.replace(/<[^>]*>?/gm, '')}`,
-      )
-      .join('\n');
+    const alertList = formatSecurityAlerts(security.openAlerts);
+    const securityMessage = `<b>[SECURITY] ${security.totalAlerts} Open Advisories</b>
+Repo: <code>${getRepoSlug()}</code>
 
-    const securityMessage = `<b>[SNPI SECURITY ALERT]</b>
-<b>Repository:</b> ${getRepoSlug()}
-<b>Active Dependabot Alerts:</b> ${security.totalAlerts} Open
 ${alertList}
-<b>Action:</b> Review dependencies and apply security patch updates.`;
+
+<b>Action:</b> Review dependencies and run <code>npm audit fix</code>
+<b>Time:</b> ${formatHumanTime()}`;
 
     await sendTelegramMessage(chatId, securityMessage);
     cache.lastSecurityAlertCount = security.totalAlerts;
@@ -431,10 +430,14 @@ ${alertList}
   // 4. Check for Live API Status Degraded
   const currentApiStatus = apiHealth.online ? 'ONLINE' : 'OFFLINE';
   if (cache.lastApiStatus && cache.lastApiStatus !== currentApiStatus) {
-    const apiMessage = `<b>[SNPI LIVE API STATUS CHANGE]</b>
-<b>Endpoint:</b> http://localhost:5001/health
-<b>Status:</b> ${currentApiStatus} (Code: ${apiHealth.statusCode}, Latency: ${apiHealth.latencyMs}ms)
-<b>Active Cluster:</b> ${apiHealth.online ? 'Cluster Operational' : 'Immediate attention required'}`;
+    const isOnline = apiHealth.online;
+    const statusLabel = isOnline ? 'ONLINE' : 'OFFLINE';
+    const apiMessage = `<b>[API HEALTH] ${statusLabel}</b>
+Cluster: <code>http://localhost:5001/health</code>
+
+• <b>Status:</b> ${isOnline ? 'Operational' : 'Degraded'} (HTTP <code>${apiHealth.statusCode}</code>)
+• <b>Latency:</b> <code>${apiHealth.latencyMs}ms</code>
+• <b>Time:</b> ${formatHumanTime()}`;
 
     await sendTelegramMessage(chatId, apiMessage);
     cache.lastApiStatus = currentApiStatus;
@@ -468,11 +471,18 @@ async function main() {
       console.log('Cannot send test: No Chat ID found. Message @snpi_statusbot first.');
       return;
     }
+    const commit = inspectLatestCommit();
+    const { packageVersion } = inspectVersionAndRelease();
     console.log(`Sending diagnostic test message to Chat ID: ${chatId}...`);
-    const success = await sendTelegramMessage(
-      chatId,
-      `<b>[SNPI STATUS BOT TEST]</b>\nBot connection established successfully.\nMonitoring live pushes, releases, and security gates.\nTimestamp: ${new Date().toISOString()}`,
-    );
+    const testMessage = `<b>[STATUS] Telegram Watcher Online</b>
+Connected to <b>${getRepoSlug()}</b>
+
+• <b>Service:</b> Real-time Repo &amp; Security Watcher
+• <b>Branch:</b> <code>${escapeHtml(commit.branch)}</code> (v${packageVersion})
+• <b>Status:</b> Active &amp; Ready
+• <b>Time:</b> ${formatHumanTime()}`;
+
+    const success = await sendTelegramMessage(chatId, testMessage);
     console.log(success ? 'Test message sent successfully.' : 'Failed to send test message.');
     return;
   }

@@ -1,4 +1,4 @@
-# SNP-SMS Changelog
+# SNPI-SMS Changelog
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
@@ -101,4 +101,3 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.13 (31.10.2026) - `c2efdc5`
 
 - Simplify hero and implement psychological reading layout
-
