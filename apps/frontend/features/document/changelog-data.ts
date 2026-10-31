@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "01.11.2026",
+    "commitHash": "4a46a37",
+    "description": "Record security audit and remediation report history"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "4ad793d",
+    "description": "Record security patch in documentation"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
     "commitHash": "190ac14",
     "description": "Resolve CVE-2026-118764 minimatch DoS across workspaces"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "0110d62",
     "description": "Document display-only open-api rules and format open-api-view"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "c6ce7eb",
-    "description": "Remove 10 deprecated components from catalog and registry"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "49f052c",
-    "description": "Redesign into minimal one-way subscription-gated guide"
   }
 ];
