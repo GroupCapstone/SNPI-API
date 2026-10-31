@@ -8,6 +8,12 @@ export interface ChangeLogEntry {
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "190ac14",
+    "description": "Resolve CVE-2026-118764 minimatch DoS across workspaces"
+  },
+  {
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "dc26051",
     "description": "Pretty-print code blocks with syntax highlighting and bakong-inspired layout"
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "49f052c",
     "description": "Redesign into minimal one-way subscription-gated guide"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "afcf5a8",
-    "description": "Implement stacked resting deck with hover/tap expansion and brand light day mode"
   }
 ];

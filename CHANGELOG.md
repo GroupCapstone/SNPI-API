@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (01.11.2026) - `190ac14`
+
+- Resolve CVE-2026-118764 minimatch DoS across workspaces
+
 ### Version 0.2.13 (31.10.2026) - `dc26051`
 
 - Pretty-print code blocks with syntax highlighting and bakong-inspired layout
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `49f052c`
 
 - Redesign into minimal one-way subscription-gated guide
-
-### Version 0.2.12 (31.10.2026) - `afcf5a8`
-
-- Implement stacked resting deck with hover/tap expansion and brand light day mode
 
