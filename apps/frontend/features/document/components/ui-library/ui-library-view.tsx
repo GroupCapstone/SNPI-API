@@ -136,16 +136,6 @@ export function UiLibraryView() {
   const [activeTool, setActiveTool] = React.useState('Move Tool (V)');
   const [tooltipPosition, setTooltipPosition] = React.useState<'top' | 'bottom'>('top');
 
-  // 5. FAB state
-  const [fabCount, setFabCount] = React.useState(0);
-  const [fabSpeedDialOpen, setFabSpeedDialOpen] = React.useState(false);
-  const [fabActionCounts, setFabActionCounts] = React.useState({
-    student: 4,
-    attendance: 28,
-    invoice: 12,
-    qr: 156,
-  });
-
   // 6. Chip state
   const [selectedChips, setSelectedChips] = React.useState<string[]>([
     'All',
@@ -325,12 +315,6 @@ export function UiLibraryView() {
     setActiveTool,
     tooltipPosition,
     setTooltipPosition,
-    fabCount,
-    setFabCount,
-    fabSpeedDialOpen,
-    setFabSpeedDialOpen,
-    fabActionCounts,
-    setFabActionCounts,
     selectedChips,
     setSelectedChips,
     toggleChip,
@@ -612,8 +596,8 @@ export function UiLibraryView() {
                                   className={cn(
                                     'flex size-9 cursor-pointer items-center justify-center rounded-[4px] border transition-all active:scale-95',
                                     copiedPromptId === comp.id
-                                      ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-2xs'
-                                      : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
+                                      ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                                      : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
                                   )}
                                 >
                                   {copiedPromptId === comp.id ? (
@@ -625,7 +609,7 @@ export function UiLibraryView() {
 
                                 {/* 3. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
                                 {currentTab === 'preview' && (
-                                  <div className="flex items-center gap-0.5 rounded-[4px] border border-slate-200 bg-white p-1 shadow-2xs">
+                                  <div className="flex items-center gap-0.5 rounded-[4px] border border-slate-200 bg-white p-1">
                                     <button
                                       type="button"
                                       onClick={() => setCompDevice(comp.id, 'mobile')}
@@ -633,7 +617,7 @@ export function UiLibraryView() {
                                       className={cn(
                                         'flex size-7 items-center justify-center rounded-[4px] transition-all',
                                         getCompDevice(comp.id) === 'mobile'
-                                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                          ? 'bg-slate-100 text-slate-900'
                                           : 'text-slate-500 hover:text-slate-900',
                                       )}
                                     >
@@ -646,7 +630,7 @@ export function UiLibraryView() {
                                       className={cn(
                                         'flex size-7 items-center justify-center rounded-[4px] transition-all',
                                         getCompDevice(comp.id) === 'tablet'
-                                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                          ? 'bg-slate-100 text-slate-900'
                                           : 'text-slate-500 hover:text-slate-900',
                                       )}
                                     >
@@ -659,7 +643,7 @@ export function UiLibraryView() {
                                       className={cn(
                                         'flex size-7 items-center justify-center rounded-[4px] transition-all',
                                         getCompDevice(comp.id) === 'desktop'
-                                          ? 'bg-slate-100 text-slate-900 shadow-2xs'
+                                          ? 'bg-slate-100 text-slate-900'
                                           : 'text-slate-500 hover:text-slate-900',
                                       )}
                                     >
@@ -680,7 +664,7 @@ export function UiLibraryView() {
                                       'flex size-9 cursor-pointer items-center justify-center rounded-[4px] border transition-all active:scale-95',
                                       getCompExpanded(comp.id)
                                         ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
-                                        : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900',
+                                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900',
                                     )}
                                   >
                                     <Maximize className="size-4 stroke-[1.8]" />
@@ -1156,153 +1140,6 @@ function renderFeedComponentDemo(
             <span>Surface: Light Card (#FFFFFF)</span>
             <span className="h-3 w-[1px] bg-slate-200" />
             <span>Touch: ≥ 44×44px</span>
-          </div>
-        </div>
-      );
-
-    case 'fab':
-      return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => state.setFabSpeedDialOpen(!state.fabSpeedDialOpen)}
-            >
-              Toggle Speed Dial
-            </GeometricButton>
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                state.setFabCount(0);
-                state.setFabActionCounts({ student: 0, attendance: 0, invoice: 0, qr: 0 });
-              }}
-            >
-              Reset Counters
-            </GeometricButton>
-          </div>
-
-          {/* Interactive Workspace Canvas with Speed-Dial */}
-          <div className="relative w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  Campus Quick Action Hub
-                </h4>
-                <p className="font-sans text-xs text-slate-500">
-                  Tap actions below to trigger live increments
-                </p>
-              </div>
-              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                Total Taps: {state.fabCount}
-              </span>
-            </div>
-
-            {/* Metric Counters Grid */}
-            <div className="mt-4 grid grid-cols-2 gap-3 font-sans text-xs sm:grid-cols-4">
-              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
-                <span className="block font-mono text-[10px] text-slate-400 uppercase">
-                  Students
-                </span>
-                <strong className="mt-1 block font-sans text-lg font-black text-[#0056FF]">
-                  {state.fabActionCounts.student}
-                </strong>
-              </div>
-              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
-                <span className="block font-mono text-[10px] text-slate-400 uppercase">
-                  Attendance
-                </span>
-                <strong className="mt-1 block font-sans text-lg font-black text-[#0056FF]">
-                  {state.fabActionCounts.attendance}
-                </strong>
-              </div>
-              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
-                <span className="block font-mono text-[10px] text-slate-400 uppercase">
-                  Invoices
-                </span>
-                <strong className="mt-1 block font-sans text-lg font-black text-[#0056FF]">
-                  {state.fabActionCounts.invoice}
-                </strong>
-              </div>
-              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
-                <span className="block font-mono text-[10px] text-slate-400 uppercase">
-                  QR Scans
-                </span>
-                <strong className="mt-1 block font-sans text-lg font-black text-[#0056FF]">
-                  {state.fabActionCounts.qr}
-                </strong>
-              </div>
-            </div>
-
-            {/* Speed Dial Action Bar */}
-            <div className="mt-5 flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
-              {state.fabSpeedDialOpen && (
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      state.setFabActionCounts((prev) => ({ ...prev, student: prev.student + 1 }));
-                      state.setFabCount((c) => c + 1);
-                    }}
-                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
-                  >
-                    + Add Student
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      state.setFabActionCounts((prev) => ({
-                        ...prev,
-                        attendance: prev.attendance + 1,
-                      }));
-                      state.setFabCount((c) => c + 1);
-                    }}
-                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
-                  >
-                    + Attendance
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      state.setFabActionCounts((prev) => ({ ...prev, invoice: prev.invoice + 1 }));
-                      state.setFabCount((c) => c + 1);
-                    }}
-                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
-                  >
-                    + Invoice
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      state.setFabActionCounts((prev) => ({ ...prev, qr: prev.qr + 1 }));
-                      state.setFabCount((c) => c + 1);
-                    }}
-                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
-                  >
-                    + Scan QR
-                  </button>
-                </div>
-              )}
-
-              <LibraryFab
-                label="Quick Action"
-                icon={
-                  <Plus
-                    className={cn(
-                      'h-5 w-5 transition-transform duration-200',
-                      state.fabSpeedDialOpen ? 'rotate-45' : '',
-                    )}
-                  />
-                }
-                onClick={() => {
-                  state.setFabSpeedDialOpen(!state.fabSpeedDialOpen);
-                  state.setFabCount((c) => c + 1);
-                }}
-                className="bg-[#0056FF] text-white hover:bg-[#2277FF]"
-              />
-            </div>
           </div>
         </div>
       );
