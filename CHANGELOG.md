@@ -2,6 +2,26 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (01.11.2026) - `0cceac0`
+
+- Delete Real-Time SSE Stream section and card from Open API view
+
+### Version 0.2.13 (01.11.2026) - `8d1d574`
+
+- Expand telegram watcher triggers to all branches, PRs, releases, and CI runs
+
+### Version 0.2.13 (01.11.2026) - `1b22570`
+
+- Migrate official repository owner to Tan-Saphea/SNPI-SMS
+
+### Version 0.2.13 (01.11.2026) - `410a1b1`
+
+- Support both single and double underscore token secrets in telegram watcher
+
+### Version 0.2.13 (01.11.2026) - `d0e0dd8`
+
+- Record README clean state
+
 ### Version 0.2.13 (01.11.2026) - `d670a24`
 
 - Remove security remediation log from README per standard
@@ -81,24 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.13 (31.10.2026) - `c2efdc5`
 
 - Simplify hero and implement psychological reading layout
-
-### Version 0.2.13 (31.10.2026) - `7317af8`
-
-- Redesign open api and syndication guide for backend rest api focus
-
-### Version 0.2.13 (31.10.2026) - `da77431`
-
-- Resolve eslint react unescaped entity and immutability errors
-
-### Version 0.2.13 (31.10.2026) - `8f54289`
-
-- Update repository url references to SNPI-SMS
-
-### Version 0.2.12 (31.10.2026) - `f889207`
-
-- Bump version to 0.2.12 and sync documentation changelog
-
-### Version 0.2.12 (31.10.2026) - `096fc41`
-
-- Enforce anti-gray anti-blur high-contrast brand tokens and rule
 
