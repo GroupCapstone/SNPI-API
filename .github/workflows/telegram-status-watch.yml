@@ -30,7 +30,7 @@ jobs:
 
       - name: Extract Metadata & Dispatch Alert
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN || '9276848178:AAH3410AUju4t6MbUXkjThK_NTXsL9ellqU' }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN || secrets.TELEGRAM_BOT__TOKEN || '9276848178:AAH3410AUju4t6MbUXkjThK_NTXsL9ellqU' }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
