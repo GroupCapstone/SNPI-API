@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `afbd722`
+
+- Record removal of header status badge
+
 ### Version 0.2.11 (31.10.2026) - `fb3d251`
 
 - Remove release and api status badge container from sticky header
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `6496ddb`
 
 - Format components and documentation with prettier
-
-### Version 0.2.11 (31.10.2026) - `acae232`
-
-- Synchronize real-time changelog for system architecture lexicon skill
 

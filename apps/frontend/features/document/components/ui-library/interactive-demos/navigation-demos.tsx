@@ -13,15 +13,21 @@ import {
   Sparkles,
   ChevronLeft,
   Menu,
+  Play,
+  Volume,
+  VolumeX,
 } from '@/components/icons';
 import { RailToc, type RailTocItem } from '../rail-toc';
 import { IconBar } from '../icon-bar';
 import { CyberArmorNav, type HangingTabItem } from '../hanging-tabs-nav';
 
-// 1. Primary Component: Rail TOC (Paper Plane Flying Along Indented Track)
+// 1. Primary Component: Rail TOC (Supersonic Origami Paper Jet Flight Navigator)
 export function RailTocDemo() {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = React.useState('installation');
+  const [soundEnabled, setSoundEnabled] = React.useState(false);
+  const [isAutopiloting, setIsAutopiloting] = React.useState(false);
+  const autopilotTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const tocItems: RailTocItem[] = [
     { id: 'installation', label: 'Installation', depth: 0 },
@@ -34,88 +40,244 @@ export function RailTocDemo() {
     { id: 'features', label: 'Features', depth: 0 },
   ];
 
-  const sectionDetails: Record<string, { summary: string; note: string }> = {
+  const sectionDetails: Record<
+    string,
+    { summary: string; note: string; tag: string; code?: string }
+  > = {
     installation: {
-      summary: 'Get started with package installation and repository cloning.',
-      note: 'Run npm install to bootstrap monorepo workspaces and shared packages.',
+      summary: 'Bootstrap monorepo packages, shared contracts, and build dependencies.',
+      note: 'Installs all workspace packages and links @snp/shared into tsconfig paths.',
+      tag: 'CORE SETUP',
+      code: 'git clone <REPO_URL> && npm install',
     },
     prerequisites: {
-      summary: 'Verify runtime environments before initiating builds.',
+      summary: 'Verify Node.js runtime, npm package manager, and MongoDB replica set.',
       note: 'Requires Node.js >= 22.13.0, npm >= 10.8, and MongoDB Replica Set (rs0).',
+      tag: 'RUNTIME',
+      code: 'node -v && mongod --replSet rs0',
     },
     'installation-steps': {
-      summary: 'Execute the five-stage local development orchestration.',
-      note: 'Step 1: npm run build:shared. Step 2: npm run dev:backend. Step 3: npm run dev:frontend.',
+      summary: 'Execute the five-stage local development orchestration pipeline.',
+      note: 'Phase 1: shared contracts. Phase 2: modular backend. Phase 3: Next.js frontend.',
+      tag: 'PIPELINE',
+      code: 'npm run build:shared && npm run dev',
     },
     configuration: {
-      summary: 'Define environment configurations across workspaces.',
-      note: 'Populate .env with BACKEND_INTERNAL_URL, MONGO_URI, and JWT secrets.',
+      summary: 'Define environment configurations across workspaces and database pools.',
+      note: 'Populate .env with BACKEND_INTERNAL_URL, MONGO_URI, and JWT constant-time keys.',
+      tag: 'ENVIRONMENT',
+      code: 'BACKEND_INTERNAL_URL=http://localhost:5001\nMONGO_URI=mongodb://localhost:27017/snp_sms?replicaSet=rs0',
     },
     usage: {
       summary: 'Explore interactive components in the Developer Documentation Library.',
-      note: 'Navigate to /document/design-system to review live components, states, and prompt skills.',
+      note: 'Inspect live components, props contracts, and 1-click procedural AI prompt skills.',
+      tag: 'DOCUMENTATION',
+      code: 'open http://localhost:3000/document/design-system',
     },
     'customizing-content': {
-      summary: 'Tailor component tokens and theme variables.',
-      note: 'Override CSS variables or pass custom variant props without touching global CSS.',
+      summary: 'Tailor component tokens, color variables, and mathematical depth ladders.',
+      note: 'Apply Royal Blue #0056FF, Azure #2277FF, and flat zero-shadow design tokens.',
+      tag: 'DESIGN TOKENS',
+      code: '--brand-blue: #0056FF;\n--brand-azure: #2277FF;\n--elevation-1: #FFFFFF;',
     },
     'submenu-content': {
-      summary: 'Configure nested navigation hierarchies and subcategories.',
-      note: 'Support multi-tier navigation trees with indented SVG rail paths and filleted bends.',
+      summary: 'Configure nested navigation hierarchies and filleted track curves.',
+      note: 'Supports multi-tier navigation trees with indented SVG rail paths and de Casteljau Bézier contrails.',
+      tag: 'HIERARCHY',
+      code: '{ id: "submenu-content", label: "Submenu Content", depth: 2 }',
     },
     features: {
       summary: 'Production enterprise pillars for the SNP-SMS platform.',
       note: '7-layer modular monolith, constant-time crypto, and WCAG AA/AAA compliance.',
+      tag: 'ENTERPRISE',
+      code: 'npm run smoke && npm run test:api && npm run deploy:verify',
     },
   };
 
+  const activeIdx = tocItems.findIndex((it) => it.id === activeSection);
+  const activeItem = tocItems[activeIdx >= 0 ? activeIdx : 0];
+
+  const handleScrollTo = (id: string) => {
+    setActiveSection(id);
+    const el = document.getElementById(id);
+    if (el && containerRef.current) {
+      const cRect = containerRef.current.getBoundingClientRect();
+      const elRect = el.getBoundingClientRect();
+      containerRef.current.scrollTo({
+        top: containerRef.current.scrollTop + elRect.top - cRect.top - 20,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleAutopilot = () => {
+    if (isAutopiloting) {
+      setIsAutopiloting(false);
+      if (autopilotTimeoutRef.current) clearTimeout(autopilotTimeoutRef.current);
+      return;
+    }
+
+    setIsAutopiloting(true);
+    let step = 0;
+    const itemsCount = tocItems.length;
+
+    const runStep = () => {
+      if (step < itemsCount) {
+        handleScrollTo(tocItems[step].id);
+        step += 1;
+        autopilotTimeoutRef.current = setTimeout(runStep, 850);
+      } else if (step === itemsCount) {
+        // Pause briefly at the bottom, then bank and fly back up to the top
+        autopilotTimeoutRef.current = setTimeout(() => {
+          handleScrollTo(tocItems[0].id);
+          autopilotTimeoutRef.current = setTimeout(() => {
+            setIsAutopiloting(false);
+          }, 900);
+        }, 600);
+      }
+    };
+
+    runStep();
+  };
+
+  React.useEffect(() => {
+    return () => {
+      if (autopilotTimeoutRef.current) clearTimeout(autopilotTimeoutRef.current);
+    };
+  }, []);
+
   return (
-    <div className="w-full max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      {/* Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-        <div className="flex items-center gap-2.5">
-          <svg viewBox="0 0 24 24" className="size-5 -rotate-90 fill-[#0056FF]" aria-hidden="true">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-          </svg>
+    <div className="w-full max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-950">
+      {/* Flight Deck HUD Header Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
+        <div className="flex items-center gap-3">
+          {/* Mini 3D Faceted Origami Paper Jet Icon */}
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#EFF5FF] dark:bg-blue-950/40">
+            <svg viewBox="0 0 32 32" className="size-5" fill="none" aria-hidden="true">
+              <path
+                d="M 28 16 L 4 5 L 11 16 Z"
+                fill="#2277FF"
+                stroke="#0056FF"
+                strokeWidth="0.75"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M 28 16 L 4 27 L 11 16 Z"
+                fill="#0056FF"
+                stroke="#003ECC"
+                strokeWidth="0.75"
+                strokeLinejoin="round"
+              />
+              <path d="M 4 16 L 2 13 L 4 19 Z" fill="#002999" />
+              <line
+                x1="4"
+                y1="16"
+                x2="28"
+                y2="16"
+                stroke="#FFFFFF"
+                strokeWidth="1"
+                strokeLinecap="round"
+                opacity="0.95"
+              />
+            </svg>
+          </div>
           <div>
-            <h3 className="font-sans text-xs font-bold text-slate-950">
-              Rail TOC · Paper Plane Flight Navigator
-            </h3>
-            <p className="font-sans text-[11px] text-slate-500">
-              Plane flies along rail bends, turns around on scroll-up, and fills passed track.
+            <div className="flex items-center gap-2">
+              <h3 className="font-sans text-xs font-bold text-slate-950 dark:text-white">
+                Rail TOC · Paper Plane Flight Navigator
+              </h3>
+              <span className="rounded-[4px] bg-[#EFF5FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] dark:bg-blue-950/60 dark:text-blue-300">
+                AEROSPACE V2
+              </span>
+            </div>
+            <p className="font-sans text-[11px] text-slate-500 dark:text-slate-400">
+              3D Faceted Jet with de Casteljau Bézier contrail, 180° turnaround banking, and tactile
+              audio chimes.
             </p>
           </div>
         </div>
 
-        {/* Quick Jump Buttons with 0px border and 4px radius standard */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          {tocItems.slice(0, 4).map((it) => (
+        {/* Flight Simulator Controls */}
+        <div className="flex items-center gap-2">
+          {/* Autopilot Walkthrough Button */}
+          <button
+            type="button"
+            onClick={handleAutopilot}
+            className={cn(
+              'flex cursor-pointer items-center gap-1.5 rounded-[4px] border-0 px-2.5 py-1.5 font-sans text-[11px] font-semibold transition-all select-none',
+              isAutopiloting
+                ? 'animate-pulse bg-[#0056FF] text-white shadow-xs'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+            )}
+            title="Automatically fly through all waypoints and return to start"
+          >
+            <Play className="size-3 fill-current" />
+            <span>{isAutopiloting ? 'AUTOPILOT ACTIVE' : 'AUTOPILOT TOUR'}</span>
+          </button>
+
+          {/* Sound FX Toggle Button */}
+          <button
+            type="button"
+            onClick={() => setSoundEnabled(!soundEnabled)}
+            className={cn(
+              'flex cursor-pointer items-center gap-1 rounded-[4px] border-0 px-2.5 py-1.5 font-sans text-[11px] font-semibold transition-all select-none',
+              soundEnabled
+                ? 'bg-[#EFF5FF] text-[#0056FF] dark:bg-blue-950/50 dark:text-blue-300'
+                : 'bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700',
+            )}
+            title={soundEnabled ? 'Mute waypoint chimes' : 'Enable procedural audio chimes'}
+          >
+            {soundEnabled ? <Volume className="size-3.5" /> : <VolumeX className="size-3.5" />}
+            <span className="font-mono text-[10px]">{soundEnabled ? 'AUDIO ON' : 'AUDIO OFF'}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Aerospace Telemetry HUD Strip */}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg bg-slate-50 px-3 py-2 font-mono text-[10px] text-slate-600 dark:bg-slate-900/60 dark:text-slate-400">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-[1px] bg-[#0056FF]" />
+            <span className="font-bold text-slate-900 dark:text-white">
+              WP 0{activeIdx + 1} / 0{tocItems.length}
+            </span>
+          </div>
+          <span className="opacity-30">|</span>
+          <span className="truncate uppercase">
+            TARGET: <span className="font-semibold text-[#0056FF]">{activeItem?.label}</span>
+          </span>
+          <span className="opacity-30">|</span>
+          <span>
+            TIER: <span className="font-semibold">DEPTH {activeItem?.depth || 0}</span>
+          </span>
+        </div>
+        <div className="flex items-center gap-2 text-[9px] text-slate-500">
+          <span>KINEMATICS: 420k / 32d</span>
+          <span className="opacity-30">|</span>
+          <span>BANKING: 180° REVERSE</span>
+        </div>
+      </div>
+
+      {/* Quick Jump Waypoint Bar */}
+      <div className="mt-3 flex flex-wrap items-center gap-1.5">
+        {tocItems.map((it) => {
+          const isCurrent = it.id === activeSection;
+          return (
             <button
               key={it.id}
               type="button"
-              onClick={() => {
-                setActiveSection(it.id);
-                const el = document.getElementById(it.id);
-                if (el && containerRef.current) {
-                  const cRect = containerRef.current.getBoundingClientRect();
-                  const elRect = el.getBoundingClientRect();
-                  containerRef.current.scrollTo({
-                    top: containerRef.current.scrollTop + elRect.top - cRect.top - 20,
-                    behavior: 'smooth',
-                  });
-                }
-              }}
+              onClick={() => handleScrollTo(it.id)}
               className={cn(
-                'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-sans text-[11px] font-semibold transition-all',
-                activeSection === it.id
+                'cursor-pointer rounded-[4px] border-0 px-2 py-1 font-sans text-[11px] font-semibold transition-all select-none',
+                isCurrent
                   ? 'bg-[#0056FF] text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
               )}
             >
               {it.label}
             </button>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
       {/* Interactive Two-Column Playground */}
@@ -123,37 +285,66 @@ export function RailTocDemo() {
         {/* Left: Scrollable Document Content Container (Tracks Scroll in Real Time) */}
         <div
           ref={containerRef}
-          className="no-scrollbar h-80 space-y-6 overflow-y-auto rounded-xl border border-slate-100 bg-[#F8FAFC] p-4 select-text md:col-span-7"
+          className="no-scrollbar h-96 space-y-4 overflow-y-auto rounded-xl border border-slate-100 bg-[#F8FAFC] p-4 select-text md:col-span-7 dark:border-slate-800 dark:bg-slate-900/40"
         >
-          {tocItems.map((item) => (
-            <section
-              key={item.id}
-              id={item.id}
-              className={cn(
-                'rounded-lg border p-3.5 transition-all',
-                activeSection === item.id
-                  ? 'border-[#0056FF]/40 bg-white shadow-2xs'
-                  : 'border-slate-200/80 bg-white/60',
-              )}
-            >
-              <div className="flex items-center justify-between">
-                <h4 className="font-sans text-xs font-bold text-slate-900">{item.label}</h4>
-                <span className="font-mono text-[9px] font-bold text-[#0056FF]">
-                  DEPTH {item.depth || 0}
-                </span>
-              </div>
-              <p className="mt-1 font-sans text-[11px] text-slate-600">
-                {sectionDetails[item.id]?.summary}
-              </p>
-              <div className="mt-2 rounded-[4px] border-0 bg-slate-100/90 p-2 font-mono text-[10px] text-slate-700">
-                {sectionDetails[item.id]?.note}
-              </div>
-            </section>
-          ))}
+          {tocItems.map((item) => {
+            const isCurrent = activeSection === item.id;
+            const details = sectionDetails[item.id];
+            return (
+              <section
+                key={item.id}
+                id={item.id}
+                className={cn(
+                  'rounded-lg border p-4 transition-all duration-200',
+                  isCurrent
+                    ? 'border-[#0056FF]/50 bg-white ring-1 ring-[#0056FF]/20 dark:border-blue-500/50 dark:bg-slate-900'
+                    : 'border-slate-200/80 bg-white/70 dark:border-slate-800 dark:bg-slate-900/50',
+                )}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-[9px] font-bold text-[#0056FF]">
+                      WP 0{tocItems.findIndex((it) => it.id === item.id) + 1}
+                    </span>
+                    <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+                      {item.label}
+                    </h4>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="rounded-[3px] bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                      {details?.tag}
+                    </span>
+                    <span className="font-mono text-[9px] font-semibold text-slate-400">
+                      DEPTH {item.depth || 0}
+                    </span>
+                  </div>
+                </div>
+
+                <p className="mt-2 font-sans text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
+                  {details?.summary}
+                </p>
+
+                {details?.code && (
+                  <div className="mt-2.5 overflow-x-auto rounded-[4px] bg-slate-950 p-2 font-mono text-[10px] text-slate-200">
+                    <pre className="m-0 leading-tight">
+                      <code>{details.code}</code>
+                    </pre>
+                  </div>
+                )}
+
+                <div className="mt-2.5 rounded-[4px] border-0 bg-slate-100/80 p-2 font-sans text-[10px] text-slate-600 dark:bg-slate-800/80 dark:text-slate-400">
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">
+                    Implementation Guide:
+                  </span>{' '}
+                  {details?.note}
+                </div>
+              </section>
+            );
+          })}
         </div>
 
-        {/* Right: The Paper Plane Rail TOC (Matches User Attachment Exact Style) */}
-        <div className="flex flex-col justify-start rounded-xl border border-slate-100 bg-white p-4 md:col-span-5">
+        {/* Right: The Paper Plane Rail TOC Flight Navigator */}
+        <div className="flex flex-col justify-start rounded-xl border border-slate-100 bg-white p-4.5 md:col-span-5 dark:border-slate-800 dark:bg-slate-900">
           <RailToc
             items={tocItems}
             containerRef={containerRef}
@@ -161,7 +352,9 @@ export function RailTocDemo() {
             indent={16}
             activeId={activeSection}
             onSelect={(id) => setActiveSection(id)}
-            title="On this page"
+            title="Flight Route"
+            showProgress={true}
+            enableSound={soundEnabled}
           />
         </div>
       </div>
