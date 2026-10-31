@@ -1385,6 +1385,117 @@ export function Example() {
     implementationNotes: ['Popover card with unread state.'],
     supportedStates: ['Unread', 'Read', 'Expanded'],
   },
+  {
+    id: 'status-404',
+    name: 'Status Page & 404 Console',
+    category: 'Feedback',
+    paradigm: 'Aerospace Status & Error Console',
+    description:
+      'Multi-archetype brand status screen supporting 404, 403, 500, 503, and 401 with Radar, Barcode, Terminal, CRT Phosphor, and Gravity Blocks modes.',
+    explanation:
+      'Provides five distinct brand visual archetypes to communicate missing routes, forbidden access, and cluster server errors. Features interactive spatial radar sweeping, brutalist cryptographic barcode ledger, live typing cyber terminal, CRT phosphor static grain, and tumbling kinetic gravity blocks.',
+    props: [
+      {
+        name: 'mode',
+        type: "'radar' | 'barcode' | 'terminal' | 'noise' | 'gravity'",
+        default: "'radar'",
+        description: 'Visual archetype presentation mode.',
+      },
+      {
+        name: 'statusCode',
+        type: '404 | 403 | 500 | 503 | 401',
+        default: '404',
+        description: 'HTTP status code determining diagnostic messaging and technical telemetry.',
+      },
+      {
+        name: 'title',
+        type: 'string',
+        description: 'Custom heading title override.',
+      },
+      {
+        name: 'description',
+        type: 'string',
+        description: 'Custom description explanation override.',
+      },
+      {
+        name: 'homeHref',
+        type: 'string',
+        default: "'/document/design-system'",
+        description: 'Primary action button navigation link destination.',
+      },
+      {
+        name: 'homeLabel',
+        type: 'string',
+        default: "'Return to System Home'",
+        description: 'Primary action button label.',
+      },
+      {
+        name: 'showControls',
+        type: 'boolean',
+        default: 'false',
+        description: 'Display interactive inline mode and status code switcher controls.',
+      },
+    ],
+    codeSnippet: `import { StatusPage404 } from '@/features/document/components/ui-library';
+
+// Next.js app/not-found.tsx
+export default function NotFound() {
+  return (
+    <StatusPage404
+      mode="radar"
+      statusCode={404}
+      homeHref="/dashboard"
+      homeLabel="Return to Dashboard"
+      showControls={true}
+    />
+  );
+}`,
+    realWorldExamples: [
+      {
+        title: 'Missing Route Handler (Next.js app/not-found.tsx)',
+        scenario: 'A user navigates to an unmapped campus URL or deleted student dossier.',
+        impact:
+          'Delightful branded recovery flow with instant home navigation and diagnostic telemetry.',
+      },
+      {
+        title: 'Cryptographic Permission Challenge (403 Forbidden)',
+        scenario:
+          'A student attempts to access administrative payroll or examination vault routes.',
+        impact:
+          'Clear explanation of missing RBAC scopes with institutional administrator escalation link.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Graceful Error Recovery & Locus of Control',
+        detail:
+          'Reduces user disorientation by providing clear situational telemetry and immediate return paths.',
+      },
+      {
+        principle: 'Brand Trust & Polish',
+        detail:
+          'Replaces generic browser error screens with high-fidelity, interactive brand archetypes.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Provide a prominent, clear action button returning users to home or dashboard.',
+        dontItem:
+          'Never trap users with dead ends or ambiguous technical error stacks without remediation steps.',
+      },
+    ],
+    implementationNotes: [
+      'Pure CSS & SVG procedural noise and radar animations with zero heavy external media assets.',
+      'Supports interactive CLI commands in terminal mode and spring physics tumbling in gravity mode.',
+    ],
+    supportedStates: [
+      'Radar Explorer',
+      'Barcode Ledger',
+      'Cyber Terminal',
+      'CRT Phosphor',
+      'Gravity Blocks',
+    ],
+  },
 
   // DISPLAY GROUP
   {

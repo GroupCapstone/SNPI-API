@@ -1,19 +1,16 @@
-import Link from 'next/link';
-
-import { Button } from '@/components/ui/button';
+import { StatusPage404 } from '@/features/document/components/ui-library';
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-screen place-items-center bg-slate-50 p-6 text-center">
-      <div>
-        <p className="text-sm font-semibold text-slate-500">404</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">
-          Page not found
-        </h1>
-        <p className="mt-3 text-sm text-slate-500">This SNP-SMS page has not been created yet.</p>
-        <Link href="/dashboard" className="mt-6 inline-block">
-          <Button>Return to dashboard</Button>
-        </Link>
+    <main className="flex min-h-screen items-center justify-center bg-slate-50 p-4 sm:p-8 dark:bg-slate-950">
+      <div className="w-full max-w-4xl">
+        <StatusPage404
+          mode="radar"
+          statusCode={404}
+          homeHref="/dashboard"
+          homeLabel="Return to Dashboard"
+          showControls={true}
+        />
       </div>
     </main>
   );

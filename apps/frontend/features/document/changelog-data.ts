@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "594c28a",
+    "description": "Record real-time changelog for brand identity colors expansion"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "1da4370",
     "description": "Expand Brand Identity & Colors with 7-token bento grid, application matrix, and do-dont rules"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "d356019",
     "description": "Merge 3-tab cyber navigation menu and apply royal blue active styling"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "0d81689",
-    "description": "Resolve vercel deployment failures for frontend and backend"
   }
 ];
