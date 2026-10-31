@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "0d6b9ef",
+    "description": "Rewrite readme to standard enterprise format with zero links and short summary"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
+    "commitHash": "5dfee5c",
+    "description": "Synchronize release changelog entries"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "c445400",
     "description": "Configure Vercel build dependencies and optional Linux oxide binaries"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "fe39f6e",
     "description": "Enforce light day mode and implement Wiz-style curved atmospheric footer"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "3bc263e",
-    "description": "Sync commit 1342394"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "1342394",
-    "description": "Remove redundant right-sidebar TOC and line tracker from Open API page"
   }
 ];
