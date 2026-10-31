@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "fb3d251",
+    "description": "Remove release and api status badge container from sticky header"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
+    "commitHash": "0bddca0",
+    "description": "Compile backend typescript output to dist directory for Vercel deployment"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "813330f",
     "description": "Record real-time changelog for condensed readme"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "acae232",
     "description": "Synchronize real-time changelog for system architecture lexicon skill"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "5c307dc",
-    "description": "Author authoritative 1,111-concept system architecture lexicon & 21 standard rules"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "578d4f3",
-    "description": "Record e11eaf9 into changelog and documentation portal"
   }
 ];

@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `fb3d251`
+
+- Remove release and api status badge container from sticky header
+
+### Version 0.2.11 (31.10.2026) - `0bddca0`
+
+- Compile backend typescript output to dist directory for Vercel deployment
+
 ### Version 0.2.11 (31.10.2026) - `813330f`
 
 - Record real-time changelog for condensed readme
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `acae232`
 
 - Synchronize real-time changelog for system architecture lexicon skill
-
-### Version 0.2.11 (31.10.2026) - `5c307dc`
-
-- Author authoritative 1,111-concept system architecture lexicon & 21 standard rules
-
-### Version 0.2.11 (31.10.2026) - `578d4f3`
-
-- Record e11eaf9 into changelog and documentation portal
 
