@@ -147,7 +147,7 @@ All AI coding assistants (including Antigravity, Claude, Copilot, Codex, and sub
 
 ## 7. Repository Ownership & Future Transfer Protocol
 
-- **Planned Ownership Transfer**: The current GitHub repository owner (`shiliaiwei`) is provisional. Repository ownership will be transferred in the future to an institutional organization or designated enterprise owner.
+- **Official Repository Ownership**: The official GitHub repository owner is `@Tan-Saphea` (`https://github.com/Tan-Saphea/SNPI-SMS.git`).
 - **Portable & Decoupled Configuration**:
   - Never hardcode personal GitHub usernames or user paths into CI/CD workflows, automation secrets, or package metadata.
   - Maintainer verification relies on immutable numeric GitHub account IDs in `.github/maintainers.json`, which must be updated upon ownership migration.

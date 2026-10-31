@@ -2,31 +2,29 @@
 # SNP-SMS Monorepo Code Ownership Policy
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
 #
-# NOTE: The current GitHub account owner (@shiliaiwei) is provisional.
-# Ownership of this repository will be transferred to an institutional organization
-# or designated enterprise owner in the future.
+# NOTE: Official repository owner is @Tan-Saphea (https://github.com/Tan-Saphea/SNPI-SMS).
 # ==============================================================================
 
 # Global fallback maintainer
-* @shiliaiwei
+* @Tan-Saphea
 
 # Monorepo Workspaces & Core Packages
-/packages/shared/ @shiliaiwei
-/packages/tsconfig/ @shiliaiwei
-/packages/eslint-config/ @shiliaiwei
+/packages/shared/ @Tan-Saphea
+/packages/tsconfig/ @Tan-Saphea
+/packages/eslint-config/ @Tan-Saphea
 
 # Backend Modular Monolith (Express 5, MongoDB rs0, 47 Domains)
-/apps/backend/ @shiliaiwei
-/apps/backend/src/modules/ @shiliaiwei
-/apps/backend/infrastructure/ @shiliaiwei
+/apps/backend/ @Tan-Saphea
+/apps/backend/src/modules/ @Tan-Saphea
+/apps/backend/infrastructure/ @Tan-Saphea
 
 # Frontend App (Next.js App Router, React 19, Light Mode)
-/apps/frontend/ @shiliaiwei
-/apps/frontend/app/ @shiliaiwei
-/apps/frontend/features/ @shiliaiwei
+/apps/frontend/ @Tan-Saphea
+/apps/frontend/app/ @Tan-Saphea
+/apps/frontend/features/ @Tan-Saphea
 
 # CI/CD Workflows, Automation, and Security Governance
-/.github/ @shiliaiwei
-/.github/workflows/ @shiliaiwei
-/.github/scripts/ @shiliaiwei
-/scripts/ @shiliaiwei
+/.github/ @Tan-Saphea
+/.github/workflows/ @Tan-Saphea
+/.github/scripts/ @Tan-Saphea
+/scripts/ @Tan-Saphea

@@ -3,7 +3,7 @@
 **Project**: SNP-SMS (SNPI-SMS Full-Stack TypeScript Monorepo)  
 **Report Date**: 2026-11-01  
 **Auditor**: Antigravity Security Automation  
-**Repository**: `shiliaiwei/SNPI-SMS`  
+**Repository**: `Tan-Saphea/SNPI-SMS`  
 **Status**: RESOLVED (0 Vulnerabilities)
 
 ---

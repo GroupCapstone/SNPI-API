@@ -60,7 +60,7 @@ route -> controller -> service -> repository -> model -> validation -> types
 
 ## 5. Repository Ownership & Portable Configuration
 
-- The provisional GitHub repository owner is `@shiliaiwei`. Ownership will be transferred to an institutional organization in the future.
+- The official GitHub repository owner is `@Tan-Saphea` (`https://github.com/Tan-Saphea/SNPI-SMS`).
 - Never hardcode personal GitHub usernames or user paths into workflows, scripts, or package metadata.
 - Maintainer verification relies on immutable numeric GitHub account IDs in `apps/backend/.github/maintainers.json`.
 
