@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (01.11.2026) - `4a46a37`
+
+- Record security audit and remediation report history
+
+### Version 0.2.13 (01.11.2026) - `4ad793d`
+
+- Record security patch in documentation
+
 ### Version 0.2.13 (01.11.2026) - `190ac14`
 
 - Resolve CVE-2026-118764 minimatch DoS across workspaces
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `0110d62`
 
 - Document display-only open-api rules and format open-api-view
-
-### Version 0.2.12 (31.10.2026) - `c6ce7eb`
-
-- Remove 10 deprecated components from catalog and registry
-
-### Version 0.2.12 (31.10.2026) - `49f052c`
-
-- Redesign into minimal one-way subscription-gated guide
 
