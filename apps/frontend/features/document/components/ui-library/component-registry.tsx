@@ -1164,7 +1164,7 @@ export function Demo() {
     implementationNotes: [
       'Responsive SVG stepped armor chassis with 45° chamfers.',
       'Double-seam divider: 1px dark border paired with 1px white highlight line.',
-      'Active bar: linear-gradient(#0056FF, #2277FF) with 10px box-shadow glow.',
+      'Active bar: solid Royal Blue (#0056FF).',
     ],
     supportedStates: ['Default', 'Hover', 'Active Glow', 'Focus Visible'],
   },
