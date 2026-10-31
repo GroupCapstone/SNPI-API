@@ -9,7 +9,7 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.12",
     "date": "31.10.2026",
-    "commitHash": "0590a40",
+    "commitHash": "f889207",
     "description": "Bump version to 0.2.12 and sync documentation changelog"
   },
   {
