@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "01.11.2026",
+    "commitHash": "4217c14",
+    "developer": "史力爱卫",
+    "description": "Consolidate all alerts into one single all-in-one status message and disable local commit hook"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "0997258",
+    "developer": "史力爱卫",
+    "description": "Enforce human-readable summaries and developer attribution across changelog and telegram alerts"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
     "commitHash": "96be3fd",
     "developer": "史力爱卫",
     "description": "Record Certificate Verification and Real-Time SSE removal"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "7970746",
     "developer": "史力爱卫",
     "description": "Condense service card and hero descriptions to ultra-minimal single-line copy"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "de98cab",
-    "developer": "史力爱卫",
-    "description": "Optimize mobile hero view, update active menu style, and sync v0.2.13 changelog"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "68d77ba",
-    "developer": "史力爱卫",
-    "description": "Standalone mobile hero with big typography and concise hook description"
   }
 ];

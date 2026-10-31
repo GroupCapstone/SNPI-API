@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (01.11.2026) - `4217c14` (Developer: **史力爱卫**)
+
+- Consolidate all alerts into one single all-in-one status message and disable local commit hook
+
+### Version 0.2.13 (01.11.2026) - `0997258` (Developer: **史力爱卫**)
+
+- Enforce human-readable summaries and developer attribution across changelog and telegram alerts
+
 ### Version 0.2.13 (01.11.2026) - `96be3fd` (Developer: **史力爱卫**)
 
 - Record Certificate Verification and Real-Time SSE removal
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.13 (31.10.2026) - `7970746` (Developer: **史力爱卫**)
 
 - Condense service card and hero descriptions to ultra-minimal single-line copy
-
-### Version 0.2.13 (31.10.2026) - `de98cab` (Developer: **史力爱卫**)
-
-- Optimize mobile hero view, update active menu style, and sync v0.2.13 changelog
-
-### Version 0.2.13 (31.10.2026) - `68d77ba` (Developer: **史力爱卫**)
-
-- Standalone mobile hero with big typography and concise hook description
 

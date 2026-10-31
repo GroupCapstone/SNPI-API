@@ -109,7 +109,11 @@ function getSecurityInlineSummary(security: SecurityStatus): string {
   return `${security.totalAlerts} open (${items})`;
 }
 
-function getTrackerSummary(apiHealth: { online: boolean; statusCode: number; latencyMs: number }): string {
+function getTrackerSummary(apiHealth: {
+  online: boolean;
+  statusCode: number;
+  latencyMs: number;
+}): string {
   if (apiHealth.online) {
     return `Operational (HTTP ${apiHealth.statusCode || 200}, ${apiHealth.latencyMs}ms)`;
   }
@@ -365,7 +369,9 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
   );
 
   // Detect events
-  const isNewRelease = Boolean(cache.lastReleaseVersion && cache.lastReleaseVersion !== packageVersion);
+  const isNewRelease = Boolean(
+    cache.lastReleaseVersion && cache.lastReleaseVersion !== packageVersion,
+  );
   const isNewCommit = cache.lastCommitHash !== commit.hash;
   const isSecurityChanged =
     cache.lastSecurityAlertCount !== undefined &&
@@ -374,7 +380,8 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
     cache.lastApiStatus !== undefined &&
     cache.lastApiStatus !== (apiHealth.online ? 'ONLINE' : 'OFFLINE');
 
-  const shouldAlert = options.forceAlert || isNewCommit || isNewRelease || isSecurityChanged || isApiChanged;
+  const shouldAlert =
+    options.forceAlert || isNewCommit || isNewRelease || isSecurityChanged || isApiChanged;
 
   if (shouldAlert) {
     const authorDisplay = formatAuthor(commit.author, commit.email);
@@ -416,7 +423,8 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
     // Initial silent state sync
     if (!cache.lastCommitHash) cache.lastCommitHash = commit.hash;
     if (!cache.lastReleaseVersion) cache.lastReleaseVersion = packageVersion;
-    if (cache.lastSecurityAlertCount === undefined) cache.lastSecurityAlertCount = security.totalAlerts;
+    if (cache.lastSecurityAlertCount === undefined)
+      cache.lastSecurityAlertCount = security.totalAlerts;
     if (!cache.lastApiStatus) cache.lastApiStatus = apiHealth.online ? 'ONLINE' : 'OFFLINE';
   }
 

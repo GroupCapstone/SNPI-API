@@ -49,10 +49,13 @@ export const syncChangelog = (): void => {
   }
 
   // 3. Extract recent commits (last 25 for rich document history)
-  const gitOutput = execSync('git log -n 25 --pretty=format:"%h|%ad|%an|%s" --date=format:"%d.%m.%Y"', {
-    cwd: ROOT_DIR,
-    encoding: 'utf-8',
-  });
+  const gitOutput = execSync(
+    'git log -n 25 --pretty=format:"%h|%ad|%an|%s" --date=format:"%d.%m.%Y"',
+    {
+      cwd: ROOT_DIR,
+      encoding: 'utf-8',
+    },
+  );
 
   const lines = gitOutput.trim().split('\n').filter(Boolean);
   const items: ChangeLogItem[] = [];
