@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.12",
     "date": "31.10.2026",
+    "commitHash": "da77431",
+    "description": "Resolve eslint react unescaped entity and immutability errors"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
     "commitHash": "8f54289",
     "description": "Update repository url references to SNPI-SMS"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "d7b657d",
     "description": "Record Rail TOC light redesign and circular waypoint nodes"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "a301963",
-    "description": "Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground"
   }
 ];
