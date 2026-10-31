@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "01.11.2026",
+    "commitHash": "d670a24",
+    "description": "Remove security remediation log from README per standard"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "af52d17",
+    "description": "Record README security remediation section"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
     "commitHash": "e9af90d",
     "description": "Add standard security vulnerability remediation log to README"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "096fc41",
     "description": "Enforce anti-gray anti-blur high-contrast brand tokens and rule"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "cb2f90c",
-    "description": "Update navbar to solid white with blue active text and redesign system color matrix to high-contrast light day mode"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "1ddce36",
-    "description": "Replace dark terminal packet monitor with light modern ui and record rule"
   }
 ];
