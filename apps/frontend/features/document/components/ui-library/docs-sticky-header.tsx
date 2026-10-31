@@ -4,7 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BrandMark } from '@/components/shared/brand-mark';
-import { FileText, Layers, Code, Terminal } from '@/components/icons';
+import { FileText, Layers, Code } from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { useDocsNav } from './docs-nav-context';
 
@@ -16,8 +16,8 @@ export interface DocsStickyHeaderProps {
 
 export function DocsStickyHeader({
   activeTab: propActiveTab,
-  version = 'v0.2.11',
-  commitHash = '0d81689',
+  version: _version = 'v0.2.11',
+  commitHash: _commitHash = '0d81689',
 }: DocsStickyHeaderProps = {}) {
   const pathname = usePathname();
   const { activeTab: navActiveTab, setActiveTab } = useDocsNav();
@@ -80,46 +80,8 @@ export function DocsStickyHeader({
           <HangingTabsNav items={navTabs} activeId={currentTab} size="md" />
         </div>
 
-        {/* Right: Release Tag, Commit Change Tracker & API Status Badge */}
-        <div className="z-10 flex items-center gap-2 select-none">
-          <div
-            className="hidden items-center gap-2.5 rounded-[4px] border border-[#CAD3F5] bg-white/95 px-3 py-1.5 shadow-2xs backdrop-blur-md sm:flex"
-            title={`SNPI-SMS Release ${version} • Commit ${commitHash} • 193 API Endpoints Active`}
-          >
-            {/* Release Version Tag */}
-            <Link
-              href="/document/changelog"
-              className="flex items-center gap-1.5 text-xs font-semibold text-slate-900 transition-colors hover:text-[#0056FF]"
-              title="View Release Changelog"
-            >
-              <span className="rounded-[3px] bg-[#EFF5FF] px-1.5 py-0.5 text-[10px] font-black tracking-wider text-[#0056FF] uppercase">
-                RELEASE
-              </span>
-              <span className="font-mono text-[11px] font-bold">{version}</span>
-            </Link>
-
-            {/* Subtle Divider */}
-            <span className="font-mono text-xs text-slate-300">|</span>
-
-            {/* Commit Change Tracker */}
-            <Link
-              href="/document/changelog"
-              className="group/commit flex items-center gap-1 font-mono text-[11px] font-semibold text-slate-600 transition-colors hover:text-[#0056FF]"
-              title="View Real-Time Commit Changelog"
-            >
-              <Terminal className="size-3 text-slate-400 transition-colors group-hover/commit:text-[#0056FF]" />
-              <span>{commitHash}</span>
-            </Link>
-
-            {/* Subtle Divider */}
-            <span className="font-mono text-xs text-slate-300">|</span>
-
-            {/* API Status Badge (Zero Dot Style) */}
-            <div className="flex items-center gap-1.5 rounded-[3px] border border-emerald-200/90 bg-emerald-50 px-2 py-0.5 font-mono text-[10.5px] font-bold text-emerald-800">
-              <span>API READY (193)</span>
-            </div>
-          </div>
-        </div>
+        {/* Right: Empty spacer to maintain layout balance */}
+        <div className="z-10 hidden sm:block" />
       </div>
     </header>
   );
