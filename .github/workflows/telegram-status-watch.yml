@@ -2,11 +2,14 @@ name: Telegram Repository Status & Security Watcher
 
 on:
   push:
-    branches: [main]
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+    types: [opened, closed, reopened]
   release:
     types: [published]
   workflow_run:
-    workflows: ['Security & Compliance Audit']
+    workflows: ['Monorepo CI', 'Security & Compliance Audit']
     types: [completed]
 
 permissions:
@@ -31,12 +34,12 @@ jobs:
       - name: Extract Metadata & Dispatch Alert
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN || secrets.TELEGRAM_BOT__TOKEN || '9276848178:AAH3410AUju4t6MbUXkjThK_NTXsL9ellqU' }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '6600489302' }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # 1. Resolve Version from package.json
           PKG_VERSION=$(node -p "require('./package.json').version || '0.0.0'")
-
+          
           # 2. Resolve Developer & Commit Info
           COMMIT_HASH="${{ github.sha }}"
           SHORT_HASH="${COMMIT_HASH:0:7}"
@@ -53,25 +56,26 @@ jobs:
 
           # 4. Determine Event Type & Format Payload
           EVENT_NAME="${{ github.event_name }}"
-
+          
           if [ "$EVENT_NAME" = "release" ]; then
             TAG_NAME="${{ github.event.release.tag_name || github.ref_name }}"
             MESSAGE="<b>[SNPI NEW VERSION RELEASE]</b>%0A<b>Release Tag:</b> ${TAG_NAME}%0A<b>Package Version:</b> v${PKG_VERSION}%0A<b>Publisher:</b> ${DEV_NAME}%0A<b>URL:</b> https://github.com/${{ github.repository }}/releases/tag/${TAG_NAME}%0A<b>Security Status:</b> ${OPEN_ALERTS} open alerts%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          elif [ "$EVENT_NAME" = "pull_request" ]; then
+            PR_NUM="${{ github.event.pull_request.number }}"
+            PR_TITLE="${{ github.event.pull_request.title }}"
+            PR_ACTION="${{ github.event.action }}"
+            MESSAGE="<b>[SNPI PULL REQUEST ${PR_ACTION^^}]</b>%0A<b>PR:</b> #${PR_NUM} ${PR_TITLE}%0A<b>Author:</b> ${{ github.event.pull_request.user.login }}%0A<b>Base:</b> ${{ github.event.pull_request.base.ref }} &larr; ${{ github.event.pull_request.head.ref }}%0A<b>URL:</b> https://github.com/${{ github.repository }}/pull/${PR_NUM}%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           elif [ "$EVENT_NAME" = "workflow_run" ]; then
             CONCLUSION="${{ github.event.workflow_run.conclusion }}"
-            MESSAGE="<b>[SNPI SECURITY AUDIT COMPLETED]</b>%0A<b>Workflow:</b> ${{ github.event.workflow_run.name }}%0A<b>Result:</b> ${CONCLUSION}%0A<b>Dependabot Open Alerts:</b> ${OPEN_ALERTS}%0A<b>Commit:</b> <code>${SHORT_HASH}</code>%0A<b>Developer:</b> ${DEV_NAME}%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+            MESSAGE="<b>[SNPI SECURITY &amp; CI AUDIT COMPLETED]</b>%0A<b>Workflow:</b> ${{ github.event.workflow_run.name }}%0A<b>Result:</b> ${CONCLUSION}%0A<b>Dependabot Open Alerts:</b> ${OPEN_ALERTS}%0A<b>Commit:</b> <code>${SHORT_HASH}</code>%0A<b>Developer:</b> ${DEV_NAME}%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           else
             MESSAGE="<b>[SNPI REPO PUSH &amp; FIX ALERT]</b>%0A<b>Developer:</b> ${DEV_NAME} &lt;${DEV_EMAIL}&gt;%0A<b>Branch:</b> <code>${{ github.ref_name }}</code>%0A<b>Commit:</b> <code>${SHORT_HASH}</code>%0A<b>Message:</b> ${COMMIT_MSG}%0A<b>System Version:</b> v${PKG_VERSION}%0A<b>Security Quality:</b> ${OPEN_ALERTS} open alerts%0A<b>Timestamp:</b> $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           fi
 
-          # 5. Dispatch to Telegram (if Chat ID configured)
-          if [ -n "$TELEGRAM_CHAT_ID" ]; then
-            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-              -d "chat_id=${TELEGRAM_CHAT_ID}" \
-              -d "text=${MESSAGE}" \
-              -d "parse_mode=HTML" \
-              -d "disable_web_page_preview=true" >/dev/null
-            echo "Telegram notification sent successfully to chat ${TELEGRAM_CHAT_ID}."
-          else
-            echo "Notice: TELEGRAM_CHAT_ID not configured in GitHub Secrets. Skipping cloud notification."
-          fi
+          # 5. Dispatch to Telegram
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=${MESSAGE}" \
+            -d "parse_mode=HTML" \
+            -d "disable_web_page_preview=true" >/dev/null
+          echo "Telegram notification sent successfully to chat ${TELEGRAM_CHAT_ID}."
