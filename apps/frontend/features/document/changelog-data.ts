@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "31.10.2026",
+    "commitHash": "7970746",
+    "description": "Condense service card and hero descriptions to ultra-minimal single-line copy"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
     "commitHash": "de98cab",
     "description": "Optimize mobile hero view, update active menu style, and sync v0.2.13 changelog"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "d451d0d",
     "description": "Record zero gradient and zero black/gray rule enforcement"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "39f2c5c",
-    "description": "Eradicate all CSS gradients, black, and gray from component library and enforce pure flat solid brand tokens"
   }
 ];

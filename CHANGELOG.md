@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (31.10.2026) - `7970746`
+
+- Condense service card and hero descriptions to ultra-minimal single-line copy
+
 ### Version 0.2.13 (31.10.2026) - `de98cab`
 
 - Optimize mobile hero view, update active menu style, and sync v0.2.13 changelog
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `d451d0d`
 
 - Record zero gradient and zero black/gray rule enforcement
-
-### Version 0.2.12 (31.10.2026) - `39f2c5c`
-
-- Eradicate all CSS gradients, black, and gray from component library and enforce pure flat solid brand tokens
 
