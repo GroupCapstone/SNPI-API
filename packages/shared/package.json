@@ -34,6 +34,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@snp/tsconfig": "*"
+    "@snp/tsconfig": "*",
+    "typescript": "^5.9.3"
   }
 }

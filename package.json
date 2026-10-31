@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "prepare": "npm run build --workspace=@snp/shared",
+    "prepare": "npm run build:shared || true",
     "build:shared": "npm run build --workspace=@snp/shared",
     "dev": "npm run dev --workspaces --if-present",
     "dev:backend": "npm run dev --workspace=apps/backend",
@@ -39,7 +39,7 @@
     "typescript": "^5.8.2"
   },
   "engines": {
-    "node": ">=22.13.0"
+    "node": "^20.18.0 || ^22.13.0"
   },
   "packageManager": "npm@10.8.2"
 }
