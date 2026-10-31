@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.12 (31.10.2026) - `5116c27`
+
+- Redesign mobile hero with simple welcoming hook and tactile service cards
+
 ### Version 0.2.12 (31.10.2026) - `c2efdc5`
 
 - Simplify hero and implement psychological reading layout
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `d3b461f`
 
 - Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console
-
-### Version 0.2.12 (31.10.2026) - `02011a6`
-
-- Record Hook Sidebar implementation and Rail TOC fixes
 
