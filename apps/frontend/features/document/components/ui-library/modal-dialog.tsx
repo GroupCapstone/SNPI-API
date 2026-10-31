@@ -323,8 +323,8 @@ export function ModalDialogDemo() {
 
   return (
     <div className="w-full space-y-6">
-      {/* Live In-Stage Modal Dialog Surface (Say Less Show More Result - Never Hidden) */}
-      <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-6 text-left shadow-md">
+      {/* Live In-Stage Modal Dialog Surface - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
+      <div className="w-full max-w-xl max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 text-left shadow-md">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
             <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -339,7 +339,7 @@ export function ModalDialogDemo() {
           </span>
         </div>
         <div className="mt-4 space-y-3">
-          <div className="space-y-1 rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
+          <div className="space-y-1 rounded-[4px] border border-slate-200 bg-slate-50 p-3 font-mono text-xs">
             <div className="flex items-center justify-between">
               <span className="text-slate-400">BATCH TX:</span>
               <span className="font-bold text-[#0056FF]">sha256:7f8a92e4b102</span>

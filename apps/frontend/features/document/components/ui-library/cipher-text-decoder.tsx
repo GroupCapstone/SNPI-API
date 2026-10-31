@@ -230,7 +230,7 @@ export function ScrambleNavLink({
       onMouseEnter={() => startDecode()}
       onFocus={() => startDecode()}
       className={cn(
-        'group relative inline-flex items-center justify-center rounded-lg px-3 py-1.5 font-mono text-xs font-semibold tracking-wider transition-all duration-150 outline-none',
+        'group relative inline-flex items-center justify-center rounded-[4px] px-3 py-1.5 font-mono text-xs font-semibold tracking-wider transition-all duration-150 outline-none',
         'focus-visible:ring-2 focus-visible:ring-[#0056FF]',
         isActive
           ? isDark
@@ -355,7 +355,7 @@ export function CipherTextDecoder({ theme = 'light', className }: CipherTextDeco
   return (
     <div
       className={cn(
-        'relative w-full overflow-hidden rounded-2xl border transition-colors duration-150',
+        'relative w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border transition-colors duration-150',
         isDark
           ? 'border-slate-800 bg-[#000B26] text-slate-100'
           : 'border-slate-200/90 bg-white text-slate-900',
@@ -533,7 +533,7 @@ export function CipherTextDecoder({ theme = 'light', className }: CipherTextDeco
             disabled={isDecoding}
             aria-label="Re-roll cipher"
             className={cn(
-              'flex items-center gap-1.5 rounded-lg border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
+              'flex items-center gap-1.5 rounded-[4px] border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
               isDark
                 ? 'border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white disabled:opacity-50'
                 : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF] disabled:opacity-50',
@@ -549,7 +549,7 @@ export function CipherTextDecoder({ theme = 'light', className }: CipherTextDeco
             onClick={() => setIsPaused(!isPaused)}
             aria-label={isPaused ? 'Resume cycle' : 'Pause cycle'}
             className={cn(
-              'flex items-center gap-1.5 rounded-lg border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
+              'flex items-center gap-1.5 rounded-[4px] border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
               isPaused
                 ? 'border-amber-500/50 bg-amber-500/10 text-amber-600 dark:text-amber-400'
                 : isDark
@@ -578,7 +578,7 @@ export function CipherTextDecoder({ theme = 'light', className }: CipherTextDeco
             }}
             aria-label="Next headline phrase"
             className={cn(
-              'rounded-lg border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
+              'rounded-[4px] border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
               isDark
                 ? 'border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700'
                 : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF]',

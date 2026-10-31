@@ -648,14 +648,14 @@ export function UiLibraryView() {
                     {/* Category Header Banner */}
                     <div className="flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white px-5 py-3 shadow-xs transition-all">
                       <div className="flex items-center gap-3">
-                        <span className="flex size-7 items-center justify-center rounded-lg bg-[#0056FF] font-mono text-xs font-black text-white">
+                        <span className="flex size-7 items-center justify-center rounded-[4px] bg-[#0056FF] font-mono text-xs font-black text-white">
                           0{group.groupNumber}
                         </span>
                         <div className="flex items-center gap-2">
                           <h3 className="font-sans text-sm font-black tracking-tight text-slate-950 uppercase sm:text-base">
                             {group.category}
                           </h3>
-                          <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                          <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                             {group.components.length} Components
                           </span>
                         </div>
@@ -684,7 +684,7 @@ export function UiLibraryView() {
                                   <h2 className="font-sans text-xl font-black text-slate-950">
                                     {comp.name}
                                   </h2>
-                                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
+                                  <span className="rounded-[4px] border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
                                     {comp.category}
                                   </span>
                                 </div>
@@ -707,7 +707,7 @@ export function UiLibraryView() {
                                   }
                                   aria-label="Copy AI Agent MVP Prompt"
                                   className={cn(
-                                    'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
+                                    'flex size-9 cursor-pointer items-center justify-center rounded-[4px] border transition-all active:scale-95',
                                     copiedPromptId === comp.id
                                       ? 'border-emerald-500 bg-emerald-50 text-emerald-700 shadow-2xs'
                                       : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
@@ -722,13 +722,13 @@ export function UiLibraryView() {
 
                                 {/* 3. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
                                 {currentTab === 'preview' && (
-                                  <div className="flex items-center gap-0.5 rounded-xl border border-slate-200 bg-white p-1 shadow-2xs">
+                                  <div className="flex items-center gap-0.5 rounded-[4px] border border-slate-200 bg-white p-1 shadow-2xs">
                                     <button
                                       type="button"
                                       onClick={() => setCompDevice(comp.id, 'mobile')}
                                       title="Mobile Phone Viewport (380px)"
                                       className={cn(
-                                        'flex size-7 items-center justify-center rounded-lg transition-all',
+                                        'flex size-7 items-center justify-center rounded-[4px] transition-all',
                                         getCompDevice(comp.id) === 'mobile'
                                           ? 'bg-slate-100 text-slate-900 shadow-2xs'
                                           : 'text-slate-500 hover:text-slate-900',
@@ -741,7 +741,7 @@ export function UiLibraryView() {
                                       onClick={() => setCompDevice(comp.id, 'tablet')}
                                       title="Tablet Viewport (680px)"
                                       className={cn(
-                                        'flex size-7 items-center justify-center rounded-lg transition-all',
+                                        'flex size-7 items-center justify-center rounded-[4px] transition-all',
                                         getCompDevice(comp.id) === 'tablet'
                                           ? 'bg-slate-100 text-slate-900 shadow-2xs'
                                           : 'text-slate-500 hover:text-slate-900',
@@ -754,7 +754,7 @@ export function UiLibraryView() {
                                       onClick={() => setCompDevice(comp.id, 'desktop')}
                                       title="Desktop Viewport"
                                       className={cn(
-                                        'flex size-7 items-center justify-center rounded-lg transition-all',
+                                        'flex size-7 items-center justify-center rounded-[4px] transition-all',
                                         getCompDevice(comp.id) === 'desktop'
                                           ? 'bg-slate-100 text-slate-900 shadow-2xs'
                                           : 'text-slate-500 hover:text-slate-900',
@@ -774,7 +774,7 @@ export function UiLibraryView() {
                                       getCompExpanded(comp.id) ? 'Collapse Stage' : 'Expand Stage'
                                     }
                                     className={cn(
-                                      'flex size-9 cursor-pointer items-center justify-center rounded-xl border transition-all active:scale-95',
+                                      'flex size-9 cursor-pointer items-center justify-center rounded-[4px] border transition-all active:scale-95',
                                       getCompExpanded(comp.id)
                                         ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
                                         : 'border-slate-200 bg-white text-slate-700 shadow-2xs hover:bg-slate-50 hover:text-slate-900',
@@ -860,7 +860,7 @@ export function UiLibraryView() {
                                     {comp.supportedStates.map((st) => (
                                       <span
                                         key={st}
-                                        className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-semibold text-slate-700"
+                                        className="rounded-[4px] border border-slate-200 bg-slate-50 px-2 py-0.5 font-semibold text-slate-700"
                                       >
                                         {st}
                                       </span>
@@ -876,7 +876,7 @@ export function UiLibraryView() {
                                       onClick={() =>
                                         handleCopyInstall(comp.id, `npx @snp/cli add ${comp.id}`)
                                       }
-                                      className="rounded-full border border-slate-200 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]"
+                                      className="rounded-[4px] border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]"
                                     >
                                       {copiedInstallId === comp.id ? 'Copied' : 'Copy'}
                                     </button>
@@ -891,7 +891,7 @@ export function UiLibraryView() {
                                 {/* Prompt Header & 1-Click Copy Banner */}
                                 <div className="flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 sm:flex-row sm:items-center sm:justify-between">
                                   <div className="flex items-center gap-3">
-                                    <span className="flex size-9 items-center justify-center rounded-xl bg-[#0056FF] text-white shadow-xs">
+                                    <span className="flex size-9 items-center justify-center rounded-[4px] bg-[#0056FF] text-white shadow-xs">
                                       <Sparkles className="size-4 stroke-[2]" />
                                     </span>
                                     <div>
@@ -899,7 +899,7 @@ export function UiLibraryView() {
                                         <h3 className="font-sans text-xs font-bold text-slate-900">
                                           Universal AI Agent MVP Prompt Skill
                                         </h3>
-                                        <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                                        <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
                                           {comp.category}
                                         </span>
                                       </div>
@@ -1323,8 +1323,8 @@ function renderFeedComponentDemo(
             </GeometricButton>
           </div>
 
-          {/* Interactive In-Stage Phone Surface */}
-          <div className="w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
+          {/* Interactive In-Stage Phone Surface - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
+          <div className="w-full max-w-xl max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
             <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
@@ -1335,7 +1335,7 @@ function renderFeedComponentDemo(
                   Siem Reap Main Campus · Science Wing B
                 </p>
               </div>
-              <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
                 4 Actions
               </span>
             </div>
@@ -1370,7 +1370,7 @@ function renderFeedComponentDemo(
                     type="button"
                     onClick={() => state.setBottomSheetChoice(opt.title)}
                     className={cn(
-                      'flex w-full cursor-pointer items-center justify-between rounded-2xl border p-3.5 text-left transition-all',
+                      'flex w-full cursor-pointer items-center justify-between rounded-[4px] border p-3.5 text-left transition-all',
                       isSelected
                         ? 'border-[#0056FF] bg-[#E3E7FC]/80 text-[#0056FF] shadow-xs'
                         : 'border-slate-100 bg-slate-50 text-slate-700 hover:border-slate-200 hover:bg-white',
@@ -1381,7 +1381,7 @@ function renderFeedComponentDemo(
                       <span className="text-[11px] text-slate-500">{opt.desc}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 font-mono text-[9px] font-bold text-slate-600 uppercase">
+                      <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 font-mono text-[9px] font-bold text-slate-600 uppercase">
                         {opt.tag}
                       </span>
                       {isSelected && (
@@ -1400,7 +1400,7 @@ function renderFeedComponentDemo(
               <button
                 type="button"
                 onClick={() => state.setBottomSheetChoice('Operation Executed Successfully')}
-                className="rounded-full border border-[#0056FF] bg-[#0056FF] px-4 py-1.5 font-sans text-xs font-bold text-white transition-all hover:bg-[#2277FF] active:scale-95"
+                className="rounded-[4px] border-0 bg-[#0056FF] px-4 py-1.5 font-sans text-xs font-bold text-white transition-all hover:bg-[#2277FF] active:scale-95"
               >
                 Execute Action
               </button>
@@ -1429,8 +1429,8 @@ function renderFeedComponentDemo(
             </GeometricButton>
           </div>
 
-          {/* Interactive In-Stage Modal Card */}
-          <div className="w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 text-left shadow-md">
+          {/* Interactive In-Stage Modal Card - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
+          <div className="w-full max-w-xl max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 text-left shadow-md">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-base font-black text-slate-950">
@@ -1440,7 +1440,7 @@ function renderFeedComponentDemo(
                   Student: Dara Sok (STU-2026-0891) · Software Engineering
                 </p>
               </div>
-              <span className="rounded-full border border-red-200 bg-red-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-red-600 uppercase">
+              <span className="rounded-[4px] border border-red-200 bg-red-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-red-600 uppercase">
                 Action Required
               </span>
             </div>
@@ -1468,7 +1468,7 @@ function renderFeedComponentDemo(
                       type="button"
                       onClick={() => state.setDeferralReason(reason)}
                       className={cn(
-                        'cursor-pointer rounded-xl border p-2.5 text-center font-sans text-xs font-semibold transition-all',
+                        'cursor-pointer rounded-[4px] border p-2.5 text-center font-sans text-xs font-semibold transition-all',
                         isSelected
                           ? 'border-[#0056FF] bg-[#E3E7FC] text-[#0056FF] shadow-xs'
                           : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-white',
@@ -1502,7 +1502,7 @@ function renderFeedComponentDemo(
             </div>
           </div>
 
-          <div className="flex w-full max-w-xl items-center justify-between rounded-xl border border-slate-200/90 bg-white px-4 py-2 font-mono text-[11px] text-slate-600 shadow-xs">
+          <div className="flex w-full max-w-xl items-center justify-between rounded-[4px] border border-slate-200/90 bg-white px-4 py-2 font-mono text-[11px] text-slate-600 shadow-xs">
             <span>
               Decision: <strong className="text-[#0056FF]">{state.dialogDecision}</strong>
             </span>
@@ -1530,7 +1530,7 @@ function renderFeedComponentDemo(
           </div>
 
           {/* Interactive Toolbelt */}
-          <div className="w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 text-center shadow-md">
+          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 text-center shadow-md">
             <span className="mb-3 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
               Interactive Canvas Toolbelt (Hover or Tap for Tooltip)
             </span>
@@ -1555,7 +1555,7 @@ function renderFeedComponentDemo(
                       type="button"
                       onClick={() => state.setActiveTool(tool.code)}
                       className={cn(
-                        'flex h-12 w-12 cursor-pointer items-center justify-center rounded-2xl border text-sm font-bold transition-all select-none',
+                        'flex h-12 w-12 cursor-pointer items-center justify-center rounded-[4px] border text-sm font-bold transition-all select-none',
                         isSelected
                           ? 'scale-105 border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
                           : 'border-slate-200 bg-slate-50 text-slate-800 hover:border-[#0056FF] hover:bg-white',
@@ -1568,7 +1568,7 @@ function renderFeedComponentDemo(
               })}
             </div>
 
-            <div className="mt-5 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3 font-mono text-xs text-slate-700">
+            <div className="mt-5 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3 font-mono text-xs text-slate-700">
               Selected Active Tool: <strong className="text-[#0056FF]">{state.activeTool}</strong> ·
               Anchor: {state.tooltipPosition.toUpperCase()}
             </div>
@@ -1601,7 +1601,7 @@ function renderFeedComponentDemo(
           </div>
 
           {/* Interactive Workspace Canvas with Speed-Dial */}
-          <div className="relative w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="relative w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1611,14 +1611,14 @@ function renderFeedComponentDemo(
                   Tap actions below to trigger live increments
                 </p>
               </div>
-              <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                 Total Taps: {state.fabCount}
               </span>
             </div>
 
             {/* Metric Counters Grid */}
             <div className="mt-4 grid grid-cols-2 gap-3 font-sans text-xs sm:grid-cols-4">
-              <div className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-center">
+              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
                 <span className="block font-mono text-[10px] text-slate-400 uppercase">
                   Students
                 </span>
@@ -1626,7 +1626,7 @@ function renderFeedComponentDemo(
                   {state.fabActionCounts.student}
                 </strong>
               </div>
-              <div className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-center">
+              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
                 <span className="block font-mono text-[10px] text-slate-400 uppercase">
                   Attendance
                 </span>
@@ -1634,7 +1634,7 @@ function renderFeedComponentDemo(
                   {state.fabActionCounts.attendance}
                 </strong>
               </div>
-              <div className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-center">
+              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
                 <span className="block font-mono text-[10px] text-slate-400 uppercase">
                   Invoices
                 </span>
@@ -1642,7 +1642,7 @@ function renderFeedComponentDemo(
                   {state.fabActionCounts.invoice}
                 </strong>
               </div>
-              <div className="rounded-2xl border border-slate-100 bg-slate-50 p-3 text-center">
+              <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3 text-center">
                 <span className="block font-mono text-[10px] text-slate-400 uppercase">
                   QR Scans
                 </span>
@@ -1662,7 +1662,7 @@ function renderFeedComponentDemo(
                       state.setFabActionCounts((prev) => ({ ...prev, student: prev.student + 1 }));
                       state.setFabCount((c) => c + 1);
                     }}
-                    className="cursor-pointer rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
+                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
                   >
                     + Add Student
                   </button>
@@ -1675,7 +1675,7 @@ function renderFeedComponentDemo(
                       }));
                       state.setFabCount((c) => c + 1);
                     }}
-                    className="cursor-pointer rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
+                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
                   >
                     + Attendance
                   </button>
@@ -1685,7 +1685,7 @@ function renderFeedComponentDemo(
                       state.setFabActionCounts((prev) => ({ ...prev, invoice: prev.invoice + 1 }));
                       state.setFabCount((c) => c + 1);
                     }}
-                    className="cursor-pointer rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
+                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
                   >
                     + Invoice
                   </button>
@@ -1695,7 +1695,7 @@ function renderFeedComponentDemo(
                       state.setFabActionCounts((prev) => ({ ...prev, qr: prev.qr + 1 }));
                       state.setFabCount((c) => c + 1);
                     }}
-                    className="cursor-pointer rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
+                    className="cursor-pointer rounded-[4px] border-0 bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
                   >
                     + Scan QR
                   </button>
@@ -1727,7 +1727,7 @@ function renderFeedComponentDemo(
       return (
         <div className="flex w-full flex-col items-center gap-5">
           {/* Filter Stage */}
-          <div className="w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1795,7 +1795,7 @@ function renderFeedComponentDemo(
               </div>
             </div>
 
-            <div className="mt-5 rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3.5 font-mono text-xs text-slate-700">
+            <div className="mt-5 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3.5 font-mono text-xs text-slate-700">
               Query Result:{' '}
               <strong className="text-[#0056FF]">
                 {state.selectedChips.includes('All') ? '1,840' : state.selectedChips.length * 312}
@@ -1839,7 +1839,7 @@ function renderFeedComponentDemo(
           </div>
 
           {/* Interactive Switches Panel */}
-          <div className="w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1849,7 +1849,7 @@ function renderFeedComponentDemo(
                   Toggle distributed microservices and hardware gate scanners
                 </p>
               </div>
-              <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
                 Enterprise Mode
               </span>
             </div>
@@ -1887,14 +1887,14 @@ function renderFeedComponentDemo(
               ].map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50 p-4 transition-all hover:border-slate-200 hover:bg-white"
+                  className="flex items-center justify-between rounded-[4px] border border-slate-100 bg-slate-50 p-4 transition-all hover:border-slate-200 hover:bg-white"
                 >
                   <div className="pr-4">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-slate-900">{item.title}</span>
                       <span
                         className={cn(
-                          'rounded-full px-2 py-0.5 font-mono text-[9px] font-bold uppercase',
+                          'rounded-[4px] px-2 py-0.5 font-mono text-[9px] font-bold uppercase',
                           item.checked
                             ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
                             : 'border border-slate-200 bg-slate-100 text-slate-500',
@@ -1910,7 +1910,7 @@ function renderFeedComponentDemo(
               ))}
             </div>
 
-            <div className="mt-5 flex items-center justify-between rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3.5 font-mono text-xs text-slate-700">
+            <div className="mt-5 flex items-center justify-between rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3.5 font-mono text-xs text-slate-700">
               <span>
                 Active Services:{' '}
                 <strong className="text-[#0056FF]">
@@ -1939,7 +1939,7 @@ function renderFeedComponentDemo(
     case 'dropdown':
       return (
         <div className="flex w-full flex-col items-center gap-5">
-          <div className="w-full max-w-xl rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1949,7 +1949,7 @@ function renderFeedComponentDemo(
                   Select typography pairings and campus branch configurations
                 </p>
               </div>
-              <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
                 Live Selection
               </span>
             </div>
@@ -2008,7 +2008,7 @@ function renderFeedComponentDemo(
             </div>
 
             {/* Real-time Font Preview */}
-            <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="mt-5 rounded-[4px] border border-slate-200 bg-slate-50 p-4">
               <div className="flex items-center justify-between pb-2 font-mono text-[10px] text-slate-400 uppercase">
                 <span>Selected Typography Sample</span>
                 <span className="font-bold text-[#0056FF]">
@@ -2060,8 +2060,8 @@ function renderFeedComponentDemo(
             </GeometricButton>
           </div>
 
-          {/* Interactive Mobile Device Viewport */}
-          <div className="w-full max-w-xl overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-md">
+          {/* Interactive Mobile Device Viewport - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
+          <div className="w-full max-w-xl overflow-hidden max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white shadow-md">
             {/* Mobile Header Bar */}
             <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-5 py-3">
               <div className="flex items-center gap-2">
@@ -2082,18 +2082,18 @@ function renderFeedComponentDemo(
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h5 className="font-sans text-sm font-bold text-slate-900">Campus Overview</h5>
-                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+                    <span className="rounded-[4px] bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
                       99.2% Present
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-2.5 font-sans">
-                    <div className="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                    <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3">
                       <span className="text-[10px] text-slate-400 uppercase">Check-ins</span>
                       <strong className="block text-base font-black text-[#0056FF]">
                         1,420 Students
                       </strong>
                     </div>
-                    <div className="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                    <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3">
                       <span className="text-[10px] text-slate-400 uppercase">Turnstiles</span>
                       <strong className="block text-base font-black text-slate-900">
                         8 Gates Active
@@ -2106,18 +2106,18 @@ function renderFeedComponentDemo(
               {state.bottomNavTab === 'search' && (
                 <div className="space-y-3">
                   <h5 className="font-sans text-sm font-bold text-slate-900">Search Directory</h5>
-                  <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 p-2.5">
+                  <div className="flex items-center gap-2 rounded-[4px] border border-slate-200 bg-slate-50 p-2.5">
                     <Search className="size-3.5 text-[#0056FF]" />
                     <span className="text-xs text-slate-400">
                       Search students, faculty, classrooms...
                     </span>
                   </div>
                   <div className="space-y-1.5 font-sans text-xs">
-                    <div className="flex items-center justify-between rounded-lg border border-slate-100 p-2">
+                    <div className="flex items-center justify-between rounded-[4px] border border-slate-100 p-2">
                       <span className="font-bold">Dara Sok (STU-2026-0891)</span>
                       <span className="text-[10px] text-slate-400">Software Eng.</span>
                     </div>
-                    <div className="flex items-center justify-between rounded-lg border border-slate-100 p-2">
+                    <div className="flex items-center justify-between rounded-[4px] border border-slate-100 p-2">
                       <span className="font-bold">Bopha Chan (STU-2026-0422)</span>
                       <span className="text-[10px] text-slate-400">Cybersecurity</span>
                     </div>
@@ -2153,13 +2153,13 @@ function renderFeedComponentDemo(
 
               {state.bottomNavTab === 'profile' && (
                 <div className="flex items-center gap-4 font-sans">
-                  <div className="flex size-14 items-center justify-center rounded-2xl bg-[#0056FF] text-xl font-black text-white shadow-md">
+                  <div className="flex size-14 items-center justify-center rounded-[4px] bg-[#0056FF] text-xl font-black text-white shadow-xs">
                     DS
                   </div>
                   <div>
                     <h5 className="font-bold text-slate-950">Dara Sok</h5>
                     <p className="font-mono text-xs text-slate-500">ID: STU-2026-0891</p>
-                    <span className="mt-1 inline-block rounded-full bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+                    <span className="mt-1 inline-block rounded-[4px] bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
                       Verified Active Student
                     </span>
                   </div>
@@ -2179,16 +2179,16 @@ function renderFeedComponentDemo(
                       type="button"
                       onClick={() => state.setBottomNavTab(item.id)}
                       className={cn(
-                        'relative flex cursor-pointer flex-col items-center gap-1 rounded-2xl px-4 py-2 transition-all select-none',
+                        'relative flex cursor-pointer flex-col items-center gap-1 rounded-[4px] border-0 px-4 py-2 transition-all select-none',
                         isActive
-                          ? 'bg-[#0056FF] font-bold text-white shadow-xs'
+                          ? 'bg-[#0056FF] font-bold text-white shadow-none'
                           : 'text-slate-600 hover:bg-white hover:text-slate-950',
                       )}
                     >
                       <div className="relative">
                         <Icon className="h-4 w-4" />
                         {item.id === 'profile' && state.bottomNavBadge > 0 && (
-                          <span className="absolute -top-1 -right-1 flex size-3.5 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
+                          <span className="absolute -top-1 -right-1 flex size-3.5 items-center justify-center rounded-[4px] bg-red-500 text-[8px] font-bold text-white">
                             {state.bottomNavBadge}
                           </span>
                         )}
@@ -2209,14 +2209,14 @@ function renderFeedComponentDemo(
       return (
         <div className="flex w-full flex-col items-center gap-5">
           {/* Card Presentation Mode Switcher */}
-          <div className="flex flex-wrap items-center justify-center rounded-full border border-slate-200 bg-white p-1 shadow-xs">
+          <div className="flex flex-wrap items-center justify-center rounded-[4px] border border-slate-200 bg-white p-1 shadow-xs">
             <button
               type="button"
               onClick={() => state.setCardPresentationMode('border-beam')}
               className={cn(
-                'cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all',
+                'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold transition-all',
                 state.cardPresentationMode === 'border-beam'
-                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  ? 'bg-[#0056FF] text-white shadow-none'
                   : 'text-slate-600 hover:text-slate-900',
               )}
             >
@@ -2226,9 +2226,9 @@ function renderFeedComponentDemo(
               type="button"
               onClick={() => state.setCardPresentationMode('folder')}
               className={cn(
-                'cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all',
+                'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold transition-all',
                 state.cardPresentationMode === 'folder'
-                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  ? 'bg-[#0056FF] text-white shadow-none'
                   : 'text-slate-600 hover:text-slate-900',
               )}
             >
@@ -2238,9 +2238,9 @@ function renderFeedComponentDemo(
               type="button"
               onClick={() => state.setCardPresentationMode('metrics')}
               className={cn(
-                'cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all',
+                'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold transition-all',
                 state.cardPresentationMode === 'metrics'
-                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  ? 'bg-[#0056FF] text-white shadow-none'
                   : 'text-slate-600 hover:text-slate-900',
               )}
             >
@@ -2300,7 +2300,7 @@ function renderFeedComponentDemo(
                   <button
                     type="button"
                     onClick={() => state.setCardRevealed(!state.cardRevealed)}
-                    className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 px-3.5 py-1.5 font-sans text-xs font-semibold transition-all hover:border-[#0056FF]"
+                    className="flex cursor-pointer items-center gap-2 rounded-[4px] border border-slate-200 px-3.5 py-1.5 font-sans text-xs font-semibold transition-all hover:border-[#0056FF]"
                   >
                     {state.cardRevealed ? (
                       <EyeOff className="size-3.5 text-[#0056FF]" />
@@ -2334,7 +2334,7 @@ function renderFeedComponentDemo(
                   <button
                     type="button"
                     onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
-                    className="cursor-pointer rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
+                    className="cursor-pointer rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
                   >
                     {state.cardSlidOut ? 'Insert Card' : 'Pull Card'}
                   </button>
@@ -2343,7 +2343,7 @@ function renderFeedComponentDemo(
             </div>
           ) : (
             /* MODE 2: Daily Active Students Metrics Card (User Image 2 Reference) */
-            <div className="w-full max-w-lg rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
+            <div className="w-full max-w-lg max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
               <div className="flex items-start justify-between">
                 <div>
                   <h4 className="font-sans text-base font-black text-slate-900">
@@ -2352,16 +2352,16 @@ function renderFeedComponentDemo(
                   <p className="font-sans text-xs text-slate-500">12,340 a day · Term 1 2026</p>
                 </div>
 
-                <div className="flex items-center rounded-full border border-slate-200 bg-slate-50 p-1 font-mono text-xs">
+                <div className="flex items-center rounded-[4px] border border-slate-200 bg-slate-50 p-1 font-mono text-xs">
                   {(['30D', '90D', '1Y', 'All'] as const).map((r) => (
                     <button
                       key={r}
                       type="button"
                       onClick={() => state.setMetricsTimeRange(r)}
                       className={cn(
-                        'cursor-pointer rounded-full px-2.5 py-0.5 font-bold transition-colors',
+                        'cursor-pointer rounded-[4px] px-2.5 py-0.5 font-bold transition-colors',
                         state.metricsTimeRange === r
-                          ? 'bg-[#0056FF] text-white shadow-xs'
+                          ? 'bg-[#0056FF] text-white shadow-none'
                           : 'text-slate-600 hover:text-slate-950',
                       )}
                     >
@@ -2371,7 +2371,7 @@ function renderFeedComponentDemo(
                 </div>
               </div>
 
-              <div className="mt-5 rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC]/60 p-4">
+              <div className="mt-5 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-4">
                 <div className="flex items-center justify-between font-mono text-xs text-slate-500">
                   <span>Saturday, Oct 30, 2026</span>
                   <span className="font-bold text-[#0056FF]">+8.5% growth</span>
@@ -2428,7 +2428,7 @@ function renderFeedComponentDemo(
             ))}
           </div>
 
-          <div className="w-full max-w-xl space-y-4 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl space-y-4 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -2442,14 +2442,14 @@ function renderFeedComponentDemo(
                 <button
                   type="button"
                   onClick={() => state.setInputDemoLoading(!state.inputDemoLoading)}
-                  className="rounded-full border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] text-slate-600 hover:border-[#0056FF]"
+                  className="rounded-[4px] border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] text-slate-600 hover:border-[#0056FF]"
                 >
                   {state.inputDemoLoading ? 'Loading ON' : 'Loading OFF'}
                 </button>
                 <button
                   type="button"
                   onClick={() => state.setInputDemoDisabled(!state.inputDemoDisabled)}
-                  className="rounded-full border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] text-slate-600 hover:border-[#0056FF]"
+                  className="rounded-[4px] border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] text-slate-600 hover:border-[#0056FF]"
                 >
                   {state.inputDemoDisabled ? 'Disabled' : 'Enabled'}
                 </button>

@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "be675a4",
+    "description": "Synchronize recent local commits"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "46d0055",
     "description": "Standardize all 75 component descriptions to 12-15 word concise summaries"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "c53639d",
     "description": "Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "adccb9c",
-    "description": "Implement 54px icon bar with label bloom status dot and roving tabindex"
   }
 ];

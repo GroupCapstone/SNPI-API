@@ -35,14 +35,14 @@ export function ToastDemo() {
           <button
             type="button"
             onClick={() => addToast('success', 'Student STU-890 verified')}
-            className="rounded-full bg-emerald-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700 hover:bg-emerald-100"
+            className="rounded-[4px] bg-emerald-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700 hover:bg-emerald-100"
           >
             + Success
           </button>
           <button
             type="button"
             onClick={() => addToast('warning', 'Session expires in 5m')}
-            className="rounded-full bg-amber-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-amber-700 hover:bg-amber-100"
+            className="rounded-[4px] bg-amber-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-amber-700 hover:bg-amber-100"
           >
             + Warning
           </button>

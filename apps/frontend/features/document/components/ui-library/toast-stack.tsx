@@ -378,7 +378,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
           {/* 03 Icon System: Inline SVG sized at 18px */}
           <div
             className={cn(
-              'mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl border',
+              'mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-[4px] border',
               colors.badgeBg,
             )}
           >
@@ -390,7 +390,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  'rounded-md border px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider uppercase',
+                  'rounded-[4px] border px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider uppercase',
                   colors.badgeBg,
                 )}
               >
@@ -413,7 +413,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
             onClick={triggerExit}
             aria-label="Dismiss notification"
             className={cn(
-              'flex size-7 shrink-0 items-center justify-center rounded-lg border transition-colors outline-none',
+              'flex size-7 shrink-0 items-center justify-center rounded-[4px] border transition-colors outline-none',
               'focus-visible:ring-2 focus-visible:ring-[#0056FF]',
               isDark
                 ? 'border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white'
@@ -562,7 +562,7 @@ export function ToastStackDemo() {
               type="button"
               onClick={() => setContainerMode('inline')}
               className={cn(
-                'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
+                'rounded-[4px] px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
                 containerMode === 'inline'
                   ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
                   : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
@@ -574,7 +574,7 @@ export function ToastStackDemo() {
               type="button"
               onClick={() => setContainerMode('fixed')}
               className={cn(
-                'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
+                'rounded-[4px] px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
                 containerMode === 'fixed'
                   ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
                   : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
@@ -590,7 +590,7 @@ export function ToastStackDemo() {
           <span className="text-slate-400">STACK:</span>
           <span
             className={cn(
-              'rounded-md px-2 py-0.5 font-bold',
+              'rounded-[4px] px-2 py-0.5 font-bold',
               toasts.length > 0
                 ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
                 : 'border border-slate-200 bg-slate-100 text-slate-500 dark:border-slate-800 dark:bg-slate-900',
@@ -602,7 +602,7 @@ export function ToastStackDemo() {
             <button
               type="button"
               onClick={dismissAll}
-              className="flex items-center gap-1 rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-bold text-slate-600 hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-red-400"
+              className="flex items-center gap-1 rounded-[4px] border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-bold text-slate-600 hover:border-red-300 hover:bg-red-50 hover:text-red-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-red-400"
             >
               <RotateCcw className="size-3" />
               <span>Dismiss All</span>
@@ -682,7 +682,7 @@ export function ToastStackDemo() {
         <button
           type="button"
           onClick={fireRapidBurst}
-          className="flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-slate-800"
+          className="flex items-center gap-2 rounded-[4px] bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-slate-800"
         >
           <Play className="size-3.5" />
           <span>FIRE RAPID BURST (5 TOASTS)</span>
@@ -705,16 +705,16 @@ export function ToastStackDemo() {
           </p>
 
           <div className="flex flex-wrap gap-2 pt-2 font-mono text-[11px] text-slate-500">
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
+            <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5">
               01 Top-Right Stack
             </span>
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
+            <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5">
               04 Progress Strip
             </span>
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
+            <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5">
               06 Two-Phase Exit
             </span>
-            <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
+            <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5">
               07 Hover Freeze
             </span>
           </div>

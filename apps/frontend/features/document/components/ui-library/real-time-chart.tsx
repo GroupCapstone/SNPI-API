@@ -385,7 +385,7 @@ export function RealTimeChart({
     <div
       ref={containerRef}
       className={cn(
-        'relative w-full rounded-2xl border p-5 transition-colors select-none',
+        'relative w-full max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border p-5 transition-colors select-none',
         isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
         className,
       )}
@@ -394,14 +394,14 @@ export function RealTimeChart({
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4 dark:border-slate-800/80">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400">
+            <span className="flex size-6 items-center justify-center rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400">
               <Activity className="size-3.5" />
             </span>
             <h3 className="font-sans text-sm font-bold text-slate-900 dark:text-white">
               Real-Time Metrics Telemetry
             </h3>
             {isPaused && (
-              <span className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[9px] font-bold text-amber-600 dark:text-amber-400">
+              <span className="rounded-[4px] border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[9px] font-bold text-amber-600 dark:text-amber-400">
                 PAUSED
               </span>
             )}
@@ -417,7 +417,7 @@ export function RealTimeChart({
             <div
               key={s.id}
               className={cn(
-                'flex items-center gap-2 rounded-xl border px-2.5 py-1 transition-colors',
+                'flex items-center gap-2 rounded-[4px] border px-2.5 py-1 transition-colors',
                 isDark ? 'border-slate-800 bg-slate-900/60' : 'border-slate-200 bg-slate-50',
               )}
             >
@@ -454,7 +454,7 @@ export function RealTimeChart({
               top: `${hoveredPoint.tooltipTop}px`,
             }}
             className={cn(
-              'pointer-events-none absolute z-20 w-44 rounded-xl border p-2.5 shadow-2xl backdrop-blur-md transition-all duration-75',
+              'pointer-events-none absolute z-20 w-44 rounded-[4px] border p-2.5 shadow-2xl backdrop-blur-md transition-all duration-75',
               isDark
                 ? 'border-slate-700 bg-slate-900/95 text-white shadow-cyan-950/40'
                 : 'border-slate-200 bg-white/95 text-slate-900 shadow-slate-900/15',
@@ -497,7 +497,7 @@ export function RealTimeChart({
             type="button"
             onClick={() => setIsPaused(!isPaused)}
             className={cn(
-              'flex items-center gap-1.5 rounded-xl border px-3 py-1 font-bold transition-colors',
+              'flex items-center gap-1.5 rounded-[4px] border px-3 py-1 font-bold transition-colors',
               isPaused
                 ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
                 : 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300',
@@ -515,7 +515,7 @@ export function RealTimeChart({
                 type="button"
                 onClick={() => setSpeedMs(rate)}
                 className={cn(
-                  'rounded-lg px-2 py-0.5 text-[10px] font-bold transition-colors',
+                  'rounded-[4px] px-2 py-0.5 text-[10px] font-bold transition-colors',
                   speedMs === rate
                     ? 'bg-[#0056FF] text-white'
                     : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
@@ -549,7 +549,7 @@ export function RealTimeChartDemo() {
           <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
             Telemetry Feed:
           </span>
-          <span className="inline-flex items-center rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+          <span className="inline-flex items-center rounded-[4px] border border-blue-200 bg-blue-50 px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
             LIVE 60FPS
           </span>
         </div>
@@ -565,43 +565,43 @@ export function RealTimeChartDemo() {
 
       {/* 10 Architectural Feature Badges */}
       <div className="grid grid-cols-2 gap-2.5 text-center font-mono text-[11px] sm:grid-cols-5">
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">01</span>
           <p className="font-bold text-slate-700">Canvas Surface</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">02</span>
           <p className="font-bold text-slate-700">40px Linear Grid</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">03</span>
           <p className="font-bold text-slate-700">Dashed Lines</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">04</span>
           <p className="font-bold text-slate-700">Bezier Splines</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">05</span>
           <p className="font-bold text-slate-700">Gradient Fills</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">06</span>
           <p className="font-bold text-slate-700">Glow Halos</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">07</span>
           <p className="font-bold text-slate-700">Dynamic Axes</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">08</span>
           <p className="font-bold text-slate-700">Live Legend</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">09</span>
           <p className="font-bold text-slate-700">Crosshair Snap</p>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-2xs">
+        <div className="rounded-[4px] border border-slate-200 bg-white p-2 shadow-2xs">
           <span className="text-slate-400">10</span>
           <p className="font-bold text-slate-700">Float Tooltip</p>
         </div>

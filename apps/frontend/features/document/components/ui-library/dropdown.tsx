@@ -65,7 +65,7 @@ export function LibraryDropdown({
         <label className="mb-1.5 block text-xs font-semibold text-slate-700">{label}</label>
       )}
 
-      {/* Trigger Button - Capsule Pill Style matching Buttons */}
+      {/* Trigger Button - Standard Button Corner Radius r4 (rounded-[4px]) */}
       <button
         type="button"
         disabled={disabled}
@@ -73,7 +73,7 @@ export function LibraryDropdown({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         className={cn(
-          'flex h-10 w-full items-center justify-between rounded-full border-2 border-slate-300 bg-slate-50/80 px-4 font-sans text-xs font-bold text-slate-800 transition-all select-none hover:border-[#0056FF] focus-visible:outline-none',
+          'flex h-10 w-full items-center justify-between rounded-[4px] border border-slate-300 bg-slate-50/80 px-3.5 font-sans text-xs font-bold text-slate-800 transition-all select-none hover:border-[#0056FF] focus-visible:outline-none',
           isOpen && 'border-[#0056FF] bg-white ring-2 ring-[#0056FF]/20',
           disabled && 'cursor-not-allowed bg-slate-100 opacity-50',
         )}
@@ -94,7 +94,7 @@ export function LibraryDropdown({
         <div
           role="listbox"
           tabIndex={-1}
-          className="absolute right-0 left-0 z-50 mt-1.5 max-h-60 overflow-y-auto rounded-xl border border-slate-200 bg-white p-1 shadow-lg transition-all"
+          className="absolute right-0 left-0 z-50 mt-1.5 max-h-60 overflow-y-auto rounded-[4px] border border-slate-200 bg-white p-1 shadow-lg transition-all"
         >
           {options.map((option) => {
             const isSelected = option.value === value;
@@ -110,7 +110,7 @@ export function LibraryDropdown({
                   setIsOpen(false);
                 }}
                 className={cn(
-                  'flex min-h-[40px] w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors duration-100',
+                  'flex min-h-[40px] w-full items-center justify-between rounded-[4px] px-3 py-2 text-left text-sm transition-colors duration-100',
                   isSelected
                     ? 'bg-blue-50 font-semibold text-[#0056FF]'
                     : 'text-slate-800 hover:bg-slate-50',

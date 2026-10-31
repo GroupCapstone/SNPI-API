@@ -234,7 +234,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
   return (
     <div
       className={cn(
-        'relative w-full overflow-hidden rounded-2xl border transition-colors duration-150',
+        'relative w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border transition-colors duration-150',
         isDark
           ? 'border-slate-800 bg-[#000B26] text-slate-100'
           : 'border-slate-200/90 bg-white text-slate-900',
@@ -292,7 +292,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                   {/* Numbered Indicator Dot */}
                   <span
                     className={cn(
-                      'flex size-7 items-center justify-center rounded-full font-mono text-xs font-bold transition-all duration-200',
+                      'flex size-7 items-center justify-center rounded-[4px] font-mono text-xs font-bold transition-all duration-200',
                       isCompleted
                         ? 'bg-emerald-600 text-white'
                         : isActive
@@ -350,7 +350,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
           className="flex flex-col items-center justify-center space-y-4 p-8 text-center sm:p-12"
         >
           {/* Animated SVG Checkmark */}
-          <div className="relative flex size-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+          <div className="relative flex size-16 items-center justify-center rounded-[4px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
             <svg
               className="size-10"
               viewBox="0 0 24 24"
@@ -376,7 +376,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
           {/* Reference Stamp */}
           <div
             className={cn(
-              'space-y-1 rounded-xl border p-3 font-mono text-xs',
+              'space-y-1 rounded-[4px] border p-3 font-mono text-xs',
               isDark ? 'border-slate-800 bg-slate-900/60' : 'border-slate-200 bg-slate-50',
             )}
           >
@@ -393,7 +393,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
           <button
             type="button"
             onClick={handleRestart}
-            className="flex items-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700"
+            className="flex items-center gap-2 rounded-[4px] border-0 bg-[#0056FF] px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700"
           >
             <RotateCcw className="size-3.5" />
             <span>START NEW SUBMISSION</span>
@@ -452,7 +452,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     }
                     placeholder="e.g. Chan Dara"
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       touchedFields.fullName && errors.fullName
                         ? 'border-red-500 focus:border-red-500'
                         : isDark
@@ -494,7 +494,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     }
                     placeholder="applicant@campus.snpi.edu.kh"
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       touchedFields.email && errors.email
                         ? 'border-red-500 focus:border-red-500'
                         : isDark
@@ -528,7 +528,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     value={formData.role}
                     onChange={(e) => handleChange('role', e.target.value)}
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       isDark
                         ? 'border-slate-700 bg-slate-900 text-white focus:border-[#38BDF8]'
                         : 'border-slate-300 bg-white text-slate-900 focus:border-[#0056FF]',
@@ -577,7 +577,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     value={formData.branch}
                     onChange={(e) => handleChange('branch', e.target.value)}
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       isDark
                         ? 'border-slate-700 bg-slate-900 text-white focus:border-[#38BDF8]'
                         : 'border-slate-300 bg-white text-slate-900 focus:border-[#0056FF]',
@@ -611,7 +611,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     }
                     placeholder="+855 12 345 678"
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       touchedFields.phone && errors.phone
                         ? 'border-red-500 focus:border-red-500'
                         : isDark
@@ -652,7 +652,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     }
                     placeholder="KH-9842104"
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       touchedFields.idNumber && errors.idNumber
                         ? 'border-red-500 focus:border-red-500'
                         : isDark
@@ -708,7 +708,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     value={formData.mfaMethod}
                     onChange={(e) => handleChange('mfaMethod', e.target.value)}
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       isDark
                         ? 'border-slate-700 bg-slate-900 text-white focus:border-[#38BDF8]'
                         : 'border-slate-300 bg-white text-slate-900 focus:border-[#0056FF]',
@@ -737,7 +737,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     value={formData.term}
                     onChange={(e) => handleChange('term', e.target.value)}
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       isDark
                         ? 'border-slate-700 bg-slate-900 text-white focus:border-[#38BDF8]'
                         : 'border-slate-300 bg-white text-slate-900 focus:border-[#0056FF]',
@@ -762,7 +762,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                     value={formData.notificationChannel}
                     onChange={(e) => handleChange('notificationChannel', e.target.value)}
                     className={cn(
-                      'w-full rounded-xl border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
+                      'w-full rounded-[4px] border px-3.5 py-2 font-sans text-xs transition-colors outline-none',
                       isDark
                         ? 'border-slate-700 bg-slate-900 text-white focus:border-[#38BDF8]'
                         : 'border-slate-300 bg-white text-slate-900 focus:border-[#0056FF]',
@@ -802,7 +802,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                 {/* Group 1 Review Card */}
                 <div
                   className={cn(
-                    'rounded-xl border p-4 transition-colors',
+                    'rounded-[4px] border p-4 transition-colors',
                     isDark
                       ? 'border-slate-800 bg-slate-900/50'
                       : 'border-slate-200/90 bg-slate-50/70',
@@ -846,7 +846,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                 {/* Group 2 Review Card */}
                 <div
                   className={cn(
-                    'rounded-xl border p-4 transition-colors',
+                    'rounded-[4px] border p-4 transition-colors',
                     isDark
                       ? 'border-slate-800 bg-slate-900/50'
                       : 'border-slate-200/90 bg-slate-50/70',
@@ -890,7 +890,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                 {/* Group 3 Review Card */}
                 <div
                   className={cn(
-                    'rounded-xl border p-4 transition-colors',
+                    'rounded-[4px] border p-4 transition-colors',
                     isDark
                       ? 'border-slate-800 bg-slate-900/50'
                       : 'border-slate-200/90 bg-slate-50/70',
@@ -966,7 +966,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                 onClick={handleBack}
                 disabled={step === 1}
                 className={cn(
-                  'flex items-center gap-1.5 rounded-xl border px-3.5 py-2 font-mono text-xs font-bold transition-colors outline-none',
+                  'flex items-center gap-1.5 rounded-[4px] border px-3.5 py-2 font-mono text-xs font-bold transition-colors outline-none',
                   step === 1
                     ? 'cursor-not-allowed opacity-40'
                     : isDark
@@ -988,7 +988,7 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
                   onClick={handleNext}
                   disabled={!isCurrentStepValid}
                   className={cn(
-                    'flex items-center gap-1.5 rounded-xl px-4 py-2 font-mono text-xs font-bold shadow-xs transition-all outline-none',
+                    'flex items-center gap-1.5 rounded-[4px] border-0 px-4 py-2 font-mono text-xs font-bold shadow-xs transition-all outline-none',
                     !isCurrentStepValid
                       ? 'cursor-not-allowed bg-slate-300 text-slate-500 opacity-60 dark:bg-slate-800 dark:text-slate-500'
                       : 'bg-[#0056FF] text-white hover:bg-blue-700 active:scale-[0.98]',
@@ -1020,7 +1020,7 @@ export function MultiStepWizardInteractiveDemo() {
         </div>
 
         <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <span className="inline-flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+          <span className="inline-flex items-center rounded-[4px] border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
             SESSION ACTIVE
           </span>
           <span>sessionStorage Persistence Active</span>

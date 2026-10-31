@@ -46,12 +46,12 @@ export function LibraryBottomSheet({
         aria-hidden="true"
       />
 
-      {/* Sheet Panel */}
+      {/* Sheet Panel - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
       <div
         role="dialog"
         aria-modal="true"
         className={cn(
-          'relative z-50 flex max-h-[85vh] w-full flex-col rounded-t-2xl border-t border-slate-200 bg-white p-6 text-slate-900 shadow-2xl transition-transform duration-300',
+          'relative z-50 flex max-h-[85vh] w-full flex-col rounded-t-2xl rounded-b-none border-t border-slate-200 border-x-0 border-b-0 bg-white p-6 text-slate-900 shadow-2xl transition-transform duration-300 sm:mb-6 sm:max-w-lg sm:mx-auto sm:rounded-2xl sm:border sm:border-slate-200',
           className,
         )}
       >
@@ -65,7 +65,7 @@ export function LibraryBottomSheet({
             type="button"
             onClick={onClose}
             aria-label="Close sheet"
-            className="ml-auto flex min-h-[44px] min-w-[44px] items-center justify-center text-slate-400 hover:text-slate-700"
+            className="ml-auto flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[4px] text-slate-400 hover:bg-slate-100 hover:text-slate-700"
           >
             <X className="size-5" />
           </button>

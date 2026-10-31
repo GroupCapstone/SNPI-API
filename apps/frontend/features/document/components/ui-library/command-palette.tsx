@@ -355,7 +355,7 @@ export function CommandPalette({
             onClick={(e) => e.stopPropagation()}
             onKeyDown={handleKeyDown}
             className={cn(
-              'relative w-full max-w-xl overflow-hidden rounded-2xl border shadow-2xl transition-all duration-150',
+              'relative w-full max-w-xl overflow-hidden max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border shadow-2xl transition-all duration-150',
               isDark
                 ? 'border-slate-800 bg-[#000B26] text-slate-100 shadow-cyan-950/20'
                 : 'border-slate-200/90 bg-white text-slate-900 shadow-slate-900/15',
@@ -434,7 +434,7 @@ export function CommandPalette({
                             onClick={() => handleSelectCommand(cmd)}
                             onMouseEnter={() => setSelectedIndex(cmdIndex)}
                             className={cn(
-                              'group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2 text-xs transition-all duration-100',
+                              'group flex cursor-pointer items-center justify-between gap-3 rounded-[4px] px-3 py-2 text-xs transition-all duration-100',
                               isSelected
                                 ? isDark
                                   ? 'bg-slate-800 text-white'
@@ -447,7 +447,7 @@ export function CommandPalette({
                             <div className="flex items-center gap-2.5 truncate">
                               <div
                                 className={cn(
-                                  'flex size-6 shrink-0 items-center justify-center rounded-lg border text-[11px] transition-colors',
+                                  'flex size-6 shrink-0 items-center justify-center rounded-[4px] border text-[11px] transition-colors',
                                   isSelected
                                     ? isDark
                                       ? 'border-[#38BDF8]/40 bg-[#38BDF8]/10 text-[#38BDF8]'
@@ -591,7 +591,7 @@ export function CommandPaletteInteractiveDemo() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex w-full items-center justify-between rounded-xl border border-slate-300 bg-slate-50/80 px-4 py-2.5 font-sans text-xs text-slate-500 transition-all outline-none hover:border-[#0056FF] hover:bg-white focus-visible:ring-2 focus-visible:ring-[#0056FF]"
+          className="flex w-full items-center justify-between rounded-[4px] border border-slate-300 bg-slate-50/80 px-4 py-2.5 font-sans text-xs text-slate-500 transition-all outline-none hover:border-[#0056FF] hover:bg-white focus-visible:ring-2 focus-visible:ring-[#0056FF]"
         >
           <div className="flex items-center gap-2.5">
             <Search className="size-3.5 text-[#0056FF]" />
@@ -616,7 +616,7 @@ export function CommandPaletteInteractiveDemo() {
               key={cmd.id}
               type="button"
               onClick={() => cmd.onSelect()}
-              className="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2 text-left font-sans text-xs transition-colors hover:border-[#0056FF] hover:bg-[#E3E7FC]/40"
+              className="flex w-full items-center justify-between rounded-[4px] border border-slate-200 bg-white px-3 py-2 text-left font-sans text-xs transition-colors hover:border-[#0056FF] hover:bg-[#E3E7FC]/40"
             >
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-slate-900">{cmd.title}</span>
@@ -635,7 +635,7 @@ export function CommandPaletteInteractiveDemo() {
 
         {/* Live Execution Feedback */}
         {executedAction && (
-          <div className="flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-2.5 font-mono text-xs text-emerald-700">
+          <div className="flex items-center justify-center gap-2 rounded-[4px] border border-emerald-200 bg-emerald-50 p-2.5 font-mono text-xs text-emerald-700">
             <Check className="size-3.5" />
             <span>Executed: &ldquo;{executedAction}&rdquo;</span>
           </div>

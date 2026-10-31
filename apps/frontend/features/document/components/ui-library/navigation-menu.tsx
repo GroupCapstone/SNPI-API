@@ -123,7 +123,7 @@ export function NavigationMenuTrigger({
     <button
       type="button"
       className={cn(
-        'group inline-flex h-9 w-max items-center justify-center rounded-full px-3.5 py-1.5 font-sans text-xs font-semibold transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+        'group inline-flex h-9 w-max items-center justify-center rounded-[4px] px-3.5 py-1.5 font-sans text-xs font-semibold transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
         isOpen
           ? 'bg-white/10 text-white shadow-inner'
           : 'text-slate-300 hover:bg-white/5 hover:text-white',
@@ -163,7 +163,7 @@ export function NavigationMenuLink({
   const anchorProps = {
     href,
     className: cn(
-      'inline-flex h-9 w-max items-center justify-center rounded-full px-3.5 py-1.5 font-sans text-xs font-medium transition-colors hover:text-white focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
+      'inline-flex h-9 w-max items-center justify-center rounded-[4px] px-3.5 py-1.5 font-sans text-xs font-medium transition-colors hover:text-white focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
       active ? 'font-bold text-white' : 'text-slate-400',
       className,
     ),
@@ -320,9 +320,9 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
                   <div className="flex flex-col justify-between gap-2.5 sm:col-span-7">
                     <a
                       href="#comp-snackbar"
-                      className="group/item flex items-start gap-3 rounded-xl p-2.5 transition-colors hover:bg-white/5"
+                      className="group/item flex items-start gap-3 rounded-[4px] p-2.5 transition-colors hover:bg-white/5"
                     >
-                      <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-slate-800 bg-[#161B26] text-[#38BDF8]">
+                      <div className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-800 bg-[#161B26] text-[#38BDF8]">
                         <Bell className="size-3.5" />
                       </div>
                       <div>
@@ -342,9 +342,9 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
 
                     <a
                       href="#comp-hanging-tabs-nav"
-                      className="group/item flex items-start gap-3 rounded-xl p-2.5 transition-colors hover:bg-white/5"
+                      className="group/item flex items-start gap-3 rounded-[4px] p-2.5 transition-colors hover:bg-white/5"
                     >
-                      <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-slate-800 bg-[#161B26] text-amber-400">
+                      <div className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-800 bg-[#161B26] text-amber-400">
                         <Compass className="size-3.5" />
                       </div>
                       <div>
@@ -359,9 +359,9 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
 
                     <a
                       href="#interactive-feed"
-                      className="group/item flex items-start gap-3 rounded-xl p-2.5 transition-colors hover:bg-white/5"
+                      className="group/item flex items-start gap-3 rounded-[4px] p-2.5 transition-colors hover:bg-white/5"
                     >
-                      <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-slate-800 bg-[#161B26] text-purple-400">
+                      <div className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-800 bg-[#161B26] text-purple-400">
                         <Layers className="size-3.5" />
                       </div>
                       <div>
@@ -402,7 +402,7 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
             setStars((prev) => (isStarred ? prev - 1 : prev + 1));
           }}
           className={cn(
-            'flex h-11 items-center gap-2 rounded-full border px-4 py-2 font-mono text-xs font-bold shadow-2xl backdrop-blur-xl transition-all active:scale-95',
+            'flex h-11 items-center gap-2 rounded-[4px] border px-4 py-2 font-mono text-xs font-bold shadow-2xl backdrop-blur-xl transition-all active:scale-95',
             isStarred
               ? 'border-amber-500/50 bg-amber-500/10 text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
               : 'border-slate-800/90 bg-[#0A0D14] text-white hover:border-slate-700',
@@ -420,7 +420,7 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
           type="button"
           onClick={() => setIsDark(!isDark)}
           title={isDark ? 'Switch to Light' : 'Switch to Dark'}
-          className="flex size-11 items-center justify-center rounded-full border border-slate-800/90 bg-[#0A0D14] text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 hover:border-slate-700 active:scale-95"
+          className="flex size-11 items-center justify-center rounded-[4px] border border-slate-800/90 bg-[#0A0D14] text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 hover:border-slate-700 active:scale-95"
         >
           {/* Half-circle contrast icon */}
           <svg className="size-4 fill-current" viewBox="0 0 24 24">

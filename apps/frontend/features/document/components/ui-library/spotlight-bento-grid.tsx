@@ -175,14 +175,14 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
                 </span>
               </div>
             </div>
-            <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+            <span className="inline-flex items-center gap-1 rounded-[4px] border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
               <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
               100% IMMUTABLE
             </span>
           </div>
 
           {/* Concrete Visual: Inline SVG Ledger Proof Block (No images) */}
-          <div className="relative z-10 mt-4 rounded-xl border border-slate-200/80 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-[#00081C]">
+          <div className="relative z-10 mt-4 rounded-[4px] border border-slate-200/80 bg-slate-50/70 p-3 dark:border-slate-800 dark:bg-[#00081C]">
             <div className="space-y-2 font-mono text-[11px]">
               <div className="flex items-center justify-between border-b border-slate-200/60 pb-1.5 dark:border-slate-800">
                 <span className="text-slate-400">OPERATION:</span>
@@ -262,20 +262,20 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
                 <span className="font-mono text-[10px] text-slate-400">Node Replica Set rs0</span>
               </div>
             </div>
-            <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+            <span className="rounded-[4px] border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
               HEALTHY
             </span>
           </div>
 
           {/* SVG Cluster Metric Visual */}
           <div className="relative z-10 mt-3 grid grid-cols-2 gap-2">
-            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-[#00081C]">
+            <div className="rounded-[4px] border border-slate-200/80 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-[#00081C]">
               <span className="font-mono text-[10px] text-slate-400">MEMORY_RSS</span>
               <div className="mt-0.5 font-mono text-xs font-bold text-slate-900 dark:text-white">
                 142.6 MB
               </div>
             </div>
-            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-[#00081C]">
+            <div className="rounded-[4px] border border-slate-200/80 bg-slate-50/70 p-2.5 dark:border-slate-800 dark:bg-[#00081C]">
               <span className="font-mono text-[10px] text-slate-400">EVENT_LOOP</span>
               <div className="mt-0.5 font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">
                 0.62 ms
@@ -412,7 +412,7 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
             </svg>
           </div>
 
-          <div className="relative z-10 mt-2 rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5 font-mono text-[10px] text-slate-500 dark:border-slate-800 dark:bg-[#00081C] dark:text-slate-400">
+          <div className="relative z-10 mt-2 rounded-[4px] border border-slate-200/80 bg-slate-50/70 p-2.5 font-mono text-[10px] text-slate-500 dark:border-slate-800 dark:bg-[#00081C] dark:text-slate-400">
             <span>BRANCH:</span>{' '}
             <strong className="text-slate-800 dark:text-slate-200">main</strong> &middot; 18 commits
             verified

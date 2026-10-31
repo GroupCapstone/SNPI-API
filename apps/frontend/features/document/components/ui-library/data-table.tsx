@@ -54,7 +54,7 @@ export function StatusPill({ status }: { status: string }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full border px-2.5 py-0.5 font-sans text-xs font-bold select-none',
+        'inline-flex items-center rounded-[4px] border px-2.5 py-0.5 font-sans text-xs font-bold select-none',
         pillClasses,
       )}
     >
@@ -244,7 +244,7 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div
       className={cn(
-        'w-full overflow-hidden rounded-2xl border transition-colors duration-150',
+        'w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border transition-colors duration-150',
         isDark
           ? 'border-slate-800 bg-[#000B26] text-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
           : 'border-slate-200/90 bg-white text-slate-900 shadow-[0_1px_4px_rgba(0,0,0,0.02)]',
@@ -287,7 +287,7 @@ export function DataTable<T extends Record<string, any>>({
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={searchPlaceholder}
               className={cn(
-                'h-9 w-full rounded-xl border pr-8 pl-9 font-sans text-xs font-medium transition-colors focus:outline-none',
+                'h-9 w-full rounded-[4px] border pr-8 pl-9 font-sans text-xs font-medium transition-colors focus:outline-none',
                 isDark
                   ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF]'
                   : 'border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF]',
@@ -299,7 +299,7 @@ export function DataTable<T extends Record<string, any>>({
                 type="button"
                 onClick={() => setSearchInput('')}
                 className={cn(
-                  'absolute top-1/2 right-2.5 -translate-y-1/2 rounded-full p-0.5 text-slate-400 transition-colors hover:text-slate-700 dark:hover:text-white',
+                  'absolute top-1/2 right-2.5 -translate-y-1/2 rounded-[4px] p-0.5 text-slate-400 transition-colors hover:text-slate-700 dark:hover:text-white',
                 )}
                 aria-label="Clear search filter"
               >
@@ -333,7 +333,7 @@ export function DataTable<T extends Record<string, any>>({
               value={pageSize}
               onChange={(e) => handlePageSizeChange(Number(e.target.value))}
               className={cn(
-                'h-8 rounded-lg border px-2 py-0.5 font-mono text-xs font-semibold transition-colors focus:outline-none',
+                'h-8 rounded-[4px] border px-2 py-0.5 font-mono text-xs font-semibold transition-colors focus:outline-none',
                 isDark
                   ? 'border-slate-700 bg-slate-900 text-white focus:border-[#0056FF]'
                   : 'border-slate-200 bg-white text-slate-800 focus:border-[#0056FF]',
@@ -496,7 +496,7 @@ export function DataTable<T extends Record<string, any>>({
           <div className="flex flex-col items-center justify-center px-4 py-16 text-center">
             <div
               className={cn(
-                'flex size-12 items-center justify-center rounded-2xl border',
+                'flex size-12 items-center justify-center rounded-[4px] border',
                 isDark
                   ? 'border-slate-800 bg-slate-900 text-slate-400'
                   : 'border-slate-200 bg-slate-50 text-slate-500',
@@ -523,7 +523,7 @@ export function DataTable<T extends Record<string, any>>({
               type="button"
               onClick={() => setSearchInput('')}
               className={cn(
-                'mt-4 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#0056FF] hover:text-white',
+                'mt-4 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#0056FF] hover:text-white',
               )}
             >
               Clear search filter
@@ -556,7 +556,7 @@ export function DataTable<T extends Record<string, any>>({
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(1)}
             className={cn(
-              'flex size-8 items-center justify-center rounded-lg border font-mono text-xs font-bold transition-colors select-none',
+              'flex size-8 items-center justify-center rounded-[4px] border font-mono text-xs font-bold transition-colors select-none',
               currentPage === 1
                 ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
                 : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
@@ -572,7 +572,7 @@ export function DataTable<T extends Record<string, any>>({
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             className={cn(
-              'flex size-8 items-center justify-center rounded-lg border transition-colors select-none',
+              'flex size-8 items-center justify-center rounded-[4px] border transition-colors select-none',
               currentPage === 1
                 ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
                 : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
@@ -601,7 +601,7 @@ export function DataTable<T extends Record<string, any>>({
                 type="button"
                 onClick={() => setCurrentPage(pageNum)}
                 className={cn(
-                  'flex size-8 items-center justify-center rounded-lg border font-mono text-xs font-bold transition-all select-none',
+                  'flex size-8 items-center justify-center rounded-[4px] border font-mono text-xs font-bold transition-all select-none',
                   isActive
                     ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs dark:border-[#38BDF8] dark:bg-[#38BDF8] dark:text-slate-950'
                     : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-[#38BDF8]',
@@ -620,7 +620,7 @@ export function DataTable<T extends Record<string, any>>({
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             className={cn(
-              'flex size-8 items-center justify-center rounded-lg border transition-colors select-none',
+              'flex size-8 items-center justify-center rounded-[4px] border transition-colors select-none',
               currentPage === totalPages
                 ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
                 : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
@@ -636,7 +636,7 @@ export function DataTable<T extends Record<string, any>>({
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(totalPages)}
             className={cn(
-              'flex size-8 items-center justify-center rounded-lg border font-mono text-xs font-bold transition-colors select-none',
+              'flex size-8 items-center justify-center rounded-[4px] border font-mono text-xs font-bold transition-colors select-none',
               currentPage === totalPages
                 ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
                 : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
