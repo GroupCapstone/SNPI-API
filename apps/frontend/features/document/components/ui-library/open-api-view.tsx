@@ -558,133 +558,162 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 2: 4 CORE SERVICES OVERVIEW (SCREEN TWO ON MOBILE)        */}
           {/* ----------------------------------------------------------------- */}
-          <section id="available-services" className="scroll-mt-24 space-y-3 pt-4 sm:pt-6">
+          <section id="available-services" className="scroll-mt-24 space-y-4 pt-4 sm:pt-6">
             <div className="flex items-center justify-between px-1">
-              <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
-                Available Services & Endpoints
+              <div className="flex items-center gap-2">
+                <span className="flex size-2 rounded-full bg-[#0056FF]" />
+                <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
+                  Available Services & Endpoints
+                </span>
+              </div>
+              <span className="rounded-full bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
+                4 Core Services
               </span>
-              <span className="text-[11px] font-medium text-[#0A1A4A]/60">4 Core Services</span>
             </div>
 
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
-              {/* Card 01: Campus Announcements & Feeds */}
+            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
+              {/* Card 01: Campus News & Feeds */}
               <button
                 onClick={() => scrollToSection('public-feeds')}
-                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
               >
-                <div className="flex w-full items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                      <Radio className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          01 · Feeds
-                        </span>
-                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
-                          RSS 2.0 & JSON
-                        </span>
-                      </div>
-                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                        Campus News & RSS Feeds
-                      </h3>
-                    </div>
+                {/* Top Row: Icon + Protocol Pill + Arrow */}
+                <div className="flex items-center justify-between">
+                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <Radio className="size-5" />
                   </div>
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
+                      RSS 2.0 & JSON
+                    </span>
+                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
-                  Live announcements and emergency alerts.
-                </p>
+                {/* Middle: Title & Micro-description */}
+                <div className="mt-4 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-black text-[#0056FF]">01</span>
+                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
+                      Campus News & RSS Feeds
+                    </h3>
+                  </div>
+                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
+                    Live institutional announcements and campus alerts.
+                  </p>
+                </div>
 
-                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                  <span className="font-mono text-[11px] text-[#0056FF]">
-                    GET /public/rss/announcements.xml
+                {/* Bottom: Dedicated Route Capsule Bar */}
+                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
+                      GET
+                    </span>
+                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
+                      /public/rss/announcements.xml
+                    </span>
+                  </div>
+                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
+                    5m Cache
                   </span>
-                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">5m Cache</span>
                 </div>
               </button>
 
               {/* Card 02: Class Roster & Catalog */}
               <button
                 onClick={() => scrollToSection('class-catalog-api')}
-                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
               >
-                <div className="flex w-full items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                      <Layers className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          02 · Catalog
-                        </span>
-                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
-                          REST API
-                        </span>
-                      </div>
-                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                        Class Roster & Catalog
-                      </h3>
-                    </div>
+                {/* Top Row: Icon + Protocol Pill + Arrow */}
+                <div className="flex items-center justify-between">
+                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <Layers className="size-5" />
                   </div>
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
+                      REST API
+                    </span>
+                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
-                  Active course schedules and live seat quotas.
-                </p>
+                {/* Middle: Title & Micro-description */}
+                <div className="mt-4 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-black text-[#0056FF]">02</span>
+                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
+                      Class Roster & Catalog
+                    </h3>
+                  </div>
+                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
+                    Active course schedules and live seat quotas.
+                  </p>
+                </div>
 
-                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                  <span className="font-mono text-[11px] text-[#0056FF]">GET /api/v1/classes</span>
-                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">Live Seats</span>
+                {/* Bottom: Dedicated Route Capsule Bar */}
+                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
+                      GET
+                    </span>
+                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
+                      /api/v1/classes
+                    </span>
+                  </div>
+                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
+                    Live Seats
+                  </span>
                 </div>
               </button>
 
               {/* Card 03: Certificate Ledger API */}
               <button
                 onClick={() => scrollToSection('certificate-ledger-api')}
-                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
               >
-                <div className="flex w-full items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ShieldCheck className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          03 · Ledger
-                        </span>
-                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
-                          SHA-256 Ledger
-                        </span>
-                      </div>
-                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                        Certificate Verification
-                      </h3>
-                    </div>
+                {/* Top Row: Icon + Protocol Pill + Arrow */}
+                <div className="flex items-center justify-between">
+                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <ShieldCheck className="size-5" />
                   </div>
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
+                      SHA-256 Ledger
+                    </span>
+                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
-                  Tamper-proof student diploma validation.
-                </p>
+                {/* Middle: Title & Micro-description */}
+                <div className="mt-4 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-black text-[#0056FF]">03</span>
+                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
+                      Certificate Verification
+                    </h3>
+                  </div>
+                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
+                    Tamper-proof student diploma validation.
+                  </p>
+                </div>
 
-                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                  <span className="font-mono text-[11px] text-[#0056FF]">
-                    GET /reports/certificates/verify/:code
-                  </span>
-                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                {/* Bottom: Dedicated Route Capsule Bar */}
+                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
+                      GET
+                    </span>
+                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
+                      /reports/certificates/verify/:code
+                    </span>
+                  </div>
+                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
                     Proof Verified
                   </span>
                 </div>
@@ -693,41 +722,47 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               {/* Card 04: Real-Time SSE Stream */}
               <button
                 onClick={() => scrollToSection('realtime-stream')}
-                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
               >
-                <div className="flex w-full items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                      <Zap className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          04 · Stream
-                        </span>
-                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
-                          HTTP/2 SSE
-                        </span>
-                      </div>
-                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                        Real-Time SSE Stream
-                      </h3>
-                    </div>
+                {/* Top Row: Icon + Protocol Pill + Arrow */}
+                <div className="flex items-center justify-between">
+                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <Zap className="size-5" />
                   </div>
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
+                      HTTP/2 SSE
+                    </span>
+                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
-                  Instant push events with zero polling.
-                </p>
+                {/* Middle: Title & Micro-description */}
+                <div className="mt-4 space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-black text-[#0056FF]">04</span>
+                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
+                      Real-Time SSE Stream
+                    </h3>
+                  </div>
+                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
+                    Instant push events with zero polling.
+                  </p>
+                </div>
 
-                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                  <span className="font-mono text-[11px] text-[#0056FF]">
-                    GET /api/v1/stream/events
-                  </span>
-                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                {/* Bottom: Dedicated Route Capsule Bar */}
+                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
+                      GET
+                    </span>
+                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
+                      /api/v1/stream/events
+                    </span>
+                  </div>
+                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
                     Sub-50ms Latency
                   </span>
                 </div>

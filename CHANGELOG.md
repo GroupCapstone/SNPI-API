@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (31.10.2026) - `c9ae516`
+
+- Streamline mobile navigation and cleanup demo viewports
+
+### Version 0.2.13 (31.10.2026) - `2c262de`
+
+- Remove Read Only badge and top context pills from hero and directory
+
 ### Version 0.2.13 (31.10.2026) - `ee38ab0`
 
 - Remove base url box from standalone hero view
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `38590fa`
 
 - Record frontsite school integration studio and zero public crud policy
-
-### Version 0.2.12 (31.10.2026) - `5f5c018`
-
-- Secure public read-only syndication and add frontsite school data integration studio
-
-### Version 0.2.12 (31.10.2026) - `38ac6e6`
-
-- Redesign open-api page with Nextra Docs Starter Kit architecture
 

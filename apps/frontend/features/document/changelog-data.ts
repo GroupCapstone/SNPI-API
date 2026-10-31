@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "31.10.2026",
+    "commitHash": "c9ae516",
+    "description": "Streamline mobile navigation and cleanup demo viewports"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
+    "commitHash": "2c262de",
+    "description": "Remove Read Only badge and top context pills from hero and directory"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
     "commitHash": "ee38ab0",
     "description": "Remove base url box from standalone hero view"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "38590fa",
     "description": "Record frontsite school integration studio and zero public crud policy"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "5f5c018",
-    "description": "Secure public read-only syndication and add frontsite school data integration studio"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "38ac6e6",
-    "description": "Redesign open-api page with Nextra Docs Starter Kit architecture"
   }
 ];
