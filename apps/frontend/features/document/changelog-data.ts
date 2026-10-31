@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "f022bc5",
+    "description": "Complete redesign with public feeds, embed studio, class table, and real-time sse"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "863b601",
     "description": "Record Vercel deployment fix and light theme enforcement"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "b8c52f2",
     "description": "Remove category banner cards and display component demo cards directly"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "5bb52b1",
-    "description": "Apply automated prettier code formatting across brand and ui-library components"
   }
 ];
