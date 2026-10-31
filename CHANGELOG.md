@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.12 (31.10.2026) - `c2efdc5`
+
+- Simplify hero and implement psychological reading layout
+
 ### Version 0.2.12 (31.10.2026) - `7317af8`
 
 - Redesign open api and syndication guide for backend rest api focus
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `02011a6`
 
 - Record Hook Sidebar implementation and Rail TOC fixes
-
-### Version 0.2.12 (31.10.2026) - `a50eee9`
-
-- Implement Hook Sidebar dashed spring rail and fix Rail TOC scroll tracking
 

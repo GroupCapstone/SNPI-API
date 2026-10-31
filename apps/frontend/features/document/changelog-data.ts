@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.12",
     "date": "31.10.2026",
+    "commitHash": "c2efdc5",
+    "description": "Simplify hero and implement psychological reading layout"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
     "commitHash": "7317af8",
     "description": "Redesign open api and syndication guide for backend rest api focus"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "02011a6",
     "description": "Record Hook Sidebar implementation and Rail TOC fixes"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "a50eee9",
-    "description": "Implement Hook Sidebar dashed spring rail and fix Rail TOC scroll tracking"
   }
 ];
