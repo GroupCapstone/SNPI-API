@@ -637,8 +637,11 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             </div>
             <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-xs text-[#0A1A4A]">
               <div className="flex items-center justify-between font-bold text-[#0056FF]">
-                <span>{CHANGE_LOGS[0]?.version || 'v0.2.12'}</span>
-                <span>{CHANGE_LOGS[0]?.date || '2026-10-31'}</span>
+                <span>{CHANGE_LOGS[0]?.version || 'v0.2.13'}</span>
+                <span className="rounded border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 text-[10px] font-semibold text-[#0056FF]">
+                  Developer: {CHANGE_LOGS[0]?.developer || 'Tan-Saphea'}
+                </span>
+                <span>{CHANGE_LOGS[0]?.date || '01.11.2026'}</span>
               </div>
               <p className="leading-relaxed text-[#0A1A4A]/80">
                 {CHANGE_LOGS[0]?.description ||

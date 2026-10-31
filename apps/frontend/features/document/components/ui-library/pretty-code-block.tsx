@@ -294,7 +294,7 @@ export function PrettyCodeBlock({
           maxHeight,
         )}
       >
-        <pre className="table w-full border-collapse">
+        <table className="w-full border-collapse font-mono">
           <tbody>
             {lines.map((line, idx) => (
               <tr key={idx} className="transition-colors hover:bg-slate-800/40">
@@ -313,7 +313,7 @@ export function PrettyCodeBlock({
               </tr>
             ))}
           </tbody>
-        </pre>
+        </table>
       </div>
     </div>
   );

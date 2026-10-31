@@ -6,6 +6,7 @@ interface ChangeLogItem {
   version: string;
   date: string;
   commitHash: string;
+  developer: string;
   description: string;
 }
 
@@ -48,7 +49,7 @@ export const syncChangelog = (): void => {
   }
 
   // 3. Extract recent commits (last 25 for rich document history)
-  const gitOutput = execSync('git log -n 25 --pretty=format:"%h|%ad|%s" --date=format:"%d.%m.%Y"', {
+  const gitOutput = execSync('git log -n 25 --pretty=format:"%h|%ad|%an|%s" --date=format:"%d.%m.%Y"', {
     cwd: ROOT_DIR,
     encoding: 'utf-8',
   });
@@ -59,9 +60,10 @@ export const syncChangelog = (): void => {
   let runningVersion = currentVersion;
 
   for (const line of lines) {
-    const [hash, date, ...subjectParts] = line.split('|');
+    const [hash, date, author, ...subjectParts] = line.split('|');
     const subject = subjectParts.join('|').trim();
     const shortHash = hash.trim().slice(0, 7);
+    const developer = (author || 'Tan-Saphea').trim();
 
     // If this commit has an explicit release tag, step into that release version
     if (tagMap.has(shortHash)) {
@@ -77,6 +79,7 @@ export const syncChangelog = (): void => {
       version: runningVersion,
       date: date.trim(),
       commitHash: shortHash,
+      developer,
       description: cleanDesc,
     });
   }
@@ -86,6 +89,7 @@ export const syncChangelog = (): void => {
   version: string;
   date: string;
   commitHash?: string;
+  developer?: string;
   description: string;
 }
 
@@ -95,10 +99,10 @@ export const CHANGE_LOGS: ChangeLogEntry[] = ${JSON.stringify(items, null, 2)};
   fs.writeFileSync(CHANGELOG_DATA_FILE, tsContent, 'utf-8');
   console.log(`[Changelog] Successfully updated ${CHANGELOG_DATA_FILE} (${items.length} entries).`);
 
-  // 5. Write root CHANGELOG.md
-  let mdContent = `# SNP-SMS Changelog\n\nAll notable changes, commits, and skill updates are recorded here in real-time.\n\n`;
+  // 5. Write root CHANGELOG.md with clear developer attribution and readable summaries
+  let mdContent = `# SNPI-SMS Changelog\n\nAll notable changes, commits, and skill updates are recorded here in real-time.\n\n`;
   for (const item of items) {
-    mdContent += `### Version ${item.version} (${item.date}) - \`${item.commitHash}\`\n\n- ${item.description}\n\n`;
+    mdContent += `### Version ${item.version} (${item.date}) - \`${item.commitHash}\` (Developer: **${item.developer}**)\n\n- ${item.description}\n\n`;
   }
 
   fs.writeFileSync(ROOT_CHANGELOG_MD, mdContent, 'utf-8');
