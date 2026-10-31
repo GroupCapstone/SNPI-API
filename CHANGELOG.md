@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `0d6b9ef`
+
+- Rewrite readme to standard enterprise format with zero links and short summary
+
+### Version 0.2.11 (31.10.2026) - `5dfee5c`
+
+- Synchronize release changelog entries
+
 ### Version 0.2.11 (31.10.2026) - `c445400`
 
 - Configure Vercel build dependencies and optional Linux oxide binaries
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `fe39f6e`
 
 - Enforce light day mode and implement Wiz-style curved atmospheric footer
-
-### Version 0.2.11 (31.10.2026) - `3bc263e`
-
-- Sync commit 1342394
-
-### Version 0.2.11 (31.10.2026) - `1342394`
-
-- Remove redundant right-sidebar TOC and line tracker from Open API page
 
