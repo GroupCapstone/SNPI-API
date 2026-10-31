@@ -8,23 +8,18 @@ import {
   type SnackbarVariant,
   LibrarySwitch,
   LibraryChip,
-  LibraryFab,
   LibraryDropdown,
   COMPONENT_LIBRARY_REGISTRY,
   COMPONENT_CATEGORIES,
   GeometricButton,
   GeometricInput,
   GeometricHeaderStamp,
-  RailTocDemo,
-  BounceSidebarDemo,
   HookSidebarDemo,
   GooeyNavDemo,
   CyberArmorNavDemo,
-  IconBarDemo,
   DurationPickerDemo,
   PasswordInputDemo,
   ThemeSelectorDemo,
-  TaskListDemo,
   NotificationBellDemo,
   FolderDemo,
   StepPlayerDemo,
@@ -32,20 +27,15 @@ import {
   VoiceNoteDemo,
   FaqDemo,
   GridRevealDemo,
-  BlurInDemo,
   MarqueeSectionDemo,
   FloatingLabelFormDemo,
   MultiStepWizardDemo,
   FileDropzoneDemo,
-  PaymentCardDemo,
-  CommandPaletteDemo,
   DataTableDemo,
   CipherTextDecoderDemo,
-  SearchableDropdownDemo,
   ToastStackDemo,
   StatusPage404Demo,
   SkeletonLoadingScreenDemo,
-  RealTimeChartDemo,
   RichTextEditorDemo,
   generateAiAgentPrompt,
 } from '@/features/document/components/ui-library';
@@ -444,18 +434,6 @@ export function UiLibraryView() {
                                   />
                                 )}
                                 <span className="truncate">{comp.name}</span>
-                                {comp.id === 'rail-toc' && (
-                                  <span
-                                    className={cn(
-                                      'ml-1 shrink-0 rounded-full px-1.5 py-0.5 font-mono text-[8px] font-bold uppercase',
-                                      isCurrentActive
-                                        ? 'bg-[#0056FF] text-white'
-                                        : 'bg-[#E3E7FC] text-[#0056FF]',
-                                    )}
-                                  >
-                                    Primary
-                                  </span>
-                                )}
                               </button>
                             );
                           })}
@@ -1641,18 +1619,12 @@ function renderFeedComponentDemo(
     // ==========================================
     // NAVIGATION GROUP (Interactive Demos)
     // ==========================================
-    case 'rail-toc':
-      return <RailTocDemo />;
-    case 'bounce-sidebar':
-      return <BounceSidebarDemo />;
     case 'hook-sidebar':
       return <HookSidebarDemo />;
     case 'gooey-nav':
       return <GooeyNavDemo />;
     case 'cyber-armor-nav':
       return <CyberArmorNavDemo />;
-    case 'icon-bar':
-      return <IconBarDemo />;
 
     // ==========================================
     // INPUTS GROUP (Interactive Demos)
@@ -1663,8 +1635,6 @@ function renderFeedComponentDemo(
       return <PasswordInputDemo />;
     case 'theme-selector':
       return <ThemeSelectorDemo />;
-    case 'task-list':
-      return <TaskListDemo />;
 
     // ==========================================
     // FEEDBACK GROUP (Interactive Demos)
@@ -1694,8 +1664,6 @@ function renderFeedComponentDemo(
       return <FaqDemo />;
     case 'data-table':
       return <DataTableDemo />;
-    case 'real-time-chart':
-      return <RealTimeChartDemo />;
 
     // ==========================================
     // AI KIT GROUP (Interactive Demos)
@@ -1706,8 +1674,6 @@ function renderFeedComponentDemo(
     // ==========================================
     // TEXT EFFECTS (Component Templates)
     // ==========================================
-    case 'blur-in':
-      return <BlurInDemo />;
     case 'cipher-decode':
       return <CipherTextDecoderDemo />;
 
@@ -1726,18 +1692,8 @@ function renderFeedComponentDemo(
       return <MultiStepWizardDemo />;
     case 'file-dropzone':
       return <FileDropzoneDemo />;
-    case 'payment-card':
-      return <PaymentCardDemo />;
-    case 'searchable-dropdown':
-      return <SearchableDropdownDemo />;
     case 'rich-text-editor':
       return <RichTextEditorDemo />;
-
-    // ==========================================
-    // OVERLAYS (Component Templates)
-    // ==========================================
-    case 'command-palette':
-      return <CommandPaletteDemo />;
 
     default:
       return null;

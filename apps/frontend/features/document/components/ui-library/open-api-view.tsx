@@ -250,7 +250,7 @@ const INITIAL_STREAM_EVENTS: LiveStreamEvent[] = [
 ];
 
 const GUIDE_NAV_ITEMS = [
-  { id: 'open-api-head', label: 'Overview & Subscription Policy', tag: '01' },
+  { id: 'open-api-head', label: 'Overview & Syndication Standards', tag: '01' },
   { id: 'public-feeds', label: 'Public Feeds & RSS 2.0', tag: '02' },
   { id: 'class-catalog-registration', label: 'Class Roster & Frontsite Studio', tag: '03' },
   { id: 'developer-embed', label: 'Developer Embed Studio', tag: '04' },
@@ -406,15 +406,14 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             </nav>
           </div>
 
-          {/* Institutional Subscription Notice Card */}
+          {/* Syndication Specification Notice Card */}
           <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
             <div className="flex items-center gap-2 text-xs font-bold text-[#0056FF]">
-              <Lock className="h-3.5 w-3.5" />
-              <span>Subscription Required</span>
+              <Info className="h-3.5 w-3.5" />
+              <span>Display-Only Specification</span>
             </div>
             <p className="text-[11px] leading-relaxed text-[#0A1A4A]">
-              Endpoints and syndication feeds are accessible exclusively through institutional
-              developer credentials. Direct public execution is restricted.
+              Real-time public syndicate catalog designed for external school portal and frontsite display.
             </p>
           </div>
         </aside>
@@ -424,22 +423,21 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
         {/* =================================================================== */}
         <main className="max-w-5xl min-w-0 flex-1 space-y-12 pb-24">
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 1: OVERVIEW & SUBSCRIPTION PROTOCOL */}
+          {/* SECTION 1: OVERVIEW & SYNDICATION STANDARDS */}
           {/* ----------------------------------------------------------------- */}
           <section id="open-api-head" className="space-y-6 pt-2">
             <div className="flex flex-col gap-4 border-b border-[#CAD3F5] pb-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-2">
                 <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-1 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                   <ShieldCheck className="h-3.5 w-3.5" />
-                  <span>Subscription-Gated Syndication · Read-Only Guide</span>
+                  <span>Public Syndication Guide · Display Only</span>
                 </div>
                 <h1 className="text-3xl font-extrabold tracking-tight text-[#0A1A4A] sm:text-4xl">
                   Open API & Syndication Guide
                 </h1>
                 <p className="text-sm leading-relaxed font-medium text-[#0A1A4A]">
-                  SNPI-SMS syndicated developer services and streaming endpoints are available
-                  exclusively via institutional developer subscription; direct public execution is
-                  restricted.
+                  SNPI-SMS syndicated developer services and streaming endpoints for external school
+                  portals and frontsite applications.
                 </p>
               </div>
               <div className="shrink-0">
@@ -457,17 +455,17 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4">
                 <span className="mb-1 block text-[11px] font-bold text-[#0056FF] uppercase">
-                  Access Paradigm
+                  Delivery Mode
                 </span>
                 <span className="text-sm font-bold text-[#0A1A4A]">
-                  Institutional Subscription Only
+                  Public Syndication Only
                 </span>
               </div>
               <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4">
                 <span className="mb-1 block text-[11px] font-bold text-[#0056FF] uppercase">
-                  Mutation Status
+                  Operation Scope
                 </span>
-                <span className="text-sm font-bold text-[#0A1A4A]">Zero Public Write Access</span>
+                <span className="text-sm font-bold text-[#0A1A4A]">Display-Only Data</span>
               </div>
               <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4">
                 <span className="mb-1 block text-[11px] font-bold text-[#0056FF] uppercase">
@@ -565,7 +563,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 <Radio className="h-3.5 w-3.5" />
-                <span>Subscription-Gated Feed · Institutional Key Required</span>
+                <span>Live Public Syndication · XML & JSON Formats</span>
               </div>
               <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
                 Public Feeds & RSS 2.0
@@ -680,7 +678,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 <Layers className="h-3.5 w-3.5" />
-                <span>Institutional Subscription Required · Zero Public Write Permissions</span>
+                <span>Public Course Catalog & Seat Counts</span>
               </div>
               <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
                 Class Roster & Frontsite Studio
@@ -691,7 +689,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               </p>
             </div>
 
-            {/* Read-Only Filter & Table */}
+            {/* Display-Only Filter & Table */}
             <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-sm">
               <div className="flex flex-col gap-3 border-b border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="relative w-full sm:w-72">
@@ -723,7 +721,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 </div>
               </div>
 
-              {/* Read-Only Table */}
+              {/* Display-Only Table */}
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse text-left">
                   <thead>
@@ -732,8 +730,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                       <th className="px-4 py-3">Course Title & Instructor</th>
                       <th className="px-4 py-3">Schedule & Room</th>
                       <th className="px-4 py-3">Seat Capacity</th>
-                      <th className="px-4 py-3">Status</th>
-                      <th className="px-4 py-3 text-right">Access Mode</th>
+                      <th className="px-4 py-3 text-right">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#CAD3F5] text-xs font-medium text-[#0A1A4A]">
@@ -772,7 +769,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                               />
                             </div>
                           </td>
-                          <td className="px-4 py-3.5">
+                          <td className="px-4 py-3.5 text-right">
                             <span
                               className={cn(
                                 'rounded border px-2 py-0.5 text-[11px] font-bold',
@@ -784,12 +781,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                               )}
                             >
                               {item.status}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3.5 text-right">
-                            <span className="inline-flex items-center gap-1 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 text-[11px] font-bold text-[#0056FF]">
-                              <Lock className="h-3 w-3" />
-                              <span>Read-Only</span>
                             </span>
                           </td>
                         </tr>
@@ -804,7 +795,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             <div className="space-y-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  Frontsite Integration Pattern (Read-Only Consumption)
+                  Frontsite Integration Pattern (Public Catalog Display)
                 </span>
                 <span className="font-mono text-[11px] text-[#0A1A4A]/70">
                   GET /api/v1/public/classes
@@ -818,7 +809,6 @@ export async function fetchSyndicatedClasses(): Promise<ClassRosterItem[]> {
   const response = await fetch('https://api.snp.edu.kh/api/v1/public/classes?branch=BR-01', {
     headers: {
       'Accept': 'application/json',
-      'X-Subscription-Key': process.env.SNP_SUBSCRIBER_KEY!,
     },
     next: { revalidate: 60 },
   });
@@ -827,9 +817,7 @@ export async function fetchSyndicatedClasses(): Promise<ClassRosterItem[]> {
 }`}
               </pre>
               <p className="text-xs leading-relaxed text-[#0A1A4A]">
-                Notice: Class roster parameters, seat quotas, and student registrations are
-                controlled exclusively through authenticated institution registrar operations;
-                external parameter modification is restricted on this syndicated guide.
+                Notice: Class roster information is provided as a display-only public catalog for frontsite portals.
               </p>
             </div>
           </section>
@@ -841,7 +829,7 @@ export async function fetchSyndicatedClasses(): Promise<ClassRosterItem[]> {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 <Code className="h-3.5 w-3.5" />
-                <span>Subscriber Embed License Required · Read-Only Sandbox</span>
+                <span>Standardized Responsive Embeds · Display Specification</span>
               </div>
               <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
                 Developer Embed Studio
@@ -957,7 +945,7 @@ export function SchoolPortal() {
               </div>
             </div>
 
-            {/* Read-Only Sandbox Preview */}
+            {/* Display-Only Sandbox Preview */}
             <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-sm">
               <div className="flex items-center justify-between border-b border-[#CAD3F5] bg-[#EFF5FF] p-3 text-xs">
                 <div className="flex items-center gap-2">
@@ -971,7 +959,7 @@ export function SchoolPortal() {
                   </span>
                 </div>
                 <span className="rounded bg-[#E3E7FC] px-2 py-0.5 text-[10px] font-bold text-[#0056FF]">
-                  Viewport Sandbox Preview (Read-Only)
+                  Viewport Preview (Display Only)
                 </span>
               </div>
 
@@ -1031,7 +1019,7 @@ export function SchoolPortal() {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 <Zap className="h-3.5 w-3.5" />
-                <span>Subscribed Stream Active · Read-Only Telemetry</span>
+                <span>Real-Time Broadcast Stream · Display Only</span>
               </div>
               <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
                 Real-Time SSE Stream
@@ -1078,7 +1066,7 @@ export function SchoolPortal() {
               </div>
             </div>
 
-            {/* Terminal Event Stream Inspector (Read-Only) */}
+            {/* Terminal Event Stream Inspector (Display Only) */}
             <div className="overflow-hidden rounded-xl border border-[#0056FF] bg-[#0A1A4A] font-mono text-[#EFF5FF] shadow-sm">
               <div className="flex items-center justify-between border-b border-[#0056FF]/40 bg-[#0A1A4A] p-3.5 text-xs">
                 <div className="flex items-center gap-2">
@@ -1122,7 +1110,7 @@ export function SchoolPortal() {
                 <button
                   onClick={() =>
                     handleCopy(
-                      `const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01', {\n  withCredentials: true\n});\n\nsse.addEventListener('class.seat_reserved', (event) => {\n  const payload = JSON.parse(event.data);\n  console.log('Real-time class update:', payload);\n});`,
+                      `const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');\n\nsse.addEventListener('class.seat_reserved', (event) => {\n  const payload = JSON.parse(event.data);\n  console.log('Real-time class update:', payload);\n});`,
                       'sse-spec',
                     )
                   }
@@ -1139,8 +1127,7 @@ export function SchoolPortal() {
               <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                 {`// Client-Side Server-Sent Events Listener
 const eventSource = new EventSource(
-  'https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01',
-  { withCredentials: true }
+  'https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01'
 );
 
 eventSource.addEventListener('class.seat_reserved', (event) => {

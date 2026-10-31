@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "49f052c",
+    "description": "Redesign into minimal one-way subscription-gated guide"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "afcf5a8",
     "description": "Implement stacked resting deck with hover/tap expansion and brand light day mode"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "fb3d251",
     "description": "Remove release and api status badge container from sticky header"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "0bddca0",
-    "description": "Compile backend typescript output to dist directory for Vercel deployment"
   }
 ];

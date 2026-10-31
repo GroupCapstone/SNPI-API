@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `49f052c`
+
+- Redesign into minimal one-way subscription-gated guide
+
 ### Version 0.2.11 (31.10.2026) - `afcf5a8`
 
 - Implement stacked resting deck with hover/tap expansion and brand light day mode
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `fb3d251`
 
 - Remove release and api status badge container from sticky header
-
-### Version 0.2.11 (31.10.2026) - `0bddca0`
-
-- Compile backend typescript output to dist directory for Vercel deployment
 
