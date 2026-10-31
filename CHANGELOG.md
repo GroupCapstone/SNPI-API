@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `70a42c7`
+
+- Sync real-time changelog for open-api redesign
+
 ### Version 0.2.11 (31.10.2026) - `f022bc5`
 
 - Complete redesign with public feeds, embed studio, class table, and real-time sse
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `d12d066`
 
 - Remove 23 requested components, obsolete demo code, and unused standalone files
-
-### Version 0.2.11 (31.10.2026) - `b8c52f2`
-
-- Remove category banner cards and display component demo cards directly
 

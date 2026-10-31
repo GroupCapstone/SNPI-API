@@ -194,9 +194,7 @@ export function TextShimmerDemo() {
   return (
     <div className="flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs">
       <div className="relative inline-block overflow-hidden font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-        <span className="inline-block text-[#0056FF]">
-          SNPI Autonomous Campus
-        </span>
+        <span className="inline-block text-[#0056FF]">SNPI Autonomous Campus</span>
       </div>
       <p className="font-sans text-xs text-slate-500">
         Gradient-clipped typography shimmer with dynamic linear keyframes.

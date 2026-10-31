@@ -82,9 +82,7 @@ export function GridRevealDemo() {
               )}
             >
               {/* Scanline Beam on Active */}
-              {isActive && (
-                <div className="absolute inset-x-0 top-0 h-0.5 bg-[#0056FF]" />
-              )}
+              {isActive && <div className="absolute inset-x-0 top-0 h-0.5 bg-[#0056FF]" />}
               <div className="flex items-center justify-between font-mono text-[10px] text-slate-400">
                 <span>{card.tag}</span>
                 <span className="font-bold text-[#0056FF]">{card.speed}</span>

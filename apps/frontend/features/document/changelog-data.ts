@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "70a42c7",
+    "description": "Sync real-time changelog for open-api redesign"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "f022bc5",
     "description": "Complete redesign with public feeds, embed studio, class table, and real-time sse"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "d12d066",
     "description": "Remove 23 requested components, obsolete demo code, and unused standalone files"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "b8c52f2",
-    "description": "Remove category banner cards and display component demo cards directly"
   }
 ];

@@ -34,7 +34,7 @@ const SKELETON_STYLES = `
 .skeleton-shimmer {
   position: relative;
   overflow: hidden;
-  background-color: var(--skeleton-base, #e2e8f0);
+  background-color: var(--skeleton-base, #eff5ff);
 }
 
 .skeleton-shimmer::after {
@@ -45,7 +45,7 @@ const SKELETON_STYLES = `
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--skeleton-highlight, rgba(255, 255, 255, 0.65)) 50%,
+    var(--skeleton-highlight, rgba(227, 231, 252, 0.7)) 50%,
     transparent 100%
   );
   animation: skeleton-shimmer-sweep var(--skeleton-speed, 1.8s) infinite ease-in-out;
