@@ -88,33 +88,32 @@ function formatDiffSummary(diffStat: string, changedFiles: string[]): string {
   return `${count} files (${ins}, ${del})`;
 }
 
-function formatSecurityAlerts(alerts: SecurityStatus['openAlerts']): string {
-  const map = new Map<
-    string,
-    { package: string; severity: string; count: number; summary: string }
-  >();
-  for (const a of alerts) {
+function getSecurityInlineSummary(security: SecurityStatus): string {
+  if (security.totalAlerts === 0) {
+    return 'Clean (0 alerts)';
+  }
+  const map = new Map<string, { package: string; severity: string; count: number }>();
+  for (const a of security.openAlerts) {
     const key = `${a.package}:${a.severity}`;
     if (!map.has(key)) {
-      map.set(key, {
-        package: a.package,
-        severity: a.severity.toUpperCase(),
-        count: 1,
-        summary: a.summary.replace(/<[^>]*>?/gm, '').trim(),
-      });
+      map.set(key, { package: a.package, severity: a.severity.toUpperCase(), count: 1 });
     } else {
       map.get(key)!.count += 1;
     }
   }
+  const items = Array.from(map.values())
+    .slice(0, 2)
+    .map((g) => `${escapeHtml(g.package)} · ${g.severity}${g.count > 1 ? ` x${g.count}` : ''}`)
+    .join(', ');
 
-  const grouped = Array.from(map.values());
-  return grouped
-    .slice(0, 3)
-    .map(
-      (g) =>
-        `• <b>${escapeHtml(g.package)}</b> · <code>${g.severity}</code>${g.count > 1 ? ` (x${g.count})` : ''}\n  ${escapeHtml(g.summary)}`,
-    )
-    .join('\n');
+  return `${security.totalAlerts} open (${items})`;
+}
+
+function getTrackerSummary(apiHealth: { online: boolean; statusCode: number; latencyMs: number }): string {
+  if (apiHealth.online) {
+    return `Operational (HTTP ${apiHealth.statusCode || 200}, ${apiHealth.latencyMs}ms)`;
+  }
+  return `Offline / Standby (HTTP ${apiHealth.statusCode || 0})`;
 }
 
 async function sendTelegramMessage(chatId: string | number, text: string): Promise<boolean> {
@@ -365,90 +364,60 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
     `[Watch Cycle] Commit: ${commit.hash} (${commit.author}) | Version: ${packageVersion} | Alerts: ${security.totalAlerts} | API: ${apiHealth.online ? 'ONLINE' : 'OFFLINE'}`,
   );
 
-  let needsAlert = options.forceAlert || false;
-
-  // 1. Check for New Commit / Push Fix by Developer
+  // Detect events
+  const isNewRelease = Boolean(cache.lastReleaseVersion && cache.lastReleaseVersion !== packageVersion);
   const isNewCommit = cache.lastCommitHash !== commit.hash;
-  if (isNewCommit || options.forceAlert) {
+  const isSecurityChanged =
+    cache.lastSecurityAlertCount !== undefined &&
+    cache.lastSecurityAlertCount !== security.totalAlerts;
+  const isApiChanged =
+    cache.lastApiStatus !== undefined &&
+    cache.lastApiStatus !== (apiHealth.online ? 'ONLINE' : 'OFFLINE');
+
+  const shouldAlert = options.forceAlert || isNewCommit || isNewRelease || isSecurityChanged || isApiChanged;
+
+  if (shouldAlert) {
     const authorDisplay = formatAuthor(commit.author, commit.email);
     const diffSummary = formatDiffSummary(commit.diffStat, commit.changedFiles);
-    const securitySummary =
-      security.totalAlerts > 0 ? `${security.totalAlerts} open advisories` : '0 alerts (clean)';
+    const securitySummary = getSecurityInlineSummary(security);
+    const trackerSummary = getTrackerSummary(apiHealth);
 
-    // Generate clean human summary from conventional commit
+    // Clean human-readable summary from conventional commit
     const humanSummary = commit.message
       .replace(/^(feat|fix|docs|refactor|test|chore|style)(\([^)]+\))?:\s*/i, '')
       .replace(/^./, (c) => c.toUpperCase());
 
-    const pushMessage = `<b>[PUSH · FIX]</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${escapeHtml(packageVersion)}</b>
+    let headerBadge = '[SNPI · REPO PUSH]';
+    if (isNewRelease) {
+      headerBadge = `[SNPI · RELEASE ${latestTag || `v${packageVersion}`}]`;
+    } else if (isApiChanged && !apiHealth.online) {
+      headerBadge = '[SNPI · TRACKER DEGRADED]';
+    }
+
+    const consolidatedMessage = `<b>${headerBadge}</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${escapeHtml(packageVersion)}</b>
 <b>${escapeHtml(humanSummary)}</b>
 
 • <b>Developer:</b> ${escapeHtml(authorDisplay)}
 • <b>Commit:</b> <code>${escapeHtml(commit.hash)}</code>
 • <b>Changes:</b> ${diffSummary}
 • <b>Security:</b> ${securitySummary}
+• <b>Tracker:</b> ${trackerSummary}
 • <b>Time:</b> ${formatHumanTime()}`;
 
-    await sendTelegramMessage(chatId, pushMessage);
+    // Send ONE consolidated message
+    await sendTelegramMessage(chatId, consolidatedMessage);
+
+    // Update cache
     cache.lastCommitHash = commit.hash;
-    needsAlert = true;
-  }
-
-  // 2. Check for New Version Release
-  const isNewRelease = cache.lastReleaseVersion !== packageVersion;
-  if (isNewRelease && !options.forceAlert) {
-    const authorDisplay = formatAuthor(commit.author, commit.email);
-    const releaseTag = latestTag || `v${packageVersion}`;
-    const releaseMessage = `<b>[RELEASE] ${escapeHtml(releaseTag)}</b>
-<b>SNP-SMS Production Checkpoint</b>
-
-• <b>Publisher:</b> ${escapeHtml(authorDisplay)}
-• <b>Tag:</b> <code>${escapeHtml(releaseTag)}</code> · Branch: <code>${escapeHtml(commit.branch)}</code>
-• <b>Notes:</b> <a href="https://github.com/${getRepoSlug()}/releases/tag/${encodeURIComponent(releaseTag)}">View GitHub Release</a>
-• <b>Time:</b> ${formatHumanTime()}`;
-
-    await sendTelegramMessage(chatId, releaseMessage);
     cache.lastReleaseVersion = packageVersion;
-    needsAlert = true;
-  }
-
-  // 3. Check for Security Alerts (Dependabot & Quality Gate)
-  const isSecurityChanged =
-    cache.lastSecurityAlertCount !== undefined &&
-    cache.lastSecurityAlertCount !== security.totalAlerts;
-
-  if ((isSecurityChanged || options.forceAlert) && security.totalAlerts > 0) {
-    const alertList = formatSecurityAlerts(security.openAlerts);
-    const securityMessage = `<b>[SECURITY] ${security.totalAlerts} Open Advisories</b>
-Repo: <code>${getRepoSlug()}</code>
-
-${alertList}
-
-<b>Action:</b> Review dependencies and run <code>npm audit fix</code>
-<b>Time:</b> ${formatHumanTime()}`;
-
-    await sendTelegramMessage(chatId, securityMessage);
     cache.lastSecurityAlertCount = security.totalAlerts;
-    needsAlert = true;
-  }
-
-  // 4. Check for Live API Status Degraded
-  const currentApiStatus = apiHealth.online ? 'ONLINE' : 'OFFLINE';
-  if (cache.lastApiStatus && cache.lastApiStatus !== currentApiStatus) {
-    const isOnline = apiHealth.online;
-    const statusLabel = isOnline ? 'ONLINE' : 'OFFLINE';
-    const apiMessage = `<b>[API HEALTH] ${statusLabel}</b>
-Cluster: <code>http://localhost:5001/health</code>
-
-• <b>Status:</b> ${isOnline ? 'Operational' : 'Degraded'} (HTTP <code>${apiHealth.statusCode}</code>)
-• <b>Latency:</b> <code>${apiHealth.latencyMs}ms</code>
-• <b>Time:</b> ${formatHumanTime()}`;
-
-    await sendTelegramMessage(chatId, apiMessage);
-    cache.lastApiStatus = currentApiStatus;
-    needsAlert = true;
-  } else if (!cache.lastApiStatus) {
-    cache.lastApiStatus = currentApiStatus;
+    cache.lastApiStatus = apiHealth.online ? 'ONLINE' : 'OFFLINE';
+  } else {
+    // Initial silent state sync
+    if (!cache.lastCommitHash) cache.lastCommitHash = commit.hash;
+    if (!cache.lastReleaseVersion) cache.lastReleaseVersion = packageVersion;
+    if (cache.lastSecurityAlertCount === undefined) cache.lastSecurityAlertCount = security.totalAlerts;
+    if (!cache.lastApiStatus) cache.lastApiStatus = apiHealth.online ? 'ONLINE' : 'OFFLINE';
   }
 
   saveCache(cache);
@@ -478,13 +447,16 @@ async function main() {
     }
     const commit = inspectLatestCommit();
     const { packageVersion } = inspectVersionAndRelease();
+    const security = inspectSecurityQuality();
+    const apiHealth = await inspectLiveApi();
     console.log(`Sending diagnostic test message to Chat ID: ${chatId}...`);
-    const testMessage = `<b>[STATUS] Telegram Watcher Online</b>
-Connected to <b>${getRepoSlug()}</b>
+    const testMessage = `<b>[SNPI · TRACKER STATUS]</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${packageVersion}</b>
+<b>Live Repository &amp; Quality Monitor Operational</b>
 
-• <b>Service:</b> Real-time Repo &amp; Security Watcher
-• <b>Branch:</b> <code>${escapeHtml(commit.branch)}</code> (v${packageVersion})
-• <b>Status:</b> Active &amp; Ready
+• <b>Developer:</b> ${escapeHtml(formatAuthor(commit.author, commit.email))}
+• <b>Commit:</b> <code>${escapeHtml(commit.hash)}</code>
+• <b>Security:</b> ${getSecurityInlineSummary(security)}
+• <b>Tracker:</b> ${getTrackerSummary(apiHealth)}
 • <b>Time:</b> ${formatHumanTime()}`;
 
     const success = await sendTelegramMessage(chatId, testMessage);

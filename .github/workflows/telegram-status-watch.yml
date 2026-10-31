@@ -66,17 +66,17 @@ jobs:
           
           if [ "$EVENT_NAME" = "release" ]; then
             TAG_NAME="${{ github.event.release.tag_name || github.ref_name }}"
-            MESSAGE="<b>[RELEASE] ${TAG_NAME}</b>%0A<b>SNP-SMS Production Checkpoint</b>%0A%0A• <b>Publisher:</b> ${DEV_NAME}%0A• <b>Package:</b> <code>v${PKG_VERSION}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Release:</b> <a href=\"https://github.com/${{ github.repository }}/releases/tag/${TAG_NAME}\">View GitHub Release</a>%0A• <b>Time:</b> ${HUMAN_TIME}"
+            MESSAGE="<b>[SNPI · RELEASE] ${TAG_NAME}</b>%0A<b>Production Checkpoint Published</b>%0A%0A• <b>Developer:</b> ${DEV_NAME}%0A• <b>Package:</b> <code>v${PKG_VERSION}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Tracker:</b> <a href=\"https://github.com/${{ github.repository }}/releases/tag/${TAG_NAME}\">View Release Notes</a>%0A• <b>Time:</b> ${HUMAN_TIME}"
           elif [ "$EVENT_NAME" = "pull_request" ]; then
             PR_NUM="${{ github.event.pull_request.number }}"
             PR_TITLE="${{ github.event.pull_request.title }}"
             PR_ACTION="${{ github.event.action }}"
-            MESSAGE="<b>[PR #${PR_NUM}] ${PR_ACTION^^}</b>%0A<b>${PR_TITLE}</b>%0A%0A• <b>Author:</b> ${{ github.event.pull_request.user.login }}%0A• <b>Branch:</b> <code>${{ github.event.pull_request.head.ref }}</code> &rarr; <code>${{ github.event.pull_request.base.ref }}</code>%0A• <b>Link:</b> <a href=\"https://github.com/${{ github.repository }}/pull/${PR_NUM}\">View Pull Request</a>%0A• <b>Time:</b> ${HUMAN_TIME}"
+            MESSAGE="<b>[SNPI · PR #${PR_NUM}] ${PR_ACTION^^}</b>%0A<b>${PR_TITLE}</b>%0A%0A• <b>Developer:</b> ${{ github.event.pull_request.user.login }}%0A• <b>Branch:</b> <code>${{ github.event.pull_request.head.ref }}</code> &rarr; <code>${{ github.event.pull_request.base.ref }}</code>%0A• <b>Tracker:</b> <a href=\"https://github.com/${{ github.repository }}/pull/${PR_NUM}\">View Pull Request</a>%0A• <b>Time:</b> ${HUMAN_TIME}"
           elif [ "$EVENT_NAME" = "workflow_run" ]; then
             CONCLUSION="${{ github.event.workflow_run.conclusion }}"
-            MESSAGE="<b>[CI ${CONCLUSION^^}] ${{ github.event.workflow_run.name }}</b>%0A<b>Monorepo Automated Verification Gate</b>%0A%0A• <b>Commit:</b> <code>${SHORT_HASH}</code> by ${DEV_NAME}%0A• <b>Dependabot:</b> ${SEC_SUMMARY}%0A• <b>Time:</b> ${HUMAN_TIME}"
+            MESSAGE="<b>[SNPI · CI ${CONCLUSION^^}] ${{ github.event.workflow_run.name }}</b>%0A<b>Monorepo Automated Verification Gate</b>%0A%0A• <b>Developer:</b> ${DEV_NAME}%0A• <b>Commit:</b> <code>${SHORT_HASH}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Tracker:</b> Automated CI Pipeline%0A• <b>Time:</b> ${HUMAN_TIME}"
           else
-            MESSAGE="<b>[PUSH · FIX]</b> <code>${{ github.ref_name }}</code> · <b>v${PKG_VERSION}</b>%0A<b>${COMMIT_MSG}</b>%0A%0A• <b>Author:</b> ${DEV_NAME}%0A• <b>Commit:</b> <code>${SHORT_HASH}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Time:</b> ${HUMAN_TIME}"
+            MESSAGE="<b>[SNPI · REPO PUSH]</b> <code>${{ github.ref_name }}</code> · <b>v${PKG_VERSION}</b>%0A<b>${COMMIT_MSG}</b>%0A%0A• <b>Developer:</b> ${DEV_NAME}%0A• <b>Commit:</b> <code>${SHORT_HASH}</code>%0A• <b>Security:</b> ${SEC_SUMMARY}%0A• <b>Tracker:</b> GitHub Actions Push Sync%0A• <b>Time:</b> ${HUMAN_TIME}"
           fi
 
           # 5. Dispatch to Telegram
