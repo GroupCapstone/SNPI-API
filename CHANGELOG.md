@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `1da4370`
+
+- Expand Brand Identity & Colors with 7-token bento grid, application matrix, and do-dont rules
+
 ### Version 0.2.11 (31.10.2026) - `e6d6680`
 
 - Record real-time changelog for Rail TOC paper plane flight navigator redesign
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `0d81689`
 
 - Resolve vercel deployment failures for frontend and backend
-
-### Version 0.2.11 (31.10.2026) - `1f7a253`
-
-- Synchronize release checkpoint v0.2.11 to developer documentation portal
 
