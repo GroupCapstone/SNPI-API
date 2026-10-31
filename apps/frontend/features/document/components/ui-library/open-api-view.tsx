@@ -464,15 +464,32 @@ async function executeApiProbe(item: ApiDocItem) {
   }
 }
 
-export function OpenApiView() {
+export function OpenApiView({ initialSection }: { initialSection?: string } = {}) {
   const rootRef = React.useRef<HTMLDivElement>(null);
   const isManualScrollRef = React.useRef<boolean>(false);
   const scrollTimerRef = React.useRef<NodeJS.Timeout | null>(null);
 
-  const [activeDocSection, setActiveDocSection] = React.useState<string>('open-api-head');
-  const [expandedChangelog, setExpandedChangelog] = React.useState<boolean>(false);
+  const [activeDocSection, setActiveDocSection] = React.useState<string>(
+    initialSection || 'open-api-head',
+  );
+  const [expandedChangelog, setExpandedChangelog] = React.useState<boolean>(
+    initialSection === 'changelogs',
+  );
   const [codeType, setCodeType] = React.useState<'curl' | 'ts' | 'json'>('curl');
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (initialSection === 'changelogs') {
+      setExpandedChangelog(true);
+      const timer = setTimeout(() => {
+        const el = document.getElementById('changelogs');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [initialSection]);
 
   // Search query & Category filter for Left Sidebar Navigation (Matching UI Library)
   const [searchQuery, setSearchQuery] = React.useState<string>('');

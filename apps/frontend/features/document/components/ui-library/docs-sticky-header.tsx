@@ -9,26 +9,27 @@ import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { useDocsNav } from './docs-nav-context';
 
 export interface DocsStickyHeaderProps {
-  activeTab?: 'openapi' | 'library' | 'document';
+  activeTab?: 'openapi' | 'library' | 'release' | 'document';
   version?: string;
   commitHash?: string;
 }
 
 export function DocsStickyHeader({
   activeTab: propActiveTab,
-  version = 'v0.2.10',
-  commitHash = 'ae44792',
+  version = 'v0.2.11',
+  commitHash = '0d81689',
 }: DocsStickyHeaderProps = {}) {
   const pathname = usePathname();
   const { activeTab: navActiveTab, setActiveTab } = useDocsNav();
 
   const isLibraryPath = pathname?.startsWith('/document/design-system');
-  const pathDerivedTab = isLibraryPath ? 'library' : 'openapi';
+  const isChangelogPath = pathname?.startsWith('/document/changelog');
+  const pathDerivedTab = isLibraryPath ? 'library' : isChangelogPath ? 'release' : 'openapi';
 
   const normalizedPropTab = propActiveTab === 'document' ? 'openapi' : propActiveTab;
   const currentTab = normalizedPropTab || navActiveTab || pathDerivedTab;
 
-  // 1. UI Library comes FIRST, Open API comes SECOND
+  // 3 Menus merged together: UI Library, Open API, and Release Version
   const navTabs: HangingTabItem[] = [
     {
       id: 'library',
@@ -43,6 +44,13 @@ export function DocsStickyHeader({
       icon: FileText,
       href: '/document',
       onClick: () => setActiveTab('openapi', false),
+    },
+    {
+      id: 'release',
+      label: `RELEASE ${version}`,
+      icon: Terminal,
+      href: '/document/changelog',
+      onClick: () => setActiveTab('release', false),
     },
   ];
 
@@ -67,28 +75,17 @@ export function DocsStickyHeader({
           </div>
         </Link>
 
-        {/* Center: Futuristic Cyber Armor Modular Nav Bar (Aerospace / Mecha HUD Console) */}
+        {/* Center: Futuristic Cyber Armor Modular Nav Bar (3 Merged Menus: UI Library, Open API, Release) */}
         <div className="pointer-events-auto absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center md:flex">
           <HangingTabsNav items={navTabs} activeId={currentTab} size="md" />
         </div>
 
-        {/* Right: Real-time Status, Version, and Commit Change Tracker Box */}
+        {/* Right: Commit Change Tracker & API Status Badge */}
         <div className="z-10 flex items-center gap-2 select-none">
           <div
             className="hidden items-center gap-2.5 rounded-[4px] border border-[#CAD3F5] bg-white/95 px-3 py-1.5 shadow-2xs backdrop-blur-md sm:flex"
-            title={`SNPI-SMS Release ${version} • Commit ${commitHash} • 193 API Endpoints Active`}
+            title={`SNPI-SMS Commit ${commitHash} • 193 API Endpoints Active`}
           >
-            {/* Version Display with Clean Badge (Zero Dot Style) */}
-            <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900">
-              <span className="rounded-[3px] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                RELEASE
-              </span>
-              <span>{version}</span>
-            </div>
-
-            {/* Subtle Divider */}
-            <span className="font-mono text-xs text-slate-300">|</span>
-
             {/* Commit Change Tracker */}
             <Link
               href="/document/changelog"
