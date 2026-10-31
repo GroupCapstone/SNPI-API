@@ -2,7 +2,13 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Bell, Check, Alert, Info, X, Sparkles } from '@/components/icons';
+import { Bell, Check, Alert, Info, X, Sparkles, RotateCw, Play } from '@/components/icons';
+import {
+  StatusPage404,
+  type StatusCode,
+  type StatusMode,
+  STATUS_DIRECTORY,
+} from '../status-page-404';
 
 // 1. Toast Notification Stack
 export function ToastDemo() {
@@ -150,6 +156,171 @@ export function NotificationBellDemo() {
       <p className="pt-3 font-sans text-xs text-slate-500">
         Tap the bell to inspect recent institutional activity.
       </p>
+    </div>
+  );
+}
+
+// 3. Status Page 404 & Error Console (5 Brand Archetypes & Multi-Status Engine)
+export function StatusPage404Demo() {
+  const [selectedMode, setSelectedMode] = React.useState<StatusMode>('radar');
+  const [selectedCode, setSelectedCode] = React.useState<StatusCode>(404);
+
+  const archetypes: { id: StatusMode; label: string; desc: string; tag: string }[] = [
+    {
+      id: 'radar',
+      label: '01 Radar Explorer',
+      desc: 'Concentric spatial rings, rotating radar beam, floating 3D numbers, and coordinate tracking.',
+      tag: 'AEROSPACE',
+    },
+    {
+      id: 'barcode',
+      label: '02 Barcode Ledger',
+      desc: 'Cryptographic high-density barcode, editorial typography, hairline accents, and error hash.',
+      tag: 'EDITORIAL',
+    },
+    {
+      id: 'terminal',
+      label: '03 Cyber Terminal',
+      desc: 'Interactive CLI command console with constellation lines, glowing apex, and live prompt.',
+      tag: 'INTERACTIVE CLI',
+    },
+    {
+      id: 'noise',
+      label: '04 CRT Phosphor',
+      desc: 'Synthesized procedural SVG noise texture, CRT scanlines, chromatic glitch split, and decibels.',
+      tag: 'GLITCH CRT',
+    },
+    {
+      id: 'gravity',
+      label: '05 Gravity Blocks',
+      desc: 'Kinetic architectural brand cards with spring physics tumbling and interactive re-alignment.',
+      tag: 'KINETIC MOTION',
+    },
+  ];
+
+  const statusCodes: { code: StatusCode; label: string }[] = [
+    { code: 404, label: '404 Not Found' },
+    { code: 403, label: '403 Forbidden' },
+    { code: 500, label: '500 Server Error' },
+    { code: 503, label: '503 Unavailable' },
+    { code: 401, label: '401 Unauthorized' },
+  ];
+
+  const activeMeta = STATUS_DIRECTORY[selectedCode];
+
+  return (
+    <div className="w-full max-w-4xl space-y-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-950">
+      {/* Header Deck */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
+        <div>
+          <div className="flex items-center gap-2">
+            <h3 className="font-sans text-xs font-bold text-slate-950 dark:text-white">
+              Status Page 404 & Error Console
+            </h3>
+            <span className="rounded-[4px] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] dark:bg-blue-950/60 dark:text-blue-300">
+              5 ARCHETYPES
+            </span>
+          </div>
+          <p className="font-sans text-[11px] text-slate-500 dark:text-slate-400">
+            Multi-mode brand status screens supporting 404, 403, 500, 503, and 401 with flat
+            geometry.
+          </p>
+        </div>
+
+        {/* HTTP Status Code Selector */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {statusCodes.map((sc) => (
+            <button
+              key={sc.code}
+              type="button"
+              onClick={() => setSelectedCode(sc.code)}
+              className={cn(
+                'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-mono text-xs font-bold transition-all select-none',
+                selectedCode === sc.code
+                  ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+              )}
+            >
+              {sc.code}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Visual Mode Picker Strip */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+        {archetypes.map((arch) => {
+          const isSelected = selectedMode === arch.id;
+          return (
+            <button
+              key={arch.id}
+              type="button"
+              onClick={() => setSelectedMode(arch.id)}
+              className={cn(
+                'flex cursor-pointer flex-col justify-between rounded-xl border p-2.5 text-left transition-all select-none',
+                isSelected
+                  ? 'border-[#0056FF] bg-[#EFF5FF]/80 ring-1 ring-[#0056FF]/30 dark:border-blue-500 dark:bg-blue-950/40'
+                  : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40 dark:hover:bg-slate-900',
+              )}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[9px] font-bold text-[#0056FF] dark:text-blue-300">
+                  {arch.tag}
+                </span>
+                {isSelected && <span className="h-1.5 w-1.5 rounded-[1px] bg-[#0056FF]" />}
+              </div>
+              <div className="mt-1 font-sans text-xs font-bold text-slate-900 dark:text-white">
+                {arch.label}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Telemetry Status Strip */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-slate-50 px-3 py-2 font-mono text-[10px] text-slate-600 dark:bg-slate-900/60 dark:text-slate-400">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-[1px] bg-[#0056FF]" />
+            <span className="font-bold text-slate-900 dark:text-white">CODE {selectedCode}</span>
+          </div>
+          <span className="opacity-30">|</span>
+          <span className="font-semibold text-[#0056FF] uppercase">{activeMeta.title}</span>
+          <span className="opacity-30">|</span>
+          <span>DIAGNOSIS: {activeMeta.tagline}</span>
+        </div>
+        <div className="text-[9px] text-slate-400">NEXT.JS APP/NOT-FOUND.TSX READY</div>
+      </div>
+
+      {/* Live Component Preview */}
+      <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
+        <StatusPage404
+          mode={selectedMode}
+          statusCode={selectedCode}
+          homeHref="/document/design-system"
+          homeLabel="Return to Document Library"
+          showControls={false}
+        />
+      </div>
+
+      {/* Usage Specification Callout */}
+      <div className="rounded-lg border border-slate-200/80 bg-slate-50/60 p-3.5 font-sans text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900/30 dark:text-slate-400">
+        <div className="font-bold text-slate-900 dark:text-slate-200">
+          Drop-in Implementation Pattern:
+        </div>
+        <div className="mt-1 font-mono text-[11px] text-[#0056FF] dark:text-blue-300">
+          import &#123; StatusPage404 &#125; from
+          &apos;@/features/document/components/ui-library&apos;;
+        </div>
+        <p className="mt-1 text-[11px] leading-relaxed">
+          Embed directly inside Next.js <code className="font-mono">app/not-found.tsx</code> or
+          error boundary handlers. Pass <code className="font-mono">mode=&quot;radar&quot;</code>,{' '}
+          <code className="font-mono">&quot;barcode&quot;</code>,{' '}
+          <code className="font-mono">&quot;terminal&quot;</code>,{' '}
+          <code className="font-mono">&quot;noise&quot;</code>, or{' '}
+          <code className="font-mono">&quot;gravity&quot;</code>.
+        </p>
+      </div>
     </div>
   );
 }

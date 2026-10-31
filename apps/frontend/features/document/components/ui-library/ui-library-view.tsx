@@ -43,6 +43,7 @@ import {
   CipherTextDecoderDemo,
   SearchableDropdownDemo,
   ToastStackDemo,
+  StatusPage404Demo,
   SkeletonLoadingScreenDemo,
   RealTimeChartDemo,
   RichTextEditorDemo,
@@ -1846,6 +1847,8 @@ function renderFeedComponentDemo(
       return <SkeletonLoadingScreenDemo />;
     case 'notification-bell':
       return <NotificationBellDemo />;
+    case 'status-404':
+      return <StatusPage404Demo />;
 
     // ==========================================
     // DISPLAY GROUP (Interactive Demos)
