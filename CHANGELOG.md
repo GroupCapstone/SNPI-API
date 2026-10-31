@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `fcd71dc`
+
+- Move brand identity into document footer link with logo, 3 colors, and code color tokens
+
 ### Version 0.2.11 (31.10.2026) - `d12d066`
 
 - Remove 23 requested components, obsolete demo code, and unused standalone files
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `fb6aa66`
 
 - Record real-time commit checkpoint for Royal Blue brand system
-
-### Version 0.2.11 (31.10.2026) - `d1b80a7`
-
-- Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication
 
