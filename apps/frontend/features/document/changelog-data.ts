@@ -9,6 +9,36 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "01.11.2026",
+    "commitHash": "0cceac0",
+    "description": "Delete Real-Time SSE Stream section and card from Open API view"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "8d1d574",
+    "description": "Expand telegram watcher triggers to all branches, PRs, releases, and CI runs"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "1b22570",
+    "description": "Migrate official repository owner to Tan-Saphea/SNPI-SMS"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "410a1b1",
+    "description": "Support both single and double underscore token secrets in telegram watcher"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "d0e0dd8",
+    "description": "Record README clean state"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
     "commitHash": "d670a24",
     "description": "Remove security remediation log from README per standard"
   },
@@ -125,35 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "c2efdc5",
     "description": "Simplify hero and implement psychological reading layout"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "7317af8",
-    "description": "Redesign open api and syndication guide for backend rest api focus"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "da77431",
-    "description": "Resolve eslint react unescaped entity and immutability errors"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "8f54289",
-    "description": "Update repository url references to SNPI-SMS"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "f889207",
-    "description": "Bump version to 0.2.12 and sync documentation changelog"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "096fc41",
-    "description": "Enforce anti-gray anti-blur high-contrast brand tokens and rule"
   }
 ];
