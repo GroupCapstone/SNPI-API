@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `816a753`
+
+- Remove sticky category banners, redundant flow labels, enforce light mode, and strip icon background containers
+
 ### Version 0.2.11 (31.10.2026) - `d356019`
 
 - Merge 3-tab cyber navigation menu and apply royal blue active styling
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `cafb0ec`
 
 - Arrange demos by flow group and synchronize sequential line tracker without rank jumping
-
-### Version 0.2.9 (31.10.2026) - `f10e1e2`
-
-- Apply floating capsule dock nav and purge legacy hanging tabs header
 
