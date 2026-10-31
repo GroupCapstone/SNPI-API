@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "1f7a253",
+    "description": "Synchronize release checkpoint v0.2.11 to developer documentation portal"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "0fcfaf0",
     "description": "V0.2.11 release checkpoint with system architecture lexicon, cyber armor nav, and royal blue brand system"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "8bc39a4",
     "description": "Record universal ai agent prompt and precision line tracker navigation standards"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "3da80f8",
-    "description": "Remove top nav hanging tabs section and add universal ai agent prompt tabs and copy action"
   }
 ];
