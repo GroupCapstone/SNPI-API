@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --font-sans:
     'Google Sans Variable', 'Google Sans', 'Google Sans Text', 'Google Sans Khmer', 'Kantumruy Pro',

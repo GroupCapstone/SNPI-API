@@ -108,6 +108,10 @@ export function BrandConceptBlueprint() {
       desc: 'Maintain pure white (#FFFFFF) as the default document canvas for maximum readability, clean printing, and accessibility.',
     },
     {
+      rule: 'Enforce High-Contrast Deep Navy Typography (#0A1A4A)',
+      desc: 'All body text, table cells, and labels on white or ice tint must strictly use Deep Navy (#0A1A4A) or Slate-900 (#0F172A) with WCAG AAA (>= 7:1) contrast ratio.',
+    },
+    {
       rule: 'Enforce Pure Flat Solid Colors (Zero Gradients)',
       desc: 'All surfaces, fills, and borders must be clean, solid colors. Never apply linear or radial gradients.',
     },
@@ -119,28 +123,28 @@ export function BrandConceptBlueprint() {
       rule: 'Use Soft Lavender (#E3E7FC) & Ice Tint (#EFF5FF) for Cards',
       desc: 'Apply Soft Lavender and Ice Tint to status badge pills, filter chips, and code callout boxes for clean, non-distracting visual grouping.',
     },
-    {
-      rule: 'Strictly Enforce WCAG AA/AAA Contrast Ratios',
-      desc: 'Verify a minimum 4.5:1 contrast ratio for body text and 3:1 for large headers using Deep Brand Navy (#0A1A4A) on light surfaces.',
-    },
   ];
 
   const donts = [
+    {
+      rule: 'Never Use Muddy Gray, Slate Containers, or Blur Styles',
+      desc: 'Under no circumstances should components use muddy gray (#64748B, #475569), dark slate containers, black buttons (bg-slate-900), or blur backgrounds.',
+    },
+    {
+      rule: 'Never Use Washed-Out, Pale Gray, or Hidden Text',
+      desc: 'Never render faint washed-out gray text (text-slate-300, text-slate-400, or #CAD3F5 text on white) that hides information or fails WCAG readability.',
+    },
     {
       rule: 'Never Use Color Gradients in Component Designs',
       desc: 'Never apply CSS gradients (bg-gradient-to-*, linear-gradient) to UI components, banners, or document sections.',
     },
     {
-      rule: 'Never Use Solid Black (#000000) or Drab Gray in Component Designs',
-      desc: 'Never use solid black or dark drab gray to design components, cards, or backgrounds. Keep all interfaces light, clean, and brand-aligned.',
-    },
-    {
-      rule: 'Never Introduce Unverified Third-Party Neons',
-      desc: 'Strictly avoid random neon purples, discordant pinks, or off-palette blues outside the official brand palette.',
+      rule: 'Never Use Solid Black (#000000) for Cards or Buttons',
+      desc: 'Never use solid black (#000000, bg-black, bg-slate-900) for button fills, badges, or containers. Maintain clean light-day brand colors.',
     },
     {
       rule: 'Never Use Dropped Blur Shadows (Zero-Shadow Rule)',
-      desc: 'Never use fuzzy box-shadows (e.g. shadow-lg, shadow-2xl). Establish spatial depth strictly through 1px border contrast and luminance.',
+      desc: 'Never use fuzzy box-shadows (e.g. shadow-lg, shadow-2xl). Establish spatial depth strictly through 1px border contrast (#CAD3F5) and luminance.',
     },
     {
       rule: 'Never Bake Colors into Flat Raster Pixels',
@@ -432,16 +436,16 @@ export function BrandConceptBlueprint() {
       {/* BRAND COLOR DO'S AND DON'TS ("AD DO DONT") */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* DO PANEL */}
-        <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/50 p-6">
-          <div className="mb-4 flex items-center gap-2 border-b border-emerald-200/60 pb-3">
-            <div className="flex size-5 items-center justify-center rounded-[3px] bg-emerald-600 text-white">
+        <div className="rounded-2xl border border-emerald-300 bg-[#ECFDF5] p-6 shadow-xs">
+          <div className="mb-4 flex items-center gap-2 border-b border-emerald-200 pb-3">
+            <div className="flex size-5 items-center justify-center rounded-[3px] bg-emerald-700 text-white">
               <Check className="size-3.5 stroke-[2.5]" />
             </div>
             <div>
-              <h3 className="font-sans text-sm font-bold text-emerald-950">
+              <h3 className="font-sans text-sm font-black text-emerald-950">
                 Brand Color Best Practices (DO)
               </h3>
-              <p className="font-sans text-[11px] text-emerald-700">
+              <p className="font-sans text-xs font-semibold text-emerald-800">
                 Approved conventions for colors and elevations.
               </p>
             </div>
@@ -450,12 +454,12 @@ export function BrandConceptBlueprint() {
           <div className="space-y-3">
             {dos.map((item, idx) => (
               <div key={idx} className="flex items-start gap-2.5">
-                <span className="mt-1 flex size-3.5 shrink-0 items-center justify-center rounded-[2px] bg-emerald-600/15 font-mono text-[9px] font-bold text-emerald-700">
+                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-[3px] bg-emerald-200 font-mono text-[10px] font-black text-emerald-900">
                   {idx + 1}
                 </span>
                 <div>
-                  <h4 className="font-sans text-xs font-bold text-slate-900">{item.rule}</h4>
-                  <p className="font-sans text-[11px] leading-relaxed text-slate-600">
+                  <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">{item.rule}</h4>
+                  <p className="font-sans text-xs leading-relaxed text-[#334155]">
                     {item.desc}
                   </p>
                 </div>
@@ -465,16 +469,16 @@ export function BrandConceptBlueprint() {
         </div>
 
         {/* DON'T PANEL */}
-        <div className="rounded-2xl border border-rose-200/80 bg-rose-50/50 p-6">
-          <div className="mb-4 flex items-center gap-2 border-b border-rose-200/60 pb-3">
-            <div className="flex size-5 items-center justify-center rounded-[3px] bg-rose-600 text-white">
+        <div className="rounded-2xl border border-rose-300 bg-[#FFF1F2] p-6 shadow-xs">
+          <div className="mb-4 flex items-center gap-2 border-b border-rose-200 pb-3">
+            <div className="flex size-5 items-center justify-center rounded-[3px] bg-rose-700 text-white">
               <X className="size-3.5 stroke-[2.5]" />
             </div>
             <div>
-              <h3 className="font-sans text-sm font-bold text-rose-950">
+              <h3 className="font-sans text-sm font-black text-rose-950">
                 Prohibited Anti-Patterns (DON'T)
               </h3>
-              <p className="font-sans text-[11px] text-rose-700">
+              <p className="font-sans text-xs font-semibold text-rose-800">
                 Strict workspace and brand design restrictions.
               </p>
             </div>
@@ -483,12 +487,12 @@ export function BrandConceptBlueprint() {
           <div className="space-y-3">
             {donts.map((item, idx) => (
               <div key={idx} className="flex items-start gap-2.5">
-                <span className="mt-1 flex size-3.5 shrink-0 items-center justify-center rounded-[2px] bg-rose-600/15 font-mono text-[9px] font-bold text-rose-700">
+                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-[3px] bg-rose-200 font-mono text-[10px] font-black text-rose-900">
                   {idx + 1}
                 </span>
                 <div>
-                  <h4 className="font-sans text-xs font-bold text-slate-900">{item.rule}</h4>
-                  <p className="font-sans text-[11px] leading-relaxed text-slate-600">
+                  <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">{item.rule}</h4>
+                  <p className="font-sans text-xs leading-relaxed text-[#334155]">
                     {item.desc}
                   </p>
                 </div>

@@ -79,6 +79,17 @@ Before modifying code, packages, or repository structure, read:
   - **Never Design Dark Terminal Containers**: Under no circumstances should logs, telemetry monitors, event stream cards, or inspection boxes be designed with solid dark navy (`#0A1A4A`), black, or dark terminal background styles.
   - **Light-Day-First Modern UI**: All telemetry monitors, packet streams, and documentation cards must strictly use **Pure White (`#FFFFFF`)** or **Ice Tint (`#EFF5FF`)** backgrounds with Soft Lavender borders (`#CAD3F5`), Deep Navy (`#0A1A4A`) high-contrast text, and Royal Blue (`#0056FF`) accent pills.
   - **Zero Dark Hacker Inversion**: Never invert page sections into high-contrast dark terminal boxes or hacker consoles in documentation views.
+- **Mandatory Brand Color Tokens & Anti-Muddy Gray / Anti-Blur / High-Contrast Typography Rule (CRITICAL RULE)**:
+  - **Zero Muddy Gray, Slate Containers, or Blur Styles**: Under no circumstances should components, cards, tables, or callouts be styled with muddy gray (`#64748B`, `#475569`), dark slate blocks, or blur backgrounds. Never use solid black or dark slate (`bg-slate-900`, `bg-black`) for buttons or badges in UI library components.
+  - **Zero Washed-Out, Pale Gray, or Hidden Text**: Never design components where text fades, washes out, or lacks sufficient contrast. All body text, data table rows, headers, and values on light surfaces (`#FFFFFF`, `#EFF5FF`, `#E3E7FC`) must maintain high contrast (WCAG AAA >= 7:1) using **Deep Navy (`#0A1A4A`)** or **Slate-900 (`#0F172A`)**. Text color must NEVER match or blend into the background.
+  - **Exclusively Use the 5 Primary Brand Tokens**:
+    1. `01 #0056FF` Royal Blue — Primary brand base, active pills, core CTAs, active highlights.
+    2. `02 #2277FF` Azure Blue — Interactive accents, illuminated hover states, secondary highlights.
+    3. `03 #E3E7FC` Soft Lavender — Surface micro-tints, subtle borders (`#CAD3F5`), badge fills.
+    4. `04 #FFFFFF` White — Document canvas base, card foundations, clean backgrounds.
+    5. `05 #EFF5FF` Ice Tint — Subsurface card fills, segment track fills, hover backdrops.
+    - Typography Token: Deep Navy `#0A1A4A` (primary headings & text) / Slate-900 `#0F172A` / `#334155` (secondary descriptive copy). Never use light gray on light surfaces.
+  - **Zero Accidental Dark Mode Inversion**: Never allow media-query dark styles or `dark:*` Tailwind classes to invert UI components into dark slate/muddy gray boxes or render washed-out white/light gray text on white tables.
 - **Mandatory Local-Only Commits & Zero Push Without Explicit Command — ABSOLUTE RULE**:
   - In every conversation, session, and task, AI agents and contributors are **strictly permitted to make local git commits only**.
   - **NEVER execute `git push`**, push release tags, publish release checkpoints, or perform remote publishing actions under any circumstances unless the user gives an explicit, direct command (e.g., `git push`, `push now`, `push to github`).

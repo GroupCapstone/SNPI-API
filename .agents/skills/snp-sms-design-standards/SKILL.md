@@ -94,16 +94,19 @@ Elevation in Dark Mode is expressed strictly through **surface lightness**, wher
   * Muted / Placeholder: `#71717A` (`zinc-500`)
 * **Lighter Font Weights**: Fonts appear optically thicker and heavier in dark mode due to white pixel bleed. Use `font-normal` (400) or `font-medium` (500) rather than heavy bold weights for body text.
 
-### 2.7 Mandatory Zero Gradient & Zero Black/Gray Component Design Rule — ABSOLUTE STANDARD
+### 2.7 Mandatory Zero Gradient, Anti-Gray, Anti-Blur & High-Contrast Typography Rule — ABSOLUTE STANDARD
 * **Zero Color Gradients**: Under no circumstances should CSS gradients (`bg-gradient-to-*`, `linear-gradient`, gradient text, gradient borders) be used in document layouts or component designs. All surfaces, accents, indicators, and fills must be flat, pure solid colors.
-* **Zero Black & Zero Gray Component Design**: Never use solid black (`#000000`, `bg-black`, `bg-slate-950`) or drab gray (`bg-gray-*`, `bg-slate-900`, dark gray card containers) to design components.
-* **Authoritative Solid Brand Palette**:
-  * **Royal Blue (`#0056FF`)**: Primary brand base, buttons, active segments, flight contrails, core CTAs.
-  * **Azure Blue (`#2277FF`)**: Interactive accents, hover highlights, waypoint node rings.
-  * **Soft Lavender (`#E3E7FC`)**: Surface micro-tints, chips, badge containers, secondary pill cards.
-  * **Light Ice Blue (`#EFF5FF`)**: Micro-container fills, code callout backgrounds, soft active tabs.
-  * **Pure White (`#FFFFFF`)**: Default document canvas, card backgrounds, print-ready surfaces.
-  * **Deep Brand Navy (`#0A1A4A` / `#001D66`)**: High-contrast, crystal-clear typography on light surfaces.
+* **Zero Muddy Gray, Slate Containers & Black Buttons**: Never use solid black (`#000000`, `bg-black`, `bg-slate-900`) or drab muddy gray (`#64748B`, `#475569`, `bg-slate-900`, dark gray card containers) to design components. Pagination, filter pills, and action buttons must never be black boxes.
+* **Zero Blur Background Styles**: Avoid artificial blur or frosted glassmorphism overlays that muddy backgrounds. Use clean, solid, flat panels with `#CAD3F5` 1px keylines.
+* **Zero Washed-Out or Hidden Typography**: Never design components where text fades, washes out, or lacks sufficient contrast. All body text, data table rows, headers, and values on light surfaces (`#FFFFFF`, `#EFF5FF`, `#E3E7FC`) must maintain high contrast (WCAG AAA >= 7:1) using **Deep Navy (`#0A1A4A`)** or **Slate-900 (`#0F172A`)**. Text color must NEVER match or blend into the background.
+* **The 5 Authoritative Solid Brand Tokens**:
+  * **01 Royal Blue (`#0056FF`)**: Primary brand base, buttons, active segments, flight contrails, core CTAs.
+  * **02 Azure Blue (`#2277FF`)**: Interactive accents, hover highlights, waypoint node rings.
+  * **03 Soft Lavender (`#E3E7FC`)**: Surface micro-tints, chips, badge containers, secondary pill cards (`#CAD3F5` border).
+  * **04 Pure White (`#FFFFFF`)**: Default document canvas, card foundations, print-ready surfaces.
+  * **05 Ice Tint (`#EFF5FF`)**: Micro-container fills, code callout backgrounds, soft active tabs, table highlights.
+  * **Typography Standard (`#0A1A4A`)**: Deep Brand Navy (`#0A1A4A`) for all primary text, and `#334155` for secondary meta text. Never use light gray text on light backgrounds.
+* **Zero Accidental Dark Mode Inversion**: Never allow media-query dark styles or `dark:*` Tailwind classes to invert UI components into dark slate/muddy gray boxes or render washed-out white/light gray text on white tables.
 
 ---
 

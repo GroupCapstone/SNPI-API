@@ -33,22 +33,16 @@ export interface DataTableProps<T = any> {
 export function StatusPill({ status }: { status: string }) {
   const normalized = status.toLowerCase();
 
-  let dotColor = 'bg-emerald-500';
-  let pillClasses =
-    'bg-emerald-50 text-emerald-700 border-emerald-200/90 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800/60';
+  let pillClasses = 'bg-[#ECFDF5] text-emerald-800 border-emerald-300';
 
-  if (['pending', 'review', 'probation', 'partial', 'in review'].includes(normalized)) {
-    dotColor = 'bg-amber-500';
-    pillClasses =
-      'bg-amber-50 text-amber-700 border-amber-200/90 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800/60';
+  if (['pending', 'review', 'in review'].includes(normalized)) {
+    pillClasses = 'bg-[#EFF5FF] text-[#0056FF] border-[#CAD3F5]';
+  } else if (['probation', 'partial'].includes(normalized)) {
+    pillClasses = 'bg-[#FFFBEB] text-amber-800 border-amber-300';
   } else if (['suspended', 'failed', 'dropped', 'overdue', 'rejected'].includes(normalized)) {
-    dotColor = 'bg-rose-500';
-    pillClasses =
-      'bg-rose-50 text-rose-700 border-rose-200/90 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800/60';
+    pillClasses = 'bg-[#FEF2F2] text-rose-800 border-rose-300';
   } else if (['inactive', 'archived', 'draft', 'withdrawn'].includes(normalized)) {
-    dotColor = 'bg-slate-400';
-    pillClasses =
-      'bg-slate-50 text-slate-700 border-slate-200/90 dark:bg-slate-800/40 dark:text-slate-300 dark:border-slate-700/60';
+    pillClasses = 'bg-[#F8FAFC] text-slate-700 border-[#CAD3F5]';
   }
 
   return (
@@ -326,13 +320,10 @@ export function DataTable<T extends Record<string, any>>({
           {/* 07 Sticky Thead with dynamic shadow */}
           <thead
             className={cn(
-              'sticky top-0 z-10 transition-shadow duration-150',
-              isDark ? 'bg-[#000E2E]' : 'bg-[#F8FAFC]',
+              'sticky top-0 z-10 transition-shadow duration-150 bg-[#EFF5FF]',
               hasScrolled
-                ? isDark
-                  ? 'border-b border-slate-700 shadow-md shadow-black/40'
-                  : 'border-b border-slate-200/90 shadow-xs'
-                : 'border-b border-slate-200/80 dark:border-slate-800',
+                ? 'border-b border-[#CAD3F5] shadow-xs'
+                : 'border-b border-[#CAD3F5]',
             )}
           >
             <tr>
@@ -365,13 +356,7 @@ export function DataTable<T extends Record<string, any>>({
                           ? 'text-right'
                           : 'text-left',
                       isSortable ? 'cursor-pointer hover:text-[#0056FF]' : '',
-                      isSorted
-                        ? isDark
-                          ? 'text-[#38BDF8]'
-                          : 'text-[#0056FF]'
-                        : isDark
-                          ? 'text-slate-400'
-                          : 'text-slate-600',
+                      isSorted ? 'text-[#0056FF]' : 'text-[#0A1A4A]',
                     )}
                   >
                     <div
@@ -392,11 +377,7 @@ export function DataTable<T extends Record<string, any>>({
                           className={cn(
                             'inline-block transition-transform duration-200',
                             isSorted && sortDirection === 'desc' ? 'rotate-180' : 'rotate-0',
-                            isSorted
-                              ? isDark
-                                ? 'text-[#38BDF8]'
-                                : 'text-[#0056FF]'
-                              : 'text-slate-300 dark:text-slate-600',
+                            isSorted ? 'text-[#0056FF]' : 'text-slate-400',
                           )}
                         >
                           <ChevronDown className="size-3.5" />
@@ -410,20 +391,12 @@ export function DataTable<T extends Record<string, any>>({
           </thead>
 
           {/* Table Body */}
-          <tbody
-            className={cn(
-              'divide-y font-sans text-xs',
-              isDark ? 'divide-slate-800/80 text-slate-200' : 'divide-slate-100 text-slate-800',
-            )}
-          >
+          <tbody className="divide-y divide-[#CAD3F5]/60 font-sans text-xs text-[#0A1A4A]">
             {paginatedData.length > 0
               ? paginatedData.map((row, idx) => (
                   <tr
                     key={String(row.id || idx)}
-                    className={cn(
-                      'transition-colors duration-100',
-                      isDark ? 'hover:bg-slate-900/60' : 'hover:bg-[#E3E7FC]/25',
-                    )}
+                    className="transition-colors duration-100 hover:bg-[#EFF5FF]/60"
                   >
                     {columns.map((col) => {
                       const colKeyStr = col.key as string;
@@ -483,7 +456,7 @@ export function DataTable<T extends Record<string, any>>({
         <span
           className={cn(
             'font-mono text-xs font-medium',
-            isDark ? 'text-slate-400' : 'text-slate-500',
+            'font-mono text-xs font-semibold text-slate-700',
           )}
         >
           Page {currentPage} of {totalPages}
@@ -499,8 +472,8 @@ export function DataTable<T extends Record<string, any>>({
             className={cn(
               'flex size-8 items-center justify-center rounded-[4px] border font-mono text-xs font-bold transition-colors select-none',
               currentPage === 1
-                ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
-                : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
+                ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
+                : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
             )}
             aria-label="First page"
           >
@@ -515,8 +488,8 @@ export function DataTable<T extends Record<string, any>>({
             className={cn(
               'flex size-8 items-center justify-center rounded-[4px] border transition-colors select-none',
               currentPage === 1
-                ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
-                : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
+                ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
+                : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
             )}
             aria-label="Previous page"
           >
@@ -544,8 +517,8 @@ export function DataTable<T extends Record<string, any>>({
                 className={cn(
                   'flex size-8 items-center justify-center rounded-[4px] border font-mono text-xs font-bold transition-all select-none',
                   isActive
-                    ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs dark:border-[#38BDF8] dark:bg-[#38BDF8] dark:text-slate-950'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-[#38BDF8]',
+                    ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                    : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
                 )}
                 aria-label={`Page ${pageNum}`}
                 aria-current={isActive ? 'page' : undefined}
@@ -563,8 +536,8 @@ export function DataTable<T extends Record<string, any>>({
             className={cn(
               'flex size-8 items-center justify-center rounded-[4px] border transition-colors select-none',
               currentPage === totalPages
-                ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
-                : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
+                ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
+                : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
             )}
             aria-label="Next page"
           >
@@ -579,8 +552,8 @@ export function DataTable<T extends Record<string, any>>({
             className={cn(
               'flex size-8 items-center justify-center rounded-[4px] border font-mono text-xs font-bold transition-colors select-none',
               currentPage === totalPages
-                ? 'cursor-not-allowed border-slate-200 opacity-40 dark:border-slate-800'
-                : 'border-slate-200 bg-white hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:hover:border-[#38BDF8]',
+                ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
+                : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
             )}
             aria-label="Last page"
           >
@@ -820,7 +793,7 @@ export function DataTableDemo() {
       type: 'string',
       width: '130px',
       render: (val) => (
-        <span className="font-mono text-xs font-bold text-[#0056FF] dark:text-[#38BDF8]">
+        <span className="font-mono text-xs font-bold text-[#0056FF]">
           {val}
         </span>
       ),
@@ -831,7 +804,7 @@ export function DataTableDemo() {
       sortable: true,
       type: 'string',
       render: (val) => (
-        <span className="font-sans text-xs font-semibold text-slate-900 dark:text-white">
+        <span className="font-sans text-xs font-bold text-[#0A1A4A]">
           {val}
         </span>
       ),
@@ -842,7 +815,7 @@ export function DataTableDemo() {
       sortable: true,
       type: 'string',
       render: (val) => (
-        <span className="font-sans text-xs text-slate-600 dark:text-slate-300">{val}</span>
+        <span className="font-sans text-xs font-semibold text-[#0A1A4A]">{val}</span>
       ),
     },
     {
@@ -859,12 +832,12 @@ export function DataTableDemo() {
         return (
           <span
             className={cn(
-              'font-mono text-xs font-bold tabular-nums',
+              'font-mono text-xs font-black tabular-nums',
               isHigh
-                ? 'text-emerald-600 dark:text-emerald-400'
+                ? 'text-emerald-700'
                 : isLow
-                  ? 'text-rose-600 dark:text-rose-400'
-                  : 'text-slate-700 dark:text-slate-200',
+                  ? 'text-rose-700'
+                  : 'text-[#0A1A4A]',
             )}
           >
             {num.toFixed(2)}
@@ -880,7 +853,7 @@ export function DataTableDemo() {
       align: 'center',
       width: '110px',
       render: (val) => (
-        <span className="font-mono text-[11px] text-slate-500 dark:text-slate-400">{val}</span>
+        <span className="font-mono text-xs font-semibold text-slate-700">{val}</span>
       ),
     },
     {
@@ -900,7 +873,7 @@ export function DataTableDemo() {
       align: 'right',
       width: '110px',
       render: (val) => (
-        <span className="font-mono text-xs font-semibold text-slate-800 tabular-nums dark:text-slate-200">
+        <span className="font-mono text-xs font-bold text-[#0A1A4A] tabular-nums">
           ${Number(val).toLocaleString()}
         </span>
       ),
