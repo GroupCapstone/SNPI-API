@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `f022bc5`
+
+- Complete redesign with public feeds, embed studio, class table, and real-time sse
+
 ### Version 0.2.11 (31.10.2026) - `863b601`
 
 - Record Vercel deployment fix and light theme enforcement
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `b8c52f2`
 
 - Remove category banner cards and display component demo cards directly
-
-### Version 0.2.11 (31.10.2026) - `5bb52b1`
-
-- Apply automated prettier code formatting across brand and ui-library components
 
