@@ -70,21 +70,19 @@ export function RailTocDemo() {
   };
 
   return (
-    <div className="w-full max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+    <div className="w-full max-w-3xl overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       {/* Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div className="flex items-center gap-2.5">
-          <span className="flex size-6 items-center justify-center rounded-[4px] bg-[#0056FF] text-white">
-            <svg
-              viewBox="0 0 24 24"
-              className="size-3.5 -rotate-90 fill-current"
-              aria-hidden="true"
-            >
-              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-            </svg>
-          </span>
+          <svg
+            viewBox="0 0 24 24"
+            className="size-5 -rotate-90 fill-[#0056FF]"
+            aria-hidden="true"
+          >
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
           <div>
-            <h3 className="font-sans text-xs font-bold text-slate-950 dark:text-white">
+            <h3 className="font-sans text-xs font-bold text-slate-950">
               Rail TOC · Paper Plane Flight Navigator
             </h3>
             <p className="font-sans text-[11px] text-slate-500">
@@ -115,7 +113,7 @@ export function RailTocDemo() {
                 'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-sans text-[11px] font-semibold transition-all',
                 activeSection === it.id
                   ? 'bg-[#0056FF] text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300',
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
               )}
             >
               {it.label}
@@ -129,7 +127,7 @@ export function RailTocDemo() {
         {/* Left: Scrollable Document Content Container (Tracks Scroll in Real Time) */}
         <div
           ref={containerRef}
-          className="no-scrollbar h-80 space-y-6 overflow-y-auto rounded-xl border border-slate-100 bg-[#F8FAFC] p-4 select-text md:col-span-7 dark:border-slate-800/80 dark:bg-[#0B0F19]"
+          className="no-scrollbar h-80 space-y-6 overflow-y-auto rounded-xl border border-slate-100 bg-[#F8FAFC] p-4 select-text md:col-span-7"
         >
           {tocItems.map((item) => (
             <section
@@ -138,22 +136,22 @@ export function RailTocDemo() {
               className={cn(
                 'rounded-lg border p-3.5 transition-all',
                 activeSection === item.id
-                  ? 'border-[#0056FF]/40 bg-white shadow-2xs dark:border-[#0056FF]/50 dark:bg-slate-800/60'
-                  : 'border-slate-200/80 bg-white/60 dark:border-slate-800 dark:bg-slate-900/40',
+                  ? 'border-[#0056FF]/40 bg-white shadow-2xs'
+                  : 'border-slate-200/80 bg-white/60',
               )}
             >
               <div className="flex items-center justify-between">
-                <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+                <h4 className="font-sans text-xs font-bold text-slate-900">
                   {item.label}
                 </h4>
                 <span className="font-mono text-[9px] font-bold text-[#0056FF]">
                   DEPTH {item.depth || 0}
                 </span>
               </div>
-              <p className="mt-1 font-sans text-[11px] text-slate-600 dark:text-slate-300">
+              <p className="mt-1 font-sans text-[11px] text-slate-600">
                 {sectionDetails[item.id]?.summary}
               </p>
-              <div className="mt-2 rounded-[4px] border-0 bg-slate-100/90 p-2 font-mono text-[10px] text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              <div className="mt-2 rounded-[4px] border-0 bg-slate-100/90 p-2 font-mono text-[10px] text-slate-700">
                 {sectionDetails[item.id]?.note}
               </div>
             </section>
@@ -161,7 +159,7 @@ export function RailTocDemo() {
         </div>
 
         {/* Right: The Paper Plane Rail TOC (Matches User Attachment Exact Style) */}
-        <div className="flex flex-col justify-start rounded-xl border border-slate-100 bg-white p-4 md:col-span-5 dark:border-slate-800/80 dark:bg-slate-900">
+        <div className="flex flex-col justify-start rounded-xl border border-slate-100 bg-white p-4 md:col-span-5">
           <RailToc
             items={tocItems}
             containerRef={containerRef}
@@ -322,9 +320,7 @@ export function ProximitySidebarDemo() {
         )}
       >
         <div className="space-y-3">
-          <div className="flex size-7 items-center justify-center rounded-lg bg-[#0056FF] text-white">
-            <Sparkles className="size-4" />
-          </div>
+          <Sparkles className="size-5 text-[#0056FF]" />
           <div className="space-y-2">
             {[
               { icon: BookOpen, label: 'Courses' },

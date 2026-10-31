@@ -619,10 +619,8 @@ export function ToastStackDemo() {
           onClick={fireSuccess}
           className="flex flex-col items-start gap-1 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-4 text-left transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10 active:scale-[0.98]"
         >
-          <div className="flex size-7 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
-            <Check className="size-4 stroke-[2.5]" />
-          </div>
-          <span className="mt-1 font-mono text-xs font-bold text-emerald-700 dark:text-emerald-400">
+          <Check className="size-5 stroke-[2.5] text-emerald-600" />
+          <span className="mt-1 font-mono text-xs font-bold text-emerald-700">
             Success Toast
           </span>
           <span className="font-sans text-[11px] text-slate-500">Form save & commit</span>
@@ -634,10 +632,8 @@ export function ToastStackDemo() {
           onClick={fireError}
           className="flex flex-col items-start gap-1 rounded-2xl border border-rose-500/30 bg-rose-500/5 p-4 text-left transition-all hover:border-rose-500/50 hover:bg-rose-500/10 active:scale-[0.98]"
         >
-          <div className="flex size-7 items-center justify-center rounded-lg border border-rose-500/30 bg-rose-500/15 text-rose-600 dark:text-rose-400">
-            <CircleAlert className="size-4 stroke-[2.5]" />
-          </div>
-          <span className="mt-1 font-mono text-xs font-bold text-rose-700 dark:text-rose-400">
+          <CircleAlert className="size-5 stroke-[2.5] text-rose-600" />
+          <span className="mt-1 font-mono text-xs font-bold text-rose-700">
             Error Toast
           </span>
           <span className="font-sans text-[11px] text-slate-500">Security failure cue</span>
@@ -649,10 +645,8 @@ export function ToastStackDemo() {
           onClick={fireWarning}
           className="flex flex-col items-start gap-1 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 text-left transition-all hover:border-amber-500/50 hover:bg-amber-500/10 active:scale-[0.98]"
         >
-          <div className="flex size-7 items-center justify-center rounded-lg border border-amber-500/30 bg-amber-500/15 text-amber-600 dark:text-amber-400">
-            <TriangleAlert className="size-4 stroke-[2.5]" />
-          </div>
-          <span className="mt-1 font-mono text-xs font-bold text-amber-700 dark:text-amber-400">
+          <TriangleAlert className="size-5 stroke-[2.5] text-amber-600" />
+          <span className="mt-1 font-mono text-xs font-bold text-amber-700">
             Warning Toast
           </span>
           <span className="font-sans text-[11px] text-slate-500">Rate limit threshold</span>
@@ -664,10 +658,8 @@ export function ToastStackDemo() {
           onClick={fireInfo}
           className="flex flex-col items-start gap-1 rounded-2xl border border-blue-500/30 bg-blue-500/5 p-4 text-left transition-all hover:border-blue-500/50 hover:bg-blue-500/10 active:scale-[0.98]"
         >
-          <div className="flex size-7 items-center justify-center rounded-lg border border-blue-500/30 bg-blue-500/15 text-[#0056FF] dark:text-[#38BDF8]">
-            <Info className="size-4 stroke-[2.5]" />
-          </div>
-          <span className="mt-1 font-mono text-xs font-bold text-[#0056FF] dark:text-[#38BDF8]">
+          <Info className="size-5 stroke-[2.5] text-[#0056FF]" />
+          <span className="mt-1 font-mono text-xs font-bold text-[#0056FF]">
             Info Toast
           </span>
           <span className="font-sans text-[11px] text-slate-500">Background event sync</span>

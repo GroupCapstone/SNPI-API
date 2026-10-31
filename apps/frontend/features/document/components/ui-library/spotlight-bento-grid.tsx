@@ -164,19 +164,10 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
 
           {/* Tile Header */}
           <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className={cn(
-                  'flex size-8 items-center justify-center rounded-lg border',
-                  isDark
-                    ? 'border-slate-700 bg-slate-900 text-[#38BDF8]'
-                    : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
-                )}
-              >
-                <ShieldCheck className="size-4" />
-              </div>
+            <div className="flex items-center gap-2.5">
+              <ShieldCheck className="size-5 text-[#0056FF]" />
               <div>
-                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950 dark:text-white">
+                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950">
                   Admin Audit & Security Vault
                 </h4>
                 <span className="font-mono text-[10px] text-slate-400">
@@ -262,19 +253,10 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
 
           {/* Content */}
           <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className={cn(
-                  'flex size-8 items-center justify-center rounded-lg border',
-                  isDark
-                    ? 'border-slate-700 bg-slate-900 text-emerald-400'
-                    : 'border-emerald-200 bg-emerald-50 text-emerald-600',
-                )}
-              >
-                <Cpu className="size-4" />
-              </div>
+            <div className="flex items-center gap-2.5">
+              <Cpu className="size-5 text-emerald-600" />
               <div>
-                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950 dark:text-white">
+                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950">
                   Cluster Vitality
                 </h4>
                 <span className="font-mono text-[10px] text-slate-400">Node Replica Set rs0</span>
@@ -343,19 +325,10 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
 
           {/* Header */}
           <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className={cn(
-                  'flex size-8 items-center justify-center rounded-lg border',
-                  isDark
-                    ? 'border-slate-700 bg-slate-900 text-[#38BDF8]'
-                    : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
-                )}
-              >
-                <GitBranch className="size-4" />
-              </div>
+            <div className="flex items-center gap-2.5">
+              <GitBranch className="size-5 text-[#0056FF]" />
               <div>
-                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950 dark:text-white">
+                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950">
                   Release Topology
                 </h4>
                 <span className="font-mono text-[10px] text-slate-400">Active Checkpoint Flow</span>
@@ -487,19 +460,10 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
 
           {/* Header */}
           <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className={cn(
-                  'flex size-8 items-center justify-center rounded-lg border',
-                  isDark
-                    ? 'border-slate-700 bg-slate-900 text-amber-400'
-                    : 'border-amber-200 bg-amber-50 text-amber-600',
-                )}
-              >
-                <Terminal className="size-4" />
-              </div>
+            <div className="flex items-center gap-2.5">
+              <Terminal className="size-5 text-amber-600" />
               <div>
-                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950 dark:text-white">
+                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950">
                   Live Deploy Stream
                 </h4>
                 <span className="font-mono text-[10px] text-slate-400">6s Cascading Preview</span>
@@ -618,19 +582,10 @@ export function SpotlightBentoGrid({ theme = 'light', className }: SpotlightBent
 
           {/* Header */}
           <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div
-                className={cn(
-                  'flex size-8 items-center justify-center rounded-lg border',
-                  isDark
-                    ? 'border-slate-700 bg-slate-900 text-[#38BDF8]'
-                    : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
-                )}
-              >
-                <Activity className="size-4" />
-              </div>
+            <div className="flex items-center gap-2.5">
+              <Activity className="size-5 text-[#0056FF]" />
               <div>
-                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950 dark:text-white">
+                <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950">
                   Real-Time SLA & Latency Telemetry
                 </h4>
                 <span className="font-mono text-[10px] text-slate-400">

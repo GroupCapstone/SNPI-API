@@ -147,7 +147,7 @@ export function RetroGridDemo() {
   const [perspective, setPerspective] = React.useState(true);
 
   return (
-    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-800 bg-[#05070E] p-6 shadow-inner">
+    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-inner">
       {/* 3D Grid Plane */}
       <div
         className={cn(
@@ -155,22 +155,22 @@ export function RetroGridDemo() {
           perspective && '[transform:rotateX(60deg)_translateY(-20%)]',
         )}
         style={{
-          backgroundImage: `linear-gradient(to right, #0056FF 1px, transparent 1px), linear-gradient(to bottom, #0056FF 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, #CAD3F5 1px, transparent 1px), linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)`,
           backgroundSize: '36px 36px',
         }}
       />
       {/* Horizon Glow */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0056FF]/30 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0056FF]/15 via-transparent to-transparent" />
 
-      <div className="relative z-10 space-y-2 rounded-xl border border-blue-500/30 bg-[#0B1120]/90 p-4 text-center text-white shadow-xl backdrop-blur-md">
-        <h4 className="font-sans text-sm font-bold text-white">Retro Cyber Grid</h4>
-        <p className="font-sans text-xs text-blue-200/70">
+      <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/95 p-4 text-center text-[#09172B] shadow-md backdrop-blur-md">
+        <h4 className="font-sans text-sm font-bold text-[#09172B]">Retro Cyber Grid</h4>
+        <p className="font-sans text-xs text-slate-600">
           CSS 3D perspective plane with gradient horizon falloff.
         </p>
         <button
           type="button"
           onClick={() => setPerspective(!perspective)}
-          className="mt-2 rounded-full border border-blue-500/40 bg-blue-600/20 px-3 py-1 font-mono text-[10px] font-bold text-blue-400 hover:bg-blue-600/30"
+          className="mt-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF] hover:bg-blue-100"
         >
           Perspective: {perspective ? '3D Active' : '2D Flat'}
         </button>
@@ -184,31 +184,31 @@ export function AuroraWavesDemo() {
   const [pulse, setPulse] = React.useState(true);
 
   return (
-    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-800 bg-[#020617] p-6">
+    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-inner">
       {/* Ambient Aurora Glow Blobs */}
       <div
         className={cn(
-          'pointer-events-none absolute -top-12 -left-12 size-56 rounded-full bg-blue-600/30 blur-3xl transition-all duration-1000',
-          pulse && 'scale-125 bg-blue-500/40',
+          'pointer-events-none absolute -top-12 -left-12 size-56 rounded-full bg-blue-300/30 blur-3xl transition-all duration-1000',
+          pulse && 'scale-125 bg-blue-400/40',
         )}
       />
       <div
         className={cn(
-          'pointer-events-none absolute -right-12 -bottom-12 size-56 rounded-full bg-indigo-600/30 blur-3xl transition-all duration-1000',
-          pulse && 'scale-125 bg-indigo-500/40',
+          'pointer-events-none absolute -right-12 -bottom-12 size-56 rounded-full bg-indigo-300/30 blur-3xl transition-all duration-1000',
+          pulse && 'scale-125 bg-indigo-400/40',
         )}
       />
-      <div className="pointer-events-none absolute top-1/2 left-1/2 size-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FF5500]/20 blur-2xl" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 size-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0056FF]/15 blur-2xl" />
 
-      <div className="relative z-10 space-y-2 rounded-xl border border-slate-700 bg-slate-900/80 p-4 text-center text-white shadow-xl backdrop-blur-lg">
-        <h4 className="font-sans text-sm font-bold text-white">Aurora Ambient Waves</h4>
-        <p className="font-sans text-xs text-slate-400">
+      <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/90 p-4 text-center text-[#09172B] shadow-md backdrop-blur-lg">
+        <h4 className="font-sans text-sm font-bold text-[#09172B]">Aurora Ambient Waves</h4>
+        <p className="font-sans text-xs text-slate-600">
           High-performance CSS blurred radial gradients for modern hero cards.
         </p>
         <button
           type="button"
           onClick={() => setPulse(!pulse)}
-          className="mt-2 rounded-full border border-slate-700 bg-slate-800 px-3 py-1 font-mono text-[10px] font-bold text-slate-300 hover:text-white"
+          className="mt-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-mono text-[10px] font-bold text-slate-700 hover:bg-slate-200"
         >
           {pulse ? 'Pulse Fast' : 'Calm State'}
         </button>
@@ -222,7 +222,7 @@ export function InteractiveParticlesDemo() {
   const [count, setCount] = React.useState(16);
 
   return (
-    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 p-6">
+    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-inner">
       {/* Simulated Particle Grid */}
       <div className="pointer-events-none absolute inset-0">
         {Array.from({ length: count }).map((_, i) => (
@@ -239,15 +239,15 @@ export function InteractiveParticlesDemo() {
         ))}
       </div>
 
-      <div className="relative z-10 space-y-2 rounded-xl border border-slate-800 bg-slate-900/90 p-4 text-center text-white backdrop-blur-sm">
-        <h4 className="font-sans text-sm font-bold">Particle Constellation</h4>
-        <p className="font-sans text-xs text-slate-400">
+      <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/95 p-4 text-center text-[#09172B] shadow-md backdrop-blur-sm">
+        <h4 className="font-sans text-sm font-bold text-[#09172B]">Particle Constellation</h4>
+        <p className="font-sans text-xs text-slate-600">
           Zero-overhead CSS keyframe floating nodes for technical dashboards.
         </p>
         <button
           type="button"
           onClick={() => setCount((prev) => (prev === 16 ? 32 : 16))}
-          className="mt-2 rounded-full border border-blue-500/40 bg-blue-600/20 px-3 py-1 font-mono text-[10px] font-bold text-blue-400"
+          className="mt-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF] hover:bg-blue-100"
         >
           Nodes: {count} Active
         </button>
@@ -343,24 +343,24 @@ export function GlitchTextDemo() {
   const [active, setActive] = React.useState(false);
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border border-slate-800 bg-[#090D16] p-6 text-center text-white shadow-xl">
+    <div className="flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 text-center text-[#09172B] shadow-md">
       <div
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
-        className="cursor-pointer font-mono text-3xl font-black tracking-widest text-[#FF5500] transition-all select-none"
+        className="cursor-pointer font-mono text-3xl font-black tracking-widest text-[#0056FF] transition-all select-none"
         style={{
-          textShadow: active ? '2px 0 #0056FF, -2px 0 #FF0055, 0 2px #00FFCC' : '1px 1px 0 #0056FF',
+          textShadow: active ? '2px 0 #0056FF, -2px 0 #FF0055, 0 2px #00FFCC' : 'none',
         }}
       >
         CYBER_TERMINAL_2026
       </div>
-      <p className="font-sans text-xs text-slate-400">
+      <p className="font-sans text-xs text-slate-600">
         Hover to trigger chromatic RGB split aberration with zero script overhead.
       </p>
       <button
         type="button"
         onClick={() => setActive(!active)}
-        className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1 font-mono text-[10px] font-bold text-slate-300 hover:text-white"
+        className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-mono text-[10px] font-bold text-slate-700 hover:bg-slate-200"
       >
         {active ? 'Glitch Active' : 'Hover or Click to Glitch'}
       </button>
@@ -420,28 +420,28 @@ export function SpotlightCardDemo() {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setPos((p) => ({ ...p, opacity: 0 }))}
-      className="relative w-full max-w-md overflow-hidden rounded-2xl border border-slate-800 bg-[#0F172A] p-6 text-white shadow-xl"
+      className="relative w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 text-[#09172B] shadow-xl"
     >
       {/* Mouse Spotlight */}
       <div
         className="pointer-events-none absolute -inset-px transition-opacity duration-300"
         style={{
           opacity: pos.opacity,
-          background: `radial-gradient(400px circle at ${pos.x}px ${pos.y}px, rgba(0, 86, 255, 0.25), transparent 80%)`,
+          background: `radial-gradient(400px circle at ${pos.x}px ${pos.y}px, rgba(0, 86, 255, 0.12), transparent 80%)`,
         }}
       />
       <div className="relative z-10 space-y-3">
         <div className="flex items-center justify-between">
-          <span className="rounded-full border border-blue-500/30 bg-blue-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-blue-400 uppercase">
+          <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
             Spotlight Ray
           </span>
-          <Sparkles className="size-4 text-blue-400" />
+          <Sparkles className="size-4 text-[#0056FF]" />
         </div>
-        <h4 className="font-sans text-lg font-black text-white">Dynamic Cursor Illumination</h4>
-        <p className="font-sans text-xs text-slate-400">
+        <h4 className="font-sans text-lg font-black text-[#09172B]">Dynamic Cursor Illumination</h4>
+        <p className="font-sans text-xs text-slate-600">
           Mouse-following radial gradient layer illuminating mathematical borders and surfaces.
         </p>
-        <div className="flex items-center justify-between border-t border-slate-800 pt-3 font-mono text-xs text-slate-500">
+        <div className="flex items-center justify-between border-t border-slate-100 pt-3 font-mono text-xs text-slate-500">
           <span>X: {Math.round(pos.x)}px</span>
           <span>Y: {Math.round(pos.y)}px</span>
         </div>
@@ -455,9 +455,7 @@ export function BentoCardDemo() {
   return (
     <div className="grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-2">
       <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-        <div className="flex size-9 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
-          <Shield className="size-5" />
-        </div>
+        <Shield className="size-6 text-[#0056FF]" />
         <div className="mt-4 space-y-1">
           <h5 className="font-sans text-sm font-bold text-slate-900">Zero Trust RBAC</h5>
           <p className="font-sans text-xs text-slate-500">
@@ -467,9 +465,7 @@ export function BentoCardDemo() {
       </div>
 
       <div className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-        <div className="flex size-9 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-600">
-          <Zap className="size-5" />
-        </div>
+        <Zap className="size-6 text-emerald-600" />
         <div className="mt-4 space-y-1">
           <h5 className="font-sans text-sm font-bold text-slate-900">42ms Sub-Query</h5>
           <p className="font-sans text-xs text-slate-500">MongoDB replica set index routing.</p>

@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `d356019`
+
+- Merge 3-tab cyber navigation menu and apply royal blue active styling
+
 ### Version 0.2.11 (31.10.2026) - `0d81689`
 
 - Resolve vercel deployment failures for frontend and backend
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `f10e1e2`
 
 - Apply floating capsule dock nav and purge legacy hanging tabs header
-
-### Version 0.2.9 (31.10.2026) - `eef9ef6`
-
-- Implement paper plane rail toc with motion flight and apply 0px border 4px radius button standard
 

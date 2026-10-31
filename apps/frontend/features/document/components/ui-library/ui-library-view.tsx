@@ -459,10 +459,10 @@ export function UiLibraryView() {
                 icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
               />
 
-              {/* Core UI Components Grouped By Flow Range */}
+              {/* Core UI Components Grouped By Category */}
               <div className="space-y-5 font-sans text-xs">
                 <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
-                  <span>Flow Groups</span>
+                  <span>Categories</span>
                   <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 text-[10px] font-black text-[#0056FF]">
                     {filteredComponents.length} Active
                   </span>
@@ -626,30 +626,17 @@ export function UiLibraryView() {
               </div>
             </section>
 
-            {/* SECTION 2: Interactive UI Components & Templates Flow Feed */}
+            {/* SECTION 2: Interactive UI Components & Templates */}
             <div
               id="interactive-feed"
-              className="scroll-mt-24 space-y-2 border-t border-slate-200/80 pt-8 pb-2"
+              className="scroll-mt-24 space-y-1 border-t border-slate-200/80 pt-8 pb-2"
             >
-              <div className="flex items-center gap-2">
-                <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                  Flow Range Mode
-                </span>
-                <span className="font-mono text-[11px] text-slate-400">
-                  {filteredComponents.length} Interactive Demos & Templates · Step-by-Step
-                  Sequential Flow
-                </span>
-              </div>
               <h2 className="font-sans text-xl font-black tracking-tight text-slate-950 sm:text-2xl">
-                Component Catalog ({filteredComponents.length} Components by Flow Range)
+                Component Catalog
               </h2>
-              <p className="font-sans text-xs text-slate-600">
-                Components arranged strictly by flow group to ensure step-by-step sequential
-                scrolling without group jumping.
-              </p>
             </div>
 
-            {/* COMPONENT DEMOS ARRANGED BY FLOW GROUP & RANGE */}
+            {/* COMPONENT DEMOS ARRANGED BY CATEGORY */}
             <div className="space-y-16">
               {groupedCategories.map((group) => {
                 return (
@@ -658,35 +645,24 @@ export function UiLibraryView() {
                     id={group.categoryId}
                     className="scroll-mt-24 space-y-8"
                   >
-                    {/* Category Flow Group Sticky Header Banner */}
-                    <div className="sticky top-20 z-20 flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white/95 px-5 py-3 shadow-xs backdrop-blur-md transition-all">
+                    {/* Category Header Banner */}
+                    <div className="flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white px-5 py-3 shadow-xs transition-all">
                       <div className="flex items-center gap-3">
                         <span className="flex size-7 items-center justify-center rounded-lg bg-[#0056FF] font-mono text-xs font-black text-white">
                           0{group.groupNumber}
                         </span>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h3 className="font-sans text-sm font-black tracking-tight text-slate-950 uppercase sm:text-base">
-                              {group.category}
-                            </h3>
-                            <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                              {group.components.length} Components
-                            </span>
-                          </div>
-                          <p className="font-sans text-[11px] text-slate-500">
-                            Flow Group {group.groupNumber} · Step-by-Step Range
-                          </p>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-sans text-sm font-black tracking-tight text-slate-950 uppercase sm:text-base">
+                            {group.category}
+                          </h3>
+                          <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                            {group.components.length} Components
+                          </span>
                         </div>
-                      </div>
-
-                      <div className="hidden items-center gap-2 font-mono text-[10px] text-slate-400 sm:flex">
-                        <span>
-                          Range 0{group.groupNumber} of 0{groupedCategories.length}
-                        </span>
                       </div>
                     </div>
 
-                    {/* Demos Inside This Flow Category Range */}
+                    {/* Demos Inside This Category */}
                     <div className="space-y-10">
                       {group.components.map((comp, compIdx) => {
                         const sectionId = `comp-${comp.id}`;
@@ -708,9 +684,6 @@ export function UiLibraryView() {
                                   <h2 className="font-sans text-xl font-black text-slate-950">
                                     {comp.name}
                                   </h2>
-                                  <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                                    {comp.paradigm}
-                                  </span>
                                   <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
                                     {comp.category}
                                   </span>
@@ -1325,7 +1298,7 @@ function renderFeedComponentDemo(
               </strong>
             </span>
             <span className="h-3 w-[1px] bg-slate-200" />
-            <span>Surface: Level 2 Obsidian (#0F172A)</span>
+            <span>Surface: Light Card (#FFFFFF)</span>
             <span className="h-3 w-[1px] bg-slate-200" />
             <span>Touch: ≥ 44×44px</span>
           </div>
@@ -1412,9 +1385,7 @@ function renderFeedComponentDemo(
                         {opt.tag}
                       </span>
                       {isSelected && (
-                        <span className="flex size-4 items-center justify-center rounded-full bg-[#0056FF] text-white">
-                          <Check className="size-2.5" />
-                        </span>
+                        <Check className="size-4 stroke-[2.4] text-[#0056FF]" />
                       )}
                     </div>
                   </button>
@@ -2095,9 +2066,6 @@ function renderFeedComponentDemo(
             <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-5 py-3">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold text-slate-900">13:25</span>
-                <span className="py-0.2 rounded-[3px] bg-emerald-100 px-1 font-mono text-[9px] font-bold text-emerald-800">
-                  ONLINE
-                </span>
               </div>
               <span className="font-sans text-xs font-black tracking-tight text-slate-900">
                 SNPI-SMS Mobile

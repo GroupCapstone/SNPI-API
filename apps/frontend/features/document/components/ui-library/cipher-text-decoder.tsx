@@ -372,16 +372,7 @@ export function CipherTextDecoder({ theme = 'light', className }: CipherTextDeco
         )}
       >
         <div className="flex items-center gap-2.5">
-          <div
-            className={cn(
-              'flex size-7 items-center justify-center rounded-lg border',
-              isDark
-                ? 'border-slate-700 bg-slate-800 text-[#38BDF8]'
-                : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
-            )}
-          >
-            <Terminal className="size-3.5" />
-          </div>
+          <Terminal className="size-5 text-[#0056FF]" />
           <div className="flex items-center gap-1.5 font-mono text-xs font-bold tracking-tight">
             <span className={isDark ? 'text-white' : 'text-slate-950'}>CIPHER.IO</span>
             <span className="text-slate-400">/</span>

@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "d356019",
+    "description": "Merge 3-tab cyber navigation menu and apply royal blue active styling"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "0d81689",
     "description": "Resolve vercel deployment failures for frontend and backend"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "f10e1e2",
     "description": "Apply floating capsule dock nav and purge legacy hanging tabs header"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "eef9ef6",
-    "description": "Implement paper plane rail toc with motion flight and apply 0px border 4px radius button standard"
   }
 ];
