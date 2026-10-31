@@ -1,165 +1,257 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
 import { Copy, Check } from '@/components/icons';
 import { GeometricHeaderStamp } from './geometric-tag-primitives';
 
 export function BrandConceptBlueprint() {
   const [copiedToken, setCopiedToken] = React.useState<string | null>(null);
 
-  const handleCopy = (token: string) => {
+  const handleCopy = (token: string, label: string) => {
     navigator.clipboard.writeText(token);
-    setCopiedToken(token);
+    setCopiedToken(label);
     setTimeout(() => setCopiedToken(null), 2000);
   };
 
+  const coreColors = [
+    {
+      num: '01',
+      name: 'Royal Blue',
+      role: 'Primary Brand Base',
+      hex: '#0056FF',
+      rgb: 'rgb(0, 86, 255)',
+      hsl: 'hsl(220, 100%, 50%)',
+      bgClass: 'bg-[#0056FF]',
+      borderClass: 'border-[#0056FF]',
+      textClass: 'text-white',
+      badgeClass: 'bg-white/20 text-white',
+    },
+    {
+      num: '02',
+      name: 'Black',
+      role: 'High-Contrast Depth',
+      hex: '#000000',
+      rgb: 'rgb(0, 0, 0)',
+      hsl: 'hsl(0, 0%, 0%)',
+      bgClass: 'bg-[#000000]',
+      borderClass: 'border-slate-900',
+      textClass: 'text-white',
+      badgeClass: 'bg-white/20 text-white',
+    },
+    {
+      num: '03',
+      name: 'White',
+      role: 'Clean Canvas Base',
+      hex: '#FFFFFF',
+      rgb: 'rgb(255, 255, 255)',
+      hsl: 'hsl(0, 0%, 100%)',
+      bgClass: 'bg-[#FFFFFF]',
+      borderClass: 'border-slate-200/90',
+      textClass: 'text-slate-950',
+      badgeClass: 'bg-slate-100 text-slate-700',
+    },
+  ];
+
+  const cssTokens = `:root {
+  --brand-royal-blue: #0056FF; /* rgb(0, 86, 255) */
+  --brand-black: #000000;      /* rgb(0, 0, 0) */
+  --brand-white: #FFFFFF;      /* rgb(255, 255, 255) */
+}`;
+
   return (
-    <section className="space-y-6">
-      {/* Blueprint Header */}
+    <section id="brand-identity" className="scroll-mt-24 space-y-6">
+      {/* Anchor alias for existing toc */}
+      <span id="brand-blueprint" className="scroll-mt-24" />
+
+      {/* Header */}
       <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="font-sans text-xl font-bold tracking-tight text-slate-900">
-            Brand Colors & Gradients
+          <h2 className="font-sans text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+            Brand Identity & Colors
           </h2>
-          <p className="mt-1 font-sans text-xs text-slate-500">
-            Royal Blue primary base, futurewave gradients, and Sora typography.
+          <p className="mt-1 font-sans text-xs text-slate-500 sm:text-sm">
+            Official logo mark, 3 core brand colors, and code color tokens.
           </p>
         </div>
-        <GeometricHeaderStamp codeA="20" titleA="BRAND" codeB="26" titleB="BLUE" />
+        <GeometricHeaderStamp codeA="03" titleA="CORE" codeB="26" titleB="BRAND" />
       </div>
 
-      {/* Main Blueprint Grid (Apple Liquid Glass Style) */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-        {/* Left Column: 01 Royal Blue (Tall Hero Card) */}
-        <div className="lg:col-span-4">
-          <button
-            type="button"
-            onClick={() => handleCopy('#0056FF')}
-            className="group relative flex h-full min-h-[480px] w-full flex-col justify-between rounded-3xl border border-[#0056FF] bg-[#0056FF] p-8 text-left text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),_0_12px_32px_rgba(0,86,255,0.25)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,86,255,0.35)]"
-          >
-            {/* Top: 01 */}
-            <div className="flex items-start justify-between">
-              <span className="font-sans text-7xl font-extrabold tracking-tighter sm:text-8xl">
-                01
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 font-mono text-xs font-semibold backdrop-blur-md transition-colors group-hover:bg-white/30">
-                {copiedToken === '#0056FF' ? (
-                  <>
-                    <Check className="h-3 w-3" />
-                    <span>Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3 w-3" />
-                    <span>#0056FF</span>
-                  </>
-                )}
-              </span>
+      {/* LOGO SECTION (Light & Dark Presentation) */}
+      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          {/* Logo Identity Title */}
+          <div className="space-y-1.5">
+            <span className="font-mono text-xs font-black tracking-widest text-[#0056FF] uppercase">
+              Official Identity Asset
+            </span>
+            <h3 className="font-sans text-xl font-extrabold text-slate-950 sm:text-2xl">
+              SNP International School Logo
+            </h3>
+            <p className="max-w-md font-sans text-xs text-slate-600 sm:text-sm">
+              The official institutional seal and brand mark for all digital interfaces, print
+              certificates, and web portals.
+            </p>
+          </div>
+
+          {/* Logo Previews (Light Canvas & Dark Canvas) */}
+          <div className="flex flex-wrap items-center gap-4">
+            {/* Light Mode Preview */}
+            <div className="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
+              <div className="relative size-16 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-white p-1 shadow-xs">
+                <Image
+                  src="/images/logo.png"
+                  alt="SNP International School Logo - Light Canvas"
+                  width={64}
+                  height={64}
+                  className="size-full object-contain"
+                  priority
+                />
+              </div>
+              <div className="space-y-0.5">
+                <div className="font-sans text-xs font-bold text-slate-950">Light Canvas</div>
+                <div className="font-mono text-[10px] text-slate-500">bg-[#FFFFFF]</div>
+              </div>
             </div>
 
-            {/* Bottom: Name & Token */}
-            <div className="space-y-1">
-              <h3 className="font-sans text-3xl font-extrabold tracking-tight">Royal Blue</h3>
-              <p className="font-mono text-xl font-bold tracking-tight text-white/90">#0056FF</p>
+            {/* Dark Mode Preview */}
+            <div className="flex items-center gap-4 rounded-2xl border border-slate-800 bg-[#000B26] p-4 text-white shadow-xs">
+              <div className="relative size-16 shrink-0 overflow-hidden rounded-full border border-white/20 bg-white p-1 shadow-xs">
+                <Image
+                  src="/images/logo.png"
+                  alt="SNP International School Logo - Dark Canvas"
+                  width={64}
+                  height={64}
+                  className="size-full object-contain"
+                  priority
+                />
+              </div>
+              <div className="space-y-0.5">
+                <div className="font-sans text-xs font-bold text-white">Dark Canvas</div>
+                <div className="font-mono text-[10px] text-blue-200">bg-[#000B26]</div>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3 CORE COLORS ONLY */}
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        {coreColors.map((color) => {
+          const isHexCopied = copiedToken === `${color.name}-hex`;
+          const isRgbCopied = copiedToken === `${color.name}-rgb`;
+
+          return (
+            <div
+              key={color.num}
+              className={`relative flex min-h-[260px] flex-col justify-between rounded-3xl border p-6 shadow-xs transition-all duration-200 hover:-translate-y-1 sm:p-7 ${color.bgClass} ${color.borderClass} ${color.textClass}`}
+            >
+              {/* Top: Number & Role */}
+              <div className="flex items-start justify-between">
+                <span className="font-sans text-5xl font-black tracking-tighter opacity-90 sm:text-6xl">
+                  {color.num}
+                </span>
+                <span
+                  className={`rounded-full px-3 py-1 font-mono text-[10px] font-bold uppercase ${color.badgeClass}`}
+                >
+                  {color.role}
+                </span>
+              </div>
+
+              {/* Bottom: Name & Click-to-Copy Buttons */}
+              <div className="space-y-3 pt-6">
+                <div>
+                  <h4 className="font-sans text-2xl font-black tracking-tight">{color.name}</h4>
+                  <p className="font-mono text-xs opacity-80">{color.hsl}</p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  {/* HEX Copy Button */}
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(color.hex, `${color.name}-hex`)}
+                    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs font-bold transition-all ${
+                      color.hex === '#FFFFFF'
+                        ? 'border-slate-300 bg-slate-50 text-slate-900 hover:border-[#0056FF]'
+                        : 'border-white/20 bg-white/10 text-white hover:bg-white/20'
+                    }`}
+                  >
+                    {isHexCopied ? (
+                      <>
+                        <Check className="size-3.5 text-emerald-400" />
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="size-3.5 opacity-70" />
+                        <span>{color.hex}</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* RGB Copy Button */}
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(color.rgb, `${color.name}-rgb`)}
+                    className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs font-bold transition-all ${
+                      color.hex === '#FFFFFF'
+                        ? 'border-slate-300 bg-slate-50 text-slate-700 hover:border-[#0056FF]'
+                        : 'border-white/20 bg-white/10 text-white/90 hover:bg-white/20'
+                    }`}
+                  >
+                    {isRgbCopied ? (
+                      <>
+                        <Check className="size-3.5 text-emerald-400" />
+                        <span>Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="size-3.5 opacity-70" />
+                        <span>{color.rgb}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* CODE COLOR (Developer Tokens Box) */}
+      <div className="rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h4 className="font-sans text-base font-bold text-slate-950">
+              Code Color Tokens (CSS Variables)
+            </h4>
+            <p className="font-sans text-xs text-slate-500">
+              Drop-in style tokens for web stylesheets and theme config.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => handleCopy(cssTokens, 'css-tokens')}
+            className="inline-flex items-center gap-2 rounded-lg bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white transition-all hover:bg-blue-700"
+          >
+            {copiedToken === 'css-tokens' ? (
+              <>
+                <Check className="size-3.5" />
+                <span>Copied CSS Tokens!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="size-3.5" />
+                <span>Copy Code Tokens</span>
+              </>
+            )}
           </button>
         </div>
 
-        {/* Right Column: 02, 03, 04, 05 and Gradients */}
-        <div className="flex flex-col gap-4 lg:col-span-8">
-          {/* Row 1: 02 Azure Blue + 03 Black */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {/* 02 Azure Blue */}
-            <button
-              type="button"
-              onClick={() => handleCopy('#2277FF')}
-              className="group relative flex min-h-[170px] flex-col justify-between rounded-2xl border border-[#2277FF] bg-[#2277FF] p-6 text-left text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),_0_8px_20px_rgba(34,119,255,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="flex items-start justify-between">
-                <span className="font-sans text-5xl font-extrabold tracking-tight">02</span>
-                <span className="font-mono text-xs font-bold text-white/90">#2277FF</span>
-              </div>
-              <h4 className="font-sans text-base font-bold">Azure Blue</h4>
-            </button>
-
-            {/* 03 Black */}
-            <button
-              type="button"
-              onClick={() => handleCopy('#000000')}
-              className="group relative flex min-h-[170px] flex-col justify-between rounded-2xl border border-slate-900 bg-[#000000] p-6 text-left text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.15),_0_8px_20px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="flex items-start justify-between">
-                <span className="font-sans text-5xl font-extrabold tracking-tight">03</span>
-                <span className="font-mono text-xs font-bold text-white/90">#000000</span>
-              </div>
-              <h4 className="font-sans text-base font-bold">Black</h4>
-            </button>
-          </div>
-
-          {/* Row 2: 04 Soft Lavender + 05 White */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {/* 04 Soft Lavender */}
-            <button
-              type="button"
-              onClick={() => handleCopy('#E3E7FC')}
-              className="group relative flex min-h-[170px] flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC] p-6 text-left text-[#000B26] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.9),_0_4px_12px_rgba(0,0,0,0.03)] transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-            >
-              <div className="flex items-start justify-between">
-                <span className="font-sans text-5xl font-extrabold tracking-tight text-[#000B26]">
-                  04
-                </span>
-                <span className="font-mono text-xs font-bold text-[#000B26]">#E3E7FC</span>
-              </div>
-              <h4 className="font-sans text-base font-bold text-[#000B26]">Soft Lavender</h4>
-            </button>
-
-            {/* 05 White */}
-            <button
-              type="button"
-              onClick={() => handleCopy('#FFFFFF')}
-              className="group relative flex min-h-[170px] flex-col justify-between rounded-2xl border border-slate-200/90 bg-[#FFFFFF] p-6 text-left text-slate-900 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.9),_0_4px_12px_rgba(0,0,0,0.03)] transition-all duration-300 hover:-translate-y-1 hover:border-[#0056FF]/40 hover:shadow-md"
-            >
-              <div className="flex items-start justify-between">
-                <span className="font-sans text-5xl font-extrabold tracking-tight text-slate-900">
-                  05
-                </span>
-                <span className="font-mono text-xs font-bold text-slate-500">#FFFFFF</span>
-              </div>
-              <h4 className="font-sans text-base font-bold text-slate-900">White</h4>
-            </button>
-          </div>
-
-          {/* Row 3: Gradient 1 Futurewave */}
-          <button
-            type="button"
-            onClick={() => handleCopy('linear-gradient(135deg, #2277FF, #6899FF, #AEC2FF)')}
-            className="group relative flex min-h-[140px] flex-col justify-between rounded-2xl border border-[#2277FF]/40 bg-gradient-to-r from-[#2277FF] via-[#5C93FF] to-[#AEC2FF] p-6 text-left text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.35),_0_8px_24px_rgba(34,119,255,0.2)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-          >
-            <div className="flex items-start justify-between">
-              <span className="font-sans text-2xl font-bold tracking-tight">Gradient 1</span>
-              <span className="font-mono text-xs font-semibold text-white/90">
-                #2277FF &rarr; #AEC2FF
-              </span>
-            </div>
-            <h4 className="font-sans text-3xl font-extrabold tracking-tight">Futurewave</h4>
-          </button>
-
-          {/* Row 4: Gradient 2 Midnight Surge */}
-          <button
-            type="button"
-            onClick={() => handleCopy('linear-gradient(135deg, #000B26, #002D8A, #0056FF)')}
-            className="group relative flex min-h-[110px] flex-col justify-between rounded-2xl border border-slate-900 bg-gradient-to-r from-[#000B26] via-[#002D8A] to-[#0056FF] p-6 text-left text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.2),_0_8px_24px_rgba(0,11,38,0.25)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-          >
-            <div className="flex items-start justify-between">
-              <span className="font-sans text-sm font-semibold tracking-wider text-white/80 uppercase">
-                Gradient 2
-              </span>
-              <span className="font-mono text-xs font-semibold text-white/80">
-                #000B26 &rarr; #0056FF
-              </span>
-            </div>
-            <h4 className="font-sans text-2xl font-extrabold tracking-tight">Midnight Surge</h4>
-          </button>
+        <div className="mt-4 overflow-hidden rounded-2xl border border-slate-800 bg-[#000B26] p-4 text-white">
+          <pre className="font-mono text-xs leading-relaxed text-[#AEC2FF]">
+            <code>{cssTokens}</code>
+          </pre>
         </div>
       </div>
     </section>
