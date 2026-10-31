@@ -1020,14 +1020,6 @@ function renderFeedComponentDemo(
     setActiveTool: (t: string) => void;
     tooltipPosition: 'top' | 'bottom';
     setTooltipPosition: (p: 'top' | 'bottom') => void;
-    fabCount: number;
-    setFabCount: React.Dispatch<React.SetStateAction<number>>;
-    fabSpeedDialOpen: boolean;
-    setFabSpeedDialOpen: (o: boolean) => void;
-    fabActionCounts: { student: number; attendance: number; invoice: number; qr: number };
-    setFabActionCounts: React.Dispatch<
-      React.SetStateAction<{ student: number; attendance: number; invoice: number; qr: number }>
-    >;
     selectedChips: string[];
     setSelectedChips: (chips: string[]) => void;
     toggleChip: (l: string) => void;
