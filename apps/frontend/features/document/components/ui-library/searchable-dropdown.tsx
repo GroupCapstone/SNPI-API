@@ -266,7 +266,7 @@ export function SearchableDropdown({
         aria-controls={listboxId}
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'flex min-h-[42px] w-full items-center justify-between gap-2 rounded-xl border px-3 py-1.5 font-sans text-xs transition-all duration-150 outline-none',
+          'flex min-h-[42px] w-full items-center justify-between gap-2 rounded-[4px] border px-3 py-1.5 font-sans text-xs transition-all duration-150 outline-none',
           'focus-visible:ring-2 focus-visible:ring-[#0056FF]',
           isOpen
             ? 'border-[#0056FF] ring-1 ring-[#0056FF]'
@@ -283,7 +283,7 @@ export function SearchableDropdown({
               <span
                 key={opt.value}
                 className={cn(
-                  'inline-flex items-center gap-1 rounded-lg border px-2 py-0.5 font-mono text-[11px] font-semibold transition-colors',
+                  'inline-flex items-center gap-1 rounded-[4px] border px-2 py-0.5 font-mono text-[11px] font-semibold transition-colors',
                   isDark
                     ? 'border-cyan-500/30 bg-cyan-500/15 text-cyan-300'
                     : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
@@ -330,7 +330,7 @@ export function SearchableDropdown({
       {isOpen && (
         <div
           className={cn(
-            'absolute left-0 z-50 mt-1.5 w-full min-w-[280px] overflow-hidden rounded-2xl border shadow-xl transition-all duration-150',
+            'absolute left-0 z-50 mt-1.5 w-full min-w-[280px] overflow-hidden rounded-[4px] border shadow-xl transition-all duration-150',
             isDark
               ? 'border-slate-800 bg-[#000B26] text-slate-100'
               : 'border-slate-200/90 bg-white text-slate-900',
@@ -357,7 +357,7 @@ export function SearchableDropdown({
               onKeyDown={handleSearchKeyDown}
               placeholder={searchPlaceholder}
               className={cn(
-                'w-full rounded-xl border py-1.5 pr-3 pl-8 font-sans text-xs transition-colors outline-none',
+                'w-full rounded-[4px] border py-1.5 pr-3 pl-8 font-sans text-xs transition-colors outline-none',
                 isDark
                   ? 'border-slate-700 bg-slate-900 text-white placeholder-slate-500 focus:border-[#38BDF8]'
                   : 'border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:border-[#0056FF] focus:bg-white',
@@ -405,7 +405,7 @@ export function SearchableDropdown({
                           onClick={() => !opt.disabled && handleSelectOption(opt.value)}
                           onMouseEnter={() => setHighlightedIndex(optIndex)}
                           className={cn(
-                            'flex cursor-pointer items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 font-sans text-xs transition-colors',
+                            'flex cursor-pointer items-center justify-between gap-2 rounded-[4px] px-2.5 py-1.5 font-sans text-xs transition-colors',
                             // 06 Active Descendant highlight state
                             isHighlighted &&
                               (isDark

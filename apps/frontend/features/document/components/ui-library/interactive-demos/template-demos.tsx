@@ -541,13 +541,13 @@ export function HeroSectionDemo() {
       <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
         <button
           type="button"
-          className="rounded-full bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-md hover:bg-blue-700"
+          className="rounded-[4px] border-0 bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-none hover:bg-blue-700"
         >
           Launch Portal
         </button>
         <button
           type="button"
-          className="rounded-full border border-slate-300 bg-white px-5 py-2 font-sans text-xs font-bold text-slate-700 hover:bg-slate-50"
+          className="rounded-[4px] border border-slate-300 bg-white px-5 py-2 font-sans text-xs font-bold text-slate-700 hover:bg-slate-50"
         >
           View API Specs
         </button>
@@ -673,7 +673,7 @@ export function FloatingLabelFormDemo() {
           onChange={(e) => setVal(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          className="peer w-full rounded-full border-2 border-slate-200 px-4 pt-5 pb-2 font-sans text-xs font-semibold text-slate-900 transition-colors outline-none focus:border-[#0056FF]"
+          className="peer w-full rounded-[4px] border border-slate-200 px-4 pt-5 pb-2 font-sans text-xs font-semibold text-slate-900 transition-colors outline-none focus:border-[#0056FF]"
         />
         <label
           htmlFor="student-id-field"
@@ -714,7 +714,7 @@ export function FileDropzoneDemo() {
         <button
           type="button"
           onClick={() => setUploaded((prev) => [...prev, `Medical_Record_${prev.length + 1}.pdf`])}
-          className="mt-3 rounded-full border border-slate-200 bg-white px-3 py-1 font-mono text-[10px] font-bold text-slate-700 shadow-xs hover:bg-slate-50"
+          className="mt-3 rounded-[4px] border border-slate-200 bg-white px-3 py-1 font-mono text-[10px] font-bold text-slate-700 shadow-xs hover:bg-slate-50"
         >
           Browse Files
         </button>
@@ -795,7 +795,7 @@ export function ConfettiCannonDemo() {
       <button
         type="button"
         onClick={triggerBurst}
-        className="rounded-full bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-md transition-all hover:bg-blue-700 active:scale-95"
+        className="rounded-[4px] border-0 bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-none transition-all hover:bg-blue-700 active:scale-95"
       >
         Trigger Confetti Cannon
       </button>
@@ -829,7 +829,7 @@ export function DrawerSheetDemo() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 font-sans text-xs font-bold text-slate-700 hover:border-[#0056FF]"
+        className="rounded-[4px] border border-slate-200 bg-slate-50 px-4 py-2 font-sans text-xs font-bold text-slate-700 hover:border-[#0056FF]"
       >
         {open ? 'Close Right Drawer' : 'Open Slide Drawer Sheet'}
       </button>

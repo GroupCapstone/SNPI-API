@@ -16,7 +16,7 @@ export function LibraryCard({
   return (
     <div
       className={cn(
-        'rounded-2xl border border-slate-200/80 bg-white/90 p-5 text-slate-900 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-200',
+        'w-full max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/80 bg-white/90 p-5 text-slate-900 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-200',
         interactive &&
           'cursor-pointer hover:-translate-y-1 hover:border-[#0056FF]/40 hover:bg-white hover:shadow-[0_12px_28px_rgba(0,86,255,0.08)]',
         className,

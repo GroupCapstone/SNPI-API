@@ -316,14 +316,14 @@ export function AnimatedCounterDemo() {
         <button
           type="button"
           onClick={() => setCount(count + 250)}
-          className="rounded-full bg-[#0056FF] px-3.5 py-1.5 font-sans text-xs font-bold text-white hover:bg-blue-700"
+          className="rounded-[4px] border-0 bg-[#0056FF] px-3.5 py-1.5 font-sans text-xs font-bold text-white hover:bg-blue-700"
         >
           +250 Students
         </button>
         <button
           type="button"
           onClick={() => setCount(12840)}
-          className="rounded-full border border-slate-200 px-3 py-1.5 font-sans text-xs font-semibold text-slate-700 hover:bg-slate-50"
+          className="rounded-[4px] border border-slate-200 px-3 py-1.5 font-sans text-xs font-semibold text-slate-700 hover:bg-slate-50"
         >
           Reset
         </button>

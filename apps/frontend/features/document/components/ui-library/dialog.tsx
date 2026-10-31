@@ -52,11 +52,11 @@ export function LibraryDialog({
         aria-hidden="true"
       />
 
-      {/* Dialog Surface */}
+      {/* Dialog Surface - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
       <div
         role="dialog"
         aria-modal="true"
-        className="relative z-50 w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-xl transition-all"
+        className="relative z-50 w-full max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border sm:border-slate-200 sm:max-w-lg bg-white p-6 text-slate-900 shadow-xl transition-all"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -69,7 +69,7 @@ export function LibraryDialog({
             type="button"
             onClick={() => onOpenChange(false)}
             aria-label="Close dialog"
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center text-slate-400 hover:text-slate-700"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-[4px] text-slate-400 hover:bg-slate-100 hover:text-slate-700"
           >
             <X className="size-4" />
           </button>

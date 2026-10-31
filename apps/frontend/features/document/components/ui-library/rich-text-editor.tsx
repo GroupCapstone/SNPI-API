@@ -365,7 +365,7 @@ export function RichTextEditor({
             aria-label="Bold (Ctrl+B)"
             aria-pressed={activeStates.bold}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.bold
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -383,7 +383,7 @@ export function RichTextEditor({
             aria-label="Italic (Ctrl+I)"
             aria-pressed={activeStates.italic}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.italic
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -401,7 +401,7 @@ export function RichTextEditor({
             aria-label="Underline (Ctrl+U)"
             aria-pressed={activeStates.underline}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.underline
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -419,7 +419,7 @@ export function RichTextEditor({
             aria-label="Strikethrough"
             aria-pressed={activeStates.strikeThrough}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.strikeThrough
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -439,7 +439,7 @@ export function RichTextEditor({
             aria-label="Heading 2"
             aria-pressed={activeStates.h2}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.h2
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -457,7 +457,7 @@ export function RichTextEditor({
             aria-label="Bullet list"
             aria-pressed={activeStates.insertUnorderedList}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.insertUnorderedList
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -475,7 +475,7 @@ export function RichTextEditor({
             aria-label="Numbered list"
             aria-pressed={activeStates.insertOrderedList}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.insertOrderedList
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -493,7 +493,7 @@ export function RichTextEditor({
             aria-label="Quote block"
             aria-pressed={activeStates.blockquote}
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border transition-all',
+              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
               activeStates.blockquote
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
@@ -509,7 +509,7 @@ export function RichTextEditor({
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('formatBlock', '<pre>')}
             aria-label="Code block"
-            className="flex size-7 items-center justify-center rounded-lg border border-transparent text-slate-600 transition-all hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800"
+            className="flex size-7 items-center justify-center rounded-[4px] border border-transparent text-slate-600 transition-all hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800"
           >
             <Code className="size-3.5" />
           </button>
@@ -521,7 +521,7 @@ export function RichTextEditor({
             onMouseDown={(e) => e.preventDefault()}
             onClick={handleInsertLink}
             aria-label="Insert Link (Ctrl+K)"
-            className="flex size-7 items-center justify-center rounded-lg border border-transparent text-slate-600 transition-all hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800"
+            className="flex size-7 items-center justify-center rounded-[4px] border border-transparent text-slate-600 transition-all hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800"
           >
             <LinkIcon className="size-3.5" />
           </button>
@@ -535,7 +535,7 @@ export function RichTextEditor({
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('removeFormat')}
             aria-label="Clear formatting"
-            className="flex size-7 items-center justify-center rounded-lg border border-transparent text-[11px] font-bold text-slate-500 transition-all hover:bg-slate-200/60 hover:text-slate-900 dark:hover:bg-slate-800"
+            className="flex size-7 items-center justify-center rounded-[4px] border border-transparent text-[11px] font-bold text-slate-500 transition-all hover:bg-slate-200/60 hover:text-slate-900 dark:hover:bg-slate-800"
           >
             T<span className="text-[9px] line-through">x</span>
           </button>
@@ -547,7 +547,7 @@ export function RichTextEditor({
             type="button"
             onClick={toggleHtmlView}
             className={cn(
-              'flex items-center gap-1 rounded-lg border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
+              'flex items-center gap-1 rounded-[4px] border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
               isHtmlView
                 ? 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
                 : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
@@ -666,7 +666,7 @@ export function RichTextEditorDemo() {
           <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
             Security Status:
           </span>
-          <span className="inline-flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+          <span className="inline-flex items-center rounded-[4px] border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
             Allowlist Active
           </span>
         </div>
@@ -675,7 +675,7 @@ export function RichTextEditorDemo() {
         <button
           type="button"
           onClick={simulateMaliciousPaste}
-          className="flex items-center gap-1.5 rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-xs font-bold text-red-600 transition-colors hover:bg-red-500/20"
+          className="flex items-center gap-1.5 rounded-[4px] border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-xs font-bold text-red-600 transition-colors hover:bg-red-500/20"
         >
           <ShieldCheck className="size-3.5" />
           <span>Simulate Dirty Paste (Strip Scripts)</span>

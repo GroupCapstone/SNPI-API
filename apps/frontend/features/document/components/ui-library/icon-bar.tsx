@@ -133,7 +133,7 @@ export function IconBar({
               onMouseLeave={() => setHoveredId(null)}
               onFocus={() => setFocusedIdx(idx)}
               className={cn(
-                'group relative flex h-full cursor-pointer items-center gap-2 rounded-xl px-3 transition-all duration-200 ease-out outline-none',
+                'group relative flex h-full cursor-pointer items-center gap-2 rounded-[4px] px-3 transition-all duration-200 ease-out outline-none',
                 isSelected
                   ? 'bg-white/10 text-white shadow-inner ring-1 ring-white/15'
                   : 'text-slate-400 hover:bg-white/5 hover:text-white',

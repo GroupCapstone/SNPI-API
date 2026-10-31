@@ -131,7 +131,7 @@ export function ColorContrastChecker({
   return (
     <div
       className={cn(
-        'w-full space-y-6 rounded-2xl border p-6 transition-colors',
+        'w-full space-y-6 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border p-6 transition-colors',
         isDark
           ? 'border-slate-800 bg-[#00081C] text-slate-100'
           : 'border-slate-200 bg-white text-slate-900 shadow-xs',
@@ -154,7 +154,7 @@ export function ColorContrastChecker({
         </div>
 
         {/* Big Contrast Ratio Display */}
-        <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="flex items-center gap-3 rounded-[4px] border border-slate-200 bg-slate-50/80 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-900/60">
           <div className="text-right">
             <span className="block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
               CONTRAST RATIO
@@ -166,7 +166,7 @@ export function ColorContrastChecker({
 
           <div
             className={cn(
-              'flex size-9 items-center justify-center rounded-xl font-mono text-xs font-bold text-white shadow-xs',
+              'flex size-9 items-center justify-center rounded-[4px] font-mono text-xs font-bold text-white shadow-xs',
               passNormalAAA ? 'bg-emerald-600' : passNormalAA ? 'bg-[#0056FF]' : 'bg-red-600',
             )}
           >
@@ -178,7 +178,7 @@ export function ColorContrastChecker({
       {/* Color Selectors & Swap Button */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {/* Foreground Input */}
-        <div className="space-y-2 rounded-xl border border-slate-200/80 bg-slate-50/40 p-3.5 dark:border-slate-800 dark:bg-slate-900/20">
+        <div className="space-y-2 rounded-[4px] border border-slate-200/80 bg-slate-50/40 p-3.5 dark:border-slate-800 dark:bg-slate-900/20">
           <label className="flex items-center justify-between font-mono text-xs font-bold text-slate-600 dark:text-slate-300">
             <span>Foreground (Text)</span>
             <span className="text-[11px] font-normal text-slate-400">color:</span>
@@ -188,19 +188,19 @@ export function ColorContrastChecker({
               type="color"
               value={foreground}
               onChange={(e) => setForeground(e.target.value)}
-              className="size-9 cursor-pointer rounded-lg border border-slate-200 bg-transparent p-0.5 outline-none dark:border-slate-700"
+              className="size-9 cursor-pointer rounded-[4px] border border-slate-200 bg-transparent p-0.5 outline-none dark:border-slate-700"
             />
             <input
               type="text"
               value={foreground}
               onChange={(e) => setForeground(e.target.value)}
-              className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-1.5 font-mono text-xs font-bold text-slate-800 transition-colors outline-none focus:border-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+              className="flex-1 rounded-[4px] border border-slate-200 bg-white px-3 py-1.5 font-mono text-xs font-bold text-slate-800 transition-colors outline-none focus:border-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
             />
           </div>
         </div>
 
         {/* Background Input */}
-        <div className="space-y-2 rounded-xl border border-slate-200/80 bg-slate-50/40 p-3.5 dark:border-slate-800 dark:bg-slate-900/20">
+        <div className="space-y-2 rounded-[4px] border border-slate-200/80 bg-slate-50/40 p-3.5 dark:border-slate-800 dark:bg-slate-900/20">
           <label className="flex items-center justify-between font-mono text-xs font-bold text-slate-600 dark:text-slate-300">
             <span>Background (Surface)</span>
             <span className="text-[11px] font-normal text-slate-400">background-color:</span>
@@ -210,13 +210,13 @@ export function ColorContrastChecker({
               type="color"
               value={background}
               onChange={(e) => setBackground(e.target.value)}
-              className="size-9 cursor-pointer rounded-lg border border-slate-200 bg-transparent p-0.5 outline-none dark:border-slate-700"
+              className="size-9 cursor-pointer rounded-[4px] border border-slate-200 bg-transparent p-0.5 outline-none dark:border-slate-700"
             />
             <input
               type="text"
               value={background}
               onChange={(e) => setBackground(e.target.value)}
-              className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-1.5 font-mono text-xs font-bold text-slate-800 transition-colors outline-none focus:border-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+              className="flex-1 rounded-[4px] border border-slate-200 bg-white px-3 py-1.5 font-mono text-xs font-bold text-slate-800 transition-colors outline-none focus:border-[#0056FF] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
             />
           </div>
         </div>
@@ -236,7 +236,7 @@ export function ColorContrastChecker({
                 setForeground(p.fg);
                 setBackground(p.bg);
               }}
-              className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] text-slate-600 transition-colors hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-cyan-400"
+              className="flex items-center gap-1.5 rounded-[4px] border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] text-slate-600 transition-colors hover:border-[#0056FF] hover:text-[#0056FF] dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:text-cyan-400"
             >
               <span
                 className="size-2 rounded-full border border-slate-300"
@@ -254,7 +254,7 @@ export function ColorContrastChecker({
         <button
           type="button"
           onClick={handleSwap}
-          className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 font-mono text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+          className="flex items-center gap-1.5 rounded-[4px] border border-slate-200 bg-slate-50 px-3 py-1.5 font-mono text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
         >
           <RotateCcw className="size-3" />
           <span>Swap Colors</span>
@@ -266,7 +266,7 @@ export function ColorContrastChecker({
         {/* Normal Text AA */}
         <div
           className={cn(
-            'space-y-1 rounded-xl border p-3 transition-colors',
+            'space-y-1 rounded-[4px] border p-3 transition-colors',
             passNormalAA
               ? 'border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10'
               : 'border-red-500/30 bg-red-500/5 dark:bg-red-500/10',
@@ -278,7 +278,7 @@ export function ColorContrastChecker({
             </span>
             <span
               className={cn(
-                'flex items-center gap-0.5 rounded-md px-1.5 py-0.5 font-mono text-[10px] font-bold',
+                'flex items-center gap-0.5 rounded-[4px] px-1.5 py-0.5 font-mono text-[10px] font-bold',
                 passNormalAA
                   ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
                   : 'bg-red-500/15 text-red-600 dark:text-red-400',
@@ -300,7 +300,7 @@ export function ColorContrastChecker({
         {/* Normal Text AAA */}
         <div
           className={cn(
-            'space-y-1 rounded-xl border p-3 transition-colors',
+            'space-y-1 rounded-[4px] border p-3 transition-colors',
             passNormalAAA
               ? 'border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10'
               : 'border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10',
@@ -312,7 +312,7 @@ export function ColorContrastChecker({
             </span>
             <span
               className={cn(
-                'flex items-center gap-0.5 rounded-md px-1.5 py-0.5 font-mono text-[10px] font-bold',
+                'flex items-center gap-0.5 rounded-[4px] px-1.5 py-0.5 font-mono text-[10px] font-bold',
                 passNormalAAA
                   ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
                   : 'bg-amber-500/15 text-amber-600 dark:text-amber-400',
@@ -334,7 +334,7 @@ export function ColorContrastChecker({
         {/* Large Text AA */}
         <div
           className={cn(
-            'space-y-1 rounded-xl border p-3 transition-colors',
+            'space-y-1 rounded-[4px] border p-3 transition-colors',
             passLargeAA
               ? 'border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10'
               : 'border-red-500/30 bg-red-500/5 dark:bg-red-500/10',
@@ -346,7 +346,7 @@ export function ColorContrastChecker({
             </span>
             <span
               className={cn(
-                'flex items-center gap-0.5 rounded-md px-1.5 py-0.5 font-mono text-[10px] font-bold',
+                'flex items-center gap-0.5 rounded-[4px] px-1.5 py-0.5 font-mono text-[10px] font-bold',
                 passLargeAA
                   ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
                   : 'bg-red-500/15 text-red-600 dark:text-red-400',
@@ -368,7 +368,7 @@ export function ColorContrastChecker({
         {/* Large Text AAA */}
         <div
           className={cn(
-            'space-y-1 rounded-xl border p-3 transition-colors',
+            'space-y-1 rounded-[4px] border p-3 transition-colors',
             passLargeAAA
               ? 'border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10'
               : 'border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/10',
@@ -380,7 +380,7 @@ export function ColorContrastChecker({
             </span>
             <span
               className={cn(
-                'flex items-center gap-0.5 rounded-md px-1.5 py-0.5 font-mono text-[10px] font-bold',
+                'flex items-center gap-0.5 rounded-[4px] px-1.5 py-0.5 font-mono text-[10px] font-bold',
                 passLargeAAA
                   ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
                   : 'bg-amber-500/15 text-amber-600 dark:text-amber-400',
@@ -410,7 +410,7 @@ export function ColorContrastChecker({
             backgroundColor: background,
             color: foreground,
           }}
-          className="space-y-3 rounded-2xl border border-slate-200/40 p-6 shadow-sm transition-all"
+          className="space-y-3 rounded-[4px] border border-slate-200/40 p-6 shadow-sm transition-all"
         >
           <div className="space-y-1">
             <h4 className="text-xl font-bold tracking-tight">
@@ -429,7 +429,7 @@ export function ColorContrastChecker({
                 border: `1.5px solid ${foreground}`,
                 color: foreground,
               }}
-              className="rounded-xl px-3 py-1 font-mono text-xs font-bold"
+              className="rounded-[4px] px-3 py-1 font-mono text-xs font-bold"
             >
               UI Component Border
             </span>

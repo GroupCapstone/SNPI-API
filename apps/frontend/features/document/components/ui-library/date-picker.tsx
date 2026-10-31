@@ -379,7 +379,7 @@ export function DatePicker({
           aria-controls={popoverId}
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            'flex w-full items-center justify-between gap-2.5 rounded-xl border px-3.5 py-2.5 font-sans text-xs font-medium transition-all duration-150 outline-none',
+            'flex w-full items-center justify-between gap-2.5 rounded-[4px] border px-3.5 py-2.5 font-sans text-xs font-medium transition-all duration-150 outline-none',
             'focus-visible:ring-2 focus-visible:ring-[#0056FF]',
             isOpen
               ? 'border-[#0056FF] ring-1 ring-[#0056FF]'
@@ -440,7 +440,7 @@ export function DatePicker({
           aria-modal="true"
           aria-label={isRange ? 'Date range picker' : 'Date picker'}
           className={cn(
-            'absolute left-0 z-50 mt-2 w-full min-w-[300px] rounded-2xl border p-4 shadow-xl transition-all duration-150 sm:min-w-[340px]',
+            'absolute left-0 z-50 mt-2 w-full min-w-[300px] rounded-[4px] border p-4 shadow-xl transition-all duration-150 sm:min-w-[340px]',
             isDark
               ? 'border-slate-800 bg-[#000B26] text-slate-100'
               : 'border-slate-200/90 bg-white text-slate-900',
@@ -456,7 +456,7 @@ export function DatePicker({
               disabled={!canGoPrev}
               aria-label="Previous month"
               className={cn(
-                'flex size-7 items-center justify-center rounded-lg border transition-colors',
+                'flex size-7 items-center justify-center rounded-[4px] border transition-colors',
                 canGoPrev
                   ? isDark
                     ? 'border-slate-700 bg-slate-800 text-white hover:bg-slate-700'
@@ -481,7 +481,7 @@ export function DatePicker({
               disabled={!canGoNext}
               aria-label="Next month"
               className={cn(
-                'flex size-7 items-center justify-center rounded-lg border transition-colors',
+                'flex size-7 items-center justify-center rounded-[4px] border transition-colors',
                 canGoNext
                   ? isDark
                     ? 'border-slate-700 bg-slate-800 text-white hover:bg-slate-700'
@@ -604,31 +604,31 @@ export function DatePicker({
                       className={cn(
                         'relative z-10 flex size-9 items-center justify-center font-mono text-xs font-semibold tabular-nums transition-all outline-none',
                         // 04 Range Band Capping with squared inner corners
-                        isSingleSelected && 'rounded-xl bg-[#0056FF] text-white shadow-xs',
+                        isSingleSelected && 'rounded-[4px] bg-[#0056FF] text-white shadow-xs',
                         isRangeStart &&
                           cn(
                             'bg-[#0056FF] text-white shadow-xs',
                             internalRange.end && !isRangeEnd
-                              ? 'rounded-l-xl rounded-r-none'
-                              : 'rounded-xl',
+                              ? 'rounded-l-[4px] rounded-r-none'
+                              : 'rounded-[4px]',
                           ),
                         isRangeEnd &&
                           cn(
                             'bg-[#0056FF] text-white shadow-xs',
                             internalRange.start && !isRangeStart
-                              ? 'rounded-l-none rounded-r-xl'
-                              : 'rounded-xl',
+                              ? 'rounded-l-none rounded-r-[4px]'
+                              : 'rounded-[4px]',
                           ),
                         isBetweenSelected && (isDark ? 'text-cyan-200' : 'text-cyan-900'),
                         isHoveredTarget &&
-                          'rounded-r-xl border border-dashed border-[#0056FF] bg-cyan-500/20 text-[#0056FF]',
+                          'rounded-r-[4px] border border-dashed border-[#0056FF] bg-cyan-500/20 text-[#0056FF]',
                         !isSingleSelected &&
                           !isRangeStart &&
                           !isRangeEnd &&
                           !isBetweenSelected &&
                           (isDark
-                            ? 'rounded-xl text-slate-200 hover:bg-slate-800'
-                            : 'rounded-xl text-slate-800 hover:bg-slate-100'),
+                            ? 'rounded-[4px] text-slate-200 hover:bg-slate-800'
+                            : 'rounded-[4px] text-slate-800 hover:bg-slate-100'),
                         // 07 Min/Max Bounds
                         isDisabled &&
                           'pointer-events-none cursor-not-allowed opacity-25 hover:bg-transparent',

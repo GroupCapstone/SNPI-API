@@ -23,7 +23,7 @@ export function LibraryBottomNav({ items, activeId, onSelect, className }: Libra
     <nav
       aria-label="Bottom Navigation Demo"
       className={cn(
-        'flex h-16 w-full items-center justify-around rounded-2xl border border-slate-200/80 bg-white/90 px-2 text-slate-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_12px_rgba(0,0,0,0.03)] backdrop-blur-xl',
+        'flex h-16 w-full items-center justify-around border-t border-slate-200 border-x-0 border-b-0 rounded-none bg-white/95 px-2 text-slate-800 shadow-sm backdrop-blur-xl sm:rounded-2xl sm:border sm:border-slate-200/80 sm:max-w-md sm:mx-auto',
         className,
       )}
     >
@@ -37,16 +37,16 @@ export function LibraryBottomNav({ items, activeId, onSelect, className }: Libra
             type="button"
             onClick={() => onSelect(item.id)}
             className={cn(
-              'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-xl px-3.5 py-1 text-xs font-semibold transition-all select-none focus-visible:outline-none',
+              'group relative flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-1 rounded-[4px] border-0 px-3.5 py-1 text-xs font-semibold transition-all select-none focus-visible:outline-none',
               isActive
-                ? 'bg-[#0056FF] text-white shadow-[0_2px_8px_rgba(0,86,255,0.25)]'
+                ? 'bg-[#0056FF] text-white shadow-none'
                 : 'text-slate-600 hover:bg-slate-100/60 hover:text-slate-900',
             )}
           >
             <div className="relative">
               <Icon className="size-5 shrink-0" />
               {item.badge !== undefined && (
-                <span className="absolute -top-1 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">
+                <span className="absolute -top-1 -right-2 flex h-4 min-w-[16px] items-center justify-center rounded-[4px] bg-red-600 px-1 text-[10px] font-bold text-white">
                   {item.badge}
                 </span>
               )}

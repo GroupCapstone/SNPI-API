@@ -223,7 +223,7 @@ export function OtpPinInput({
         <div className="flex items-center gap-2">
           <div
             className={cn(
-              'flex size-7 items-center justify-center rounded-lg border',
+              'flex size-7 items-center justify-center rounded-[4px] border',
               isDark
                 ? 'border-slate-700 bg-slate-800 text-cyan-400'
                 : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
@@ -242,7 +242,7 @@ export function OtpPinInput({
         {/* State Badge */}
         <span
           className={cn(
-            'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase transition-colors',
+            'inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase transition-colors',
             status === 'success'
               ? 'border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
               : status === 'error'
@@ -320,7 +320,7 @@ export function OtpPinInput({
                 disabled={status === 'success'}
                 className={cn(
                   // 01 Segmented Cells: Tabular width and fixed height
-                  'size-11 rounded-xl border text-center font-mono text-xl font-bold tabular-nums transition-all duration-150 outline-none select-none sm:size-14 sm:text-2xl',
+                  'size-11 rounded-[4px] border text-center font-mono text-xl font-bold tabular-nums transition-all duration-150 outline-none select-none sm:size-14 sm:text-2xl',
                   'focus:ring-2 focus:ring-[#0056FF]',
                   // 06 Error Shake Recolor
                   isError
@@ -360,7 +360,7 @@ export function OtpPinInput({
         {/* Interactive Testing Quick-Actions */}
         <div
           className={cn(
-            'flex flex-wrap items-center justify-center gap-2 rounded-xl border p-3 font-mono text-[11px]',
+            'flex flex-wrap items-center justify-center gap-2 rounded-[4px] border p-3 font-mono text-[11px]',
             isDark
               ? 'border-slate-800 bg-slate-900/50 text-slate-400'
               : 'border-slate-200 bg-slate-50/70 text-slate-600',
@@ -370,21 +370,21 @@ export function OtpPinInput({
           <button
             type="button"
             onClick={() => handleQuickPaste('842910')}
-            className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-bold text-emerald-600 transition-colors hover:bg-emerald-500/20 dark:text-emerald-400"
+            className="rounded-[4px] border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-bold text-emerald-600 transition-colors hover:bg-emerald-500/20 dark:text-emerald-400"
           >
             Paste 842910 (Valid)
           </button>
           <button
             type="button"
             onClick={() => handleQuickPaste('000000')}
-            className="rounded-lg border border-red-500/30 bg-red-500/10 px-2 py-0.5 font-bold text-red-600 transition-colors hover:bg-red-500/20 dark:text-red-400"
+            className="rounded-[4px] border border-red-500/30 bg-red-500/10 px-2 py-0.5 font-bold text-red-600 transition-colors hover:bg-red-500/20 dark:text-red-400"
           >
             Paste 000000 (Shake)
           </button>
           <button
             type="button"
             onClick={handleClear}
-            className="rounded-lg border border-slate-300 bg-white px-2 py-0.5 font-bold text-slate-700 transition-colors hover:text-slate-950 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+            className="rounded-[4px] border border-slate-300 bg-white px-2 py-0.5 font-bold text-slate-700 transition-colors hover:text-slate-950 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
           >
             Clear
           </button>

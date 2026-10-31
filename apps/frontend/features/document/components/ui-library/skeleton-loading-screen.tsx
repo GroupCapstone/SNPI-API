@@ -86,8 +86,8 @@ export function Skeleton({
     variant === 'circle'
       ? 'rounded-full aspect-square shrink-0'
       : variant === 'text'
-        ? 'rounded-md h-3.5 my-1'
-        : 'rounded-xl';
+        ? 'rounded-[2px] h-3.5 my-1'
+        : 'rounded-[4px]';
 
   const themeVars = isDark
     ? ({
@@ -127,7 +127,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
     return (
       <div
         className={cn(
-          'space-y-5 rounded-2xl border p-6 transition-colors',
+          'space-y-5 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border p-6 transition-colors',
           isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
         )}
       >
@@ -137,21 +137,21 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
 
           <div className="w-full flex-1 space-y-2.5">
             {/* Name bar */}
-            <Skeleton className="h-5 w-48 rounded-lg" theme={theme} />
+            <Skeleton className="h-5 w-48 rounded-[4px]" theme={theme} />
             {/* Title & Badge */}
             <div className="flex items-center gap-2">
-              <Skeleton className="h-3.5 w-32 rounded-md" theme={theme} />
-              <Skeleton className="h-3.5 w-16 rounded-full" theme={theme} />
+              <Skeleton className="h-3.5 w-32 rounded-[2px]" theme={theme} />
+              <Skeleton className="h-3.5 w-16 rounded-[4px]" theme={theme} />
             </div>
             {/* Bio lines */}
-            <Skeleton className="h-3 w-full max-w-md rounded-md" theme={theme} />
-            <Skeleton className="h-3 w-3/4 max-w-sm rounded-md" theme={theme} />
+            <Skeleton className="h-3 w-full max-w-md rounded-[2px]" theme={theme} />
+            <Skeleton className="h-3 w-3/4 max-w-sm rounded-[2px]" theme={theme} />
           </div>
 
           {/* Action buttons */}
           <div className="flex w-full shrink-0 gap-2 pt-2 sm:w-auto sm:flex-col sm:pt-0">
-            <Skeleton className="h-8 w-24 rounded-xl" theme={theme} />
-            <Skeleton className="h-8 w-24 rounded-xl" theme={theme} />
+            <Skeleton className="h-8 w-24 rounded-[4px]" theme={theme} />
+            <Skeleton className="h-8 w-24 rounded-[4px]" theme={theme} />
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
   return (
     <div
       className={cn(
-        'rounded-2xl border p-6 transition-colors',
+        'max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border p-6 transition-colors',
         isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
       )}
     >
@@ -176,7 +176,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
             <h4 className="font-sans text-base font-bold text-slate-900 dark:text-white">
               Dr. Sokha Chann
             </h4>
-            <span className="flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+            <span className="flex items-center gap-1 rounded-[4px] border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
               <ShieldCheck className="size-3" />
               <span>SUPERADMIN VERIFIED</span>
             </span>
@@ -194,13 +194,13 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
         <div className="flex w-full shrink-0 gap-2 pt-2 sm:w-auto sm:flex-col sm:pt-0">
           <button
             type="button"
-            className="rounded-xl bg-[#0056FF] px-3.5 py-1.5 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700"
+            className="rounded-[4px] bg-[#0056FF] px-3.5 py-1.5 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700"
           >
             Edit Profile
           </button>
           <button
             type="button"
-            className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-1.5 font-mono text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+            className="rounded-[4px] border border-slate-200 bg-slate-50 px-3.5 py-1.5 font-mono text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
           >
             Passbook
           </button>
@@ -362,7 +362,7 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
     return (
       <div
         className={cn(
-          'divide-y rounded-2xl border transition-colors',
+          'divide-y max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border transition-colors',
           isDark
             ? 'divide-slate-800 border-slate-800 bg-[#00081C]'
             : 'divide-slate-100 border-slate-200 bg-white shadow-xs',
@@ -371,19 +371,19 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
         {[1, 2, 3, 4].map((key) => (
           <div key={key} className="flex items-center gap-4 p-4">
             {/* Square Icon Thumbnail */}
-            <Skeleton className="size-10 shrink-0 rounded-xl" theme={theme} />
+            <Skeleton className="size-10 shrink-0 rounded-[4px]" theme={theme} />
 
             {/* Typography lines */}
             <div className="flex-1 space-y-2">
-              <Skeleton className="h-4 w-3/5 rounded-md" theme={theme} />
+              <Skeleton className="h-4 w-3/5 rounded-[2px]" theme={theme} />
               <div className="flex items-center gap-2">
-                <Skeleton className="h-3 w-20 rounded-md" theme={theme} />
-                <Skeleton className="h-3 w-16 rounded-md" theme={theme} />
+                <Skeleton className="h-3 w-20 rounded-[2px]" theme={theme} />
+                <Skeleton className="h-3 w-16 rounded-[2px]" theme={theme} />
               </div>
             </div>
 
             {/* Status Pill */}
-            <Skeleton className="h-6 w-20 shrink-0 rounded-full" theme={theme} />
+            <Skeleton className="h-6 w-20 shrink-0 rounded-[4px]" theme={theme} />
           </div>
         ))}
       </div>
@@ -394,7 +394,7 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
   return (
     <div
       className={cn(
-        'divide-y rounded-2xl border transition-colors',
+        'divide-y max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border transition-colors',
         isDark
           ? 'divide-slate-800 border-slate-800 bg-[#00081C]'
           : 'divide-slate-100 border-slate-200 bg-white shadow-xs',
@@ -403,7 +403,7 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
       {listItems.map((item, idx) => (
         <div key={idx} className="flex items-center justify-between gap-4 p-4">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-[4px] border border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
               <FileText className="size-5" />
             </div>
 
@@ -422,7 +422,7 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
             </div>
           </div>
 
-          <span className="shrink-0 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+          <span className="shrink-0 rounded-[4px] border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
             {item.status}
           </span>
         </div>
@@ -458,7 +458,7 @@ export function SkeletonLoadingScreenDemo() {
                 type="button"
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  'rounded-full px-2.5 py-0.5 font-mono text-[11px] font-bold capitalize transition-colors',
+                  'rounded-[4px] px-2.5 py-0.5 font-mono text-[11px] font-bold capitalize transition-colors',
                   activeTab === tab
                     ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400'
                     : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400',
@@ -475,7 +475,7 @@ export function SkeletonLoadingScreenDemo() {
           type="button"
           onClick={() => setIsLoaded(!isLoaded)}
           className={cn(
-            'flex items-center gap-2 rounded-xl px-4 py-2 font-mono text-xs font-bold shadow-xs transition-all active:scale-[0.98]',
+            'flex items-center gap-2 rounded-[4px] border-0 px-4 py-2 font-mono text-xs font-bold shadow-xs transition-all active:scale-[0.98]',
             isLoaded
               ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
               : 'bg-[#0056FF] text-white hover:bg-blue-700',
@@ -500,10 +500,10 @@ export function SkeletonLoadingScreenDemo() {
         </div>
 
         <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-          <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+          <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
             1.8s Ease Loop
           </span>
-          <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+          <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
             CLS = 0 Sizing
           </span>
         </div>
