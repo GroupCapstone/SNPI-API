@@ -27,3 +27,4 @@ coverage/
 *.db
 .vercel
 .env*
+.telegram-watch-cache.json
