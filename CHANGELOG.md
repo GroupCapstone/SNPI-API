@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `c445400`
+
+- Configure Vercel build dependencies and optional Linux oxide binaries
+
 ### Version 0.2.11 (31.10.2026) - `fcd71dc`
 
 - Move brand identity into document footer link with logo, 3 colors, and code color tokens
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `1342394`
 
 - Remove redundant right-sidebar TOC and line tracker from Open API page
-
-### Version 0.2.11 (31.10.2026) - `fb6aa66`
-
-- Record real-time commit checkpoint for Royal Blue brand system
 
