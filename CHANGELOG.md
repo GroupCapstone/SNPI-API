@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `39f2c5c`
+
+- Eradicate all CSS gradients, black, and gray from component library and enforce pure flat solid brand tokens
+
 ### Version 0.2.11 (31.10.2026) - `70a42c7`
 
 - Sync real-time changelog for open-api redesign
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `fcd71dc`
 
 - Move brand identity into document footer link with logo, 3 colors, and code color tokens
-
-### Version 0.2.11 (31.10.2026) - `d12d066`
-
-- Remove 23 requested components, obsolete demo code, and unused standalone files
 
