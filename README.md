@@ -72,3 +72,28 @@ npm run dev
 - Contributing: Governed by CONTRIBUTING.md
 - Code of Conduct: Governed by CODE_OF_CONDUCT.md
 - License: MIT License in LICENSE
+
+---
+
+## 5. Security & Vulnerability Remediation
+
+All security vulnerabilities, automated Dependabot alerts, and CVE resolutions are tracked in accordance with [SECURITY.md](SECURITY.md) and documented in full detail within [docs/security/security-audit-remediation-report.md](docs/security/security-audit-remediation-report.md).
+
+### Latest Remediation Log
+
+| Metric                  | Details                                                                                                                                                                               |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Vulnerability Title** | `minimatch` Denial of Service via Globparts Amplification                                                                                                                             |
+| **Advisory Reference**  | [GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249)                                                                                                              |
+| **CVE Reference**       | [CVE-2026-118764](https://nvd.nist.gov/vuln/detail/CVE-2026-118764)                                                                                                                   |
+| **CWE Classification**  | [CWE-405: Asymmetric Resource Consumption (Amplification)](https://cwe.mitre.org/data/definitions/405.html)                                                                           |
+| **Upstream Fix**        | [minimatch v11.0.1](https://github.com/isaacs/minimatch/releases/tag/v11.0.1) ([Commit 77a0f5c](https://github.com/isaacs/minimatch/commit/77a0f5c4b80bdc641c3c930a1d9edf5ad2db57f8)) |
+| **Severity**            | Moderate (CVSS 6.9)                                                                                                                                                                   |
+| **Date Opened**         | 2026-10-31 16:28:54 UTC                                                                                                                                                               |
+| **Date Closed / Fixed** | 2026-11-01 00:46:45 UTC                                                                                                                                                               |
+| **Turnaround Time**     | < 8 Hours (Same-Day Patch)                                                                                                                                                            |
+| **Alerts Resolved**     | 3 of 3 Dependabot Alerts (#1, #2, #3 Closed)                                                                                                                                          |
+| **Affected Manifests**  | `package-lock.json` (Root), `apps/frontend/package-lock.json`, `apps/backend/package-lock.json`                                                                                       |
+| **Remediation Action**  | Pinned `minimatch@11.0.3` via root `package.json` overrides across all npm workspaces                                                                                                 |
+| **Audit Verification**  | `npm audit` returns **0 vulnerabilities** across all workspaces (PASS)                                                                                                                |
+| **Detailed Report**     | [Security Audit & Remediation Report](docs/security/security-audit-remediation-report.md)                                                                                             |
