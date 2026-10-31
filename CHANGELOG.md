@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `3ed5f95`
+
+- Sync real-time changelog for navigation bar and active menu gradient redesign
+
 ### Version 0.2.11 (31.10.2026) - `308d343`
 
 - Remove right toc and enforce 100% strict brand color design palette
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `813330f`
 
 - Record real-time changelog for condensed readme
-
-### Version 0.2.11 (31.10.2026) - `c0b1893`
-
-- Condense to ultra-short summary and remove monorepo structure section
 
