@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "3ed5f95",
+    "description": "Sync real-time changelog for navigation bar and active menu gradient redesign"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "308d343",
     "description": "Remove right toc and enforce 100% strict brand color design palette"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "813330f",
     "description": "Record real-time changelog for condensed readme"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "c0b1893",
-    "description": "Condense to ultra-short summary and remove monorepo structure section"
   }
 ];
