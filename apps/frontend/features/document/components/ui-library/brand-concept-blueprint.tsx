@@ -459,9 +459,7 @@ export function BrandConceptBlueprint() {
                 </span>
                 <div>
                   <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">{item.rule}</h4>
-                  <p className="font-sans text-xs leading-relaxed text-[#334155]">
-                    {item.desc}
-                  </p>
+                  <p className="font-sans text-xs leading-relaxed text-[#334155]">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -492,9 +490,7 @@ export function BrandConceptBlueprint() {
                 </span>
                 <div>
                   <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">{item.rule}</h4>
-                  <p className="font-sans text-xs leading-relaxed text-[#334155]">
-                    {item.desc}
-                  </p>
+                  <p className="font-sans text-xs leading-relaxed text-[#334155]">{item.desc}</p>
                 </div>
               </div>
             ))}

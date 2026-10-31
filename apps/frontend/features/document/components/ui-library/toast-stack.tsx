@@ -313,7 +313,7 @@ function ToastCard({
                 </h4>
                 <span
                   className={cn(
-                    'rounded-md border px-1.5 py-0.2 font-mono text-[9px] font-bold tracking-wider uppercase',
+                    'py-0.2 rounded-md border px-1.5 font-mono text-[9px] font-bold tracking-wider uppercase',
                     config.badgeBg,
                   )}
                 >
@@ -768,11 +768,7 @@ export function ToastStackDemo() {
 
         {/* The Toast Stack Container (Inline in demo or Fixed viewport) */}
         <div className="mt-6 flex w-full justify-center sm:justify-end">
-          <ToastContainer
-            position={containerMode}
-            toasts={toasts}
-            onDismiss={dismiss}
-          />
+          <ToastContainer position={containerMode} toasts={toasts} onDismiss={dismiss} />
         </div>
       </div>
     </div>
