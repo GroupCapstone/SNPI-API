@@ -2,7 +2,24 @@
 
 import * as React from 'react';
 
-import { Check, Copy, Server, Search } from '@/components/icons';
+import {
+  Check,
+  Copy,
+  Server,
+  Search,
+  Calendar,
+  CircleAlert,
+  CircleCheck,
+  Code,
+  Layers,
+  Pause,
+  Play,
+  Radio,
+  RotateCcw,
+  ShieldCheck,
+  User,
+  ExternalLink,
+} from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import {
   GeometricButton,

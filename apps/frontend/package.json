@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:frontend": "next dev",
+    "prebuild": "node -e \"if(process.platform==='linux'&&process.arch==='x64'){try{require('@tailwindcss/oxide-linux-x64-gnu')}catch{require('child_process').execSync('npm install --no-save @tailwindcss/oxide-linux-x64-gnu@4.3.3', {stdio:'inherit'})}}\"",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",

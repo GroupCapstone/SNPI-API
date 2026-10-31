@@ -209,19 +209,19 @@ export function StatusPage404Demo() {
   const activeMeta = STATUS_DIRECTORY[selectedCode];
 
   return (
-    <div className="w-full max-w-4xl space-y-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-950">
+    <div className="w-full max-w-4xl space-y-5 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
       {/* Header Deck */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="font-sans text-xs font-bold text-slate-950 dark:text-white">
+            <h3 className="font-sans text-xs font-bold text-slate-950">
               Status Page 404 & Error Console
             </h3>
-            <span className="rounded-[4px] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] dark:bg-blue-950/60 dark:text-blue-300">
+            <span className="rounded-[4px] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
               5 ARCHETYPES
             </span>
           </div>
-          <p className="font-sans text-[11px] text-slate-500 dark:text-slate-400">
+          <p className="font-sans text-[11px] text-slate-500">
             Multi-mode brand status screens supporting 404, 403, 500, 503, and 401 with flat
             geometry.
           </p>
@@ -237,8 +237,8 @@ export function StatusPage404Demo() {
               className={cn(
                 'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-mono text-xs font-bold transition-all select-none',
                 selectedCode === sc.code
-                  ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
               )}
             >
               {sc.code}
@@ -259,30 +259,26 @@ export function StatusPage404Demo() {
               className={cn(
                 'flex cursor-pointer flex-col justify-between rounded-xl border p-2.5 text-left transition-all select-none',
                 isSelected
-                  ? 'border-[#0056FF] bg-[#EFF5FF]/80 ring-1 ring-[#0056FF]/30 dark:border-blue-500 dark:bg-blue-950/40'
-                  : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40 dark:hover:bg-slate-900',
+                  ? 'border-[#0056FF] bg-[#EFF5FF]/80 ring-1 ring-[#0056FF]/30'
+                  : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
               )}
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[9px] font-bold text-[#0056FF] dark:text-blue-300">
-                  {arch.tag}
-                </span>
+                <span className="font-mono text-[9px] font-bold text-[#0056FF]">{arch.tag}</span>
                 {isSelected && <span className="h-1.5 w-1.5 rounded-[1px] bg-[#0056FF]" />}
               </div>
-              <div className="mt-1 font-sans text-xs font-bold text-slate-900 dark:text-white">
-                {arch.label}
-              </div>
+              <div className="mt-1 font-sans text-xs font-bold text-slate-900">{arch.label}</div>
             </button>
           );
         })}
       </div>
 
       {/* Telemetry Status Strip */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-slate-50 px-3 py-2 font-mono text-[10px] text-slate-600 dark:bg-slate-900/60 dark:text-slate-400">
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-100 bg-[#F8FAFC] px-3 py-2 font-mono text-[10px] text-slate-600">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-[1px] bg-[#0056FF]" />
-            <span className="font-bold text-slate-900 dark:text-white">CODE {selectedCode}</span>
+            <span className="font-bold text-slate-900">CODE {selectedCode}</span>
           </div>
           <span className="opacity-30">|</span>
           <span className="font-semibold text-[#0056FF] uppercase">{activeMeta.title}</span>
@@ -293,7 +289,7 @@ export function StatusPage404Demo() {
       </div>
 
       {/* Live Component Preview */}
-      <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
+      <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-2xs">
         <StatusPage404
           mode={selectedMode}
           statusCode={selectedCode}
@@ -304,11 +300,9 @@ export function StatusPage404Demo() {
       </div>
 
       {/* Usage Specification Callout */}
-      <div className="rounded-lg border border-slate-200/80 bg-slate-50/60 p-3.5 font-sans text-xs text-slate-600 dark:border-slate-800 dark:bg-slate-900/30 dark:text-slate-400">
-        <div className="font-bold text-slate-900 dark:text-slate-200">
-          Drop-in Implementation Pattern:
-        </div>
-        <div className="mt-1 font-mono text-[11px] text-[#0056FF] dark:text-blue-300">
+      <div className="rounded-lg border border-slate-200/80 bg-[#F8FAFC] p-3.5 font-sans text-xs text-slate-600">
+        <div className="font-bold text-slate-900">Drop-in Implementation Pattern:</div>
+        <div className="mt-1 font-mono text-[11px] text-[#0056FF]">
           import &#123; StatusPage404 &#125; from
           &apos;@/features/document/components/ui-library&apos;;
         </div>

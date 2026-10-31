@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `02011a6`
+
+- Record Hook Sidebar implementation and Rail TOC fixes
+
 ### Version 0.2.11 (31.10.2026) - `a50eee9`
 
 - Implement Hook Sidebar dashed spring rail and fix Rail TOC scroll tracking
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `7d5867c`
 
 - Align 3-tab cyber armor navigation dock with uppercase labels, code changelog icon, and glowing active underline
-
-### Version 0.2.11 (31.10.2026) - `1bb47eb`
-
-- Remove 15 specified components and redesign 10 core components with zero dark mode, bare icons, and rounded-[4px] standard
 
