@@ -430,25 +430,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
     };
   }, []);
 
-  // Filtered classes for read-only table
-  const filteredClasses = React.useMemo(() => {
-    return SAMPLE_CLASSES_CATALOG.filter((item) => {
-      const matchStatus =
-        classFilterStatus === 'All' ||
-        item.status.toLowerCase() === classFilterStatus.toLowerCase();
-      if (!matchStatus) return false;
-      if (!classSearch.trim()) return true;
-      const q = classSearch.toLowerCase().trim();
-      return (
-        item.name.toLowerCase().includes(q) ||
-        item.code.toLowerCase().includes(q) ||
-        item.instructor.toLowerCase().includes(q) ||
-        item.department.toLowerCase().includes(q) ||
-        item.room.toLowerCase().includes(q)
-      );
-    });
-  }, [classSearch, classFilterStatus]);
-
   return (
     <div ref={rootRef} className="min-h-screen w-full bg-[#FFFFFF] text-[#0A1A4A]">
       <div className="mx-auto flex max-w-7xl items-start gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
@@ -558,162 +539,146 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 2: 4 CORE SERVICES OVERVIEW (SCREEN TWO ON MOBILE)        */}
           {/* ----------------------------------------------------------------- */}
-          <section id="available-services" className="scroll-mt-24 space-y-4 pt-4 sm:pt-6">
+          <section id="available-services" className="scroll-mt-24 space-y-3 pt-4 sm:pt-6">
             <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-2">
-                <span className="flex size-2 rounded-full bg-[#0056FF]" />
-                <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
-                  Available Services & Endpoints
-                </span>
-              </div>
-              <span className="rounded-full bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
-                4 Core Services
+              <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
+                Available Services & Endpoints
               </span>
+              <span className="text-[11px] font-medium text-[#0A1A4A]/60">4 Core Services</span>
             </div>
 
-            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
-              {/* Card 01: Campus News & Feeds */}
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
+              {/* Card 01: Campus Announcements & Feeds */}
               <button
                 onClick={() => scrollToSection('public-feeds')}
-                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
               >
-                {/* Top Row: Icon + Protocol Pill + Arrow */}
-                <div className="flex items-center justify-between">
-                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <Radio className="size-5" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
-                      RSS 2.0 & JSON
-                    </span>
-                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <Radio className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          01 · Feeds
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          RSS 2.0 & JSON
+                        </span>
+                      </div>
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Campus News & RSS Feeds
+                      </h3>
                     </div>
                   </div>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  </div>
                 </div>
 
-                {/* Middle: Title & Micro-description */}
-                <div className="mt-4 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-[#0056FF]">01</span>
-                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
-                      Campus News & RSS Feeds
-                    </h3>
-                  </div>
-                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
-                    Live institutional announcements and campus alerts.
-                  </p>
-                </div>
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Live announcements and emergency alerts.
+                </p>
 
-                {/* Bottom: Dedicated Route Capsule Bar */}
-                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
-                  <div className="flex min-w-0 items-center gap-2">
-                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
-                      GET
-                    </span>
-                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
-                      /public/rss/announcements.xml
-                    </span>
-                  </div>
-                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
-                    5m Cache
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">
+                    GET /public/rss/announcements.xml
                   </span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">5m Cache</span>
                 </div>
               </button>
 
               {/* Card 02: Class Roster & Catalog */}
               <button
-                onClick={() => scrollToSection('class-catalog-api')}
-                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
+                onClick={() => handleCopy('https://api.snp.edu.kh/api/v1/classes', 'card-classes')}
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
               >
-                {/* Top Row: Icon + Protocol Pill + Arrow */}
-                <div className="flex items-center justify-between">
-                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <Layers className="size-5" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
-                      REST API
-                    </span>
-                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <Layers className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          02 · Catalog
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          REST API
+                        </span>
+                      </div>
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Class Roster & Catalog
+                      </h3>
                     </div>
                   </div>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    {copiedId === 'card-classes' ? (
+                      <Check className="size-3.5" />
+                    ) : (
+                      <Copy className="size-3.5 transition-transform group-hover:scale-110" />
+                    )}
+                  </div>
                 </div>
 
-                {/* Middle: Title & Micro-description */}
-                <div className="mt-4 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-[#0056FF]">02</span>
-                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
-                      Class Roster & Catalog
-                    </h3>
-                  </div>
-                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
-                    Active course schedules and live seat quotas.
-                  </p>
-                </div>
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Active course schedules and live seat quotas.
+                </p>
 
-                {/* Bottom: Dedicated Route Capsule Bar */}
-                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
-                  <div className="flex min-w-0 items-center gap-2">
-                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
-                      GET
-                    </span>
-                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
-                      /api/v1/classes
-                    </span>
-                  </div>
-                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
-                    Live Seats
-                  </span>
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">GET /api/v1/classes</span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">Live Seats</span>
                 </div>
               </button>
 
               {/* Card 03: Certificate Ledger API */}
               <button
-                onClick={() => scrollToSection('certificate-ledger-api')}
-                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
+                onClick={() =>
+                  handleCopy(
+                    'https://api.snp.edu.kh/api/v1/reports/certificates/verify/:code',
+                    'card-certs',
+                  )
+                }
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
               >
-                {/* Top Row: Icon + Protocol Pill + Arrow */}
-                <div className="flex items-center justify-between">
-                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <ShieldCheck className="size-5" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
-                      SHA-256 Ledger
-                    </span>
-                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ShieldCheck className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          03 · Ledger
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          SHA-256 Ledger
+                        </span>
+                      </div>
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Certificate Verification
+                      </h3>
                     </div>
                   </div>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    {copiedId === 'card-certs' ? (
+                      <Check className="size-3.5" />
+                    ) : (
+                      <Copy className="size-3.5 transition-transform group-hover:scale-110" />
+                    )}
+                  </div>
                 </div>
 
-                {/* Middle: Title & Micro-description */}
-                <div className="mt-4 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-[#0056FF]">03</span>
-                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
-                      Certificate Verification
-                    </h3>
-                  </div>
-                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
-                    Tamper-proof student diploma validation.
-                  </p>
-                </div>
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Tamper-proof student diploma validation.
+                </p>
 
-                {/* Bottom: Dedicated Route Capsule Bar */}
-                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
-                  <div className="flex min-w-0 items-center gap-2">
-                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
-                      GET
-                    </span>
-                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
-                      /reports/certificates/verify/:code
-                    </span>
-                  </div>
-                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">
+                    GET /reports/certificates/verify/:code
+                  </span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
                     Proof Verified
                   </span>
                 </div>
@@ -722,47 +687,41 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               {/* Card 04: Real-Time SSE Stream */}
               <button
                 onClick={() => scrollToSection('realtime-stream')}
-                className="group relative flex w-full flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF]/40 hover:shadow-md active:scale-[0.99]"
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
               >
-                {/* Top Row: Icon + Protocol Pill + Arrow */}
-                <div className="flex items-center justify-between">
-                  <div className="flex size-11 items-center justify-center rounded-xl border border-[#CAD3F5]/80 bg-[#EFF5FF] text-[#0056FF] shadow-2xs transition-all group-hover:scale-105 group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <Zap className="size-5" />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs">
-                      HTTP/2 SSE
-                    </span>
-                    <div className="flex size-8 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] shadow-2xs transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <Zap className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          04 · Stream
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          HTTP/2 SSE
+                        </span>
+                      </div>
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Real-Time SSE Stream
+                      </h3>
                     </div>
                   </div>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  </div>
                 </div>
 
-                {/* Middle: Title & Micro-description */}
-                <div className="mt-4 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black text-[#0056FF]">04</span>
-                    <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
-                      Real-Time SSE Stream
-                    </h3>
-                  </div>
-                  <p className="text-xs font-medium text-[#0A1A4A]/70 truncate">
-                    Instant push events with zero polling.
-                  </p>
-                </div>
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Instant push events with zero polling.
+                </p>
 
-                {/* Bottom: Dedicated Route Capsule Bar */}
-                <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5]/70 bg-[#EFF5FF] px-3 py-2 transition-colors group-hover:bg-[#E3E7FC]/60">
-                  <div className="flex min-w-0 items-center gap-2">
-                    <span className="shrink-0 rounded bg-[#0056FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-white uppercase">
-                      GET
-                    </span>
-                    <span className="truncate font-mono text-[11px] font-semibold text-[#0A1A4A]">
-                      /api/v1/stream/events
-                    </span>
-                  </div>
-                  <span className="shrink-0 font-mono text-[10px] font-bold text-[#0056FF]">
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">
+                    GET /api/v1/stream/events
+                  </span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
                     Sub-50ms Latency
                   </span>
                 </div>
@@ -881,324 +840,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           </section>
 
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 3: CLASS ROSTER & CATALOG REST API */}
-          {/* ----------------------------------------------------------------- */}
-          <section id="class-catalog-api" className="space-y-4 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-1">
-              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                Course Catalog
-              </span>
-              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
-                Class Roster & Catalog REST API
-              </h2>
-              <p className="text-xs font-medium text-[#0A1A4A]/75">
-                Real-time public courses, instructor schedules, and live seat counts across
-                campuses.
-              </p>
-            </div>
-
-            {/* Endpoint Bar */}
-            <div className="flex flex-col gap-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
-              <div className="flex items-center gap-2">
-                <span className="rounded bg-[#0056FF] px-2 py-0.5 text-xs font-bold text-white">
-                  GET
-                </span>
-                <span className="truncate font-mono text-xs font-bold text-[#0A1A4A]">
-                  /api/v1/classes?branch=&lt;BRANCH_ID&gt;&amp;status=open
-                </span>
-              </div>
-
-              <button
-                onClick={() =>
-                  handleCopy(
-                    'curl -X GET "https://api.snp.edu.kh/api/v1/classes?branch=BR-01&status=open" -H "Accept: application/json"',
-                    'copy-class-curl',
-                  )
-                }
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
-              >
-                {copiedId === 'copy-class-curl' ? (
-                  <>
-                    <Check className="h-3.5 w-3.5" />
-                    <span>Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3.5 w-3.5" />
-                    <span>Copy cURL</span>
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Display-Only Filter & Table */}
-            <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
-                <div className="relative w-full sm:w-64">
-                  <Search className="absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#0056FF]" />
-                  <input
-                    type="text"
-                    value={classSearch}
-                    onChange={(e) => setClassSearch(e.target.value)}
-                    placeholder="Search courses, teachers..."
-                    className="w-full rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] py-1.5 pr-3 pl-8 text-xs text-[#0A1A4A] placeholder-[#0A1A4A]/50 focus:border-[#0056FF] focus:outline-none"
-                  />
-                </div>
-
-                <div className="flex items-center gap-1 self-start sm:self-auto">
-                  {['All', 'Open', 'Filling Fast', 'Waitlist'].map((status) => (
-                    <button
-                      key={status}
-                      onClick={() => setClassFilterStatus(status)}
-                      className={cn(
-                        'rounded-lg border px-2 py-0.5 text-xs font-semibold transition-colors',
-                        classFilterStatus === status
-                          ? 'border-[#0056FF] bg-[#0056FF] text-[#FFFFFF]'
-                          : 'border-[#CAD3F5] bg-[#FFFFFF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
-                      )}
-                    >
-                      {status}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Display-Only Table */}
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-left">
-                  <thead>
-                    <tr className="border-b border-[#CAD3F5] bg-[#FFFFFF] text-[11px] font-bold tracking-wider text-[#0056FF] uppercase">
-                      <th className="px-4 py-2.5">Code / Dept</th>
-                      <th className="px-4 py-2.5">Course Title & Instructor</th>
-                      <th className="px-4 py-2.5">Schedule</th>
-                      <th className="px-4 py-2.5">Seats</th>
-                      <th className="px-4 py-2.5 text-right">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#CAD3F5] text-xs font-medium text-[#0A1A4A]">
-                    {filteredClasses.map((item) => {
-                      const capacityPercent = Math.min(
-                        100,
-                        Math.round((item.enrolled / item.capacity) * 100),
-                      );
-                      return (
-                        <tr key={item.id} className="transition-colors hover:bg-[#EFF5FF]">
-                          <td className="px-4 py-3">
-                            <span className="block font-mono font-bold text-[#0056FF]">
-                              {item.code}
-                            </span>
-                            <span className="text-[11px] text-[#0A1A4A]/70">{item.department}</span>
-                          </td>
-                          <td className="max-w-xs px-4 py-3">
-                            <span className="block font-bold">{item.name}</span>
-                            <span className="text-[11px] text-[#0A1A4A]/70">{item.instructor}</span>
-                          </td>
-                          <td className="px-4 py-3">
-                            <span className="block">{item.schedule}</span>
-                            <span className="text-[11px] text-[#0A1A4A]/70">{item.room}</span>
-                          </td>
-                          <td className="w-32 px-4 py-3">
-                            <div className="mb-1 flex items-center justify-between font-mono text-[11px]">
-                              <span>
-                                {item.enrolled} / {item.capacity}
-                              </span>
-                              <span>{capacityPercent}%</span>
-                            </div>
-                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#E3E7FC]">
-                              <div
-                                className="h-full rounded-full bg-[#0056FF] transition-all"
-                                style={{ width: `${capacityPercent}%` }}
-                              />
-                            </div>
-                          </td>
-                          <td className="px-4 py-3 text-right">
-                            <span
-                              className={cn(
-                                'rounded border px-2 py-0.5 text-[11px] font-bold',
-                                item.status === 'Open'
-                                  ? 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
-                                  : item.status === 'Filling Fast'
-                                    ? 'border-[#CAD3F5] bg-[#EFF5FF] text-[#2277FF]'
-                                    : 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A]',
-                              )}
-                            >
-                              {item.status}
-                            </span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {/* Code Snippet Box */}
-            <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:p-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  Fetch Class Catalog
-                </span>
-                <div className="flex items-center gap-1 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-0.5">
-                  <button
-                    onClick={() => setClassCodeLanguage('curl')}
-                    className={cn(
-                      'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
-                      classCodeLanguage === 'curl'
-                        ? 'bg-[#0056FF] text-white'
-                        : 'text-[#0A1A4A] hover:text-[#0056FF]',
-                    )}
-                  >
-                    cURL
-                  </button>
-                  <button
-                    onClick={() => setClassCodeLanguage('typescript')}
-                    className={cn(
-                      'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
-                      classCodeLanguage === 'typescript'
-                        ? 'bg-[#0056FF] text-white'
-                        : 'text-[#0A1A4A] hover:text-[#0056FF]',
-                    )}
-                  >
-                    TypeScript
-                  </button>
-                  <button
-                    onClick={() => setClassCodeLanguage('python')}
-                    className={cn(
-                      'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
-                      classCodeLanguage === 'python'
-                        ? 'bg-[#0056FF] text-white'
-                        : 'text-[#0A1A4A] hover:text-[#0056FF]',
-                    )}
-                  >
-                    Python
-                  </button>
-                </div>
-              </div>
-
-              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
-                {classCodeLanguage === 'curl' &&
-                  `curl -X GET "https://api.snp.edu.kh/api/v1/classes?branch=BR-01&status=open" \\
-  -H "Accept: application/json"`}
-                {classCodeLanguage === 'typescript' &&
-                  `const res = await fetch('https://api.snp.edu.kh/api/v1/classes?branch=BR-01', {
-  headers: { 'Accept': 'application/json' },
-  next: { revalidate: 60 }
-});
-const { data } = await res.json();`}
-                {classCodeLanguage === 'python' &&
-                  `import requests
-res = requests.get('https://api.snp.edu.kh/api/v1/classes', params={'branch': 'BR-01'})
-classes = res.json().get('data', {}).get('classes', [])`}
-              </pre>
-            </div>
-          </section>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* SECTION 4: CERTIFICATE LEDGER API (ADR-0006) */}
-          {/* ----------------------------------------------------------------- */}
-          <section id="certificate-ledger-api" className="space-y-4 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-1">
-              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                Cryptographic Ledger
-              </span>
-              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
-                Certificate Ledger Verification API
-              </h2>
-              <p className="text-xs font-medium text-[#0A1A4A]/75">
-                ADR-0006 SHA-256 tamper-proof diploma and transcript verification.
-              </p>
-            </div>
-
-            {/* Verification Specimen & Interactive Explorer */}
-            <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex flex-col gap-2 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
-                <div className="flex items-center gap-2">
-                  <span className="rounded bg-[#0056FF] px-2 py-0.5 text-xs font-bold text-white">
-                    GET
-                  </span>
-                  <span className="truncate font-mono text-xs font-bold text-[#0A1A4A]">
-                    /api/v1/reports/certificates/verify/:code
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-1 self-start sm:self-auto">
-                  <button
-                    onClick={() => setVerifyStatusTab('valid')}
-                    className={cn(
-                      'rounded-lg border px-2.5 py-0.5 text-xs font-semibold transition-colors',
-                      verifyStatusTab === 'valid'
-                        ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                        : 'border-[#CAD3F5] bg-[#FFFFFF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
-                    )}
-                  >
-                    Valid (200 OK)
-                  </button>
-                  <button
-                    onClick={() => setVerifyStatusTab('tampered')}
-                    className={cn(
-                      'rounded-lg border px-2.5 py-0.5 text-xs font-semibold transition-colors',
-                      verifyStatusTab === 'tampered'
-                        ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                        : 'border-[#CAD3F5] bg-[#FFFFFF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
-                    )}
-                  >
-                    Tampered (409)
-                  </button>
-                </div>
-              </div>
-
-              <div className="p-3.5 sm:p-4">
-                <pre className="max-h-60 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
-                  {verifyStatusTab === 'valid'
-                    ? JSON.stringify(
-                        {
-                          success: true,
-                          verified: true,
-                          status: 'COMMITTED_TAMPER_PROOF',
-                          certificate: {
-                            code: 'SNPI-2026-CS-8891',
-                            studentName: 'Sokha Chan',
-                            program: 'Bachelor of Computer Science',
-                            graduationDate: '2026-08-15',
-                            contentHash:
-                              '0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069',
-                            merkleRoot:
-                              '0x3a4f89d812b186b245c3b9dc9081e55dfc2d4b1fa3d677284addd200126d7781',
-                            issuer: 'SNP Institute Office of the Registrar',
-                          },
-                        },
-                        null,
-                        2,
-                      )
-                    : JSON.stringify(
-                        {
-                          success: false,
-                          verified: false,
-                          status: 'TAMPER_DETECTED',
-                          certificate: {
-                            code: 'SNPI-2026-CS-8891',
-                            computedHash:
-                              '0x992cb8311a3fe40081d5fbc74619d83ea74fc2194b15093721867123984ab104',
-                            ledgerHash:
-                              '0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069',
-                          },
-                          error: {
-                            code: 'HASH_MISMATCH',
-                            message:
-                              'Dynamic SHA-256 payload does not match anchored ledger record.',
-                          },
-                        },
-                        null,
-                        2,
-                      )}
-                </pre>
-              </div>
-            </div>
-          </section>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* SECTION 5: REAL-TIME SSE STREAM */}
+          {/* SECTION 4: REAL-TIME SSE STREAM */}
           {/* ----------------------------------------------------------------- */}
           <section id="realtime-stream" className="space-y-4 border-t border-[#CAD3F5] pt-8">
             <div className="space-y-1">
@@ -1283,67 +925,7 @@ sse.addEventListener('class.seat_reserved', (event) => {
           </section>
 
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 6: BACKEND REST API DIRECTORY */}
-          {/* ----------------------------------------------------------------- */}
-          <section id="rest-api-directory" className="space-y-4 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-1">
-              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                Directory
-              </span>
-              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
-                Backend REST API Directory
-              </h2>
-              <p className="text-xs font-medium text-[#0A1A4A]/75">
-                Summary of public syndication, health, ledger verification, and streaming endpoints.
-              </p>
-            </div>
-
-            {/* Endpoints Table */}
-            <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse text-left">
-                  <thead>
-                    <tr className="border-b border-[#CAD3F5] bg-[#EFF5FF] text-[11px] font-bold tracking-wider text-[#0056FF] uppercase">
-                      <th className="px-4 py-2.5">Method & Route</th>
-                      <th className="px-4 py-2.5">Scope</th>
-                      <th className="px-4 py-2.5">Rate Limit</th>
-                      <th className="px-4 py-2.5">Cache</th>
-                      <th className="px-4 py-2.5">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-[#CAD3F5] text-xs font-medium text-[#0A1A4A]">
-                    {BACKEND_PUBLIC_ENDPOINTS.map((endpoint) => (
-                      <tr key={endpoint.path} className="transition-colors hover:bg-[#EFF5FF]/60">
-                        <td className="px-4 py-2.5 font-mono">
-                          <span className="mr-2 inline-block rounded bg-[#E3E7FC] px-1.5 py-0.5 text-[10px] font-bold text-[#0056FF]">
-                            {endpoint.method}
-                          </span>
-                          <span className="font-semibold">{endpoint.path}</span>
-                        </td>
-                        <td className="px-4 py-2.5">
-                          <span className="rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2 py-0.5 text-[11px] text-[#0A1A4A]">
-                            {endpoint.scope}
-                          </span>
-                        </td>
-                        <td className="px-4 py-2.5 font-mono text-[11px] text-[#0056FF]">
-                          {endpoint.rateLimit}
-                        </td>
-                        <td className="px-4 py-2.5 font-mono text-[11px] text-[#0A1A4A]/70">
-                          {endpoint.cacheControl}
-                        </td>
-                        <td className="px-4 py-2.5 text-[11px] text-[#0A1A4A]/80">
-                          {endpoint.description}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* SECTION 7: RELEASES */}
+          {/* SECTION 5: RELEASES */}
           {/* ----------------------------------------------------------------- */}
           <section id="changelogs" className="space-y-3 border-t border-[#CAD3F5] pt-8">
             <div className="flex items-center justify-between">
