@@ -338,7 +338,7 @@ const GUIDE_NAV_ITEMS = [
 ];
 
 // ============================================================================
-// MAIN COMPONENT: OPEN API & SYNDICATION GUIDE (PSYCHOLOGICAL READING HERO)
+// MAIN COMPONENT: OPEN API & SYNDICATION GUIDE (MOBILE-FIRST HOOK HERO)
 // ============================================================================
 
 export function OpenApiView({ initialSection }: { initialSection?: string } = {}) {
@@ -448,9 +448,9 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
 
   return (
     <div ref={rootRef} className="min-h-screen w-full bg-[#FFFFFF] text-[#0A1A4A]">
-      <div className="mx-auto flex max-w-7xl items-start gap-8 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-start gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         {/* =================================================================== */}
-        {/* MINIMAL LEFT NAVIGATION (7 CLEAN ANCHORS) */}
+        {/* MINIMAL LEFT NAVIGATION (DESKTOP ONLY) */}
         {/* =================================================================== */}
         <aside className="sticky top-28 hidden w-60 shrink-0 space-y-4 self-start md:block">
           <div className="rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 shadow-xs">
@@ -500,219 +500,283 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
         </aside>
 
         {/* =================================================================== */}
-        {/* MAIN GUIDE CONTENT — PSYCHOLOGICAL READING OPTIMIZED */}
+        {/* MAIN GUIDE CONTENT — MOBILE-FIRST WELCOME & HOOK */}
         {/* =================================================================== */}
-        <main className="max-w-5xl min-w-0 flex-1 space-y-10 pb-24">
+        <main className="max-w-5xl min-w-0 flex-1 space-y-8 pb-24 sm:space-y-10">
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 1: PSYCHOLOGICAL READING HERO (SIMPLE, NO CLUTTER) */}
+          {/* SECTION 1: WELCOMING MOBILE HERO HOOK */}
           {/* ----------------------------------------------------------------- */}
-          <section id="open-api-head" className="space-y-6 pt-2">
-            {/* Header: Minimal Identity + Punchy 1-Line Scope */}
-            <div className="space-y-2 border-b border-[#CAD3F5] pb-5">
+          <section id="open-api-head" className="space-y-4 pt-1 sm:space-y-6">
+            {/* The Integrated Welcome & Hook Card */}
+            <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF] p-4.5 sm:p-7 shadow-xs">
+              {/* Top Context & Welcome Badge */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-0.5 text-[11px] font-bold text-[#0056FF] uppercase">
-                  <ShieldCheck className="h-3.5 w-3.5" />
-                  Public API · Read Only
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1 text-xs font-bold text-[#0056FF] shadow-xs">
+                  <Radio className="size-3.5 text-[#0056FF]" />
+                  <span>SNP Public Developer Hub</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 text-[11px] font-mono text-[#0056FF]">
-                  v0.2.12 Active
+                <span className="inline-flex items-center rounded-full bg-[#E3E7FC] px-2.5 py-1 text-[11px] font-bold text-[#0056FF]">
+                  Free Public Access
                 </span>
               </div>
 
-              <h1 className="text-3xl font-extrabold tracking-tight text-[#0A1A4A] sm:text-4xl">
-                Open API & Syndication
+              {/* Main Welcoming Headline */}
+              <h1 className="mt-3 text-2xl font-black tracking-tight text-[#0A1A4A] sm:text-3xl lg:text-4xl">
+                Welcome to SNP Open API
               </h1>
 
-              <p className="text-sm font-medium text-[#0A1A4A]/75">
-                Public feeds, course catalog, and cryptographic ledger verification.
+              {/* Simple Hook: What this page is for */}
+              <p className="mt-2 text-xs leading-relaxed font-medium text-[#0A1A4A]/80 sm:text-sm sm:leading-relaxed">
+                This page gives you direct, open access to live campus data. Use our public REST endpoints and syndication feeds to integrate announcements, course schedules, and certificate verification into your apps — no login, tokens, or API keys required.
               </p>
+
+              {/* 3 Simple Value Chips */}
+              <div className="mt-3.5 flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0A1A4A]">
+                  <Check className="size-3 text-[#0056FF]" />
+                  <span>No API Key Required</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0A1A4A]">
+                  <Check className="size-3 text-[#0056FF]" />
+                  <span>Live Campus Feeds</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0A1A4A]">
+                  <Check className="size-3 text-[#0056FF]" />
+                  <span>Tamper-Proof Verification</span>
+                </div>
+              </div>
+
+              {/* Mobile-Optimized Instant Base URL Bar */}
+              <div className="mt-4.5 flex flex-col gap-2 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-2.5 sm:flex-row sm:items-center sm:justify-between sm:p-3">
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="shrink-0 rounded bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] font-bold text-white uppercase">
+                    BASE API
+                  </span>
+                  <span className="truncate font-mono text-xs font-bold text-[#0A1A4A]">
+                    https://api.snp.edu.kh/api/v1
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 border-t border-[#CAD3F5]/60 pt-2 sm:border-t-0 sm:pt-0">
+                  <span className="text-[11px] font-semibold text-[#0056FF]">
+                    HTTP/2 · Public REST
+                  </span>
+                  <button
+                    onClick={() => handleCopy('https://api.snp.edu.kh/api/v1', 'base-url')}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 text-xs font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
+                  >
+                    {copiedId === 'base-url' ? (
+                      <>
+                        <Check className="size-3.5 text-[#0056FF]" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="size-3.5 text-[#0056FF]" />
+                        <span>Copy URL</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Instant Gateway Anchor Bar (Immediate Orientation for Developers) */}
-            <div className="flex flex-col gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between sm:p-4">
-              <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
-                <span className="rounded bg-[#0056FF] px-2 py-0.5 font-bold text-white">
-                  BASE URL
+            {/* 4 Core Services: Tactile Mobile Cards */}
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between px-1">
+                <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
+                  Available Services & Endpoints
                 </span>
-                <span className="font-bold text-[#0A1A4A]">
-                  https://api.snp.edu.kh/api/v1
+                <span className="text-[11px] font-medium text-[#0A1A4A]/60">
+                  4 Core Services
                 </span>
               </div>
 
-              <div className="flex items-center gap-2 self-end sm:self-auto">
-                <span className="rounded border border-[#CAD3F5] bg-white px-2 py-0.5 text-[11px] font-medium text-[#0A1A4A]">
-                  Zero Auth Required
-                </span>
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
+                {/* Card 01: Campus Announcements & Feeds */}
                 <button
-                  onClick={() => handleCopy('https://api.snp.edu.kh/api/v1', 'base-url')}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-white px-3 py-1 text-xs font-semibold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
+                  onClick={() => scrollToSection('public-feeds')}
+                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
                 >
-                  {copiedId === 'base-url' ? (
-                    <>
-                      <Check className="h-3.5 w-3.5" />
-                      <span>Copied</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-3.5 w-3.5" />
-                      <span>Copy Base</span>
-                    </>
-                  )}
+                  <div className="flex w-full items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                        <Radio className="size-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                            01 · Feeds
+                          </span>
+                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
+                            RSS 2.0 & JSON
+                          </span>
+                        </div>
+                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                          Campus News & RSS Feeds
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                    Live institutional announcements, urgent emergency alerts, and academic milestones.
+                  </p>
+
+                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                    <span className="font-mono text-[11px] text-[#0056FF]">
+                      GET /public/rss/announcements.xml
+                    </span>
+                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                      5m Cache
+                    </span>
+                  </div>
+                </button>
+
+                {/* Card 02: Class Roster & Catalog */}
+                <button
+                  onClick={() => scrollToSection('class-catalog-api')}
+                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+                >
+                  <div className="flex w-full items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                        <Layers className="size-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                            02 · Catalog
+                          </span>
+                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
+                            REST API
+                          </span>
+                        </div>
+                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                          Class Roster & Catalog
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                    Query active courses, schedules, instructor details, and real-time available seats.
+                  </p>
+
+                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                    <span className="font-mono text-[11px] text-[#0056FF]">
+                      GET /api/v1/classes
+                    </span>
+                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                      Live Seats
+                    </span>
+                  </div>
+                </button>
+
+                {/* Card 03: Certificate Ledger API */}
+                <button
+                  onClick={() => scrollToSection('certificate-ledger-api')}
+                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+                >
+                  <div className="flex w-full items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                        <ShieldCheck className="size-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                            03 · Ledger
+                          </span>
+                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
+                            SHA-256 Ledger
+                          </span>
+                        </div>
+                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                          Certificate Verification
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                    Instantly verify student degrees with tamper-proof ADR-0006 cryptographic ledger proofs.
+                  </p>
+
+                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                    <span className="font-mono text-[11px] text-[#0056FF]">
+                      GET /reports/certificates/verify/:code
+                    </span>
+                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                      Proof Verified
+                    </span>
+                  </div>
+                </button>
+
+                {/* Card 04: Real-Time SSE Stream */}
+                <button
+                  onClick={() => scrollToSection('realtime-stream')}
+                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+                >
+                  <div className="flex w-full items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                        <Zap className="size-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                            04 · Stream
+                          </span>
+                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
+                            HTTP/2 SSE
+                          </span>
+                        </div>
+                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                          Real-Time SSE Stream
+                        </h3>
+                      </div>
+                    </div>
+                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                    Receive instant push events for announcements and seat reservations without polling.
+                  </p>
+
+                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                    <span className="font-mono text-[11px] text-[#0056FF]">
+                      GET /api/v1/stream/events
+                    </span>
+                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                      Sub-50ms Latency
+                    </span>
+                  </div>
                 </button>
               </div>
-            </div>
-
-            {/* =============================================================== */}
-            {/* 4 CORE FUNCTIONAL PATHWAYS (MILLER'S LAW - 4 CHUNKED TARGETS) */}
-            {/* =============================================================== */}
-            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-              {/* Feature 01 */}
-              <button
-                onClick={() => scrollToSection('public-feeds')}
-                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
-              >
-                <div>
-                  <div className="mb-2.5 flex items-center justify-between">
-                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
-                      01 · FEEDS
-                    </span>
-                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                    Public Feeds & RSS 2.0
-                  </h3>
-
-                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
-                    GET /public/rss/announcements.xml
-                  </div>
-
-                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
-                    Live XML & JSON feeds for announcements and alerts.
-                  </p>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
-                  <span className="font-mono text-[#0056FF]">5m TTL</span>
-                  <span>Public RSS</span>
-                </div>
-              </button>
-
-              {/* Feature 02 */}
-              <button
-                onClick={() => scrollToSection('class-catalog-api')}
-                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
-              >
-                <div>
-                  <div className="mb-2.5 flex items-center justify-between">
-                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
-                      02 · CATALOG
-                    </span>
-                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                    Class Roster & Catalog
-                  </h3>
-
-                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
-                    GET /classes?branch=&lt;BRANCH_ID&gt;
-                  </div>
-
-                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
-                    Syndicated courses, schedules, and live seat counts.
-                  </p>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
-                  <span className="font-mono text-[#0056FF]">120 req/min</span>
-                  <span>REST API</span>
-                </div>
-              </button>
-
-              {/* Feature 03 */}
-              <button
-                onClick={() => scrollToSection('certificate-ledger-api')}
-                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
-              >
-                <div>
-                  <div className="mb-2.5 flex items-center justify-between">
-                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
-                      03 · LEDGER
-                    </span>
-                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                    Certificate Ledger API
-                  </h3>
-
-                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
-                    GET /reports/certificates/verify/:code
-                  </div>
-
-                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
-                    SHA-256 tamper-proof diploma verification.
-                  </p>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
-                  <span className="font-mono text-[#0056FF]">Instant</span>
-                  <span>ADR-0006 Standard</span>
-                </div>
-              </button>
-
-              {/* Feature 04 */}
-              <button
-                onClick={() => scrollToSection('realtime-stream')}
-                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
-              >
-                <div>
-                  <div className="mb-2.5 flex items-center justify-between">
-                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
-                      04 · STREAM
-                    </span>
-                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                    Real-Time SSE Stream
-                  </h3>
-
-                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
-                    GET /stream/events
-                  </div>
-
-                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
-                    HTTP/2 Server-Sent Events live mutation broadcast.
-                  </p>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
-                  <span className="font-mono text-[#0056FF]">14ms Latency</span>
-                  <span>text/event-stream</span>
-                </div>
-              </button>
             </div>
           </section>
 
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 2: PUBLIC FEEDS & RSS 2.0 */}
           {/* ----------------------------------------------------------------- */}
-          <section id="public-feeds" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+          <section id="public-feeds" className="space-y-4 border-t border-[#CAD3F5] pt-8">
             <div className="space-y-1">
               <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 Feeds & Syndication
               </span>
-              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
+              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                 Public Feeds & RSS 2.0
               </h2>
               <p className="text-xs font-medium text-[#0A1A4A]/75">
@@ -720,7 +784,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {PUBLIC_FEEDS_SPECS.map((feed) => {
                 const currentFormat = feedFormatTab[feed.id] || (feed.sampleXml ? 'xml' : 'json');
                 const hasXml = Boolean(feed.sampleXml);
@@ -731,7 +795,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                     className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs"
                   >
                     {/* Feed Header */}
-                    <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between sm:p-4">
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
                           <span className="rounded bg-[#E3E7FC] px-2 py-0.5 text-xs font-bold text-[#0056FF]">
@@ -745,7 +809,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                       <div className="flex shrink-0 items-center gap-2">
                         <div className="flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-xs text-[#0A1A4A]">
                           <span className="font-bold text-[#0056FF]">GET</span>
-                          <span className="max-w-[200px] truncate">{feed.endpoint}</span>
+                          <span className="max-w-[180px] truncate sm:max-w-[200px]">{feed.endpoint}</span>
                         </div>
                         <button
                           onClick={() => handleCopy(feed.endpoint, feed.id)}
@@ -762,7 +826,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                     </div>
 
                     {/* Specimen Tabs & Code Container */}
-                    <div className="space-y-2.5 p-4">
+                    <div className="space-y-2 p-3.5 sm:p-4">
                       <div className="flex items-center justify-between border-b border-[#CAD3F5] pb-2">
                         <span className="text-[11px] font-bold tracking-wider text-[#0056FF] uppercase">
                           Sample Response
@@ -799,7 +863,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                         </div>
                       </div>
 
-                      <pre className="max-h-52 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+                      <pre className="max-h-52 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                         {currentFormat === 'xml' && feed.sampleXml
                           ? feed.sampleXml
                           : JSON.stringify(feed.sampleJson, null, 2)}
@@ -814,12 +878,12 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 3: CLASS ROSTER & CATALOG REST API */}
           {/* ----------------------------------------------------------------- */}
-          <section id="class-catalog-api" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+          <section id="class-catalog-api" className="space-y-4 border-t border-[#CAD3F5] pt-8">
             <div className="space-y-1">
               <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 Course Catalog
               </span>
-              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
+              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                 Class Roster & Catalog REST API
               </h2>
               <p className="text-xs font-medium text-[#0A1A4A]/75">
@@ -828,12 +892,12 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             </div>
 
             {/* Endpoint Bar */}
-            <div className="flex flex-col gap-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
               <div className="flex items-center gap-2">
                 <span className="rounded bg-[#0056FF] px-2 py-0.5 text-xs font-bold text-white">
                   GET
                 </span>
-                <span className="font-mono text-xs font-bold text-[#0A1A4A]">
+                <span className="truncate font-mono text-xs font-bold text-[#0A1A4A]">
                   /api/v1/classes?branch=&lt;BRANCH_ID&gt;&amp;status=open
                 </span>
               </div>
@@ -860,7 +924,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
 
             {/* Display-Only Filter & Table */}
             <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
                 <div className="relative w-full sm:w-64">
                   <Search className="absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#0056FF]" />
                   <input
@@ -878,7 +942,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                       key={status}
                       onClick={() => setClassFilterStatus(status)}
                       className={cn(
-                        'rounded-lg border px-2.5 py-1 text-xs font-semibold transition-colors',
+                        'rounded-lg border px-2 py-0.5 text-xs font-semibold transition-colors',
                         classFilterStatus === status
                           ? 'border-[#0056FF] bg-[#0056FF] text-[#FFFFFF]'
                           : 'border-[#CAD3F5] bg-[#FFFFFF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
@@ -961,7 +1025,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             </div>
 
             {/* Code Snippet Box */}
-            <div className="space-y-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4">
+            <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:p-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                   Fetch Class Catalog
@@ -1003,7 +1067,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 </div>
               </div>
 
-              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                 {classCodeLanguage === 'curl' &&
                   `curl -X GET "https://api.snp.edu.kh/api/v1/classes?branch=BR-01&status=open" \\
   -H "Accept: application/json"`}
@@ -1024,12 +1088,12 @@ classes = res.json().get('data', {}).get('classes', [])`}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 4: CERTIFICATE LEDGER API (ADR-0006) */}
           {/* ----------------------------------------------------------------- */}
-          <section id="certificate-ledger-api" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+          <section id="certificate-ledger-api" className="space-y-4 border-t border-[#CAD3F5] pt-8">
             <div className="space-y-1">
               <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 Cryptographic Ledger
               </span>
-              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
+              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                 Certificate Ledger Verification API
               </h2>
               <p className="text-xs font-medium text-[#0A1A4A]/75">
@@ -1039,17 +1103,17 @@ classes = res.json().get('data', {}).get('classes', [])`}
 
             {/* Verification Specimen & Interactive Explorer */}
             <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-2 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
                 <div className="flex items-center gap-2">
                   <span className="rounded bg-[#0056FF] px-2 py-0.5 text-xs font-bold text-white">
                     GET
                   </span>
-                  <span className="font-mono text-xs font-bold text-[#0A1A4A]">
+                  <span className="truncate font-mono text-xs font-bold text-[#0A1A4A]">
                     /api/v1/reports/certificates/verify/:code
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 self-start sm:self-auto">
                   <button
                     onClick={() => setVerifyStatusTab('valid')}
                     className={cn(
@@ -1075,8 +1139,8 @@ classes = res.json().get('data', {}).get('classes', [])`}
                 </div>
               </div>
 
-              <div className="p-4">
-                <pre className="max-h-64 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+              <div className="p-3.5 sm:p-4">
+                <pre className="max-h-60 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                   {verifyStatusTab === 'valid'
                     ? JSON.stringify(
                         {
@@ -1124,12 +1188,12 @@ classes = res.json().get('data', {}).get('classes', [])`}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 5: REAL-TIME SSE STREAM */}
           {/* ----------------------------------------------------------------- */}
-          <section id="realtime-stream" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+          <section id="realtime-stream" className="space-y-4 border-t border-[#CAD3F5] pt-8">
             <div className="space-y-1">
               <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 Server-Sent Events
               </span>
-              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
+              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                 Real-Time SSE Stream
               </h2>
               <p className="text-xs font-medium text-[#0A1A4A]/75">
@@ -1153,7 +1217,7 @@ classes = res.json().get('data', {}).get('classes', [])`}
                 </span>
               </div>
 
-              <div className="max-h-64 space-y-2 overflow-y-auto p-3.5">
+              <div className="max-h-56 space-y-2 overflow-y-auto p-3">
                 {streamEvents.map((ev) => (
                   <div
                     key={ev.id}
@@ -1205,12 +1269,12 @@ sse.addEventListener('class.seat_reserved', (event) => {
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 6: BACKEND REST API DIRECTORY */}
           {/* ----------------------------------------------------------------- */}
-          <section id="rest-api-directory" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+          <section id="rest-api-directory" className="space-y-4 border-t border-[#CAD3F5] pt-8">
             <div className="space-y-1">
               <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
                 Directory
               </span>
-              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
+              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                 Backend REST API Directory
               </h2>
               <p className="text-xs font-medium text-[#0A1A4A]/75">
@@ -1282,7 +1346,7 @@ sse.addEventListener('class.seat_reserved', (event) => {
               </div>
               <p className="leading-relaxed text-[#0A1A4A]/80">
                 {CHANGE_LOGS[0]?.description ||
-                  'Open API & Syndication Guide redesigned for minimal psychological reading, backend REST API contracts, and real-time streaming.'}
+                  'Open API & Syndication Guide redesigned with mobile-first welcome hook and tactile service cards.'}
               </p>
             </div>
           </section>
