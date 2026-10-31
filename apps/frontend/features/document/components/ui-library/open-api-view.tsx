@@ -25,12 +25,8 @@ import {
   Info,
   Lock,
   Zap,
-  Activity,
-  Globe,
 } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
-import { GeometricHeaderStamp } from '@/features/document/components/ui-library';
-import { useDocsNav } from './docs-nav-context';
 import { cn } from '@/lib/utils';
 
 // ============================================================================
@@ -52,13 +48,12 @@ interface PublicFeedSpec {
 const PUBLIC_FEEDS_SPECS: PublicFeedSpec[] = [
   {
     id: 'feed-news-rss',
-    title: 'Institutional News & Notices RSS 2.0',
+    title: 'News & Academic Notices RSS 2.0',
     category: 'Announcements & News',
     format: 'RSS 2.0 (XML)',
     endpoint: '/api/v1/public/rss/announcements.xml',
-    refreshInterval: '5 minutes cache (RFC 7234)',
-    description:
-      'Public syndicate feed publishing verified institutional announcements, academic period start dates, and holiday advisories.',
+    refreshInterval: '5m cache',
+    description: 'Verified institutional announcements, academic period dates, and holiday advisories.',
     sampleXml: `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -92,13 +87,12 @@ const PUBLIC_FEEDS_SPECS: PublicFeedSpec[] = [
   },
   {
     id: 'feed-alerts-json',
-    title: 'Campus Emergency & Operational Alerts Feed',
+    title: 'Emergency & Operational Alerts',
     category: 'Emergency Alerts',
     format: 'JSON Feed',
     endpoint: '/api/v1/public/feed/alerts.json',
-    refreshInterval: 'Real-time (60s polling / SSE broadcast)',
-    description:
-      'High-priority broadcast feed for weather warnings, campus maintenance, gate status, and exam reschedule alerts.',
+    refreshInterval: 'Real-time (60s)',
+    description: 'Campus weather warnings, entrance maintenance notices, and exam reschedule alerts.',
     sampleJson: {
       status: 'active',
       count: 1,
@@ -116,13 +110,12 @@ const PUBLIC_FEEDS_SPECS: PublicFeedSpec[] = [
   },
   {
     id: 'feed-calendar-json',
-    title: 'Academic Calendar & Intake Milestones Feed',
+    title: 'Academic Calendar Milestones',
     category: 'Academic Calendar',
     format: 'JSON Feed',
     endpoint: '/api/v1/public/feed/academic-calendar.json',
-    refreshInterval: '1 hour cache',
-    description:
-      'Public syndicated schedule of semester milestones, examination windows, national holiday closures, and graduation ceremonies.',
+    refreshInterval: '1h cache',
+    description: 'Semester milestones, examination windows, and national holiday closures.',
     sampleJson: {
       academicYear: '2026-2027',
       term: 'Semester 1',
@@ -279,77 +272,76 @@ const BACKEND_PUBLIC_ENDPOINTS: RestEndpointSummary[] = [
   {
     method: 'GET',
     path: '/api/v1/health',
-    scope: 'Public (Unauthenticated)',
+    scope: 'Public',
     rateLimit: '120 req / 1 min',
     cacheControl: 'no-store',
-    description: 'Cluster health, MongoDB replica set status, and uptime metrics.',
+    description: 'Cluster health and MongoDB replica set status.',
   },
   {
     method: 'GET',
     path: '/api/v1/reports/certificates/verify/:code',
-    scope: 'Public (Unauthenticated)',
+    scope: 'Public',
     rateLimit: '60 req / 15 min',
     cacheControl: 'no-store',
-    description: 'Cryptographic SHA-256 ledger proof & tamper-detection check (ADR-0006).',
+    description: 'SHA-256 ledger proof & tamper-detection verification (ADR-0006).',
   },
   {
     method: 'GET',
     path: '/api/v1/classes',
     scope: 'Public Projection',
     rateLimit: '120 req / 1 min',
-    cacheControl: 'public, max-age=60, s-maxage=300',
-    description: 'Syndicated course catalog, schedules, instructors, and seat metrics.',
+    cacheControl: 'public, max-age=60',
+    description: 'Syndicated course catalog, schedules, and seat quotas.',
   },
   {
     method: 'GET',
     path: '/api/v1/public/rss/announcements.xml',
-    scope: 'Public (Unauthenticated)',
+    scope: 'Public',
     rateLimit: '300 req / 5 min',
     cacheControl: 'public, max-age=300',
-    description: 'Standard RSS 2.0 XML feed of campus news and notices.',
+    description: 'RSS 2.0 XML feed of campus news and notices.',
   },
   {
     method: 'GET',
     path: '/api/v1/public/feed/alerts.json',
-    scope: 'Public (Unauthenticated)',
+    scope: 'Public',
     rateLimit: '300 req / 5 min',
     cacheControl: 'public, max-age=60',
-    description: 'JSON feed of high-priority emergency advisories and notices.',
+    description: 'JSON feed of high-priority emergency advisories.',
   },
   {
     method: 'GET',
     path: '/api/v1/stream/events',
-    scope: 'Public SSE Channel',
-    rateLimit: '50 concurrent conn',
-    cacheControl: 'no-cache, text/event-stream',
-    description: 'Persistent Server-Sent Events channel streaming live mutations.',
+    scope: 'Public SSE',
+    rateLimit: '50 concurrent',
+    cacheControl: 'text/event-stream',
+    description: 'Persistent Server-Sent Events stream for live mutations.',
   },
   {
     method: 'GET',
     path: '/api/v1/docs/openapi.json',
-    scope: 'Public Specification',
+    scope: 'Public Contract',
     rateLimit: '120 req / 1 min',
     cacheControl: 'public, max-age=3600',
-    description: 'Machine-readable OpenAPI 3.1.0 contract for all platform endpoints.',
+    description: 'OpenAPI 3.1.0 machine-readable specification.',
   },
 ];
 
 const GUIDE_NAV_ITEMS = [
-  { id: 'open-api-head', label: 'Overview & Backend Standards', tag: '01' },
-  { id: 'public-feeds', label: 'Public Feeds & RSS 2.0', tag: '02' },
+  { id: 'open-api-head', label: 'Overview', tag: '01' },
+  { id: 'public-feeds', label: 'Public Feeds (RSS 2.0)', tag: '02' },
   { id: 'class-catalog-api', label: 'Class Catalog REST API', tag: '03' },
   { id: 'certificate-ledger-api', label: 'Certificate Ledger API', tag: '04' },
   { id: 'realtime-stream', label: 'Real-Time SSE Stream', tag: '05' },
-  { id: 'rest-api-directory', label: 'Backend API Directory', tag: '06' },
-  { id: 'changelogs', label: 'Syndication Releases', tag: '07' },
+  { id: 'rest-api-directory', label: 'API Directory', tag: '06' },
+  { id: 'changelogs', label: 'Releases', tag: '07' },
 ];
 
 // ============================================================================
-// MAIN COMPONENT: OPEN API & SYNDICATION GUIDE
+// MAIN COMPONENT: OPEN API & SYNDICATION GUIDE (PSYCHOLOGICAL READING HERO)
 // ============================================================================
 
 export function OpenApiView({ initialSection }: { initialSection?: string } = {}) {
-  const { activeTab, setActiveTab } = useDocsNav();
   const rootRef = React.useRef<HTMLDivElement>(null);
   const isManualScrollRef = React.useRef<boolean>(false);
   const scrollTimerRef = React.useRef<NodeJS.Timeout | null>(null);
@@ -366,7 +358,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
     'feed-calendar-json': 'json',
   });
 
-  // Class Roster filter state (read-only search)
+  // Class Roster filter state
   const [classSearch, setClassSearch] = React.useState<string>('');
   const [classFilterStatus, setClassFilterStatus] = React.useState<string>('All');
   const [classCodeLanguage, setClassCodeLanguage] = React.useState<'curl' | 'typescript' | 'python'>(
@@ -375,9 +367,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
 
   // Verification Ledger state
   const [verifyStatusTab, setVerifyStatusTab] = React.useState<'valid' | 'tampered'>('valid');
-  const [verifyCodeLanguage, setVerifyCodeLanguage] = React.useState<'curl' | 'typescript'>('curl');
 
-  // SSE Stream telemetry metrics
+  // SSE Stream telemetry
   const [streamLatency] = React.useState<number>(14);
   const [streamSubscribers] = React.useState<number>(1428);
   const [streamEvents] = React.useState<LiveStreamEvent[]>(INITIAL_STREAM_EVENTS);
@@ -459,16 +450,16 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
     <div ref={rootRef} className="min-h-screen w-full bg-[#FFFFFF] text-[#0A1A4A]">
       <div className="mx-auto flex max-w-7xl items-start gap-8 px-4 py-8 sm:px-6 lg:px-8">
         {/* =================================================================== */}
-        {/* MINIMAL LEFT NAVIGATION (7 ANCHORS) */}
+        {/* MINIMAL LEFT NAVIGATION (7 CLEAN ANCHORS) */}
         {/* =================================================================== */}
-        <aside className="sticky top-28 hidden w-64 shrink-0 space-y-4 self-start md:block">
+        <aside className="sticky top-28 hidden w-60 shrink-0 space-y-4 self-start md:block">
           <div className="rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 shadow-xs">
             <div className="mb-2 flex items-center justify-between border-b border-[#CAD3F5] px-3 py-2">
               <span className="text-[11px] font-black tracking-widest text-[#0056FF] uppercase">
-                Backend API Guide
+                Directory
               </span>
               <span className="rounded bg-[#E3E7FC] px-1.5 py-0.5 text-[10px] font-bold text-[#0056FF]">
-                Display Only
+                Read Only
               </span>
             </div>
 
@@ -496,278 +487,218 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             </nav>
           </div>
 
-          {/* Syndication Specification Notice Card */}
-          <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#0056FF]">
+          {/* Quick Info Box */}
+          <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[#0056FF]">
               <Info className="h-3.5 w-3.5" />
-              <span>Display-Only Specification</span>
+              <span>Public Access</span>
             </div>
-            <p className="text-[11px] leading-relaxed text-[#0A1A4A]">
-              Authoritative backend REST API directory, public RSS syndication, cryptographic ledger
-              verification, and streaming specifications for external developers.
+            <p className="text-[11px] leading-relaxed text-[#0A1A4A]/80">
+              Zero tokens or auth headers needed. Projections are open and cached at edge CDN nodes.
             </p>
           </div>
         </aside>
 
         {/* =================================================================== */}
-        {/* MAIN BACKEND API GUIDE CONTENT */}
+        {/* MAIN GUIDE CONTENT — PSYCHOLOGICAL READING OPTIMIZED */}
         {/* =================================================================== */}
-        <main className="max-w-5xl min-w-0 flex-1 space-y-12 pb-24">
+        <main className="max-w-5xl min-w-0 flex-1 space-y-10 pb-24">
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 1: OVERVIEW & BACKEND SYNDICATION STANDARDS */}
+          {/* SECTION 1: PSYCHOLOGICAL READING HERO (SIMPLE, NO CLUTTER) */}
           {/* ----------------------------------------------------------------- */}
           <section id="open-api-head" className="space-y-6 pt-2">
-            <div className="flex flex-col gap-6 border-b border-[#CAD3F5] pb-6 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-3">
-                <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-1 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+            {/* Header: Minimal Identity + Punchy 1-Line Scope */}
+            <div className="space-y-2 border-b border-[#CAD3F5] pb-5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-0.5 text-[11px] font-bold text-[#0056FF] uppercase">
                   <ShieldCheck className="h-3.5 w-3.5" />
-                  <span>Public Syndication Guide · Display Only</span>
-                </div>
-                <h1 className="text-3xl font-extrabold tracking-tight text-[#0A1A4A] sm:text-4xl">
-                  Open API & Syndication
-                </h1>
-                <p className="text-sm leading-relaxed font-medium text-[#0A1A4A]">
-                  Authoritative SNPI-SMS backend REST endpoints, XML/JSON public syndication feeds,
-                  cryptographic ledger verification, and real-time SSE stream architecture.
-                </p>
+                  Public API · Read Only
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 text-[11px] font-mono text-[#0056FF]">
+                  v0.2.12 Active
+                </span>
               </div>
 
-              <div className="flex shrink-0 flex-col items-start gap-3 sm:items-end">
-                {/* Related Hub Navigation Menu (UI Library & Open API) */}
-                <div className="flex items-center gap-1 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1 shadow-inner">
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('library', true)}
-                    className={cn(
-                      'flex items-center gap-2 rounded-full px-4 py-2 font-sans text-xs font-bold transition-all',
-                      activeTab === 'library'
-                        ? 'bg-[#0056FF] text-white shadow-xs'
-                        : 'text-[#0A1A4A] hover:bg-[#E3E7FC] hover:text-[#0056FF]',
-                    )}
-                  >
-                    <Layers className="size-3.5 stroke-[2]" />
-                    <span>UI Library</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('openapi', true)}
-                    className={cn(
-                      'flex items-center gap-2 rounded-full px-4 py-2 font-sans text-xs font-bold transition-all',
-                      activeTab === 'openapi'
-                        ? 'bg-[#0056FF] text-white shadow-xs'
-                        : 'text-[#0A1A4A] hover:bg-[#E3E7FC] hover:text-[#0056FF]',
-                    )}
-                  >
-                    <FileText className="size-3.5 stroke-[2.2]" />
-                    <span>Open API</span>
-                  </button>
-                </div>
+              <h1 className="text-3xl font-extrabold tracking-tight text-[#0A1A4A] sm:text-4xl">
+                Open API & Syndication
+              </h1>
 
-                <GeometricHeaderStamp
-                  codeA="20"
-                  titleA="OPEN"
-                  codeB="26"
-                  titleB="API"
-                  className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3"
-                />
-              </div>
+              <p className="text-sm font-medium text-[#0A1A4A]/75">
+                Public feeds, course catalog, and cryptographic ledger verification.
+              </p>
             </div>
 
-            {/* Protocol Status Metrics Banner */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  Delivery Mode
+            {/* Instant Gateway Anchor Bar (Immediate Orientation for Developers) */}
+            <div className="flex flex-col gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between sm:p-4">
+              <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
+                <span className="rounded bg-[#0056FF] px-2 py-0.5 font-bold text-white">
+                  BASE URL
                 </span>
-                <span className="block text-xs font-bold text-[#0A1A4A]">Public Syndication</span>
+                <span className="font-bold text-[#0A1A4A]">
+                  https://api.snp.edu.kh/api/v1
+                </span>
               </div>
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  Operation Scope
+
+              <div className="flex items-center gap-2 self-end sm:self-auto">
+                <span className="rounded border border-[#CAD3F5] bg-white px-2 py-0.5 text-[11px] font-medium text-[#0A1A4A]">
+                  Zero Auth Required
                 </span>
-                <span className="block text-xs font-bold text-[#0A1A4A]">Display-Only Data</span>
-              </div>
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  Authentication Tier
-                </span>
-                <span className="block text-xs font-bold text-[#0A1A4A]">Zero-Credential Access</span>
-              </div>
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  Stream Protocol
-                </span>
-                <span className="block font-mono text-xs font-bold text-[#0A1A4A]">
-                  SSE (HTTP/2)
-                </span>
+                <button
+                  onClick={() => handleCopy('https://api.snp.edu.kh/api/v1', 'base-url')}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-white px-3 py-1 text-xs font-semibold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
+                >
+                  {copiedId === 'base-url' ? (
+                    <>
+                      <Check className="h-3.5 w-3.5" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-3.5 w-3.5" />
+                      <span>Copy Base</span>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
 
             {/* =============================================================== */}
-            {/* 4 CORE FEATURES QUICK CARDS — REDESIGNED BACKEND API FOCUS */}
+            {/* 4 CORE FUNCTIONAL PATHWAYS (MILLER'S LAW - 4 CHUNKED TARGETS) */}
             {/* =============================================================== */}
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {/* Feature 01: Public Feeds & RSS 2.0 */}
+            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+              {/* Feature 01 */}
               <button
                 onClick={() => scrollToSection('public-feeds')}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
+                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
               >
                 <div>
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="rounded bg-[#E3E7FC] px-2.5 py-1 text-xs font-bold text-[#0056FF]">
-                        Feature 01
-                      </span>
-                      <span className="font-mono text-[10px] font-semibold text-[#0056FF] uppercase">
-                        RSS 2.0 · XML / JSON
-                      </span>
-                    </div>
-                    <div className="flex size-7 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                  <div className="mb-2.5 flex items-center justify-between">
+                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
+                      01 · FEEDS
+                    </span>
+                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
+                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
                     Public Feeds & RSS 2.0
                   </h3>
 
-                  <div className="mt-2 inline-flex items-center gap-1.5 rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[11px] text-[#0A1A4A]">
-                    <span className="font-bold text-[#0056FF]">GET</span>
-                    <span className="truncate">/api/v1/public/rss/announcements.xml</span>
+                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
+                    GET /public/rss/announcements.xml
                   </div>
 
-                  <p className="mt-2.5 text-xs leading-relaxed text-[#0A1A4A]/80">
-                    Live XML and JSON syndication feeds for emergency alerts, announcements, and
-                    academic milestones without user authentication.
+                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
+                    Live XML & JSON feeds for announcements and alerts.
                   </p>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-3 text-[11px]">
-                  <span className="font-mono font-medium text-[#0056FF]">Cache: 5m TTL</span>
-                  <span className="font-medium text-[#0A1A4A]/70">Public Syndicate</span>
+                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
+                  <span className="font-mono text-[#0056FF]">5m TTL</span>
+                  <span>Public RSS</span>
                 </div>
               </button>
 
-              {/* Feature 02: Class Roster & Catalog REST API */}
+              {/* Feature 02 */}
               <button
                 onClick={() => scrollToSection('class-catalog-api')}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
+                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
               >
                 <div>
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="rounded bg-[#E3E7FC] px-2.5 py-1 text-xs font-bold text-[#0056FF]">
-                        Feature 02
-                      </span>
-                      <span className="font-mono text-[10px] font-semibold text-[#0056FF] uppercase">
-                        REST API · Dynamic Catalog
-                      </span>
-                    </div>
-                    <div className="flex size-7 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                  <div className="mb-2.5 flex items-center justify-between">
+                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
+                      02 · CATALOG
+                    </span>
+                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
-                    Class Roster & Catalog API
+                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                    Class Roster & Catalog
                   </h3>
 
-                  <div className="mt-2 inline-flex items-center gap-1.5 rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[11px] text-[#0A1A4A]">
-                    <span className="font-bold text-[#0056FF]">GET</span>
-                    <span className="truncate">/api/v1/classes?branch=&lt;BRANCH_ID&gt;</span>
+                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
+                    GET /classes?branch=&lt;BRANCH_ID&gt;
                   </div>
 
-                  <p className="mt-2.5 text-xs leading-relaxed text-[#0A1A4A]/80">
-                    Syndicated live course catalog, real-time seat capacities, schedules, and
-                    department queries for external portal integration.
+                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
+                    Syndicated courses, schedules, and live seat counts.
                   </p>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-3 text-[11px]">
-                  <span className="font-mono font-medium text-[#0056FF]">Rate: 120 req/min</span>
-                  <span className="font-medium text-[#0A1A4A]/70">JSON Projection</span>
+                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
+                  <span className="font-mono text-[#0056FF]">120 req/min</span>
+                  <span>REST API</span>
                 </div>
               </button>
 
-              {/* Feature 03: Cryptographic Certificate Ledger Verification API */}
+              {/* Feature 03 */}
               <button
                 onClick={() => scrollToSection('certificate-ledger-api')}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
+                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
               >
                 <div>
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="rounded bg-[#E3E7FC] px-2 py-0.5 text-xs font-bold text-[#0056FF]">
-                        Feature 03
-                      </span>
-                      <span className="font-mono text-[10px] font-semibold text-[#0056FF] uppercase">
-                        SHA-256 Ledger Verification
-                      </span>
-                    </div>
-                    <div className="flex size-7 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                  <div className="mb-2.5 flex items-center justify-between">
+                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
+                      03 · LEDGER
+                    </span>
+                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
-                    Certificate Ledger Verification API
+                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                    Certificate Ledger API
                   </h3>
 
-                  <div className="mt-2 inline-flex items-center gap-1.5 rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[11px] text-[#0A1A4A]">
-                    <span className="font-bold text-[#0056FF]">GET</span>
-                    <span className="truncate">/api/v1/reports/certificates/verify/:code</span>
+                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
+                    GET /reports/certificates/verify/:code
                   </div>
 
-                  <p className="mt-2.5 text-xs leading-relaxed text-[#0A1A4A]/80">
-                    Cryptographically anchored public diploma and transcript verification endpoint
-                    with tamper-proof SHA-256 signature checks (ADR-0006).
+                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
+                    SHA-256 tamper-proof diploma verification.
                   </p>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-3 text-[11px]">
-                  <span className="font-mono font-medium text-[#0056FF]">Zero-Cache Validation</span>
-                  <span className="font-medium text-[#0A1A4A]/70">Tamper Proof</span>
+                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
+                  <span className="font-mono text-[#0056FF]">Instant</span>
+                  <span>ADR-0006 Standard</span>
                 </div>
               </button>
 
-              {/* Feature 04: Real-Time SSE Stream */}
+              {/* Feature 04 */}
               <button
                 onClick={() => scrollToSection('realtime-stream')}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
+                className="group relative flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-5 text-left shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:shadow-[0_8px_20px_rgba(0,86,255,0.08)]"
               >
                 <div>
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="rounded bg-[#E3E7FC] px-2.5 py-1 text-xs font-bold text-[#0056FF]">
-                        Feature 04
-                      </span>
-                      <span className="font-mono text-[10px] font-semibold text-[#0056FF] uppercase">
-                        HTTP/2 Server-Sent Events
-                      </span>
-                    </div>
-                    <div className="flex size-7 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                  <div className="mb-2.5 flex items-center justify-between">
+                    <span className="rounded bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold text-[#0056FF]">
+                      04 · STREAM
+                    </span>
+                    <div className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
                       <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
+                  <h3 className="text-base font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
                     Real-Time SSE Stream
                   </h3>
 
-                  <div className="mt-2 inline-flex items-center gap-1.5 rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[11px] text-[#0A1A4A]">
-                    <span className="font-bold text-[#0056FF]">GET</span>
-                    <span className="truncate">/api/v1/stream/events?channel=...</span>
+                  <div className="mt-1.5 font-mono text-xs text-[#0056FF]">
+                    GET /stream/events
                   </div>
 
-                  <p className="mt-2.5 text-xs leading-relaxed text-[#0A1A4A]/80">
-                    Persistent Server-Sent Events channel streaming live academic mutations,
-                    emergency alerts, and system telemetry to external client subscribers.
+                  <p className="mt-2 text-xs leading-relaxed text-[#0A1A4A]/75">
+                    HTTP/2 Server-Sent Events live mutation broadcast.
                   </p>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-3 text-[11px]">
-                  <span className="font-mono font-medium text-[#0056FF]">Avg Latency: 14ms</span>
-                  <span className="font-medium text-[#0A1A4A]/70">text/event-stream</span>
+                <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 text-[11px] text-[#0A1A4A]/70">
+                  <span className="font-mono text-[#0056FF]">14ms Latency</span>
+                  <span>text/event-stream</span>
                 </div>
               </button>
             </div>
@@ -776,22 +707,20 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 2: PUBLIC FEEDS & RSS 2.0 */}
           {/* ----------------------------------------------------------------- */}
-          <section id="public-feeds" className="space-y-6 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                <Radio className="h-3.5 w-3.5" />
-                <span>Live Public Syndication · XML & JSON Formats</span>
-              </div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
+          <section id="public-feeds" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                Feeds & Syndication
+              </span>
+              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
                 Public Feeds & RSS 2.0
               </h2>
-              <p className="text-sm leading-relaxed font-medium text-[#0A1A4A]">
-                Subscribe to read-only XML and JSON feeds to ingest campus announcements, security
-                advisories, and academic milestones directly into external CMS platforms or mobile apps.
+              <p className="text-xs font-medium text-[#0A1A4A]/75">
+                Subscribe to read-only XML and JSON feeds to ingest campus announcements, security alerts, and milestones.
               </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {PUBLIC_FEEDS_SPECS.map((feed) => {
                 const currentFormat = feedFormatTab[feed.id] || (feed.sampleXml ? 'xml' : 'json');
                 const hasXml = Boolean(feed.sampleXml);
@@ -802,59 +731,56 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                     className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs"
                   >
                     {/* Feed Header */}
-                    <div className="flex flex-col gap-3 border-b border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
-                      <div className="space-y-1">
+                    <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="space-y-0.5">
                         <div className="flex items-center gap-2">
                           <span className="rounded bg-[#E3E7FC] px-2 py-0.5 text-xs font-bold text-[#0056FF]">
                             {feed.format}
                           </span>
-                          <span className="rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2 py-0.5 text-xs font-medium text-[#0A1A4A]">
-                            {feed.refreshInterval}
-                          </span>
+                          <span className="text-xs font-bold text-[#0A1A4A]">{feed.title}</span>
                         </div>
-                        <h3 className="text-base font-bold text-[#0A1A4A]">{feed.title}</h3>
-                        <p className="text-xs text-[#0A1A4A]">{feed.description}</p>
+                        <p className="text-xs text-[#0A1A4A]/75">{feed.description}</p>
                       </div>
 
                       <div className="flex shrink-0 items-center gap-2">
-                        <div className="flex items-center gap-2 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 font-mono text-xs text-[#0A1A4A]">
+                        <div className="flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-xs text-[#0A1A4A]">
                           <span className="font-bold text-[#0056FF]">GET</span>
                           <span className="max-w-[200px] truncate">{feed.endpoint}</span>
                         </div>
                         <button
                           onClick={() => handleCopy(feed.endpoint, feed.id)}
-                          className="rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-2 text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
+                          className="rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-1.5 text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
                           title="Copy Endpoint URL"
                         >
                           {copiedId === feed.id ? (
-                            <Check className="h-4 w-4 text-[#0056FF]" />
+                            <Check className="h-3.5 w-3.5 text-[#0056FF]" />
                           ) : (
-                            <Copy className="h-4 w-4 text-[#0056FF]" />
+                            <Copy className="h-3.5 w-3.5 text-[#0056FF]" />
                           )}
                         </button>
                       </div>
                     </div>
 
                     {/* Specimen Tabs & Code Container */}
-                    <div className="space-y-3 p-4 sm:p-5">
+                    <div className="space-y-2.5 p-4">
                       <div className="flex items-center justify-between border-b border-[#CAD3F5] pb-2">
-                        <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                          Syndicated Response Specimen
+                        <span className="text-[11px] font-bold tracking-wider text-[#0056FF] uppercase">
+                          Sample Response
                         </span>
-                        <div className="flex items-center gap-1 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-1">
+                        <div className="flex items-center gap-1 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-0.5">
                           {hasXml && (
                             <button
                               onClick={() =>
                                 setFeedFormatTab((prev) => ({ ...prev, [feed.id]: 'xml' }))
                               }
                               className={cn(
-                                'rounded px-2.5 py-1 text-xs font-semibold transition-colors',
+                                'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
                                 currentFormat === 'xml'
                                   ? 'bg-[#0056FF] text-[#FFFFFF]'
                                   : 'text-[#0A1A4A] hover:text-[#0056FF]',
                               )}
                             >
-                              RSS XML
+                              XML
                             </button>
                           )}
                           <button
@@ -862,18 +788,18 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                               setFeedFormatTab((prev) => ({ ...prev, [feed.id]: 'json' }))
                             }
                             className={cn(
-                              'rounded px-2.5 py-1 text-xs font-semibold transition-colors',
+                              'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
                               currentFormat === 'json'
                                 ? 'bg-[#0056FF] text-[#FFFFFF]'
                                 : 'text-[#0A1A4A] hover:text-[#0056FF]',
                             )}
                           >
-                            JSON Feed
+                            JSON
                           </button>
                         </div>
                       </div>
 
-                      <pre className="max-h-56 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+                      <pre className="max-h-52 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                         {currentFormat === 'xml' && feed.sampleXml
                           ? feed.sampleXml
                           : JSON.stringify(feed.sampleJson, null, 2)}
@@ -888,47 +814,40 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 3: CLASS ROSTER & CATALOG REST API */}
           {/* ----------------------------------------------------------------- */}
-          <section id="class-catalog-api" className="space-y-6 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                <Layers className="h-3.5 w-3.5" />
-                <span>Public Course Catalog & Seat Projections</span>
-              </div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
+          <section id="class-catalog-api" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                Course Catalog
+              </span>
+              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
                 Class Roster & Catalog REST API
               </h2>
-              <p className="text-sm leading-relaxed font-medium text-[#0A1A4A]">
-                Syndicated class catalog and seat metrics API for institutional course schedules,
-                real-time seat counts, and department filtering across all campuses.
+              <p className="text-xs font-medium text-[#0A1A4A]/75">
+                Real-time public courses, instructor schedules, and live seat counts across campuses.
               </p>
             </div>
 
-            {/* Endpoint Technical Specification Banner */}
-            <div className="flex flex-col gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="rounded bg-[#0056FF] px-2 py-0.5 text-xs font-bold text-white">
-                    GET
-                  </span>
-                  <span className="font-mono text-xs font-bold text-[#0A1A4A]">
-                    /api/v1/classes?branch=&lt;BRANCH_ID&gt;&amp;status=open
-                  </span>
-                </div>
-                <p className="text-xs text-[#0A1A4A]/80">
-                  Returns public projection of scheduled classes, active instructors, room locations, and seat quotas.
-                </p>
+            {/* Endpoint Bar */}
+            <div className="flex flex-col gap-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-2">
+                <span className="rounded bg-[#0056FF] px-2 py-0.5 text-xs font-bold text-white">
+                  GET
+                </span>
+                <span className="font-mono text-xs font-bold text-[#0A1A4A]">
+                  /api/v1/classes?branch=&lt;BRANCH_ID&gt;&amp;status=open
+                </span>
               </div>
 
               <button
                 onClick={() =>
                   handleCopy('curl -X GET "https://api.snp.edu.kh/api/v1/classes?branch=BR-01&status=open" -H "Accept: application/json"', 'copy-class-curl')
                 }
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
               >
                 {copiedId === 'copy-class-curl' ? (
                   <>
                     <Check className="h-3.5 w-3.5" />
-                    <span>Copied cURL</span>
+                    <span>Copied</span>
                   </>
                 ) : (
                   <>
@@ -941,19 +860,19 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
 
             {/* Display-Only Filter & Table */}
             <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex flex-col gap-3 border-b border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="relative w-full sm:w-72">
-                  <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-[#0056FF]" />
+              <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="relative w-full sm:w-64">
+                  <Search className="absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-[#0056FF]" />
                   <input
                     type="text"
                     value={classSearch}
                     onChange={(e) => setClassSearch(e.target.value)}
-                    placeholder="Filter classes, codes, teachers..."
-                    className="w-full rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] py-1.5 pr-3 pl-9 text-xs text-[#0A1A4A] placeholder-[#0A1A4A]/50 focus:border-[#0056FF] focus:outline-none"
+                    placeholder="Search courses, teachers..."
+                    className="w-full rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] py-1.5 pr-3 pl-8 text-xs text-[#0A1A4A] placeholder-[#0A1A4A]/50 focus:border-[#0056FF] focus:outline-none"
                   />
                 </div>
 
-                <div className="flex items-center gap-1.5 self-start sm:self-auto">
+                <div className="flex items-center gap-1 self-start sm:self-auto">
                   {['All', 'Open', 'Filling Fast', 'Waitlist'].map((status) => (
                     <button
                       key={status}
@@ -976,11 +895,11 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 <table className="w-full border-collapse text-left">
                   <thead>
                     <tr className="border-b border-[#CAD3F5] bg-[#FFFFFF] text-[11px] font-bold tracking-wider text-[#0056FF] uppercase">
-                      <th className="px-4 py-3">Code / Dept</th>
-                      <th className="px-4 py-3">Course Title & Instructor</th>
-                      <th className="px-4 py-3">Schedule & Room</th>
-                      <th className="px-4 py-3">Seat Capacity</th>
-                      <th className="px-4 py-3 text-right">Status</th>
+                      <th className="px-4 py-2.5">Code / Dept</th>
+                      <th className="px-4 py-2.5">Course Title & Instructor</th>
+                      <th className="px-4 py-2.5">Schedule</th>
+                      <th className="px-4 py-2.5">Seats</th>
+                      <th className="px-4 py-2.5 text-right">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#CAD3F5] text-xs font-medium text-[#0A1A4A]">
@@ -991,21 +910,21 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                       );
                       return (
                         <tr key={item.id} className="transition-colors hover:bg-[#EFF5FF]">
-                          <td className="px-4 py-3.5">
+                          <td className="px-4 py-3">
                             <span className="block font-mono font-bold text-[#0056FF]">
                               {item.code}
                             </span>
                             <span className="text-[11px] text-[#0A1A4A]/70">{item.department}</span>
                           </td>
-                          <td className="max-w-xs px-4 py-3.5">
+                          <td className="max-w-xs px-4 py-3">
                             <span className="block font-bold">{item.name}</span>
                             <span className="text-[11px] text-[#0A1A4A]/70">{item.instructor}</span>
                           </td>
-                          <td className="px-4 py-3.5">
+                          <td className="px-4 py-3">
                             <span className="block">{item.schedule}</span>
                             <span className="text-[11px] text-[#0A1A4A]/70">{item.room}</span>
                           </td>
-                          <td className="w-36 px-4 py-3.5">
+                          <td className="w-32 px-4 py-3">
                             <div className="mb-1 flex items-center justify-between font-mono text-[11px]">
                               <span>
                                 {item.enrolled} / {item.capacity}
@@ -1019,7 +938,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                               />
                             </div>
                           </td>
-                          <td className="px-4 py-3.5 text-right">
+                          <td className="px-4 py-3 text-right">
                             <span
                               className={cn(
                                 'rounded border px-2 py-0.5 text-[11px] font-bold',
@@ -1041,20 +960,17 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               </div>
             </div>
 
-            {/* Backend Integration Code Snippets (cURL / TypeScript / Python) */}
-            <div className="space-y-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                    Backend API Client Integration Specimen
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-1 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-1">
+            {/* Code Snippet Box */}
+            <div className="space-y-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                  Fetch Class Catalog
+                </span>
+                <div className="flex items-center gap-1 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-0.5">
                   <button
                     onClick={() => setClassCodeLanguage('curl')}
                     className={cn(
-                      'rounded px-2.5 py-1 text-xs font-semibold transition-colors',
+                      'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
                       classCodeLanguage === 'curl'
                         ? 'bg-[#0056FF] text-white'
                         : 'text-[#0A1A4A] hover:text-[#0056FF]',
@@ -1065,123 +981,65 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   <button
                     onClick={() => setClassCodeLanguage('typescript')}
                     className={cn(
-                      'rounded px-2.5 py-1 text-xs font-semibold transition-colors',
+                      'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
                       classCodeLanguage === 'typescript'
                         ? 'bg-[#0056FF] text-white'
                         : 'text-[#0A1A4A] hover:text-[#0056FF]',
                     )}
                   >
-                    TypeScript (Fetch)
+                    TypeScript
                   </button>
                   <button
                     onClick={() => setClassCodeLanguage('python')}
                     className={cn(
-                      'rounded px-2.5 py-1 text-xs font-semibold transition-colors',
+                      'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
                       classCodeLanguage === 'python'
                         ? 'bg-[#0056FF] text-white'
                         : 'text-[#0A1A4A] hover:text-[#0056FF]',
                     )}
                   >
-                    Python (Requests)
+                    Python
                   </button>
                 </div>
               </div>
 
-              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                 {classCodeLanguage === 'curl' &&
                   `curl -X GET "https://api.snp.edu.kh/api/v1/classes?branch=BR-01&status=open" \\
-  -H "Accept: application/json" \\
-  -H "User-Agent: EnterprisePortal-Syndicate/1.0"`}
+  -H "Accept: application/json"`}
                 {classCodeLanguage === 'typescript' &&
-                  `// Node.js / Next.js Server Integration
-export async function getSyndicatedClasses(branchId: string = 'BR-01') {
-  const response = await fetch(\`https://api.snp.edu.kh/api/v1/classes?branch=\${encodeURIComponent(branchId)}\`, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'User-Agent': 'EnterprisePortal-Syndicate/1.0',
-    },
-    next: { revalidate: 60 }, // RFC 7234 cache revalidation
-  });
-
-  if (!response.ok) {
-    throw new Error(\`Syndication API responded with status: \${response.status}\`);
-  }
-
-  const payload = await response.json();
-  return payload.data.classes;
-}`}
+                  `const res = await fetch('https://api.snp.edu.kh/api/v1/classes?branch=BR-01', {
+  headers: { 'Accept': 'application/json' },
+  next: { revalidate: 60 }
+});
+const { data } = await res.json();`}
                 {classCodeLanguage === 'python' &&
-                  `# Python 3.11+ Requests Client
-import requests
-
-def fetch_syndicated_roster(branch_id: str = "BR-01"):
-    url = "https://api.snp.edu.kh/api/v1/classes"
-    params = {"branch": branch_id, "status": "open"}
-    headers = {
-        "Accept": "application/json",
-        "User-Agent": "EnterprisePortal-Syndicate/1.0"
-    }
-    
-    response = requests.get(url, params=params, headers=headers, timeout=5)
-    response.raise_for_status()
-    return response.json().get("data", {}).get("classes", [])`}
+                  `import requests
+res = requests.get('https://api.snp.edu.kh/api/v1/classes', params={'branch': 'BR-01'})
+classes = res.json().get('data', {}).get('classes', [])`}
               </pre>
             </div>
           </section>
 
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 4: CRYPTOGRAPHIC CERTIFICATE LEDGER API (ADR-0006) */}
+          {/* SECTION 4: CERTIFICATE LEDGER API (ADR-0006) */}
           {/* ----------------------------------------------------------------- */}
-          <section
-            id="certificate-ledger-api"
-            className="space-y-6 border-t border-[#CAD3F5] pt-8"
-          >
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                <ShieldCheck className="h-3.5 w-3.5" />
-                <span>ADR-0006 Standard · Cryptographic Verification</span>
-              </div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
+          <section id="certificate-ledger-api" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                Cryptographic Ledger
+              </span>
+              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
                 Certificate Ledger Verification API
               </h2>
-              <p className="text-sm leading-relaxed font-medium text-[#0A1A4A]">
-                Cryptographically anchored public diploma and transcript verification endpoint.
-                Verifies SHA-256 payload hashes against immutable ledger records with zero credential leakage.
+              <p className="text-xs font-medium text-[#0A1A4A]/75">
+                ADR-0006 SHA-256 tamper-proof diploma and transcript verification.
               </p>
-            </div>
-
-            {/* Architecture Invariants Card */}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-4">
-                <span className="text-[11px] font-bold text-[#0056FF] uppercase">
-                  Four-Tier Isolation
-                </span>
-                <p className="text-xs text-[#0A1A4A]">
-                  Public unauthenticated consumers receive content hashes and status only; internal Fabric credentials remain strictly isolated.
-                </p>
-              </div>
-              <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-4">
-                <span className="text-[11px] font-bold text-[#0056FF] uppercase">
-                  Runtime SHA-256 Check
-                </span>
-                <p className="text-xs text-[#0A1A4A]">
-                  Dynamically recalculates SHA-256 hash across diploma attributes and verifies exact match against the immutable ledger root.
-                </p>
-              </div>
-              <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-4">
-                <span className="text-[11px] font-bold text-[#0056FF] uppercase">
-                  Tamper Detection
-                </span>
-                <p className="text-xs text-[#0A1A4A]">
-                  Flags altered academic data immediately as TAMPER_DETECTED with valid: false and cryptographic discrepancy logs.
-                </p>
-              </div>
             </div>
 
             {/* Verification Specimen & Interactive Explorer */}
             <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex flex-col gap-3 border-b border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2">
                   <span className="rounded bg-[#0056FF] px-2 py-0.5 text-xs font-bold text-white">
                     GET
@@ -1191,43 +1049,34 @@ def fetch_syndicated_roster(branch_id: str = "BR-01"):
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() => setVerifyStatusTab('valid')}
                     className={cn(
-                      'rounded-lg border px-3 py-1 text-xs font-semibold transition-colors',
+                      'rounded-lg border px-2.5 py-0.5 text-xs font-semibold transition-colors',
                       verifyStatusTab === 'valid'
                         ? 'border-[#0056FF] bg-[#0056FF] text-white'
                         : 'border-[#CAD3F5] bg-[#FFFFFF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
                     )}
                   >
-                    Valid (Tamper-Proof)
+                    Valid (200 OK)
                   </button>
                   <button
                     onClick={() => setVerifyStatusTab('tampered')}
                     className={cn(
-                      'rounded-lg border px-3 py-1 text-xs font-semibold transition-colors',
+                      'rounded-lg border px-2.5 py-0.5 text-xs font-semibold transition-colors',
                       verifyStatusTab === 'tampered'
                         ? 'border-[#0056FF] bg-[#0056FF] text-white'
                         : 'border-[#CAD3F5] bg-[#FFFFFF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
                     )}
                   >
-                    Tampered (Altered Data)
+                    Tampered (409)
                   </button>
                 </div>
               </div>
 
-              <div className="p-4 sm:p-5">
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                    Verification Ledger Response · {verifyStatusTab === 'valid' ? 'HTTP 200 OK' : 'HTTP 409 Conflict'}
-                  </span>
-                  <span className="font-mono text-[11px] text-[#0A1A4A]/70">
-                    Engine: SNP-Fabric-SHA256
-                  </span>
-                </div>
-
-                <pre className="max-h-72 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+              <div className="p-4">
+                <pre className="max-h-64 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                   {verifyStatusTab === 'valid'
                     ? JSON.stringify(
                         {
@@ -1245,11 +1094,6 @@ def fetch_syndicated_roster(branch_id: str = "BR-01"):
                               '0x3a4f89d812b186b245c3b9dc9081e55dfc2d4b1fa3d677284addd200126d7781',
                             issuer: 'SNP Institute Office of the Registrar',
                           },
-                          ledger: {
-                            engine: 'SNP-Fabric-SHA256',
-                            blockHeight: 18402,
-                            timestamp: '2026-08-15T10:00:00Z',
-                          },
                         },
                         null,
                         2,
@@ -1261,10 +1105,8 @@ def fetch_syndicated_roster(branch_id: str = "BR-01"):
                           status: 'TAMPER_DETECTED',
                           certificate: {
                             code: 'SNPI-2026-CS-8891',
-                            computedHash:
-                              '0x992cb8311a3fe40081d5fbc74619d83ea74fc2194b15093721867123984ab104',
-                            ledgerHash:
-                              '0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069',
+                            computedHash: '0x992cb8311a3fe40081d5fbc74619d83ea74fc2194b15093721867123984ab104',
+                            ledgerHash: '0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069',
                           },
                           error: {
                             code: 'HASH_MISMATCH',
@@ -1277,215 +1119,102 @@ def fetch_syndicated_roster(branch_id: str = "BR-01"):
                 </pre>
               </div>
             </div>
-
-            {/* Verification Request Integration Code */}
-            <div className="space-y-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  Verification API Integration Snippet
-                </span>
-                <button
-                  onClick={() =>
-                    handleCopy(
-                      'curl -X GET "https://api.snp.edu.kh/api/v1/reports/certificates/verify/SNPI-2026-CS-8891" -H "Accept: application/json"',
-                      'copy-verify-curl',
-                    )
-                  }
-                  className="flex items-center gap-1 text-xs font-semibold text-[#0056FF] hover:underline"
-                >
-                  {copiedId === 'copy-verify-curl' ? (
-                    <Check className="h-3.5 w-3.5" />
-                  ) : (
-                    <Copy className="h-3.5 w-3.5" />
-                  )}
-                  <span>{copiedId === 'copy-verify-curl' ? 'Copied' : 'Copy cURL'}</span>
-                </button>
-              </div>
-
-              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
-                {`// Cryptographic Certificate Verification Example
-async function verifyCertificate(certificateCode: string) {
-  const endpoint = \`https://api.snp.edu.kh/api/v1/reports/certificates/verify/\${encodeURIComponent(certificateCode)}\`;
-  const response = await fetch(endpoint, {
-    method: 'GET',
-    headers: { 'Accept': 'application/json' },
-  });
-  
-  const payload = await response.json();
-  if (payload.status === 'COMMITTED_TAMPER_PROOF') {
-    console.log('[VERIFIED] Certificate is cryptographically authentic:', payload.certificate);
-    return true;
-  }
-  
-  console.warn('[FAILED] Certificate fails ledger signature check:', payload.error);
-  return false;
-}`}
-              </pre>
-            </div>
           </section>
 
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 5: REAL-TIME SSE STREAM */}
           {/* ----------------------------------------------------------------- */}
-          <section id="realtime-stream" className="space-y-6 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                <Zap className="h-3.5 w-3.5" />
-                <span>Real-Time Broadcast Stream · Display Only</span>
-              </div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
-                Real-Time SSE Stream Architecture
+          <section id="realtime-stream" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                Server-Sent Events
+              </span>
+              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
+                Real-Time SSE Stream
               </h2>
-              <p className="text-sm leading-relaxed font-medium text-[#0A1A4A]">
-                Persistent Server-Sent Events channel streaming live academic mutations, emergency
-                broadcasts, and system telemetry directly to subscriber client applications.
+              <p className="text-xs font-medium text-[#0A1A4A]/75">
+                HTTP/2 Server-Sent Events channel streaming live academic mutations and alerts.
               </p>
-            </div>
-
-            {/* Connection Telemetry Specs */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  Channel Route
-                </span>
-                <span className="block truncate font-mono text-xs font-bold text-[#0A1A4A]">
-                  /api/v1/stream/events
-                </span>
-              </div>
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  MIME Protocol
-                </span>
-                <span className="block font-mono text-xs font-bold text-[#0A1A4A]">
-                  text/event-stream
-                </span>
-              </div>
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  Active Subscribers
-                </span>
-                <span className="block font-mono text-xs font-bold text-[#0A1A4A]">
-                  {streamSubscribers.toLocaleString()} clients
-                </span>
-              </div>
-              <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
-                <span className="mb-1 block text-[10px] font-bold text-[#0056FF] uppercase">
-                  Network Latency
-                </span>
-                <span className="block font-mono text-xs font-bold text-[#0056FF]">
-                  {streamLatency}ms avg
-                </span>
-              </div>
             </div>
 
             {/* Live Packet Stream Monitor (Light Modern Design) */}
             <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex items-center justify-between border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 text-xs">
+              <div className="flex items-center justify-between border-b border-[#CAD3F5] bg-[#EFF5FF] p-3 text-xs">
                 <div className="flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0056FF] opacity-75" />
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0056FF]" />
                   </span>
-                  <span className="font-bold text-[#0A1A4A]">Live Broadcast Packet Monitor</span>
+                  <span className="font-bold text-[#0A1A4A]">Live Packet Monitor</span>
+                  <span className="text-[11px] text-[#0A1A4A]/60">({streamLatency}ms avg)</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                    Cluster AP-01
-                  </span>
-                  <span className="rounded bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                    One-Way Broadcast
-                  </span>
-                </div>
+                <span className="rounded bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                  text/event-stream
+                </span>
               </div>
 
-              <div className="max-h-80 space-y-2.5 overflow-y-auto p-4">
+              <div className="max-h-64 space-y-2 overflow-y-auto p-3.5">
                 {streamEvents.map((ev) => (
                   <div
                     key={ev.id}
-                    className="space-y-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-xs transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF]/80"
+                    className="flex flex-col gap-1 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-2.5 text-xs sm:flex-row sm:items-center sm:justify-between"
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[11px] font-bold text-[#0056FF]">
-                        {ev.channel}
-                      </span>
-                      <span className="font-mono text-[10px] text-[#0A1A4A]/60">
-                        {ev.timestamp}
-                      </span>
-                    </div>
-                    <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center">
-                      <span className="inline-block shrink-0 rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                    <div className="flex items-center gap-2">
+                      <span className="rounded bg-[#FFFFFF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                         {ev.eventName}
                       </span>
-                      <code className="block flex-1 truncate rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[11px] text-[#0A1A4A]">
-                        {ev.payload}
-                      </code>
+                      <span className="font-mono text-[11px] text-[#0A1A4A]/80">{ev.channel}</span>
                     </div>
+                    <code className="truncate font-mono text-[11px] text-[#0A1A4A]">
+                      {ev.payload}
+                    </code>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Client Subscription Code Container */}
-            <div className="space-y-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
+            {/* Client Listener Code */}
+            <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  Client-Side EventSource Listener Specification
+                  EventSource Listener
                 </span>
                 <button
                   onClick={() =>
                     handleCopy(
-                      `const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');\n\nsse.addEventListener('class.seat_reserved', (event) => {\n  const payload = JSON.parse(event.data);\n  console.log('Real-time class update:', payload);\n});`,
+                      `const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');\nsse.addEventListener('class.seat_reserved', (e) => console.log(JSON.parse(e.data)));`,
                       'sse-spec',
                     )
                   }
                   className="flex items-center gap-1 text-xs font-semibold text-[#0056FF] hover:underline"
                 >
-                  {copiedId === 'sse-spec' ? (
-                    <Check className="h-3 w-3" />
-                  ) : (
-                    <Copy className="h-3 w-3" />
-                  )}
+                  {copiedId === 'sse-spec' ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                   <span>{copiedId === 'sse-spec' ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
-              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
-                {`// Client-Side Server-Sent Events Listener
-const eventSource = new EventSource(
-  'https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01'
-);
-
-eventSource.addEventListener('class.seat_reserved', (event) => {
+              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+                {`const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');
+sse.addEventListener('class.seat_reserved', (event) => {
   const packet = JSON.parse(event.data);
-  console.log('Live seat mutation broadcast:', packet);
-});
-
-eventSource.onerror = (err) => {
-  console.error('SSE Stream reconnecting via exponential backoff...', err);
-};`}
+  console.log('Live seat mutation:', packet);
+});`}
               </pre>
-              <p className="text-xs leading-relaxed text-[#0A1A4A]">
-                Note: Direct packet injection and mutation dispatch are restricted to backend
-                registrar workers. The client channel functions as a high-efficiency one-way
-                broadcast.
-              </p>
             </div>
           </section>
 
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 6: BACKEND REST API DIRECTORY & RATE LIMITS */}
+          {/* SECTION 6: BACKEND REST API DIRECTORY */}
           {/* ----------------------------------------------------------------- */}
-          <section id="rest-api-directory" className="space-y-6 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                <Server className="h-3.5 w-3.5" />
-                <span>REST Architecture · Open API 3.1.0 Contract</span>
-              </div>
-              <h2 className="text-2xl font-extrabold tracking-tight text-[#0A1A4A]">
+          <section id="rest-api-directory" className="space-y-5 border-t border-[#CAD3F5] pt-8">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
+                Directory
+              </span>
+              <h2 className="text-2xl font-bold tracking-tight text-[#0A1A4A]">
                 Backend REST API Directory
               </h2>
-              <p className="text-sm leading-relaxed font-medium text-[#0A1A4A]">
-                Complete reference table of public syndication, health diagnostics, ledger verification,
-                and streaming endpoints across the SNP-SMS modular monolith.
+              <p className="text-xs font-medium text-[#0A1A4A]/75">
+                Summary of public syndication, health, ledger verification, and streaming endpoints.
               </p>
             </div>
 
@@ -1495,34 +1224,34 @@ eventSource.onerror = (err) => {
                 <table className="w-full border-collapse text-left">
                   <thead>
                     <tr className="border-b border-[#CAD3F5] bg-[#EFF5FF] text-[11px] font-bold tracking-wider text-[#0056FF] uppercase">
-                      <th className="px-4 py-3">Method & Route</th>
-                      <th className="px-4 py-3">Access Tier</th>
-                      <th className="px-4 py-3">Rate Limit</th>
-                      <th className="px-4 py-3">Cache Policy</th>
-                      <th className="px-4 py-3">Description</th>
+                      <th className="px-4 py-2.5">Method & Route</th>
+                      <th className="px-4 py-2.5">Scope</th>
+                      <th className="px-4 py-2.5">Rate Limit</th>
+                      <th className="px-4 py-2.5">Cache</th>
+                      <th className="px-4 py-2.5">Description</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#CAD3F5] text-xs font-medium text-[#0A1A4A]">
                     {BACKEND_PUBLIC_ENDPOINTS.map((endpoint) => (
                       <tr key={endpoint.path} className="transition-colors hover:bg-[#EFF5FF]/60">
-                        <td className="px-4 py-3 font-mono">
+                        <td className="px-4 py-2.5 font-mono">
                           <span className="mr-2 inline-block rounded bg-[#E3E7FC] px-1.5 py-0.5 text-[10px] font-bold text-[#0056FF]">
                             {endpoint.method}
                           </span>
                           <span className="font-semibold">{endpoint.path}</span>
                         </td>
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-2.5">
                           <span className="rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2 py-0.5 text-[11px] text-[#0A1A4A]">
                             {endpoint.scope}
                           </span>
                         </td>
-                        <td className="px-4 py-3 font-mono text-[11px] text-[#0056FF]">
+                        <td className="px-4 py-2.5 font-mono text-[11px] text-[#0056FF]">
                           {endpoint.rateLimit}
                         </td>
-                        <td className="px-4 py-3 font-mono text-[11px] text-[#0A1A4A]/70">
+                        <td className="px-4 py-2.5 font-mono text-[11px] text-[#0A1A4A]/70">
                           {endpoint.cacheControl}
                         </td>
-                        <td className="px-4 py-3 text-[11px] text-[#0A1A4A]/80">
+                        <td className="px-4 py-2.5 text-[11px] text-[#0A1A4A]/80">
                           {endpoint.description}
                         </td>
                       </tr>
@@ -1531,54 +1260,29 @@ eventSource.onerror = (err) => {
                 </table>
               </div>
             </div>
-
-            {/* RFC 7807 Problem Details Error Contract Box */}
-            <div className="space-y-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  RFC 7807 / RFC 9457 Error Response Specification
-                </span>
-                <span className="font-mono text-[11px] text-[#0A1A4A]/70">
-                  Content-Type: application/problem+json
-                </span>
-              </div>
-              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
-                {`{
-  "type": "https://api.snp.edu.kh/errors/rate_limit_exceeded",
-  "title": "Too Many Requests",
-  "status": 429,
-  "detail": "Rate limit quota exceeded. Retry after 60 seconds.",
-  "instance": "/api/v1/classes?branch=BR-01",
-  "retryAfter": 60
-}`}
-              </pre>
-              <p className="text-xs leading-relaxed text-[#0A1A4A]">
-                All non-2xx responses from SNP-SMS backend APIs adhere strictly to the RFC 7807 Problem Details standard with deterministic error codes and retry windows.
-              </p>
-            </div>
           </section>
 
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 7: CHANGELOGS ANCHOR */}
+          {/* SECTION 7: RELEASES */}
           {/* ----------------------------------------------------------------- */}
-          <section id="changelogs" className="space-y-4 border-t border-[#CAD3F5] pt-8">
+          <section id="changelogs" className="space-y-3 border-t border-[#CAD3F5] pt-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <FileText className="h-4 w-4 text-[#0056FF]" />
-                <h3 className="text-base font-bold text-[#0A1A4A]">Syndication API Releases</h3>
+                <h3 className="text-base font-bold text-[#0A1A4A]">Syndication Releases</h3>
               </div>
               <span className="rounded border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 text-xs font-semibold text-[#0056FF]">
                 v0.2.12 Active
               </span>
             </div>
-            <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-4 text-xs text-[#0A1A4A]">
+            <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-xs text-[#0A1A4A]">
               <div className="flex items-center justify-between font-bold text-[#0056FF]">
-                <span>Latest Update — {CHANGE_LOGS[0]?.version || 'v0.2.12'}</span>
+                <span>{CHANGE_LOGS[0]?.version || 'v0.2.12'}</span>
                 <span>{CHANGE_LOGS[0]?.date || '2026-10-31'}</span>
               </div>
-              <p className="leading-relaxed">
+              <p className="leading-relaxed text-[#0A1A4A]/80">
                 {CHANGE_LOGS[0]?.description ||
-                  'Open API & Syndication Guide redesigned for backend REST API specifications, cryptographic ledger verification, and real-time streaming.'}
+                  'Open API & Syndication Guide redesigned for minimal psychological reading, backend REST API contracts, and real-time streaming.'}
               </p>
             </div>
           </section>

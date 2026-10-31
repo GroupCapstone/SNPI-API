@@ -54,6 +54,12 @@ import {
   Monitor,
   Layers,
   FileText,
+  Smartphone,
+  LayoutGrid,
+  BatteryMedium,
+  Palette,
+  ChevronDown,
+  ChevronRight,
 } from '@/components/icons';
 import { useDocsNav } from './docs-nav-context';
 import { cn } from '@/lib/utils';
@@ -70,6 +76,19 @@ export function UiLibraryView() {
   // Per-component tab view state: 'preview' | 'prompt'
   const [componentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>({});
   const getCompTab = (id: string): 'preview' | 'prompt' => componentTabs[id] || 'preview';
+
+  // Per-component preview mode: 'desktop' | 'mobile' | 'grid' (Inspired by React Bits / 21st.dev reference)
+  const [demoModes, setDemoModes] = React.useState<Record<string, 'desktop' | 'mobile' | 'grid'>>({});
+  const getDemoMode = (id: string): 'desktop' | 'mobile' | 'grid' => demoModes[id] || 'desktop';
+  const setDemoMode = (id: string, mode: 'desktop' | 'mobile' | 'grid') => {
+    setDemoModes((prev) => ({ ...prev, [id]: mode }));
+  };
+
+  // Sidebar collapsible category state (Inspired by Knowledge Base reference)
+  const [collapsedCategories, setCollapsedCategories] = React.useState<Record<string, boolean>>({});
+  const toggleCategory = (cat: string) => {
+    setCollapsedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }));
+  };
 
   // Active section for Line Tracker
   const [activeSectionId, setActiveSectionId] = React.useState<string>('interactive-feed');
@@ -322,117 +341,114 @@ export function UiLibraryView() {
       {/* Main Grid Container */}
       <div className="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 lg:flex-row">
-          {/* COLUMN 1: Left Sticky Sidebar Navigation (Permanently Pinned Like Navbar) */}
-          <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-60 lg:self-start xl:w-64">
+          {/* COLUMN 1: Left Sticky Sidebar Navigation (Knowledge Base Style - Images 3 & 4) */}
+          <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-64 lg:self-start xl:w-72">
             <div
               ref={sidebarContainerRef}
-              className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-4 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
-              {/* Filter Input */}
-              <GeometricInput
-                inputSize="sm"
-                placeholder="Filter components..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
-              />
+              {/* Knowledge Base Header (Images 3 & 4) */}
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="font-sans text-sm font-bold text-slate-900">
+                  Knowledge base
+                </span>
+                <button
+                  type="button"
+                  title="Total Components"
+                  className="flex size-6 items-center justify-center rounded-md border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                >
+                  <Plus className="size-3.5 stroke-[2]" />
+                </button>
+              </div>
 
-              {/* Core UI Components Grouped By Category */}
-              <div className="space-y-5 font-sans text-xs">
-                <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
-                  <span>Categories</span>
-                  <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 text-[10px] font-black text-[#0056FF]">
-                    {filteredComponents.length} Active
-                  </span>
-                </div>
+              {/* Clean Search Documents Input (Images 3 & 4) */}
+              <div className="relative">
+                <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Search documents"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2 pr-3 pl-8.5 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-hidden"
+                />
+              </div>
 
+              {/* Collapsible Folder Categories Tree */}
+              <div className="space-y-1.5 font-sans text-xs pt-1">
                 {groupedCategories.length === 0 ? (
                   <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
-                    No matching components found
+                    No matching documents found
                   </div>
                 ) : (
                   groupedCategories.map((group) => {
+                    const isCollapsed = collapsedCategories[group.category];
                     const isCategoryActive =
                       activeSectionId === group.categoryId ||
                       group.components.some((c) => activeSectionId === `comp-${c.id}`);
 
                     return (
-                      <div key={group.category} className="space-y-1.5">
-                        {/* Category Flow Header Button */}
+                      <div key={group.category} className="space-y-0.5">
+                        {/* Folder Header */}
                         <button
                           type="button"
-                          data-section-id={group.categoryId}
-                          onClick={() => {
-                            if (searchQuery.trim()) setSearchQuery('');
-                            scrollToSection(group.categoryId);
-                          }}
+                          onClick={() => toggleCategory(group.category)}
                           className={cn(
-                            'group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1 text-left font-mono text-[11px] font-bold tracking-wider transition-all select-none',
+                            'group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-semibold transition-all select-none',
                             isCategoryActive
-                              ? 'bg-[#0056FF]/10 text-[#0056FF]'
-                              : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900',
+                              ? 'bg-[#0056FF]/[0.08] text-[#0056FF]'
+                              : 'text-slate-700 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={cn(
-                                'h-3.5 w-1 rounded-[2px] transition-colors',
-                                isCategoryActive ? 'bg-[#0056FF]' : 'bg-transparent',
-                              )}
-                            />
-                            <span className="uppercase">{group.category}</span>
+                          <div className="flex items-center gap-2 min-w-0">
+                            {isCollapsed ? (
+                              <ChevronRight className="size-3.5 shrink-0 text-slate-400" />
+                            ) : (
+                              <ChevronDown className="size-3.5 shrink-0 text-slate-400" />
+                            )}
+                            <Folder className="size-3.5 shrink-0 text-slate-500 group-hover:text-[#0056FF]" />
+                            <span className="truncate">{group.category}</span>
                           </div>
-                          <span className="text-[10px] text-[#FF5500]">
-                            [{group.components.length}]
+                          <span className="font-mono text-[10px] text-slate-400 font-normal">
+                            {group.components.length}
                           </span>
                         </button>
 
-                        {/* Continuous Vertical Line Tracker Track (Zero Dots, Pure Precision Line) */}
-                        <div className="relative space-y-0.5 border-l-2 border-slate-200/90 pl-3 dark:border-slate-800">
-                          {group.components.map((comp) => {
-                            const targetId = `comp-${comp.id}`;
-                            const isCurrentActive = activeSectionId === targetId;
-                            return (
-                              <button
-                                key={comp.id}
-                                type="button"
-                                data-section-id={targetId}
-                                onClick={() => {
-                                  if (searchQuery.trim()) {
-                                    setSearchQuery('');
-                                  }
-                                  scrollToSection(targetId);
-                                }}
-                                className={cn(
-                                  'group relative flex w-full cursor-pointer items-center justify-between rounded-r-lg py-1.5 pr-2 pl-2.5 text-left font-sans text-xs transition-all duration-150 select-none',
-                                  isCurrentActive
-                                    ? '-ml-[2px] bg-[#0056FF]/[0.07] font-bold text-[#0056FF]'
-                                    : 'font-normal text-slate-600 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-950',
-                                )}
-                              >
-                                {/* Active Line Indicator Segment (Zero Dots, Pure Precision Line) */}
-                                {isCurrentActive && (
-                                  <span
-                                    aria-hidden="true"
-                                    className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-[1px] bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
-                                  />
-                                )}
-                                <span className="truncate">{comp.name}</span>
-                              </button>
-                            );
-                          })}
-                        </div>
+                        {/* Folder File Items */}
+                        {!isCollapsed && (
+                          <div className="space-y-0.5 pl-6 border-l border-slate-100 ml-3">
+                            {group.components.map((comp) => {
+                              const targetId = `comp-${comp.id}`;
+                              const isCurrentActive = activeSectionId === targetId;
+                              return (
+                                <button
+                                  key={comp.id}
+                                  type="button"
+                                  onClick={() => scrollToSection(targetId)}
+                                  className={cn(
+                                    'group flex w-full cursor-pointer items-center gap-2 rounded-lg py-1 px-2 text-left font-sans text-xs transition-all select-none',
+                                    isCurrentActive
+                                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                                      : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
+                                  )}
+                                >
+                                  <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-[#0056FF]" />
+                                  <span className="truncate">{comp.name}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
                     );
                   })
                 )}
 
                 {/* Documentation Section Links */}
-                <div className="border-t border-slate-200/80 pt-3">
-                  <div className="pb-2 font-mono text-[10px] font-bold text-slate-400 uppercase">
+                <div className="border-t border-slate-100 pt-3 mt-3">
+                  <div className="pb-1.5 font-mono text-[10px] font-bold text-slate-400 uppercase">
                     <span>Documentation</span>
                   </div>
-                  <div className="relative space-y-0.5 border-l-2 border-slate-200/90 pl-3 dark:border-slate-800">
+                  <div className="space-y-0.5">
                     {[
                       { id: 'brand-blueprint', label: 'Brand Blueprint' },
                       { id: 'design-principles', label: 'Design Standards' },
@@ -443,25 +459,36 @@ export function UiLibraryView() {
                         <button
                           key={doc.id}
                           type="button"
-                          data-section-id={doc.id}
                           onClick={() => scrollToSection(doc.id)}
                           className={cn(
-                            'group relative flex w-full cursor-pointer items-center justify-between rounded-r-lg py-1.5 pr-2 pl-2.5 text-left font-sans text-xs transition-all duration-150 select-none',
+                            'group flex w-full cursor-pointer items-center gap-2 rounded-lg py-1.5 px-2 text-left font-sans text-xs transition-all select-none',
                             isCurrentActive
-                              ? '-ml-[2px] bg-[#0056FF]/[0.07] font-bold text-[#0056FF]'
-                              : 'font-normal text-slate-600 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-950',
+                              ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                              : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
-                          {isCurrentActive && (
-                            <span
-                              aria-hidden="true"
-                              className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-[1px] bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
-                            />
-                          )}
+                          <FileText className="size-3 shrink-0 text-slate-400" />
                           <span className="truncate">{doc.label}</span>
                         </button>
                       );
                     })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Profile / Portal Info Card (Images 3 & 4) */}
+              <div className="border-t border-slate-100 pt-3 mt-4">
+                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#0056FF] font-sans text-xs font-bold text-white shadow-2xs">
+                    LM
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-sans text-xs font-bold text-slate-900">
+                      Lena Marchetti
+                    </p>
+                    <p className="truncate font-sans text-[11px] text-slate-500">
+                      Knowledge manager
+                    </p>
                   </div>
                 </div>
               </div>
