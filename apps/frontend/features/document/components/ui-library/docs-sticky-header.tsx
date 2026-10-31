@@ -55,7 +55,7 @@ export function DocsStickyHeader({
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#CAD3F5] bg-[#E3E7FC]/95 shadow-[0_1px_8px_rgba(0,0,0,0.03)] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-[#CAD3F5] bg-white shadow-[0_1px_8px_rgba(0,0,0,0.03)] backdrop-blur-xl">
       <div className="relative mx-auto flex h-[68px] max-w-[1560px] items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left: Brand Identity */}
         <Link

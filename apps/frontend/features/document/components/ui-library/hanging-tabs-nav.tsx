@@ -118,24 +118,16 @@ function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; class
       fill="none"
     >
       <defs>
-        {/* Metallic Light Mech Gradient */}
-        <linearGradient id="cyberChassisLightGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="35%" stopColor="#F8FAFC" />
-          <stop offset="85%" stopColor="#EEF2F8" />
-          <stop offset="100%" stopColor="#E2E8F4" />
-        </linearGradient>
-
         {/* Ambient Royal Blue Glow Filter */}
         <filter id="royalGlow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#0056FF" floodOpacity="0.45" />
+          <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="#0056FF" floodOpacity="0.3" />
         </filter>
       </defs>
 
-      {/* Main Outer Chassis Path (Chamfered Ears, Stepped Armor Wings, Bottom Drop Bracket) */}
+      {/* Main Outer Chassis Path (Chamfered Ears, Stepped Armor Wings, Bottom Drop Bracket - Pure Solid White) */}
       <path
         d={is2Tabs ? path2 : path3}
-        fill="url(#cyberChassisLightGrad)"
+        fill="#FFFFFF"
         stroke="#CAD3F5"
         strokeWidth="1.75"
         vectorEffect="non-scaling-stroke"
@@ -355,19 +347,9 @@ export function CyberArmorNav({
             'group relative flex items-center justify-center cursor-pointer transition-all duration-150 active:scale-[0.98] mx-0.5',
             buttonHeights,
             isActive
-              ? 'bg-white text-[#0056FF] shadow-[0_2px_8px_rgba(0,86,255,0.08),_0_1px_3px_rgba(0,0,0,0.04)] rounded-[6px]'
-              : 'hover:bg-white/60 hover:text-[#0056FF] text-slate-800 rounded-[6px]',
+              ? 'bg-[#EFF5FF] text-[#0056FF] border border-[#CAD3F5] rounded-[6px] shadow-xs'
+              : 'hover:bg-[#EFF5FF]/80 hover:text-[#0056FF] text-[#0A1A4A] rounded-[6px]',
           );
-
-          const indicator = isActive ? (
-            <span
-              className={cn(
-                'absolute -bottom-1 left-1/2 h-[3.5px] w-3/4 -translate-x-1/2 rounded-full',
-                'bg-[#0056FF]',
-                'shadow-[0_0_14px_rgba(0,86,255,0.95),0_2px_6px_rgba(0,86,255,0.7)]',
-              )}
-            />
-          ) : null;
 
           return (
             <React.Fragment key={tab.id}>
@@ -383,7 +365,6 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
-                  {indicator}
                 </Link>
               ) : (
                 <button
@@ -397,14 +378,13 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
-                  {indicator}
                 </button>
               )}
 
-              {/* Physical Vertical Seam: 1px Darker Line + 1px White Milled Highlight */}
+              {/* Physical Vertical Seam: 1px Soft Lavender Line */}
               {!isLast && (
                 <div className="relative mx-1 flex h-4 w-[1px] items-center">
-                  <span className="h-full w-[1px] bg-slate-300/80" />
+                  <span className="h-full w-[1px] bg-[#CAD3F5]" />
                 </div>
               )}
             </React.Fragment>
