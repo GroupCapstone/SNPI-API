@@ -103,7 +103,9 @@ export function UiLibraryView() {
   const getCompTab = (id: string): 'preview' | 'prompt' => componentTabs[id] || 'preview';
 
   // Per-component preview mode: 'desktop' | 'tablet' | 'mobile' (Matching media_1793457954613_79aaf0a5.png)
-  const [demoModes, setDemoModes] = React.useState<Record<string, 'desktop' | 'tablet' | 'mobile'>>({});
+  const [demoModes, setDemoModes] = React.useState<Record<string, 'desktop' | 'tablet' | 'mobile'>>(
+    {},
+  );
   const getDemoMode = (id: string): 'desktop' | 'tablet' | 'mobile' => demoModes[id] || 'desktop';
   const setDemoMode = (id: string, mode: 'desktop' | 'tablet' | 'mobile') => {
     setDemoModes((prev) => ({ ...prev, [id]: mode }));
@@ -449,10 +451,8 @@ export function UiLibraryView() {
               className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-4 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
               {/* Knowledge Base Header (Images 3 & 4) */}
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                <span className="font-sans text-sm font-bold text-slate-900">
-                  Knowledge base
-                </span>
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <span className="font-sans text-sm font-bold text-slate-900">Knowledge base</span>
                 <button
                   type="button"
                   title="Total Components"
@@ -475,7 +475,7 @@ export function UiLibraryView() {
               </div>
 
               {/* Collapsible Folder Categories Tree */}
-              <div className="space-y-1.5 font-sans text-xs pt-1">
+              <div className="space-y-1.5 pt-1 font-sans text-xs">
                 {groupedCategories.length === 0 ? (
                   <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
                     No matching documents found
@@ -500,7 +500,7 @@ export function UiLibraryView() {
                               : 'text-slate-700 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
-                          <div className="flex items-center gap-2 min-w-0">
+                          <div className="flex min-w-0 items-center gap-2">
                             {isCollapsed ? (
                               <ChevronRight className="size-3.5 shrink-0 text-slate-400" />
                             ) : (
@@ -509,14 +509,14 @@ export function UiLibraryView() {
                             <Folder className="size-3.5 shrink-0 text-slate-500 group-hover:text-[#0056FF]" />
                             <span className="truncate">{group.category}</span>
                           </div>
-                          <span className="font-mono text-[10px] text-slate-400 font-normal">
+                          <span className="font-mono text-[10px] font-normal text-slate-400">
                             {group.components.length}
                           </span>
                         </button>
 
                         {/* Folder File Items */}
                         {!isCollapsed && (
-                          <div className="space-y-0.5 pl-6 border-l border-slate-100 ml-3">
+                          <div className="ml-3 space-y-0.5 border-l border-slate-100 pl-6">
                             {group.components.map((comp) => {
                               const targetId = `comp-${comp.id}`;
                               const isCurrentActive = activeSectionId === targetId;
@@ -526,7 +526,7 @@ export function UiLibraryView() {
                                   type="button"
                                   onClick={() => scrollToSection(targetId)}
                                   className={cn(
-                                    'group flex w-full cursor-pointer items-center gap-2 rounded-lg py-1 px-2 text-left font-sans text-xs transition-all select-none',
+                                    'group flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-left font-sans text-xs transition-all select-none',
                                     isCurrentActive
                                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
                                       : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
@@ -545,7 +545,7 @@ export function UiLibraryView() {
                 )}
 
                 {/* Documentation Section Links */}
-                <div className="border-t border-slate-100 pt-3 mt-3">
+                <div className="mt-3 border-t border-slate-100 pt-3">
                   <div className="pb-1.5 font-mono text-[10px] font-bold text-slate-400 uppercase">
                     <span>Documentation</span>
                   </div>
@@ -562,7 +562,7 @@ export function UiLibraryView() {
                           type="button"
                           onClick={() => scrollToSection(doc.id)}
                           className={cn(
-                            'group flex w-full cursor-pointer items-center gap-2 rounded-lg py-1.5 px-2 text-left font-sans text-xs transition-all select-none',
+                            'group flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-left font-sans text-xs transition-all select-none',
                             isCurrentActive
                               ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
                               : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
@@ -582,7 +582,7 @@ export function UiLibraryView() {
           {/* COLUMN 2: Center Main Interactive Component Feed (1-Column Continuous Scroll Feed) */}
           <main className="min-w-0 flex-1 space-y-10">
             {/* STICKY LIVE LOCATION TRACKER: Easy to recognize where we stand in each menu page */}
-            <div className="sticky top-[68px] z-30 -mx-4 border-y border-slate-200/90 bg-white/95 px-4 py-2.5 backdrop-blur-md shadow-2xs sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <div className="sticky top-[68px] z-30 -mx-4 border-y border-slate-200/90 bg-white/95 px-4 py-2.5 shadow-2xs backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
               <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
                 {/* Active Breadcrumb & Current Standing Position */}
                 <div className="flex min-w-0 items-center gap-2">
@@ -591,7 +591,7 @@ export function UiLibraryView() {
                     <span className="size-2 rounded-full bg-[#0056FF]" />
                   </span>
                   <div className="flex min-w-0 flex-wrap items-center gap-1.5 font-mono text-[11px]">
-                    <span className="font-bold text-slate-500 uppercase tracking-wider">
+                    <span className="font-bold tracking-wider text-slate-500 uppercase">
                       {currentLocation.crumb}
                     </span>
                     <span className="text-slate-300">/</span>
@@ -644,7 +644,7 @@ export function UiLibraryView() {
 
             {/* HERO HEAD TITLE: Ultra-Hook Homepage Section with High-Impact Developer Experience */}
             <section id="ui-library-head" className="scroll-mt-36 space-y-4">
-              <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-[#F8FAFC]/60 to-white p-6 shadow-xs sm:p-10">
+              <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white via-[#F8FAFC]/60 to-white p-4 shadow-xs sm:rounded-3xl sm:p-10">
                 {/* Subtle Geometric Background Dot Grid */}
                 <div
                   className="pointer-events-none absolute inset-0 opacity-[0.4]"
@@ -661,16 +661,16 @@ export function UiLibraryView() {
                   <div className="h-16 w-full max-w-3xl rounded-t-[100%] border-t border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
                 </div>
 
-                <div className="relative z-10 space-y-6">
+                <div className="relative z-10 space-y-4 sm:space-y-6">
                   {/* Top Status & Hub Switcher Bar */}
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     {/* Live System Badge */}
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 px-3 py-1 font-mono text-[10px] font-bold text-emerald-700">
-                        <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700 sm:px-3 sm:py-1">
+                        <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
                         v0.2.12 LIVE
                       </span>
-                      <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC]/60 px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                      <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC]/60 px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase sm:px-3 sm:py-1">
                         SNPI Enterprise UI System
                       </span>
                     </div>
@@ -681,7 +681,7 @@ export function UiLibraryView() {
                         type="button"
                         onClick={() => setActiveTab('library', true)}
                         className={cn(
-                          'flex items-center gap-2 rounded-full px-4 py-2 font-sans text-xs font-bold transition-all',
+                          'flex items-center gap-2 rounded-full px-3 py-1.5 font-sans text-xs font-bold transition-all sm:px-4 sm:py-2',
                           activeTab === 'library'
                             ? 'bg-[#0056FF] text-white shadow-xs'
                             : 'text-slate-600 hover:text-slate-900',
@@ -694,7 +694,7 @@ export function UiLibraryView() {
                         type="button"
                         onClick={() => setActiveTab('openapi', true)}
                         className={cn(
-                          'flex items-center gap-2 rounded-full px-4 py-2 font-sans text-xs font-bold transition-all',
+                          'flex items-center gap-2 rounded-full px-3 py-1.5 font-sans text-xs font-bold transition-all sm:px-4 sm:py-2',
                           activeTab === 'openapi'
                             ? 'bg-[#0056FF] text-white shadow-xs'
                             : 'text-slate-600 hover:text-slate-900',
@@ -706,25 +706,35 @@ export function UiLibraryView() {
                     </div>
                   </div>
 
-                  {/* Monumental Hook Title */}
-                  <div className="max-w-3xl space-y-3">
-                    <h1 className="font-sans text-4xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl">
-                      Interactive UI Library.
-                      <span className="block text-[#0056FF]">Built for Production.</span>
+                  {/* Monumental Hook Title - Clear Mobile View: "UI Library" Name Only */}
+                  <div className="max-w-3xl space-y-2 sm:space-y-3">
+                    <h1 className="font-sans text-3xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl">
+                      <span className="sm:hidden">UI Library</span>
+                      <span className="hidden sm:inline">
+                        Interactive UI Library.
+                        <span className="block text-[#0056FF]">Built for Production.</span>
+                      </span>
                     </h1>
-                    <p className="font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
-                      Interactive component catalog, enterprise design tokens, and universal AI agent prompt specifications.
-                      Engineered with strict flat design, WCAG AA accessibility, 44px touch targets, and instant 1-click prompt export.
+                    {/* Clear View: Less description on mobile, concise instruction */}
+                    <p className="font-sans text-xs text-slate-600 sm:text-base sm:leading-relaxed">
+                      <span className="sm:hidden">
+                        73 production components. Tap a menu category or scroll below to explore.
+                      </span>
+                      <span className="hidden sm:inline">
+                        Interactive component catalog, enterprise design tokens, and universal AI
+                        agent prompt specifications. Engineered with strict flat design, WCAG AA
+                        accessibility, 44px touch targets, and instant 1-click prompt export.
+                      </span>
                     </p>
                   </div>
 
                   {/* Interactive Terminal Quickstart Bar & Action Hook */}
-                  <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
+                  <div className="flex flex-col gap-2.5 pt-1 sm:flex-row sm:items-center sm:gap-3 sm:pt-2">
                     {/* 1-Click Copy Package Command */}
-                    <div className="flex items-center rounded-2xl border border-slate-200/90 bg-white p-1.5 shadow-2xs">
-                      <div className="flex items-center gap-2 px-3 text-slate-500">
-                        <Terminal className="size-4 text-[#0056FF]" />
-                        <span className="font-mono text-xs font-semibold text-slate-900">
+                    <div className="flex items-center justify-between rounded-xl border border-slate-200/90 bg-white p-1 shadow-2xs sm:justify-start sm:rounded-2xl sm:p-1.5">
+                      <div className="flex items-center gap-2 px-2.5 text-slate-500 sm:px-3">
+                        <Terminal className="size-3.5 text-[#0056FF] sm:size-4" />
+                        <span className="font-mono text-[11px] font-semibold text-slate-900 sm:text-xs">
                           npx snp-ui@latest add @components
                         </span>
                       </div>
@@ -732,20 +742,20 @@ export function UiLibraryView() {
                         type="button"
                         onClick={handleCopyQuickstart}
                         className={cn(
-                          'flex items-center gap-1.5 rounded-xl px-3 py-1.5 font-sans text-xs font-bold transition-all cursor-pointer active:scale-95',
+                          'flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1 font-sans text-xs font-bold transition-all active:scale-95 sm:rounded-xl sm:px-3 sm:py-1.5',
                           copiedQuickstart
-                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-500/40'
+                            ? 'border border-emerald-500/40 bg-emerald-50 text-emerald-700'
                             : 'bg-slate-100 text-slate-700 hover:bg-[#0056FF] hover:text-white',
                         )}
                       >
                         {copiedQuickstart ? (
                           <>
-                            <Check className="size-3.5 stroke-[2.5] text-emerald-600" />
+                            <Check className="size-3 stroke-[2.5] text-emerald-600 sm:size-3.5" />
                             <span>Copied!</span>
                           </>
                         ) : (
                           <>
-                            <Copy className="size-3.5 stroke-[2]" />
+                            <Copy className="size-3 stroke-[2] sm:size-3.5" />
                             <span>Copy</span>
                           </>
                         )}
@@ -756,7 +766,7 @@ export function UiLibraryView() {
                     <button
                       type="button"
                       onClick={() => scrollToSection('cat-navigation')}
-                      className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0056FF] px-5 py-2.5 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0048D9] active:scale-95 cursor-pointer"
+                      className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0048D9] active:scale-95 sm:rounded-2xl sm:px-5 sm:py-2.5"
                     >
                       <span>Explore 73 Components</span>
                       <ArrowRight className="size-3.5 stroke-[2]" />
@@ -827,7 +837,7 @@ export function UiLibraryView() {
                     className="scroll-mt-36 space-y-6"
                   >
                     {/* PROMINENT CATEGORY SECTION BANNER: Instant recognition of where user stands */}
-                    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-[#EFF5FF] via-white to-white p-5 sm:p-6 shadow-2xs">
+                    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-[#EFF5FF] via-white to-white p-5 shadow-2xs sm:p-6">
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex items-center gap-3">
                           <span className="flex size-11 items-center justify-center rounded-xl bg-[#0056FF] font-mono text-sm font-black text-white shadow-xs">
@@ -835,7 +845,7 @@ export function UiLibraryView() {
                           </span>
                           <div>
                             <div className="flex items-center gap-2">
-                              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase tracking-wider">
+                              <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
                                 Menu Section · 0{group.groupNumber} of 0{groupedCategories.length}
                               </span>
                               <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 font-mono text-[9px] font-bold text-slate-600">
@@ -855,7 +865,7 @@ export function UiLibraryView() {
                               key={comp.id}
                               type="button"
                               onClick={() => scrollToSection(`comp-${comp.id}`)}
-                              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 font-sans text-xs font-semibold text-slate-700 hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF] transition-all cursor-pointer"
+                              className="cursor-pointer rounded-lg border border-slate-200 bg-white px-2.5 py-1 font-sans text-xs font-semibold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]"
                             >
                               0{idx + 1}. {comp.name}
                             </button>
@@ -888,7 +898,7 @@ export function UiLibraryView() {
                                     <h2 className="font-sans text-lg font-black text-slate-950 sm:text-xl">
                                       {comp.name}
                                     </h2>
-                                    <span className="rounded-[4px] border border-slate-200 px-1.5 py-0.5 font-mono text-[9px] font-bold text-slate-500 uppercase tracking-wider">
+                                    <span className="rounded-[4px] border border-slate-200 px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider text-slate-500 uppercase">
                                       {comp.category}
                                     </span>
                                   </div>
@@ -914,7 +924,7 @@ export function UiLibraryView() {
                                     }
                                     aria-label="Copy AI Agent MVP Prompt"
                                     className={cn(
-                                      'relative group/tip flex size-8 cursor-pointer items-center justify-center rounded-[8px] border transition-all active:scale-95',
+                                      'group/tip relative flex size-8 cursor-pointer items-center justify-center rounded-[8px] border transition-all active:scale-95',
                                       copiedPromptId === comp.id
                                         ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
                                         : 'border-slate-200 bg-white text-slate-600 hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
@@ -925,7 +935,7 @@ export function UiLibraryView() {
                                     ) : (
                                       <Copy className="size-3.5 stroke-[2]" />
                                     )}
-                                    <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-slate-900 px-2 py-0.5 text-[10px] font-medium text-white whitespace-nowrap opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100 z-30">
+                                    <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2 py-0.5 text-[10px] font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
                                       Copy Prompt
                                     </span>
                                   </button>
@@ -937,15 +947,15 @@ export function UiLibraryView() {
                                       type="button"
                                       onClick={() => setDemoMode(comp.id, 'mobile')}
                                       className={cn(
-                                        'relative group/tip flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
+                                        'group/tip relative flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
                                         getDemoMode(comp.id) === 'mobile'
-                                          ? 'bg-slate-100 text-slate-950 font-bold shadow-xs'
+                                          ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
                                           : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
                                       )}
                                       aria-label="Phone Viewport (380px)"
                                     >
                                       <Smartphone className="size-3.5 stroke-[2]" />
-                                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium text-white whitespace-nowrap opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100 z-30">
+                                      <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
                                         Phone Viewport (380px)
                                       </span>
                                     </button>
@@ -955,15 +965,15 @@ export function UiLibraryView() {
                                       type="button"
                                       onClick={() => setDemoMode(comp.id, 'tablet')}
                                       className={cn(
-                                        'relative group/tip flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
+                                        'group/tip relative flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
                                         getDemoMode(comp.id) === 'tablet'
-                                          ? 'bg-slate-100 text-slate-950 font-bold shadow-xs'
+                                          ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
                                           : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
                                       )}
                                       aria-label="Tablet Viewport (680px)"
                                     >
                                       <Tablet className="size-3.5 stroke-[2]" />
-                                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium text-white whitespace-nowrap opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100 z-30">
+                                      <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
                                         Tablet Viewport (680px)
                                       </span>
                                     </button>
@@ -973,15 +983,15 @@ export function UiLibraryView() {
                                       type="button"
                                       onClick={() => setDemoMode(comp.id, 'desktop')}
                                       className={cn(
-                                        'relative group/tip flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
+                                        'group/tip relative flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
                                         getDemoMode(comp.id) === 'desktop'
-                                          ? 'bg-slate-100 text-slate-950 font-bold shadow-xs'
+                                          ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
                                           : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
                                       )}
                                       aria-label="Desktop Viewport (100%)"
                                     >
                                       <Monitor className="size-3.5 stroke-[2]" />
-                                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium text-white whitespace-nowrap opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100 z-30">
+                                      <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
                                         Desktop Viewport (100%)
                                       </span>
                                     </button>
@@ -991,12 +1001,12 @@ export function UiLibraryView() {
                                   <button
                                     type="button"
                                     onClick={() => setFullscreenCompId(comp.id)}
-                                    className="relative group/tip flex size-8 cursor-pointer items-center justify-center rounded-[10px] bg-[#EFF5FF] text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
+                                    className="group/tip relative flex size-8 cursor-pointer items-center justify-center rounded-[10px] bg-[#EFF5FF] text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
                                     title="Fullscreen Viewport"
                                     aria-label="Fullscreen Viewport"
                                   >
                                     <FullscreenCornersIcon className="size-4" />
-                                    <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium text-white whitespace-nowrap opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100 z-30">
+                                    <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
                                       Fullscreen Viewport
                                     </span>
                                   </button>
@@ -1023,16 +1033,16 @@ export function UiLibraryView() {
 
                                 {/* Phone Viewport: Realistic iPhone Mockup */}
                                 {getDemoMode(comp.id) === 'mobile' && (
-                                  <div className="relative z-10 w-full max-w-[360px] sm:max-w-[380px] rounded-[48px] border-[7px] border-slate-900 bg-white shadow-2xl overflow-hidden transition-all">
+                                  <div className="relative z-10 w-full max-w-[360px] overflow-hidden rounded-[48px] border-[7px] border-slate-900 bg-white shadow-2xl transition-all sm:max-w-[380px]">
                                     {/* Status Bar */}
-                                    <div className="flex h-11 items-center justify-between px-6 pt-1 text-slate-900 bg-white">
+                                    <div className="flex h-11 items-center justify-between bg-white px-6 pt-1 text-slate-900">
                                       <span className="font-mono text-xs font-semibold">9:41</span>
                                       <div className="h-4.5 w-24 rounded-full bg-slate-950" />
-                                      <BatteryMedium className="size-4 text-slate-900 stroke-[2]" />
+                                      <BatteryMedium className="size-4 stroke-[2] text-slate-900" />
                                     </div>
 
                                     {/* Scrollable Inside Screen */}
-                                    <div className="no-scrollbar min-h-[460px] max-h-[520px] overflow-y-auto px-4 py-6 flex flex-col items-center justify-center">
+                                    <div className="no-scrollbar flex max-h-[520px] min-h-[460px] flex-col items-center justify-center overflow-y-auto px-4 py-6">
                                       {renderFeedComponentDemo(comp.id, stateBundle)}
                                     </div>
 
@@ -1045,14 +1055,14 @@ export function UiLibraryView() {
 
                                 {/* Tablet Viewport: 680px Width Frame */}
                                 {getDemoMode(comp.id) === 'tablet' && (
-                                  <div className="relative z-10 w-full max-w-[680px] rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm flex items-center justify-center transition-all">
+                                  <div className="relative z-10 flex w-full max-w-[680px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition-all">
                                     {renderFeedComponentDemo(comp.id, stateBundle)}
                                   </div>
                                 )}
 
                                 {/* Desktop Viewport: 100% Full Width Stage with Ambient Horizon Curve */}
                                 {getDemoMode(comp.id) === 'desktop' && (
-                                  <div className="relative z-10 flex w-full max-w-4xl min-h-[400px] flex-col items-center justify-center">
+                                  <div className="relative z-10 flex min-h-[400px] w-full max-w-4xl flex-col items-center justify-center">
                                     {/* Ambient Horizon Arc Glow (Image 8 style) */}
                                     <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center opacity-70">
                                       <div className="h-20 w-full max-w-2xl rounded-t-[100%] border-t-2 border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
@@ -1295,7 +1305,7 @@ export function UiLibraryView() {
                   className={cn(
                     'flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
                     getDemoMode(fullscreenCompId) === 'mobile'
-                      ? 'bg-slate-100 text-slate-950 font-bold shadow-xs'
+                      ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
                       : 'text-slate-500 hover:bg-slate-50',
                   )}
                   title="Phone Viewport (380px)"
@@ -1308,7 +1318,7 @@ export function UiLibraryView() {
                   className={cn(
                     'flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
                     getDemoMode(fullscreenCompId) === 'tablet'
-                      ? 'bg-slate-100 text-slate-950 font-bold shadow-xs'
+                      ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
                       : 'text-slate-500 hover:bg-slate-50',
                   )}
                   title="Tablet Viewport (680px)"
@@ -1321,7 +1331,7 @@ export function UiLibraryView() {
                   className={cn(
                     'flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
                     getDemoMode(fullscreenCompId) === 'desktop'
-                      ? 'bg-slate-100 text-slate-950 font-bold shadow-xs'
+                      ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
                       : 'text-slate-500 hover:bg-slate-50',
                   )}
                   title="Desktop Viewport (100%)"
@@ -1355,13 +1365,13 @@ export function UiLibraryView() {
             />
 
             {getDemoMode(fullscreenCompId) === 'mobile' && (
-              <div className="relative z-10 w-full max-w-[380px] rounded-[48px] border-[7px] border-slate-900 bg-white shadow-2xl overflow-hidden transition-all">
-                <div className="flex h-11 items-center justify-between px-6 pt-1 text-slate-900 bg-white">
+              <div className="relative z-10 w-full max-w-[380px] overflow-hidden rounded-[48px] border-[7px] border-slate-900 bg-white shadow-2xl transition-all">
+                <div className="flex h-11 items-center justify-between bg-white px-6 pt-1 text-slate-900">
                   <span className="font-mono text-xs font-semibold">9:41</span>
                   <div className="h-4.5 w-24 rounded-full bg-slate-950" />
-                  <BatteryMedium className="size-4 text-slate-900 stroke-[2]" />
+                  <BatteryMedium className="size-4 stroke-[2] text-slate-900" />
                 </div>
-                <div className="no-scrollbar min-h-[480px] max-h-[600px] overflow-y-auto px-4 py-6 flex flex-col items-center justify-center">
+                <div className="no-scrollbar flex max-h-[600px] min-h-[480px] flex-col items-center justify-center overflow-y-auto px-4 py-6">
                   {renderFeedComponentDemo(fullscreenCompId, stateBundle)}
                 </div>
                 <div className="flex h-6 items-center justify-center bg-white pb-1">
@@ -1371,7 +1381,7 @@ export function UiLibraryView() {
             )}
 
             {getDemoMode(fullscreenCompId) === 'tablet' && (
-              <div className="relative z-10 w-full max-w-[680px] rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm flex items-center justify-center transition-all">
+              <div className="relative z-10 flex w-full max-w-[680px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm transition-all">
                 {renderFeedComponentDemo(fullscreenCompId, stateBundle)}
               </div>
             )}

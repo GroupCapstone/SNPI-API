@@ -53,7 +53,8 @@ const PUBLIC_FEEDS_SPECS: PublicFeedSpec[] = [
     format: 'RSS 2.0 (XML)',
     endpoint: '/api/v1/public/rss/announcements.xml',
     refreshInterval: '5m cache',
-    description: 'Verified institutional announcements, academic period dates, and holiday advisories.',
+    description:
+      'Verified institutional announcements, academic period dates, and holiday advisories.',
     sampleXml: `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -92,7 +93,8 @@ const PUBLIC_FEEDS_SPECS: PublicFeedSpec[] = [
     format: 'JSON Feed',
     endpoint: '/api/v1/public/feed/alerts.json',
     refreshInterval: 'Real-time (60s)',
-    description: 'Campus weather warnings, entrance maintenance notices, and exam reschedule alerts.',
+    description:
+      'Campus weather warnings, entrance maintenance notices, and exam reschedule alerts.',
     sampleJson: {
       status: 'active',
       count: 1,
@@ -362,9 +364,9 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
   // Class Roster filter state
   const [classSearch, setClassSearch] = React.useState<string>('');
   const [classFilterStatus, setClassFilterStatus] = React.useState<string>('All');
-  const [classCodeLanguage, setClassCodeLanguage] = React.useState<'curl' | 'typescript' | 'python'>(
-    'curl',
-  );
+  const [classCodeLanguage, setClassCodeLanguage] = React.useState<
+    'curl' | 'typescript' | 'python'
+  >('curl');
 
   // Verification Ledger state
   const [verifyStatusTab, setVerifyStatusTab] = React.useState<'valid' | 'tampered'>('valid');
@@ -512,7 +514,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             className="flex min-h-[calc(100vh-92px)] flex-col justify-between pt-1 pb-4 sm:min-h-0 sm:pb-6"
           >
             {/* The Integrated Standalone Welcome Card */}
-            <div className="flex flex-1 flex-col justify-between rounded-3xl border border-[#CAD3F5] bg-[#EFF5FF] p-6 sm:p-10 shadow-xs">
+            <div className="flex flex-1 flex-col justify-between rounded-3xl border border-[#CAD3F5] bg-[#EFF5FF] p-6 shadow-xs sm:p-10">
               {/* Top Context & Headline */}
               <div className="space-y-4">
                 {/* Context Badge */}
@@ -527,13 +529,14 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 </div>
 
                 {/* Big Clear Headline */}
-                <h1 className="text-3xl font-black tracking-tight text-[#0A1A4A] sm:text-5xl lg:text-6xl leading-[1.12]">
+                <h1 className="text-3xl leading-[1.12] font-black tracking-tight text-[#0A1A4A] sm:text-5xl lg:text-6xl">
                   Welcome to SNP Open API
                 </h1>
 
                 {/* Less Description: Concise, punchy, high-impact */}
-                <p className="max-w-2xl text-sm font-medium leading-relaxed text-[#0A1A4A]/80 sm:text-base sm:leading-relaxed">
-                  Direct, read-only access to live campus announcements, course rosters, and tamper-proof diploma verification — free, open, and zero API keys needed.
+                <p className="max-w-2xl text-sm leading-relaxed font-medium text-[#0A1A4A]/80 sm:text-base sm:leading-relaxed">
+                  Direct, read-only access to live campus announcements, course rosters, and
+                  tamper-proof diploma verification — free, open, and zero API keys needed.
                 </p>
 
                 {/* 3 Quick Value Chips */}
@@ -556,7 +559,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               {/* Bottom Actions: Base URL Bar & Glide to Services Button */}
               <div className="mt-8 space-y-3">
                 {/* Instant Base URL Bar */}
-                <div className="flex flex-col gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5 shadow-2xs">
+                <div className="flex flex-col gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 shadow-2xs sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
                   <div className="flex min-w-0 items-center gap-2.5">
                     <span className="shrink-0 rounded-md bg-[#0056FF] px-2.5 py-1 font-mono text-[10px] font-bold text-white uppercase">
                       BASE URL
@@ -604,189 +607,185 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           {/* ----------------------------------------------------------------- */}
           {/* SECTION 2: 4 CORE SERVICES OVERVIEW (SCREEN TWO ON MOBILE)        */}
           {/* ----------------------------------------------------------------- */}
-          <section id="available-services" className="space-y-3 scroll-mt-24 pt-4 sm:pt-6">
+          <section id="available-services" className="scroll-mt-24 space-y-3 pt-4 sm:pt-6">
             <div className="flex items-center justify-between px-1">
               <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
                 Available Services & Endpoints
               </span>
-              <span className="text-[11px] font-medium text-[#0A1A4A]/60">
-                4 Core Services
-              </span>
+              <span className="text-[11px] font-medium text-[#0A1A4A]/60">4 Core Services</span>
             </div>
 
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
-                {/* Card 01: Campus Announcements & Feeds */}
-                <button
-                  onClick={() => scrollToSection('public-feeds')}
-                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
-                >
-                  <div className="flex w-full items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                        <Radio className="size-5" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                            01 · Feeds
-                          </span>
-                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
-                            RSS 2.0 & JSON
-                          </span>
-                        </div>
-                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                          Campus News & RSS Feeds
-                        </h3>
-                      </div>
+              {/* Card 01: Campus Announcements & Feeds */}
+              <button
+                onClick={() => scrollToSection('public-feeds')}
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+              >
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <Radio className="size-5" />
                     </div>
-                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          01 · Feeds
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          RSS 2.0 & JSON
+                        </span>
+                      </div>
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Campus News & RSS Feeds
+                      </h3>
                     </div>
                   </div>
-
-                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                    Live institutional announcements, urgent emergency alerts, and academic milestones.
-                  </p>
-
-                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                    <span className="font-mono text-[11px] text-[#0056FF]">
-                      GET /public/rss/announcements.xml
-                    </span>
-                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
-                      5m Cache
-                    </span>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                   </div>
-                </button>
+                </div>
 
-                {/* Card 02: Class Roster & Catalog */}
-                <button
-                  onClick={() => scrollToSection('class-catalog-api')}
-                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
-                >
-                  <div className="flex w-full items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                        <Layers className="size-5" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                            02 · Catalog
-                          </span>
-                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
-                            REST API
-                          </span>
-                        </div>
-                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                          Class Roster & Catalog
-                        </h3>
-                      </div>
+                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                  Live institutional announcements, urgent emergency alerts, and academic
+                  milestones.
+                </p>
+
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">
+                    GET /public/rss/announcements.xml
+                  </span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">5m Cache</span>
+                </div>
+              </button>
+
+              {/* Card 02: Class Roster & Catalog */}
+              <button
+                onClick={() => scrollToSection('class-catalog-api')}
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+              >
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <Layers className="size-5" />
                     </div>
-                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                    </div>
-                  </div>
-
-                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                    Query active courses, schedules, instructor details, and real-time available seats.
-                  </p>
-
-                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                    <span className="font-mono text-[11px] text-[#0056FF]">
-                      GET /api/v1/classes
-                    </span>
-                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
-                      Live Seats
-                    </span>
-                  </div>
-                </button>
-
-                {/* Card 03: Certificate Ledger API */}
-                <button
-                  onClick={() => scrollToSection('certificate-ledger-api')}
-                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
-                >
-                  <div className="flex w-full items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                        <ShieldCheck className="size-5" />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          02 · Catalog
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          REST API
+                        </span>
                       </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                            03 · Ledger
-                          </span>
-                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
-                            SHA-256 Ledger
-                          </span>
-                        </div>
-                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                          Certificate Verification
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Class Roster & Catalog
+                      </h3>
                     </div>
                   </div>
-
-                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                    Instantly verify student degrees with tamper-proof ADR-0006 cryptographic ledger proofs.
-                  </p>
-
-                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                    <span className="font-mono text-[11px] text-[#0056FF]">
-                      GET /reports/certificates/verify/:code
-                    </span>
-                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
-                      Proof Verified
-                    </span>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                   </div>
-                </button>
+                </div>
 
-                {/* Card 04: Real-Time SSE Stream */}
-                <button
-                  onClick={() => scrollToSection('realtime-stream')}
-                  className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
-                >
-                  <div className="flex w-full items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                        <Zap className="size-5" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                            04 · Stream
-                          </span>
-                          <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF] border border-[#CAD3F5]/60">
-                            HTTP/2 SSE
-                          </span>
-                        </div>
-                        <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                          Real-Time SSE Stream
-                        </h3>
-                      </div>
+                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                  Query active courses, schedules, instructor details, and real-time available
+                  seats.
+                </p>
+
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">GET /api/v1/classes</span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">Live Seats</span>
+                </div>
+              </button>
+
+              {/* Card 03: Certificate Ledger API */}
+              <button
+                onClick={() => scrollToSection('certificate-ledger-api')}
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+              >
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <ShieldCheck className="size-5" />
                     </div>
-                    <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                      <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          03 · Ledger
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          SHA-256 Ledger
+                        </span>
+                      </div>
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Certificate Verification
+                      </h3>
                     </div>
                   </div>
-
-                  <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                    Receive instant push events for announcements and seat reservations without polling.
-                  </p>
-
-                  <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                    <span className="font-mono text-[11px] text-[#0056FF]">
-                      GET /api/v1/stream/events
-                    </span>
-                    <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
-                      Sub-50ms Latency
-                    </span>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                   </div>
-                </button>
-              </div>
+                </div>
+
+                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                  Instantly verify student degrees with tamper-proof ADR-0006 cryptographic ledger
+                  proofs.
+                </p>
+
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">
+                    GET /reports/certificates/verify/:code
+                  </span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                    Proof Verified
+                  </span>
+                </div>
+              </button>
+
+              {/* Card 04: Real-Time SSE Stream */}
+              <button
+                onClick={() => scrollToSection('realtime-stream')}
+                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
+              >
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                      <Zap className="size-5" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                          04 · Stream
+                        </span>
+                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
+                          HTTP/2 SSE
+                        </span>
+                      </div>
+                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
+                        Real-Time SSE Stream
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
+                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </div>
+
+                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
+                  Receive instant push events for announcements and seat reservations without
+                  polling.
+                </p>
+
+                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
+                  <span className="font-mono text-[11px] text-[#0056FF]">
+                    GET /api/v1/stream/events
+                  </span>
+                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
+                    Sub-50ms Latency
+                  </span>
+                </div>
+              </button>
+            </div>
           </section>
 
           {/* ----------------------------------------------------------------- */}
@@ -801,7 +800,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 Public Feeds & RSS 2.0
               </h2>
               <p className="text-xs font-medium text-[#0A1A4A]/75">
-                Subscribe to read-only XML and JSON feeds to ingest campus announcements, security alerts, and milestones.
+                Subscribe to read-only XML and JSON feeds to ingest campus announcements, security
+                alerts, and milestones.
               </p>
             </div>
 
@@ -830,7 +830,9 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                       <div className="flex shrink-0 items-center gap-2">
                         <div className="flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-xs text-[#0A1A4A]">
                           <span className="font-bold text-[#0056FF]">GET</span>
-                          <span className="max-w-[180px] truncate sm:max-w-[200px]">{feed.endpoint}</span>
+                          <span className="max-w-[180px] truncate sm:max-w-[200px]">
+                            {feed.endpoint}
+                          </span>
                         </div>
                         <button
                           onClick={() => handleCopy(feed.endpoint, feed.id)}
@@ -908,7 +910,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 Class Roster & Catalog REST API
               </h2>
               <p className="text-xs font-medium text-[#0A1A4A]/75">
-                Real-time public courses, instructor schedules, and live seat counts across campuses.
+                Real-time public courses, instructor schedules, and live seat counts across
+                campuses.
               </p>
             </div>
 
@@ -925,7 +928,10 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
 
               <button
                 onClick={() =>
-                  handleCopy('curl -X GET "https://api.snp.edu.kh/api/v1/classes?branch=BR-01&status=open" -H "Accept: application/json"', 'copy-class-curl')
+                  handleCopy(
+                    'curl -X GET "https://api.snp.edu.kh/api/v1/classes?branch=BR-01&status=open" -H "Accept: application/json"',
+                    'copy-class-curl',
+                  )
                 }
                 className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
               >
@@ -1190,12 +1196,15 @@ classes = res.json().get('data', {}).get('classes', [])`}
                           status: 'TAMPER_DETECTED',
                           certificate: {
                             code: 'SNPI-2026-CS-8891',
-                            computedHash: '0x992cb8311a3fe40081d5fbc74619d83ea74fc2194b15093721867123984ab104',
-                            ledgerHash: '0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069',
+                            computedHash:
+                              '0x992cb8311a3fe40081d5fbc74619d83ea74fc2194b15093721867123984ab104',
+                            ledgerHash:
+                              '0x7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069',
                           },
                           error: {
                             code: 'HASH_MISMATCH',
-                            message: 'Dynamic SHA-256 payload does not match anchored ledger record.',
+                            message:
+                              'Dynamic SHA-256 payload does not match anchored ledger record.',
                           },
                         },
                         null,
@@ -1273,7 +1282,11 @@ classes = res.json().get('data', {}).get('classes', [])`}
                   }
                   className="flex items-center gap-1 text-xs font-semibold text-[#0056FF] hover:underline"
                 >
-                  {copiedId === 'sse-spec' ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                  {copiedId === 'sse-spec' ? (
+                    <Check className="h-3 w-3" />
+                  ) : (
+                    <Copy className="h-3 w-3" />
+                  )}
                   <span>{copiedId === 'sse-spec' ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>

@@ -4,16 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BrandMark } from '@/components/shared/brand-mark';
-import {
-  FileText,
-  Layers,
-  Code,
-  Menu,
-  X,
-  Search,
-  Moon,
-  ChevronRight,
-} from '@/components/icons';
+import { FileText, Layers, Code, Menu, X, Search, Moon, ChevronRight } from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { useDocsNav } from './docs-nav-context';
 import { COMPONENT_LIBRARY_REGISTRY } from './component-registry';
@@ -203,7 +194,7 @@ export function DocsStickyHeader({
 
           {/* Mobile Dropdown Panel (Right Side) */}
           {mobileMenuOpen && (
-            <div className="absolute top-[calc(100%+8px)] right-0 w-[min(calc(100vw-32px),360px)] overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+            <div className="animate-in fade-in zoom-in-95 absolute top-[calc(100%+8px)] right-0 w-[min(calc(100vw-32px),360px)] overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl duration-150">
               {/* Top Primary Page Switcher Tabs (Pill Style) */}
               <div className="mb-4">
                 <span className="mb-2 block font-mono text-[10px] font-bold text-slate-400 uppercase">
@@ -278,7 +269,7 @@ export function DocsStickyHeader({
                         <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
                           {grp.category} ({grp.items.length})
                         </span>
-                        <div className="space-y-0.5 pl-2 border-l border-slate-200">
+                        <div className="space-y-0.5 border-l border-slate-200 pl-2">
                           {grp.items.map((comp) => (
                             <button
                               key={comp.id}
@@ -297,7 +288,7 @@ export function DocsStickyHeader({
                 ) : (
                   /* Open API Specific Sections Navigation */
                   <div className="space-y-1.5">
-                    <span className="block font-mono text-[10px] font-bold text-slate-400 uppercase mb-2">
+                    <span className="mb-2 block font-mono text-[10px] font-bold text-slate-400 uppercase">
                       Jump to API Guide Section
                     </span>
                     {OPEN_API_SECTIONS.map((sec) => (

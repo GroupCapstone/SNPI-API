@@ -7,43 +7,49 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
-    "version": "0.2.12",
+    "version": "0.2.13",
+    "date": "31.10.2026",
+    "commitHash": "68d77ba",
+    "description": "Standalone mobile hero with big typography and concise hook description"
+  },
+  {
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "6af06e9",
     "description": "Record removal of theme FAB and profile card"
   },
   {
-    "version": "0.2.12",
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "01b501d",
     "description": "Remove floating theme FAB button and Lena Marchetti profile card"
   },
   {
-    "version": "0.2.12",
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "5116c27",
     "description": "Redesign mobile hero with simple welcoming hook and tactile service cards"
   },
   {
-    "version": "0.2.12",
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "c2efdc5",
     "description": "Simplify hero and implement psychological reading layout"
   },
   {
-    "version": "0.2.12",
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "7317af8",
     "description": "Redesign open api and syndication guide for backend rest api focus"
   },
   {
-    "version": "0.2.12",
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "da77431",
     "description": "Resolve eslint react unescaped entity and immutability errors"
   },
   {
-    "version": "0.2.12",
+    "version": "0.2.13",
     "date": "31.10.2026",
     "commitHash": "8f54289",
     "description": "Update repository url references to SNPI-SMS"
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "70a42c7",
     "description": "Sync real-time changelog for open-api redesign"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "f022bc5",
-    "description": "Complete redesign with public feeds, embed studio, class table, and real-time sse"
   }
 ];
