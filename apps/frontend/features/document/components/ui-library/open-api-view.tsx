@@ -26,6 +26,8 @@ import {
   Terminal,
   FileText,
   Info,
+  Lock,
+  Zap,
 } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import {
@@ -703,7 +705,7 @@ const DOC_TOC_HEADINGS = [
   { id: 'who-can-access', title: 'Who Can Access', level: 1 },
   { id: 'public-feeds', title: 'Public Feeds & RSS', level: 1 },
   { id: 'developer-embed', title: 'Developer Embed Studio', level: 1 },
-  { id: 'class-catalog-registration', title: 'Class Table & Registration', level: 1 },
+  { id: 'class-catalog-registration', title: 'Class Roster & Frontsite Studio', level: 1 },
   { id: 'realtime-stream', title: 'Real-Time Stream Engine', level: 1 },
   { id: 'endpoints-available', title: 'Endpoints Catalog', level: 1 },
   { id: 'protected-endpoints', title: 'Protected Endpoints', level: 2 },
@@ -922,31 +924,22 @@ console.log(payload.data);`;
   const [embedTheme, setEmbedTheme] = React.useState<'light' | 'dark'>('light');
   const [embedLimit, setEmbedLimit] = React.useState<number>(5);
 
-  // Interactive Class Catalog Table state
+  // Interactive Class Catalog Table & Frontsite Integration Studio state
   const [classesList, setClassesList] = React.useState<ClassRosterItem[]>(SAMPLE_CLASSES_CATALOG);
   const [classSearch, setClassSearch] = React.useState<string>('');
   const [classFilterStatus, setClassFilterStatus] = React.useState<string>('All');
-  const [selectedClassForReg, setSelectedClassForReg] = React.useState<ClassRosterItem | null>(
-    null,
+  const [selectedFrontsiteClass, setSelectedFrontsiteClass] = React.useState<ClassRosterItem>(
+    SAMPLE_CLASSES_CATALOG[0],
   );
-
-  // User Registration Form state
-  const [regForm, setRegForm] = React.useState({
-    studentName: '',
-    email: '',
-    phone: '',
-    dob: '2005-06-15',
-    branchId: 'BR-01',
-    classId: 'CLS-2026-CS101',
-  });
-  const [isSubmittingReg, setIsSubmittingReg] = React.useState<boolean>(false);
-  const [regSuccessResult, setRegSuccessResult] = React.useState<{
-    ticketId: string;
-    studentName: string;
-    classCode: string;
-    className: string;
-    timestamp: string;
-  } | null>(null);
+  const [frontsiteStudioTab, setFrontsiteStudioTab] = React.useState<
+    'preview-ui' | 'json-feed' | 'code-snippets' | 'auth-policy'
+  >('preview-ui');
+  const [integrationCodeTab, setIntegrationCodeTab] = React.useState<
+    'react' | 'types' | 'nextjs' | 'curl'
+  >('react');
+  const [isSimulatingSseUpdate, setIsSimulatingSseUpdate] = React.useState<boolean>(false);
+  const [lastSseUpdatedClassCode, setLastSseUpdatedClassCode] = React.useState<string | null>(null);
+  const [frontsiteCopied, setFrontsiteCopied] = React.useState<string | null>(null);
 
   // Real-Time Event Stream Simulator state
   const [isStreamActive, setIsStreamActive] = React.useState<boolean>(true);
@@ -990,22 +983,16 @@ console.log(payload.data);`;
     });
   }, [classesList, classSearch, classFilterStatus]);
 
-  const handleRegisterStudent = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!regForm.studentName.trim() || !regForm.email.trim()) return;
+  // Simulate real-time background SSE stream event from external server
+  const handleSimulateRealtimeSseUpdate = () => {
+    setIsSimulatingSseUpdate(true);
+    const targetIdx = Math.floor(Math.random() * classesList.length);
+    const target = classesList[targetIdx];
 
-    setIsSubmittingReg(true);
     setTimeout(() => {
-      const targetClass =
-        classesList.find((c) => c.code === regForm.classId || c.id === regForm.classId) ||
-        classesList[0];
-      const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-      const ticketId = `REG-2026-${randomSuffix}`;
-
-      // Increment enrolled count dynamically in class list
       setClassesList((prev) =>
-        prev.map((c) => {
-          if (c.code === targetClass.code) {
+        prev.map((c, i) => {
+          if (i === targetIdx) {
             const nextEnrolled = Math.min(c.capacity, c.enrolled + 1);
             return {
               ...c,
@@ -1021,31 +1008,42 @@ console.log(payload.data);`;
           return c;
         }),
       );
+      setLastSseUpdatedClassCode(target.code);
+      setIsSimulatingSseUpdate(false);
 
-      // Prepend event to the stream
+      // Prepend event to the stream inspector
       const newEvent: LiveStreamEvent = {
         id: `ev-${Date.now()}`,
         timestamp: new Date().toTimeString().slice(0, 8),
-        channel: `classes.roster.${regForm.branchId}`,
+        channel: `classes.roster.BR-01`,
         eventName: 'class.seat_reserved',
         payload: JSON.stringify({
-          ticket: ticketId,
-          code: targetClass.code,
-          student: regForm.studentName,
-          status: 'confirmed',
+          ticket: `REG-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+          code: target.code,
+          enrolled: Math.min(target.capacity, target.enrolled + 1),
+          capacity: target.capacity,
+          channel: 'sse.stream',
         }),
       };
       setStreamEvents((prev) => [newEvent, ...prev.slice(0, 9)]);
 
-      setRegSuccessResult({
-        ticketId,
-        studentName: regForm.studentName,
-        classCode: targetClass.code,
-        className: targetClass.name,
-        timestamp: new Date().toISOString(),
-      });
-      setIsSubmittingReg(false);
-    }, 450);
+      setTimeout(() => {
+        setLastSseUpdatedClassCode(null);
+      }, 3500);
+    }, 300);
+  };
+
+  const handleResetCatalog = () => {
+    setClassesList(SAMPLE_CLASSES_CATALOG);
+    setLastSseUpdatedClassCode(null);
+  };
+
+  const handleCopyFrontsiteContent = (text: string, type: string) => {
+    if (typeof window !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+    }
+    setFrontsiteCopied(type);
+    setTimeout(() => setFrontsiteCopied(null), 2000);
   };
 
   const handleTriggerTestEvent = (eventName: string, sampleData: Record<string, unknown>) => {
@@ -1227,7 +1225,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                       : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
                   )}
                 >
-                  <span className="truncate">Live Class Table &amp; Intake</span>
+                  <span className="truncate">Class Roster &amp; Frontsite Studio</span>
                 </button>
                 <button
                   type="button"
@@ -1481,11 +1479,10 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   </span>
                 </div>
                 <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
-                  Live Class Table &amp; Intake
+                  Class Roster &amp; Frontsite Studio
                 </h3>
                 <p className="mt-1 text-xs leading-relaxed text-slate-500">
-                  Active academic roster table with live seat meters and simulated public student
-                  registration.
+                  Syndicated live catalog, real-time SSE updates, and school frontsite integration.
                 </p>
               </div>
 
@@ -2227,13 +2224,12 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                               <button
                                 type="button"
                                 onClick={() => {
-                                  setSelectedClassForReg(c);
-                                  setRegForm((prev) => ({ ...prev, classId: c.code }));
+                                  setSelectedFrontsiteClass(c);
                                   scrollToDocSection('class-catalog-registration');
                                 }}
-                                className="rounded-[4px] border-0 bg-[#0056FF] px-2.5 py-1 font-sans text-xs font-bold text-white hover:bg-[#0040CC]"
+                                className="cursor-pointer rounded-[4px] border border-slate-200 bg-slate-50 px-2.5 py-1 font-sans text-xs font-bold text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
                               >
-                                Register
+                                View in Studio
                               </button>
                             </div>
                           </div>
@@ -2245,7 +2241,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
               </div>
             </section>
 
-            {/* Section 5: Interactive Class Table & User Registration Engine */}
+            {/* Section 5: Public Class Roster & Frontsite School Integration Studio */}
             <section
               id="class-catalog-registration"
               className="scroll-mt-24 space-y-6 border-t border-slate-200 pt-8"
@@ -2254,16 +2250,35 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
-                      ACADEMIC ROSTER & INTAKE
+                      ACADEMIC ROSTER &amp; FRONTSITE INTEGRATION
                     </span>
-                    <span className="font-mono text-xs text-slate-400">Interactive Engine</span>
+                    <span className="font-mono text-xs text-slate-400">External Dev Studio</span>
                   </div>
                   <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
-                    Live Class Table &amp; Public User Registration
+                    Live Class Roster &amp; Frontsite Integration Studio
                   </h2>
-                  <p className="mt-1 max-w-2xl text-xs text-slate-500">
-                    Inspect active class rosters and room assignments with live seat counters, and
-                    test student registration workflows with immediate response envelopes.
+                  <p className="mt-1 max-w-3xl text-xs text-slate-500">
+                    Syndicated public class catalog (
+                    <code className="font-mono text-[#0056FF]">GET /api/v1/public/classes</code>).
+                    Explore how external developer teams building partner school portals consume
+                    real-time JSON feeds and render reactive student interfaces.
+                  </p>
+                </div>
+              </div>
+
+              {/* Zero Public CRUD Policy Callout */}
+              <div className="flex items-start gap-3.5 rounded-lg border border-slate-200 bg-slate-50/90 p-4 text-xs text-slate-700">
+                <ShieldCheck className="mt-0.5 size-4.5 shrink-0 text-[#0056FF]" />
+                <div className="space-y-1">
+                  <div className="font-bold text-slate-900">
+                    Zero Public Mutation Policy (Bearer Auth Protected)
+                  </div>
+                  <p className="text-slate-600">
+                    Write operations (student admissions, enrollment intake, and course mutations
+                    via <code className="font-mono text-[#0056FF]">POST /api/v1/registrations</code>
+                    ) are strictly restricted to authenticated developer backend services holding
+                    valid Bearer tokens. Public visitors and guest frontends operate exclusively on
+                    read-only syndication feeds. Zero public mutation or intake buttons are exposed.
                   </p>
                 </div>
               </div>
@@ -2292,7 +2307,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         type="button"
                         onClick={() => setClassFilterStatus(st)}
                         className={cn(
-                          'rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
+                          'cursor-pointer rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                           classFilterStatus === st
                             ? 'bg-[#0056FF] text-white shadow-xs'
                             : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
@@ -2314,7 +2329,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         <th className="px-4 py-3">Schedule &amp; Room</th>
                         <th className="px-4 py-3 text-center">Seat Capacity</th>
                         <th className="px-4 py-3 text-center">Status</th>
-                        <th className="px-4 py-3 text-right">Action</th>
+                        <th className="px-4 py-3 text-right">Studio Preview</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 bg-white">
@@ -2327,10 +2342,17 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                       ) : (
                         filteredClasses.map((item) => {
                           const percent = Math.round((item.enrolled / item.capacity) * 100);
-                          const isFull = item.enrolled >= item.capacity;
+                          const isSelected = selectedFrontsiteClass.code === item.code;
+                          const isRecentSseUpdate = lastSseUpdatedClassCode === item.code;
 
                           return (
-                            <tr key={item.id} className="transition-colors hover:bg-slate-50/80">
+                            <tr
+                              key={item.id}
+                              className={cn(
+                                'transition-colors',
+                                isSelected ? 'bg-[#EFF5FF]/80' : 'hover:bg-slate-50/80',
+                              )}
+                            >
                               <td className="px-4 py-3.5 font-mono">
                                 <div className="font-bold text-[#0056FF]">{item.code}</div>
                                 <div className="text-[10px] text-slate-400">{item.department}</div>
@@ -2344,8 +2366,13 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 <div className="text-slate-400">{item.room}</div>
                               </td>
                               <td className="px-4 py-3.5 text-center">
-                                <div className="font-mono text-xs font-bold text-slate-900">
-                                  {item.enrolled} / {item.capacity}
+                                <div className="flex items-center justify-center gap-1.5 font-mono text-xs font-bold text-slate-900">
+                                  <span>
+                                    {item.enrolled} / {item.capacity}
+                                  </span>
+                                  {isRecentSseUpdate && (
+                                    <span className="inline-block size-2 animate-ping rounded-full bg-[#0056FF]" />
+                                  )}
                                 </div>
                                 <div className="mx-auto mt-1 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
                                   <div
@@ -2380,12 +2407,17 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 <button
                                   type="button"
                                   onClick={() => {
-                                    setSelectedClassForReg(item);
-                                    setRegForm((prev) => ({ ...prev, classId: item.code }));
+                                    setSelectedFrontsiteClass(item);
+                                    setFrontsiteStudioTab('preview-ui');
                                   }}
-                                  className="rounded-[4px] border-0 bg-[#0056FF] px-3 py-1.5 font-sans text-xs font-bold text-white hover:bg-[#0040CC]"
+                                  className={cn(
+                                    'cursor-pointer rounded-[4px] border px-2.5 py-1 font-sans text-xs font-bold transition-all',
+                                    isSelected
+                                      ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                                      : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                                  )}
                                 >
-                                  Register
+                                  {isSelected ? 'Selected' : 'Preview in UI'}
                                 </button>
                               </td>
                             </tr>
@@ -2396,177 +2428,726 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   </table>
                 </div>
 
-                {/* User Registration Form Card */}
-                <div className="mt-6 space-y-4 rounded-xl border border-slate-200 bg-slate-50/70 p-5">
-                  <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                {/* Frontsite School Data Integration Studio */}
+                <div className="mt-8 space-y-5 rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6">
+                  {/* Studio Navigation Header */}
+                  <div className="flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center">
                     <div>
-                      <h3 className="font-sans text-sm font-bold text-slate-900">
-                        Class Registration &amp; Student Intake Form
-                      </h3>
-                      <p className="font-sans text-xs text-slate-500">
-                        Submit a student enrollment into the active academic term (simulates{' '}
-                        <code className="font-mono text-[#0056FF]">POST /api/v1/registrations</code>
-                        ).
-                      </p>
-                    </div>
-                    {selectedClassForReg && (
-                      <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-1 font-mono text-xs font-bold text-[#0056FF]">
-                        Selected: {selectedClassForReg.code}
-                      </span>
-                    )}
-                  </div>
-
-                  <form onSubmit={handleRegisterStudent} className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4 font-sans text-xs sm:grid-cols-3">
-                      <div>
-                        <label className="block font-mono text-[10px] font-bold text-slate-600 uppercase">
-                          Student Full Name *
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          placeholder="e.g. Sokha Chan"
-                          value={regForm.studentName}
-                          onChange={(e) =>
-                            setRegForm((prev) => ({ ...prev, studentName: e.target.value }))
-                          }
-                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] font-bold text-slate-600 uppercase">
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          required
-                          placeholder="sokha.chan@example.com"
-                          value={regForm.email}
-                          onChange={(e) =>
-                            setRegForm((prev) => ({ ...prev, email: e.target.value }))
-                          }
-                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] font-bold text-slate-600 uppercase">
-                          Contact Phone
-                        </label>
-                        <input
-                          type="tel"
-                          placeholder="+855 12 345 678"
-                          value={regForm.phone}
-                          onChange={(e) =>
-                            setRegForm((prev) => ({ ...prev, phone: e.target.value }))
-                          }
-                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] font-bold text-slate-600 uppercase">
-                          Target Class *
-                        </label>
-                        <select
-                          value={regForm.classId}
-                          onChange={(e) =>
-                            setRegForm((prev) => ({ ...prev, classId: e.target.value }))
-                          }
-                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
-                        >
-                          {classesList.map((c) => (
-                            <option key={c.id} value={c.code}>
-                              {c.code} — {c.name} ({c.enrolled}/{c.capacity})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] font-bold text-slate-600 uppercase">
-                          Campus Branch *
-                        </label>
-                        <select
-                          value={regForm.branchId}
-                          onChange={(e) =>
-                            setRegForm((prev) => ({ ...prev, branchId: e.target.value }))
-                          }
-                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
-                        >
-                          <option value="BR-01">BR-01 (Main Campus)</option>
-                          <option value="BR-02">BR-02 (Tuol Kork)</option>
-                          <option value="BR-03">BR-03 (Sen Sok)</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block font-mono text-[10px] font-bold text-slate-600 uppercase">
-                          Date of Birth
-                        </label>
-                        <input
-                          type="date"
-                          value={regForm.dob}
-                          onChange={(e) => setRegForm((prev) => ({ ...prev, dob: e.target.value }))}
-                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-2">
-                      <span className="font-mono text-[11px] text-slate-500">
-                        Payload validates via Zod schema before database ingestion.
-                      </span>
-                      <button
-                        type="submit"
-                        disabled={isSubmittingReg}
-                        className="cursor-pointer rounded-[4px] border-0 bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-xs hover:bg-[#0040CC] disabled:opacity-50"
-                      >
-                        {isSubmittingReg
-                          ? 'Submitting Registration...'
-                          : 'Submit Class Registration'}
-                      </button>
-                    </div>
-                  </form>
-
-                  {/* Success notification & simulated API response */}
-                  {regSuccessResult && (
-                    <div className="mt-4 space-y-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 font-sans text-xs font-bold text-emerald-800">
-                          <CircleCheck className="size-4 text-emerald-600" />
-                          <span>Enrollment Intake Successfully Recorded</span>
-                        </div>
-                        <span className="rounded-md border border-emerald-300 bg-white px-2.5 py-0.5 font-mono text-xs font-bold text-emerald-700">
-                          {regSuccessResult.ticketId}
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[11px] font-bold text-[#0056FF] uppercase">
+                          FRONTSITE INTEGRATION STUDIO
+                        </span>
+                        <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+                          Scenario Demo
                         </span>
                       </div>
-
-                      <p className="font-sans text-xs text-emerald-900">
-                        Student <strong>{regSuccessResult.studentName}</strong> registered for{' '}
-                        <strong>{regSuccessResult.classCode}</strong> ({regSuccessResult.className}
-                        ). Real-time capacity counter was incremented in the table above.
+                      <h3 className="mt-1 font-sans text-base font-bold text-slate-900">
+                        External Partner School Portal: Live Data Ingestion
+                      </h3>
+                      <p className="font-sans text-xs text-slate-500">
+                        Illustrating how an external developer team ingests syndication endpoints
+                        and renders a live responsive student course UI.
                       </p>
+                    </div>
 
-                      <div className="rounded-lg border border-slate-200/90 bg-[#F8FAFC] p-3 font-mono text-[11px] text-[#CAD3F5]">
-                        <pre className="overflow-x-auto whitespace-pre">
+                    {/* View Switcher Tabs */}
+                    <div className="flex items-center rounded-lg border border-slate-200 bg-white p-1 shadow-2xs">
+                      {[
+                        { id: 'preview-ui', label: 'Frontsite Live UI', icon: Layers },
+                        { id: 'json-feed', label: 'Live JSON API', icon: Code },
+                        { id: 'code-snippets', label: 'Integration Code', icon: Terminal },
+                        { id: 'auth-policy', label: 'Auth & CRUD Policy', icon: Lock },
+                      ].map((tab) => {
+                        const Icon = tab.icon;
+                        const isActive = frontsiteStudioTab === tab.id;
+                        return (
+                          <button
+                            key={tab.id}
+                            type="button"
+                            onClick={() =>
+                              setFrontsiteStudioTab(
+                                tab.id as
+                                  'preview-ui' | 'json-feed' | 'code-snippets' | 'auth-policy',
+                              )
+                            }
+                            className={cn(
+                              'flex cursor-pointer items-center gap-1.5 rounded-[4px] border-0 px-3 py-1.5 font-sans text-xs font-bold transition-all',
+                              isActive
+                                ? 'bg-[#0056FF] text-white shadow-xs'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                            )}
+                          >
+                            <Icon className="size-3.5" />
+                            <span>{tab.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* TAB 1: Frontsite Live UI Widget */}
+                  {frontsiteStudioTab === 'preview-ui' && (
+                    <div className="space-y-4">
+                      {/* Controls Bar for Testing Real-Time SSE Reactivity */}
+                      <div className="flex flex-col items-start justify-between gap-3 rounded-lg border border-slate-200 bg-white p-3.5 sm:flex-row sm:items-center">
+                        <div className="flex items-center gap-2.5">
+                          <span className="relative flex size-2.5">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                            <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500" />
+                          </span>
+                          <span className="font-mono text-xs font-semibold text-slate-700">
+                            Live Stream:{' '}
+                            <span className="font-bold text-emerald-700">classes.roster.BR-01</span>
+                          </span>
+                          <span className="text-slate-300">|</span>
+                          <span className="font-sans text-xs text-slate-500">
+                            Push simulated background changes to observe immediate UI reactivity.
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleSimulateRealtimeSseUpdate}
+                            disabled={isSimulatingSseUpdate}
+                            className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border-0 bg-[#0056FF] px-3 py-1.5 font-sans text-xs font-bold text-white shadow-xs hover:bg-[#0040CC] disabled:opacity-50"
+                          >
+                            <Zap className="size-3.5" />
+                            <span>
+                              {isSimulatingSseUpdate
+                                ? 'Emitting SSE...'
+                                : 'Simulate Live Seat Update'}
+                            </span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleResetCatalog}
+                            className="flex cursor-pointer items-center gap-1 rounded-[4px] border border-slate-200 bg-slate-100 px-2.5 py-1.5 font-sans text-xs font-bold text-slate-600 hover:bg-slate-200"
+                            title="Reset Catalog to Seed Data"
+                          >
+                            <RotateCcw className="size-3" />
+                            <span>Reset</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Mock External School Student Portal Shell */}
+                      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                        {/* Mock School Portal Header */}
+                        <div className="flex flex-col justify-between gap-3 border-b border-[#0047D4] bg-[#0056FF] p-4 text-white sm:flex-row sm:items-center">
+                          <div className="flex items-center gap-3">
+                            <div className="flex size-9 items-center justify-center rounded-lg bg-white font-mono text-sm font-black text-[#0056FF] shadow-xs">
+                              RS
+                            </div>
+                            <div>
+                              <div className="font-sans text-sm font-bold tracking-tight">
+                                Royal Institute of Science &amp; Technology
+                              </div>
+                              <div className="font-mono text-[11px] text-[#E3E7FC]">
+                                Department of Computer Science &amp; Engineering · Term 2026-S1
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="rounded-md bg-white/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-slate-200">
+                              Syndication: Active
+                            </span>
+                            <span className="rounded-md bg-emerald-500/20 px-2.5 py-1 font-mono text-[11px] font-bold text-emerald-300">
+                              SSE Connected
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Courses Grid Rendered From Live JSON */}
+                        <div className="p-5">
+                          <div className="mb-4 flex items-center justify-between">
+                            <span className="font-sans text-xs font-bold tracking-wider text-slate-400 uppercase">
+                              Active Course Offerings ({filteredClasses.length} Courses Available)
+                            </span>
+                            <span className="font-mono text-[11px] text-slate-400">
+                              Selected:{' '}
+                              <strong className="text-[#0056FF]">
+                                {selectedFrontsiteClass.code}
+                              </strong>
+                            </span>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            {filteredClasses.map((cls) => {
+                              const percent = Math.round((cls.enrolled / cls.capacity) * 100);
+                              const isSelected = selectedFrontsiteClass.code === cls.code;
+                              const isUpdated = lastSseUpdatedClassCode === cls.code;
+
+                              return (
+                                <div
+                                  key={cls.id}
+                                  onClick={() => setSelectedFrontsiteClass(cls)}
+                                  className={cn(
+                                    'cursor-pointer rounded-lg border p-4 transition-all duration-300',
+                                    isUpdated
+                                      ? 'border-[#0056FF] bg-[#EFF5FF] ring-2 ring-[#0056FF]/30'
+                                      : isSelected
+                                        ? 'border-[#0056FF] bg-[#EFF5FF]/40 shadow-xs'
+                                        : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-2xs',
+                                  )}
+                                >
+                                  {/* Card Top: Dept & Code */}
+                                  <div className="flex items-center justify-between">
+                                    <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-bold text-slate-600">
+                                      {cls.department}
+                                    </span>
+                                    <span className="font-mono text-xs font-bold text-[#0056FF]">
+                                      {cls.code}
+                                    </span>
+                                  </div>
+
+                                  {/* Course Title */}
+                                  <h4 className="mt-2 font-sans text-sm font-bold text-slate-900">
+                                    {cls.name}
+                                  </h4>
+
+                                  {/* Instructor & Location */}
+                                  <div className="mt-2.5 space-y-1 font-sans text-xs text-slate-500">
+                                    <div className="flex items-center gap-1.5">
+                                      <User className="size-3.5 text-slate-400" />
+                                      <span>{cls.instructor}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 font-mono text-[11px]">
+                                      <Calendar className="size-3.5 text-slate-400" />
+                                      <span>
+                                        {cls.schedule} · {cls.room}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Live Seat Availability Meter */}
+                                  <div className="mt-4 border-t border-slate-100 pt-3">
+                                    <div className="flex items-center justify-between font-mono text-[11px]">
+                                      <span className="font-bold text-slate-700">
+                                        Capacity: {cls.enrolled} / {cls.capacity}
+                                      </span>
+                                      <span
+                                        className={cn(
+                                          'font-bold',
+                                          cls.status === 'Open' && 'text-emerald-600',
+                                          cls.status === 'Filling Fast' && 'text-amber-600',
+                                          cls.status === 'Waitlist' && 'text-slate-600',
+                                        )}
+                                      >
+                                        {cls.status === 'Open' &&
+                                          `${cls.capacity - cls.enrolled} seats left`}
+                                        {cls.status === 'Filling Fast' &&
+                                          `Only ${cls.capacity - cls.enrolled} left`}
+                                        {cls.status === 'Waitlist' && 'Waitlist full'}
+                                      </span>
+                                    </div>
+
+                                    <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                                      <div
+                                        className={cn(
+                                          'h-full rounded-full transition-all duration-300',
+                                          percent >= 100
+                                            ? 'bg-rose-500'
+                                            : percent >= 85
+                                              ? 'bg-amber-500'
+                                              : 'bg-[#0056FF]',
+                                        )}
+                                        style={{ width: `${Math.min(100, percent)}%` }}
+                                      />
+                                    </div>
+                                  </div>
+
+                                  {/* Card Status & Read-only Indicator */}
+                                  <div className="mt-3 flex items-center justify-between pt-1">
+                                    {isUpdated ? (
+                                      <span className="inline-flex items-center gap-1 rounded bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] font-bold text-white">
+                                        <Zap className="size-2.5" />
+                                        <span>Updated via SSE</span>
+                                      </span>
+                                    ) : (
+                                      <span className="font-mono text-[10px] text-slate-400">
+                                        Read-only syndicated
+                                      </span>
+                                    )}
+
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedFrontsiteClass(cls);
+                                        setFrontsiteStudioTab('json-feed');
+                                      }}
+                                      className="font-mono text-[10.5px] font-bold text-[#0056FF] hover:underline"
+                                    >
+                                      Inspect JSON →
+                                    </button>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* TAB 2: Live JSON API Feed */}
+                  {frontsiteStudioTab === 'json-feed' && (
+                    <div className="space-y-4">
+                      {/* URL bar & Action */}
+                      <div className="flex flex-col items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-3 sm:flex-row">
+                        <div className="flex w-full items-center gap-2 font-mono text-xs text-slate-700 sm:w-auto">
+                          <span className="rounded bg-emerald-100 px-2 py-0.5 font-bold text-emerald-800">
+                            GET
+                          </span>
+                          <span className="text-slate-900">
+                            https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=BR-01
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleCopyFrontsiteContent(
+                              JSON.stringify(
+                                {
+                                  status: 'success',
+                                  meta: {
+                                    total: filteredClasses.length,
+                                    branch: 'BR-01',
+                                    timestamp: new Date().toISOString(),
+                                    sseChannel: 'classes.roster.BR-01',
+                                  },
+                                  data: filteredClasses,
+                                },
+                                null,
+                                2,
+                              ),
+                              'json',
+                            )
+                          }
+                          className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-slate-200 bg-slate-100 px-3 py-1.5 font-sans text-xs font-bold text-slate-700 hover:bg-slate-200"
+                        >
+                          {frontsiteCopied === 'json' ? (
+                            <>
+                              <Check className="size-3.5 text-emerald-600" />
+                              <span className="text-emerald-700">Copied JSON!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="size-3.5" />
+                              <span>Copy JSON Payload</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {/* JSON Response View */}
+                      <div className="rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4 font-mono text-[11px] text-slate-800">
+                        <pre className="max-h-[460px] overflow-x-auto overflow-y-auto whitespace-pre">
                           {JSON.stringify(
                             {
-                              success: true,
-                              message: 'Class registration intake accepted',
-                              data: {
-                                registrationId: regSuccessResult.ticketId,
-                                studentName: regSuccessResult.studentName,
-                                classCode: regSuccessResult.classCode,
-                                status: 'confirmed',
-                                timestamp: regSuccessResult.timestamp,
+                              status: 'success',
+                              meta: {
+                                total: filteredClasses.length,
+                                branch: 'BR-01',
+                                timestamp: new Date().toISOString(),
+                                sseChannel: 'classes.roster.BR-01',
+                                selectedInspection: selectedFrontsiteClass.code,
                               },
+                              data: filteredClasses,
                             },
                             null,
                             2,
                           )}
                         </pre>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* TAB 3: Frontend Integration Code Snippets */}
+                  {frontsiteStudioTab === 'code-snippets' && (
+                    <div className="space-y-4">
+                      {/* Code Sub-tabs */}
+                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                        <div className="flex items-center gap-1">
+                          {[
+                            { id: 'react', label: 'React Hook (useSchoolClasses)' },
+                            { id: 'types', label: 'TypeScript Types' },
+                            { id: 'nextjs', label: 'Next.js App Router (RSC)' },
+                            { id: 'curl', label: 'cURL Verification' },
+                          ].map((t) => (
+                            <button
+                              key={t.id}
+                              type="button"
+                              onClick={() => setIntegrationCodeTab(t.id as any)}
+                              className={cn(
+                                'cursor-pointer rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
+                                integrationCodeTab === t.id
+                                  ? 'bg-[#0056FF] text-white shadow-xs'
+                                  : 'bg-transparent text-slate-600 hover:bg-slate-200',
+                              )}
+                            >
+                              {t.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const code =
+                              integrationCodeTab === 'react'
+                                ? `import { useEffect, useState } from 'react';
+
+export interface SchoolClass {
+  id: string;
+  code: string;
+  name: string;
+  department: string;
+  instructor: string;
+  schedule: string;
+  room: string;
+  enrolled: number;
+  capacity: number;
+  status: 'Open' | 'Filling Fast' | 'Waitlist';
+}
+
+export function useSchoolClasses(branchId: string = 'BR-01') {
+  const [classes, setClasses] = useState<SchoolClass[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // 1. Initial REST fetch for instant paint
+    fetch(\`https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=\${branchId}\`)
+      .then((res) => res.json())
+      .then((payload) => {
+        setClasses(payload.data);
+        setLoading(false);
+      });
+
+    // 2. Real-time updates via Server-Sent Events (SSE)
+    const sse = new EventSource(
+      \`https://snpis.kesararamwithdigital.tech/api/v1/public/events?channel=classes.roster.\${branchId}\`
+    );
+
+    sse.addEventListener('class.seat_reserved', (event: MessageEvent) => {
+      const data = JSON.parse(event.data);
+      setClasses((prev) =>
+        prev.map((c) =>
+          c.code === data.code
+            ? {
+                ...c,
+                enrolled: data.enrolled,
+                status: data.enrolled >= c.capacity ? 'Waitlist' : 'Open',
+              }
+            : c
+        )
+      );
+    });
+
+    return () => sse.close();
+  }, [branchId]);
+
+  return { classes, loading };
+}`
+                                : integrationCodeTab === 'types'
+                                  ? `export interface SchoolClass {
+  id: string;
+  code: string;
+  name: string;
+  department: string;
+  instructor: string;
+  schedule: string;
+  room: string;
+  enrolled: number;
+  capacity: number;
+  status: 'Open' | 'Filling Fast' | 'Waitlist';
+  updatedAt: string;
+}
+
+export interface ClassCatalogResponse {
+  status: 'success';
+  meta: {
+    total: number;
+    branch: string;
+    timestamp: string;
+    sseChannel: string;
+  };
+  data: SchoolClass[];
+}`
+                                  : integrationCodeTab === 'nextjs'
+                                    ? `// app/courses/page.tsx - Next.js Server Component with 60s ISR
+import { SchoolClass } from '@/types/school';
+
+async function getClasses(): Promise<SchoolClass[]> {
+  const res = await fetch(
+    'https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=BR-01',
+    { next: { revalidate: 60 } }
+  );
+  if (!res.ok) throw new Error('Failed to fetch class roster');
+  const payload = await res.json();
+  return payload.data;
+}
+
+export default async function CoursesPage() {
+  const classes = await getClasses();
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {classes.map((cls) => (
+        <div key={cls.id} className="p-4 rounded-lg border bg-white shadow-sm">
+          <div className="text-xs font-mono font-bold text-blue-600">{cls.code}</div>
+          <h3 className="font-bold text-slate-900">{cls.name}</h3>
+          <p className="text-sm text-slate-500">{cls.instructor} · {cls.room}</p>
+          <div className="mt-2 text-xs font-medium">
+            Seats: {cls.enrolled}/{cls.capacity} ({cls.status})
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}`
+                                    : `curl -X GET "https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=BR-01" \\
+  -H "Accept: application/json"`;
+
+                            handleCopyFrontsiteContent(code, 'snippet');
+                          }}
+                          className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 font-sans text-xs font-bold text-slate-700 hover:bg-slate-50"
+                        >
+                          {frontsiteCopied === 'snippet' ? (
+                            <>
+                              <Check className="size-3 text-emerald-600" />
+                              <span className="text-emerald-700">Copied!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="size-3" />
+                              <span>Copy Snippet</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {/* Code Snippet Box */}
+                      <div className="rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4 font-mono text-[11px] text-slate-800">
+                        <pre className="max-h-[460px] overflow-x-auto overflow-y-auto whitespace-pre">
+                          {integrationCodeTab === 'react' &&
+                            `import { useEffect, useState } from 'react';
+
+export interface SchoolClass {
+  id: string;
+  code: string;
+  name: string;
+  department: string;
+  instructor: string;
+  schedule: string;
+  room: string;
+  enrolled: number;
+  capacity: number;
+  status: 'Open' | 'Filling Fast' | 'Waitlist';
+}
+
+export function useSchoolClasses(branchId: string = 'BR-01') {
+  const [classes, setClasses] = useState<SchoolClass[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // 1. Initial REST fetch for instant paint
+    fetch(\`https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=\${branchId}\`)
+      .then((res) => res.json())
+      .then((payload) => {
+        setClasses(payload.data);
+        setLoading(false);
+      });
+
+    // 2. Real-time updates via Server-Sent Events (SSE)
+    const sse = new EventSource(
+      \`https://snpis.kesararamwithdigital.tech/api/v1/public/events?channel=classes.roster.\${branchId}\`
+    );
+
+    sse.addEventListener('class.seat_reserved', (event: MessageEvent) => {
+      const data = JSON.parse(event.data);
+      setClasses((prev) =>
+        prev.map((c) =>
+          c.code === data.code
+            ? {
+                ...c,
+                enrolled: data.enrolled,
+                status: data.enrolled >= c.capacity ? 'Waitlist' : 'Open',
+              }
+            : c
+        )
+      );
+    });
+
+    return () => sse.close();
+  }, [branchId]);
+
+  return { classes, loading };
+}`}
+
+                          {integrationCodeTab === 'types' &&
+                            `export interface SchoolClass {
+  id: string;
+  code: string;
+  name: string;
+  department: string;
+  instructor: string;
+  schedule: string;
+  room: string;
+  enrolled: number;
+  capacity: number;
+  status: 'Open' | 'Filling Fast' | 'Waitlist';
+  updatedAt: string;
+}
+
+export interface ClassCatalogResponse {
+  status: 'success';
+  meta: {
+    total: number;
+    branch: string;
+    timestamp: string;
+    sseChannel: string;
+  };
+  data: SchoolClass[];
+}`}
+
+                          {integrationCodeTab === 'nextjs' &&
+                            `// app/courses/page.tsx - Next.js Server Component with 60s ISR
+import { SchoolClass } from '@/types/school';
+
+async function getClasses(): Promise<SchoolClass[]> {
+  const res = await fetch(
+    'https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=BR-01',
+    { next: { revalidate: 60 } }
+  );
+  if (!res.ok) throw new Error('Failed to fetch class roster');
+  const payload = await res.json();
+  return payload.data;
+}
+
+export default async function CoursesPage() {
+  const classes = await getClasses();
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {classes.map((cls) => (
+        <div key={cls.id} className="p-4 rounded-lg border bg-white shadow-sm">
+          <div className="text-xs font-mono font-bold text-blue-600">{cls.code}</div>
+          <h3 className="font-bold text-slate-900">{cls.name}</h3>
+          <p className="text-sm text-slate-500">{cls.instructor} · {cls.room}</p>
+          <div className="mt-2 text-xs font-medium">
+            Seats: {cls.enrolled}/{cls.capacity} ({cls.status})
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}`}
+
+                          {integrationCodeTab === 'curl' &&
+                            `curl -X GET "https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=BR-01" \\
+  -H "Accept: application/json"`}
+                        </pre>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* TAB 4: Developer Auth & CRUD Policy */}
+                  {frontsiteStudioTab === 'auth-policy' && (
+                    <div className="space-y-4">
+                      <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+                        <div className="flex items-center gap-2 font-sans text-xs font-bold text-amber-900">
+                          <Lock className="size-4 text-amber-700" />
+                          <span>RESTRICTED WRITE ACCESS · DEVELOPER BEARER TOKEN REQUIRED</span>
+                        </div>
+                        <p className="mt-1 text-xs text-amber-800">
+                          To protect academic integrity, all write operations (class creation,
+                          roster adjustments, and student intake registration) are completely
+                          disabled for public users and guest frontsites. Zero public buttons are
+                          provided. Write mutations require authenticated server-to-server
+                          credentials.
+                        </p>
+                      </div>
+
+                      <div className="space-y-3 rounded-lg border border-slate-200 bg-white p-4 font-sans text-xs">
+                        <h4 className="font-bold text-slate-900">
+                          Authorized Mutation Endpoint:{' '}
+                          <code className="font-mono text-[#0056FF]">
+                            POST /api/v1/registrations
+                          </code>
+                        </h4>
+                        <p className="text-slate-600">
+                          Authenticated school backend services use this endpoint to submit
+                          registrations on behalf of verified students.
+                        </p>
+
+                        <div className="rounded-lg border border-slate-200/90 bg-[#F8FAFC] p-3 font-mono text-[11px] text-slate-800">
+                          <div className="mb-2 flex items-center justify-between border-b border-slate-200 pb-2">
+                            <span className="font-bold text-slate-600">
+                              Authenticated Developer cURL
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleCopyFrontsiteContent(
+                                  `curl -X POST "https://snpis.kesararamwithdigital.tech/api/v1/registrations" \\
+  -H "Authorization: Bearer dev_live_sec_991823ab981c" \\
+  -H "X-Branch-Id: BR-01" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "studentId": "STU-2026-0042",
+    "classCode": "${selectedFrontsiteClass.code}",
+    "academicYearId": "AY-2025-2026"
+  }'`,
+                                  'auth-curl',
+                                )
+                              }
+                              className="cursor-pointer text-[#0056FF] hover:underline"
+                            >
+                              {frontsiteCopied === 'auth-curl' ? 'Copied!' : 'Copy cURL'}
+                            </button>
+                          </div>
+                          <pre className="overflow-x-auto whitespace-pre">
+                            {`curl -X POST "https://snpis.kesararamwithdigital.tech/api/v1/registrations" \\
+  -H "Authorization: Bearer dev_live_sec_991823ab981c" \\
+  -H "X-Branch-Id: BR-01" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "studentId": "STU-2026-0042",
+    "classCode": "${selectedFrontsiteClass.code}",
+    "academicYearId": "AY-2025-2026"
+  }'`}
+                          </pre>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-3">
+                          <div className="rounded-md border border-slate-200 bg-slate-50 p-2.5">
+                            <div className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                              Required Header
+                            </div>
+                            <div className="font-mono text-xs font-bold text-slate-900">
+                              Authorization: Bearer
+                            </div>
+                          </div>
+                          <div className="rounded-md border border-slate-200 bg-slate-50 p-2.5">
+                            <div className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                              Rate Limit
+                            </div>
+                            <div className="font-mono text-xs font-bold text-slate-900">
+                              30 writes / minute
+                            </div>
+                          </div>
+                          <div className="rounded-md border border-slate-200 bg-slate-50 p-2.5">
+                            <div className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                              Audit Logging
+                            </div>
+                            <div className="font-mono text-xs font-bold text-slate-900">
+                              Logged &amp; Immutable
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
