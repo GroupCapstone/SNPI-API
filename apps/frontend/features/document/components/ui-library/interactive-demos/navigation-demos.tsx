@@ -490,9 +490,9 @@ export function CyberArmorNavDemo() {
 
   // 3-Tab System Documentation Navigation
   const systemDocTabs: HangingTabItem[] = [
-    { id: 'library', label: 'UI Library', icon: Layers },
-    { id: 'openapi', label: 'Open API', icon: FileText },
-    { id: 'changelog', label: 'Changelog', icon: Code },
+    { id: 'library', label: 'UI LIBRARY', icon: Layers },
+    { id: 'openapi', label: 'OPEN API', icon: FileText },
+    { id: 'changelog', label: 'CHANGELOG', icon: Code },
   ];
 
   return (
