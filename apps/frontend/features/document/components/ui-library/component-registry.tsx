@@ -166,7 +166,8 @@ const RAW_COMPONENT_REGISTRY: ComponentItemDoc[] = [
     name: 'Snackbar',
     category: 'Feedback',
     paradigm: 'Gmail Paradigm',
-    description: 'Non-intrusive bottom notification alert displaying operational status feedback with instant single-click undo recovery mechanism.',
+    description:
+      'Non-intrusive bottom notification alert displaying operational status feedback with instant single-click undo recovery mechanism.',
     explanation:
       'The Snackbar provides brief, non-intrusive feedback about an operation. It appears temporarily at the bottom edge of the screen, ensuring that users stay informed without having their active workflow halted. By including an instant "Undo" recovery mechanism, it drastically reduces user error anxiety.',
     supportedStates: ['Default', 'Success', 'Error', 'Info', 'Active (Displaying)', 'Dismissed'],
@@ -290,7 +291,8 @@ export function Example() {
     name: 'FAB (Floating Action Button)',
     category: 'Feedback',
     paradigm: 'Google Calendar Paradigm',
-    description: 'Prominent floating action button providing instant physical access to the screen\'s primary creation workflow.',
+    description:
+      "Prominent floating action button providing instant physical access to the screen's primary creation workflow.",
     explanation:
       'The Floating Action Button (FAB) floats continuously above the application canvas. Modeled after the Google Calendar plus-button, it acts as a visual lifebuoy that immediately signals to the user the primary productive action available in the current context.',
     supportedStates: [
@@ -392,7 +394,8 @@ export function Example() {
     name: 'Chip',
     category: 'Inputs',
     paradigm: 'YouTube Paradigm',
-    description: 'Compact interactive filter pill allowing instant toggling, multi-selection, and dynamic query filtering across datasets.',
+    description:
+      'Compact interactive filter pill allowing instant toggling, multi-selection, and dynamic query filtering across datasets.',
     explanation:
       'Chips are compact interactive tags shaped like poker chips. Modeled after YouTube home feed category filters, they allow users to rapidly segment extensive catalogs, switch active query parameters, or dismiss selected entities without navigating to a complex filter modal.',
     supportedStates: [
@@ -495,7 +498,8 @@ export function Example() {
     name: 'Toggle Switch',
     category: 'Inputs',
     paradigm: 'iPhone Settings Paradigm',
-    description: 'Accessible hardware-inspired binary toggle switch controlling immediate system preferences and automated background service states.',
+    description:
+      'Accessible hardware-inspired binary toggle switch controlling immediate system preferences and automated background service states.',
     explanation:
       'The Toggle Switch provides instantaneous binary control. Modeled after physical wall switches and iOS Settings controls, it applies configuration adjustments the exact millisecond it is flipped, completely eliminating the need for an awkward secondary "Save Changes" confirmation button.',
     supportedStates: [
@@ -590,7 +594,8 @@ export function Example() {
     name: 'Dropdown',
     category: 'Inputs',
     paradigm: 'Google Docs Paradigm',
-    description: 'Keyboard-friendly collapsible select menu enabling clean single or multiple option selection with active states.',
+    description:
+      'Keyboard-friendly collapsible select menu enabling clean single or multiple option selection with active states.',
     explanation:
       'The Dropdown menu tucks a list of options away under a single trigger button. Inspired by font pickers in Google Docs, it enables users to select from dozens of values without consuming permanent vertical screen real estate.',
     supportedStates: [
@@ -705,7 +710,8 @@ export function Example() {
     name: 'Card',
     category: 'Display',
     paradigm: 'Airbnb Paradigm',
-    description: 'Architectural flat surface container organizing interrelated telemetry data, controls, and media with zero shadows.',
+    description:
+      'Architectural flat surface container organizing interrelated telemetry data, controls, and media with zero shadows.',
     explanation:
       'The Card is an all-purpose container for grouped information. Modeled after Airbnb property cards, it packages media, title, descriptive metadata, and action triggers into a single cohesive unit, establishing clear perceptual boundaries between disparate entities.',
     supportedStates: [
@@ -806,7 +812,8 @@ export function Example() {
     name: 'Pill Input & Search',
     category: 'Inputs',
     paradigm: 'Capsule Pill Standard',
-    description: 'Precision text input field featuring inline icon slots, interactive action buttons, and clear validation.',
+    description:
+      'Precision text input field featuring inline icon slots, interactive action buttons, and clear validation.',
     explanation:
       'The Pill Input & Search component applies capsule button aesthetics to form inputs. It features a continuous 2px border, rounded-full geometry, integrated search icon with zero background color, clear "x" button, and eliminates native browser focus rectangles for clean, unified ergonomics.',
     supportedStates: [
@@ -1054,7 +1061,8 @@ export function Example() {
     name: 'Bounce Sidebar',
     category: 'Navigation',
     paradigm: 'Spring Physics Standard',
-    description: 'Drawer navigation panel utilizing spring-physics bounce damping to produce fluid, organic open and close transitions.',
+    description:
+      'Drawer navigation panel utilizing spring-physics bounce damping to produce fluid, organic open and close transitions.',
     explanation: 'Applies cubic-bezier spring overshoot physics on collapse and expansion.',
     props: [{ name: 'isOpen', type: 'boolean', description: 'Drawer state.' }],
     codeSnippet: `import { BounceSidebarDemo } from '@/features/document/components/ui-library';\n\n<BounceSidebarDemo />`,
@@ -1075,7 +1083,8 @@ export function Example() {
     name: 'Hook Sidebar',
     category: 'Navigation',
     paradigm: 'Kinetic Pull Paradigm',
-    description: 'Edge-anchored tactile kinetic pull tab that slides out a dedicated drawer for administrative tools.',
+    description:
+      'Edge-anchored tactile kinetic pull tab that slides out a dedicated drawer for administrative tools.',
     explanation: 'Provides an edge-pinned kinetic hook that pulls open contextual tools.',
     props: [{ name: 'isHooked', type: 'boolean', description: 'Open state.' }],
     codeSnippet: `import { HookSidebarDemo } from '@/features/document/components/ui-library';\n\n<HookSidebarDemo />`,
@@ -1096,7 +1105,8 @@ export function Example() {
     name: 'Proximity Sidebar',
     category: 'Navigation',
     paradigm: 'Cursor Proximity Standard',
-    description: 'Intelligent rail sidebar that expands dynamically into a full navigation drawer upon cursor approach.',
+    description:
+      'Intelligent rail sidebar that expands dynamically into a full navigation drawer upon cursor approach.',
     explanation: 'Minimizes cognitive load by expanding only when cursor moves into proximity.',
     props: [{ name: 'threshold', type: 'number', description: 'Proximity distance in px.' }],
     codeSnippet: `import { ProximitySidebarDemo } from '@/features/document/components/ui-library';\n\n<ProximitySidebarDemo />`,
@@ -1119,7 +1129,8 @@ export function Example() {
     name: 'Scroll Progress',
     category: 'Navigation',
     paradigm: 'Milestone Tracker Standard',
-    description: 'Top-anchored document reading meter tracking scroll progress, chapter milestones, and estimated remaining reading time.',
+    description:
+      'Top-anchored document reading meter tracking scroll progress, chapter milestones, and estimated remaining reading time.',
     explanation: 'Visualizes document consumption percentage with tick milestone markers.',
     props: [{ name: 'progress', type: 'number', description: 'Progress percentage (0-100).' }],
     codeSnippet: `import { ScrollProgressDemo } from '@/features/document/components/ui-library';\n\n<ScrollProgressDemo />`,
@@ -1142,7 +1153,8 @@ export function Example() {
     name: 'Gooey Nav',
     category: 'Navigation',
     paradigm: 'Fluid Pill Paradigm',
-    description: 'High-performance fluid tab indicator gliding with liquid surface tension between active destination pill buttons.',
+    description:
+      'High-performance fluid tab indicator gliding with liquid surface tension between active destination pill buttons.',
     explanation: 'Smoothly interpolates pill geometry between destination segments.',
     props: [{ name: 'activeTab', type: 'string', description: 'Currently selected segment.' }],
     codeSnippet: `import { GooeyNavDemo } from '@/features/document/components/ui-library';\n\n<GooeyNavDemo />`,
@@ -1229,7 +1241,8 @@ export function Example() {
     name: 'Duration Picker',
     category: 'Inputs',
     paradigm: 'Tactile Stepper Standard',
-    description: 'Quick duration selector combining preset time capsules with an increment stepper for meeting scheduling.',
+    description:
+      'Quick duration selector combining preset time capsules with an increment stepper for meeting scheduling.',
     explanation: 'Combines fast 15m/30m/1h quick preset pills with incremental adjustment.',
     props: [{ name: 'minutes', type: 'number', description: 'Duration in minutes.' }],
     codeSnippet: `import { DurationPickerDemo } from '@/features/document/components/ui-library';\n\n<DurationPickerDemo />`,
@@ -1361,7 +1374,8 @@ export function Example() {
     name: 'Password Input',
     category: 'Inputs',
     paradigm: 'Strength Policy Standard',
-    description: 'Secure authentication passkey input with eye toggle visibility, live strength meter, and compliance checklist.',
+    description:
+      'Secure authentication passkey input with eye toggle visibility, live strength meter, and compliance checklist.',
     explanation: 'Visualizes password entropy and policy compliance in real-time.',
     props: [{ name: 'value', type: 'string', description: 'Password string.' }],
     codeSnippet: `import { PasswordInputDemo } from '@/features/document/components/ui-library';\n\n<PasswordInputDemo />`,
@@ -1382,7 +1396,8 @@ export function Example() {
     name: 'Theme Selector',
     category: 'Inputs',
     paradigm: 'Luminance Switch Standard',
-    description: 'Visual segmented mode switcher toggling interface aesthetics seamlessly between Light, Dark, and System preferences.',
+    description:
+      'Visual segmented mode switcher toggling interface aesthetics seamlessly between Light, Dark, and System preferences.',
     explanation: 'Presents visual mini-window tiles representing application luminance modes.',
     props: [{ name: 'theme', type: 'string', description: 'Selected mode.' }],
     codeSnippet: `import { ThemeSelectorDemo } from '@/features/document/components/ui-library';\n\n<ThemeSelectorDemo />`,
@@ -1403,7 +1418,8 @@ export function Example() {
     name: 'Delete Button',
     category: 'Inputs',
     paradigm: 'Safety Gate Standard',
-    description: 'Deliberate two-stage confirmation action button introducing intentional friction to prevent accidental record purging.',
+    description:
+      'Deliberate two-stage confirmation action button introducing intentional friction to prevent accidental record purging.',
     explanation: 'Requires an explicit secondary confirmation click to prevent accidental loss.',
     props: [{ name: 'onConfirm', type: '() => void', description: 'Execution handler.' }],
     codeSnippet: `import { DeleteButtonDemo } from '@/features/document/components/ui-library';\n\n<DeleteButtonDemo />`,
@@ -1426,7 +1442,8 @@ export function Example() {
     name: 'Task List',
     category: 'Inputs',
     paradigm: 'Interactive Checklist Standard',
-    description: 'Interactive checklist supporting animated checkmark completion, instant task adding, and reactive item count tracking.',
+    description:
+      'Interactive checklist supporting animated checkmark completion, instant task adding, and reactive item count tracking.',
     explanation: 'Interactive task tracker with check animation and completion counts.',
     props: [{ name: 'tasks', type: 'Array<{id, title, done}>', description: 'Task items.' }],
     codeSnippet: `import { TaskListDemo } from '@/features/document/components/ui-library';\n\n<TaskListDemo />`,
@@ -1552,7 +1569,8 @@ export function Example() {
     name: 'Skeleton Loading Screen',
     category: 'Feedback',
     paradigm: 'CSS Shimmer Placeholder Standard',
-    description: 'Zero-JavaScript CSS shimmer placeholders communicating layout geometry while asynchronous data streams load into memory.',
+    description:
+      'Zero-JavaScript CSS shimmer placeholders communicating layout geometry while asynchronous data streams load into memory.',
     explanation:
       'Three common skeleton patterns — profile header, card grid, and content list — all animated with a single CSS keyframe. Click the preview to toggle the loaded state.',
     props: [
@@ -1736,7 +1754,8 @@ export function Example() {
     name: 'Emoji Reaction',
     category: 'Feedback',
     paradigm: 'Social Pill Paradigm',
-    description: 'Lightweight interactive reaction pills offering real-time counter increments, active toggling, and elastic pop feedback.',
+    description:
+      'Lightweight interactive reaction pills offering real-time counter increments, active toggling, and elastic pop feedback.',
     explanation: 'Engaging micro-feedback pills for collaborative announcements and lessons.',
     props: [{ name: 'reactions', type: 'Array<{emoji, count}>', description: 'Reaction badges.' }],
     codeSnippet: `import { EmojiReactionDemo } from '@/features/document/components/ui-library';\n\n<EmojiReactionDemo />`,
@@ -1759,7 +1778,8 @@ export function Example() {
     name: 'Notification Bell',
     category: 'Feedback',
     paradigm: 'Popover Feed Standard',
-    description: 'Animated notification bell trigger featuring unread badge counters and a collapsible operational alert feed.',
+    description:
+      'Animated notification bell trigger featuring unread badge counters and a collapsible operational alert feed.',
     explanation: 'Combines an alert bell trigger with an unread badge and flyout feed.',
     props: [
       { name: 'unreadCount', type: 'number', description: 'Number of unread notifications.' },
@@ -1786,7 +1806,8 @@ export function Example() {
     name: 'Folder Component',
     category: 'Display',
     paradigm: 'Tactile Tab Standard',
-    description: 'Interactive document folder component expanding smoothly to reveal nested files, certificates, and metadata attachments.',
+    description:
+      'Interactive document folder component expanding smoothly to reveal nested files, certificates, and metadata attachments.',
     explanation: 'Skeuomorphic digital folder tab that stores and organizes files.',
     props: [{ name: 'files', type: 'Array<{name, size}>', description: 'Stored files.' }],
     codeSnippet: `import { FolderDemo } from '@/features/document/components/ui-library';\n\n<FolderDemo />`,
@@ -1807,7 +1828,8 @@ export function Example() {
     name: 'GitHub Activity',
     category: 'Display',
     paradigm: 'Contribution Grid Standard',
-    description: 'Fifty-two-week commit telemetry matrix visualizing engineering cadence, activity intensity, and continuous deployment streaks.',
+    description:
+      'Fifty-two-week commit telemetry matrix visualizing engineering cadence, activity intensity, and continuous deployment streaks.',
     explanation: 'Matrix grid visualizing operational repository commit activity.',
     props: [{ name: 'weeks', type: 'number[][]', description: 'Activity matrix.' }],
     codeSnippet: `import { GitHubActivityDemo } from '@/features/document/components/ui-library';\n\n<GitHubActivityDemo />`,
@@ -1830,7 +1852,8 @@ export function Example() {
     name: 'Step Player',
     category: 'Display',
     paradigm: 'Sequential Workflow Standard',
-    description: 'Multi-stage progress stepper guiding operators through sequential tasks with forward and backward navigation controls.',
+    description:
+      'Multi-stage progress stepper guiding operators through sequential tasks with forward and backward navigation controls.',
     explanation: 'Guides users through sequential institutional onboarding processes.',
     props: [{ name: 'currentStep', type: 'number', description: 'Active step.' }],
     codeSnippet: `import { StepPlayerDemo } from '@/features/document/components/ui-library';\n\n<StepPlayerDemo />`,
@@ -1851,7 +1874,8 @@ export function Example() {
     name: 'Animated Counter',
     category: 'Display',
     paradigm: 'Odometer Roll Standard',
-    description: 'Precision mechanical odometer counter rolling numerical metrics smoothly during real-time value updates and increments.',
+    description:
+      'Precision mechanical odometer counter rolling numerical metrics smoothly during real-time value updates and increments.',
     explanation: 'Smoothly rolls numbers when key school metrics update.',
     props: [{ name: 'value', type: 'number', description: 'Numeric count.' }],
     codeSnippet: `import { AnimatedCounterDemo } from '@/features/document/components/ui-library';\n\n<AnimatedCounterDemo />`,
@@ -1876,7 +1900,8 @@ export function Example() {
     name: 'Voice Note',
     category: 'Display',
     paradigm: 'Waveform Audio Standard',
-    description: 'Interactive audio waveform player featuring animated amplitude bars, playback toggles, and variable playback speeds.',
+    description:
+      'Interactive audio waveform player featuring animated amplitude bars, playback toggles, and variable playback speeds.',
     explanation: 'Voice message playback capsule with sound waveform visualization.',
     props: [{ name: 'duration', type: 'string', description: 'Audio length.' }],
     codeSnippet: `import { VoiceNoteDemo } from '@/features/document/components/ui-library';\n\n<VoiceNoteDemo />`,
@@ -1899,7 +1924,8 @@ export function Example() {
     name: 'FAQ Accordion',
     category: 'Display',
     paradigm: 'Collapsible Disclosure Standard',
-    description: 'Accessible question-and-answer accordion with rotating chevron indicators and fluid spring height expansion.',
+    description:
+      'Accessible question-and-answer accordion with rotating chevron indicators and fluid spring height expansion.',
     explanation: 'Progressively discloses answers to frequent institutional questions.',
     props: [{ name: 'items', type: 'Array<{q, a}>', description: 'Questions and answers.' }],
     codeSnippet: `import { FaqDemo } from '@/features/document/components/ui-library';\n\n<FaqDemo />`,
@@ -2067,7 +2093,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Real-Time Data Chart',
     category: 'Display',
     paradigm: 'Canvas 60FPS Streaming Telemetry Standard',
-    description: 'Streaming HTML5 canvas telemetry chart plotting real-time metrics with zero external chart library overhead.',
+    description:
+      'Streaming HTML5 canvas telemetry chart plotting real-time metrics with zero external chart library overhead.',
     explanation:
       'This is a working example of what the prompt generates — a real-time streaming chart rendering at 60fps with hover tooltips, gradient fills, and glow effects. Click the chart to pause.',
     props: [
@@ -2158,7 +2185,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Grid Reveal',
     category: 'AI Kit',
     paradigm: 'Cyber Matrix Standard',
-    description: 'Cybernetic matrix grid featuring horizontal laser scanlines and interactive hover spotlights across child cards.',
+    description:
+      'Cybernetic matrix grid featuring horizontal laser scanlines and interactive hover spotlights across child cards.',
     explanation: 'Reveals autonomous agent telemetry across distributed services.',
     props: [{ name: 'cards', type: 'Array<{title, speed}>', description: 'Grid nodes.' }],
     codeSnippet: `import { GridRevealDemo } from '@/features/document/components/ui-library';\n\n<GridRevealDemo />`,
@@ -2179,7 +2207,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Web Search',
     category: 'AI Kit',
     paradigm: 'Agentic Crawl Standard',
-    description: 'Omni-search command bar with regulatory source citation pills, debounced input, and filtered live suggestions.',
+    description:
+      'Omni-search command bar with regulatory source citation pills, debounced input, and filtered live suggestions.',
     explanation: 'Agentic search component displaying verified cited domains.',
     props: [{ name: 'query', type: 'string', description: 'Search term.' }],
     codeSnippet: `import { WebSearchDemo } from '@/features/document/components/ui-library';\n\n<WebSearchDemo />`,
@@ -2205,7 +2234,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Hanging Tabs Nav',
     category: 'Navigation',
     paradigm: 'Trapezoid Ceiling Paradigm',
-    description: 'Header navigation bar with stepped mecha tabs, Royal Blue luminous indicators, and zero-dot styling.',
+    description:
+      'Header navigation bar with stepped mecha tabs, Royal Blue luminous indicators, and zero-dot styling.',
     explanation:
       'The Hanging Tabs Nav suspends navigation tabs directly from the application header baseline. Inspired by index dividers in physical filing cabinets, its inverted trapezoid geometry provides a distinctive, tactile sense of workspace organization while maintaining centered page balance.',
     supportedStates: [
@@ -2388,7 +2418,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Number Ticker',
     category: 'Text Effects',
     paradigm: 'Tabular Digit Odometer Standard',
-    description: 'Tabular numeric ticker cycling digits vertically with constant speed to present high-frequency financial telemetry.',
+    description:
+      'Tabular numeric ticker cycling digits vertically with constant speed to present high-frequency financial telemetry.',
     explanation: 'Animated numeral ticker with constant font-variant-numeric spacing.',
     props: [{ name: 'val', type: 'number', description: 'Target value.' }],
     codeSnippet: `import { NumberTickerDemo } from '@/features/document/components/ui-library';\n\n<NumberTickerDemo />`,
@@ -2416,7 +2447,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Glitch Text',
     category: 'Text Effects',
     paradigm: 'Chromatic Aberration Split Standard',
-    description: 'Interactive terminal typography triggering chromatic RGB split aberration effects on pointer hover and tap.',
+    description:
+      'Interactive terminal typography triggering chromatic RGB split aberration effects on pointer hover and tap.',
     explanation: 'Cybernetic text-shadow split simulating CRT monitor signal displacement.',
     props: [{ name: 'active', type: 'boolean', description: 'Trigger displacement state.' }],
     codeSnippet: `import { GlitchTextDemo } from '@/features/document/components/ui-library';\n\n<GlitchTextDemo />`,
@@ -2441,7 +2473,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Blur In Typography',
     category: 'Text Effects',
     paradigm: 'Gaussian Lens Focus Standard',
-    description: 'Sophisticated typographic entrance transition shifting from cinematic Gaussian blur to crisp focal clarity smoothly.',
+    description:
+      'Sophisticated typographic entrance transition shifting from cinematic Gaussian blur to crisp focal clarity smoothly.',
     explanation: 'Progressive filter blur-in transition simulating optical lens focus.',
     props: [{ name: 'duration', type: 'string', description: 'Animation duration.' }],
     codeSnippet: `import { BlurInDemo } from '@/features/document/components/ui-library';\n\n<BlurInDemo />`,
@@ -2558,7 +2591,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Bento Grid Card',
     category: 'Cards',
     paradigm: 'Modular Container Standard',
-    description: 'Modular information tile showcasing key infrastructure metrics with clean typography and transparent icon badges.',
+    description:
+      'Modular information tile showcasing key infrastructure metrics with clean typography and transparent icon badges.',
     explanation: 'Discrete feature card engineered for structured multi-column bento grids.',
     props: [{ name: 'variant', type: 'string', description: 'Accent color theme.' }],
     codeSnippet: `import { BentoCardDemo } from '@/features/document/components/ui-library';\n\n<BentoCardDemo />`,
@@ -2583,7 +2617,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: '3D Tilt Card',
     category: 'Cards',
     paradigm: 'Gyroscope Parallax Standard',
-    description: 'Three-dimensional interactive surface tilting realistically in response to cursor position using smooth CSS perspective.',
+    description:
+      'Three-dimensional interactive surface tilting realistically in response to cursor position using smooth CSS perspective.',
     explanation: 'Perspective card tilting toward cursor position with spring damping.',
     props: [{ name: 'maxAngle', type: 'number', description: 'Max rotation angle.' }],
     codeSnippet: `import { TiltCardDemo } from '@/features/document/components/ui-library';\n\n<TiltCardDemo />`,
@@ -2711,7 +2746,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Hero Section',
     category: 'Sections',
     paradigm: 'Monumental Hero Standard',
-    description: 'Monumental headline section featuring live system status stamps, release tags, and high-contrast call-to-action buttons.',
+    description:
+      'Monumental headline section featuring live system status stamps, release tags, and high-contrast call-to-action buttons.',
     explanation: 'Complete flagship section introducing platform value with clear hierarchy.',
     props: [{ name: 'title', type: 'string', description: 'Headline copy.' }],
     codeSnippet: `import { HeroSectionDemo } from '@/features/document/components/ui-library';\n\n<HeroSectionDemo />`,
@@ -2822,7 +2858,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Pricing Matrix Section',
     category: 'Sections',
     paradigm: 'SaaS License Switcher Standard',
-    description: 'Transparent subscription tier matrix featuring monthly or annual billing toggles and comprehensive feature comparisons.',
+    description:
+      'Transparent subscription tier matrix featuring monthly or annual billing toggles and comprehensive feature comparisons.',
     explanation: 'Billing period switchable license tier presentation with discount badge.',
     props: [{ name: 'period', type: 'string', description: 'Billing frequency.' }],
     codeSnippet: `import { PricingMatrixDemo } from '@/features/document/components/ui-library';\n\n<PricingMatrixDemo />`,
@@ -2850,7 +2887,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Marquee Section',
     category: 'Sections',
     paradigm: 'Continuous Velocity Ticker Standard',
-    description: 'Seamless horizontal infinite marquee ticker displaying institutional partners and accreditations with pause on hover.',
+    description:
+      'Seamless horizontal infinite marquee ticker displaying institutional partners and accreditations with pause on hover.',
     explanation: 'Endless marquee carousel displaying accredited institutions and partners.',
     props: [{ name: 'items', type: 'array', description: 'List of partner labels.' }],
     codeSnippet: `import { MarqueeSectionDemo } from '@/features/document/components/ui-library';\n\n<MarqueeSectionDemo />`,
@@ -2878,7 +2916,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Floating Label Form',
     category: 'Forms',
     paradigm: 'Shrinking Boundary Label Standard',
-    description: 'Floating label text input offering smooth label transitions, focus rings, and strict 44px hit bounds.',
+    description:
+      'Floating label text input offering smooth label transitions, focus rings, and strict 44px hit bounds.',
     explanation: 'Label transforms smoothly into border micro-stamp upon input focus.',
     props: [{ name: 'label', type: 'string', description: 'Field label text.' }],
     codeSnippet: `import { FloatingLabelFormDemo } from '@/features/document/components/ui-library';\n\n<FloatingLabelFormDemo />`,
@@ -2980,7 +3019,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'File Dropzone',
     category: 'Forms',
     paradigm: 'Dashed Target Dropzone Standard',
-    description: 'Drag-and-drop file staging zone providing MIME type verification, file size validation, and interactive removal chips.',
+    description:
+      'Drag-and-drop file staging zone providing MIME type verification, file size validation, and interactive removal chips.',
     explanation: 'Tactile file ingestion zone with live list of verified dossier attachments.',
     props: [{ name: 'maxSize', type: 'string', description: 'Allowed file size limit.' }],
     codeSnippet: `import { FileDropzoneDemo } from '@/features/document/components/ui-library';\n\n<FileDropzoneDemo />`,
@@ -3008,7 +3048,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Payment Card Form',
     category: 'Forms',
     paradigm: 'Live Holographic Card Standard',
-    description: 'Interactive credit card input interface with real-time numeric formatting and holographic card visual feedback.',
+    description:
+      'Interactive credit card input interface with real-time numeric formatting and holographic card visual feedback.',
     explanation: 'Real-time card visualization mirroring user keystrokes into live card layout.',
     props: [{ name: 'cardNumber', type: 'string', description: 'Masked card number.' }],
     codeSnippet: `import { PaymentCardDemo } from '@/features/document/components/ui-library';\n\n<PaymentCardDemo />`,
@@ -3356,7 +3397,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Command Palette',
     category: 'Overlays',
     paradigm: 'Global Spotlight Search Standard',
-    description: 'Universal Cmd+K modal launcher providing instant keyboard navigation, grouped operational commands, and fuzzy search filtering.',
+    description:
+      'Universal Cmd+K modal launcher providing instant keyboard navigation, grouped operational commands, and fuzzy search filtering.',
     explanation:
       'Click the search bar or press Cmd+K (or Ctrl+K) to open. Navigate with arrow keys, select with Enter, close with Escape. Try typing to filter results.',
     props: [
@@ -3571,7 +3613,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Confetti Cannon',
     category: 'Overlays',
     paradigm: 'Celebration Particle Burst Standard',
-    description: 'Celebratory particle physics explosion rewarding operators upon successful milestone completions with zero layout reflows.',
+    description:
+      'Celebratory particle physics explosion rewarding operators upon successful milestone completions with zero layout reflows.',
     explanation: 'Particle physics burst rewarding major milestones and graduation approvals.',
     props: [{ name: 'burst', type: 'boolean', description: 'Fire cannon trigger.' }],
     codeSnippet: `import { ConfettiCannonDemo } from '@/features/document/components/ui-library';\n\n<ConfettiCannonDemo />`,
@@ -3602,7 +3645,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Drawer Sheet',
     category: 'Overlays',
     paradigm: 'Slide-over Inspector Standard',
-    description: 'Off-canvas slide-out inspector panel providing dedicated workspace for secondary detail views, audits, and configuration.',
+    description:
+      'Off-canvas slide-out inspector panel providing dedicated workspace for secondary detail views, audits, and configuration.',
     explanation: 'Edge drawer overlay providing contextual secondary details without leaving page.',
     props: [{ name: 'open', type: 'boolean', description: 'Drawer visibility.' }],
     codeSnippet: `import { DrawerSheetDemo } from '@/features/document/components/ui-library';\n\n<DrawerSheetDemo />`,
@@ -3633,7 +3677,8 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Image Lightbox',
     category: 'Overlays',
     paradigm: 'Expanded Media Zoom Standard',
-    description: 'Distraction-free media viewer modal with smooth thumbnail-to-fullscreen transitions, keyboard closing, and high-resolution zoom capabilities.',
+    description:
+      'Distraction-free media viewer modal with smooth thumbnail-to-fullscreen transitions, keyboard closing, and high-resolution zoom capabilities.',
     explanation: 'High-res modal overlay expanding thumbnail images for detailed inspection.',
     props: [{ name: 'zoom', type: 'boolean', description: 'Zoom state toggle.' }],
     codeSnippet: `import { ImageLightboxDemo } from '@/features/document/components/ui-library';\n\n<ImageLightboxDemo />`,

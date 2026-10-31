@@ -385,7 +385,7 @@ export function RealTimeChart({
     <div
       ref={containerRef}
       className={cn(
-        'relative w-full max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white p-5 shadow-xs transition-colors select-none',
+        'relative w-full border-slate-200 bg-white p-5 shadow-xs transition-colors select-none max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
         className,
       )}
     >

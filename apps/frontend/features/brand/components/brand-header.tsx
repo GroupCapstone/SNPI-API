@@ -5,13 +5,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BrandMark } from '@/components/shared/brand-mark';
 import { Layers, Bookmark, FileText, Sparkles } from '@/components/icons';
-import { HangingTabsNav, type HangingTabItem } from '@/features/document/components/ui-library/hanging-tabs-nav';
+import {
+  HangingTabsNav,
+  type HangingTabItem,
+} from '@/features/document/components/ui-library/hanging-tabs-nav';
 
 export function BrandHeader() {
   const pathname = usePathname();
 
-  const isStandards = pathname?.startsWith('/brand/standards') || pathname?.startsWith('/standards');
-  const isResources = pathname?.startsWith('/brand/resources') || pathname?.startsWith('/resources');
+  const isStandards =
+    pathname?.startsWith('/brand/standards') || pathname?.startsWith('/standards');
+  const isResources =
+    pathname?.startsWith('/brand/resources') || pathname?.startsWith('/resources');
   const activeId = isStandards ? 'standards' : isResources ? 'resources' : 'brand';
 
   const brandTabs: HangingTabItem[] = [

@@ -74,11 +74,7 @@ export function RailTocDemo() {
       {/* Header Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div className="flex items-center gap-2.5">
-          <svg
-            viewBox="0 0 24 24"
-            className="size-5 -rotate-90 fill-[#0056FF]"
-            aria-hidden="true"
-          >
+          <svg viewBox="0 0 24 24" className="size-5 -rotate-90 fill-[#0056FF]" aria-hidden="true">
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
           </svg>
           <div>
@@ -141,9 +137,7 @@ export function RailTocDemo() {
               )}
             >
               <div className="flex items-center justify-between">
-                <h4 className="font-sans text-xs font-bold text-slate-900">
-                  {item.label}
-                </h4>
+                <h4 className="font-sans text-xs font-bold text-slate-900">{item.label}</h4>
                 <span className="font-mono text-[9px] font-bold text-[#0056FF]">
                   DEPTH {item.depth || 0}
                 </span>

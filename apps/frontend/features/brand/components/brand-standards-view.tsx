@@ -25,8 +25,8 @@ export function BrandStandardsView() {
               Brand Standards Specification
             </h1>
             <p className="font-sans text-sm text-slate-600 sm:text-base">
-              The authoritative technical manual governing Foundations, Logos, Design Language, and Handbooks.
-              Strictly restricted to the Royal Blue palette and Sora typography.
+              The authoritative technical manual governing Foundations, Logos, Design Language, and
+              Handbooks. Strictly restricted to the Royal Blue palette and Sora typography.
             </p>
           </div>
         </div>
@@ -37,7 +37,9 @@ export function BrandStandardsView() {
         {/* 1. FOUNDATIONS */}
         <section className="space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Core Architecture</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Core Architecture
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950">
               1. Foundations
             </h2>
@@ -45,74 +47,83 @@ export function BrandStandardsView() {
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {/* History */}
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-3">
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
               <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                 1.1 HISTORY
               </span>
               <h3 className="font-sans text-lg font-bold text-slate-950">System Lineage</h3>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                SNPI-SMS emerged from institutional requirements for high-availability student tracking.
-                Evolved into a 7-layer modular monolith coordinating 47 domains with MongoDB replica sets.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                SNPI-SMS emerged from institutional requirements for high-availability student
+                tracking. Evolved into a 7-layer modular monolith coordinating 47 domains with
+                MongoDB replica sets.
               </p>
             </div>
 
             {/* Brand platform */}
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-3">
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
               <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                 1.2 BRAND PLATFORM
               </span>
               <h3 className="font-sans text-lg font-bold text-slate-950">Mission &amp; Vision</h3>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                To build unbreakable educational software infrastructure. Zero downtime, zero shadow clutter,
-                strict multi-tenant scoping, and cryptographic auditability for every transaction.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                To build unbreakable educational software infrastructure. Zero downtime, zero shadow
+                clutter, strict multi-tenant scoping, and cryptographic auditability for every
+                transaction.
               </p>
             </div>
 
             {/* Brand personality */}
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-3">
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
               <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                 1.3 BRAND PERSONALITY
               </span>
               <h3 className="font-sans text-lg font-bold text-slate-950">Aerospace Precision</h3>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Technical, disciplined, and modern. Chamfered 45-degree cyber armor plates, double-seam dividers,
-                and luminous Royal Blue feedback create an interface that feels like high-tech avionics.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                Technical, disciplined, and modern. Chamfered 45-degree cyber armor plates,
+                double-seam dividers, and luminous Royal Blue feedback create an interface that
+                feels like high-tech avionics.
               </p>
             </div>
 
             {/* The hat / Brand mark */}
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-3">
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
               <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                 1.4 THE HAT / BRAND MARK
               </span>
-              <h3 className="font-sans text-lg font-bold text-slate-950">Official Mark Standards</h3>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                The circular insignia is the primary graphic identifier. Clear space must equal at least 50%
-                of the mark&apos;s diameter on all sides. Never alter, rotate, skew, or outline the mark.
+              <h3 className="font-sans text-lg font-bold text-slate-950">
+                Official Mark Standards
+              </h3>
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                The circular insignia is the primary graphic identifier. Clear space must equal at
+                least 50% of the mark&apos;s diameter on all sides. Never alter, rotate, skew, or
+                outline the mark.
               </p>
             </div>
 
             {/* Brand architecture */}
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-3">
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
               <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                 1.5 BRAND ARCHITECTURE
               </span>
-              <h3 className="font-sans text-lg font-bold text-slate-950">Monolithic Master Brand</h3>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                All 47 domains (Attendance, Admissions, Finance, Exams) sit directly under the SNPI-SMS parent
-                brand banner. Sub-products do not carry isolated visual identities.
+              <h3 className="font-sans text-lg font-bold text-slate-950">
+                Monolithic Master Brand
+              </h3>
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                All 47 domains (Attendance, Admissions, Finance, Exams) sit directly under the
+                SNPI-SMS parent brand banner. Sub-products do not carry isolated visual identities.
               </p>
             </div>
 
             {/* Naming & trademarks */}
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-3">
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
               <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                 1.6 NAMING &amp; TRADEMARKS
               </span>
               <h3 className="font-sans text-lg font-bold text-slate-950">Nomenclature Rules</h3>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Official name: &quot;SNPI-SMS&quot; (hyphenated, uppercase). Short form: &quot;SNPI&quot;. Academic institution:
-                &quot;SNP International School&quot;. Never write &quot;SnpiSms&quot;, &quot;snp-sms&quot; in user-facing copy.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                Official name: &quot;SNPI-SMS&quot; (hyphenated, uppercase). Short form:
+                &quot;SNPI&quot;. Academic institution: &quot;SNP International School&quot;. Never
+                write &quot;SnpiSms&quot;, &quot;snp-sms&quot; in user-facing copy.
               </p>
             </div>
           </div>
@@ -121,7 +132,9 @@ export function BrandStandardsView() {
         {/* 2. LOGOS */}
         <section className="space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Asset Hierarchy</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Asset Hierarchy
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950">
               2. Official Logo Family
             </h2>
@@ -191,9 +204,11 @@ export function BrandStandardsView() {
           <BrandColorsPalette />
 
           {/* Fonts & Typography */}
-          <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-6">
+          <div className="space-y-6 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
             <div className="border-b border-[#CAD3F5] pb-3">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Typography</span>
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Typography
+              </span>
               <h3 className="font-sans text-xl font-bold text-slate-950">
                 Google Sora Geometric Typography
               </h3>
@@ -201,7 +216,9 @@ export function BrandStandardsView() {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-3">
-                <h4 className="font-sans text-sm font-bold text-slate-900 uppercase">Hierarchical Rules</h4>
+                <h4 className="font-sans text-sm font-bold text-slate-900 uppercase">
+                  Hierarchical Rules
+                </h4>
                 <ul className="space-y-2 font-sans text-xs text-slate-600">
                   <li className="flex items-center gap-2">
                     <Check className="size-3.5 text-[#0056FF]" />
@@ -227,12 +244,15 @@ export function BrandStandardsView() {
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-sans text-sm font-bold text-slate-900 uppercase">KaTeX Math &amp; Code Syntax</h4>
-                <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                  Monospace text must use JetBrains Mono or SF Mono with Royal Blue (#0056FF) syntax highlights.
-                  Mathematical equations use KaTeX standard notation with dollar-escaping protocols.
+                <h4 className="font-sans text-sm font-bold text-slate-900 uppercase">
+                  KaTeX Math &amp; Code Syntax
+                </h4>
+                <p className="font-sans text-xs leading-relaxed text-slate-600">
+                  Monospace text must use JetBrains Mono or SF Mono with Royal Blue (#0056FF) syntax
+                  highlights. Mathematical equations use KaTeX standard notation with
+                  dollar-escaping protocols.
                 </p>
-                <div className="rounded-[4px] bg-[#E3E7FC]/40 p-3 font-mono text-xs text-slate-900 border border-[#CAD3F5]">
+                <div className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/40 p-3 font-mono text-xs text-slate-900">
                   E = mc^2 &middot; f(x) = \int_0^\infty e^(-x) dx
                 </div>
               </div>
@@ -258,31 +278,36 @@ export function BrandStandardsView() {
           </div>
 
           {/* Iconography */}
-          <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-4">
+          <div className="space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
             <div className="border-b border-[#CAD3F5] pb-3">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Symbol Systems</span>
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Symbol Systems
+              </span>
               <h3 className="font-sans text-xl font-bold text-slate-950">
                 Iconography &middot; Icons, Technology Icons, UI Icons
               </h3>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div className="rounded-[4px] border border-[#CAD3F5] p-4 bg-[#E3E7FC]/20">
+              <div className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-4">
                 <h4 className="font-sans text-sm font-bold text-slate-900">Bare UI Icons</h4>
-                <p className="font-sans text-xs text-slate-600 mt-1">
-                  Icons sit bare on cards without colorful square background boxes for maximum clean elegance.
+                <p className="mt-1 font-sans text-xs text-slate-600">
+                  Icons sit bare on cards without colorful square background boxes for maximum clean
+                  elegance.
                 </p>
               </div>
-              <div className="rounded-[4px] border border-[#CAD3F5] p-4 bg-[#E3E7FC]/20">
+              <div className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-4">
                 <h4 className="font-sans text-sm font-bold text-slate-900">Technology Icons</h4>
-                <p className="font-sans text-xs text-slate-600 mt-1">
-                  Approved monochrome stack emblems for MongoDB, TypeScript, Next.js, Docker, and Express.
+                <p className="mt-1 font-sans text-xs text-slate-600">
+                  Approved monochrome stack emblems for MongoDB, TypeScript, Next.js, Docker, and
+                  Express.
                 </p>
               </div>
-              <div className="rounded-[4px] border border-[#CAD3F5] p-4 bg-[#E3E7FC]/20">
+              <div className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-4">
                 <h4 className="font-sans text-sm font-bold text-slate-900">Zero Emoji Mandate</h4>
-                <p className="font-sans text-xs text-slate-600 mt-1">
-                  All status badges use crisp textual codes ([PASSED], [FAILED], [WARNING]) rather than emojis.
+                <p className="mt-1 font-sans text-xs text-slate-600">
+                  All status badges use crisp textual codes ([PASSED], [FAILED], [WARNING]) rather
+                  than emojis.
                 </p>
               </div>
             </div>
@@ -292,7 +317,9 @@ export function BrandStandardsView() {
         {/* 4. HANDBOOKS */}
         <section className="space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Operational Guidelines</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Operational Guidelines
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950">
               4. Brand Handbooks
             </h2>

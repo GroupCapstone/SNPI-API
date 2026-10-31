@@ -127,7 +127,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
     return (
       <div
         className={cn(
-          'space-y-5 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border p-6 transition-colors',
+          'space-y-5 p-6 transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
           isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
         )}
       >
@@ -160,7 +160,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
 
   // Loaded state
   return (
-    <div className="max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white p-6 shadow-xs transition-colors">
+    <div className="border-slate-200 bg-white p-6 shadow-xs transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
       <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
         <div className="flex shrink-0 items-center justify-center">
           <User className="size-10 text-[#0056FF]" />
@@ -168,9 +168,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
 
         <div className="flex-1 space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <h4 className="font-sans text-base font-bold text-slate-900">
-              Dr. Sokha Chann
-            </h4>
+            <h4 className="font-sans text-base font-bold text-slate-900">Dr. Sokha Chann</h4>
             <span className="flex items-center gap-1 rounded-[4px] border border-emerald-500/30 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
               <ShieldCheck className="size-3" />
               <span>SUPERADMIN VERIFIED</span>
@@ -357,7 +355,7 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
     return (
       <div
         className={cn(
-          'divide-y max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border transition-colors',
+          'divide-y transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
           isDark
             ? 'divide-slate-800 border-slate-800 bg-[#00081C]'
             : 'divide-slate-100 border-slate-200 bg-white shadow-xs',
@@ -387,7 +385,7 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
 
   // Loaded state
   return (
-    <div className="divide-y divide-slate-100 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white shadow-xs transition-colors">
+    <div className="divide-y divide-slate-100 border-slate-200 bg-white shadow-xs transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
       {listItems.map((item, idx) => (
         <div key={idx} className="flex items-center justify-between gap-4 p-4">
           <div className="flex min-w-0 items-center gap-3">

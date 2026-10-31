@@ -397,9 +397,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
                 </h4>
               )}
             </div>
-            <p className="font-sans text-xs leading-relaxed text-slate-600">
-              {item.message}
-            </p>
+            <p className="font-sans text-xs leading-relaxed text-slate-600">{item.message}</p>
           </div>
 
           {/* Manual Close Button (>= 32px touch target) */}
@@ -407,7 +405,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
             type="button"
             onClick={triggerExit}
             aria-label="Dismiss notification"
-            className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-200 bg-white text-slate-500 hover:text-slate-900 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[#0056FF]"
+            className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-200 bg-white text-slate-500 transition-colors outline-none hover:text-slate-900 focus-visible:ring-2 focus-visible:ring-[#0056FF]"
           >
             <X className="size-3.5" />
           </button>
@@ -609,9 +607,7 @@ export function ToastStackDemo() {
           className="flex flex-col items-start gap-1 rounded-[4px] border border-emerald-500/30 bg-emerald-500/5 p-4 text-left transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10 active:scale-[0.98]"
         >
           <Check className="size-5 stroke-[2.5] text-emerald-600" />
-          <span className="mt-1 font-mono text-xs font-bold text-emerald-700">
-            Success Toast
-          </span>
+          <span className="mt-1 font-mono text-xs font-bold text-emerald-700">Success Toast</span>
           <span className="font-sans text-[11px] text-slate-500">Form save & commit</span>
         </button>
 
@@ -622,9 +618,7 @@ export function ToastStackDemo() {
           className="flex flex-col items-start gap-1 rounded-[4px] border border-rose-500/30 bg-rose-500/5 p-4 text-left transition-all hover:border-rose-500/50 hover:bg-rose-500/10 active:scale-[0.98]"
         >
           <CircleAlert className="size-5 stroke-[2.5] text-rose-600" />
-          <span className="mt-1 font-mono text-xs font-bold text-rose-700">
-            Error Toast
-          </span>
+          <span className="mt-1 font-mono text-xs font-bold text-rose-700">Error Toast</span>
           <span className="font-sans text-[11px] text-slate-500">Security failure cue</span>
         </button>
 
@@ -635,9 +629,7 @@ export function ToastStackDemo() {
           className="flex flex-col items-start gap-1 rounded-[4px] border border-amber-500/30 bg-amber-500/5 p-4 text-left transition-all hover:border-amber-500/50 hover:bg-amber-500/10 active:scale-[0.98]"
         >
           <TriangleAlert className="size-5 stroke-[2.5] text-amber-600" />
-          <span className="mt-1 font-mono text-xs font-bold text-amber-700">
-            Warning Toast
-          </span>
+          <span className="mt-1 font-mono text-xs font-bold text-amber-700">Warning Toast</span>
           <span className="font-sans text-[11px] text-slate-500">Rate limit threshold</span>
         </button>
 
@@ -648,9 +640,7 @@ export function ToastStackDemo() {
           className="flex flex-col items-start gap-1 rounded-[4px] border border-blue-500/30 bg-blue-500/5 p-4 text-left transition-all hover:border-blue-500/50 hover:bg-blue-500/10 active:scale-[0.98]"
         >
           <Info className="size-5 stroke-[2.5] text-[#0056FF]" />
-          <span className="mt-1 font-mono text-xs font-bold text-[#0056FF]">
-            Info Toast
-          </span>
+          <span className="mt-1 font-mono text-xs font-bold text-[#0056FF]">Info Toast</span>
           <span className="font-sans text-[11px] text-slate-500">Background event sync</span>
         </button>
       </div>
@@ -679,7 +669,7 @@ export function ToastStackDemo() {
       </div>
 
       {/* Interactive Preview Canvas with Toast Container */}
-      <div className="relative min-h-[360px] w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-slate-50/50 p-6 shadow-inner transition-colors">
+      <div className="relative min-h-[360px] w-full overflow-hidden border-slate-200 bg-slate-50/50 p-6 shadow-inner transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
         <div className="max-w-md space-y-3">
           <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
             Sandbox Viewport &middot; Hover To Freeze Countdown

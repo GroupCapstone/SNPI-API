@@ -244,7 +244,7 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div
       className={cn(
-        'w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white text-slate-900 shadow-[0_1px_4px_rgba(0,0,0,0.02)] transition-colors duration-150',
+        'w-full overflow-hidden border-slate-200/90 bg-white text-slate-900 shadow-[0_1px_4px_rgba(0,0,0,0.02)] transition-colors duration-150 max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
         className,
       )}
     >
@@ -254,14 +254,8 @@ export function DataTable<T extends Record<string, any>>({
         <div className="flex flex-1 flex-col gap-1 sm:max-w-md">
           {title && (
             <div className="flex items-center gap-2">
-              <h3 className="font-sans text-sm font-bold tracking-tight text-slate-950">
-                {title}
-              </h3>
-              {subtitle && (
-                <span className="font-sans text-xs text-slate-500">
-                  {subtitle}
-                </span>
-              )}
+              <h3 className="font-sans text-sm font-bold tracking-tight text-slate-950">{title}</h3>
+              {subtitle && <span className="font-sans text-xs text-slate-500">{subtitle}</span>}
             </div>
           )}
 
@@ -273,7 +267,7 @@ export function DataTable<T extends Record<string, any>>({
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={searchPlaceholder}
-              className="h-9 w-full rounded-[4px] border border-slate-200 bg-white pr-8 pl-9 font-sans text-xs font-medium text-slate-900 placeholder:text-slate-400 transition-colors focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
+              className="h-9 w-full rounded-[4px] border border-slate-200 bg-white pr-8 pl-9 font-sans text-xs font-medium text-slate-900 transition-colors placeholder:text-slate-400 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
               aria-label="Filter records"
             />
             {searchInput && (
@@ -294,10 +288,13 @@ export function DataTable<T extends Record<string, any>>({
           {/* 02 Live Result Count Region (with aria-live) */}
           <div
             aria-live="polite"
-            className="font-mono text-xs font-semibold tabular-nums text-slate-500"
+            className="font-mono text-xs font-semibold text-slate-500 tabular-nums"
           >
-            Showing <span className="text-slate-900">{startRecord}-{endRecord}</span> of{' '}
-            <span className="text-slate-900">{sortedData.length}</span>
+            Showing{' '}
+            <span className="text-slate-900">
+              {startRecord}-{endRecord}
+            </span>{' '}
+            of <span className="text-slate-900">{sortedData.length}</span>
           </div>
 
           {/* 09 Page Size Dropdown */}
@@ -464,15 +461,11 @@ export function DataTable<T extends Record<string, any>>({
         {paginatedData.length === 0 && (
           <div className="flex flex-col items-center justify-center px-4 py-16 text-center">
             <Search className="size-8 text-slate-400" />
-            <h4 className="mt-3 font-sans text-sm font-bold text-slate-900">
-              No records found
-            </h4>
+            <h4 className="mt-3 font-sans text-sm font-bold text-slate-900">No records found</h4>
             <p className="mt-1 max-w-sm font-sans text-xs text-slate-500">
               No matching results found for{' '}
-              <span className="font-semibold text-slate-800">
-                &ldquo;{debouncedQuery}&rdquo;
-              </span>
-              . Try searching by student code, full name, or status.
+              <span className="font-semibold text-slate-800">&ldquo;{debouncedQuery}&rdquo;</span>.
+              Try searching by student code, full name, or status.
             </p>
             <button
               type="button"

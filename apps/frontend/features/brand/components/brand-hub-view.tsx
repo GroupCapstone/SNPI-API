@@ -6,13 +6,7 @@ import { BrandMark } from '@/components/shared/brand-mark';
 import { BrandColorsPalette } from './brand-colors-palette';
 import { BrandAssetPlaceholder } from './brand-asset-placeholder';
 import { BrandJumpNav } from './brand-jump-nav';
-import {
-  Sparkles,
-  Bookmark,
-  Layers,
-  Download,
-  ArrowRight,
-} from '@/components/icons';
+import { Sparkles, Bookmark, Layers, Download, ArrowRight } from '@/components/icons';
 
 export function BrandHubView() {
   return (
@@ -32,8 +26,9 @@ export function BrandHubView() {
               SNPI-SMS Brand Hub
             </h1>
             <p className="font-sans text-base leading-relaxed text-blue-100 sm:text-lg">
-              The single source of truth for the SNPI-SMS brand identity. Explore foundational rules,
-              the Royal Blue palette, typography, logo lockups, marketing templates, and handbooks.
+              The single source of truth for the SNPI-SMS brand identity. Explore foundational
+              rules, the Royal Blue palette, typography, logo lockups, marketing templates, and
+              handbooks.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-4">
@@ -64,7 +59,9 @@ export function BrandHubView() {
         {/* SECTION: Featured */}
         <section id="featured" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Curated Highlights</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Curated Highlights
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Featured Brand Stories
             </h2>
@@ -98,7 +95,9 @@ export function BrandHubView() {
         {/* SECTION: Events */}
         <section id="events" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Milestones &amp; Gatherings</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Milestones &amp; Gatherings
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Events &amp; Summits
             </h2>
@@ -125,7 +124,9 @@ export function BrandHubView() {
         {/* SECTION: Templates */}
         <section id="templates" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Turnkey Collateral</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Turnkey Collateral
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Brand Templates
             </h2>
@@ -166,7 +167,9 @@ export function BrandHubView() {
         {/* SECTION: Ads & marketing */}
         <section id="ads-marketing" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Commercial Visibility</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Commercial Visibility
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Ads &amp; Marketing
             </h2>
@@ -200,42 +203,50 @@ export function BrandHubView() {
         {/* SECTION: Writing */}
         <section id="writing" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Editorial &amp; Tone</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Editorial &amp; Tone
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Brand Voice &amp; Writing Guidelines
             </h2>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-6 space-y-3">
-              <h4 className="font-sans text-base font-bold text-slate-950 uppercase">Authoritative &amp; Direct</h4>
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-6">
+              <h4 className="font-sans text-base font-bold text-slate-950 uppercase">
+                Authoritative &amp; Direct
+              </h4>
               <p className="font-sans text-xs leading-relaxed text-slate-600">
-                Write concise, clear sentences. Avoid buzzwords, fluff, and filler. Speak with technical
-                confidence and rigorous accuracy.
+                Write concise, clear sentences. Avoid buzzwords, fluff, and filler. Speak with
+                technical confidence and rigorous accuracy.
               </p>
-              <div className="rounded-[2px] bg-white p-2.5 font-mono text-[11px] text-slate-700 border border-[#CAD3F5]">
+              <div className="rounded-[2px] border border-[#CAD3F5] bg-white p-2.5 font-mono text-[11px] text-slate-700">
                 Do: &quot;Deploy API endpoints with tenant-scoped JWT auth.&quot;
               </div>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-6 space-y-3">
-              <h4 className="font-sans text-base font-bold text-slate-950 uppercase">Zero Emojis Standard</h4>
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-6">
+              <h4 className="font-sans text-base font-bold text-slate-950 uppercase">
+                Zero Emojis Standard
+              </h4>
               <p className="font-sans text-xs leading-relaxed text-slate-600">
-                Under no circumstances are emojis permitted in documentation, copy, code, or interfaces.
-                Use textual badges like [PASSED], [ACTIVE], or [OFFICIAL].
+                Under no circumstances are emojis permitted in documentation, copy, code, or
+                interfaces. Use textual badges like [PASSED], [ACTIVE], or [OFFICIAL].
               </p>
-              <div className="rounded-[2px] bg-white p-2.5 font-mono text-[11px] text-slate-700 border border-[#CAD3F5]">
+              <div className="rounded-[2px] border border-[#CAD3F5] bg-white p-2.5 font-mono text-[11px] text-slate-700">
                 Standard: &quot;[VERIFIED] Production Readiness Gate&quot;
               </div>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-6 space-y-3">
-              <h4 className="font-sans text-base font-bold text-slate-950 uppercase">Proper Naming &amp; Capitalization</h4>
+            <div className="space-y-3 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-6">
+              <h4 className="font-sans text-base font-bold text-slate-950 uppercase">
+                Proper Naming &amp; Capitalization
+              </h4>
               <p className="font-sans text-xs leading-relaxed text-slate-600">
-                Always write SNPI-SMS with a hyphen and all-caps. Write &quot;Open API&quot; and &quot;UI Library&quot; with
-                exact casing.
+                Always write SNPI-SMS with a hyphen and all-caps. Write &quot;Open API&quot; and
+                &quot;UI Library&quot; with exact casing.
               </p>
-              <div className="rounded-[2px] bg-white p-2.5 font-mono text-[11px] text-slate-700 border border-[#CAD3F5]">
+              <div className="rounded-[2px] border border-[#CAD3F5] bg-white p-2.5 font-mono text-[11px] text-slate-700">
                 Rule: &quot;SNPI-SMS Monorepo (never snpi_sms or SnpiSms)&quot;
               </div>
             </div>
@@ -245,7 +256,9 @@ export function BrandHubView() {
         {/* SECTION: For Red Hatters / SNPI Team */}
         <section id="for-red-hatters" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Internal Culture</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Internal Culture
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               For Red Hatters &amp; SNPI Team Members
             </h2>
@@ -279,18 +292,23 @@ export function BrandHubView() {
         {/* SECTION: For Creatives */}
         <section id="for-creatives" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Production Specs</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Production Specs
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               For Creatives &amp; Designers
             </h2>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-4">
-              <h4 className="font-sans text-lg font-bold text-slate-950 uppercase">Grid &amp; Mathematical Tokens</h4>
+            <div className="space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <h4 className="font-sans text-lg font-bold text-slate-950 uppercase">
+                Grid &amp; Mathematical Tokens
+              </h4>
               <p className="font-sans text-xs leading-relaxed text-slate-600">
-                All layouts are anchored to an 8px base rhythm (8, 16, 24, 32, 48, 64px). Component corner radii
-                are mathematically standardized to rounded-[4px] across all desktop and mobile web screens.
+                All layouts are anchored to an 8px base rhythm (8, 16, 24, 32, 48, 64px). Component
+                corner radii are mathematically standardized to rounded-[4px] across all desktop and
+                mobile web screens.
               </p>
               <div className="flex flex-wrap gap-2 font-mono text-[11px]">
                 <span className="rounded bg-[#E3E7FC] px-2 py-1 text-slate-800">4px Corners</span>
@@ -300,11 +318,14 @@ export function BrandHubView() {
               </div>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-4">
-              <h4 className="font-sans text-lg font-bold text-slate-950 uppercase">Vector Asset Export Pipeline</h4>
+            <div className="space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <h4 className="font-sans text-lg font-bold text-slate-950 uppercase">
+                Vector Asset Export Pipeline
+              </h4>
               <p className="font-sans text-xs leading-relaxed text-slate-600">
-                Primary design files must remain live editable vector objects. Export digital graphics strictly in
-                PDF (print), SVG (web code), and lossless PNG. Never export flattened raster layers as primary masters.
+                Primary design files must remain live editable vector objects. Export digital
+                graphics strictly in PDF (print), SVG (web code), and lossless PNG. Never export
+                flattened raster layers as primary masters.
               </p>
               <div className="flex flex-wrap gap-2 font-mono text-[11px]">
                 <span className="rounded bg-[#E3E7FC] px-2 py-1 text-slate-800">SVG 1.1</span>
@@ -318,7 +339,9 @@ export function BrandHubView() {
         {/* SECTION: For The Press */}
         <section id="for-press" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Media Inquiries</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Media Inquiries
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               For The Press &amp; Media Outlets
             </h2>
@@ -359,57 +382,72 @@ export function BrandHubView() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-2">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Foundational Pillar 01</span>
+            <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Foundational Pillar 01
+              </span>
               <h4 className="font-sans text-lg font-bold text-slate-950">History</h4>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Founded as an institutional school management system, SNPI-SMS evolved into a high-concurrency,
-                modular monolith orchestrating 47 academic and administrative operational domains.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                Founded as an institutional school management system, SNPI-SMS evolved into a
+                high-concurrency, modular monolith orchestrating 47 academic and administrative
+                operational domains.
               </p>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-2">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Foundational Pillar 02</span>
+            <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Foundational Pillar 02
+              </span>
               <h4 className="font-sans text-lg font-bold text-slate-950">Brand Platform</h4>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Mission: Empower educational institutions with mission-critical software reliability, zero-shadow
-                ergonomic clarity, and military-grade data governance.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                Mission: Empower educational institutions with mission-critical software
+                reliability, zero-shadow ergonomic clarity, and military-grade data governance.
               </p>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-2">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Foundational Pillar 03</span>
+            <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Foundational Pillar 03
+              </span>
               <h4 className="font-sans text-lg font-bold text-slate-950">Brand Personality</h4>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Bold, authoritative, precise, and human-centric. Expressed through deep Royal Blue (#0056FF),
-                geometric Sora typography, and mecha cyber contours.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                Bold, authoritative, precise, and human-centric. Expressed through deep Royal Blue
+                (#0056FF), geometric Sora typography, and mecha cyber contours.
               </p>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-2">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Foundational Pillar 04</span>
+            <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Foundational Pillar 04
+              </span>
               <h4 className="font-sans text-lg font-bold text-slate-950">The Hat / Brand Mark</h4>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                The authoritative emblem. Must always maintain minimum clear space equal to 50% of the mark&apos;s
-                height, and never appear smaller than 24x24px on screens.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                The authoritative emblem. Must always maintain minimum clear space equal to 50% of
+                the mark&apos;s height, and never appear smaller than 24x24px on screens.
               </p>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-2">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Foundational Pillar 05</span>
+            <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Foundational Pillar 05
+              </span>
               <h4 className="font-sans text-lg font-bold text-slate-950">Brand Architecture</h4>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                A monolithic master brand framework. All sub-domains (Attendance, Finance, Exams, Admissions)
-                inherit the primary identity and visual markers.
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                A monolithic master brand framework. All sub-domains (Attendance, Finance, Exams,
+                Admissions) inherit the primary identity and visual markers.
               </p>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-2">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Foundational Pillar 06</span>
-              <h4 className="font-sans text-lg font-bold text-slate-950">Naming &amp; Trademarks</h4>
-              <p className="font-sans text-xs text-slate-600 leading-relaxed">
-                Protected trademarks and canonical naming rules: SNPI-SMS, SNP International School, and
-                SNP Modular Monolith.
+            <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Foundational Pillar 06
+              </span>
+              <h4 className="font-sans text-lg font-bold text-slate-950">
+                Naming &amp; Trademarks
+              </h4>
+              <p className="font-sans text-xs leading-relaxed text-slate-600">
+                Protected trademarks and canonical naming rules: SNPI-SMS, SNP International School,
+                and SNP Modular Monolith.
               </p>
             </div>
           </div>
@@ -418,7 +456,9 @@ export function BrandHubView() {
         {/* SECTION: Logos */}
         <section id="logos" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Visual Identity Assets</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Visual Identity Assets
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Official Logo System
             </h2>
@@ -473,7 +513,9 @@ export function BrandHubView() {
         {/* SECTION: Design language (with live BrandColorsPalette) */}
         <section id="design-language" className="scroll-mt-32 space-y-8">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Visual Vocabulary</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Visual Vocabulary
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Design Language
             </h2>
@@ -485,40 +527,57 @@ export function BrandHubView() {
           </div>
 
           {/* Fonts & Typography */}
-          <div id="typography" className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-6">
+          <div
+            id="typography"
+            className="space-y-6 rounded-[4px] border border-[#CAD3F5] bg-white p-6"
+          >
             <div className="border-b border-[#CAD3F5] pb-3">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Type System</span>
-              <h3 className="font-sans text-xl font-bold text-slate-950">Fonts &amp; Typography &middot; Google Sora</h3>
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Type System
+              </span>
+              <h3 className="font-sans text-xl font-bold text-slate-950">
+                Fonts &amp; Typography &middot; Google Sora
+              </h3>
               <p className="font-sans text-xs text-slate-600">
-                Sora is a geometric sans-serif typeface designed for clarity on high-density displays.
+                Sora is a geometric sans-serif typeface designed for clarity on high-density
+                displays.
               </p>
             </div>
 
             <div className="space-y-4">
               <div className="border-b border-slate-100 pb-3">
-                <span className="font-mono text-[10px] text-slate-400">Heading 1 &middot; Sora 800 ExtraBold &middot; 36-48px</span>
+                <span className="font-mono text-[10px] text-slate-400">
+                  Heading 1 &middot; Sora 800 ExtraBold &middot; 36-48px
+                </span>
                 <p className="font-sans text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
                   Enterprise Academic Infrastructure
                 </p>
               </div>
 
               <div className="border-b border-slate-100 pb-3">
-                <span className="font-mono text-[10px] text-slate-400">Heading 2 &middot; Sora 700 Bold &middot; 24-30px</span>
+                <span className="font-mono text-[10px] text-slate-400">
+                  Heading 2 &middot; Sora 700 Bold &middot; 24-30px
+                </span>
                 <p className="font-sans text-2xl font-bold tracking-tight text-slate-900">
                   Mission-Critical Modular Architecture
                 </p>
               </div>
 
               <div className="border-b border-slate-100 pb-3">
-                <span className="font-mono text-[10px] text-slate-400">Body &middot; Sora 400 Regular &middot; 15-16px</span>
+                <span className="font-mono text-[10px] text-slate-400">
+                  Body &middot; Sora 400 Regular &middot; 15-16px
+                </span>
                 <p className="font-sans text-sm leading-relaxed text-slate-700">
-                  Every student record, cryptographic exam assessment, and financial invoice is enforced through
-                  the multi-tenant isolation layers and strict RBAC permission models.
+                  Every student record, cryptographic exam assessment, and financial invoice is
+                  enforced through the multi-tenant isolation layers and strict RBAC permission
+                  models.
                 </p>
               </div>
 
               <div>
-                <span className="font-mono text-[10px] text-slate-400">Code &amp; Monospace &middot; JetBrains Mono / SF Mono &middot; 12-13px</span>
+                <span className="font-mono text-[10px] text-slate-400">
+                  Code &amp; Monospace &middot; JetBrains Mono / SF Mono &middot; 12-13px
+                </span>
                 <p className="font-mono text-xs font-semibold text-[#0056FF]">
                   const API_GATEWAY_URL = &quot;https://api.snpi.edu.kh/v1&quot;;
                 </p>
@@ -545,39 +604,51 @@ export function BrandHubView() {
           </div>
 
           {/* Iconography: Icons, Technology Icons, UI Icons */}
-          <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-6">
+          <div className="space-y-6 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
             <div className="border-b border-[#CAD3F5] pb-3">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Symbol Standards</span>
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Symbol Standards
+              </span>
               <h3 className="font-sans text-xl font-bold text-slate-950">
                 Iconography &middot; Icons, Technology Icons, UI Icons
               </h3>
               <p className="font-sans text-xs text-slate-600">
-                Geometric 24x24px stroke system with 2.0px stroke-width, rounded caps, and zero emoji integration.
+                Geometric 24x24px stroke system with 2.0px stroke-width, rounded caps, and zero
+                emoji integration.
               </p>
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-              <div className="space-y-2 border border-[#CAD3F5] rounded-[4px] p-4 bg-[#E3E7FC]/20">
-                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">UI Icons</span>
+              <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-4">
+                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                  UI Icons
+                </span>
                 <h4 className="font-sans text-sm font-bold text-slate-900">Interface Navigation</h4>
                 <p className="font-sans text-xs text-slate-600">
                   Layers, FileText, Code, Bookmark, Search, User, Shield, Calendar, and Terminal.
                 </p>
               </div>
 
-              <div className="space-y-2 border border-[#CAD3F5] rounded-[4px] p-4 bg-[#E3E7FC]/20">
-                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Technology Icons</span>
+              <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-4">
+                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                  Technology Icons
+                </span>
                 <h4 className="font-sans text-sm font-bold text-slate-900">Infrastructure Stack</h4>
                 <p className="font-sans text-xs text-slate-600">
                   MongoDB, Next.js, Express, Docker, Kubernetes, Vercel, and TypeScript badges.
                 </p>
               </div>
 
-              <div className="space-y-2 border border-[#CAD3F5] rounded-[4px] p-4 bg-[#E3E7FC]/20">
-                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Bare Icons Standard</span>
-                <h4 className="font-sans text-sm font-bold text-slate-900">Zero Background Color</h4>
+              <div className="space-y-2 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/20 p-4">
+                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                  Bare Icons Standard
+                </span>
+                <h4 className="font-sans text-sm font-bold text-slate-900">
+                  Zero Background Color
+                </h4>
                 <p className="font-sans text-xs text-slate-600">
-                  Icons sit bare on cards without colorful square background boxes for clean elegance.
+                  Icons sit bare on cards without colorful square background boxes for clean
+                  elegance.
                 </p>
               </div>
             </div>
@@ -587,7 +658,9 @@ export function BrandHubView() {
         {/* SECTION: Handbooks */}
         <section id="handbooks" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Operational Manuals</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Operational Manuals
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               Brand Handbooks &amp; Sub-Guides
             </h2>
@@ -663,11 +736,14 @@ export function BrandHubView() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-4">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Resource 01</span>
+            <div className="space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Resource 01
+              </span>
               <h4 className="font-sans text-lg font-bold text-slate-950">Master Logo Package</h4>
               <p className="font-sans text-xs text-slate-600">
-                Vector SVG, EPS, high-resolution PNG, and monochrome marks for print and digital applications.
+                Vector SVG, EPS, high-resolution PNG, and monochrome marks for print and digital
+                applications.
               </p>
               <Link
                 href="/brand/resources"
@@ -678,11 +754,16 @@ export function BrandHubView() {
               </Link>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-4">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Resource 02</span>
-              <h4 className="font-sans text-lg font-bold text-slate-950">Design Token Specification</h4>
+            <div className="space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Resource 02
+              </span>
+              <h4 className="font-sans text-lg font-bold text-slate-950">
+                Design Token Specification
+              </h4>
               <p className="font-sans text-xs text-slate-600">
-                Mathematical color tokens, elevation curves, typography scales, and CSS pseudo-element mixins.
+                Mathematical color tokens, elevation curves, typography scales, and CSS
+                pseudo-element mixins.
               </p>
               <Link
                 href="/brand/standards"
@@ -693,11 +774,14 @@ export function BrandHubView() {
               </Link>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-6 space-y-4">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">Resource 03</span>
+            <div className="space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-6">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                Resource 03
+              </span>
               <h4 className="font-sans text-lg font-bold text-slate-950">Presentation Templates</h4>
               <p className="font-sans text-xs text-slate-600">
-                Pre-built 16:9 widescreen Google Slides and PowerPoint master decks in official Royal Blue styling.
+                Pre-built 16:9 widescreen Google Slides and PowerPoint master decks in official
+                Royal Blue styling.
               </p>
               <Link
                 href="/brand/resources"
@@ -713,14 +797,16 @@ export function BrandHubView() {
         {/* SECTION: What's new */}
         <section id="whats-new" className="scroll-mt-32 space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Release Tracker</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Release Tracker
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               What&apos;s New in Brand Standards
             </h2>
           </div>
 
           <div className="space-y-3">
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-5 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-[4px] border border-[#CAD3F5] bg-white p-5">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10.5px] font-bold text-[#0056FF]">
@@ -732,7 +818,8 @@ export function BrandHubView() {
                   Cyber Armor Modular Navigation &amp; Royal Blue Active Glow Standard
                 </h4>
                 <p className="font-sans text-xs text-slate-600">
-                  Established the 3-tab Cyber Armor dock with 45° chamfers, double-seam dividers, and Royal Blue glow bar.
+                  Established the 3-tab Cyber Armor dock with 45° chamfers, double-seam dividers,
+                  and Royal Blue glow bar.
                 </p>
               </div>
               <Link
@@ -744,7 +831,7 @@ export function BrandHubView() {
               </Link>
             </div>
 
-            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-5 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-[4px] border border-[#CAD3F5] bg-white p-5">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10.5px] font-bold text-[#0056FF]">
@@ -756,7 +843,8 @@ export function BrandHubView() {
                   Authoritative Brand Colors &amp; Gradients Specification
                 </h4>
                 <p className="font-sans text-xs text-slate-600">
-                  Locked the 5-color palette (#0056FF, #2277FF, #000000, #E3E7FC, #FFFFFF) and dual gradients (Futurewave &amp; Midnight Surge).
+                  Locked the 5-color palette (#0056FF, #2277FF, #000000, #E3E7FC, #FFFFFF) and dual
+                  gradients (Futurewave &amp; Midnight Surge).
                 </p>
               </div>
               <Link

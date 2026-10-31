@@ -205,7 +205,7 @@ export function OtpPinInput({
   return (
     <div
       className={cn(
-        'relative w-full max-w-lg overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white text-slate-900 transition-colors duration-150',
+        'relative w-full max-w-lg overflow-hidden border-slate-200/90 bg-white text-slate-900 transition-colors duration-150 max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
         className,
       )}
     >
@@ -303,7 +303,7 @@ export function OtpPinInput({
                 className={cn(
                   // 01 Segmented Cells: Tabular width and fixed height
                   'size-11 rounded-[4px] border text-center font-mono text-xl font-bold tabular-nums transition-all duration-150 outline-none select-none sm:size-14 sm:text-2xl',
-                  'focus:ring-2 focus:ring-[#0056FF]/30 focus:border-[#0056FF]',
+                  'focus:border-[#0056FF] focus:ring-2 focus:ring-[#0056FF]/30',
                   // 06 Error Shake Recolor
                   isError
                     ? 'border-red-500 bg-red-50 text-red-700'

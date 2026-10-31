@@ -49,9 +49,7 @@ export function BrandAssetPlaceholder({
             [OFFICIAL BRAND ASSET]
           </span>
         </div>
-        <span className="font-mono text-[10px] font-semibold text-slate-500">
-          {dimensions}
-        </span>
+        <span className="font-mono text-[10px] font-semibold text-slate-500">{dimensions}</span>
       </div>
 
       {/* Center Official Brand Logo & Clear Term Description */}
@@ -63,9 +61,7 @@ export function BrandAssetPlaceholder({
           <h4 className="font-sans text-sm font-black tracking-wider text-slate-900 uppercase">
             {title}
           </h4>
-          <p className="font-sans text-xs font-medium text-slate-600 line-clamp-2">
-            {description}
-          </p>
+          <p className="line-clamp-2 font-sans text-xs font-medium text-slate-600">{description}</p>
         </div>
       </div>
 
@@ -74,7 +70,10 @@ export function BrandAssetPlaceholder({
         {guidelines.length > 0 ? (
           <div className="flex flex-wrap items-center justify-between gap-1.5 font-mono text-[10px] text-slate-500">
             {guidelines.map((rule, idx) => (
-              <span key={idx} className="rounded-[2px] bg-white px-1.5 py-0.5 border border-[#CAD3F5]">
+              <span
+                key={idx}
+                className="rounded-[2px] border border-[#CAD3F5] bg-white px-1.5 py-0.5"
+              >
                 {rule}
               </span>
             ))}

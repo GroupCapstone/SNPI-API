@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "6f2f41c",
+    "description": "Add brand hub, standards, and resources portals with strict royal blue palette, jump nav, and zero outside colors"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "7d5867c",
     "description": "Align 3-tab cyber armor navigation dock with uppercase labels, code changelog icon, and glowing active underline"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "0963776",
     "description": "V0.2.9 release checkpoint with navigation redesign and CI quality gate fixes"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "ae44792",
-    "description": "Upgrade hanging tabs navigation with UI Library first kinetic animations and real-time status tracker box"
   }
 ];
