@@ -18,6 +18,7 @@ export * from './rich-text-editor';
 export * from './dropdown';
 export * from './tooltip';
 export * from './rail-toc';
+export * from './hook-sidebar';
 export * from './status-page-404';
 export * from './icon-bar';
 export * from './component-registry';

@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "d7b657d",
+    "description": "Record Rail TOC light redesign and circular waypoint nodes"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "a301963",
     "description": "Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "afe1383",
     "description": "Enforce rounded-[4px] primary corner radius and responsive mobile border-t vs web border standards"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "be675a4",
-    "description": "Synchronize recent local commits"
   }
 ];

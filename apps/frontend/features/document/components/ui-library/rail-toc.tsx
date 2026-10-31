@@ -122,10 +122,11 @@ export function RailToc({
         const el = document.getElementById(item.id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          const top =
-            containerRef && containerRef.current
-              ? containerRef.current.scrollTop + rect.top
-              : window.scrollY + rect.top;
+          let top = window.scrollY + rect.top;
+          if (containerRef && containerRef.current) {
+            const cRect = containerRef.current.getBoundingClientRect();
+            top = containerRef.current.scrollTop + (rect.top - cRect.top);
+          }
           sectionPositions.push({ id: item.id, top });
         }
       });
@@ -169,6 +170,16 @@ export function RailToc({
 
     return () => targetEl.removeEventListener('scroll', handleScroll);
   }, [items, containerRef, offset, activeId, controlledActiveId, onSelect]);
+
+  // Synchronize active progress when controlled activeId changes externally
+  React.useEffect(() => {
+    if (controlledActiveId !== undefined) {
+      const idx = items.findIndex((it) => it.id === controlledActiveId);
+      if (idx >= 0) {
+        setActiveProgress(idx);
+      }
+    }
+  }, [controlledActiveId, items]);
 
   // Update animated plane position and rotation based on activeProgress & nodeCoords
   React.useEffect(() => {
@@ -365,7 +376,7 @@ export function RailToc({
       <div className="relative">
         {/* SVG Rail Track Canvas */}
         <svg
-          className="pointer-events-none absolute top-0 left-0"
+          className="pointer-events-none absolute top-0 left-0 z-10"
           width={svgWidth}
           height={svgHeight}
           aria-hidden="true"
@@ -486,10 +497,10 @@ export function RailToc({
                   className={cn(
                     'group flex w-full cursor-pointer items-center justify-between rounded-[4px] py-1.5 pr-2.5 text-left font-sans text-xs transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-[#0056FF] focus-visible:outline-hidden',
                     isActive
-                      ? 'bg-[#EFF5FF] font-bold text-[#0056FF]'
+                      ? 'font-bold text-[#0056FF]'
                       : isPassed
-                        ? 'font-medium text-slate-800 hover:bg-slate-50'
-                        : 'font-normal text-slate-500 hover:bg-slate-50 hover:text-slate-900',
+                        ? 'font-medium text-slate-800 hover:text-slate-950'
+                        : 'font-normal text-slate-500 hover:text-slate-900',
                   )}
                 >
                   <span className="flex-1 truncate leading-snug">{item.label}</span>

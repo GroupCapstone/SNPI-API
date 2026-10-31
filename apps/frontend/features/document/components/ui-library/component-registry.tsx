@@ -960,23 +960,127 @@ export function Docs() {
     id: 'hook-sidebar',
     name: 'Hook Sidebar',
     category: 'Navigation',
-    paradigm: 'Kinetic Pull Paradigm',
-    description:
-      'Edge-anchored tactile kinetic pull tab that slides out a dedicated drawer for administrative tools.',
-    explanation: 'Provides an edge-pinned kinetic hook that pulls open contextual tools.',
-    props: [{ name: 'isHooked', type: 'boolean', description: 'Open state.' }],
-    codeSnippet: `import { HookSidebarDemo } from '@/features/document/components/ui-library';\n\n<HookSidebarDemo />`,
-    realWorldExamples: [
+    paradigm: 'Dashed Spring Rail Standard',
+    description: 'A vertical navigation list with a dashed rail that marks the active item.',
+    explanation:
+      'Click an item to spring the accent rail down to it. Hovering or tabbing to another row draws a second, dimmer rail that stops where the accent one ends.',
+    props: [
       {
-        title: 'Quick Ledger',
-        scenario: 'Accountant peeks at daily ledger.',
-        impact: 'Preserves context.',
+        name: 'items *',
+        type: 'Array<string | { label: string; href?: string }>',
+        description:
+          'Rows rendered as the vertical list. A plain string or an object with a label is a nav item, and href turns it into a link.',
+      },
+      {
+        name: 'label',
+        type: 'string',
+        description:
+          'Group title shown above the list, outside the rail. Omit it for a bare list. Also names the nav for screen readers.',
+      },
+      {
+        name: 'value',
+        type: 'number',
+        description:
+          'Active item index for controlled usage. When set, it wins over both the URL and internal state.',
+      },
+      {
+        name: 'defaultValue',
+        type: 'number',
+        default: '0',
+        description:
+          'Initial active index. Used only when no item has an href and value is not provided.',
+      },
+      {
+        name: 'onChange',
+        type: '(index: number) => void',
+        description: 'Called with the new index whenever an item is selected.',
+      },
+      {
+        name: 'color',
+        type: 'string',
+        default: "'#0056FF'",
+        description:
+          'Any CSS color for the active rail (hex, rgb, hsl, var). The hover rail stays neutral.',
+      },
+      {
+        name: 'dashed',
+        type: 'boolean',
+        default: 'true',
+        description: 'Draws the rail and its corner as dashes. Set false for a solid line.',
+      },
+      {
+        name: 'className',
+        type: 'string',
+        description: 'Extra classes merged onto the root <nav> element.',
       },
     ],
-    uxPsychology: [{ principle: 'Affordance', detail: 'Visual tab invites pull gesture.' }],
-    usageGuidelines: [{ doItem: 'Anchor cleanly.', dontItem: 'Avoid blocking page content.' }],
-    implementationNotes: ['Absolute anchored tab with translate-x drawer.'],
-    supportedStates: ['Closed', 'Hooked Open'],
+    codeSnippet: `import { HookSidebar } from "@/components/ui/hook-sidebar"
+
+// any item with an href makes the rail follow the current route
+const display = [
+  { label: "Folder", href: "/folder" },
+  { label: "Code block", href: "/codeblock" },
+]
+
+const navigation = [{ label: "Gooey nav", href: "/gooeynav" }]
+
+// one HookSidebar per group, stacked
+export function Demo() {
+  return (
+    <div className="flex flex-col gap-5">
+      <HookSidebar label="Display" items={display} />
+      <HookSidebar label="Navigation" items={navigation} />
+    </div>
+  )
+}`,
+    realWorldExamples: [
+      {
+        title: 'Documentation Sub-Navigation',
+        scenario:
+          'Developer portals and nested API documentation sidebars with quick section jumping.',
+        impact: 'Clear visual tracking with tactile spring feedback and hover previewing.',
+      },
+      {
+        title: 'Settings & Administration Hubs',
+        scenario: 'Multi-group administrative navigation trees with sub-routes.',
+        impact: 'Minimal visual noise with dashed connecting rails and responsive route tracking.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Kinetic Momentum & Spring Physics',
+        detail:
+          'Physics-based mass-damped springs create an organic feeling of elasticity when jumping between destinations.',
+      },
+      {
+        principle: 'Feedforward Hover Anticipation',
+        detail:
+          'A secondary dimmer rail previews the travel path before committing a click or tap.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Stack multiple HookSidebar instances for clean grouped navigation.',
+        dontItem: 'Mix solid and dashed rails within the same navigation cluster.',
+      },
+      {
+        doItem: 'Use href properties to automatically bind navigation to the active URL route.',
+        dontItem:
+          'Apply excessive vertical spacing that causes the rail spring to stretch beyond viewport height.',
+      },
+    ],
+    implementationNotes: [
+      '01 Dual Rail Architecture: Active accent rail and dimmer hover rail operate on independent spring calculations.',
+      '02 Corner Arc Geometry: SVG curved path (M0.5 0a6 6 0 0 0 6 6H12) hooks seamlessly into item text.',
+      '03 CSS Repeating Dash: Background repeating linear gradient renders crisp 2px/2px dashed pattern without SVG distortion.',
+      '04 Data-Slot Attributes: Root, labels, and items carry data-slot attributes for flexible headless styling.',
+    ],
+    supportedStates: [
+      'Default Active',
+      'Hover Dimmer Rail',
+      'Controlled Value',
+      'Solid / Dashed Mode',
+    ],
   },
   {
     id: 'gooey-nav',
