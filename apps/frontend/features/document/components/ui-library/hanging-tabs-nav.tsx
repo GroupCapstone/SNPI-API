@@ -28,7 +28,15 @@ export interface HangingTabsNavProps {
  * High-tech aerospace / mecha console with dual top stepped armor wings,
  * drop bottom bracket, chamfered 45° corner caps, and debossed tech grooves.
  */
-function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; className?: string }) {
+function CyberChassisSvg({
+  tabCount = 3,
+  activeIdx = 0,
+  className,
+}: {
+  tabCount?: number;
+  activeIdx?: number;
+  className?: string;
+}) {
   const is2Tabs = tabCount === 2;
 
   // 3-tab path: 3 elevated wings aligned with 3 modular buttons
@@ -145,67 +153,112 @@ function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; class
 
       {is2Tabs ? (
         <>
-          {/* Left Wing Debossed Tech Slot & White Glint Accent */}
-          <rect x="264" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
+          {/* Left Wing Debossed Tech Slot & Glint Accent */}
           <rect
-            x="270"
-            y="4"
-            width="22"
-            height="2"
-            rx="1"
-            fill="#0056FF"
-            filter="url(#royalGlow)"
+            x="264"
+            y="3.5"
+            width="72"
+            height="3"
+            rx="1.5"
+            fill={activeIdx === 0 ? '#0056FF' : '#CAD3F5'}
           />
+          {activeIdx === 0 && (
+            <rect
+              x="270"
+              y="4"
+              width="22"
+              height="2"
+              rx="1"
+              fill="#FFFFFF"
+              filter="url(#royalGlow)"
+            />
+          )}
 
-          {/* Right Wing Debossed Tech Slot & White Glint Accent */}
-          <rect x="664" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
+          {/* Right Wing Debossed Tech Slot & Glint Accent */}
           <rect
-            x="708"
-            y="4"
-            width="22"
-            height="2"
-            rx="1"
-            fill="#0056FF"
-            filter="url(#royalGlow)"
+            x="664"
+            y="3.5"
+            width="72"
+            height="3"
+            rx="1.5"
+            fill={activeIdx === 1 ? '#0056FF' : '#CAD3F5'}
           />
+          {activeIdx === 1 && (
+            <rect
+              x="708"
+              y="4"
+              width="22"
+              height="2"
+              rx="1"
+              fill="#FFFFFF"
+              filter="url(#royalGlow)"
+            />
+          )}
         </>
       ) : (
         <>
           {/* Wing 1 Debossed Tech Slot & Glint Accent */}
-          <rect x="135" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
           <rect
-            x="140"
-            y="4"
-            width="22"
-            height="2"
-            rx="1"
-            fill="#0056FF"
-            filter="url(#royalGlow)"
+            x="135"
+            y="3.5"
+            width="70"
+            height="3"
+            rx="1.5"
+            fill={activeIdx === 0 ? '#0056FF' : '#CAD3F5'}
           />
+          {activeIdx === 0 && (
+            <rect
+              x="140"
+              y="4"
+              width="22"
+              height="2"
+              rx="1"
+              fill="#FFFFFF"
+              filter="url(#royalGlow)"
+            />
+          )}
 
           {/* Wing 2 Debossed Tech Slot & Glint Accent */}
-          <rect x="465" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
           <rect
-            x="490"
-            y="4"
-            width="22"
-            height="2"
-            rx="1"
-            fill="#0056FF"
-            filter="url(#royalGlow)"
+            x="465"
+            y="3.5"
+            width="70"
+            height="3"
+            rx="1.5"
+            fill={activeIdx === 1 ? '#0056FF' : '#CAD3F5'}
           />
+          {activeIdx === 1 && (
+            <rect
+              x="490"
+              y="4"
+              width="22"
+              height="2"
+              rx="1"
+              fill="#FFFFFF"
+              filter="url(#royalGlow)"
+            />
+          )}
 
           {/* Wing 3 Debossed Tech Slot & Glint Accent */}
-          <rect x="795" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
           <rect
-            x="840"
-            y="4"
-            width="22"
-            height="2"
-            rx="1"
-            fill="#0056FF"
-            filter="url(#royalGlow)"
+            x="795"
+            y="3.5"
+            width="70"
+            height="3"
+            rx="1.5"
+            fill={activeIdx === 2 ? '#0056FF' : '#CAD3F5'}
           />
+          {activeIdx === 2 && (
+            <rect
+              x="840"
+              y="4"
+              width="22"
+              height="2"
+              rx="1"
+              fill="#FFFFFF"
+              filter="url(#royalGlow)"
+            />
+          )}
         </>
       )}
 
@@ -296,6 +349,8 @@ export function CyberArmorNav({
     lg: 'text-sm sm:text-base',
   }[size];
 
+  const activeIdx = items.findIndex((item) => item.id === activeId);
+
   return (
     <nav
       aria-label="Modular Mecha Cyber Navigation"
@@ -306,8 +361,11 @@ export function CyberArmorNav({
         className,
       )}
     >
-      {/* 1. Underlying Armored Cyber Chassis */}
-      <CyberChassisSvg tabCount={items.length} />
+      {/* 1. Underlying Armored Cyber Chassis with Active Laser Wing Highlight */}
+      <CyberChassisSvg
+        tabCount={items.length}
+        activeIdx={activeIdx >= 0 ? activeIdx : 0}
+      />
 
       {/* 2. Overlaid Button Cell Segments */}
       <div className="relative z-10 flex h-full items-center">
@@ -325,24 +383,24 @@ export function CyberArmorNav({
                   className={cn(
                     'size-4 transition-transform duration-150',
                     isActive
-                      ? 'stroke-[2.5] text-[#0056FF]'
+                      ? 'stroke-[2.5] text-white'
                       : isHovered
                         ? 'scale-110 stroke-[2.2] text-slate-950'
-                        : 'stroke-[2.2] text-slate-700',
+                        : 'stroke-[2] text-slate-500',
                   )}
                 />
               )}
 
-              {/* High-Contrast Bold Label (Black text based on light #EFF5FF / #E3E7FC background) */}
+              {/* High-Contrast Bold Label */}
               <span
                 className={cn(
                   'font-sans tracking-wider uppercase transition-colors duration-150',
                   textSizes,
                   isActive
-                    ? 'font-black text-slate-950'
+                    ? 'font-black text-white'
                     : isHovered
                       ? 'font-bold text-slate-950'
-                      : 'font-bold text-slate-800',
+                      : 'font-semibold text-slate-600',
                 )}
               >
                 {tab.label}
@@ -350,13 +408,25 @@ export function CyberArmorNav({
             </div>
           );
 
+          // New Style Active Menu: Vivid Solid Royal Blue Capsule with Soft Elevation Glow
           const sharedClasses = cn(
-            'group relative flex items-center justify-center cursor-pointer transition-all duration-150 active:scale-[0.98] mx-0.5 rounded-[6px]',
+            'group relative flex items-center justify-center cursor-pointer transition-all duration-200 active:scale-[0.98] mx-0.5 rounded-[8px]',
             buttonHeights,
             isActive
-              ? 'bg-[#E3E7FC] text-slate-950 border border-[#0056FF]/35 shadow-xs'
-              : 'bg-[#EFF5FF] text-slate-800 hover:bg-white hover:text-slate-950 border border-[#CAD3F5]/60 shadow-2xs',
+              ? 'bg-[#0056FF] text-white shadow-[0_2px_12px_rgba(0,86,255,0.4)]'
+              : 'bg-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-950',
           );
+
+          // High-Tech Active Bottom Glint Bar Indicator
+          const indicator = isActive ? (
+            <span
+              className={cn(
+                'absolute -bottom-0.5 left-1/2 h-[2.5px] w-2/3 -translate-x-1/2 rounded-full',
+                'bg-white/90',
+                'shadow-[0_0_8px_rgba(255,255,255,0.95)]',
+              )}
+            />
+          ) : null;
 
           return (
             <React.Fragment key={tab.id}>
@@ -372,6 +442,7 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
+                  {indicator}
                 </Link>
               ) : (
                 <button
@@ -385,11 +456,12 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
+                  {indicator}
                 </button>
               )}
 
-              {/* Physical Vertical Seam: Soft Slate-Lavender Seam Line */}
-              {!isLast && (
+              {/* Physical Vertical Seam: Soft Slate-Lavender Seam Line (only between inactive tabs) */}
+              {!isLast && !isActive && activeIdx !== idx + 1 && (
                 <div className="relative mx-1 flex h-4 w-[1px] items-center">
                   <span className="h-full w-[1px] bg-[#CAD3F5]" />
                 </div>
