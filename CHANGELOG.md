@@ -2,31 +2,35 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.12 (31.10.2026) - `6af06e9`
+### Version 0.2.13 (31.10.2026) - `68d77ba`
+
+- Standalone mobile hero with big typography and concise hook description
+
+### Version 0.2.13 (31.10.2026) - `6af06e9`
 
 - Record removal of theme FAB and profile card
 
-### Version 0.2.12 (31.10.2026) - `01b501d`
+### Version 0.2.13 (31.10.2026) - `01b501d`
 
 - Remove floating theme FAB button and Lena Marchetti profile card
 
-### Version 0.2.12 (31.10.2026) - `5116c27`
+### Version 0.2.13 (31.10.2026) - `5116c27`
 
 - Redesign mobile hero with simple welcoming hook and tactile service cards
 
-### Version 0.2.12 (31.10.2026) - `c2efdc5`
+### Version 0.2.13 (31.10.2026) - `c2efdc5`
 
 - Simplify hero and implement psychological reading layout
 
-### Version 0.2.12 (31.10.2026) - `7317af8`
+### Version 0.2.13 (31.10.2026) - `7317af8`
 
 - Redesign open api and syndication guide for backend rest api focus
 
-### Version 0.2.12 (31.10.2026) - `da77431`
+### Version 0.2.13 (31.10.2026) - `da77431`
 
 - Resolve eslint react unescaped entity and immutability errors
 
-### Version 0.2.12 (31.10.2026) - `8f54289`
+### Version 0.2.13 (31.10.2026) - `8f54289`
 
 - Update repository url references to SNPI-SMS
 
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `70a42c7`
 
 - Sync real-time changelog for open-api redesign
-
-### Version 0.2.12 (31.10.2026) - `f022bc5`
-
-- Complete redesign with public feeds, embed studio, class table, and real-time sse
 

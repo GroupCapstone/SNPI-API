@@ -284,7 +284,16 @@ function CyberChassisSvg({
         strokeLinecap="round"
         opacity="0.8"
       />
-      <line x1="7" y1="26" x2="7" y2="42" stroke="#CAD3F5" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+      <line
+        x1="7"
+        y1="26"
+        x2="7"
+        y2="42"
+        stroke="#CAD3F5"
+        strokeWidth="1"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
 
       {/* Right Stepped Ear Notches */}
       <line
@@ -362,10 +371,7 @@ export function CyberArmorNav({
       )}
     >
       {/* 1. Underlying Armored Cyber Chassis with Active Laser Wing Highlight */}
-      <CyberChassisSvg
-        tabCount={items.length}
-        activeIdx={activeIdx >= 0 ? activeIdx : 0}
-      />
+      <CyberChassisSvg tabCount={items.length} activeIdx={activeIdx >= 0 ? activeIdx : 0} />
 
       {/* 2. Overlaid Button Cell Segments */}
       <div className="relative z-10 flex h-full items-center">
