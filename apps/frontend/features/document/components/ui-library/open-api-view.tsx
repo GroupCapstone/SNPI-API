@@ -413,7 +413,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               <span>Display-Only Specification</span>
             </div>
             <p className="text-[11px] leading-relaxed text-[#0A1A4A]">
-              Real-time public syndicate catalog designed for external school portal and frontsite display.
+              Real-time public syndicate catalog designed for external school portal and frontsite
+              display.
             </p>
           </div>
         </aside>
@@ -457,9 +458,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 <span className="mb-1 block text-[11px] font-bold text-[#0056FF] uppercase">
                   Delivery Mode
                 </span>
-                <span className="text-sm font-bold text-[#0A1A4A]">
-                  Public Syndication Only
-                </span>
+                <span className="text-sm font-bold text-[#0A1A4A]">Public Syndication Only</span>
               </div>
               <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4">
                 <span className="mb-1 block text-[11px] font-bold text-[#0056FF] uppercase">
@@ -817,7 +816,8 @@ export async function fetchSyndicatedClasses(): Promise<ClassRosterItem[]> {
 }`}
               </pre>
               <p className="text-xs leading-relaxed text-[#0A1A4A]">
-                Notice: Class roster information is provided as a display-only public catalog for frontsite portals.
+                Notice: Class roster information is provided as a display-only public catalog for
+                frontsite portals.
               </p>
             </div>
           </section>
