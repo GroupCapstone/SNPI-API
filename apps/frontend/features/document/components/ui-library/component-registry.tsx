@@ -813,9 +813,9 @@ export function Example() {
     category: 'Navigation',
     paradigm: 'Paper Plane Flight Rail Standard',
     description:
-      'Kinetic table of contents featuring an origami paper plane navigating continuous vertical section rails.',
+      'Kinetic table of contents featuring an aerodynamic 3D faceted supersonic origami paper jet navigating continuous vertical section rails with de Casteljau Bézier contrails.',
     explanation:
-      'Scroll the content and the paper plane flies along the rail between headings, turning where the rail bends. Scroll back up and it turns around. The rail behind it is solid and each heading it passes fills in; the rest stays dashed. Click any heading to scroll to it.',
+      'Scroll the content and the 3D faceted origami paper jet flies along the rail between headings, turning where the rail bends. Scroll back up and it executes a 180° turnaround banking maneuver. The rail behind it is a solid luminous contrail connected dynamically via de Casteljau cubic subdivision, and each heading it passes fills in while the rest remains dashed. Features optional procedural Web Audio API audio chimes and flight telemetry.',
     props: [
       {
         name: 'items',
@@ -846,6 +846,18 @@ export function Example() {
         type: 'string',
         default: "'On this page'",
         description: 'Text above the list and accessibility landmark label.',
+      },
+      {
+        name: 'showProgress',
+        type: 'boolean',
+        default: 'true',
+        description: 'Show flight waypoint progress badge (e.g. WP 3 / 8).',
+      },
+      {
+        name: 'enableSound',
+        type: 'boolean',
+        default: 'false',
+        description: 'Optional tactile procedural Web Audio API chime when crossing headings.',
       },
       {
         name: 'className',

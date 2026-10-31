@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "afbd722",
+    "description": "Record removal of header status badge"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "fb3d251",
     "description": "Remove release and api status badge container from sticky header"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "6496ddb",
     "description": "Format components and documentation with prettier"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "acae232",
-    "description": "Synchronize real-time changelog for system architecture lexicon skill"
   }
 ];
