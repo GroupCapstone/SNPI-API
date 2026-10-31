@@ -294,12 +294,12 @@ export function CyberArmorNav({
               {showIcons && Icon && (
                 <Icon
                   className={cn(
-                    'size-3.5 transition-transform duration-150',
+                    'size-4 transition-transform duration-150',
                     isActive
-                      ? 'stroke-[2.4] text-[#0056FF]'
+                      ? 'stroke-[2.5] text-[#0056FF]'
                       : isHovered
-                        ? 'scale-110 stroke-[2] text-[#0056FF]'
-                        : 'stroke-[1.8] text-slate-500',
+                        ? 'scale-110 stroke-[2.2] text-[#0056FF]'
+                        : 'stroke-[2.2] text-slate-700',
                   )}
                 />
               )}
@@ -309,32 +309,31 @@ export function CyberArmorNav({
                 className={cn(
                   'font-sans font-black tracking-wider uppercase transition-colors duration-150',
                   textSizes,
-                  isActive ? 'text-[#0056FF]' : isHovered ? 'text-[#0056FF]' : 'text-slate-600',
+                  isActive ? 'text-[#0056FF]' : isHovered ? 'text-[#0056FF]' : 'text-slate-800',
                 )}
               >
                 {tab.label}
               </span>
-
-              {/* Active Tab Underline Indicator Bar (Royal Blue Glow) */}
-              {isActive && (
-                <span
-                  className={cn(
-                    'absolute -bottom-2 left-1/2 h-[3.5px] w-4/5 -translate-x-1/2 rounded-full',
-                    'bg-gradient-to-r from-[#0056FF] via-[#2277FF] to-[#0056FF]',
-                    'shadow-[0_0_12px_rgba(0,86,255,0.85),0_1px_4px_rgba(0,86,255,0.6)]',
-                  )}
-                />
-              )}
             </div>
           );
 
           const sharedClasses = cn(
-            'group relative flex items-center justify-center cursor-pointer transition-all duration-150 active:scale-[0.98]',
+            'group relative flex items-center justify-center cursor-pointer transition-all duration-150 active:scale-[0.98] mx-0.5',
             buttonHeights,
             isActive
-              ? 'bg-gradient-to-b from-[#EFF5FF] via-white to-[#DCE7FE] text-[#0056FF] shadow-[inset_0_1px_1px_rgba(255,255,255,0.95)]'
-              : 'hover:bg-[#E3E7FC]/40 text-slate-600',
+              ? 'bg-white text-[#0056FF] shadow-[0_2px_8px_rgba(0,86,255,0.08),_0_1px_3px_rgba(0,0,0,0.04)] rounded-[6px]'
+              : 'hover:bg-white/60 hover:text-[#0056FF] text-slate-800 rounded-[6px]',
           );
+
+          const indicator = isActive ? (
+            <span
+              className={cn(
+                'absolute -bottom-1 left-1/2 h-[3.5px] w-3/4 -translate-x-1/2 rounded-full',
+                'bg-[#0056FF]',
+                'shadow-[0_0_14px_rgba(0,86,255,0.95),0_2px_6px_rgba(0,86,255,0.7)]',
+              )}
+            />
+          ) : null;
 
           return (
             <React.Fragment key={tab.id}>
@@ -350,6 +349,7 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
+                  {indicator}
                 </Link>
               ) : (
                 <button
@@ -363,14 +363,14 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
+                  {indicator}
                 </button>
               )}
 
               {/* Physical Vertical Seam: 1px Darker Line + 1px White Milled Highlight */}
               {!isLast && (
-                <div className="relative flex h-5 w-[2px] items-center">
+                <div className="relative mx-1 flex h-4 w-[1px] items-center">
                   <span className="h-full w-[1px] bg-slate-300/80" />
-                  <span className="h-full w-[1px] bg-white" />
                 </div>
               )}
             </React.Fragment>

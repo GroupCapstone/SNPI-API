@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "1bb47eb",
+    "description": "Remove 15 specified components and redesign 10 core components with zero dark mode, bare icons, and rounded-[4px] standard"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "afe1383",
     "description": "Enforce rounded-[4px] primary corner radius and responsive mobile border-t vs web border standards"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "a62fcd4",
     "description": "Remove preview and prompt buttons and convert copy prompt to icon-only action"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "97efab1",
-    "description": "Revert(document): remove floating capsule dock nav and restore top hanging tabs header"
   }
 ];

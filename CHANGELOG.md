@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `1bb47eb`
+
+- Remove 15 specified components and redesign 10 core components with zero dark mode, bare icons, and rounded-[4px] standard
+
 ### Version 0.2.11 (31.10.2026) - `afe1383`
 
 - Enforce rounded-[4px] primary corner radius and responsive mobile border-t vs web border standards
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `a62fcd4`
 
 - Remove preview and prompt buttons and convert copy prompt to icon-only action
-
-### Version 0.2.9 (31.10.2026) - `97efab1`
-
-- Revert(document): remove floating capsule dock nav and restore top hanging tabs header
 
