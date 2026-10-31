@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "0d81689",
+    "description": "Resolve vercel deployment failures for frontend and backend"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "1f7a253",
     "description": "Synchronize release checkpoint v0.2.11 to developer documentation portal"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "eef9ef6",
     "description": "Implement paper plane rail toc with motion flight and apply 0px border 4px radius button standard"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "8bc39a4",
-    "description": "Record universal ai agent prompt and precision line tracker navigation standards"
   }
 ];

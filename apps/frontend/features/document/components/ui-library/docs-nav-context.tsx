@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-export type DocsTab = 'openapi' | 'library';
+export type DocsTab = 'openapi' | 'library' | 'release';
 
 interface DocsNavContextValue {
   activeTab: DocsTab;
@@ -22,7 +22,12 @@ export function DocsNavProvider({
   const pathname = usePathname();
   const router = useRouter();
   const isLibraryPath = pathname?.startsWith('/document/design-system');
-  const pathDerivedTab: DocsTab = isLibraryPath ? 'library' : 'openapi';
+  const isChangelogPath = pathname?.startsWith('/document/changelog');
+  const pathDerivedTab: DocsTab = isLibraryPath
+    ? 'library'
+    : isChangelogPath
+      ? 'release'
+      : 'openapi';
 
   const [activeTab, setActiveTabState] = React.useState<DocsTab>(defaultTab || pathDerivedTab);
 
@@ -34,7 +39,8 @@ export function DocsNavProvider({
     const handlePopState = () => {
       if (typeof window !== 'undefined') {
         const isLib = window.location.pathname.startsWith('/document/design-system');
-        setActiveTabState(isLib ? 'library' : 'openapi');
+        const isChange = window.location.pathname.startsWith('/document/changelog');
+        setActiveTabState(isLib ? 'library' : isChange ? 'release' : 'openapi');
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -45,7 +51,12 @@ export function DocsNavProvider({
     (tab: DocsTab, updateHistory = true) => {
       setActiveTabState(tab);
       if (updateHistory) {
-        const targetPath = tab === 'library' ? '/document/design-system' : '/document';
+        const targetPath =
+          tab === 'library'
+            ? '/document/design-system'
+            : tab === 'release'
+              ? '/document/changelog'
+              : '/document';
         if (pathname !== targetPath) {
           router.push(targetPath);
         }

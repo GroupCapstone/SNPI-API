@@ -28,7 +28,91 @@ export interface HangingTabsNavProps {
  * High-tech aerospace / mecha console with dual top stepped armor wings,
  * drop bottom bracket, chamfered 45° corner caps, and debossed tech grooves.
  */
-function CyberChassisSvg({ className }: { className?: string }) {
+function CyberChassisSvg({
+  tabCount = 3,
+  className,
+}: {
+  tabCount?: number;
+  className?: string;
+}) {
+  const is2Tabs = tabCount === 2;
+
+  // 3-tab path: 3 elevated wings aligned with 3 modular buttons
+  const path3 = `M 18,10 
+            L 100,10 
+            L 120,0 
+            L 220,0 
+            L 240,10 
+            L 430,10 
+            L 450,0 
+            L 550,0 
+            L 570,10 
+            L 760,10 
+            L 780,0 
+            L 880,0 
+            L 900,10 
+            L 982,10 
+            L 1000,28 
+            L 1000,40 
+            L 982,58 
+            L 880,58 
+            L 860,68 
+            L 140,68 
+            L 120,58 
+            L 18,58 
+            L 0,40 
+            L 0,28 
+            Z`;
+
+  // 2-tab path: original 2 elevated wings
+  const path2 = `M 18,10 
+            L 220,10 
+            L 240,0 
+            L 360,0 
+            L 380,10 
+            L 620,10 
+            L 640,0 
+            L 760,0 
+            L 780,10 
+            L 982,10 
+            L 1000,28 
+            L 1000,40 
+            L 982,58 
+            L 760,58 
+            L 740,68 
+            L 260,68 
+            L 240,58 
+            L 18,58 
+            L 0,40 
+            L 0,28 
+            Z`;
+
+  const topBevel3 = `M 19,11 
+            L 100,11 
+            L 120,1.5 
+            L 220,1.5 
+            L 240,11 
+            L 430,11 
+            L 450,1.5 
+            L 550,1.5 
+            L 570,11 
+            L 760,11 
+            L 780,1.5 
+            L 880,1.5 
+            L 900,11 
+            L 981,11`;
+
+  const topBevel2 = `M 19,11 
+            L 220,11 
+            L 240,1.5 
+            L 360,1.5 
+            L 380,11 
+            L 620,11 
+            L 640,1.5 
+            L 760,1.5 
+            L 780,11 
+            L 981,11`;
+
   return (
     <svg
       className={cn(
@@ -54,29 +138,9 @@ function CyberChassisSvg({ className }: { className?: string }) {
         </filter>
       </defs>
 
-      {/* Main Outer Chassis Path (Chamfered Ears, Dual Top Wings, Bottom Drop Bracket) */}
+      {/* Main Outer Chassis Path (Chamfered Ears, Stepped Armor Wings, Bottom Drop Bracket) */}
       <path
-        d="M 18,10 
-           L 220,10 
-           L 240,0 
-           L 360,0 
-           L 380,10 
-           L 620,10 
-           L 640,0 
-           L 760,0 
-           L 780,10 
-           L 982,10 
-           L 1000,28 
-           L 1000,40 
-           L 982,58 
-           L 760,58 
-           L 740,68 
-           L 260,68 
-           L 240,58 
-           L 18,58 
-           L 0,40 
-           L 0,28 
-           Z"
+        d={is2Tabs ? path2 : path3}
         fill="url(#cyberChassisLightGrad)"
         stroke="#CAD3F5"
         strokeWidth="1.75"
@@ -85,16 +149,7 @@ function CyberChassisSvg({ className }: { className?: string }) {
 
       {/* Top Inner Bevel Highlight (1px Milled Aluminum Glint) */}
       <path
-        d="M 19,11 
-           L 220,11 
-           L 240,1.5 
-           L 360,1.5 
-           L 380,11 
-           L 620,11 
-           L 640,1.5 
-           L 760,1.5 
-           L 780,11 
-           L 981,11"
+        d={is2Tabs ? topBevel2 : topBevel3}
         stroke="#FFFFFF"
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -102,19 +157,37 @@ function CyberChassisSvg({ className }: { className?: string }) {
         opacity="0.95"
       />
 
-      {/* Left Wing Debossed Tech Slot & Royal Blue Accent */}
-      <rect x="264" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
-      <rect x="270" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+      {is2Tabs ? (
+        <>
+          {/* Left Wing Debossed Tech Slot & Royal Blue Accent */}
+          <rect x="264" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
+          <rect x="270" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
 
-      {/* Right Wing Debossed Tech Slot & Royal Blue Accent */}
-      <rect x="664" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
-      <rect x="708" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+          {/* Right Wing Debossed Tech Slot & Royal Blue Accent */}
+          <rect x="664" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
+          <rect x="708" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+        </>
+      ) : (
+        <>
+          {/* Wing 1 Debossed Tech Slot & Royal Blue Accent */}
+          <rect x="135" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
+          <rect x="140" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+
+          {/* Wing 2 Debossed Tech Slot & Royal Blue Accent */}
+          <rect x="465" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
+          <rect x="490" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+
+          {/* Wing 3 Debossed Tech Slot & Royal Blue Accent */}
+          <rect x="795" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
+          <rect x="840" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+        </>
+      )}
 
       {/* Bottom Drop Bracket Milled Groove */}
       <line
-        x1="285"
+        x1={is2Tabs ? '285' : '160'}
         y1="64"
-        x2="715"
+        x2={is2Tabs ? '715' : '840'}
         y2="64"
         stroke="#CAD3F5"
         strokeWidth="1.5"
@@ -205,7 +278,7 @@ export function CyberArmorNav({
       )}
     >
       {/* 1. Underlying Armored Cyber Chassis */}
-      <CyberChassisSvg />
+      <CyberChassisSvg tabCount={items.length} />
 
       {/* 2. Overlaid Button Cell Segments */}
       <div className="relative z-10 flex h-full items-center">
@@ -223,20 +296,20 @@ export function CyberArmorNav({
                   className={cn(
                     'size-3.5 transition-transform duration-150',
                     isActive
-                      ? 'stroke-[2.2] text-[#0056FF]'
+                      ? 'stroke-[2.4] text-[#0056FF]'
                       : isHovered
-                        ? 'scale-110 stroke-[2] text-slate-900'
+                        ? 'scale-110 stroke-[2] text-[#0056FF]'
                         : 'stroke-[1.8] text-slate-500',
                   )}
                 />
               )}
 
-              {/* High-Contrast Bold Sora Label (Zero-Dot Standard) */}
+              {/* High-Contrast Bold Sora Label with Royal Blue Active Style */}
               <span
                 className={cn(
                   'font-sans font-black tracking-wider uppercase transition-colors duration-150',
                   textSizes,
-                  isActive ? 'text-slate-950' : isHovered ? 'text-[#0056FF]' : 'text-slate-600',
+                  isActive ? 'text-[#0056FF]' : isHovered ? 'text-[#0056FF]' : 'text-slate-600',
                 )}
               >
                 {tab.label}
@@ -248,7 +321,7 @@ export function CyberArmorNav({
                   className={cn(
                     'absolute -bottom-2 left-1/2 h-[3.5px] w-4/5 -translate-x-1/2 rounded-full',
                     'bg-gradient-to-r from-[#0056FF] via-[#2277FF] to-[#0056FF]',
-                    'shadow-[0_0_10px_rgba(0,86,255,0.7),0_1px_3px_rgba(0,86,255,0.4)]',
+                    'shadow-[0_0_12px_rgba(0,86,255,0.85),0_1px_4px_rgba(0,86,255,0.6)]',
                   )}
                 />
               )}
@@ -259,8 +332,8 @@ export function CyberArmorNav({
             'group relative flex items-center justify-center cursor-pointer transition-all duration-150 active:scale-[0.98]',
             buttonHeights,
             isActive
-              ? 'bg-gradient-to-b from-white/90 via-white to-[#F0F5FF]'
-              : 'hover:bg-[#E3E7FC]/40',
+              ? 'bg-gradient-to-b from-[#EFF5FF] via-white to-[#DCE7FE] text-[#0056FF] shadow-[inset_0_1px_1px_rgba(255,255,255,0.95)]'
+              : 'hover:bg-[#E3E7FC]/40 text-slate-600',
           );
 
           return (

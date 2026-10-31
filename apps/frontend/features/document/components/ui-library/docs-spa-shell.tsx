@@ -1,12 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { useDocsNav } from './docs-nav-context';
+import { useDocsNav, type DocsTab } from './docs-nav-context';
 import { OpenApiView } from './open-api-view';
 import { UiLibraryView } from './ui-library-view';
 
 export interface DocsSpaShellProps {
-  defaultTab?: 'openapi' | 'library';
+  defaultTab?: DocsTab;
 }
 
 export function DocsSpaShell({ defaultTab }: DocsSpaShellProps) {
@@ -21,8 +21,8 @@ export function DocsSpaShell({ defaultTab }: DocsSpaShellProps) {
 
   return (
     <div className="w-full">
-      <div className={activeTab === 'openapi' ? 'block' : 'hidden'}>
-        <OpenApiView />
+      <div className={activeTab === 'openapi' || activeTab === 'release' ? 'block' : 'hidden'}>
+        <OpenApiView initialSection={activeTab === 'release' ? 'changelogs' : undefined} />
       </div>
       <div className={activeTab === 'library' ? 'block' : 'hidden'}>
         <UiLibraryView />
