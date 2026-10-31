@@ -19,24 +19,6 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     description: 'Ephemeral feedback banner with auto-dismiss and instant Undo recovery.',
   },
   {
-    id: 'bottom-sheet',
-    name: 'Bottom Sheet',
-    category: 'Mobile Navigation',
-    description: 'Anchored pull-up drawer for contextual actions, filters, and records.',
-  },
-  {
-    id: 'dialog',
-    name: 'Dialog',
-    category: 'Feedback & Overlays',
-    description: 'Focused modal overlay interrupting user flow for critical confirmation.',
-  },
-  {
-    id: 'tooltip',
-    name: 'Tooltip',
-    category: 'Feedback & Overlays',
-    description: 'Contextual popover hint revealing keyboard shortcuts and helper text on hover.',
-  },
-  {
     id: 'fab',
     name: 'FAB (Floating Action Button)',
     category: 'Actions & Triggers',
@@ -59,12 +41,6 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Dropdown',
     category: 'Selection & Inputs',
     description: 'Compact disclosure menu displaying selectable options upon click.',
-  },
-  {
-    id: 'bottom-nav',
-    name: 'Bottom Nav',
-    category: 'Mobile Navigation',
-    description: 'Thumb-reachable mobile bottom navigation bar with active tab indicators.',
   },
   {
     id: 'card',
@@ -245,63 +221,6 @@ function renderRealMiniDemo(
         </div>
       );
 
-    case 'bottom-sheet':
-      return (
-        <div className="w-full rounded-xl border border-slate-200/90 bg-white p-2.5 shadow-sm">
-          {/* Sheet Handle */}
-          <div className="mx-auto h-1 w-8 rounded-full bg-slate-300" />
-          <div className="mt-2 text-center font-sans text-[11px] font-bold text-slate-900">
-            Campus Actions
-          </div>
-          <div className="mt-2 space-y-1">
-            <div className="flex items-center justify-between rounded-lg bg-[#E3E7FC]/50 px-2 py-1 text-[10.5px] font-semibold text-[#0056FF]">
-              <span>Export Student Roster</span>
-              <span className="font-mono text-[9px]">PDF</span>
-            </div>
-            <div className="flex items-center justify-between rounded-lg bg-slate-50 px-2 py-1 text-[10.5px] font-medium text-slate-700">
-              <span>Biometric Sync</span>
-              <span className="font-mono text-[9px]">LIVE</span>
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'dialog':
-      return (
-        <div className="w-full rounded-xl border border-slate-200/90 bg-white p-3 shadow-sm">
-          <div className="flex items-center gap-1.5 font-sans text-xs font-bold text-slate-950">
-            <span className="h-3 w-1 rounded-[1px] bg-[#0056FF]" />
-            <span>Revoke enrollment?</span>
-          </div>
-          <p className="mt-1 font-sans text-[10.5px] text-slate-600">
-            Cancel student seat for Term 1?
-          </p>
-          <div className="mt-2.5 flex items-center justify-end gap-1.5">
-            <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[9.5px] font-semibold text-slate-600">
-              Cancel
-            </span>
-            <span className="rounded-full border border-[#0056FF] bg-[#0056FF] px-2 py-0.5 font-mono text-[9.5px] font-bold text-white">
-              Confirm
-            </span>
-          </div>
-        </div>
-      );
-
-    case 'tooltip':
-      return (
-        <div className="flex flex-col items-center gap-1.5">
-          {/* Popover Bubble */}
-          <div className="relative rounded-lg border border-slate-900 bg-[#000B26] px-2.5 py-1 text-center font-mono text-[10px] text-white shadow-sm">
-            <span>Save roster changes (⌘S)</span>
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#000B26]" />
-          </div>
-          {/* Anchor Button */}
-          <div className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF]">
-            Save Record
-          </div>
-        </div>
-      );
-
     case 'fab':
       return (
         <div className="flex items-center justify-center py-2">
@@ -407,37 +326,6 @@ function renderRealMiniDemo(
               ))}
             </div>
           )}
-        </div>
-      );
-
-    case 'bottom-nav':
-      return (
-        <div className="flex w-full items-center justify-around rounded-xl border border-slate-200 bg-white py-1.5 shadow-xs">
-          {[
-            { id: 'home', label: 'Home', icon: Home },
-            { id: 'search', label: 'Search', icon: Search },
-            { id: 'profile', label: 'Profile', icon: User },
-          ].map((tab) => {
-            const isTabActive = state.miniBottomNav === tab.id;
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  state.setMiniBottomNav(tab.id);
-                }}
-                className={cn(
-                  'flex flex-col items-center gap-0.5 px-3 py-1 font-sans text-[10px] font-bold transition-colors',
-                  isTabActive ? 'text-[#0056FF]' : 'text-slate-400 hover:text-slate-700',
-                )}
-              >
-                <Icon className="size-4" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
         </div>
       );
 

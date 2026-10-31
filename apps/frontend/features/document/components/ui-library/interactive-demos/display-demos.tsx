@@ -21,33 +21,36 @@ export function FolderDemo() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const files = [
-    { name: 'Enrollment_Report_2026.pdf', size: '2.4 MB' },
-    { name: 'Tuition_Ledger_Q1.xlsx', size: '1.1 MB' },
-    { name: 'Teacher_Syllabus.docx', size: '850 KB' },
+    { name: 'Enrollment_Report_2026.pdf', size: '2.4 MB', type: 'PDF' },
+    { name: 'Tuition_Ledger_Q1.xlsx', size: '1.1 MB', type: 'XLSX' },
+    { name: 'Teacher_Syllabus.docx', size: '850 KB', type: 'DOCX' },
   ];
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Interactive Document Folder
-      </span>
+    <div className="w-full max-w-lg space-y-4 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white p-5 shadow-xs">
+      <div className="flex items-center justify-between">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
+          Interactive Document Folder
+        </span>
+        <span className="font-mono text-[10px] text-slate-400">Institutional Archive</span>
+      </div>
 
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left focus:outline-none"
-      >
+      <div className="w-full text-left">
         <div
           className={cn(
-            'rounded-2xl border p-4 transition-all',
+            'rounded-[4px] border p-4 transition-all',
             isOpen
-              ? 'border-[#0056FF] bg-[#E3E7FC]/30 shadow-xs'
-              : 'border-slate-200 bg-slate-50 hover:border-slate-300',
+              ? 'border-[#0056FF] bg-[#E3E7FC]/20 shadow-xs'
+              : 'border-slate-200 bg-slate-50/70 hover:border-slate-300',
           )}
         >
-          <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex w-full items-center justify-between text-left focus:outline-none cursor-pointer"
+          >
             <div className="flex items-center gap-3">
-              <Folder className="size-6 text-[#0056FF]" />
+              <Folder className="size-5 text-[#0056FF]" />
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
                   Academic Records / Term 1
@@ -55,29 +58,34 @@ export function FolderDemo() {
                 <span className="font-mono text-[10px] text-slate-500">3 Verified Documents</span>
               </div>
             </div>
-            <span className="rounded-full bg-white px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF]">
-              {isOpen ? 'Expanded' : 'Tap to Open'}
+            <span className="rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF]">
+              {isOpen ? 'Close Folder' : 'Open Folder'}
             </span>
-          </div>
+          </button>
 
           {isOpen && (
-            <div className="animate-in fade-in slide-in-from-top-1 mt-3.5 space-y-1.5 border-t border-slate-200/80 pt-3">
+            <div className="animate-in fade-in slide-in-from-top-1 mt-3.5 space-y-2 border-t border-slate-200/80 pt-3">
               {files.map((f, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between rounded-xl bg-white px-3 py-2 text-xs"
+                  className="flex items-center justify-between rounded-[4px] border border-slate-200/60 bg-white px-3 py-2 text-xs transition-colors hover:border-[#0056FF]/40"
                 >
-                  <div className="flex items-center gap-2">
-                    <FileText className="size-3.5 text-slate-500" />
+                  <div className="flex items-center gap-2.5">
+                    <FileText className="size-4 text-slate-500" />
                     <span className="font-sans font-medium text-slate-800">{f.name}</span>
                   </div>
-                  <span className="font-mono text-[10px] text-slate-400">{f.size}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-[4px] bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] font-bold text-slate-600">
+                      {f.type}
+                    </span>
+                    <span className="font-mono text-[10px] text-slate-400">{f.size}</span>
+                  </div>
                 </div>
               ))}
             </div>
           )}
         </div>
-      </button>
+      </div>
     </div>
   );
 }
@@ -405,10 +413,13 @@ export function FaqDemo() {
   ];
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Institutional FAQ Accordion
-      </span>
+    <div className="w-full max-w-lg space-y-4 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white p-5 shadow-xs">
+      <div className="flex items-center justify-between">
+        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
+          Institutional FAQ Accordion
+        </span>
+        <span className="font-mono text-[10px] text-slate-400">3 Questions</span>
+      </div>
 
       <div className="space-y-2">
         {faqs.map((faq, idx) => {
@@ -416,23 +427,26 @@ export function FaqDemo() {
           return (
             <div
               key={idx}
-              className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
+              className="overflow-hidden rounded-[4px] border border-slate-200 bg-white transition-all"
             >
               <button
                 type="button"
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
-                className="flex w-full items-center justify-between p-3 text-left font-sans text-xs font-bold text-slate-900"
+                className={cn(
+                  'flex w-full items-center justify-between p-3.5 text-left font-sans text-xs font-bold transition-colors cursor-pointer',
+                  isOpen ? 'bg-[#E3E7FC]/30 text-[#0056FF]' : 'bg-slate-50/70 text-slate-900 hover:bg-slate-100/70',
+                )}
               >
                 <span>{faq.q}</span>
                 <ChevronDown
                   className={cn(
-                    'size-4 text-slate-400 transition-transform duration-200',
-                    isOpen && 'rotate-180 text-[#0056FF]',
+                    'size-4 shrink-0 transition-transform duration-200',
+                    isOpen ? 'rotate-180 text-[#0056FF]' : 'text-slate-400',
                   )}
                 />
               </button>
               {isOpen && (
-                <div className="animate-in fade-in border-t border-slate-200 bg-white p-3 font-sans text-xs leading-relaxed text-slate-600">
+                <div className="animate-in fade-in border-t border-slate-100 bg-white p-3.5 font-sans text-xs leading-relaxed text-slate-600">
                   {faq.a}
                 </div>
               )}

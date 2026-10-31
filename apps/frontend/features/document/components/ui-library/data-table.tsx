@@ -244,29 +244,21 @@ export function DataTable<T extends Record<string, any>>({
   return (
     <div
       className={cn(
-        'w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border transition-colors duration-150',
-        isDark
-          ? 'border-slate-800 bg-[#000B26] text-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
-          : 'border-slate-200/90 bg-white text-slate-900 shadow-[0_1px_4px_rgba(0,0,0,0.02)]',
+        'w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white text-slate-900 shadow-[0_1px_4px_rgba(0,0,0,0.02)] transition-colors duration-150',
         className,
       )}
     >
       {/* Top Controls Header: Search Box & Controls */}
-      <div
-        className={cn(
-          'flex flex-col gap-3.5 border-b p-4 sm:flex-row sm:items-center sm:justify-between',
-          isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200/80 bg-slate-50/70',
-        )}
-      >
+      <div className="flex flex-col gap-3.5 border-b border-slate-200/80 bg-slate-50/70 p-4 sm:flex-row sm:items-center sm:justify-between">
         {/* Title or Filter Input */}
         <div className="flex flex-1 flex-col gap-1 sm:max-w-md">
           {title && (
             <div className="flex items-center gap-2">
-              <h3 className="font-sans text-sm font-bold tracking-tight text-slate-950 dark:text-white">
+              <h3 className="font-sans text-sm font-bold tracking-tight text-slate-950">
                 {title}
               </h3>
               {subtitle && (
-                <span className="font-sans text-xs text-slate-500 dark:text-slate-400">
+                <span className="font-sans text-xs text-slate-500">
                   {subtitle}
                 </span>
               )}
@@ -275,32 +267,20 @@ export function DataTable<T extends Record<string, any>>({
 
           {/* 01 Search Input */}
           <div className="relative w-full">
-            <Search
-              className={cn(
-                'pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2',
-                isDark ? 'text-slate-500' : 'text-slate-400',
-              )}
-            />
+            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder={searchPlaceholder}
-              className={cn(
-                'h-9 w-full rounded-[4px] border pr-8 pl-9 font-sans text-xs font-medium transition-colors focus:outline-none',
-                isDark
-                  ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF]'
-                  : 'border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF]',
-              )}
+              className="h-9 w-full rounded-[4px] border border-slate-200 bg-white pr-8 pl-9 font-sans text-xs font-medium text-slate-900 placeholder:text-slate-400 transition-colors focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
               aria-label="Filter records"
             />
             {searchInput && (
               <button
                 type="button"
                 onClick={() => setSearchInput('')}
-                className={cn(
-                  'absolute top-1/2 right-2.5 -translate-y-1/2 rounded-[4px] p-0.5 text-slate-400 transition-colors hover:text-slate-700 dark:hover:text-white',
-                )}
+                className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-[4px] p-0.5 text-slate-400 transition-colors hover:text-slate-700"
                 aria-label="Clear search filter"
               >
                 <X className="size-3.5" />
@@ -314,30 +294,19 @@ export function DataTable<T extends Record<string, any>>({
           {/* 02 Live Result Count Region (with aria-live) */}
           <div
             aria-live="polite"
-            className={cn(
-              'font-mono text-xs font-semibold tabular-nums',
-              isDark ? 'text-slate-400' : 'text-slate-500',
-            )}
+            className="font-mono text-xs font-semibold tabular-nums text-slate-500"
           >
-            Showing{' '}
-            <span className={isDark ? 'text-white' : 'text-slate-900'}>
-              {startRecord}-{endRecord}
-            </span>{' '}
-            of <span className={isDark ? 'text-white' : 'text-slate-900'}>{sortedData.length}</span>
+            Showing <span className="text-slate-900">{startRecord}-{endRecord}</span> of{' '}
+            <span className="text-slate-900">{sortedData.length}</span>
           </div>
 
           {/* 09 Page Size Dropdown */}
           <div className="flex items-center gap-1.5 font-sans text-xs">
-            <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>Rows:</span>
+            <span className="text-slate-500">Rows:</span>
             <select
               value={pageSize}
               onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-              className={cn(
-                'h-8 rounded-[4px] border px-2 py-0.5 font-mono text-xs font-semibold transition-colors focus:outline-none',
-                isDark
-                  ? 'border-slate-700 bg-slate-900 text-white focus:border-[#0056FF]'
-                  : 'border-slate-200 bg-white text-slate-800 focus:border-[#0056FF]',
-              )}
+              className="h-8 rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 font-mono text-xs font-semibold text-slate-800 transition-colors focus:border-[#0056FF] focus:outline-none"
               aria-label="Rows per page"
             >
               {pageSizeOptions.map((opt) => (
@@ -494,27 +463,13 @@ export function DataTable<T extends Record<string, any>>({
         {/* 10 Empty State */}
         {paginatedData.length === 0 && (
           <div className="flex flex-col items-center justify-center px-4 py-16 text-center">
-            <div
-              className={cn(
-                'flex size-12 items-center justify-center rounded-[4px] border',
-                isDark
-                  ? 'border-slate-800 bg-slate-900 text-slate-400'
-                  : 'border-slate-200 bg-slate-50 text-slate-500',
-              )}
-            >
-              <Search className="size-5" />
-            </div>
-            <h4
-              className={cn(
-                'mt-3 font-sans text-sm font-bold',
-                isDark ? 'text-white' : 'text-slate-900',
-              )}
-            >
+            <Search className="size-8 text-slate-400" />
+            <h4 className="mt-3 font-sans text-sm font-bold text-slate-900">
               No records found
             </h4>
-            <p className="mt-1 max-w-sm font-sans text-xs text-slate-500 dark:text-slate-400">
+            <p className="mt-1 max-w-sm font-sans text-xs text-slate-500">
               No matching results found for{' '}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">
+              <span className="font-semibold text-slate-800">
                 &ldquo;{debouncedQuery}&rdquo;
               </span>
               . Try searching by student code, full name, or status.
@@ -522,9 +477,7 @@ export function DataTable<T extends Record<string, any>>({
             <button
               type="button"
               onClick={() => setSearchInput('')}
-              className={cn(
-                'mt-4 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#0056FF] hover:text-white',
-              )}
+              className="mt-4 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-[#0056FF] hover:text-white"
             >
               Clear search filter
             </button>
@@ -533,12 +486,7 @@ export function DataTable<T extends Record<string, any>>({
       </div>
 
       {/* 08 Pagination Nav Footer */}
-      <div
-        className={cn(
-          'flex flex-col gap-3 border-t px-4 py-3 sm:flex-row sm:items-center sm:justify-between',
-          isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200/80 bg-slate-50/70',
-        )}
-      >
+      <div className="flex flex-col gap-3 border-t border-slate-200/80 bg-slate-50/70 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
         <span
           className={cn(
             'font-mono text-xs font-medium',

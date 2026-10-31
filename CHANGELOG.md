@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `afe1383`
+
+- Enforce rounded-[4px] primary corner radius and responsive mobile border-t vs web border standards
+
 ### Version 0.2.11 (31.10.2026) - `be675a4`
 
 - Synchronize recent local commits
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `97efab1`
 
 - Revert(document): remove floating capsule dock nav and restore top hanging tabs header
-
-### Version 0.2.9 (31.10.2026) - `c53639d`
-
-- Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry
 

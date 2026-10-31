@@ -200,8 +200,8 @@ export function NativeSnackbarInline({
 
   return (
     <div className="w-full max-w-lg space-y-3">
-      {/* Native Snackbar Outer Frame (Strict Clean Light Day Mode) */}
-      <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white text-[#09172B] shadow-xl">
+      {/* Native Snackbar Outer Frame (Strict Clean Light Day Mode & Responsive Border) */}
+      <div className="relative overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white text-[#09172B] shadow-xl">
         <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5">
           {/* Status Icon (No Background Color Behind Icon) */}
           <div className="flex shrink-0 items-center">

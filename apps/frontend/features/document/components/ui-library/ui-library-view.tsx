@@ -7,14 +7,10 @@ import {
   NativeSnackbarInline,
   type SnackbarVariant,
   BorderBeamInteractiveShowcase,
-  LibraryBottomSheet,
-  LibraryDialog,
-  type LibraryBottomNavItem,
   LibrarySwitch,
   LibraryChip,
   LibraryFab,
   LibraryDropdown,
-  LibraryTooltip,
   COMPONENT_LIBRARY_REGISTRY,
   COMPONENT_CATEGORIES,
   GeometricButton,
@@ -37,28 +33,17 @@ import {
   EmojiReactionDemo,
   NotificationBellDemo,
   FolderDemo,
-  CodeBlockDemo,
-  GravityLettersDemo,
   GitHubActivityDemo,
   StepPlayerDemo,
   AnimatedCounterDemo,
   VoiceNoteDemo,
   FaqDemo,
-  FluidOrbDemo,
   GridRevealDemo,
-  MatrixOrbDemo,
   WebSearchDemo,
-  InlineAiStatusDemo,
   HangingTabsNavDemo,
-  DotPatternDemo,
-  RetroGridDemo,
-  AuroraWavesDemo,
-  InteractiveParticlesDemo,
-  TextShimmerDemo,
   NumberTickerDemo,
   GlitchTextDemo,
   BlurInDemo,
-  SpotlightCardDemo,
   BentoCardDemo,
   TiltCardDemo,
   BorderBeamDemo,
@@ -212,17 +197,6 @@ export function UiLibraryView() {
   // 8. Dropdown state
   const [dropdownValue, setDropdownValue] = React.useState('sora');
   const [dropdownCampus, setDropdownCampus] = React.useState('siem-reap');
-
-  // 9. Bottom Nav state
-  const [bottomNavTab, setBottomNavTab] = React.useState('home');
-  const [bottomNavBadge, setBottomNavBadge] = React.useState(8);
-
-  const bottomNavItems: LibraryBottomNavItem[] = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'search', label: 'Search', icon: Search },
-    { id: 'academics', label: 'Academics', icon: Folder },
-    { id: 'profile', label: 'Profile', icon: User },
-  ];
 
   // 10. Card interactive states (Folder mode & Metrics mode)
   const [cardPresentationMode, setCardPresentationMode] = React.useState<
@@ -407,11 +381,6 @@ export function UiLibraryView() {
     setDropdownValue,
     dropdownCampus,
     setDropdownCampus,
-    bottomNavTab,
-    setBottomNavTab,
-    bottomNavBadge,
-    setBottomNavBadge,
-    bottomNavItems,
     cardPresentationMode,
     setCardPresentationMode,
     cardRevealed,
@@ -1102,35 +1071,6 @@ export function UiLibraryView() {
         onAction={() => setSnackbarOpen(false)}
         onClose={() => setSnackbarOpen(false)}
       />
-
-      <LibraryBottomSheet
-        open={sheetOpen}
-        onClose={() => setSheetOpen(false)}
-        title="Campus Infrastructure Operations"
-      >
-        <div className="space-y-4">
-          <p className="text-sm text-slate-600">
-            Siem Reap Science Wing B · Active student roster exports and telemetry diagnostics.
-          </p>
-          <GeometricButton variant="blue" className="w-full" onClick={() => setSheetOpen(false)}>
-            Close Sheet
-          </GeometricButton>
-        </div>
-      </LibraryBottomSheet>
-
-      <LibraryDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        title="Revoke enrollment?"
-        description="Permanently revokes course registration for this academic term."
-        confirmLabel="Confirm Revoke"
-        cancelLabel="Cancel"
-        isDestructive
-        onConfirm={() => {
-          setDialogOpen(false);
-          setDialogDecision('Revocation Confirmed');
-        }}
-      />
     </div>
   );
 }
@@ -1185,11 +1125,6 @@ function renderFeedComponentDemo(
     setDropdownValue: (v: string) => void;
     dropdownCampus: string;
     setDropdownCampus: (c: string) => void;
-    bottomNavTab: string;
-    setBottomNavTab: (t: string) => void;
-    bottomNavBadge: number;
-    setBottomNavBadge: React.Dispatch<React.SetStateAction<number>>;
-    bottomNavItems: LibraryBottomNavItem[];
     cardPresentationMode: 'border-beam' | 'folder' | 'metrics';
     setCardPresentationMode: (m: 'border-beam' | 'folder' | 'metrics') => void;
     cardRevealed: boolean;
@@ -1301,277 +1236,6 @@ function renderFeedComponentDemo(
             <span>Surface: Light Card (#FFFFFF)</span>
             <span className="h-3 w-[1px] bg-slate-200" />
             <span>Touch: ≥ 44×44px</span>
-          </div>
-        </div>
-      );
-
-    case 'bottom-sheet':
-      return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton variant="blue" size="sm" onClick={() => state.setSheetOpen(true)}>
-              <MapPin className="h-3.5 w-3.5" />
-              <span>Open Modal Sheet</span>
-            </GeometricButton>
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => state.setBottomSheetChoice('Export Student Roster (CSV / PDF)')}
-            >
-              <span>Reset Option</span>
-            </GeometricButton>
-          </div>
-
-          {/* Interactive In-Stage Phone Surface - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
-          <div className="w-full max-w-xl max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
-            <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-slate-300" />
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  Campus Operations Sheet
-                </h4>
-                <p className="font-sans text-xs text-slate-500">
-                  Siem Reap Main Campus · Science Wing B
-                </p>
-              </div>
-              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                4 Actions
-              </span>
-            </div>
-
-            <div className="mt-3.5 space-y-2 font-sans text-xs">
-              {[
-                {
-                  title: 'Export Student Roster (CSV / PDF)',
-                  desc: 'Generate complete enrolled roster for Term 1 2026',
-                  tag: 'CSV / PDF',
-                },
-                {
-                  title: 'Generate Monthly Attendance Matrix',
-                  desc: 'Compile biometric check-in data with absence logs',
-                  tag: 'TELEMETRY',
-                },
-                {
-                  title: 'Batch Dispatch Parent SMS Announcement',
-                  desc: 'Trigger bulk notifications to registered guardians',
-                  tag: 'SMS HUB',
-                },
-                {
-                  title: 'Archive Current Academic Term Records',
-                  desc: 'Lock grades and create encrypted audit snapshot',
-                  tag: 'SECURITY',
-                },
-              ].map((opt) => {
-                const isSelected = state.bottomSheetChoice === opt.title;
-                return (
-                  <button
-                    key={opt.title}
-                    type="button"
-                    onClick={() => state.setBottomSheetChoice(opt.title)}
-                    className={cn(
-                      'flex w-full cursor-pointer items-center justify-between rounded-[4px] border p-3.5 text-left transition-all',
-                      isSelected
-                        ? 'border-[#0056FF] bg-[#E3E7FC]/80 text-[#0056FF] shadow-xs'
-                        : 'border-slate-100 bg-slate-50 text-slate-700 hover:border-slate-200 hover:bg-white',
-                    )}
-                  >
-                    <div>
-                      <span className="block font-bold">{opt.title}</span>
-                      <span className="text-[11px] text-slate-500">{opt.desc}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 font-mono text-[9px] font-bold text-slate-600 uppercase">
-                        {opt.tag}
-                      </span>
-                      {isSelected && (
-                        <Check className="size-4 stroke-[2.4] text-[#0056FF]" />
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-              <span className="font-mono text-[11px] text-slate-500">
-                Selected: <strong className="text-slate-800">{state.bottomSheetChoice}</strong>
-              </span>
-              <button
-                type="button"
-                onClick={() => state.setBottomSheetChoice('Operation Executed Successfully')}
-                className="rounded-[4px] border-0 bg-[#0056FF] px-4 py-1.5 font-sans text-xs font-bold text-white transition-all hover:bg-[#2277FF] active:scale-95"
-              >
-                Execute Action
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'dialog':
-      return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton variant="blue" size="sm" onClick={() => state.setDialogOpen(true)}>
-              <span>Open Modal Dialog</span>
-            </GeometricButton>
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                state.setDialogDecision('Pending Review');
-                state.setDeferralReason('Medical Leave of Absence');
-              }}
-            >
-              <span>Reset State</span>
-            </GeometricButton>
-          </div>
-
-          {/* Interactive In-Stage Modal Card - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
-          <div className="w-full max-w-xl max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 text-left shadow-md">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h4 className="font-sans text-base font-black text-slate-950">
-                  Confirm Academic Deferral
-                </h4>
-                <p className="font-sans text-xs text-slate-500">
-                  Student: Dara Sok (STU-2026-0891) · Software Engineering
-                </p>
-              </div>
-              <span className="rounded-[4px] border border-red-200 bg-red-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-red-600 uppercase">
-                Action Required
-              </span>
-            </div>
-
-            <p className="mt-3 font-sans text-xs leading-relaxed text-slate-600">
-              This action defers student STU-2026-0891 to Academic Term 2027. Pending tuition fees
-              will be preserved and classroom seat allocation released.
-            </p>
-
-            {/* Interactive Deferral Reason Picker */}
-            <div className="mt-4 space-y-2">
-              <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                Select Reason for Deferral:
-              </span>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                {[
-                  'Medical Leave of Absence',
-                  'International Exchange',
-                  'Financial Reassessment',
-                ].map((reason) => {
-                  const isSelected = state.deferralReason === reason;
-                  return (
-                    <button
-                      key={reason}
-                      type="button"
-                      onClick={() => state.setDeferralReason(reason)}
-                      className={cn(
-                        'cursor-pointer rounded-[4px] border p-2.5 text-center font-sans text-xs font-semibold transition-all',
-                        isSelected
-                          ? 'border-[#0056FF] bg-[#E3E7FC] text-[#0056FF] shadow-xs'
-                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-white',
-                      )}
-                    >
-                      {reason}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="mt-5 flex items-center justify-end gap-2 border-t border-slate-100 pt-3">
-              <GeometricButton
-                size="sm"
-                variant="outline"
-                onClick={() => state.setDialogDecision('Cancelled: Deferral dismissed')}
-              >
-                Cancel
-              </GeometricButton>
-              <GeometricButton
-                size="sm"
-                variant="blue"
-                onClick={() =>
-                  state.setDialogDecision(`Confirmed: Approved (${state.deferralReason})`)
-                }
-              >
-                Confirm Deferral
-              </GeometricButton>
-            </div>
-          </div>
-
-          <div className="flex w-full max-w-xl items-center justify-between rounded-[4px] border border-slate-200/90 bg-white px-4 py-2 font-mono text-[11px] text-slate-600 shadow-xs">
-            <span>
-              Decision: <strong className="text-[#0056FF]">{state.dialogDecision}</strong>
-            </span>
-            <span className="text-slate-400">Reason: {state.deferralReason}</span>
-          </div>
-        </div>
-      );
-
-    case 'tooltip':
-      return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {(['top', 'bottom'] as const).map((pos) => (
-              <GeometricButton
-                key={pos}
-                size="sm"
-                variant={state.tooltipPosition === pos ? 'blue' : 'outline'}
-                isActive={state.tooltipPosition === pos}
-                onClick={() => state.setTooltipPosition(pos)}
-              >
-                Anchor {pos.toUpperCase()}
-              </GeometricButton>
-            ))}
-          </div>
-
-          {/* Interactive Toolbelt */}
-          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 text-center shadow-md">
-            <span className="mb-3 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              Interactive Canvas Toolbelt (Hover or Tap for Tooltip)
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {[
-                { label: 'Pointer Tool (Select & Move)', key: 'V', code: 'Move Tool (V)' },
-                { label: 'Frame Tool (Slice Artboards)', key: 'F', code: 'Frame Tool (F)' },
-                { label: 'Vector Pen Tool (Bezier Curves)', key: 'P', code: 'Vector Pen (P)' },
-                { label: 'Typography Engine (Live Text)', key: 'T', code: 'Text Tool (T)' },
-                { label: 'Export Record to CSV/PDF', key: '⌘E', code: 'Export Record (⌘E)' },
-                { label: 'Save Database Snapshot', key: '⌘S', code: 'Save Record (⌘S)' },
-              ].map((tool) => {
-                const isSelected = state.activeTool === tool.code;
-                return (
-                  <LibraryTooltip
-                    key={tool.code}
-                    content={tool.label}
-                    shortcut={tool.key}
-                    position={state.tooltipPosition}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => state.setActiveTool(tool.code)}
-                      className={cn(
-                        'flex h-12 w-12 cursor-pointer items-center justify-center rounded-[4px] border text-sm font-bold transition-all select-none',
-                        isSelected
-                          ? 'scale-105 border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                          : 'border-slate-200 bg-slate-50 text-slate-800 hover:border-[#0056FF] hover:bg-white',
-                      )}
-                    >
-                      {tool.key.replace('⌘', '')}
-                    </button>
-                  </LibraryTooltip>
-                );
-              })}
-            </div>
-
-            <div className="mt-5 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3 font-mono text-xs text-slate-700">
-              Selected Active Tool: <strong className="text-[#0056FF]">{state.activeTool}</strong> ·
-              Anchor: {state.tooltipPosition.toUpperCase()}
-            </div>
           </div>
         </div>
       );
@@ -2043,168 +1707,6 @@ function renderFeedComponentDemo(
         </div>
       );
 
-    case 'bottom-nav':
-      return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="blue"
-              size="sm"
-              onClick={() => state.setBottomNavBadge((b) => b + 1)}
-            >
-              <span>+1 Alert Badge</span>
-            </GeometricButton>
-            <GeometricButton variant="outline" size="sm" onClick={() => state.setBottomNavBadge(0)}>
-              <span>Clear Badges</span>
-            </GeometricButton>
-          </div>
-
-          {/* Interactive Mobile Device Viewport - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
-          <div className="w-full max-w-xl overflow-hidden max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white shadow-md">
-            {/* Mobile Header Bar */}
-            <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-5 py-3">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-bold text-slate-900">13:25</span>
-              </div>
-              <span className="font-sans text-xs font-black tracking-tight text-slate-900">
-                SNPI-SMS Mobile
-              </span>
-              <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500">
-                <span>5G</span>
-                <span>98%</span>
-              </div>
-            </div>
-
-            {/* Dynamic Screen Body based on Active Screen */}
-            <div className="min-h-[180px] bg-white p-5">
-              {state.bottomNavTab === 'home' && (
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h5 className="font-sans text-sm font-bold text-slate-900">Campus Overview</h5>
-                    <span className="rounded-[4px] bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
-                      99.2% Present
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2.5 font-sans">
-                    <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3">
-                      <span className="text-[10px] text-slate-400 uppercase">Check-ins</span>
-                      <strong className="block text-base font-black text-[#0056FF]">
-                        1,420 Students
-                      </strong>
-                    </div>
-                    <div className="rounded-[4px] border border-slate-100 bg-slate-50 p-3">
-                      <span className="text-[10px] text-slate-400 uppercase">Turnstiles</span>
-                      <strong className="block text-base font-black text-slate-900">
-                        8 Gates Active
-                      </strong>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {state.bottomNavTab === 'search' && (
-                <div className="space-y-3">
-                  <h5 className="font-sans text-sm font-bold text-slate-900">Search Directory</h5>
-                  <div className="flex items-center gap-2 rounded-[4px] border border-slate-200 bg-slate-50 p-2.5">
-                    <Search className="size-3.5 text-[#0056FF]" />
-                    <span className="text-xs text-slate-400">
-                      Search students, faculty, classrooms...
-                    </span>
-                  </div>
-                  <div className="space-y-1.5 font-sans text-xs">
-                    <div className="flex items-center justify-between rounded-[4px] border border-slate-100 p-2">
-                      <span className="font-bold">Dara Sok (STU-2026-0891)</span>
-                      <span className="text-[10px] text-slate-400">Software Eng.</span>
-                    </div>
-                    <div className="flex items-center justify-between rounded-[4px] border border-slate-100 p-2">
-                      <span className="font-bold">Bopha Chan (STU-2026-0422)</span>
-                      <span className="text-[10px] text-slate-400">Cybersecurity</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {state.bottomNavTab === 'academics' && (
-                <div className="space-y-3 font-sans">
-                  <h5 className="text-sm font-bold text-slate-900">Academic Progress</h5>
-                  <div className="space-y-2">
-                    <div>
-                      <div className="flex items-center justify-between text-xs font-semibold">
-                        <span>CS-301 Distributed Systems</span>
-                        <span className="text-[#0056FF]">84%</span>
-                      </div>
-                      <div className="mt-1 h-1.5 w-full rounded-full bg-slate-100">
-                        <div className="h-full w-[84%] rounded-full bg-[#0056FF]" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-between text-xs font-semibold">
-                        <span>SE-402 Cloud Architectures</span>
-                        <span className="text-[#0056FF]">92%</span>
-                      </div>
-                      <div className="mt-1 h-1.5 w-full rounded-full bg-slate-100">
-                        <div className="h-full w-[92%] rounded-full bg-[#0056FF]" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {state.bottomNavTab === 'profile' && (
-                <div className="flex items-center gap-4 font-sans">
-                  <div className="flex size-14 items-center justify-center rounded-[4px] bg-[#0056FF] text-xl font-black text-white shadow-xs">
-                    DS
-                  </div>
-                  <div>
-                    <h5 className="font-bold text-slate-950">Dara Sok</h5>
-                    <p className="font-mono text-xs text-slate-500">ID: STU-2026-0891</p>
-                    <span className="mt-1 inline-block rounded-[4px] bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
-                      Verified Active Student
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Bottom Nav Bar */}
-            <div className="border-t border-slate-200 bg-slate-50/80 p-2">
-              <div className="flex items-center justify-around">
-                {state.bottomNavItems.map((item) => {
-                  const isActive = state.bottomNavTab === item.id;
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => state.setBottomNavTab(item.id)}
-                      className={cn(
-                        'relative flex cursor-pointer flex-col items-center gap-1 rounded-[4px] border-0 px-4 py-2 transition-all select-none',
-                        isActive
-                          ? 'bg-[#0056FF] font-bold text-white shadow-none'
-                          : 'text-slate-600 hover:bg-white hover:text-slate-950',
-                      )}
-                    >
-                      <div className="relative">
-                        <Icon className="h-4 w-4" />
-                        {item.id === 'profile' && state.bottomNavBadge > 0 && (
-                          <span className="absolute -top-1 -right-1 flex size-3.5 items-center justify-center rounded-[4px] bg-red-500 text-[8px] font-bold text-white">
-                            {state.bottomNavBadge}
-                          </span>
-                        )}
-                      </div>
-                      <span className="font-sans text-[10px] tracking-wider uppercase">
-                        {item.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-
     case 'card':
       return (
         <div className="flex w-full flex-col items-center gap-5">
@@ -2257,37 +1759,37 @@ function renderFeedComponentDemo(
               <div
                 onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
                 className={cn(
-                  'relative mx-auto w-[94%] cursor-pointer rounded-3xl p-6 transition-all duration-300 ease-out',
-                  'border border-slate-700/60 bg-gradient-to-br from-[#0B0E14] via-[#000B26] to-[#0056FF]',
-                  'text-white shadow-2xl',
+                  'relative mx-auto w-[94%] cursor-pointer rounded-2xl p-6 transition-all duration-300 ease-out',
+                  'border border-blue-400/30 bg-gradient-to-br from-[#0056FF] via-[#0047D4] to-[#0035A0]',
+                  'text-white shadow-xl',
                   state.cardSlidOut ? '-translate-y-12 scale-[1.02]' : 'translate-y-0',
                 )}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black tracking-widest text-slate-300 uppercase">
+                    <span className="font-mono text-xs font-black tracking-widest text-blue-100 uppercase">
                       SNPI-SMS STUDENT PASS
                     </span>
                   </div>
-                  <div className="h-7 w-9 rounded-md border border-amber-300/40 bg-amber-400/30 shadow-inner" />
+                  <div className="h-7 w-9 rounded-[4px] border border-amber-300/40 bg-amber-400/30 shadow-inner" />
                 </div>
 
-                <div className="mt-8 font-mono text-xl font-black tracking-widest text-slate-100 sm:text-2xl">
+                <div className="mt-8 font-mono text-xl font-black tracking-widest text-white sm:text-2xl">
                   {state.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
                 </div>
 
                 <div className="mt-6 flex items-end justify-between font-mono text-xs">
                   <div>
-                    <span className="block text-[10px] text-slate-400 uppercase">Student Name</span>
-                    <span className="text-sm font-bold text-slate-100">DARA SOK</span>
+                    <span className="block text-[10px] text-blue-200 uppercase">Student Name</span>
+                    <span className="text-sm font-bold text-white">DARA SOK</span>
                   </div>
                   <div className="text-right">
-                    <span className="block text-[10px] text-slate-400 uppercase">Valid Thru</span>
-                    <span className="text-sm font-bold text-slate-100">08/29</span>
+                    <span className="block text-[10px] text-blue-200 uppercase">Valid Thru</span>
+                    <span className="text-sm font-bold text-white">08/29</span>
                   </div>
                   <div className="text-right">
-                    <span className="block text-[10px] text-slate-400 uppercase">CVV</span>
-                    <span className="text-sm font-bold text-[#CAD3F5]">
+                    <span className="block text-[10px] text-blue-200 uppercase">CVV</span>
+                    <span className="text-sm font-bold text-blue-100">
                       {state.cardRevealed ? '742' : '•••'}
                     </span>
                   </div>
@@ -2295,7 +1797,7 @@ function renderFeedComponentDemo(
               </div>
 
               {/* Curved Folder Pocket Base */}
-              <div className="relative z-20 -mt-16 w-full rounded-3xl border border-slate-200/90 bg-white p-6 text-slate-900 shadow-xl">
+              <div className="relative z-20 -mt-16 w-full rounded-[4px] border border-slate-200/90 bg-white p-6 text-slate-900 shadow-xl">
                 <div className="flex items-center justify-between border-b border-dashed border-slate-200 pb-4">
                   <button
                     type="button"
@@ -2539,10 +2041,6 @@ function renderFeedComponentDemo(
     // ==========================================
     case 'folder':
       return <FolderDemo />;
-    case 'code-block':
-      return <CodeBlockDemo />;
-    case 'gravity-letters':
-      return <GravityLettersDemo />;
     case 'github-activity':
       return <GitHubActivityDemo />;
     case 'step-player':
@@ -2561,16 +2059,10 @@ function renderFeedComponentDemo(
     // ==========================================
     // AI KIT GROUP (Interactive Demos)
     // ==========================================
-    case 'fluid-orb':
-      return <FluidOrbDemo />;
     case 'grid-reveal':
       return <GridRevealDemo />;
-    case 'matrix-orb':
-      return <MatrixOrbDemo />;
     case 'web-search':
       return <WebSearchDemo />;
-    case 'inline-ai-status':
-      return <InlineAiStatusDemo />;
 
     // ==========================================
     // NAVIGATION (Hanging Tabs & Navigation)
@@ -2582,22 +2074,8 @@ function renderFeedComponentDemo(
       return <IconBarDemo />;
 
     // ==========================================
-    // BACKGROUNDS (Component Templates)
-    // ==========================================
-    case 'dot-pattern':
-      return <DotPatternDemo />;
-    case 'retro-grid':
-      return <RetroGridDemo />;
-    case 'aurora-waves':
-      return <AuroraWavesDemo />;
-    case 'interactive-particles':
-      return <InteractiveParticlesDemo />;
-
-    // ==========================================
     // TEXT EFFECTS (Component Templates)
     // ==========================================
-    case 'text-shimmer':
-      return <TextShimmerDemo />;
     case 'number-ticker':
       return <NumberTickerDemo />;
     case 'glitch-text':
@@ -2610,8 +2088,6 @@ function renderFeedComponentDemo(
     // ==========================================
     // CARDS (Component Templates)
     // ==========================================
-    case 'spotlight-card':
-      return <SpotlightCardDemo />;
     case 'bento-card':
       return <BentoCardDemo />;
     case 'tilt-card':

@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "afe1383",
+    "description": "Enforce rounded-[4px] primary corner radius and responsive mobile border-t vs web border standards"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "be675a4",
     "description": "Synchronize recent local commits"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "97efab1",
     "description": "Revert(document): remove floating capsule dock nav and restore top hanging tabs header"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "c53639d",
-    "description": "Update floating dock with official logo two-item menu version badge scroll resize and 4px button geometry"
   }
 ];
