@@ -45,7 +45,7 @@ const SKELETON_STYLES = `
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--skeleton-highlight, rgba(227, 231, 252, 0.7)) 50%,
+    var(--skeleton-highlight, rgba(227, 231, 252, 0.95)) 50%,
     transparent 100%
   );
   animation: skeleton-shimmer-sweep var(--skeleton-speed, 1.8s) infinite ease-in-out;
@@ -80,8 +80,6 @@ export function Skeleton({
   theme = 'light',
   ...props
 }: SkeletonProps) {
-  const isDark = theme === 'dark';
-
   const variantClass =
     variant === 'circle'
       ? 'rounded-full aspect-square shrink-0'
@@ -89,17 +87,11 @@ export function Skeleton({
         ? 'rounded-[2px] h-3.5 my-1'
         : 'rounded-[4px]';
 
-  const themeVars = isDark
-    ? ({
-        '--skeleton-base': '#0F172A',
-        '--skeleton-highlight': 'rgba(255, 255, 255, 0.09)',
-        '--skeleton-speed': '1.8s',
-      } as React.CSSProperties)
-    : ({
-        '--skeleton-base': '#E2E8F0',
-        '--skeleton-highlight': 'rgba(255, 255, 255, 0.75)',
-        '--skeleton-speed': '1.8s',
-      } as React.CSSProperties);
+  const themeVars = {
+    '--skeleton-base': '#EFF5FF',
+    '--skeleton-highlight': 'rgba(255, 255, 255, 0.9)',
+    '--skeleton-speed': '1.8s',
+  } as React.CSSProperties;
 
   return (
     <div
@@ -120,38 +112,31 @@ export function Skeleton({
 // PATTERN 1: PROFILE HEADER (Loading Skeleton vs Loaded Content)
 // ============================================================================
 
-function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'light' | 'dark' }) {
-  const isDark = theme === 'dark';
-
+function ProfileHeaderPattern({ isLoaded }: { isLoaded: boolean; theme?: 'light' | 'dark' }) {
   if (!isLoaded) {
     return (
-      <div
-        className={cn(
-          'space-y-5 p-6 transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
-          isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
-        )}
-      >
+      <div className="space-y-5 rounded-2xl border border-[#CAD3F5] bg-white p-6 shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
         <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
           {/* Avatar circle (02 Shape) */}
-          <Skeleton variant="circle" className="size-16" theme={theme} />
+          <Skeleton variant="circle" className="size-16" />
 
           <div className="w-full flex-1 space-y-2.5">
             {/* Name bar */}
-            <Skeleton className="h-5 w-48 rounded-[4px]" theme={theme} />
+            <Skeleton className="h-5 w-48 rounded-[4px]" />
             {/* Title & Badge */}
             <div className="flex items-center gap-2">
-              <Skeleton className="h-3.5 w-32 rounded-[2px]" theme={theme} />
-              <Skeleton className="h-3.5 w-16 rounded-[4px]" theme={theme} />
+              <Skeleton className="h-3.5 w-32 rounded-[2px]" />
+              <Skeleton className="h-3.5 w-16 rounded-[4px]" />
             </div>
             {/* Bio lines */}
-            <Skeleton className="h-3 w-full max-w-md rounded-[2px]" theme={theme} />
-            <Skeleton className="h-3 w-3/4 max-w-sm rounded-[2px]" theme={theme} />
+            <Skeleton className="h-3 w-full max-w-md rounded-[2px]" />
+            <Skeleton className="h-3 w-3/4 max-w-sm rounded-[2px]" />
           </div>
 
           {/* Action buttons */}
           <div className="flex w-full shrink-0 gap-2 pt-2 sm:w-auto sm:flex-col sm:pt-0">
-            <Skeleton className="h-8 w-24 rounded-[4px]" theme={theme} />
-            <Skeleton className="h-8 w-24 rounded-[4px]" theme={theme} />
+            <Skeleton className="h-8 w-24 rounded-[4px]" />
+            <Skeleton className="h-8 w-24 rounded-[4px]" />
           </div>
         </div>
       </div>
@@ -160,7 +145,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
 
   // Loaded state
   return (
-    <div className="border-slate-200 bg-white p-6 shadow-xs transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
+    <div className="border border-[#CAD3F5] bg-white p-6 shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
       <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center">
         <div className="flex shrink-0 items-center justify-center">
           <User className="size-10 text-[#0056FF]" />
@@ -168,17 +153,17 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
 
         <div className="flex-1 space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <h4 className="font-sans text-base font-bold text-slate-900">Dr. Sokha Chann</h4>
-            <span className="flex items-center gap-1 rounded-[4px] border border-emerald-500/30 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+            <h4 className="font-sans text-base font-bold text-[#0A1A4A]">Dr. Sokha Chann</h4>
+            <span className="flex items-center gap-1 rounded-[4px] border border-emerald-300 bg-[#ECFDF5] px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-800">
               <ShieldCheck className="size-3" />
               <span>SUPERADMIN VERIFIED</span>
             </span>
           </div>
 
-          <p className="font-mono text-xs text-[#0056FF]">
+          <p className="font-mono text-xs font-bold text-[#0056FF]">
             Principal Campus Architect &middot; SNPI Institutional Systems
           </p>
-          <p className="max-w-md font-sans text-xs leading-relaxed text-slate-600">
+          <p className="max-w-md font-sans text-xs leading-relaxed text-slate-700">
             Directs the 47 modular monolith domain engines, managing student lifecycles, ledger
             hashes, and accreditation pipelines.
           </p>
@@ -187,13 +172,13 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
         <div className="flex w-full shrink-0 gap-2 pt-2 sm:w-auto sm:flex-col sm:pt-0">
           <button
             type="button"
-            className="rounded-[4px] bg-[#0056FF] px-3.5 py-1.5 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700"
+            className="rounded-[4px] bg-[#0056FF] px-3.5 py-1.5 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-[#2277FF]"
           >
             Edit Profile
           </button>
           <button
             type="button"
-            className="rounded-[4px] border border-slate-200 bg-slate-50 px-3.5 py-1.5 font-mono text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100"
+            className="rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 font-mono text-xs font-bold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
           >
             Passbook
           </button>
@@ -207,9 +192,7 @@ function ProfileHeaderPattern({ isLoaded, theme }: { isLoaded: boolean; theme: '
 // PATTERN 2: CARD GRID (Loading Skeleton vs Loaded Content)
 // ============================================================================
 
-function CardGridPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'light' | 'dark' }) {
-  const isDark = theme === 'dark';
-
+function CardGridPattern({ isLoaded }: { isLoaded: boolean; theme?: 'light' | 'dark' }) {
   const cardsData = [
     {
       code: 'CS-401',
@@ -240,33 +223,30 @@ function CardGridPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'light
         {[1, 2, 3].map((key) => (
           <div
             key={key}
-            className={cn(
-              'space-y-3.5 rounded-2xl border p-4 transition-colors',
-              isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
-            )}
+            className="space-y-3.5 rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-xs"
           >
             {/* 03 Aspect Ratio: 16/9 media thumbnail */}
-            <Skeleton className="aspect-video w-full rounded-xl" theme={theme} />
+            <Skeleton className="aspect-video w-full rounded-xl" />
 
             {/* Pill & Title */}
             <div className="space-y-2">
-              <Skeleton className="h-3 w-16 rounded-full" theme={theme} />
-              <Skeleton className="h-4.5 w-3/4 rounded-lg" theme={theme} />
+              <Skeleton className="h-3 w-16 rounded-full" />
+              <Skeleton className="h-4.5 w-3/4 rounded-lg" />
             </div>
 
             {/* Body copy lines */}
             <div className="space-y-1.5 pt-1">
-              <Skeleton className="h-3 w-full rounded-md" theme={theme} />
-              <Skeleton className="h-3 w-5/6 rounded-md" theme={theme} />
+              <Skeleton className="h-3 w-full rounded-md" />
+              <Skeleton className="h-3 w-5/6 rounded-md" />
             </div>
 
             {/* Footer row: avatar + text */}
-            <div className="flex items-center justify-between border-t border-slate-100 pt-3 dark:border-slate-800/80">
+            <div className="flex items-center justify-between border-t border-[#CAD3F5]/60 pt-3">
               <div className="flex items-center gap-2">
-                <Skeleton variant="circle" className="size-6" theme={theme} />
-                <Skeleton className="h-3 w-20 rounded-md" theme={theme} />
+                <Skeleton variant="circle" className="size-6" />
+                <Skeleton className="h-3 w-20 rounded-md" />
               </div>
-              <Skeleton className="h-3 w-16 rounded-md" theme={theme} />
+              <Skeleton className="h-3 w-16 rounded-md" />
             </div>
           </div>
         ))}
@@ -280,14 +260,11 @@ function CardGridPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'light
       {cardsData.map((c) => (
         <div
           key={c.code}
-          className={cn(
-            'flex flex-col justify-between rounded-2xl border p-4 transition-colors hover:border-[#0056FF]/40',
-            isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
-          )}
+          className="flex flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-xs transition-colors hover:border-[#0056FF]"
         >
           <div className="space-y-3">
             {/* Aspect Video Media Banner */}
-            <div className="flex aspect-video w-full flex-col items-center justify-center rounded-xl border border-slate-200/80 bg-slate-100 text-slate-400 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-500">
+            <div className="flex aspect-video w-full flex-col items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]">
               <Folder className="size-8" />
               <span className="mt-1 font-mono text-[10px] font-bold tracking-wider">
                 SYLLABUS MODULE
@@ -295,21 +272,21 @@ function CardGridPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'light
             </div>
 
             <div className="space-y-1">
-              <span className="font-mono text-[10px] font-bold text-[#0056FF] dark:text-[#38BDF8]">
+              <span className="font-mono text-[10px] font-bold text-[#0056FF]">
                 {c.code}
               </span>
-              <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
+              <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">
                 {c.title}
               </h4>
-              <p className="font-sans text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+              <p className="font-sans text-[11px] leading-relaxed text-slate-700">
                 {c.desc}
               </p>
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 font-mono text-[11px] dark:border-slate-800/80">
-            <span className="font-bold text-slate-600 dark:text-slate-300">{c.author}</span>
-            <span className="font-bold text-[#0056FF] dark:text-cyan-400">{c.students}</span>
+          <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-3 font-mono text-[11px]">
+            <span className="font-bold text-slate-700">{c.author}</span>
+            <span className="font-bold text-[#0056FF]">{c.students}</span>
           </div>
         </div>
       ))}
@@ -321,9 +298,7 @@ function CardGridPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'light
 // PATTERN 3: CONTENT LIST (Loading Skeleton vs Loaded Content)
 // ============================================================================
 
-function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'light' | 'dark' }) {
-  const isDark = theme === 'dark';
-
+function ContentListPattern({ isLoaded }: { isLoaded: boolean; theme?: 'light' | 'dark' }) {
   const listItems = [
     {
       title: 'ACID Ledger Commitment TX-9204 Finalized',
@@ -353,30 +328,23 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
 
   if (!isLoaded) {
     return (
-      <div
-        className={cn(
-          'divide-y transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
-          isDark
-            ? 'divide-slate-800 border-slate-800 bg-[#00081C]'
-            : 'divide-slate-100 border-slate-200 bg-white shadow-xs',
-        )}
-      >
+      <div className="divide-y divide-[#CAD3F5]/60 border border-[#CAD3F5] bg-white shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
         {[1, 2, 3, 4].map((key) => (
           <div key={key} className="flex items-center gap-4 p-4">
             {/* Square Icon Thumbnail */}
-            <Skeleton className="size-10 shrink-0 rounded-[4px]" theme={theme} />
+            <Skeleton className="size-10 shrink-0 rounded-[4px]" />
 
             {/* Typography lines */}
             <div className="flex-1 space-y-2">
-              <Skeleton className="h-4 w-3/5 rounded-[2px]" theme={theme} />
+              <Skeleton className="h-4 w-3/5 rounded-[2px]" />
               <div className="flex items-center gap-2">
-                <Skeleton className="h-3 w-20 rounded-[2px]" theme={theme} />
-                <Skeleton className="h-3 w-16 rounded-[2px]" theme={theme} />
+                <Skeleton className="h-3 w-20 rounded-[2px]" />
+                <Skeleton className="h-3 w-16 rounded-[2px]" />
               </div>
             </div>
 
             {/* Status Pill */}
-            <Skeleton className="h-6 w-20 shrink-0 rounded-[4px]" theme={theme} />
+            <Skeleton className="h-6 w-20 shrink-0 rounded-[4px]" />
           </div>
         ))}
       </div>
@@ -385,18 +353,18 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
 
   // Loaded state
   return (
-    <div className="divide-y divide-slate-100 border-slate-200 bg-white shadow-xs transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
+    <div className="divide-y divide-[#CAD3F5]/60 border border-[#CAD3F5] bg-white shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
       {listItems.map((item, idx) => (
         <div key={idx} className="flex items-center justify-between gap-4 p-4">
           <div className="flex min-w-0 items-center gap-3">
             <FileText className="size-5 shrink-0 text-[#0056FF]" />
 
             <div className="min-w-0 space-y-0.5">
-              <h5 className="truncate font-sans text-xs font-bold text-slate-900 dark:text-white">
+              <h5 className="truncate font-sans text-xs font-bold text-[#0A1A4A]">
                 {item.title}
               </h5>
-              <div className="flex items-center gap-2 font-mono text-[10px] text-slate-400">
-                <span className="font-bold text-[#0056FF] dark:text-[#38BDF8]">{item.tag}</span>
+              <div className="flex items-center gap-2 font-mono text-[10px] text-slate-500">
+                <span className="font-bold text-[#0056FF]">{item.tag}</span>
                 <span>&middot;</span>
                 <span className="flex items-center gap-1">
                   <Clock className="size-2.5" />
@@ -406,7 +374,7 @@ function ContentListPattern({ isLoaded, theme }: { isLoaded: boolean; theme: 'li
             </div>
           </div>
 
-          <span className="shrink-0 rounded-[4px] border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+          <span className="shrink-0 rounded-[4px] border border-emerald-300 bg-[#ECFDF5] px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-800">
             {item.status}
           </span>
         </div>
@@ -429,11 +397,11 @@ export function SkeletonLoadingScreenDemo() {
       <style dangerouslySetInnerHTML={{ __html: SKELETON_STYLES }} />
 
       {/* Control Bar: Active State Toggle, Pattern Switcher */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CAD3F5] pb-3">
         <div className="flex flex-wrap items-center gap-4">
           {/* Pattern filter tabs */}
           <div className="flex items-center gap-1.5">
-            <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
+            <span className="font-mono text-xs font-bold tracking-wider text-slate-500 uppercase">
               Pattern:
             </span>
             {(['all', 'profile', 'grid', 'list'] as const).map((tab) => (
@@ -442,10 +410,10 @@ export function SkeletonLoadingScreenDemo() {
                 type="button"
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  'rounded-[4px] px-2.5 py-0.5 font-mono text-[11px] font-bold capitalize transition-colors',
+                  'rounded-[4px] px-2.5 py-1 font-mono text-[11px] font-bold capitalize transition-colors',
                   activeTab === tab
-                    ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400'
-                    : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400',
+                    ? 'border border-[#0056FF] bg-[#0056FF] text-white'
+                    : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
                 )}
               >
                 {tab === 'all' ? 'All Patterns' : tab}
@@ -459,10 +427,10 @@ export function SkeletonLoadingScreenDemo() {
           type="button"
           onClick={() => setIsLoaded(!isLoaded)}
           className={cn(
-            'flex items-center gap-2 rounded-[4px] border-0 px-4 py-2 font-mono text-xs font-bold shadow-xs transition-all active:scale-[0.98]',
+            'flex items-center gap-2 rounded-[4px] border px-4 py-2 font-mono text-xs font-bold shadow-xs transition-all active:scale-[0.98]',
             isLoaded
-              ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-              : 'bg-[#0056FF] text-white hover:bg-blue-700',
+              ? 'border-emerald-300 bg-[#ECFDF5] text-emerald-800 hover:bg-emerald-100'
+              : 'border-[#0056FF] bg-[#0056FF] text-white hover:bg-[#2277FF]',
           )}
         >
           <RefreshCw className={cn('size-3.5', !isLoaded && 'animate-spin')} />
@@ -470,24 +438,24 @@ export function SkeletonLoadingScreenDemo() {
         </button>
       </div>
 
-      {/* Feature Description Card */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-900/40">
+      {/* Feature Description Card (Image 1 High-Contrast Light-Day Fix) */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 shadow-xs">
         <div className="space-y-0.5">
-          <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900 dark:text-white">
-            <Sparkles className="size-3.5 text-[#0056FF] dark:text-[#38BDF8]" />
+          <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-[#0A1A4A]">
+            <Sparkles className="size-3.5 text-[#0056FF]" />
             <span>CSS-Only Shimmer (Zero JavaScript Render Overhead)</span>
           </div>
-          <p className="font-sans text-xs text-slate-500">
+          <p className="font-sans text-xs text-[#334155]">
             Shimmer gradient sweeps left to right via pure CSS <code>::after</code> pseudo-elements,
             disabling automatically under <code>prefers-reduced-motion</code>.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-          <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex items-center gap-2 font-mono text-[11px]">
+          <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-bold text-[#0056FF]">
             1.8s Ease Loop
           </span>
-          <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 dark:border-slate-800 dark:bg-slate-900">
+          <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-bold text-[#0056FF]">
             CLS = 0 Sizing
           </span>
         </div>
@@ -497,14 +465,14 @@ export function SkeletonLoadingScreenDemo() {
       {(activeTab === 'all' || activeTab === 'profile') && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
               Pattern 01 &middot; Profile Header
             </span>
-            <span className="font-mono text-[10px] text-slate-500">
+            <span className="font-mono text-[10px] font-medium text-slate-600">
               Avatar Circle + Typography Lines + Action Badges
             </span>
           </div>
-          <ProfileHeaderPattern isLoaded={isLoaded} theme="light" />
+          <ProfileHeaderPattern isLoaded={isLoaded} />
         </div>
       )}
 
@@ -512,14 +480,14 @@ export function SkeletonLoadingScreenDemo() {
       {(activeTab === 'all' || activeTab === 'grid') && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
               Pattern 02 &middot; Responsive Card Grid
             </span>
-            <span className="font-mono text-[10px] text-slate-500">
+            <span className="font-mono text-[10px] font-medium text-slate-600">
               16:9 Media Aspect Ratio + Title + Author Row
             </span>
           </div>
-          <CardGridPattern isLoaded={isLoaded} theme="light" />
+          <CardGridPattern isLoaded={isLoaded} />
         </div>
       )}
 
@@ -527,14 +495,14 @@ export function SkeletonLoadingScreenDemo() {
       {(activeTab === 'all' || activeTab === 'list') && (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
               Pattern 03 &middot; Content Audit List
             </span>
-            <span className="font-mono text-[10px] text-slate-500">
+            <span className="font-mono text-[10px] font-medium text-slate-600">
               40x40 Thumbnail Icon + Two-Line Text + Status Badge
             </span>
           </div>
-          <ContentListPattern isLoaded={isLoaded} theme="light" />
+          <ContentListPattern isLoaded={isLoaded} />
         </div>
       )}
     </div>

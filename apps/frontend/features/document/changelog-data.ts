@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "db2b477",
+    "description": "Enforce anti-gray anti-blur high-contrast brand tokens and rule"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
+    "commitHash": "cb2f90c",
+    "description": "Update navbar to solid white with blue active text and redesign system color matrix to high-contrast light day mode"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "1ddce36",
     "description": "Replace dark terminal packet monitor with light modern ui and record rule"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "2125659",
     "description": "Create multi-archetype Status Page 404 with 5 brand modes and HTTP status code engine"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "594c28a",
-    "description": "Record real-time changelog for brand identity colors expansion"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "1da4370",
-    "description": "Expand Brand Identity & Colors with 7-token bento grid, application matrix, and do-dont rules"
   }
 ];
