@@ -2,7 +2,7 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.12 (31.10.2026) - `0590a40`
+### Version 0.2.12 (31.10.2026) - `f889207`
 
 - Bump version to 0.2.12 and sync documentation changelog
 

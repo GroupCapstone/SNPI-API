@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The repository is currently hosted under personal provisional ownership (`shiliaiwei/SNP-SMS`), with a planned future transfer to an institutional enterprise organization. Hardcoded personal usernames, machine paths, or rigid ownership bindings will break CI/CD workflows, automation tokens, and documentation upon ownership migration.
+The repository is currently hosted under personal provisional ownership (`shiliaiwei/SNPI-SMS`), with a planned future transfer to an institutional enterprise organization. Hardcoded personal usernames, machine paths, or rigid ownership bindings will break CI/CD workflows, automation tokens, and documentation upon ownership migration.
 
 ## Decision
 

@@ -45,8 +45,8 @@ The repository is structured as an npm workspaces monorepo:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/shiliaiwei/SNP-SMS.git
-cd SNP-SMS
+git clone https://github.com/shiliaiwei/SNPI-SMS.git
+cd SNPI-SMS
 
 # 2. Install dependencies across all workspaces
 npm install
