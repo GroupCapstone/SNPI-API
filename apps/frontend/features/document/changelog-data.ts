@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "1da4370",
+    "description": "Expand Brand Identity & Colors with 7-token bento grid, application matrix, and do-dont rules"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "e6d6680",
     "description": "Record real-time changelog for Rail TOC paper plane flight navigator redesign"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "0d81689",
     "description": "Resolve vercel deployment failures for frontend and backend"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "1f7a253",
-    "description": "Synchronize release checkpoint v0.2.11 to developer documentation portal"
   }
 ];
