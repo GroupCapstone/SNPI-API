@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "9aecb3d",
+    "description": "Redesign Rail TOC paper plane flight navigator with 3D faceted jet, de Casteljau contrail, and telemetry deck"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "afbd722",
     "description": "Record removal of header status badge"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "0fcfaf0",
     "description": "V0.2.11 release checkpoint with system architecture lexicon, cyber armor nav, and royal blue brand system"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "6496ddb",
-    "description": "Format components and documentation with prettier"
   }
 ];
