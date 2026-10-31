@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "31.10.2026",
+    "commitHash": "ee38ab0",
+    "description": "Remove base url box from standalone hero view"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
     "commitHash": "7970746",
     "description": "Condense service card and hero descriptions to ultra-minimal single-line copy"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "38ac6e6",
     "description": "Redesign open-api page with Nextra Docs Starter Kit architecture"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "d451d0d",
-    "description": "Record zero gradient and zero black/gray rule enforcement"
   }
 ];
