@@ -329,12 +329,13 @@ const BACKEND_PUBLIC_ENDPOINTS: RestEndpointSummary[] = [
 
 const GUIDE_NAV_ITEMS = [
   { id: 'open-api-head', label: 'Overview', tag: '01' },
-  { id: 'public-feeds', label: 'Public Feeds (RSS 2.0)', tag: '02' },
-  { id: 'class-catalog-api', label: 'Class Catalog REST API', tag: '03' },
-  { id: 'certificate-ledger-api', label: 'Certificate Ledger API', tag: '04' },
-  { id: 'realtime-stream', label: 'Real-Time SSE Stream', tag: '05' },
-  { id: 'rest-api-directory', label: 'API Directory', tag: '06' },
-  { id: 'changelogs', label: 'Releases', tag: '07' },
+  { id: 'available-services', label: 'Core Services', tag: '02' },
+  { id: 'public-feeds', label: 'Public Feeds (RSS 2.0)', tag: '03' },
+  { id: 'class-catalog-api', label: 'Class Catalog REST API', tag: '04' },
+  { id: 'certificate-ledger-api', label: 'Certificate Ledger API', tag: '05' },
+  { id: 'realtime-stream', label: 'Real-Time SSE Stream', tag: '06' },
+  { id: 'rest-api-directory', label: 'API Directory', tag: '07' },
+  { id: 'changelogs', label: 'Releases', tag: '08' },
 ];
 
 // ============================================================================
@@ -504,95 +505,116 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
         {/* =================================================================== */}
         <main className="max-w-5xl min-w-0 flex-1 space-y-8 pb-24 sm:space-y-10">
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 1: WELCOMING MOBILE HERO HOOK */}
+          {/* SECTION 1: STANDALONE WELCOME HERO SCREEN (MOBILE ONE-SECTION)   */}
           {/* ----------------------------------------------------------------- */}
-          <section id="open-api-head" className="space-y-4 pt-1 sm:space-y-6">
-            {/* The Integrated Welcome & Hook Card */}
-            <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF] p-4.5 sm:p-7 shadow-xs">
-              {/* Top Context & Welcome Badge */}
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1 text-xs font-bold text-[#0056FF] shadow-xs">
-                  <Radio className="size-3.5 text-[#0056FF]" />
-                  <span>SNP Public Developer Hub</span>
-                </span>
-                <span className="inline-flex items-center rounded-full bg-[#E3E7FC] px-2.5 py-1 text-[11px] font-bold text-[#0056FF]">
-                  Free Public Access
-                </span>
+          <section
+            id="open-api-head"
+            className="flex min-h-[calc(100vh-92px)] flex-col justify-between pt-1 pb-4 sm:min-h-0 sm:pb-6"
+          >
+            {/* The Integrated Standalone Welcome Card */}
+            <div className="flex flex-1 flex-col justify-between rounded-3xl border border-[#CAD3F5] bg-[#EFF5FF] p-6 sm:p-10 shadow-xs">
+              {/* Top Context & Headline */}
+              <div className="space-y-4">
+                {/* Context Badge */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-3.5 py-1 text-xs font-bold text-[#0056FF] shadow-xs">
+                    <Radio className="size-3.5 text-[#0056FF]" />
+                    <span>SNP Public Developer Hub</span>
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-[#E3E7FC] px-3 py-1 text-xs font-bold text-[#0056FF]">
+                    Free Public Access
+                  </span>
+                </div>
+
+                {/* Big Clear Headline */}
+                <h1 className="text-3xl font-black tracking-tight text-[#0A1A4A] sm:text-5xl lg:text-6xl leading-[1.12]">
+                  Welcome to SNP Open API
+                </h1>
+
+                {/* Less Description: Concise, punchy, high-impact */}
+                <p className="max-w-2xl text-sm font-medium leading-relaxed text-[#0A1A4A]/80 sm:text-base sm:leading-relaxed">
+                  Direct, read-only access to live campus announcements, course rosters, and tamper-proof diploma verification — free, open, and zero API keys needed.
+                </p>
+
+                {/* 3 Quick Value Chips */}
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
+                    <Check className="size-3.5 text-[#0056FF]" />
+                    <span>No API Key Required</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
+                    <Check className="size-3.5 text-[#0056FF]" />
+                    <span>Live Campus Feeds</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
+                    <Check className="size-3.5 text-[#0056FF]" />
+                    <span>Tamper-Proof Verification</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Main Welcoming Headline */}
-              <h1 className="mt-3 text-2xl font-black tracking-tight text-[#0A1A4A] sm:text-3xl lg:text-4xl">
-                Welcome to SNP Open API
-              </h1>
+              {/* Bottom Actions: Base URL Bar & Glide to Services Button */}
+              <div className="mt-8 space-y-3">
+                {/* Instant Base URL Bar */}
+                <div className="flex flex-col gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 sm:flex-row sm:items-center sm:justify-between sm:p-3.5 shadow-2xs">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <span className="shrink-0 rounded-md bg-[#0056FF] px-2.5 py-1 font-mono text-[10px] font-bold text-white uppercase">
+                      BASE URL
+                    </span>
+                    <span className="truncate font-mono text-xs font-bold text-[#0A1A4A] sm:text-sm">
+                      https://api.snp.edu.kh/api/v1
+                    </span>
+                  </div>
 
-              {/* Simple Hook: What this page is for */}
-              <p className="mt-2 text-xs leading-relaxed font-medium text-[#0A1A4A]/80 sm:text-sm sm:leading-relaxed">
-                This page gives you direct, open access to live campus data. Use our public REST endpoints and syndication feeds to integrate announcements, course schedules, and certificate verification into your apps — no login, tokens, or API keys required.
-              </p>
-
-              {/* 3 Simple Value Chips */}
-              <div className="mt-3.5 flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0A1A4A]">
-                  <Check className="size-3 text-[#0056FF]" />
-                  <span>No API Key Required</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0A1A4A]">
-                  <Check className="size-3 text-[#0056FF]" />
-                  <span>Live Campus Feeds</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 text-xs font-semibold text-[#0A1A4A]">
-                  <Check className="size-3 text-[#0056FF]" />
-                  <span>Tamper-Proof Verification</span>
-                </div>
-              </div>
-
-              {/* Mobile-Optimized Instant Base URL Bar */}
-              <div className="mt-4.5 flex flex-col gap-2 rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-2.5 sm:flex-row sm:items-center sm:justify-between sm:p-3">
-                <div className="flex min-w-0 items-center gap-2">
-                  <span className="shrink-0 rounded bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] font-bold text-white uppercase">
-                    BASE API
-                  </span>
-                  <span className="truncate font-mono text-xs font-bold text-[#0A1A4A]">
-                    https://api.snp.edu.kh/api/v1
-                  </span>
+                  <div className="flex items-center justify-between gap-3 border-t border-[#CAD3F5]/60 pt-2 sm:border-t-0 sm:pt-0">
+                    <span className="font-mono text-xs font-semibold text-[#0056FF]">
+                      HTTP/2 · Public
+                    </span>
+                    <button
+                      onClick={() => handleCopy('https://api.snp.edu.kh/api/v1', 'base-url')}
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 text-xs font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
+                    >
+                      {copiedId === 'base-url' ? (
+                        <>
+                          <Check className="size-3.5 text-[#0056FF]" />
+                          <span>Copied</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="size-3.5 text-[#0056FF]" />
+                          <span>Copy URL</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
 
-                <div className="flex items-center justify-between gap-2 border-t border-[#CAD3F5]/60 pt-2 sm:border-t-0 sm:pt-0">
-                  <span className="text-[11px] font-semibold text-[#0056FF]">
-                    HTTP/2 · Public REST
-                  </span>
-                  <button
-                    onClick={() => handleCopy('https://api.snp.edu.kh/api/v1', 'base-url')}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 text-xs font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
-                  >
-                    {copiedId === 'base-url' ? (
-                      <>
-                        <Check className="size-3.5 text-[#0056FF]" />
-                        <span>Copied</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="size-3.5 text-[#0056FF]" />
-                        <span>Copy URL</span>
-                      </>
-                    )}
-                  </button>
-                </div>
+                {/* Dedicated Scroll Cue to Screen 2 */}
+                <button
+                  onClick={() => scrollToSection('available-services')}
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] py-3 text-xs font-bold text-[#0056FF] shadow-2xs transition-all hover:bg-[#EFF5FF] active:scale-[0.99]"
+                >
+                  <span>Explore 4 Core Services</span>
+                  <ArrowRight className="size-4 rotate-90" />
+                </button>
               </div>
             </div>
+          </section>
 
-            {/* 4 Core Services: Tactile Mobile Cards */}
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between px-1">
-                <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
-                  Available Services & Endpoints
-                </span>
-                <span className="text-[11px] font-medium text-[#0A1A4A]/60">
-                  4 Core Services
-                </span>
-              </div>
+          {/* ----------------------------------------------------------------- */}
+          {/* SECTION 2: 4 CORE SERVICES OVERVIEW (SCREEN TWO ON MOBILE)        */}
+          {/* ----------------------------------------------------------------- */}
+          <section id="available-services" className="space-y-3 scroll-mt-24 pt-4 sm:pt-6">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
+                Available Services & Endpoints
+              </span>
+              <span className="text-[11px] font-medium text-[#0A1A4A]/60">
+                4 Core Services
+              </span>
+            </div>
 
-              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
                 {/* Card 01: Campus Announcements & Feeds */}
                 <button
                   onClick={() => scrollToSection('public-feeds')}
@@ -765,7 +787,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </button>
               </div>
-            </div>
           </section>
 
           {/* ----------------------------------------------------------------- */}

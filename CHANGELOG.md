@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.12 (31.10.2026) - `6af06e9`
+
+- Record removal of theme FAB and profile card
+
+### Version 0.2.12 (31.10.2026) - `01b501d`
+
+- Remove floating theme FAB button and Lena Marchetti profile card
+
 ### Version 0.2.12 (31.10.2026) - `5116c27`
 
 - Redesign mobile hero with simple welcoming hook and tactile service cards
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `f022bc5`
 
 - Complete redesign with public feeds, embed studio, class table, and real-time sse
-
-### Version 0.2.12 (31.10.2026) - `863b601`
-
-- Record Vercel deployment fix and light theme enforcement
-
-### Version 0.2.12 (31.10.2026) - `d3b461f`
-
-- Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console
 

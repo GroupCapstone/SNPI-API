@@ -26,7 +26,8 @@ export interface DocsStickyHeaderProps {
 }
 
 const OPEN_API_SECTIONS = [
-  { id: 'open-api-head', label: 'Overview & Standards' },
+  { id: 'open-api-head', label: 'Welcome & Overview' },
+  { id: 'available-services', label: '4 Core Services' },
   { id: 'public-feeds', label: 'Public Feeds & RSS 2.0' },
   { id: 'class-catalog-api', label: 'Class Catalog REST API' },
   { id: 'certificate-ledger-api', label: 'Certificate Ledger API' },

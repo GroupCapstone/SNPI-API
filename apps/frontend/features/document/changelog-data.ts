@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.12",
     "date": "31.10.2026",
+    "commitHash": "6af06e9",
+    "description": "Record removal of theme FAB and profile card"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
+    "commitHash": "01b501d",
+    "description": "Remove floating theme FAB button and Lena Marchetti profile card"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
     "commitHash": "5116c27",
     "description": "Redesign mobile hero with simple welcoming hook and tactile service cards"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "f022bc5",
     "description": "Complete redesign with public feeds, embed studio, class table, and real-time sse"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "863b601",
-    "description": "Record Vercel deployment fix and light theme enforcement"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "d3b461f",
-    "description": "Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console"
   }
 ];
