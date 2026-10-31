@@ -11,64 +11,30 @@ export interface RailTocItem {
 }
 
 export interface RailTocProps {
-  /** Headings in document order. Each id must match an element id in the content. */
+  /** Headings in document order. Each id must match an element id in the content. Depth sets the indent level and defaults to 0. */
   items: RailTocItem[];
-  /** Scroll container to track and scroll within. Defaults to window when omitted. */
+  /** Scroll container to track and scroll within. Defaults to the window when omitted. */
   containerRef?: React.RefObject<HTMLElement | null>;
-  /** Distance in pixels below scroller top edge where heading counts as reached. Default: 100. */
+  /** Distance in pixels below the scroller's top edge where a heading counts as reached. Default: 100. */
   offset?: number;
   /** Horizontal step in pixels for each depth level. Default: 16. */
   indent?: number;
-  /** Text above the list and accessibility landmark label. Default: "On this page". */
+  /** Text above the list. It also names the navigation for screen readers. Default: "On this page". */
   title?: string;
-  /** Extra classes merged onto root nav. */
+  /** Extra classes merged onto the root nav. Inner parts carry data-slot attributes (rail-toc-title, -list, -plane). */
   className?: string;
   /** Active heading override for controlled mode. */
   activeId?: string;
   /** Callback fired when user clicks or scrolls into a heading. */
   onSelect?: (id: string) => void;
-  /** Show flight waypoint progress badge (e.g. "3 / 8"). Default: true. */
+  /** Show flight waypoint progress badge (e.g. "3 / 8"). Default: false. */
   showProgress?: boolean;
-  /** Optional tactile procedural sound feedback when crossing headings. Default: false. */
-  enableSound?: boolean;
 }
 
 /**
- * Procedural Web Audio API sound for waypoint crossing
- */
-function playFlightChime(direction: 'down' | 'up') {
-  if (typeof window === 'undefined') return;
-  try {
-    const AudioCtx =
-      window.AudioContext ||
-      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    const baseFreq = direction === 'down' ? 880 : 660;
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(baseFreq, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.15, ctx.currentTime + 0.035);
-
-    gain.gain.setValueAtTime(0.03, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.05);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start();
-    osc.stop(ctx.currentTime + 0.055);
-  } catch {
-    // Audio context may be suspended until user gesture
-  }
-}
-
-/**
- * Rail TOC with a Supersonic Origami Paper Jet that navigates an indented rail.
- * Behind it is solid with active tangent tracking, passed headings fill in, ahead is dashed route.
- * Banks and turns 180° around on scroll-up with natural spring physics.
+ * Rail TOC with a Paper Plane that flies along the indented rail.
+ * Behind it is solid, passed headings fill in, ahead is dashed.
+ * Turns around when scrolling up.
  */
 export function RailToc({
   items,
@@ -79,8 +45,7 @@ export function RailToc({
   className,
   activeId: controlledActiveId,
   onSelect,
-  showProgress = true,
-  enableSound = false,
+  showProgress = false,
 }: RailTocProps) {
   const rootNavRef = React.useRef<HTMLElement>(null);
   const itemRefs = React.useRef<Map<string, HTMLButtonElement>>(new Map());
@@ -92,17 +57,16 @@ export function RailToc({
   // Track scroll direction: 'down' | 'up'
   const [scrollDirection, setScrollDirection] = React.useState<'down' | 'up'>('down');
   const lastScrollYRef = React.useRef<number>(0);
-  const prevActiveIdxRef = React.useRef<number>(0);
 
   // Position coordinates of all heading nodes
   const [nodeCoords, setNodeCoords] = React.useState<{ x: number; y: number }[]>([]);
   const [activeProgress, setActiveProgress] = React.useState<number>(0);
 
-  // Aerospace spring kinematics for paper plane motion
-  const startX = 16;
-  const planeX = useSpring(startX, { stiffness: 420, damping: 32 });
-  const planeY = useSpring(18, { stiffness: 420, damping: 32 });
-  const planeRotate = useSpring(90, { stiffness: 360, damping: 28 });
+  // Spring animations for paper plane motion
+  const startX = 14;
+  const planeX = useSpring(startX, { stiffness: 350, damping: 28 });
+  const planeY = useSpring(18, { stiffness: 350, damping: 28 });
+  const planeRotate = useSpring(90, { stiffness: 300, damping: 24 });
 
   // Measure heading node positions within the TOC container
   const measureNodes = React.useCallback(() => {
@@ -190,11 +154,6 @@ export function RailToc({
         if (newActiveId && newActiveId !== activeId && controlledActiveId === undefined) {
           setActiveSectionId(newActiveId);
           onSelect?.(newActiveId);
-
-          if (enableSound && currentIdx !== prevActiveIdxRef.current) {
-            playFlightChime(currentIdx > prevActiveIdxRef.current ? 'down' : 'up');
-            prevActiveIdxRef.current = currentIdx;
-          }
         }
       } else {
         const idx = items.findIndex((it) => it.id === activeId);
@@ -209,7 +168,7 @@ export function RailToc({
     handleScroll();
 
     return () => targetEl.removeEventListener('scroll', handleScroll);
-  }, [items, containerRef, offset, activeId, controlledActiveId, onSelect, enableSound]);
+  }, [items, containerRef, offset, activeId, controlledActiveId, onSelect]);
 
   // Update animated plane position and rotation based on activeProgress & nodeCoords
   React.useEffect(() => {
@@ -222,7 +181,7 @@ export function RailToc({
 
     let targetX = curP.x;
     let targetY = curP.y;
-    let targetAngle = 90; // Default: facing downwards
+    let targetAngle = 90; // Default: pointing straight down along rail
 
     if (curP && nextP && frac > 0) {
       // Smooth S-curve interpolation between nodes
@@ -248,7 +207,7 @@ export function RailToc({
         3 * invT * t * t * cp2y +
         t * t * t * nextP.y;
 
-      // First derivative tangent vector for rotation angle
+      // First derivative tangent vector for smooth rotation angle
       const dX =
         3 * invT * invT * (cp1x - curP.x) +
         6 * invT * t * (cp2x - cp1x) +
@@ -260,10 +219,10 @@ export function RailToc({
 
       targetAngle = (Math.atan2(dY, dX) * 180) / Math.PI;
     } else if (curP && nextP && nextP.x !== curP.x) {
-      targetAngle = nextP.x > curP.x ? 65 : 115;
+      targetAngle = nextP.x > curP.x ? 70 : 110;
     }
 
-    // Aerodynamic turnaround: when scrolling up, paper plane rotates 180° to point backward!
+    // When scrolling up, plane turns around 180° to point backward!
     if (scrollDirection === 'up') {
       targetAngle = (targetAngle + 180) % 360;
     }
@@ -273,12 +232,12 @@ export function RailToc({
     planeRotate.set(targetAngle);
   }, [activeProgress, nodeCoords, scrollDirection, planeX, planeY, planeRotate]);
 
-  // Construct SVG paths
+  // Construct SVG rail paths
   const maxDepth = items.reduce((max, it) => Math.max(max, it.depth || 0), 0);
   const svgWidth = Math.max(64, startX + maxDepth * indent + 20);
   const svgHeight = nodeCoords.length > 0 ? nodeCoords[nodeCoords.length - 1].y + 16 : 300;
 
-  // Build full dashed background flight route
+  // 1. Build full dashed route ahead
   let fullPathD = '';
   if (nodeCoords.length > 0) {
     fullPathD = `M ${nodeCoords[0].x} ${nodeCoords[0].y}`;
@@ -294,7 +253,7 @@ export function RailToc({
     }
   }
 
-  // Build continuous solid path connecting from origin seamlessly to plane current position
+  // 2. Build solid traversed path connecting from origin seamlessly to plane current position
   const activeIntIdx = Math.min(Math.floor(activeProgress), nodeCoords.length - 1);
   const frac = activeProgress - activeIntIdx;
   let solidPathD = '';
@@ -369,37 +328,35 @@ export function RailToc({
       data-slot="rail-toc"
       className={cn('relative font-sans text-xs select-none', className)}
     >
-      {/* Header with Title & Flight Progress Telemetry */}
+      {/* Header with Title and Document Outline Icon (Exact Image 2 Style) */}
       <div
         data-slot="rail-toc-title"
-        className="mb-3.5 flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5 dark:border-slate-800"
+        className="mb-3.5 flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5"
       >
         <div className="flex items-center gap-2">
-          {/* Aerospace Compass Heading Icon */}
+          {/* 3-Line Document Outline Menu Icon (Exact Image 2 Reference) */}
           <svg
             viewBox="0 0 16 16"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.6"
-            className="size-3.5 text-[#0056FF]"
+            className="size-3.5 text-slate-700"
             aria-hidden="true"
           >
-            <circle cx="8" cy="8" r="6" strokeDasharray="1.5 2" />
-            <polygon points="8,4 10,8 8,7 6,8" fill="#0056FF" stroke="none" />
-            <polygon points="8,12 10,8 8,9 6,8" fill="#94A3B8" stroke="none" />
+            <line x1="2" y1="4" x2="14" y2="4" strokeWidth="1.6" strokeLinecap="round" />
+            <line x1="2" y1="8" x2="11" y2="8" strokeWidth="1.6" strokeLinecap="round" />
+            <line x1="2" y1="12" x2="7" y2="12" strokeWidth="1.6" strokeLinecap="round" />
           </svg>
-          <span className="font-sans text-xs font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          <span className="font-sans text-xs font-semibold tracking-tight text-slate-900">
             {title}
           </span>
         </div>
 
-        {/* Flight Waypoint Progress Badge */}
+        {/* Optional Progress Badge */}
         {showProgress && (
-          <div className="flex items-center gap-1.5 rounded-[4px] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] dark:bg-blue-950/50 dark:text-blue-300">
-            <span>WP</span>
+          <div className="flex items-center gap-1 rounded-[4px] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
             <span>{currentStep}</span>
             <span className="opacity-40">/</span>
-            <span className="opacity-70">{items.length}</span>
+            <span>{items.length}</span>
           </div>
         )}
       </div>
@@ -413,87 +370,53 @@ export function RailToc({
           height={svgHeight}
           aria-hidden="true"
         >
-          <defs>
-            {/* Royal Blue Luminous Contrail Glow */}
-            <linearGradient id="contrailGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#2277FF" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#0056FF" stopOpacity="1" />
-            </linearGradient>
-
-            <filter id="planeGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow
-                dx="0"
-                dy="1"
-                stdDeviation="1.5"
-                floodColor="#0056FF"
-                floodOpacity="0.3"
-              />
-            </filter>
-          </defs>
-
-          {/* 1. Full Dashed Flight Route Ahead */}
+          {/* 1. Full Dashed Flight Route Ahead (Light Gray Dash) */}
           {fullPathD && (
             <path
               d={fullPathD}
               fill="none"
-              stroke="#CAD3F5"
+              stroke="#CBD5E1"
               strokeWidth="1.75"
               strokeDasharray="3 3.5"
               strokeLinecap="round"
-              className="dark:stroke-slate-700"
             />
           )}
 
-          {/* 2. Solid Traversed Track Behind Jet */}
+          {/* 2. Solid Traversed Track Behind Plane (Royal Blue #0056FF) */}
           {solidPathD && (
             <path
               d={solidPathD}
               fill="none"
-              stroke="url(#contrailGrad)"
+              stroke="#0056FF"
               strokeWidth="2.25"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           )}
 
-          {/* 3. Precision Waypoint Node Ticks (Zero-Dot Standard) */}
+          {/* 3. Heading Node Markers (Exact Image 2 Circular Rings) */}
           {nodeCoords.map((coord, i) => {
             const isPassed = i <= activeIntIdx;
             const isCurrent = i === activeIdx;
 
             return (
               <g key={i}>
-                {/* Horizontal Guide Connector from base track if nested */}
-                {coord.x > startX && (
-                  <line
-                    x1={startX}
-                    y1={coord.y}
-                    x2={coord.x}
-                    y2={coord.y}
-                    stroke="#E2E8F0"
-                    strokeWidth="1"
-                    strokeDasharray="2 2"
-                    className="dark:stroke-slate-800"
-                  />
-                )}
-
-                {/* Precision Aerospace Notch Tick */}
-                <line
-                  x1={coord.x - (isCurrent ? 5 : 3.5)}
-                  x2={coord.x + (isCurrent ? 5 : 3.5)}
-                  y1={coord.y}
-                  y2={coord.y}
+                {/* Node Ring: Fills in when passed, stays hollow ahead */}
+                <circle
+                  cx={coord.x}
+                  cy={coord.y}
+                  r={isCurrent ? 3.5 : 2.5}
+                  fill={isPassed ? '#0056FF' : '#FFFFFF'}
+                  stroke={isPassed ? '#0056FF' : '#CBD5E1'}
+                  strokeWidth="1.5"
                   className="transition-all duration-200"
-                  stroke={isCurrent ? '#0056FF' : isPassed ? '#2277FF' : '#CAD3F5'}
-                  strokeWidth={isCurrent ? '2.5' : '1.75'}
-                  strokeLinecap="square"
                 />
               </g>
             );
           })}
         </svg>
 
-        {/* 4. Flying Supersonic Origami Paper Jet (Faceted Vector with Motion Springs) */}
+        {/* 4. Flying Origami Paper Plane (Exact Image 2 Reference) */}
         <motion.div
           data-slot="rail-toc-plane"
           className="pointer-events-none absolute z-20"
@@ -506,48 +429,39 @@ export function RailToc({
           }}
           aria-hidden="true"
         >
-          {/* Faceted 3D Origami Jet Silhouette (Nose points right at 0deg) */}
+          {/* Origami Paper Plane Silhouette (Nose points right at 0deg) */}
           <svg
-            viewBox="0 0 32 32"
-            className="size-5 filter-[drop-shadow(0_1px_3px_rgba(0,86,255,0.35))]"
+            viewBox="0 0 24 24"
+            className="size-4.5 filter-[drop-shadow(0_1px_2px_rgba(0,86,255,0.3))]"
             fill="none"
             aria-hidden="true"
           >
-            {/* Top Wing / Port Wing (Illuminated Azure Facet) */}
+            {/* Top / Port Wing (Illuminated Azure) */}
             <path
-              d="M 28 16 L 4 5 L 11 16 Z"
+              d="M 22 12 L 2 3 L 7 12 Z"
               fill="#2277FF"
               stroke="#0056FF"
-              strokeWidth="0.75"
+              strokeWidth="0.5"
               strokeLinejoin="round"
             />
-
-            {/* Bottom Wing / Starboard Wing (Primary Royal Blue Facet) */}
+            {/* Bottom / Starboard Wing (Primary Royal Blue) */}
             <path
-              d="M 28 16 L 4 27 L 11 16 Z"
+              d="M 22 12 L 2 21 L 7 12 Z"
               fill="#0056FF"
               stroke="#003ECC"
-              strokeWidth="0.75"
+              strokeWidth="0.5"
               strokeLinejoin="round"
             />
-
-            {/* Underbelly Keel Fold (Depth Shadow) */}
-            <path d="M 4 16 L 2 13 L 4 19 Z" fill="#002999" />
-
-            {/* Sharp Center Spine Crease (Milled Glint Line) */}
+            {/* Crisp Center Spine Crease */}
             <line
-              x1="4"
-              y1="16"
-              x2="28"
-              y2="16"
+              x1="2"
+              y1="12"
+              x2="22"
+              y2="12"
               stroke="#FFFFFF"
-              strokeWidth="1"
+              strokeWidth="0.75"
               strokeLinecap="round"
-              opacity="0.95"
             />
-
-            {/* Luminous Exhaust Glow Spark */}
-            <circle cx="11" cy="16" r="1.5" fill="#E3E7FC" />
           </svg>
         </motion.div>
 
@@ -572,18 +486,13 @@ export function RailToc({
                   className={cn(
                     'group flex w-full cursor-pointer items-center justify-between rounded-[4px] py-1.5 pr-2.5 text-left font-sans text-xs transition-all duration-150 select-none focus-visible:ring-2 focus-visible:ring-[#0056FF] focus-visible:outline-hidden',
                     isActive
-                      ? 'bg-[#EFF5FF] font-bold text-slate-950 dark:bg-blue-950/40 dark:text-white'
+                      ? 'bg-[#EFF5FF] font-bold text-[#0056FF]'
                       : isPassed
-                        ? 'font-medium text-slate-800 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-900/40'
-                        : 'font-normal text-slate-500 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-900/40 dark:hover:text-slate-200',
+                        ? 'font-medium text-slate-800 hover:bg-slate-50'
+                        : 'font-normal text-slate-500 hover:bg-slate-50 hover:text-slate-900',
                   )}
                 >
                   <span className="flex-1 truncate leading-snug">{item.label}</span>
-
-                  {/* Active Heading Royal Blue Notch Segment (Zero-Dot Standard) */}
-                  {isActive && (
-                    <span className="ml-2 h-1 w-2.5 shrink-0 rounded-[1px] bg-[#0056FF]" />
-                  )}
                 </button>
               </li>
             );
@@ -593,3 +502,5 @@ export function RailToc({
     </nav>
   );
 }
+
+export default RailToc;
