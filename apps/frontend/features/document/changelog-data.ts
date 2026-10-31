@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "c0b1893",
+    "description": "Condense to ultra-short summary and remove monorepo structure section"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
+    "commitHash": "555f4c0",
+    "description": "Sync real-time changelog for readme rewrite"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "0d6b9ef",
     "description": "Rewrite readme to standard enterprise format with zero links and short summary"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "e11eaf9",
     "description": "Implement cyber armor mecha modular navigation bar"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "d085801",
-    "description": "Synchronize fe39f6e to developer portal and changelog"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "fe39f6e",
-    "description": "Enforce light day mode and implement Wiz-style curved atmospheric footer"
   }
 ];
