@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "e6d6680",
+    "description": "Record real-time changelog for Rail TOC paper plane flight navigator redesign"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "9aecb3d",
     "description": "Redesign Rail TOC paper plane flight navigator with 3D faceted jet, de Casteljau contrail, and telemetry deck"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "1f7a253",
     "description": "Synchronize release checkpoint v0.2.11 to developer documentation portal"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "0fcfaf0",
-    "description": "V0.2.11 release checkpoint with system architecture lexicon, cyber armor nav, and royal blue brand system"
   }
 ];
