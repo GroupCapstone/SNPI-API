@@ -94,6 +94,17 @@ Elevation in Dark Mode is expressed strictly through **surface lightness**, wher
   * Muted / Placeholder: `#71717A` (`zinc-500`)
 * **Lighter Font Weights**: Fonts appear optically thicker and heavier in dark mode due to white pixel bleed. Use `font-normal` (400) or `font-medium` (500) rather than heavy bold weights for body text.
 
+### 2.7 Mandatory Zero Gradient & Zero Black/Gray Component Design Rule — ABSOLUTE STANDARD
+* **Zero Color Gradients**: Under no circumstances should CSS gradients (`bg-gradient-to-*`, `linear-gradient`, gradient text, gradient borders) be used in document layouts or component designs. All surfaces, accents, indicators, and fills must be flat, pure solid colors.
+* **Zero Black & Zero Gray Component Design**: Never use solid black (`#000000`, `bg-black`, `bg-slate-950`) or drab gray (`bg-gray-*`, `bg-slate-900`, dark gray card containers) to design components.
+* **Authoritative Solid Brand Palette**:
+  * **Royal Blue (`#0056FF`)**: Primary brand base, buttons, active segments, flight contrails, core CTAs.
+  * **Azure Blue (`#2277FF`)**: Interactive accents, hover highlights, waypoint node rings.
+  * **Soft Lavender (`#E3E7FC`)**: Surface micro-tints, chips, badge containers, secondary pill cards.
+  * **Light Ice Blue (`#EFF5FF`)**: Micro-container fills, code callout backgrounds, soft active tabs.
+  * **Pure White (`#FFFFFF`)**: Default document canvas, card backgrounds, print-ready surfaces.
+  * **Deep Brand Navy (`#0A1A4A` / `#001D66`)**: High-contrast, crystal-clear typography on light surfaces.
+
 ---
 
 ## 3. Mathematical Design Token Specifications

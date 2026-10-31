@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "863b601",
+    "description": "Record Vercel deployment fix and light theme enforcement"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "d3b461f",
     "description": "Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "5bb52b1",
     "description": "Apply automated prettier code formatting across brand and ui-library components"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "6f2f41c",
-    "description": "Add brand hub, standards, and resources portals with strict royal blue palette, jump nav, and zero outside colors"
   }
 ];

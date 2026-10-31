@@ -201,10 +201,10 @@ function renderRealMiniDemo(
   switch (id) {
     case 'snackbar':
       return (
-        <div className="flex w-full items-center justify-between rounded-xl border border-slate-900 bg-[#000B26] px-3 py-2 text-white shadow-md">
+        <div className="flex w-full items-center justify-between rounded-xl border border-slate-200/90 bg-[#EFF5FF] px-3 py-2 text-slate-800 shadow-2xs">
           <div className="flex items-center gap-2">
             <span className="h-3 w-1 rounded-[1px] bg-[#0056FF]" />
-            <span className="font-sans text-[11px] font-medium text-slate-200">
+            <span className="font-sans text-[11px] font-medium text-slate-800">
               {state.miniSnackbarUndone ? 'Action undone' : 'STU-2026 enrolled'}
             </span>
           </div>
@@ -226,7 +226,7 @@ function renderRealMiniDemo(
         <div className="flex items-center justify-center py-2">
           <div className="relative flex size-12 items-center justify-center rounded-full border border-[#0056FF] bg-[#0056FF] text-white shadow-[0_4px_14px_rgba(0,86,255,0.4)] transition-transform hover:scale-105 active:scale-95">
             <Plus className="size-5 stroke-[2.5]" />
-            <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full border border-white bg-[#000B26] font-mono text-[9px] font-bold text-white">
+            <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full border border-white bg-[#2277FF] font-mono text-[9px] font-bold text-white">
               +
             </span>
           </div>

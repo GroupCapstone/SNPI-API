@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `863b601`
+
+- Record Vercel deployment fix and light theme enforcement
+
 ### Version 0.2.11 (31.10.2026) - `d3b461f`
 
 - Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `5bb52b1`
 
 - Apply automated prettier code formatting across brand and ui-library components
-
-### Version 0.2.11 (31.10.2026) - `6f2f41c`
-
-- Add brand hub, standards, and resources portals with strict royal blue palette, jump nav, and zero outside colors
 

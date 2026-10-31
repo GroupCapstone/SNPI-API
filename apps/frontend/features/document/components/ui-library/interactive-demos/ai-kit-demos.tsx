@@ -26,13 +26,13 @@ export function FluidOrbDemo() {
           {/* Outer Luminous Glow */}
           <div
             className={cn(
-              'absolute inset-0 rounded-full bg-gradient-to-tr from-[#0056FF] via-[#7B2CBF] to-[#00F5D4] opacity-70 blur-xl transition-all duration-700',
+              'absolute inset-0 rounded-full bg-[#0056FF]/20 blur-xl transition-all duration-700',
               pulse ? 'scale-125 opacity-90' : 'animate-pulse',
             )}
           />
 
           {/* Morphing Inner Sphere */}
-          <div className="relative flex size-24 items-center justify-center rounded-full bg-gradient-to-tr from-[#0056FF] via-[#4361EE] to-[#4CC9F0] shadow-inner">
+          <div className="relative flex size-24 items-center justify-center rounded-full bg-[#0056FF] shadow-inner">
             <div className="flex size-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-md">
               <Sparkles className="animate-spin-slow size-8 text-white drop-shadow-md" />
             </div>
@@ -83,7 +83,7 @@ export function GridRevealDemo() {
             >
               {/* Scanline Beam on Active */}
               {isActive && (
-                <div className="absolute inset-x-0 top-0 h-0.5 animate-pulse bg-gradient-to-r from-transparent via-[#0056FF] to-transparent" />
+                <div className="absolute inset-x-0 top-0 h-0.5 bg-[#0056FF]" />
               )}
               <div className="flex items-center justify-between font-mono text-[10px] text-slate-400">
                 <span>{card.tag}</span>

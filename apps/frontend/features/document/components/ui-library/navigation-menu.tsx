@@ -290,26 +290,25 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
               <NavigationMenuContent value="components">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
                   {/* Left Column: Featured Component Showcase Card */}
-                  <div className="flex flex-col justify-between rounded-xl border border-slate-800 bg-gradient-to-br from-[#111622] to-[#0A0D14] p-4 sm:col-span-5">
+                  <div className="flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 sm:col-span-5">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="size-2 animate-pulse rounded-full bg-amber-400" />
-                        <span className="font-mono text-[10px] font-bold text-amber-400 uppercase">
+                        <span className="size-2 rounded-full bg-[#0056FF]" />
+                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
                           Featured
                         </span>
                       </div>
-                      <h4 className="mt-2 font-sans text-sm font-extrabold text-white">
+                      <h4 className="mt-2 font-sans text-sm font-extrabold text-[#0A1A4A]">
                         Border Beam Card
                       </h4>
-                      <p className="mt-1 font-sans text-[11px] leading-relaxed text-slate-400">
-                        Matte instrument login card with continuous constant-velocity 4-dash amber
-                        ray.
+                      <p className="mt-1 font-sans text-[11px] leading-relaxed text-slate-600">
+                        Matte instrument login card with continuous constant-velocity 4-dash ray.
                       </p>
                     </div>
 
                     <a
                       href="#comp-border-beam"
-                      className="group/cta mt-4 inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#38BDF8] hover:text-white"
+                      className="group/cta mt-4 inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#0056FF] hover:underline"
                     >
                       <span>Explore Beam</span>
                       <ArrowRight className="size-3 transition-transform group-hover/cta:translate-x-1" />
