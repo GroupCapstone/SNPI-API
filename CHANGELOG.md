@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `a301963`
+
+- Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground
+
 ### Version 0.2.11 (31.10.2026) - `2c4d6bc`
 
 - Record real-time changelog for Status Page 404 multi-archetype component
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `be675a4`
 
 - Synchronize recent local commits
-
-### Version 0.2.11 (31.10.2026) - `46d0055`
-
-- Standardize all 75 component descriptions to 12-15 word concise summaries
 
