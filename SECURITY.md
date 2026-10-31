@@ -106,3 +106,13 @@ Prior to publishing any release checkpoint:
 2. Run `npm run typecheck` to assert zero TypeScript errors.
 3. Run `npm run smoke` and `npm run test:api` to verify RBAC enforcement across all 47 domain modules.
 4. Verify zero credentials, test secrets, or private keys are staged in git.
+
+---
+
+## 6. Security Audit & Remediation History
+
+Historical security audit findings, vulnerability resolutions, and patch certifications are maintained under `docs/security/`:
+
+| Date       | Scope              | Advisory / Topic                      | Status             | Audit Report                                                                                                                    |
+| ---------- | ------------------ | ------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-11-01 | Monorepo Lockfiles | GHSA-g3hv-75wg-m249 (`minimatch` DoS) | Resolved (0 Vulns) | [Security Audit & Remediation Report](file:///Users/Apple16/Desktop/SNP-SMS/docs/security/security-audit-remediation-report.md) |
