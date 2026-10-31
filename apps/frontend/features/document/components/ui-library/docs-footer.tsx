@@ -114,6 +114,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
   ];
 
   const learnLinks = [
+    { label: 'Brand & Colors', href: '/document/design-system#brand-identity' },
     { label: 'Architecture Standards', href: '/document/design-system#design-principles' },
     { label: 'Design System Manual', href: '/document/design-system' },
     { label: 'Monorepo Security Policy', href: '/document#security-policies' },

@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "d12d066",
+    "description": "Remove 23 requested components, obsolete demo code, and unused standalone files"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "b8c52f2",
     "description": "Remove category banner cards and display component demo cards directly"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "d1b80a7",
     "description": "Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication"
-  },
-  {
-    "version": "0.2.10",
-    "date": "31.10.2026",
-    "commitHash": "ccec8cf",
-    "description": "Eliminate explicit any in data-table and remove prepare script from shared package"
   }
 ];

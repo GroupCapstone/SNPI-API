@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `d12d066`
+
+- Remove 23 requested components, obsolete demo code, and unused standalone files
+
 ### Version 0.2.11 (31.10.2026) - `b8c52f2`
 
 - Remove category banner cards and display component demo cards directly
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `d1b80a7`
 
 - Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication
-
-### Version 0.2.10 (31.10.2026) - `ccec8cf`
-
-- Eliminate explicit any in data-table and remove prepare script from shared package
 

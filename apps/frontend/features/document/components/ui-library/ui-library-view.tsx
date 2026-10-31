@@ -223,7 +223,7 @@ export function UiLibraryView() {
         ids.push(`comp-${comp.id}`);
       });
     });
-    ids.push('brand-blueprint', 'design-principles', 'touch-targets');
+    ids.push('brand-identity', 'brand-blueprint', 'design-principles', 'touch-targets');
     return ids;
   }, [groupedCategories]);
 
@@ -959,9 +959,9 @@ export function UiLibraryView() {
               })}
             </div>
 
-            {/* SECTION: Brand Colors Blueprint */}
+            {/* SECTION: Brand Identity & Colors */}
             <section
-              id="brand-blueprint"
+              id="brand-identity"
               className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
             >
               <BrandConceptBlueprint />
