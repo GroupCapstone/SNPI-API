@@ -54,10 +54,7 @@ import {
   Monitor,
   Layers,
   FileText,
-  Smartphone,
-  Tablet,
   LayoutGrid,
-  BatteryMedium,
   ChevronDown,
   ChevronRight,
   X,
@@ -66,28 +63,6 @@ import {
 } from '@/components/icons';
 import { useDocsNav } from './docs-nav-context';
 import { cn } from '@/lib/utils';
-
-/**
- * 4-Corner Bracket Fullscreen Icon (Matching Reference media_1793457903442_938d960a.png)
- */
-function FullscreenCornersIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className || 'size-4'}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 9V6a2 2 0 0 1 2-2h3" />
-      <path d="M15 4h3a2 2 0 0 1 2 2v3" />
-      <path d="M4 15v3a2 2 0 0 0 2 2h3" />
-      <path d="M15 20h3a2 2 0 0 0 2-2v-3" />
-    </svg>
-  );
-}
 
 export function UiLibraryView() {
   const { activeTab, setActiveTab } = useDocsNav();
@@ -101,29 +76,6 @@ export function UiLibraryView() {
   // Per-component tab view state: 'preview' | 'prompt'
   const [componentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>({});
   const getCompTab = (id: string): 'preview' | 'prompt' => componentTabs[id] || 'preview';
-
-  // Per-component preview mode: 'desktop' | 'tablet' | 'mobile' (Matching media_1793457954613_79aaf0a5.png)
-  const [demoModes, setDemoModes] = React.useState<Record<string, 'desktop' | 'tablet' | 'mobile'>>(
-    {},
-  );
-  const getDemoMode = (id: string): 'desktop' | 'tablet' | 'mobile' => demoModes[id] || 'desktop';
-  const setDemoMode = (id: string, mode: 'desktop' | 'tablet' | 'mobile') => {
-    setDemoModes((prev) => ({ ...prev, [id]: mode }));
-  };
-
-  // Fullscreen expanded component preview modal state
-  const [fullscreenCompId, setFullscreenCompId] = React.useState<string | null>(null);
-
-  // Close fullscreen on Escape
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setFullscreenCompId(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   // Sidebar collapsible category state (Inspired by Knowledge Base reference)
   const [collapsedCategories, setCollapsedCategories] = React.useState<Record<string, boolean>>({});
@@ -444,8 +396,8 @@ export function UiLibraryView() {
       {/* Main Grid Container */}
       <div className="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 lg:flex-row">
-          {/* COLUMN 1: Left Sticky Sidebar Navigation (Knowledge Base Style - Images 3 & 4) */}
-          <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-64 lg:self-start xl:w-72">
+          {/* COLUMN 1: Left Sticky Sidebar Navigation (Knowledge Base Style - Desktop Only, Hidden on Mobile for Clean Homepage) */}
+          <aside className="hidden lg:sticky lg:top-20 lg:z-30 lg:block lg:w-64 lg:shrink-0 lg:self-start xl:w-72">
             <div
               ref={sidebarContainerRef}
               className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-4 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
@@ -909,20 +861,23 @@ export function UiLibraryView() {
                                   )}
                                 </div>
 
-                                {/* Right Toolbar: Copy, Device Switcher, Fullscreen Button */}
-                                <div className="flex shrink-0 items-center gap-2">
-                                  {/* 1. Direct 1-Click Copy AI Agent Prompt Button */}
+                                {/* Right Toolbar: Copy Button Only */}
+                                <div className="flex shrink-0 items-center">
+                                  {/* 1-Click Copy AI Agent Prompt / Code Button */}
                                   <button
                                     type="button"
                                     onClick={() =>
-                                      handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
+                                      handleCopyPrompt(
+                                        comp.id,
+                                        comp.codeSnippet || generateAiAgentPrompt(comp),
+                                      )
                                     }
                                     title={
                                       copiedPromptId === comp.id
-                                        ? 'Prompt Copied to Clipboard!'
-                                        : 'Copy AI Agent MVP Prompt'
+                                        ? 'Code Copied to Clipboard!'
+                                        : 'Copy Component Code'
                                     }
-                                    aria-label="Copy AI Agent MVP Prompt"
+                                    aria-label="Copy Component Code"
                                     className={cn(
                                       'group/tip relative flex size-8 cursor-pointer items-center justify-center rounded-[8px] border transition-all active:scale-95',
                                       copiedPromptId === comp.id
@@ -936,78 +891,7 @@ export function UiLibraryView() {
                                       <Copy className="size-3.5 stroke-[2]" />
                                     )}
                                     <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2 py-0.5 text-[10px] font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
-                                      Copy Prompt
-                                    </span>
-                                  </button>
-
-                                  {/* 2. Segmented Device Switcher Pill [ Phone | Tablet | PC ] */}
-                                  <div className="flex items-center rounded-[10px] border border-slate-200/90 bg-white p-0.5 shadow-xs">
-                                    {/* Phone Viewport (380px) */}
-                                    <button
-                                      type="button"
-                                      onClick={() => setDemoMode(comp.id, 'mobile')}
-                                      className={cn(
-                                        'group/tip relative flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
-                                        getDemoMode(comp.id) === 'mobile'
-                                          ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
-                                          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
-                                      )}
-                                      aria-label="Phone Viewport (380px)"
-                                    >
-                                      <Smartphone className="size-3.5 stroke-[2]" />
-                                      <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
-                                        Phone Viewport (380px)
-                                      </span>
-                                    </button>
-
-                                    {/* Tablet Viewport (680px) - Exact match to media_1793457954613_79aaf0a5.png */}
-                                    <button
-                                      type="button"
-                                      onClick={() => setDemoMode(comp.id, 'tablet')}
-                                      className={cn(
-                                        'group/tip relative flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
-                                        getDemoMode(comp.id) === 'tablet'
-                                          ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
-                                          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
-                                      )}
-                                      aria-label="Tablet Viewport (680px)"
-                                    >
-                                      <Tablet className="size-3.5 stroke-[2]" />
-                                      <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
-                                        Tablet Viewport (680px)
-                                      </span>
-                                    </button>
-
-                                    {/* Desktop Viewport (100%) */}
-                                    <button
-                                      type="button"
-                                      onClick={() => setDemoMode(comp.id, 'desktop')}
-                                      className={cn(
-                                        'group/tip relative flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
-                                        getDemoMode(comp.id) === 'desktop'
-                                          ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
-                                          : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800',
-                                      )}
-                                      aria-label="Desktop Viewport (100%)"
-                                    >
-                                      <Monitor className="size-3.5 stroke-[2]" />
-                                      <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
-                                        Desktop Viewport (100%)
-                                      </span>
-                                    </button>
-                                  </div>
-
-                                  {/* 3. Fullscreen / Expand Button in Blue Rounded Square (media_1793457903442_938d960a.png) */}
-                                  <button
-                                    type="button"
-                                    onClick={() => setFullscreenCompId(comp.id)}
-                                    className="group/tip relative flex size-8 cursor-pointer items-center justify-center rounded-[10px] bg-[#EFF5FF] text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
-                                    title="Fullscreen Viewport"
-                                    aria-label="Fullscreen Viewport"
-                                  >
-                                    <FullscreenCornersIcon className="size-4" />
-                                    <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
-                                      Fullscreen Viewport
+                                      Copy Code
                                     </span>
                                   </button>
                                 </div>
@@ -1017,62 +901,70 @@ export function UiLibraryView() {
                               <div className="mt-4 border-b border-slate-100" />
                             </div>
 
-                            {/* Clean Single-Box Stage Canvas with Responsive Viewports */}
+                            {/* Clean Stage Canvas (Default Full Size) & NPX Install Bar Below */}
                             {currentTab === 'preview' && (
-                              <div className="relative flex min-h-[460px] w-full items-center justify-center overflow-hidden rounded-2xl bg-[#FAFAFA] p-4 sm:p-8">
-                                {/* Subtle Background Grid Pattern */}
-                                <div
-                                  className="pointer-events-none absolute inset-0 opacity-[0.35]"
-                                  style={{
-                                    backgroundImage:
-                                      'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FAFAFA 0.75px)',
-                                    backgroundSize: '24px 24px',
-                                    backgroundPosition: '0 0, 12px 12px',
-                                  }}
-                                />
+                              <div className="space-y-3">
+                                {/* Default Full Size Stage */}
+                                <div className="relative flex min-h-[420px] w-full items-center justify-center overflow-hidden rounded-2xl bg-[#FAFAFA] p-4 sm:p-8">
+                                  {/* Subtle Background Grid Pattern */}
+                                  <div
+                                    className="pointer-events-none absolute inset-0 opacity-[0.35]"
+                                    style={{
+                                      backgroundImage:
+                                        'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FAFAFA 0.75px)',
+                                      backgroundSize: '24px 24px',
+                                      backgroundPosition: '0 0, 12px 12px',
+                                    }}
+                                  />
 
-                                {/* Phone Viewport: Realistic iPhone Mockup */}
-                                {getDemoMode(comp.id) === 'mobile' && (
-                                  <div className="relative z-10 w-full max-w-[360px] overflow-hidden rounded-[48px] border-[7px] border-slate-900 bg-white shadow-2xl transition-all sm:max-w-[380px]">
-                                    {/* Status Bar */}
-                                    <div className="flex h-11 items-center justify-between bg-white px-6 pt-1 text-slate-900">
-                                      <span className="font-mono text-xs font-semibold">9:41</span>
-                                      <div className="h-4.5 w-24 rounded-full bg-slate-950" />
-                                      <BatteryMedium className="size-4 stroke-[2] text-slate-900" />
-                                    </div>
-
-                                    {/* Scrollable Inside Screen */}
-                                    <div className="no-scrollbar flex max-h-[520px] min-h-[460px] flex-col items-center justify-center overflow-y-auto px-4 py-6">
-                                      {renderFeedComponentDemo(comp.id, stateBundle)}
-                                    </div>
-
-                                    {/* Home Indicator */}
-                                    <div className="flex h-6 items-center justify-center bg-white pb-1">
-                                      <div className="h-1 w-32 rounded-full bg-slate-900/80" />
-                                    </div>
+                                  {/* Ambient Horizon Arc Glow */}
+                                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center opacity-70">
+                                    <div className="h-20 w-full max-w-2xl rounded-t-[100%] border-t-2 border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
                                   </div>
-                                )}
 
-                                {/* Tablet Viewport: 680px Width Frame */}
-                                {getDemoMode(comp.id) === 'tablet' && (
-                                  <div className="relative z-10 flex w-full max-w-[680px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm transition-all">
+                                  {/* Full Size Component Render */}
+                                  <div className="relative z-10 flex w-full max-w-4xl items-center justify-center py-6">
                                     {renderFeedComponentDemo(comp.id, stateBundle)}
                                   </div>
-                                )}
+                                </div>
 
-                                {/* Desktop Viewport: 100% Full Width Stage with Ambient Horizon Curve */}
-                                {getDemoMode(comp.id) === 'desktop' && (
-                                  <div className="relative z-10 flex min-h-[400px] w-full max-w-4xl flex-col items-center justify-center">
-                                    {/* Ambient Horizon Arc Glow (Image 8 style) */}
-                                    <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center opacity-70">
-                                      <div className="h-20 w-full max-w-2xl rounded-t-[100%] border-t-2 border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
-                                    </div>
-
-                                    <div className="relative z-10 flex w-full items-center justify-center py-6">
-                                      {renderFeedComponentDemo(comp.id, stateBundle)}
-                                    </div>
+                                {/* Component Specific NPX Command Bar Below Demo */}
+                                <div className="flex flex-col gap-2 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-2.5">
+                                  <div className="flex min-w-0 items-center gap-2">
+                                    <Terminal className="size-4 shrink-0 text-[#0056FF]" />
+                                    <span className="shrink-0 font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
+                                      Install Command:
+                                    </span>
+                                    <code className="truncate rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/60 px-2.5 py-1 font-mono text-xs font-bold text-[#0056FF]">
+                                      npx snp-ui@latest add {comp.id}
+                                    </code>
                                   </div>
-                                )}
+
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      handleCopyInstall(comp.id, `npx snp-ui@latest add ${comp.id}`)
+                                    }
+                                    className={cn(
+                                      'flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1 font-mono text-xs font-bold transition-all active:scale-95',
+                                      copiedInstallId === comp.id
+                                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                                        : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                                    )}
+                                  >
+                                    {copiedInstallId === comp.id ? (
+                                      <>
+                                        <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
+                                        <span>Copied!</span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Copy className="size-3.5 stroke-[2]" />
+                                        <span>Copy Command</span>
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
                               </div>
                             )}
 
@@ -1283,122 +1175,6 @@ export function UiLibraryView() {
           </main>
         </div>
       </div>
-
-      {/* Fullscreen Expanded Component Preview Modal */}
-      {fullscreenCompId && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-white">
-          {/* Fullscreen Header */}
-          <div className="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 px-6 sm:px-10">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-black text-[#0056FF]">FULLSCREEN VIEW</span>
-              <h3 className="font-sans text-base font-black text-slate-950 sm:text-lg">
-                {COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === fullscreenCompId)?.name}
-              </h3>
-            </div>
-
-            <div className="flex items-center gap-3">
-              {/* Viewport switch in Fullscreen */}
-              <div className="flex items-center rounded-[10px] border border-slate-200/90 bg-white p-0.5 shadow-xs">
-                <button
-                  type="button"
-                  onClick={() => setDemoMode(fullscreenCompId, 'mobile')}
-                  className={cn(
-                    'flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
-                    getDemoMode(fullscreenCompId) === 'mobile'
-                      ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
-                      : 'text-slate-500 hover:bg-slate-50',
-                  )}
-                  title="Phone Viewport (380px)"
-                >
-                  <Smartphone className="size-3.5 stroke-[2]" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDemoMode(fullscreenCompId, 'tablet')}
-                  className={cn(
-                    'flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
-                    getDemoMode(fullscreenCompId) === 'tablet'
-                      ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
-                      : 'text-slate-500 hover:bg-slate-50',
-                  )}
-                  title="Tablet Viewport (680px)"
-                >
-                  <Tablet className="size-3.5 stroke-[2]" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDemoMode(fullscreenCompId, 'desktop')}
-                  className={cn(
-                    'flex size-7 cursor-pointer items-center justify-center rounded-[7px] transition-all',
-                    getDemoMode(fullscreenCompId) === 'desktop'
-                      ? 'bg-slate-100 font-bold text-slate-950 shadow-xs'
-                      : 'text-slate-500 hover:bg-slate-50',
-                  )}
-                  title="Desktop Viewport (100%)"
-                >
-                  <Monitor className="size-3.5 stroke-[2]" />
-                </button>
-              </div>
-
-              {/* Close Fullscreen Button */}
-              <button
-                type="button"
-                onClick={() => setFullscreenCompId(null)}
-                className="flex size-9 cursor-pointer items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950"
-                title="Exit Fullscreen (Esc)"
-              >
-                <X className="size-4 stroke-[2]" />
-              </button>
-            </div>
-          </div>
-
-          {/* Fullscreen Body */}
-          <div className="relative flex flex-1 items-center justify-center overflow-auto bg-[#FAFAFA] p-6 sm:p-12">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.35]"
-              style={{
-                backgroundImage:
-                  'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FAFAFA 0.75px)',
-                backgroundSize: '24px 24px',
-                backgroundPosition: '0 0, 12px 12px',
-              }}
-            />
-
-            {getDemoMode(fullscreenCompId) === 'mobile' && (
-              <div className="relative z-10 w-full max-w-[380px] overflow-hidden rounded-[48px] border-[7px] border-slate-900 bg-white shadow-2xl transition-all">
-                <div className="flex h-11 items-center justify-between bg-white px-6 pt-1 text-slate-900">
-                  <span className="font-mono text-xs font-semibold">9:41</span>
-                  <div className="h-4.5 w-24 rounded-full bg-slate-950" />
-                  <BatteryMedium className="size-4 stroke-[2] text-slate-900" />
-                </div>
-                <div className="no-scrollbar flex max-h-[600px] min-h-[480px] flex-col items-center justify-center overflow-y-auto px-4 py-6">
-                  {renderFeedComponentDemo(fullscreenCompId, stateBundle)}
-                </div>
-                <div className="flex h-6 items-center justify-center bg-white pb-1">
-                  <div className="h-1 w-32 rounded-full bg-slate-900/80" />
-                </div>
-              </div>
-            )}
-
-            {getDemoMode(fullscreenCompId) === 'tablet' && (
-              <div className="relative z-10 flex w-full max-w-[680px] items-center justify-center rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm transition-all">
-                {renderFeedComponentDemo(fullscreenCompId, stateBundle)}
-              </div>
-            )}
-
-            {getDemoMode(fullscreenCompId) === 'desktop' && (
-              <div className="relative z-10 flex w-full max-w-5xl flex-col items-center justify-center">
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center opacity-70">
-                  <div className="h-24 w-full max-w-3xl rounded-t-[100%] border-t-2 border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
-                </div>
-                <div className="relative z-10 flex w-full items-center justify-center py-8">
-                  {renderFeedComponentDemo(fullscreenCompId, stateBundle)}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* Global Interactive Overlays */}
       <LibrarySnackbar

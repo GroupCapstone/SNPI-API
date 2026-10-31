@@ -4,10 +4,22 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BrandMark } from '@/components/shared/brand-mark';
-import { FileText, Layers, Code, Menu, X, Search, Moon, ChevronRight } from '@/components/icons';
+import {
+  FileText,
+  Layers,
+  Code,
+  Menu,
+  X,
+  Search,
+  Moon,
+  ChevronRight,
+  ChevronDown,
+  Folder,
+  Plus,
+} from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { useDocsNav } from './docs-nav-context';
-import { COMPONENT_LIBRARY_REGISTRY } from './component-registry';
+import { COMPONENT_CATEGORIES, COMPONENT_LIBRARY_REGISTRY } from './component-registry';
 import { cn } from '@/lib/utils';
 
 export interface DocsStickyHeaderProps {
@@ -62,6 +74,15 @@ export function DocsStickyHeader({
     };
   }, [mobileMenuOpen]);
 
+  const [collapsedFolders, setCollapsedFolders] = React.useState<Record<string, boolean>>({});
+
+  const toggleFolder = (category: string) => {
+    setCollapsedFolders((prev) => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
+  };
+
   // Jump to specific component or section
   const handleMobileNavigate = (tab: 'library' | 'openapi' | 'release', sectionId?: string) => {
     setActiveTab(tab, true);
@@ -76,25 +97,24 @@ export function DocsStickyHeader({
     }
   };
 
-  // Grouped library components for mobile sidebar navigation
+  // Grouped library components for mobile sidebar navigation (Knowledge Base tree)
   const groupedComponents = React.useMemo(() => {
-    const map = new Map<string, typeof COMPONENT_LIBRARY_REGISTRY>();
-    COMPONENT_LIBRARY_REGISTRY.forEach((item) => {
-      if (
-        mobileSearch &&
-        !item.name.toLowerCase().includes(mobileSearch.toLowerCase()) &&
-        !item.category.toLowerCase().includes(mobileSearch.toLowerCase())
-      ) {
-        return;
-      }
-      const list = map.get(item.category) || [];
-      list.push(item);
-      map.set(item.category, list);
-    });
-    return Array.from(map.entries()).map(([category, items]) => ({
-      category,
-      items,
-    }));
+    const q = mobileSearch.toLowerCase().trim();
+    return COMPONENT_CATEGORIES.map((category) => {
+      const items = COMPONENT_LIBRARY_REGISTRY.filter((item) => {
+        if (item.category !== category) return false;
+        if (!q) return true;
+        return (
+          item.name.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q) ||
+          item.id.toLowerCase().includes(q)
+        );
+      });
+      return {
+        category,
+        items,
+      };
+    }).filter((group) => group.items.length > 0);
   }, [mobileSearch]);
 
   // 3 Menus merged together: UI LIBRARY, OPEN API, and CHANGELOG
@@ -251,39 +271,107 @@ export function DocsStickyHeader({
                   type="text"
                   value={mobileSearch}
                   onChange={(e) => setMobileSearch(e.target.value)}
-                  placeholder="Filter menu & specific links..."
-                  className="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pr-3 pl-8 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-hidden"
+                  placeholder="Search documents"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2 pr-3 pl-8.5 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-hidden"
                 />
               </div>
 
-              {/* Sidebar Specific Links Scrollable Viewport */}
-              <div className="max-h-[320px] overflow-y-auto pr-1">
+              {/* Sidebar Specific Links Scrollable Viewport (Knowledge Base Style) */}
+              <div className="no-scrollbar max-h-[min(65vh,480px)] overflow-y-auto pr-1">
                 {currentTab === 'library' ? (
-                  /* UI Library Specific Demos Navigation */
-                  <div className="space-y-3">
-                    <span className="block font-mono text-[10px] font-bold text-slate-400 uppercase">
-                      Jump to Component Demo
-                    </span>
-                    {groupedComponents.map((grp) => (
-                      <div key={grp.category} className="space-y-1">
-                        <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                          {grp.category} ({grp.items.length})
+                  /* UI Library Specific Demos Navigation (Knowledge Base Folder Tree) */
+                  <div className="space-y-3 font-sans">
+                    {/* Knowledge Base Header Bar */}
+                    <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                      <div className="flex items-center gap-1.5">
+                        <Folder className="size-4 text-[#0056FF]" />
+                        <span className="font-sans text-xs font-bold text-slate-900">
+                          Knowledge base
                         </span>
-                        <div className="space-y-0.5 border-l border-slate-200 pl-2">
-                          {grp.items.map((comp) => (
-                            <button
-                              key={comp.id}
-                              type="button"
-                              onClick={() => handleMobileNavigate('library', `comp-${comp.id}`)}
-                              className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left font-sans text-xs text-slate-700 hover:bg-[#EFF5FF] hover:text-[#0056FF]"
-                            >
-                              <span className="truncate">{comp.name}</span>
-                              <ChevronRight className="size-3 text-slate-400" />
-                            </button>
-                          ))}
-                        </div>
                       </div>
-                    ))}
+                      <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
+                        {COMPONENT_LIBRARY_REGISTRY.length} Documents
+                      </span>
+                    </div>
+
+                    {/* Collapsible Folder Categories Tree */}
+                    <div className="space-y-1">
+                      {groupedComponents.length === 0 ? (
+                        <div className="py-4 text-center font-sans text-xs text-slate-400">
+                          No matching documents found
+                        </div>
+                      ) : (
+                        groupedComponents.map((grp) => {
+                          const isCollapsed = Boolean(collapsedFolders[grp.category]);
+                          return (
+                            <div key={grp.category} className="space-y-0.5">
+                              {/* Folder Header */}
+                              <button
+                                type="button"
+                                onClick={() => toggleFolder(grp.category)}
+                                className="group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-semibold text-slate-800 transition-colors hover:bg-slate-50 hover:text-[#0056FF]"
+                              >
+                                <div className="flex min-w-0 items-center gap-2">
+                                  {isCollapsed ? (
+                                    <ChevronRight className="size-3.5 shrink-0 text-slate-400" />
+                                  ) : (
+                                    <ChevronDown className="size-3.5 shrink-0 text-slate-400" />
+                                  )}
+                                  <Folder className="size-3.5 shrink-0 text-slate-500 group-hover:text-[#0056FF]" />
+                                  <span className="truncate">{grp.category}</span>
+                                </div>
+                                <span className="font-mono text-[10px] font-normal text-slate-400">
+                                  {grp.items.length}
+                                </span>
+                              </button>
+
+                              {/* Folder File Items */}
+                              {!isCollapsed && (
+                                <div className="ml-3 space-y-0.5 border-l border-slate-100 pl-4">
+                                  {grp.items.map((comp) => (
+                                    <button
+                                      key={comp.id}
+                                      type="button"
+                                      onClick={() =>
+                                        handleMobileNavigate('library', `comp-${comp.id}`)
+                                      }
+                                      className="group flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-left font-sans text-xs text-slate-600 transition-colors hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+                                    >
+                                      <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-[#0056FF]" />
+                                      <span className="truncate">{comp.name}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+
+                    {/* Documentation Sections */}
+                    <div className="mt-3 border-t border-slate-100 pt-2.5">
+                      <span className="mb-1.5 block font-mono text-[10px] font-bold text-slate-400 uppercase">
+                        Documentation
+                      </span>
+                      <div className="space-y-0.5">
+                        {[
+                          { id: 'brand-blueprint', label: 'Brand Blueprint' },
+                          { id: 'design-principles', label: 'Design Standards' },
+                          { id: 'touch-targets', label: 'Touch Targets' },
+                        ].map((doc) => (
+                          <button
+                            key={doc.id}
+                            type="button"
+                            onClick={() => handleMobileNavigate('library', doc.id)}
+                            className="group flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs text-slate-600 transition-colors hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+                          >
+                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-[#0056FF]" />
+                            <span className="truncate">{doc.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   /* Open API Specific Sections Navigation */
