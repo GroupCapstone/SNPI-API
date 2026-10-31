@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "0110d62",
+    "description": "Document display-only open-api rules and format open-api-view"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
+    "commitHash": "c6ce7eb",
+    "description": "Remove 10 deprecated components from catalog and registry"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "49f052c",
     "description": "Redesign into minimal one-way subscription-gated guide"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "9aecb3d",
     "description": "Redesign Rail TOC paper plane flight navigator with 3D faceted jet, de Casteljau contrail, and telemetry deck"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "afbd722",
-    "description": "Record removal of header status badge"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "fb3d251",
-    "description": "Remove release and api status badge container from sticky header"
   }
 ];

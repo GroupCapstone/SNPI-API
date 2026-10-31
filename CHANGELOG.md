@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `0110d62`
+
+- Document display-only open-api rules and format open-api-view
+
+### Version 0.2.11 (31.10.2026) - `c6ce7eb`
+
+- Remove 10 deprecated components from catalog and registry
+
 ### Version 0.2.11 (31.10.2026) - `49f052c`
 
 - Redesign into minimal one-way subscription-gated guide
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `9aecb3d`
 
 - Redesign Rail TOC paper plane flight navigator with 3D faceted jet, de Casteljau contrail, and telemetry deck
-
-### Version 0.2.11 (31.10.2026) - `afbd722`
-
-- Record removal of header status badge
-
-### Version 0.2.11 (31.10.2026) - `fb3d251`
-
-- Remove release and api status badge container from sticky header
 
