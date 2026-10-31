@@ -88,42 +88,22 @@ export function LibrarySnackbar({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className={cn(
-        'fixed bottom-6 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-slate-800 bg-[#0F172A] text-white shadow-2xl backdrop-blur-xl transition-all duration-200 select-none',
+        'fixed bottom-6 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-[#09172B] shadow-2xl backdrop-blur-xl transition-all duration-200 select-none',
         className,
       )}
     >
       <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5">
-        {/* Status Indicator Icon Pill */}
+        {/* Status Indicator Icon (Zero Background Color Behind Icon) */}
         <div className="flex shrink-0 items-center">
-          {variant === 'success' && (
-            <span className="flex size-6 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
-              <Check className="size-3.5 stroke-[2.5]" />
-            </span>
-          )}
-          {variant === 'info' && (
-            <span className="flex size-6 items-center justify-center rounded-full bg-sky-500/20 text-sky-400">
-              <Info className="size-3.5 stroke-[2.5]" />
-            </span>
-          )}
-          {variant === 'warning' && (
-            <span className="flex size-6 items-center justify-center rounded-full bg-amber-500/20 text-amber-400">
-              <Alert className="size-3.5 stroke-[2.5]" />
-            </span>
-          )}
-          {variant === 'error' && (
-            <span className="flex size-6 items-center justify-center rounded-full bg-rose-500/20 text-rose-400">
-              <Alert className="size-3.5 stroke-[2.5]" />
-            </span>
-          )}
-          {variant === 'default' && (
-            <span className="flex size-6 items-center justify-center rounded-lg bg-[#0056FF]/20 text-[#0056FF]">
-              <Info className="size-3.5 stroke-[2.5]" />
-            </span>
-          )}
+          {variant === 'success' && <Check className="size-4 stroke-[2.5] text-emerald-600" />}
+          {variant === 'info' && <Info className="size-4 stroke-[2.5] text-sky-600" />}
+          {variant === 'warning' && <Alert className="size-4 stroke-[2.5] text-amber-600" />}
+          {variant === 'error' && <Alert className="size-4 stroke-[2.5] text-rose-600" />}
+          {variant === 'default' && <Info className="size-4 stroke-[2.5] text-[#0056FF]" />}
         </div>
 
         {/* Primary Message */}
-        <p className="flex-1 font-sans text-xs leading-relaxed font-semibold text-slate-100 sm:text-sm">
+        <p className="flex-1 font-sans text-xs leading-relaxed font-semibold text-[#09172B] sm:text-sm">
           {message}
         </p>
 
@@ -138,14 +118,14 @@ export function LibrarySnackbar({
             className={cn(
               'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg px-3 font-mono text-xs font-bold tracking-wider uppercase transition-colors focus-visible:ring-2 focus-visible:outline-none',
               variant === 'success' &&
-                'text-emerald-400 hover:bg-emerald-500/10 focus-visible:ring-emerald-400',
-              variant === 'info' && 'text-sky-400 hover:bg-sky-500/10 focus-visible:ring-sky-400',
+                'text-emerald-700 hover:bg-emerald-50 focus-visible:ring-emerald-500',
+              variant === 'info' && 'text-sky-700 hover:bg-sky-50 focus-visible:ring-sky-500',
               variant === 'warning' &&
-                'text-amber-400 hover:bg-amber-500/10 focus-visible:ring-amber-400',
+                'text-amber-700 hover:bg-amber-50 focus-visible:ring-amber-500',
               variant === 'error' &&
-                'text-rose-400 hover:bg-rose-500/10 focus-visible:ring-rose-400',
+                'text-rose-700 hover:bg-rose-50 focus-visible:ring-rose-500',
               variant === 'default' &&
-                'text-[#38BDF8] hover:bg-[#38BDF8]/10 focus-visible:ring-[#38BDF8]',
+                'text-[#0056FF] hover:bg-[#E3E7FC] focus-visible:ring-[#0056FF]',
             )}
           >
             {actionLabel}
@@ -157,7 +137,7 @@ export function LibrarySnackbar({
           type="button"
           onClick={onClose}
           aria-label="Dismiss message"
-          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800 hover:text-white focus-visible:outline-none"
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none"
         >
           <X className="size-4" />
         </button>
@@ -165,10 +145,10 @@ export function LibrarySnackbar({
 
       {/* Auto-Dismiss Progress Indicator Strip */}
       {showProgress && duration > 0 && (
-        <div className="h-1 w-full bg-slate-800/80">
+        <div className="h-1 w-full bg-slate-100">
           <div
             className={cn(
-              'h-full transition-all duration-100 ease-linear',
+              'h-full transition-all duration-75 ease-linear',
               variant === 'success' && 'bg-emerald-500',
               variant === 'info' && 'bg-sky-500',
               variant === 'warning' && 'bg-amber-500',
@@ -220,40 +200,20 @@ export function NativeSnackbarInline({
 
   return (
     <div className="w-full max-w-lg space-y-3">
-      {/* Native Snackbar Outer Frame */}
-      <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0F172A] text-white shadow-2xl">
+      {/* Native Snackbar Outer Frame (Strict Clean Light Day Mode) */}
+      <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white text-[#09172B] shadow-xl">
         <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5">
-          {/* Status Icon */}
+          {/* Status Icon (No Background Color Behind Icon) */}
           <div className="flex shrink-0 items-center">
-            {variant === 'success' && (
-              <span className="flex size-6 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
-                <Check className="size-3.5 stroke-[2.5]" />
-              </span>
-            )}
-            {variant === 'info' && (
-              <span className="flex size-6 items-center justify-center rounded-full bg-sky-500/20 text-sky-400">
-                <Info className="size-3.5 stroke-[2.5]" />
-              </span>
-            )}
-            {variant === 'warning' && (
-              <span className="flex size-6 items-center justify-center rounded-full bg-amber-500/20 text-amber-400">
-                <Alert className="size-3.5 stroke-[2.5]" />
-              </span>
-            )}
-            {variant === 'error' && (
-              <span className="flex size-6 items-center justify-center rounded-full bg-rose-500/20 text-rose-400">
-                <Alert className="size-3.5 stroke-[2.5]" />
-              </span>
-            )}
-            {variant === 'default' && (
-              <span className="flex size-6 items-center justify-center rounded-lg bg-[#0056FF]/20 text-[#0056FF]">
-                <Info className="size-3.5 stroke-[2.5]" />
-              </span>
-            )}
+            {variant === 'success' && <Check className="size-4 stroke-[2.5] text-emerald-600" />}
+            {variant === 'info' && <Info className="size-4 stroke-[2.5] text-sky-600" />}
+            {variant === 'warning' && <Alert className="size-4 stroke-[2.5] text-amber-600" />}
+            {variant === 'error' && <Alert className="size-4 stroke-[2.5] text-rose-600" />}
+            {variant === 'default' && <Info className="size-4 stroke-[2.5] text-[#0056FF]" />}
           </div>
 
           {/* Primary Text */}
-          <p className="flex-1 font-sans text-xs leading-relaxed font-semibold text-slate-100 sm:text-sm">
+          <p className="flex-1 font-sans text-xs leading-relaxed font-semibold text-[#09172B] sm:text-sm">
             {message}
           </p>
 
@@ -266,11 +226,11 @@ export function NativeSnackbarInline({
               }}
               className={cn(
                 'flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg px-3 font-mono text-xs font-bold tracking-wider uppercase transition-colors',
-                variant === 'success' && 'text-emerald-400 hover:bg-emerald-500/10',
-                variant === 'info' && 'text-sky-400 hover:bg-sky-500/10',
-                variant === 'warning' && 'text-amber-400 hover:bg-amber-500/10',
-                variant === 'error' && 'text-rose-400 hover:bg-rose-500/10',
-                variant === 'default' && 'text-[#38BDF8] hover:bg-[#38BDF8]/10',
+                variant === 'success' && 'text-emerald-700 hover:bg-emerald-50',
+                variant === 'info' && 'text-sky-700 hover:bg-sky-50',
+                variant === 'warning' && 'text-amber-700 hover:bg-amber-50',
+                variant === 'error' && 'text-rose-700 hover:bg-rose-50',
+                variant === 'default' && 'text-[#0056FF] hover:bg-[#E3E7FC]',
               )}
             >
               {actionLabel}
@@ -282,14 +242,14 @@ export function NativeSnackbarInline({
             type="button"
             onClick={onClose}
             aria-label="Dismiss message"
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white"
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-900"
           >
             <X className="size-4" />
           </button>
         </div>
 
         {/* Countdown Bar */}
-        <div className="h-1 w-full bg-slate-800">
+        <div className="h-1 w-full bg-slate-100">
           <div
             className={cn(
               'h-full transition-all duration-1000 ease-linear',

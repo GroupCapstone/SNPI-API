@@ -141,11 +141,9 @@ export function ColorContrastChecker({
       {/* Header & Overall Metric */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5 dark:border-slate-800">
         <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="flex size-6 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400">
-              <Eye className="size-3.5" />
-            </span>
-            <h3 className="font-sans text-base font-bold text-slate-900 dark:text-white">
+          <div className="flex items-center gap-2.5">
+            <Eye className="size-5 text-[#0056FF]" />
+            <h3 className="font-sans text-base font-bold text-slate-900">
               WCAG 2.1 Contrast Ratio Inspector
             </h3>
           </div>

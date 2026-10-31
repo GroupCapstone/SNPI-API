@@ -293,33 +293,33 @@ export function BorderBeamLoginCard({
   return (
     <div
       className={cn(
-        'group relative w-full max-w-md overflow-hidden rounded-3xl border border-slate-800/90 bg-[#0B0F17] p-6 text-white shadow-2xl transition-all duration-300',
-        'hover:border-slate-700/80 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7)]',
+        'group relative w-full max-w-md overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 text-[#09172B] shadow-xl transition-all duration-300',
+        'hover:border-slate-300 hover:shadow-2xl',
         className,
       )}
     >
       {/* 4-Dash Constant Speed Border Beam */}
       <BorderBeamSvg color={color} duration={duration} rx={24} ry={24} />
 
-      {/* Background Instrument Telemetry Grid (Subtle Matrix) */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#1E293B_1px,transparent_1px)] [background-size:16px_16px] opacity-25" />
+      {/* Background Instrument Telemetry Grid (Subtle Light Matrix) */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#E2E8F0_1px,transparent_1px)] [background-size:16px_16px] opacity-40" />
 
       {/* Header Telemetry Bar */}
-      <div className="relative z-10 mb-5 flex items-center justify-between border-b border-slate-800/80 pb-4">
+      <div className="relative z-10 mb-5 flex items-center justify-between border-b border-slate-100 pb-4">
         {/* Institutional Node Badge */}
         <div className="flex items-center gap-2">
           <span className="relative flex size-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
             <span className="relative inline-flex size-2 rounded-full bg-amber-500" />
           </span>
-          <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+          <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
             SNPI-GATEWAY // NODE-01
           </span>
         </div>
 
         {/* Tabular Millisecond Clock */}
-        <div className="flex items-center gap-1.5 font-mono text-[10px] font-medium tracking-tight text-slate-400 tabular-nums">
-          <Activity className="size-3 text-amber-500/80" />
+        <div className="flex items-center gap-1.5 font-mono text-[10px] font-medium tracking-tight text-slate-500 tabular-nums">
+          <Activity className="size-3 text-amber-600" />
           <span>{timeString}</span>
         </div>
       </div>
@@ -327,28 +327,28 @@ export function BorderBeamLoginCard({
       {/* Brand Identity & Instrument Title */}
       <div className="relative z-10 mb-6">
         <div className="flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#0056FF]/30 bg-[#0056FF]/10 px-3 py-1 text-[#38BDF8]">
-            <Shield className="size-3.5 stroke-[2.5]" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1 text-[#0056FF]">
+            <Shield className="size-3.5 stroke-[2.5] text-[#0056FF]" />
             <span className="font-mono text-[11px] font-bold tracking-wider uppercase">
               Zero Trust Auth
             </span>
           </div>
 
-          <span className="font-mono text-[10px] font-semibold tracking-widest text-slate-500 uppercase">
+          <span className="font-mono text-[10px] font-semibold tracking-widest text-slate-400 uppercase">
             TLS 1.3 ARMED
           </span>
         </div>
 
-        <h3 className="mt-3 font-sans text-xl font-extrabold tracking-tight text-white">
+        <h3 className="mt-3 font-sans text-xl font-extrabold tracking-tight text-[#09172B]">
           Access Console
         </h3>
-        <p className="mt-1 font-sans text-xs text-slate-400">
+        <p className="mt-1 font-sans text-xs text-slate-500">
           Authenticate operator credentials to enter the SNPI-SMS cluster.
         </p>
       </div>
 
       {/* Role Segmented Controller */}
-      <div className="relative z-10 mb-5 grid grid-cols-3 gap-1 rounded-xl border border-slate-800 bg-[#070A0F] p-1">
+      <div className="relative z-10 mb-5 grid grid-cols-3 gap-1 rounded-xl border border-slate-200 bg-slate-100 p-1">
         {(['student', 'faculty', 'root'] as const).map((r) => (
           <button
             key={r}
@@ -361,7 +361,9 @@ export function BorderBeamLoginCard({
             }}
             className={cn(
               'rounded-lg py-1.5 font-mono text-[11px] font-bold tracking-wider uppercase transition-all duration-150',
-              role === r ? 'bg-[#0056FF] text-white shadow-sm' : 'text-slate-400 hover:text-white',
+              role === r
+                ? 'bg-white text-[#09172B] shadow-xs'
+                : 'text-slate-500 hover:text-slate-900',
             )}
           >
             {r}
@@ -373,16 +375,16 @@ export function BorderBeamLoginCard({
       <form onSubmit={handleSubmit} className="relative z-10 space-y-4">
         {/* Institutional Identifier Field */}
         <div className="space-y-1.5">
-          <label className="flex items-center justify-between font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+          <label className="flex items-center justify-between font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
             <span>Operator Identity</span>
-            <span className="text-slate-600">ID / Matricule</span>
+            <span className="text-slate-400">ID / Matricule</span>
           </label>
           <div className="relative">
             <input
               type="text"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              className="w-full rounded-xl border border-slate-800 bg-[#070A0F] px-3.5 py-2.5 font-mono text-xs text-slate-100 placeholder:text-slate-600 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 font-mono text-xs text-[#09172B] placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
               placeholder="e.g. STU-2026-0891"
               required
             />
@@ -391,23 +393,23 @@ export function BorderBeamLoginCard({
 
         {/* Security Access Passkey Field */}
         <div className="space-y-1.5">
-          <label className="flex items-center justify-between font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+          <label className="flex items-center justify-between font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
             <span>Security Passkey</span>
-            <span className="text-slate-600">Encrypted</span>
+            <span className="text-slate-400">Encrypted</span>
           </label>
           <div className="relative">
             <input
               type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-slate-800 bg-[#070A0F] px-3.5 py-2.5 pr-10 font-mono text-xs text-slate-100 placeholder:text-slate-600 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
+              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 pr-10 font-mono text-xs text-[#09172B] placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:ring-1 focus:ring-[#0056FF] focus:outline-none"
               placeholder="Enter secure passkey"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+              className="absolute top-1/2 right-3 -translate-y-1/2 text-slate-400 hover:text-slate-700"
             >
               {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
             </button>
@@ -421,12 +423,12 @@ export function BorderBeamLoginCard({
               type="checkbox"
               checked={rememberSession}
               onChange={(e) => setRememberSession(e.target.checked)}
-              className="size-3.5 rounded border-slate-800 bg-[#070A0F] text-[#0056FF] focus:ring-0"
+              className="size-3.5 rounded border-slate-300 bg-white text-[#0056FF] focus:ring-0"
             />
-            <span className="font-mono text-[11px] text-slate-400">Preserve Session</span>
+            <span className="font-mono text-[11px] text-slate-500">Preserve Session</span>
           </label>
 
-          <button type="button" className="font-mono text-[11px] text-[#38BDF8] hover:underline">
+          <button type="button" className="font-mono text-[11px] text-[#0056FF] hover:underline">
             Rotate Key
           </button>
         </div>
@@ -490,19 +492,19 @@ export function BorderBeamPricingCard({
   return (
     <div
       className={cn(
-        'group relative w-full max-w-md overflow-hidden rounded-3xl border border-slate-800/90 bg-[#0B0F17] p-6 text-white shadow-2xl transition-all duration-300',
-        'hover:border-slate-700/80 hover:shadow-[0_20px_50px_rgba(0,0,0,0.7)]',
+        'group relative w-full max-w-md overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 text-[#09172B] shadow-xl transition-all duration-300',
+        'hover:border-slate-300 hover:shadow-2xl',
         className,
       )}
     >
       <BorderBeamSvg color={color} duration={duration} rx={24} ry={24} />
 
-      {/* Background Instrument Telemetry Grid */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#1E293B_1px,transparent_1px)] [background-size:16px_16px] opacity-25" />
+      {/* Background Instrument Telemetry Grid (Light Matrix) */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#E2E8F0_1px,transparent_1px)] [background-size:16px_16px] opacity-40" />
 
       {/* Header Telemetry */}
-      <div className="relative z-10 mb-4 flex items-center justify-between border-b border-slate-800/80 pb-3">
-        <span className="font-mono text-[10px] font-bold tracking-wider text-amber-400 uppercase">
+      <div className="relative z-10 mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
+        <span className="font-mono text-[10px] font-bold tracking-wider text-amber-600 uppercase">
           CLUSTER TIER // ENTERPRISE
         </span>
         <span className="font-mono text-[10px] text-slate-500 tabular-nums">99.99% SLA</span>
@@ -511,20 +513,20 @@ export function BorderBeamPricingCard({
       {/* 06 Tabular Pricing: Tabular numerals, baseline-aligned period, screen-reader phrase */}
       <div className="relative z-10 mb-6">
         <div className="flex items-baseline font-mono tabular-nums" aria-label="$1,240 per month">
-          <span className="text-4xl font-extrabold tracking-tight text-white">$1,240</span>
-          <span className="text-2xl font-bold text-slate-300">.00</span>
-          <span className="ml-2 font-mono text-xs font-semibold text-slate-400 uppercase">
+          <span className="text-4xl font-extrabold tracking-tight text-[#09172B]">$1,240</span>
+          <span className="text-2xl font-bold text-slate-400">.00</span>
+          <span className="ml-2 font-mono text-xs font-semibold text-slate-500 uppercase">
             / month
           </span>
           <span className="sr-only">$1,240 per month</span>
         </div>
-        <p className="mt-1 font-sans text-xs text-slate-400">
+        <p className="mt-1 font-sans text-xs text-slate-500">
           Dedicated MongoDB replica set (rs0), 47 domain modules, zero rate limits.
         </p>
       </div>
 
-      {/* 07 Single Accent: Amber checks and pill, matte graphite surface */}
-      <div className="relative z-10 mb-6 space-y-2.5 border-y border-slate-800/80 py-4 font-mono text-xs">
+      {/* 07 Single Accent: Amber checks and pill */}
+      <div className="relative z-10 mb-6 space-y-2.5 border-y border-slate-100 py-4 font-mono text-xs">
         {[
           { label: 'Domain Modules', val: '47 Monolith APIs' },
           { label: 'REST Endpoints', val: '193 Unified Routes' },
@@ -532,12 +534,12 @@ export function BorderBeamPricingCard({
           { label: 'Campus Branches', val: 'Unlimited Scopes' },
           { label: 'Telemetry Logging', val: 'Real-Time Audit' },
         ].map((item, i) => (
-          <div key={i} className="flex items-center justify-between text-slate-300">
+          <div key={i} className="flex items-center justify-between text-slate-600">
             <div className="flex items-center gap-2">
-              <Check className="size-3.5 shrink-0 stroke-[2.5] text-amber-500" />
+              <Check className="size-3.5 shrink-0 stroke-[2.5] text-amber-600" />
               <span>{item.label}</span>
             </div>
-            <span className="font-bold text-white tabular-nums">{item.val}</span>
+            <span className="font-bold text-[#09172B] tabular-nums">{item.val}</span>
           </div>
         ))}
       </div>
@@ -545,7 +547,7 @@ export function BorderBeamPricingCard({
       {/* Deploy Button */}
       <button
         type="button"
-        className="group/btn relative z-10 flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500 to-amber-600 font-mono text-xs font-bold tracking-wider text-slate-950 uppercase shadow-[0_4px_20px_rgba(245,158,11,0.25)] transition-all hover:brightness-110 active:scale-[0.98]"
+        className="group/btn relative z-10 flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl bg-[#0056FF] font-mono text-xs font-bold tracking-wider text-white uppercase shadow-md transition-all hover:bg-[#2277FF] active:scale-[0.98]"
       >
         <span>Deploy Cluster Node</span>
         <ArrowRight className="size-3.5 transition-transform group-hover/btn:translate-x-1" />

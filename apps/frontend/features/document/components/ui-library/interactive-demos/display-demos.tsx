@@ -47,9 +47,7 @@ export function FolderDemo() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-xl bg-[#0056FF] text-white">
-                <Folder className="size-5" />
-              </div>
+              <Folder className="size-6 text-[#0056FF]" />
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
                   Academic Records / Term 1
@@ -102,25 +100,25 @@ export const ledgerConfig = {
   };
 
   return (
-    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 text-left shadow-lg">
-      <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/80 px-4 py-2.5">
+    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-md">
+      <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <span className="rounded-[3px] bg-slate-800 px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#CAD3F5]">
+          <span className="rounded-[3px] bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] font-bold text-slate-700">
             CODE
           </span>
-          <span className="font-mono text-[10px] font-bold text-slate-400">ledger.ts</span>
+          <span className="font-mono text-[10px] font-bold text-slate-600">ledger.ts</span>
         </div>
         <button
           type="button"
           onClick={copyCode}
-          className="flex items-center gap-1 rounded-md border border-slate-700 bg-slate-800 px-2 py-1 font-mono text-[10px] text-slate-300 hover:bg-slate-700"
+          className="flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] text-slate-700 hover:bg-slate-50"
         >
-          {copied ? <Check className="size-3 text-emerald-400" /> : <Copy className="size-3" />}
+          {copied ? <Check className="size-3 text-emerald-600" /> : <Copy className="size-3" />}
           <span>{copied ? 'Copied' : 'Copy'}</span>
         </button>
       </div>
 
-      <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-slate-200">
+      <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-[#09172B]">
         <code>{code}</code>
       </pre>
     </div>

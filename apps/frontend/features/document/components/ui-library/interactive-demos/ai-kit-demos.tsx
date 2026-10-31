@@ -103,12 +103,12 @@ export function MatrixOrbDemo() {
   const [online, setOnline] = React.useState(true);
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-800 bg-slate-950 p-5 text-center text-white shadow-lg">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-        <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
+    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center text-[#09172B] shadow-md">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+        <span className="font-mono text-xs font-bold tracking-wider text-slate-700 uppercase">
           Cybernetic Telemetry Orb
         </span>
-        <span className="font-mono text-[10px] font-bold text-emerald-400">ONLINE 99.8%</span>
+        <span className="font-mono text-[10px] font-bold text-emerald-600">ACTIVE 99.8%</span>
       </div>
 
       <div className="flex min-h-[150px] items-center justify-center py-2">
@@ -118,18 +118,18 @@ export function MatrixOrbDemo() {
           <div className="animate-reverse-spin absolute inset-2 rounded-full border border-dotted border-cyan-400/50" />
 
           {/* Central Core */}
-          <div className="flex size-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 shadow-[0_0_20px_rgba(0,180,255,0.6)]">
-            <Terminal className="size-6 text-white" />
+          <div className="flex size-16 items-center justify-center">
+            <Terminal className="size-7 text-[#0056FF]" />
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 font-mono text-[11px] text-slate-300">
+      <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-[11px] text-slate-700">
         <span>Subsystem: Neural Cluster A</span>
         <button
           type="button"
           onClick={() => setOnline(!online)}
-          className="text-cyan-400 hover:underline"
+          className="text-[#0056FF] hover:underline"
         >
           {online ? 'Active' : 'Standby'}
         </button>
