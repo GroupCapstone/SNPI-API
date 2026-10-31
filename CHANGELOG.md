@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `5f5c018`
+
+- Secure public read-only syndication and add frontsite school data integration studio
+
 ### Version 0.2.11 (31.10.2026) - `38ac6e6`
 
 - Redesign open-api page with Nextra Docs Starter Kit architecture
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `0d6b9ef`
 
 - Rewrite readme to standard enterprise format with zero links and short summary
-
-### Version 0.2.11 (31.10.2026) - `5dfee5c`
-
-- Synchronize release changelog entries
 

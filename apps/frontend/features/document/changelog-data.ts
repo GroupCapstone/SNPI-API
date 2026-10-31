@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "5f5c018",
+    "description": "Secure public read-only syndication and add frontsite school data integration studio"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "38ac6e6",
     "description": "Redesign open-api page with Nextra Docs Starter Kit architecture"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "0d6b9ef",
     "description": "Rewrite readme to standard enterprise format with zero links and short summary"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "5dfee5c",
-    "description": "Synchronize release changelog entries"
   }
 ];
