@@ -51,14 +51,15 @@ import {
   Eye,
   EyeOff,
   User,
-  Smartphone,
-  Tablet,
   Monitor,
-  Maximize,
+  Layers,
+  FileText,
 } from '@/components/icons';
+import { useDocsNav } from './docs-nav-context';
 import { cn } from '@/lib/utils';
 
 export function UiLibraryView() {
+  const { activeTab, setActiveTab } = useDocsNav();
   const rootRef = React.useRef<HTMLDivElement>(null);
   const isManualScrollRef = React.useRef<boolean>(false);
   const scrollTimerRef = React.useRef<NodeJS.Timeout | null>(null);
@@ -69,23 +70,6 @@ export function UiLibraryView() {
   // Per-component tab view state: 'preview' | 'prompt'
   const [componentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>({});
   const getCompTab = (id: string): 'preview' | 'prompt' => componentTabs[id] || 'preview';
-
-  // Per-component device preview mode: 'mobile' | 'tablet' | 'desktop'
-  const [compDeviceModes, setCompDeviceModes] = React.useState<
-    Record<string, 'mobile' | 'tablet' | 'desktop'>
-  >({});
-  const getCompDevice = (id: string): 'mobile' | 'tablet' | 'desktop' =>
-    compDeviceModes[id] || 'desktop';
-  const setCompDevice = (id: string, mode: 'mobile' | 'tablet' | 'desktop') => {
-    setCompDeviceModes((prev) => ({ ...prev, [id]: mode }));
-  };
-
-  // Per-component expanded canvas state
-  const [compExpandedModes, setCompExpandedModes] = React.useState<Record<string, boolean>>({});
-  const getCompExpanded = (id: string): boolean => compExpandedModes[id] || false;
-  const toggleCompExpanded = (id: string) => {
-    setCompExpandedModes((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
 
   // Active section for Line Tracker
   const [activeSectionId, setActiveSectionId] = React.useState<string>('interactive-feed');
@@ -486,17 +470,50 @@ export function UiLibraryView() {
 
           {/* COLUMN 2: Center Main Interactive Component Feed (1-Column Continuous Scroll Feed) */}
           <main className="min-w-0 flex-1 space-y-12">
-            {/* HERO HEAD TITLE: Specific to UI Library (Monumental Big As Footer Style) */}
+            {/* HERO HEAD TITLE: Redesigned Home Section with Related Menu */}
             <section id="ui-library-head" className="scroll-mt-24 space-y-4">
               <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-10">
                 <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
-                    <h1 className="font-sans text-5xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-8xl">
+                    <h1 className="font-sans text-4xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl">
                       UI Library
                     </h1>
+                    <p className="mt-2 max-w-xl font-sans text-xs text-slate-600 sm:text-sm">
+                      Interactive component catalog, enterprise design tokens, and AI agent prompt specifications.
+                    </p>
                   </div>
 
-                  <div className="shrink-0">
+                  <div className="flex shrink-0 flex-col items-start gap-3 sm:items-end">
+                    {/* Related Hub Navigation Menu (UI Library & Open API) */}
+                    <div className="flex items-center gap-1 rounded-full border border-slate-200/90 bg-slate-100/90 p-1 shadow-inner">
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('library', true)}
+                        className={cn(
+                          'flex items-center gap-2 rounded-full px-4 py-2 font-sans text-xs font-bold transition-all',
+                          activeTab === 'library'
+                            ? 'bg-[#0056FF] text-white shadow-xs'
+                            : 'text-slate-600 hover:text-slate-900',
+                        )}
+                      >
+                        <Layers className="size-3.5 stroke-[2.2]" />
+                        <span>UI Library</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('openapi', true)}
+                        className={cn(
+                          'flex items-center gap-2 rounded-full px-4 py-2 font-sans text-xs font-bold transition-all',
+                          activeTab === 'openapi'
+                            ? 'bg-[#0056FF] text-white shadow-xs'
+                            : 'text-slate-600 hover:text-slate-900',
+                        )}
+                      >
+                        <FileText className="size-3.5 stroke-[2]" />
+                        <span>Open API</span>
+                      </button>
+                    </div>
+
                     <GeometricHeaderStamp
                       codeA={String(COMPONENT_LIBRARY_REGISTRY.length)}
                       titleA="COMPONENTS"
@@ -519,16 +536,16 @@ export function UiLibraryView() {
             </div>
 
             {/* COMPONENT DEMOS ARRANGED BY CATEGORY */}
-            <div className="space-y-10">
+            <div className="space-y-8">
               {groupedCategories.map((group) => {
                 return (
                   <div
                     key={group.category}
                     id={group.categoryId}
-                    className="scroll-mt-24 space-y-10"
+                    className="scroll-mt-24 space-y-8"
                   >
                     {/* Demos Inside This Category */}
-                    <div className="space-y-10">
+                    <div className="space-y-8">
                       {group.components.map((comp, compIdx) => {
                         const sectionId = `comp-${comp.id}`;
                         const currentTab = getCompTab(comp.id);
@@ -537,25 +554,17 @@ export function UiLibraryView() {
                           <section
                             key={comp.id}
                             id={sectionId}
-                            className="scroll-mt-24 space-y-4 rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-6"
+                            className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-8"
                           >
-                            {/* Component Card Header */}
-                            <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
-                              <div className="min-w-0 flex-1">
-                                <div className="flex flex-wrap items-center gap-2">
-                                  <span className="font-mono text-xs font-black text-[#0056FF]">
-                                    0{group.groupNumber}.0{compIdx + 1}
-                                  </span>
-                                  <h2 className="font-sans text-xl font-black text-slate-950">
-                                    {comp.name}
-                                  </h2>
-                                  <span className="rounded-[4px] border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 uppercase">
-                                    {comp.category}
-                                  </span>
-                                </div>
-                                <p className="mt-1 font-sans text-xs text-slate-600">
-                                  {comp.description}
-                                </p>
+                            {/* Minimal Top Header Row */}
+                            <div className="mb-6 flex items-center justify-between gap-3">
+                              <div className="flex items-center gap-2.5">
+                                <span className="font-mono text-xs font-black text-[#0056FF]">
+                                  0{group.groupNumber}.0{compIdx + 1}
+                                </span>
+                                <h2 className="font-sans text-lg font-black text-slate-950 sm:text-xl">
+                                  {comp.name}
+                                </h2>
                               </div>
 
                               <div className="flex shrink-0 items-center gap-2">
@@ -572,180 +581,29 @@ export function UiLibraryView() {
                                   }
                                   aria-label="Copy AI Agent MVP Prompt"
                                   className={cn(
-                                    'flex size-9 cursor-pointer items-center justify-center rounded-[4px] border transition-all active:scale-95',
+                                    'flex size-8 cursor-pointer items-center justify-center rounded-[6px] border transition-all active:scale-95',
                                     copiedPromptId === comp.id
                                       ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                                      : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
+                                      : 'border-slate-200 bg-white text-slate-600 hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
                                   )}
                                 >
                                   {copiedPromptId === comp.id ? (
-                                    <Check className="size-4 stroke-[2.2] text-emerald-600" />
+                                    <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
                                   ) : (
-                                    <Copy className="size-4 stroke-[2]" />
+                                    <Copy className="size-3.5 stroke-[2]" />
                                   )}
                                 </button>
-
-                                {/* 3. Device Viewport Switcher [Mobile | Tablet | Desktop] */}
-                                {currentTab === 'preview' && (
-                                  <div className="flex items-center gap-0.5 rounded-[4px] border border-slate-200 bg-white p-1">
-                                    <button
-                                      type="button"
-                                      onClick={() => setCompDevice(comp.id, 'mobile')}
-                                      title="Mobile Phone Viewport (380px)"
-                                      className={cn(
-                                        'flex size-7 items-center justify-center rounded-[4px] transition-all',
-                                        getCompDevice(comp.id) === 'mobile'
-                                          ? 'bg-slate-100 text-slate-900'
-                                          : 'text-slate-500 hover:text-slate-900',
-                                      )}
-                                    >
-                                      <Smartphone className="size-4 stroke-[1.8]" />
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => setCompDevice(comp.id, 'tablet')}
-                                      title="Tablet Viewport (680px)"
-                                      className={cn(
-                                        'flex size-7 items-center justify-center rounded-[4px] transition-all',
-                                        getCompDevice(comp.id) === 'tablet'
-                                          ? 'bg-slate-100 text-slate-900'
-                                          : 'text-slate-500 hover:text-slate-900',
-                                      )}
-                                    >
-                                      <Tablet className="size-4 stroke-[1.8]" />
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => setCompDevice(comp.id, 'desktop')}
-                                      title="Desktop Viewport"
-                                      className={cn(
-                                        'flex size-7 items-center justify-center rounded-[4px] transition-all',
-                                        getCompDevice(comp.id) === 'desktop'
-                                          ? 'bg-slate-100 text-slate-900'
-                                          : 'text-slate-500 hover:text-slate-900',
-                                      )}
-                                    >
-                                      <Monitor className="size-4 stroke-[1.8]" />
-                                    </button>
-                                  </div>
-                                )}
-
-                                {/* Fullscreen / Maximize Toggle */}
-                                {currentTab === 'preview' && (
-                                  <button
-                                    type="button"
-                                    onClick={() => toggleCompExpanded(comp.id)}
-                                    title={
-                                      getCompExpanded(comp.id) ? 'Collapse Stage' : 'Expand Stage'
-                                    }
-                                    className={cn(
-                                      'flex size-9 cursor-pointer items-center justify-center rounded-[4px] border transition-all active:scale-95',
-                                      getCompExpanded(comp.id)
-                                        ? 'border-[#0056FF] bg-[#0056FF]/10 text-[#0056FF]'
-                                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900',
-                                    )}
-                                  >
-                                    <Maximize className="size-4 stroke-[1.8]" />
-                                  </button>
-                                )}
                               </div>
                             </div>
 
-                            {/* TAB CONTENT: PREVIEW */}
+                            {/* Clean Single-Box Stage Canvas (One Simple Layer - Reference Style) */}
                             {currentTab === 'preview' && (
-                              <div className="space-y-4">
-                                {/* Live Interactive Stage Canvas (Responsive Viewport - Strict Light Day Mode) */}
+                              <div className="flex min-h-[460px] w-full items-center justify-center py-4">
                                 <div
-                                  className={cn(
-                                    'relative flex w-full items-center justify-center overflow-hidden rounded-3xl border border-slate-200/90 bg-[#F8FAFC] p-4 text-slate-900 shadow-inner transition-all duration-300 sm:p-8',
-                                    getCompExpanded(comp.id) ? 'min-h-[620px]' : 'min-h-[440px]',
-                                  )}
+                                  key={`${comp.id}-stage`}
+                                  className="flex w-full max-w-3xl items-center justify-center"
                                 >
-                                  {/* Subtle Precision Linear Grid (Zero-Dot Design Standard) */}
-                                  <div
-                                    className="pointer-events-none absolute inset-0 opacity-40"
-                                    style={{
-                                      backgroundImage:
-                                        'linear-gradient(to right, #CAD3F5 1px, transparent 1px), linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)',
-                                      backgroundSize: '24px 24px',
-                                    }}
-                                  />
-
-                                  {getCompDevice(comp.id) === 'mobile' ? (
-                                    /* Realistic Mobile Phone Viewport Frame */
-                                    <div className="relative z-10 mx-auto w-full max-w-[380px] overflow-hidden rounded-[44px] border-[8px] border-slate-900 bg-white shadow-2xl ring-1 ring-slate-900/10">
-                                      <div className="flex justify-center bg-white pt-2.5 pb-1">
-                                        <div className="flex h-4 w-24 items-center justify-end rounded-full bg-slate-950 pr-2">
-                                          <div className="size-2 rounded-full bg-slate-900 ring-1 ring-slate-800" />
-                                        </div>
-                                      </div>
-                                      <div
-                                        key={`${comp.id}-mobile`}
-                                        className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/50 p-4 text-slate-900 transition-colors"
-                                      >
-                                        {renderFeedComponentDemo(comp.id, stateBundle)}
-                                      </div>
-                                      <div className="flex justify-center bg-white py-2">
-                                        <div className="h-1 w-28 rounded-full bg-slate-300" />
-                                      </div>
-                                    </div>
-                                  ) : getCompDevice(comp.id) === 'tablet' ? (
-                                    /* Realistic Tablet Viewport Frame */
-                                    <div className="relative z-10 mx-auto w-full max-w-[680px] overflow-hidden rounded-[32px] border-[6px] border-slate-800 bg-white shadow-2xl">
-                                      <div className="flex justify-center bg-slate-900 py-1.5">
-                                        <div className="size-2 rounded-full bg-slate-700" />
-                                      </div>
-                                      <div
-                                        key={`${comp.id}-tablet`}
-                                        className="flex min-h-[460px] w-full flex-col items-center justify-center overflow-y-auto bg-slate-50/40 p-6 text-slate-900 transition-colors"
-                                      >
-                                        {renderFeedComponentDemo(comp.id, stateBundle)}
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    /* Desktop Monitor Stage */
-                                    <div
-                                      key={`${comp.id}-desktop`}
-                                      className={cn(
-                                        'relative z-10 flex w-full flex-col items-center justify-center',
-                                        getCompExpanded(comp.id) ? 'max-w-4xl' : 'max-w-2xl',
-                                      )}
-                                    >
-                                      {renderFeedComponentDemo(comp.id, stateBundle)}
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* Supported States & Install Banner */}
-                                <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs">
-                                  <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
-                                    <span className="font-bold text-slate-400 uppercase">
-                                      States:
-                                    </span>
-                                    {comp.supportedStates.map((st) => (
-                                      <span
-                                        key={st}
-                                        className="rounded-[4px] border border-slate-200 bg-slate-50 px-2 py-0.5 font-semibold text-slate-700"
-                                      >
-                                        {st}
-                                      </span>
-                                    ))}
-                                  </div>
-
-                                  <div className="flex items-center gap-2">
-                                    <code className="font-mono text-[11px] text-[#0056FF]">
-                                      npx @snp/cli add {comp.id}
-                                    </code>
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        handleCopyInstall(comp.id, `npx @snp/cli add ${comp.id}`)
-                                      }
-                                      className="rounded-[4px] border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-slate-600 hover:border-[#0056FF] hover:text-[#0056FF]"
-                                    >
-                                      {copiedInstallId === comp.id ? 'Copied' : 'Copy'}
-                                    </button>
-                                  </div>
+                                  {renderFeedComponentDemo(comp.id, stateBundle)}
                                 </div>
                               </div>
                             )}

@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.12 (31.10.2026) - `da77431`
+
+- Resolve eslint react unescaped entity and immutability errors
+
 ### Version 0.2.12 (31.10.2026) - `8f54289`
 
 - Update repository url references to SNPI-SMS
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `d7b657d`
 
 - Record Rail TOC light redesign and circular waypoint nodes
-
-### Version 0.2.12 (31.10.2026) - `a301963`
-
-- Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground
 

@@ -124,11 +124,11 @@ function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; class
         </filter>
       </defs>
 
-      {/* Main Outer Chassis Path (Chamfered Ears, Stepped Armor Wings, Bottom Drop Bracket - Pure Solid White) */}
+      {/* Main Outer Chassis Path (Chamfered Ears, Stepped Armor Wings, Bottom Drop Bracket - Azure Blue #2277FF) */}
       <path
         d={is2Tabs ? path2 : path3}
-        fill="#FFFFFF"
-        stroke="#CAD3F5"
+        fill="#2277FF"
+        stroke="#0056FF"
         strokeWidth="1.75"
         vectorEffect="non-scaling-stroke"
       />
@@ -140,70 +140,70 @@ function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; class
         strokeWidth="1.5"
         strokeLinecap="round"
         vectorEffect="non-scaling-stroke"
-        opacity="0.95"
+        opacity="0.8"
       />
 
       {is2Tabs ? (
         <>
-          {/* Left Wing Debossed Tech Slot & Royal Blue Accent */}
-          <rect x="264" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
+          {/* Left Wing Debossed Tech Slot & White Glint Accent */}
+          <rect x="264" y="3.5" width="72" height="3" rx="1.5" fill="#0056FF" />
           <rect
             x="270"
             y="4"
             width="22"
             height="2"
             rx="1"
-            fill="#0056FF"
+            fill="#FFFFFF"
             filter="url(#royalGlow)"
           />
 
-          {/* Right Wing Debossed Tech Slot & Royal Blue Accent */}
-          <rect x="664" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
+          {/* Right Wing Debossed Tech Slot & White Glint Accent */}
+          <rect x="664" y="3.5" width="72" height="3" rx="1.5" fill="#0056FF" />
           <rect
             x="708"
             y="4"
             width="22"
             height="2"
             rx="1"
-            fill="#0056FF"
+            fill="#FFFFFF"
             filter="url(#royalGlow)"
           />
         </>
       ) : (
         <>
-          {/* Wing 1 Debossed Tech Slot & Royal Blue Accent */}
-          <rect x="135" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
+          {/* Wing 1 Debossed Tech Slot & White Glint Accent */}
+          <rect x="135" y="3.5" width="70" height="3" rx="1.5" fill="#0056FF" />
           <rect
             x="140"
             y="4"
             width="22"
             height="2"
             rx="1"
-            fill="#0056FF"
+            fill="#FFFFFF"
             filter="url(#royalGlow)"
           />
 
-          {/* Wing 2 Debossed Tech Slot & Royal Blue Accent */}
-          <rect x="465" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
+          {/* Wing 2 Debossed Tech Slot & White Glint Accent */}
+          <rect x="465" y="3.5" width="70" height="3" rx="1.5" fill="#0056FF" />
           <rect
             x="490"
             y="4"
             width="22"
             height="2"
             rx="1"
-            fill="#0056FF"
+            fill="#FFFFFF"
             filter="url(#royalGlow)"
           />
 
-          {/* Wing 3 Debossed Tech Slot & Royal Blue Accent */}
-          <rect x="795" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
+          {/* Wing 3 Debossed Tech Slot & White Glint Accent */}
+          <rect x="795" y="3.5" width="70" height="3" rx="1.5" fill="#0056FF" />
           <rect
             x="840"
             y="4"
             width="22"
             height="2"
             rx="1"
-            fill="#0056FF"
+            fill="#FFFFFF"
             filter="url(#royalGlow)"
           />
         </>
@@ -215,7 +215,7 @@ function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; class
         y1="64"
         x2={is2Tabs ? '715' : '840'}
         y2="64"
-        stroke="#CAD3F5"
+        stroke="#0056FF"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
@@ -226,11 +226,12 @@ function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; class
         y1="30"
         x2="3"
         y2="38"
-        stroke="#CAD3F5"
+        stroke="#FFFFFF"
         strokeWidth="2.5"
         strokeLinecap="round"
+        opacity="0.8"
       />
-      <line x1="7" y1="26" x2="7" y2="42" stroke="#94A3B8" strokeWidth="1" strokeLinecap="round" />
+      <line x1="7" y1="26" x2="7" y2="42" stroke="#FFFFFF" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
 
       {/* Right Stepped Ear Notches */}
       <line
@@ -238,18 +239,20 @@ function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; class
         y1="30"
         x2="997"
         y2="38"
-        stroke="#CAD3F5"
+        stroke="#FFFFFF"
         strokeWidth="2.5"
         strokeLinecap="round"
+        opacity="0.8"
       />
       <line
         x1="993"
         y1="26"
         x2="993"
         y2="42"
-        stroke="#94A3B8"
+        stroke="#FFFFFF"
         strokeWidth="1"
         strokeLinecap="round"
+        opacity="0.6"
       />
     </svg>
   );
@@ -324,18 +327,22 @@ export function CyberArmorNav({
                     isActive
                       ? 'stroke-[2.5] text-[#0056FF]'
                       : isHovered
-                        ? 'scale-110 stroke-[2.2] text-[#0056FF]'
+                        ? 'scale-110 stroke-[2.2] text-slate-950'
                         : 'stroke-[2.2] text-slate-700',
                   )}
                 />
               )}
 
-              {/* High-Contrast Bold Sora Label with Royal Blue Active Style */}
+              {/* High-Contrast Bold Label (Black text based on light #EFF5FF / #E3E7FC background) */}
               <span
                 className={cn(
-                  'font-sans font-black tracking-wider uppercase transition-colors duration-150',
+                  'font-sans tracking-wider uppercase transition-colors duration-150',
                   textSizes,
-                  isActive ? 'text-[#0056FF]' : isHovered ? 'text-[#0056FF]' : 'text-slate-800',
+                  isActive
+                    ? 'font-black text-slate-950'
+                    : isHovered
+                      ? 'font-bold text-slate-950'
+                      : 'font-bold text-slate-800',
                 )}
               >
                 {tab.label}
@@ -344,11 +351,11 @@ export function CyberArmorNav({
           );
 
           const sharedClasses = cn(
-            'group relative flex items-center justify-center cursor-pointer transition-all duration-150 active:scale-[0.98] mx-0.5',
+            'group relative flex items-center justify-center cursor-pointer transition-all duration-150 active:scale-[0.98] mx-0.5 rounded-[6px]',
             buttonHeights,
             isActive
-              ? 'bg-[#EFF5FF] text-[#0056FF] border border-[#CAD3F5] rounded-[6px] shadow-xs'
-              : 'hover:bg-[#EFF5FF]/80 hover:text-[#0056FF] text-[#0A1A4A] rounded-[6px]',
+              ? 'bg-[#E3E7FC] text-slate-950 border border-[#0056FF]/35 shadow-xs'
+              : 'bg-[#EFF5FF] text-slate-800 hover:bg-white hover:text-slate-950 border border-[#CAD3F5]/60 shadow-2xs',
           );
 
           return (
@@ -381,10 +388,10 @@ export function CyberArmorNav({
                 </button>
               )}
 
-              {/* Physical Vertical Seam: 1px Soft Lavender Line */}
+              {/* Physical Vertical Seam: Soft Semi-Transparent White Line */}
               {!isLast && (
                 <div className="relative mx-1 flex h-4 w-[1px] items-center">
-                  <span className="h-full w-[1px] bg-[#CAD3F5]" />
+                  <span className="h-full w-[1px] bg-white/40" />
                 </div>
               )}
             </React.Fragment>
