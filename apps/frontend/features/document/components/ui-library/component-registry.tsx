@@ -812,28 +812,29 @@ export function Example() {
     name: 'Rail TOC',
     category: 'Navigation',
     paradigm: 'Paper Plane Flight Rail Standard',
-    description:
-      'Kinetic table of contents featuring an aerodynamic 3D faceted supersonic origami paper jet navigating continuous vertical section rails with de Casteljau Bézier contrails.',
+    description: "A table of contents with a paper plane that flies to the section you're reading.",
     explanation:
-      'Scroll the content and the 3D faceted origami paper jet flies along the rail between headings, turning where the rail bends. Scroll back up and it executes a 180° turnaround banking maneuver. The rail behind it is a solid luminous contrail connected dynamically via de Casteljau cubic subdivision, and each heading it passes fills in while the rest remains dashed. Features optional procedural Web Audio API audio chimes and flight telemetry.',
+      'Scroll the content and the paper plane flies along the rail between headings, turning where the rail bends. Scroll back up and it turns around. The rail behind it is solid and each heading it passes fills in; the rest stays dashed. Click any heading to scroll to it.',
     props: [
       {
-        name: 'items',
+        name: 'items *',
         type: '{ id: string; label: string; depth?: number }[]',
-        description: 'Headings in document order. Each id must match an element id in content.',
+        description:
+          'Headings in document order. Each id must match an element id in the content. Depth sets the indent level and defaults to 0.',
       },
       {
         name: 'containerRef',
         type: 'React.RefObject<HTMLElement | null>',
         default: 'window',
         description:
-          'Scroll container to track and scroll within. Defaults to window when omitted.',
+          'Scroll container to track and scroll within. Defaults to the window when omitted.',
       },
       {
         name: 'offset',
         type: 'number',
         default: '100',
-        description: 'Distance in pixels below scroller top edge where heading counts as reached.',
+        description:
+          "Distance in pixels below the scroller's top edge where a heading counts as reached. Clicking an item scrolls its heading to this line.",
       },
       {
         name: 'indent',
@@ -845,45 +846,45 @@ export function Example() {
         name: 'title',
         type: 'string',
         default: "'On this page'",
-        description: 'Text above the list and accessibility landmark label.',
-      },
-      {
-        name: 'showProgress',
-        type: 'boolean',
-        default: 'true',
-        description: 'Show flight waypoint progress badge (e.g. WP 3 / 8).',
-      },
-      {
-        name: 'enableSound',
-        type: 'boolean',
-        default: 'false',
-        description: 'Optional tactile procedural Web Audio API chime when crossing headings.',
+        description: 'Text above the list. It also names the navigation for screen readers.',
       },
       {
         name: 'className',
         type: 'string',
-        description: 'Extra classes merged onto root nav with data-slot attributes.',
+        description:
+          'Extra classes merged onto the root nav. Inner parts carry data-slot attributes (rail-toc-title, -list, -plane) for styling from CSS.',
       },
     ],
-    codeSnippet: `import { RailToc } from '@/features/document/components/ui-library';
+    codeSnippet: `"use client"
 
-export function Example() {
+import { useRef } from "react"
+import RailToc, { type RailTocItem } from "@/components/ui/rail-toc"
+
+const items: RailTocItem[] = [
+  { id: "install", label: "Installation" },
+  { id: "requirements", label: "Prerequisites", depth: 1 },
+  { id: "usage", label: "Usage" },
+]
+
+export function Docs() {
+  const scrollRef = useRef<HTMLElement>(null)
+
   return (
-    <RailToc
-      items={[
-        { id: 'installation', label: 'Installation', depth: 0 },
-        { id: 'prerequisites', label: 'Prerequisites', depth: 1 },
-        { id: 'installation-steps', label: 'Installation Steps', depth: 1 },
-        { id: 'configuration', label: 'Configuration', depth: 1 },
-        { id: 'usage', label: 'Usage', depth: 0 },
-        { id: 'customizing-content', label: 'Customizing Content', depth: 1 },
-        { id: 'submenu-content', label: 'Submenu Content', depth: 2 },
-        { id: 'features', label: 'Features', depth: 0 },
-      ]}
-      title="On this page"
-    />
-  );
-}`,
+    <main ref={scrollRef} className="flex h-full gap-12 overflow-auto">
+      <article>
+        <h2 id="install">Installation</h2>
+        <h3 id="requirements">Prerequisites</h3>
+        <h2 id="usage">Usage</h2>
+      </article>
+      <aside className="sticky top-4 h-max">
+        <RailToc items={items} containerRef={scrollRef} />
+      </aside>
+    </main>
+  )
+}
+
+// tracks the window with no container ref
+// <RailToc items={items} />`,
     realWorldExamples: [
       {
         title: 'Developer Documentation & Technical Guides',

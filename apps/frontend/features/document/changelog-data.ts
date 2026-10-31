@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "2c4d6bc",
+    "description": "Record real-time changelog for Status Page 404 multi-archetype component"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "2125659",
     "description": "Create multi-archetype Status Page 404 with 5 brand modes and HTTP status code engine"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "46d0055",
     "description": "Standardize all 75 component descriptions to 12-15 word concise summaries"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "816a753",
-    "description": "Remove sticky category banners, redundant flow labels, enforce light mode, and strip icon background containers"
   }
 ];
