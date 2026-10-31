@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "46d0055",
+    "description": "Standardize all 75 component descriptions to 12-15 word concise summaries"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "816a753",
     "description": "Remove sticky category banners, redundant flow labels, enforce light mode, and strip icon background containers"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "adccb9c",
     "description": "Implement 54px icon bar with label bloom status dot and roving tabindex"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "cafb0ec",
-    "description": "Arrange demos by flow group and synchronize sequential line tracker without rank jumping"
   }
 ];

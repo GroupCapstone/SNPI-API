@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `46d0055`
+
+- Standardize all 75 component descriptions to 12-15 word concise summaries
+
 ### Version 0.2.11 (31.10.2026) - `816a753`
 
 - Remove sticky category banners, redundant flow labels, enforce light mode, and strip icon background containers
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `adccb9c`
 
 - Implement 54px icon bar with label bloom status dot and roving tabindex
-
-### Version 0.2.9 (31.10.2026) - `cafb0ec`
-
-- Arrange demos by flow group and synchronize sequential line tracker without rank jumping
 
