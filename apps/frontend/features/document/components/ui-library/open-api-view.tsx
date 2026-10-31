@@ -1066,35 +1066,47 @@ export function SchoolPortal() {
               </div>
             </div>
 
-            {/* Terminal Event Stream Inspector (Display Only) */}
-            <div className="overflow-hidden rounded-xl border border-[#0056FF] bg-[#0A1A4A] font-mono text-[#EFF5FF] shadow-sm">
-              <div className="flex items-center justify-between border-b border-[#0056FF]/40 bg-[#0A1A4A] p-3.5 text-xs">
+            {/* Live Packet Stream Monitor (Light Modern Design) */}
+            <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-sm">
+              <div className="flex items-center justify-between border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 text-xs">
                 <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 animate-pulse rounded-full bg-[#2277FF]" />
-                  <span className="font-bold text-[#EFF5FF]">
-                    Live Broadcast Packet Monitor (One-Way Telemetry)
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0056FF] opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0056FF]" />
+                  </span>
+                  <span className="font-bold text-[#0A1A4A]">Live Broadcast Packet Monitor</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                    Cluster AP-01
+                  </span>
+                  <span className="rounded bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                    One-Way Broadcast
                   </span>
                 </div>
-                <span className="rounded bg-[#0056FF] px-2 py-0.5 text-[10px] text-[#E3E7FC]">
-                  Cluster AP-01
-                </span>
               </div>
 
-              <div className="max-h-72 space-y-3 overflow-y-auto p-4 text-xs">
+              <div className="max-h-80 space-y-2.5 overflow-y-auto p-4">
                 {streamEvents.map((ev) => (
                   <div
                     key={ev.id}
-                    className="space-y-1 rounded border border-[#0056FF]/30 bg-[#EFF5FF]/10 p-2.5"
+                    className="space-y-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-xs transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF]/80"
                   >
-                    <div className="flex items-center justify-between text-[11px] text-[#E3E7FC]">
-                      <span className="font-bold text-[#2277FF]">{ev.channel}</span>
-                      <span>{ev.timestamp}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[11px] font-bold text-[#0056FF]">
+                        {ev.channel}
+                      </span>
+                      <span className="font-mono text-[10px] text-[#0A1A4A]/60">
+                        {ev.timestamp}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="py-0.2 rounded bg-[#E3E7FC] px-1.5 text-[10px] font-bold text-[#0056FF]">
+                    <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center">
+                      <span className="inline-block shrink-0 rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                         {ev.eventName}
                       </span>
-                      <span className="truncate text-[#EFF5FF]">{ev.payload}</span>
+                      <code className="block flex-1 truncate rounded border border-[#CAD3F5] bg-[#FFFFFF] px-2.5 py-1 font-mono text-[11px] text-[#0A1A4A]">
+                        {ev.payload}
+                      </code>
                     </div>
                   </div>
                 ))}

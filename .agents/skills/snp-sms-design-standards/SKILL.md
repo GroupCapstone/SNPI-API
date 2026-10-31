@@ -276,6 +276,12 @@ Refer to `cyber-armor-nav-manual.md` for the aerospace mecha HUD console specifi
 - **Strictly Display Only**: All public catalogs, syndication feeds, and embed previews must serve strictly as visual, display-only specifications for external frontsite integration.
 - **Zero Credential Headers or Inspection Code**: Never display, instruct, or include credential headers (`X-Subscription-Key`, auth tokens, secret keys) or credential flags (`withCredentials: true`) in client-side code snippets or documentation. Endpoints must be presented purely as standard public display feeds without user credential inspection.
 
+### 7.10 Prohibition of Dark Navy / Black Terminal Box Aesthetics in Documentation
+- **Never Design Dark Terminal Containers**: Under no circumstances should logs, telemetry monitors, event stream cards, or inspection boxes be designed with solid dark navy (`#0A1A4A`), black, or dark terminal background styles.
+- **Strictly Light-Day-First Modern UI**: All telemetry monitors, packet streams, and documentation cards must strictly use **Pure White (`#FFFFFF`)** or **Ice Tint (`#EFF5FF`)** backgrounds with Soft Lavender borders (`#CAD3F5`), Deep Navy (`#0A1A4A`) high-contrast text, and Royal Blue (`#0056FF`) accent pills.
+- **Zero Dark Hacker Inversion**: Never invert page sections into high-contrast dark terminal boxes or hacker consoles in documentation views.
+
+
 
 
 

@@ -75,6 +75,10 @@ Before modifying code, packages, or repository structure, read:
   - **Never Design "Access Mode" or Access-Granting Columns**: Under no circumstances should tables or UI views include an "ACCESS MODE" column, "[Lock] Read-Only" badges, or UI components that suggest user access rights, permissions, or access gates.
   - **Strictly Display-Only Presentation**: All public catalogs, syndication feeds, and embed previews must strictly be visual, display-only guides showing clean data fields only (`Code`, `Title`, `Schedule`, `Capacity`, `Status`).
   - **Zero Credential Headers or Inspection Code**: Never display, instruct, or include credential headers (`X-Subscription-Key`, auth tokens, secret keys) or credential flags (`withCredentials: true`) in client-side code snippets or documentation. Endpoints must be presented purely as standard public display feeds without user credential inspection.
+- **Mandatory Prohibition of Dark Navy / Black Terminal Box Aesthetics in Documentation (CRITICAL RULE)**:
+  - **Never Design Dark Terminal Containers**: Under no circumstances should logs, telemetry monitors, event stream cards, or inspection boxes be designed with solid dark navy (`#0A1A4A`), black, or dark terminal background styles.
+  - **Light-Day-First Modern UI**: All telemetry monitors, packet streams, and documentation cards must strictly use **Pure White (`#FFFFFF`)** or **Ice Tint (`#EFF5FF`)** backgrounds with Soft Lavender borders (`#CAD3F5`), Deep Navy (`#0A1A4A`) high-contrast text, and Royal Blue (`#0056FF`) accent pills.
+  - **Zero Dark Hacker Inversion**: Never invert page sections into high-contrast dark terminal boxes or hacker consoles in documentation views.
 - **Mandatory Local-Only Commits & Zero Push Without Explicit Command — ABSOLUTE RULE**:
   - In every conversation, session, and task, AI agents and contributors are **strictly permitted to make local git commits only**.
   - **NEVER execute `git push`**, push release tags, publish release checkpoints, or perform remote publishing actions under any circumstances unless the user gives an explicit, direct command (e.g., `git push`, `push now`, `push to github`).
