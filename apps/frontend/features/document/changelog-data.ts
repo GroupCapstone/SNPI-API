@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "b8c52f2",
+    "description": "Remove category banner cards and display component demo cards directly"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "5bb52b1",
     "description": "Apply automated prettier code formatting across brand and ui-library components"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "ccec8cf",
     "description": "Eliminate explicit any in data-table and remove prepare script from shared package"
-  },
-  {
-    "version": "0.2.10",
-    "date": "31.10.2026",
-    "commitHash": "4e1fe42",
-    "description": "V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes"
   }
 ];
