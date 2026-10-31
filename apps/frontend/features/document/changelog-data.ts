@@ -9,6 +9,24 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "01.11.2026",
+    "commitHash": "56d407a",
+    "description": "Redesign alerts with clean human-readable short headers"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "d5e63ca",
+    "description": "Format telegram repo watcher"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "237630a",
+    "description": "Record Real-Time SSE Stream section removal"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
     "commitHash": "0cceac0",
     "description": "Delete Real-Time SSE Stream section and card from Open API view"
   },
@@ -137,23 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "6af06e9",
     "description": "Record removal of theme FAB and profile card"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "01b501d",
-    "description": "Remove floating theme FAB button and Lena Marchetti profile card"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "5116c27",
-    "description": "Redesign mobile hero with simple welcoming hook and tactile service cards"
-  },
-  {
-    "version": "0.2.13",
-    "date": "31.10.2026",
-    "commitHash": "c2efdc5",
-    "description": "Simplify hero and implement psychological reading layout"
   }
 ];

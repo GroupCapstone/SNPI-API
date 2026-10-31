@@ -1,6 +1,18 @@
-# SNPI-SMS Changelog
+# SNP-SMS Changelog
 
 All notable changes, commits, and skill updates are recorded here in real-time.
+
+### Version 0.2.13 (01.11.2026) - `56d407a`
+
+- Redesign alerts with clean human-readable short headers
+
+### Version 0.2.13 (01.11.2026) - `d5e63ca`
+
+- Format telegram repo watcher
+
+### Version 0.2.13 (01.11.2026) - `237630a`
+
+- Record Real-Time SSE Stream section removal
 
 ### Version 0.2.13 (01.11.2026) - `0cceac0`
 
@@ -90,14 +102,3 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 
 - Record removal of theme FAB and profile card
 
-### Version 0.2.13 (31.10.2026) - `01b501d`
-
-- Remove floating theme FAB button and Lena Marchetti profile card
-
-### Version 0.2.13 (31.10.2026) - `5116c27`
-
-- Redesign mobile hero with simple welcoming hook and tactile service cards
-
-### Version 0.2.13 (31.10.2026) - `c2efdc5`
-
-- Simplify hero and implement psychological reading layout
