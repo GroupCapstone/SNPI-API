@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/shiliaiwei/snp-integrated-multi-branch-school-management-system/backend:latest
+          image: ghcr.io/tan-saphea/snp-integrated-multi-branch-school-management-system/backend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 4000

@@ -186,10 +186,21 @@ interface SecurityStatus {
   }>;
 }
 
+function getRepoSlug(): string {
+  try {
+    const remoteUrl = execSync('git remote get-url origin', { cwd: ROOT_DIR, encoding: 'utf-8' }).trim();
+    const match = remoteUrl.match(/github\.com[/:]([^/]+)\/([^/.]+)/);
+    if (match) return `${match[1]}/${match[2].replace(/\.git$/, '')}`;
+  } catch {
+    // fallback
+  }
+  return 'Tan-Saphea/SNPI-SMS';
+}
+
 function inspectSecurityQuality(): SecurityStatus {
   try {
-    const cmd =
-      'gh api repos/shiliaiwei/SNPI-SMS/dependabot/alerts --jq \'[.[] | select(.state=="open") | {number: .number, package: .security_vulnerability.package.name, severity: .security_advisory.severity, summary: .security_advisory.summary}]\'';
+    const repoSlug = getRepoSlug();
+    const cmd = `gh api repos/${repoSlug}/dependabot/alerts --jq '[.[] | select(.state=="open") | {number: .number, package: .security_vulnerability.package.name, severity: .security_advisory.severity, summary: .security_advisory.summary}]'`;
     const out = execSync(cmd, { cwd: ROOT_DIR, encoding: 'utf-8' }).trim();
     const openAlerts = JSON.parse(out);
     return {
@@ -289,7 +300,7 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
 <b>Release Tag:</b> ${latestTag || `v${packageVersion}`}
 <b>Package Version:</b> v${packageVersion}
 <b>Developer:</b> ${commit.author}
-<b>Changelog:</b> <a href="https://github.com/shiliaiwei/SNPI-SMS/releases">GitHub Releases</a>
+<b>Changelog:</b> <a href="https://github.com/${getRepoSlug()}/releases">GitHub Releases</a>
 <b>Summary:</b> Enterprise monorepo updated with latest build checkpoints.`;
 
     await sendTelegramMessage(chatId, releaseMessage);
@@ -312,7 +323,7 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
       .join('\n');
 
     const securityMessage = `<b>[SNPI SECURITY ALERT]</b>
-<b>Repository:</b> shiliaiwei/SNPI-SMS
+<b>Repository:</b> ${getRepoSlug()}
 <b>Active Dependabot Alerts:</b> ${security.totalAlerts} Open
 ${alertList}
 <b>Action:</b> Review dependencies and apply security patch updates.`;

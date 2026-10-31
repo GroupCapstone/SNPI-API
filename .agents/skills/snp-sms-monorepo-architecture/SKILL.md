@@ -14,7 +14,7 @@ This skill establishes the production standards, directory organization, applica
 
 ## 1. High-Level Architecture Overview
 
-* **Private Repository**: `https://github.com/shiliaiwei/SNPI-SMS.git` *(Provisional owner: planned for future institutional transfer)*
+* **Private Repository**: `https://github.com/Tan-Saphea/SNPI-SMS.git` *(Owner: @Tan-Saphea)*
 * **Release Checkpoint**: `v0.1.0` (Tag: `v0.1.0`, Commit: `28ef01b`)
 * **Live Document Portal**: `/document` (Publicly accessible technical specification)
 * **Future Ownership Transfer**: Decoupled from personal account; maintainer verification via `.github/maintainers.json` numeric IDs.
