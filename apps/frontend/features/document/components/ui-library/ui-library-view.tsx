@@ -58,7 +58,6 @@ import {
   Tablet,
   LayoutGrid,
   BatteryMedium,
-  Palette,
   ChevronDown,
   ChevronRight,
   X,
@@ -237,6 +236,68 @@ export function UiLibraryView() {
       };
     }).filter((group) => group.components.length > 0);
   }, [filteredComponents]);
+
+  // Quickstart terminal copy state
+  const [copiedQuickstart, setCopiedQuickstart] = React.useState(false);
+  const handleCopyQuickstart = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText('npx snp-ui@latest add @components');
+      setCopiedQuickstart(true);
+      setTimeout(() => setCopiedQuickstart(false), 2500);
+    }
+  };
+
+  // Derive current location context for recognizable location bar
+  const currentLocation = React.useMemo(() => {
+    if (activeSectionId === 'ui-library-head') {
+      return {
+        crumb: 'Docs › UI Library',
+        title: 'Component Catalog & Overview',
+        badge: 'Homepage',
+      };
+    }
+    if (activeSectionId.startsWith('comp-')) {
+      const compId = activeSectionId.replace('comp-', '');
+      const comp = COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === compId);
+      const group = groupedCategories.find((g) => g.components.some((c) => c.id === compId));
+      if (comp) {
+        return {
+          crumb: `UI Library › ${group?.category || comp.category}`,
+          title: comp.name,
+          badge: comp.category,
+        };
+      }
+    }
+    if (activeSectionId.startsWith('cat-')) {
+      const group = groupedCategories.find((g) => g.categoryId === activeSectionId);
+      if (group) {
+        return {
+          crumb: 'UI Library › Category Menu',
+          title: group.category,
+          badge: `${group.components.length} Components`,
+        };
+      }
+    }
+    if (activeSectionId === 'brand-identity') {
+      return {
+        crumb: 'UI Library › Tokens',
+        title: 'Brand Concept Blueprint',
+        badge: 'Design System',
+      };
+    }
+    if (activeSectionId === 'design-principles' || activeSectionId === 'touch-targets') {
+      return {
+        crumb: 'UI Library › Guidelines',
+        title: 'Accessibility & Flat Design Standards',
+        badge: 'WCAG AA',
+      };
+    }
+    return {
+      crumb: 'Docs › UI Library',
+      title: 'Interactive Component Catalog',
+      badge: 'Live Feed',
+    };
+  }, [activeSectionId, groupedCategories]);
 
   // Section IDs for active tracking in Left Sticky Menu (strictly linear sequential flow)
   const scrollSectionIds = React.useMemo(() => {
@@ -515,44 +576,107 @@ export function UiLibraryView() {
                   </div>
                 </div>
               </div>
-
-              {/* Bottom Profile / Portal Info Card (Images 3 & 4) */}
-              <div className="border-t border-slate-100 pt-3 mt-4">
-                <div className="flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/70 p-2.5">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#0056FF] font-sans text-xs font-bold text-white shadow-2xs">
-                    LM
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate font-sans text-xs font-bold text-slate-900">
-                      Lena Marchetti
-                    </p>
-                    <p className="truncate font-sans text-[11px] text-slate-500">
-                      Knowledge manager
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </aside>
 
           {/* COLUMN 2: Center Main Interactive Component Feed (1-Column Continuous Scroll Feed) */}
-          <main className="min-w-0 flex-1 space-y-12">
-            {/* HERO HEAD TITLE: Redesigned Home Section with Related Menu */}
-            <section id="ui-library-head" className="scroll-mt-24 space-y-4">
-              <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-10">
-                <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
-                  <div>
-                    <h1 className="font-sans text-4xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl">
-                      UI Library
-                    </h1>
-                    <p className="mt-2 max-w-xl font-sans text-xs text-slate-600 sm:text-sm">
-                      Interactive component catalog, enterprise design tokens, and AI agent prompt specifications.
-                    </p>
+          <main className="min-w-0 flex-1 space-y-10">
+            {/* STICKY LIVE LOCATION TRACKER: Easy to recognize where we stand in each menu page */}
+            <div className="sticky top-[68px] z-30 -mx-4 border-y border-slate-200/90 bg-white/95 px-4 py-2.5 backdrop-blur-md shadow-2xs sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+              <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
+                {/* Active Breadcrumb & Current Standing Position */}
+                <div className="flex min-w-0 items-center gap-2">
+                  <span className="relative flex size-2.5 shrink-0 items-center justify-center">
+                    <span className="absolute size-full animate-ping rounded-full bg-[#0056FF] opacity-75" />
+                    <span className="size-2 rounded-full bg-[#0056FF]" />
+                  </span>
+                  <div className="flex min-w-0 flex-wrap items-center gap-1.5 font-mono text-[11px]">
+                    <span className="font-bold text-slate-500 uppercase tracking-wider">
+                      {currentLocation.crumb}
+                    </span>
+                    <span className="text-slate-300">/</span>
+                    <span className="truncate font-sans text-xs font-black text-slate-950 sm:text-sm">
+                      {currentLocation.title}
+                    </span>
+                    <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                      {currentLocation.badge}
+                    </span>
                   </div>
+                </div>
 
-                  <div className="flex shrink-0 flex-col items-start gap-3 sm:items-end">
+                {/* Mobile & PC Quick-Jump Category Menu Rail */}
+                <div className="no-scrollbar flex items-center gap-1 overflow-x-auto py-0.5">
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('ui-library-head')}
+                    className={cn(
+                      'shrink-0 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all select-none',
+                      activeSectionId === 'ui-library-head'
+                        ? 'bg-[#0056FF] text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
+                    )}
+                  >
+                    Home
+                  </button>
+                  {groupedCategories.map((grp) => {
+                    const isCurrent =
+                      activeSectionId === grp.categoryId ||
+                      grp.components.some((c) => activeSectionId === `comp-${c.id}`);
+                    return (
+                      <button
+                        key={grp.category}
+                        type="button"
+                        onClick={() => scrollToSection(grp.categoryId)}
+                        className={cn(
+                          'shrink-0 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all select-none',
+                          isCurrent
+                            ? 'bg-[#0056FF] text-white shadow-xs'
+                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
+                        )}
+                      >
+                        {grp.category}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* HERO HEAD TITLE: Ultra-Hook Homepage Section with High-Impact Developer Experience */}
+            <section id="ui-library-head" className="scroll-mt-36 space-y-4">
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-[#F8FAFC]/60 to-white p-6 shadow-xs sm:p-10">
+                {/* Subtle Geometric Background Dot Grid */}
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-[0.4]"
+                  style={{
+                    backgroundImage:
+                      'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FFFFFF 0.75px)',
+                    backgroundSize: '20px 20px',
+                    backgroundPosition: '0 0, 10px 10px',
+                  }}
+                />
+
+                {/* Ambient Horizon Arc Glow at Bottom */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center opacity-60">
+                  <div className="h-16 w-full max-w-3xl rounded-t-[100%] border-t border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
+                </div>
+
+                <div className="relative z-10 space-y-6">
+                  {/* Top Status & Hub Switcher Bar */}
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    {/* Live System Badge */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 px-3 py-1 font-mono text-[10px] font-bold text-emerald-700">
+                        <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        v0.2.12 LIVE
+                      </span>
+                      <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC]/60 px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                        SNPI Enterprise UI System
+                      </span>
+                    </div>
+
                     {/* Related Hub Navigation Menu (UI Library & Open API) */}
-                    <div className="flex items-center gap-1 rounded-full border border-slate-200/90 bg-slate-100/90 p-1 shadow-inner">
+                    <div className="flex items-center gap-1 self-start rounded-full border border-slate-200/90 bg-white p-1 shadow-xs sm:self-auto">
                       <button
                         type="button"
                         onClick={() => setActiveTab('library', true)}
@@ -580,37 +704,166 @@ export function UiLibraryView() {
                         <span>Open API</span>
                       </button>
                     </div>
+                  </div>
 
-                    <GeometricHeaderStamp
-                      codeA={String(COMPONENT_LIBRARY_REGISTRY.length)}
-                      titleA="COMPONENTS"
-                      codeB="100%"
-                      titleB="INTERACTIVE"
-                    />
+                  {/* Monumental Hook Title */}
+                  <div className="max-w-3xl space-y-3">
+                    <h1 className="font-sans text-4xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl">
+                      Interactive UI Library.
+                      <span className="block text-[#0056FF]">Built for Production.</span>
+                    </h1>
+                    <p className="font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
+                      Interactive component catalog, enterprise design tokens, and universal AI agent prompt specifications.
+                      Engineered with strict flat design, WCAG AA accessibility, 44px touch targets, and instant 1-click prompt export.
+                    </p>
+                  </div>
+
+                  {/* Interactive Terminal Quickstart Bar & Action Hook */}
+                  <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
+                    {/* 1-Click Copy Package Command */}
+                    <div className="flex items-center rounded-2xl border border-slate-200/90 bg-white p-1.5 shadow-2xs">
+                      <div className="flex items-center gap-2 px-3 text-slate-500">
+                        <Terminal className="size-4 text-[#0056FF]" />
+                        <span className="font-mono text-xs font-semibold text-slate-900">
+                          npx snp-ui@latest add @components
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleCopyQuickstart}
+                        className={cn(
+                          'flex items-center gap-1.5 rounded-xl px-3 py-1.5 font-sans text-xs font-bold transition-all cursor-pointer active:scale-95',
+                          copiedQuickstart
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-500/40'
+                            : 'bg-slate-100 text-slate-700 hover:bg-[#0056FF] hover:text-white',
+                        )}
+                      >
+                        {copiedQuickstart ? (
+                          <>
+                            <Check className="size-3.5 stroke-[2.5] text-emerald-600" />
+                            <span>Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="size-3.5 stroke-[2]" />
+                            <span>Copy</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Quick Jump Action Button */}
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-navigation')}
+                      className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#0056FF] px-5 py-2.5 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0048D9] active:scale-95 cursor-pointer"
+                    >
+                      <span>Explore 73 Components</span>
+                      <ArrowRight className="size-3.5 stroke-[2]" />
+                    </button>
+                  </div>
+
+                  {/* 4-Metric Grid Hook */}
+                  <div className="grid grid-cols-2 gap-3 pt-3 sm:grid-cols-4">
+                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
+                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
+                        {COMPONENT_LIBRARY_REGISTRY.length}
+                      </span>
+                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
+                        Total Components
+                      </span>
+                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
+                        100% interactive live feed
+                      </span>
+                    </div>
+
+                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
+                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
+                        0px
+                      </span>
+                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
+                        Blur Shadows
+                      </span>
+                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
+                        Strict flat architecture
+                      </span>
+                    </div>
+
+                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
+                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
+                        44px
+                      </span>
+                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
+                        Touch Targets
+                      </span>
+                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
+                        Mobile-first ergonomics
+                      </span>
+                    </div>
+
+                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
+                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
+                        1-Click
+                      </span>
+                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
+                        AI Prompt Export
+                      </span>
+                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
+                        Universal Antigravity & Cursor
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* SECTION 2: Interactive UI Components & Templates */}
-            <div
-              id="interactive-feed"
-              className="scroll-mt-24 space-y-1 border-t border-slate-200/80 pt-8 pb-2"
-            >
-              <h2 className="font-sans text-xl font-black tracking-tight text-slate-950 sm:text-2xl">
-                Component Catalog
-              </h2>
-            </div>
-
-            {/* COMPONENT DEMOS ARRANGED BY CATEGORY */}
-            <div className="space-y-8">
+            {/* COMPONENT DEMOS ARRANGED BY CATEGORY WITH PROMINENT SECTION HEADERS */}
+            <div className="space-y-12">
               {groupedCategories.map((group) => {
                 return (
                   <div
                     key={group.category}
                     id={group.categoryId}
-                    className="scroll-mt-24 space-y-8"
+                    className="scroll-mt-36 space-y-6"
                   >
+                    {/* PROMINENT CATEGORY SECTION BANNER: Instant recognition of where user stands */}
+                    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-[#EFF5FF] via-white to-white p-5 sm:p-6 shadow-2xs">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="flex size-11 items-center justify-center rounded-xl bg-[#0056FF] font-mono text-sm font-black text-white shadow-xs">
+                            0{group.groupNumber}
+                          </span>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase tracking-wider">
+                                Menu Section · 0{group.groupNumber} of 0{groupedCategories.length}
+                              </span>
+                              <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 font-mono text-[9px] font-bold text-slate-600">
+                                {group.components.length} Components
+                              </span>
+                            </div>
+                            <h2 className="font-sans text-xl font-black text-slate-950 sm:text-2xl">
+                              {group.category}
+                            </h2>
+                          </div>
+                        </div>
+
+                        {/* Quick Component Jump Links inside this category */}
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {group.components.map((comp, idx) => (
+                            <button
+                              key={comp.id}
+                              type="button"
+                              onClick={() => scrollToSection(`comp-${comp.id}`)}
+                              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1 font-sans text-xs font-semibold text-slate-700 hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF] transition-all cursor-pointer"
+                            >
+                              0{idx + 1}. {comp.name}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Demos Inside This Category */}
                     <div className="space-y-8">
                       {group.components.map((comp, compIdx) => {
@@ -1019,20 +1272,6 @@ export function UiLibraryView() {
             </section>
           </main>
         </div>
-      </div>
-
-      {/* Floating Theme Button (Matching Reference Images 3 & 4) */}
-      <div className="fixed right-6 bottom-6 z-40">
-        <button
-          type="button"
-          onClick={() => scrollToSection('comp-theme-selector')}
-          className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-4 py-2 font-sans text-xs font-bold text-slate-800 shadow-xl backdrop-blur-md transition-all hover:border-[#0056FF]/40 hover:bg-slate-50 active:scale-95"
-          title="Theme Selector"
-          aria-label="Theme Selector"
-        >
-          <Palette className="size-3.5 text-slate-600 transition-colors group-hover:text-[#0056FF]" />
-          <span>Theme</span>
-        </button>
       </div>
 
       {/* Fullscreen Expanded Component Preview Modal */}
