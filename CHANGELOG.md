@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.12 (31.10.2026) - `7317af8`
+
+- Redesign open api and syndication guide for backend rest api focus
+
 ### Version 0.2.12 (31.10.2026) - `da77431`
 
 - Resolve eslint react unescaped entity and immutability errors
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `a50eee9`
 
 - Implement Hook Sidebar dashed spring rail and fix Rail TOC scroll tracking
-
-### Version 0.2.12 (31.10.2026) - `d7b657d`
-
-- Record Rail TOC light redesign and circular waypoint nodes
 

@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.12",
     "date": "31.10.2026",
+    "commitHash": "7317af8",
+    "description": "Redesign open api and syndication guide for backend rest api focus"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
     "commitHash": "da77431",
     "description": "Resolve eslint react unescaped entity and immutability errors"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "a50eee9",
     "description": "Implement Hook Sidebar dashed spring rail and fix Rail TOC scroll tracking"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "d7b657d",
-    "description": "Record Rail TOC light redesign and circular waypoint nodes"
   }
 ];
