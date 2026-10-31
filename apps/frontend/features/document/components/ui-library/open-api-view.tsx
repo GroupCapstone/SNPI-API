@@ -55,13 +55,13 @@ const PUBLIC_FEEDS_SPECS: PublicFeedSpec[] = [
     sampleXml: `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>SNP Institute Official News &amp; Announcements</title>
-    <link>https://snp.edu.kh</link>
-    <description>Live updates and academic announcements from SNP Institute</description>
+    <title>SNPI Institute Official News &amp; Announcements</title>
+    <link>https://snpi.edu.kh</link>
+    <description>Live updates and academic announcements from SNPI Institute</description>
     <language>en-US</language>
     <item>
       <title>Semester 1 2026-2027 Registration Opens</title>
-      <link>https://snp.edu.kh/announcements/ann-2026-001</link>
+      <link>https://snpi.edu.kh/announcements/ann-2026-001</link>
       <pubDate>Fri, 30 Oct 2026 08:00:00 GMT</pubDate>
       <guid>ANN-2026-001</guid>
       <description>Online intake registration is now open for all branches.</description>
@@ -226,12 +226,37 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
   const [streamSubscribers] = React.useState<number>(1428);
   const [streamEvents] = React.useState<LiveStreamEvent[]>(INITIAL_STREAM_EVENTS);
 
-  // Copy helper
-  const handleCopy = (text: string, id: string) => {
-    if (typeof window !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(text);
+  // Copy helper with robust fallback
+  const handleCopy = async (text: string, id: string) => {
+    if (typeof window === 'undefined') return;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        setCopiedId(id);
+        setTimeout(() => setCopiedId(null), 2000);
+        return;
+      }
+    } catch {
+      // Fall through to textarea fallback
+    }
+
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+      textArea.style.opacity = '0';
+      textArea.setAttribute('readonly', '');
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 2000);
+    } catch (e) {
+      console.error('Copy failed:', e);
     }
   };
 
@@ -354,12 +379,13 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               <div className="space-y-4">
                 {/* Big Clear Headline */}
                 <h1 className="text-3xl leading-[1.12] font-black tracking-tight text-[#0A1A4A] sm:text-5xl lg:text-6xl">
-                  Welcome to SNP Open API
+                  Welcome to SNPI Open API
                 </h1>
 
                 {/* Less Description: Concise, punchy, high-impact */}
-                <p className="max-w-xl text-sm font-medium leading-relaxed text-[#0A1A4A]/75 sm:text-base">
-                  Free public REST APIs and live feeds for campus announcements, course schedules, and certificate verification.
+                <p className="max-w-xl text-sm leading-relaxed font-medium text-[#0A1A4A]/75 sm:text-base">
+                  Free public REST APIs and live feeds for campus announcements, course schedules,
+                  and certificate verification.
                 </p>
 
                 {/* 3 Quick Value Chips */}
@@ -434,7 +460,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                <p className="mt-1 truncate text-xs text-[#0A1A4A]/70">
                   Live announcements and emergency alerts.
                 </p>
 
@@ -479,7 +505,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                <p className="mt-1 truncate text-xs text-[#0A1A4A]/70">
                   Active course schedules and live seat quotas.
                 </p>
 
@@ -527,7 +553,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                <p className="mt-1 truncate text-xs text-[#0A1A4A]/70">
                   Tamper-proof student diploma validation.
                 </p>
 
@@ -570,7 +596,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                <p className="mt-1 truncate text-xs text-[#0A1A4A]/70">
                   Instant push events with zero polling.
                 </p>
 

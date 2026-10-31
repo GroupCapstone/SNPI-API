@@ -347,15 +347,15 @@ export function CyberArmorNav({
   }[size];
 
   const buttonHeights = {
-    sm: 'h-[32px] px-3.5',
-    md: 'h-[36px] px-5 sm:px-6',
-    lg: 'h-[42px] px-6 sm:px-8',
+    sm: 'h-[32px] px-2 sm:px-3.5',
+    md: 'h-[36px] px-2.5 sm:px-6',
+    lg: 'h-[42px] px-4 sm:px-8',
   }[size];
 
   const textSizes = {
-    sm: 'text-[11px]',
-    md: 'text-xs sm:text-[13px]',
-    lg: 'text-sm sm:text-base',
+    sm: 'text-[10px] sm:text-[11px]',
+    md: 'text-[11px] sm:text-[13px]',
+    lg: 'text-xs sm:text-base',
   }[size];
 
   const activeIdx = items.findIndex((item) => item.id === activeId);
@@ -389,23 +389,23 @@ export function CyberArmorNav({
                   className={cn(
                     'size-4 transition-transform duration-150',
                     isActive
-                      ? 'stroke-[2.5] text-white'
+                      ? 'stroke-[2.5] text-slate-950'
                       : isHovered
-                        ? 'scale-110 stroke-[2.2] text-slate-950'
+                        ? 'scale-105 stroke-[2] text-slate-900'
                         : 'stroke-[2] text-slate-500',
                   )}
                 />
               )}
 
-              {/* High-Contrast Bold Label */}
+              {/* High-Contrast Bold Label: ONLY Black Color Text and Bold for Active Menu */}
               <span
                 className={cn(
                   'font-sans tracking-wider uppercase transition-colors duration-150',
                   textSizes,
                   isActive
-                    ? 'font-black text-white'
+                    ? 'font-black text-black text-slate-950'
                     : isHovered
-                      ? 'font-bold text-slate-950'
+                      ? 'font-bold text-slate-900'
                       : 'font-semibold text-slate-600',
                 )}
               >
@@ -414,25 +414,14 @@ export function CyberArmorNav({
             </div>
           );
 
-          // New Style Active Menu: Vivid Solid Royal Blue Capsule with Soft Elevation Glow
+          // Default Background for Active Menu (Zero Active Blue, Clean Seamless Chassis)
           const sharedClasses = cn(
-            'group relative flex items-center justify-center cursor-pointer transition-all duration-200 active:scale-[0.98] mx-0.5 rounded-[8px]',
+            'group relative flex items-center justify-center cursor-pointer transition-all duration-150 mx-0.5 rounded-[8px]',
             buttonHeights,
             isActive
-              ? 'bg-[#0056FF] text-white shadow-[0_2px_12px_rgba(0,86,255,0.4)]'
-              : 'bg-transparent text-slate-600 hover:bg-slate-100/80 hover:text-slate-950',
+              ? 'bg-transparent text-slate-950 font-black'
+              : 'bg-transparent text-slate-600 font-semibold hover:bg-slate-100/60 hover:text-slate-950',
           );
-
-          // High-Tech Active Bottom Glint Bar Indicator
-          const indicator = isActive ? (
-            <span
-              className={cn(
-                'absolute -bottom-0.5 left-1/2 h-[2.5px] w-2/3 -translate-x-1/2 rounded-full',
-                'bg-white/90',
-                'shadow-[0_0_8px_rgba(255,255,255,0.95)]',
-              )}
-            />
-          ) : null;
 
           return (
             <React.Fragment key={tab.id}>
@@ -448,7 +437,6 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
-                  {indicator}
                 </Link>
               ) : (
                 <button
@@ -462,13 +450,12 @@ export function CyberArmorNav({
                   className={sharedClasses}
                 >
                   {buttonContent}
-                  {indicator}
                 </button>
               )}
 
-              {/* Physical Vertical Seam: Soft Slate-Lavender Seam Line (only between inactive tabs) */}
-              {!isLast && !isActive && activeIdx !== idx + 1 && (
-                <div className="relative mx-1 flex h-4 w-[1px] items-center">
+              {/* Physical Vertical Seam: Soft Slate-Lavender Seam Line between tabs */}
+              {!isLast && (
+                <div className="relative mx-1.5 flex h-4 w-[1px] items-center">
                   <span className="h-full w-[1px] bg-[#CAD3F5]" />
                 </div>
               )}

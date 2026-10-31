@@ -2,6 +2,18 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (31.10.2026) - `dc26051`
+
+- Pretty-print code blocks with syntax highlighting and bakong-inspired layout
+
+### Version 0.2.13 (31.10.2026) - `c127141`
+
+- Remove class catalog, certificate ledger, and rest api directory sections
+
+### Version 0.2.13 (31.10.2026) - `cfdd732`
+
+- Redesign 4 service cards with prominent top icon, protocol pill, and route capsule
+
 ### Version 0.2.13 (31.10.2026) - `c9ae516`
 
 - Streamline mobile navigation and cleanup demo viewports
@@ -89,16 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `afcf5a8`
 
 - Implement stacked resting deck with hover/tap expansion and brand light day mode
-
-### Version 0.2.12 (31.10.2026) - `3ed5f95`
-
-- Sync real-time changelog for navigation bar and active menu gradient redesign
-
-### Version 0.2.12 (31.10.2026) - `308d343`
-
-- Remove right toc and enforce 100% strict brand color design palette
-
-### Version 0.2.12 (31.10.2026) - `38590fa`
-
-- Record frontsite school integration studio and zero public crud policy
 

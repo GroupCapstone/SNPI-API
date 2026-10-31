@@ -22,7 +22,7 @@ export const BrandMark = ({
     >
       <Image
         src="/images/logo.png"
-        alt="SNP International School Logo"
+        alt="SNPI International School Logo"
         width={size}
         height={size}
         className="size-full object-contain p-0.5"
@@ -37,7 +37,7 @@ export const BrandMark = ({
             inverse ? 'text-white' : 'text-slate-950',
           )}
         >
-          SNP-SMS
+          SNPI-SMS
         </p>
         <p
           className={cn(
@@ -45,7 +45,7 @@ export const BrandMark = ({
             inverse ? 'text-slate-400' : 'text-slate-500',
           )}
         >
-          SNP International School
+          SNPI International School
         </p>
       </div>
     )}

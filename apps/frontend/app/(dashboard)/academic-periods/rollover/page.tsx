@@ -7,7 +7,7 @@ import { RolloverPlanList } from '@/features/rollover/components/rollover-plan-l
 import { RolloverWizard } from '@/features/rollover/components/rollover-wizard';
 
 export const metadata: Metadata = {
-  title: 'Academic Rollover Center | SNP Management System',
+  title: 'Academic Rollover Center | SNPI Management System',
   description:
     'End-of-term and end-of-year rollover engine: pre-close validation, class carrying, student progression, and draft timetable rollover.',
 };

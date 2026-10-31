@@ -37,6 +37,8 @@ import {
   StatusPage404Demo,
   SkeletonLoadingScreenDemo,
   RichTextEditorDemo,
+  HookSidebar,
+  type HookSidebarItem,
   generateAiAgentPrompt,
 } from '@/features/document/components/ui-library';
 import {
@@ -52,7 +54,6 @@ import {
   EyeOff,
   User,
   Monitor,
-  Layers,
   FileText,
   LayoutGrid,
   ChevronDown,
@@ -63,6 +64,53 @@ import {
 } from '@/components/icons';
 import { useDocsNav } from './docs-nav-context';
 import { cn } from '@/lib/utils';
+
+/**
+ * Universal bulletproof clipboard copy helper with hidden textarea execCommand fallback.
+ * Works seamlessly across mobile Safari, iOS Chrome, Android, iframes, and local network IP contexts.
+ */
+async function copyTextToClipboard(text: string): Promise<boolean> {
+  if (typeof window === 'undefined') return false;
+
+  // 1. Modern Navigator Clipboard API
+  if (navigator?.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to execCommand fallback
+    }
+  }
+
+  // 2. Reliable DOM Textarea fallback
+  try {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = '0';
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.style.fontSize = '16px';
+    textArea.setAttribute('readonly', '');
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    textArea.setSelectionRange(0, text.length);
+
+    const successful = document.execCommand('copy');
+    document.body.removeChild(textArea);
+    return successful;
+  } catch (err) {
+    console.error('All clipboard copy methods failed:', err);
+    return false;
+  }
+}
 
 export function UiLibraryView() {
   const { activeTab, setActiveTab } = useDocsNav();
@@ -90,9 +138,9 @@ export function UiLibraryView() {
   const [copiedPromptId, setCopiedPromptId] = React.useState<string | null>(null);
   const [copiedInstallId, setCopiedInstallId] = React.useState<string | null>(null);
 
-  const handleCopyPrompt = (id: string, text: string) => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(text);
+  const handleCopyPrompt = async (id: string, text: string) => {
+    const success = await copyTextToClipboard(text);
+    if (success) {
       setCopiedPromptId(id);
       setTimeout(() => setCopiedPromptId(null), 2500);
     }
@@ -193,65 +241,13 @@ export function UiLibraryView() {
 
   // Quickstart terminal copy state
   const [copiedQuickstart, setCopiedQuickstart] = React.useState(false);
-  const handleCopyQuickstart = () => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText('npx snp-ui@latest add @components');
+  const handleCopyQuickstart = async () => {
+    const success = await copyTextToClipboard('npx snpi-ui@latest add @components');
+    if (success) {
       setCopiedQuickstart(true);
       setTimeout(() => setCopiedQuickstart(false), 2500);
     }
   };
-
-  // Derive current location context for recognizable location bar
-  const currentLocation = React.useMemo(() => {
-    if (activeSectionId === 'ui-library-head') {
-      return {
-        crumb: 'Docs › UI Library',
-        title: 'Component Catalog & Overview',
-        badge: 'Homepage',
-      };
-    }
-    if (activeSectionId.startsWith('comp-')) {
-      const compId = activeSectionId.replace('comp-', '');
-      const comp = COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === compId);
-      const group = groupedCategories.find((g) => g.components.some((c) => c.id === compId));
-      if (comp) {
-        return {
-          crumb: `UI Library › ${group?.category || comp.category}`,
-          title: comp.name,
-          badge: comp.category,
-        };
-      }
-    }
-    if (activeSectionId.startsWith('cat-')) {
-      const group = groupedCategories.find((g) => g.categoryId === activeSectionId);
-      if (group) {
-        return {
-          crumb: 'UI Library › Category Menu',
-          title: group.category,
-          badge: `${group.components.length} Components`,
-        };
-      }
-    }
-    if (activeSectionId === 'brand-identity') {
-      return {
-        crumb: 'UI Library › Tokens',
-        title: 'Brand Concept Blueprint',
-        badge: 'Design System',
-      };
-    }
-    if (activeSectionId === 'design-principles' || activeSectionId === 'touch-targets') {
-      return {
-        crumb: 'UI Library › Guidelines',
-        title: 'Accessibility & Flat Design Standards',
-        badge: 'WCAG AA',
-      };
-    }
-    return {
-      crumb: 'Docs › UI Library',
-      title: 'Interactive Component Catalog',
-      badge: 'Live Feed',
-    };
-  }, [activeSectionId, groupedCategories]);
 
   // Section IDs for active tracking in Left Sticky Menu (strictly linear sequential flow)
   const scrollSectionIds = React.useMemo(() => {
@@ -336,10 +332,12 @@ export function UiLibraryView() {
     }
   }, [activeSectionId]);
 
-  const handleCopyInstall = (id: string, cmd: string) => {
-    navigator.clipboard.writeText(cmd);
-    setCopiedInstallId(id);
-    setTimeout(() => setCopiedInstallId(null), 2000);
+  const handleCopyInstall = async (id: string, cmd: string) => {
+    const success = await copyTextToClipboard(cmd);
+    if (success) {
+      setCopiedInstallId(id);
+      setTimeout(() => setCopiedInstallId(null), 2500);
+    }
   };
 
   const stateBundle = {
@@ -448,7 +446,7 @@ export function UiLibraryView() {
                           className={cn(
                             'group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-semibold transition-all select-none',
                             isCategoryActive
-                              ? 'bg-[#0056FF]/[0.08] text-[#0056FF]'
+                              ? 'bg-slate-100 font-bold text-slate-950'
                               : 'text-slate-700 hover:bg-slate-50 hover:text-slate-950',
                           )}
                         >
@@ -458,7 +456,14 @@ export function UiLibraryView() {
                             ) : (
                               <ChevronDown className="size-3.5 shrink-0 text-slate-400" />
                             )}
-                            <Folder className="size-3.5 shrink-0 text-slate-500 group-hover:text-[#0056FF]" />
+                            <Folder
+                              className={cn(
+                                'size-3.5 shrink-0 transition-colors',
+                                isCategoryActive
+                                  ? 'text-slate-900'
+                                  : 'text-slate-500 group-hover:text-slate-900',
+                              )}
+                            />
                             <span className="truncate">{group.category}</span>
                           </div>
                           <span className="font-mono text-[10px] font-normal text-slate-400">
@@ -466,29 +471,27 @@ export function UiLibraryView() {
                           </span>
                         </button>
 
-                        {/* Folder File Items */}
+                        {/* Folder File Items (Hook Sidebar with Dashed Rail Style) */}
                         {!isCollapsed && (
-                          <div className="ml-3 space-y-0.5 border-l border-slate-100 pl-6">
-                            {group.components.map((comp) => {
-                              const targetId = `comp-${comp.id}`;
-                              const isCurrentActive = activeSectionId === targetId;
-                              return (
-                                <button
-                                  key={comp.id}
-                                  type="button"
-                                  onClick={() => scrollToSection(targetId)}
-                                  className={cn(
-                                    'group flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1 text-left font-sans text-xs transition-all select-none',
-                                    isCurrentActive
-                                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                                      : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
-                                  )}
-                                >
-                                  <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-[#0056FF]" />
-                                  <span className="truncate">{comp.name}</span>
-                                </button>
-                              );
-                            })}
+                          <div className="ml-3 pl-1">
+                            <HookSidebar
+                              items={group.components.map((comp) => ({
+                                label: comp.name,
+                                icon: (
+                                  <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                                ),
+                                onClick: () => scrollToSection(`comp-${comp.id}`),
+                              }))}
+                              value={group.components.findIndex(
+                                (c) => activeSectionId === `comp-${c.id}`,
+                              )}
+                              onChange={(idx) => {
+                                const comp = group.components[idx];
+                                if (comp) scrollToSection(`comp-${comp.id}`);
+                              }}
+                              dashed={true}
+                              color="#0056FF"
+                            />
                           </div>
                         )}
                       </div>
@@ -496,35 +499,46 @@ export function UiLibraryView() {
                   })
                 )}
 
-                {/* Documentation Section Links */}
+                {/* Documentation Section Links (Hook Sidebar Dashed Rail Style) */}
                 <div className="mt-3 border-t border-slate-100 pt-3">
                   <div className="pb-1.5 font-mono text-[10px] font-bold text-slate-400 uppercase">
                     <span>Documentation</span>
                   </div>
-                  <div className="space-y-0.5">
-                    {[
-                      { id: 'brand-blueprint', label: 'Brand Blueprint' },
-                      { id: 'design-principles', label: 'Design Standards' },
-                      { id: 'touch-targets', label: 'Touch Targets' },
-                    ].map((doc) => {
-                      const isCurrentActive = activeSectionId === doc.id;
-                      return (
-                        <button
-                          key={doc.id}
-                          type="button"
-                          onClick={() => scrollToSection(doc.id)}
-                          className={cn(
-                            'group flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-left font-sans text-xs transition-all select-none',
-                            isCurrentActive
-                              ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                              : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
-                          )}
-                        >
-                          <FileText className="size-3 shrink-0 text-slate-400" />
-                          <span className="truncate">{doc.label}</span>
-                        </button>
-                      );
-                    })}
+                  <div className="ml-1">
+                    <HookSidebar
+                      items={[
+                        {
+                          label: 'Brand Blueprint',
+                          icon: (
+                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                          ),
+                          onClick: () => scrollToSection('brand-blueprint'),
+                        },
+                        {
+                          label: 'Design Standards',
+                          icon: (
+                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                          ),
+                          onClick: () => scrollToSection('design-principles'),
+                        },
+                        {
+                          label: 'Touch Targets',
+                          icon: (
+                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                          ),
+                          onClick: () => scrollToSection('touch-targets'),
+                        },
+                      ]}
+                      value={['brand-blueprint', 'design-principles', 'touch-targets'].indexOf(
+                        activeSectionId,
+                      )}
+                      onChange={(idx) => {
+                        const docs = ['brand-blueprint', 'design-principles', 'touch-targets'];
+                        if (docs[idx]) scrollToSection(docs[idx]);
+                      }}
+                      dashed={true}
+                      color="#0056FF"
+                    />
                   </div>
                 </div>
               </div>
@@ -533,64 +547,42 @@ export function UiLibraryView() {
 
           {/* COLUMN 2: Center Main Interactive Component Feed (1-Column Continuous Scroll Feed) */}
           <main className="min-w-0 flex-1 space-y-10">
-            {/* STICKY LIVE LOCATION TRACKER: Easy to recognize where we stand in each menu page */}
-            <div className="sticky top-[68px] z-30 -mx-4 border-y border-slate-200/90 bg-white/95 px-4 py-2.5 shadow-2xs backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-              <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
-                {/* Active Breadcrumb & Current Standing Position */}
-                <div className="flex min-w-0 items-center gap-2">
-                  <span className="relative flex size-2.5 shrink-0 items-center justify-center">
-                    <span className="absolute size-full animate-ping rounded-full bg-[#0056FF] opacity-75" />
-                    <span className="size-2 rounded-full bg-[#0056FF]" />
-                  </span>
-                  <div className="flex min-w-0 flex-wrap items-center gap-1.5 font-mono text-[11px]">
-                    <span className="font-bold tracking-wider text-slate-500 uppercase">
-                      {currentLocation.crumb}
-                    </span>
-                    <span className="text-slate-300">/</span>
-                    <span className="truncate font-sans text-xs font-black text-slate-950 sm:text-sm">
-                      {currentLocation.title}
-                    </span>
-                    <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                      {currentLocation.badge}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Mobile & PC Quick-Jump Category Menu Rail */}
-                <div className="no-scrollbar flex items-center gap-1 overflow-x-auto py-0.5">
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('ui-library-head')}
-                    className={cn(
-                      'shrink-0 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all select-none',
-                      activeSectionId === 'ui-library-head'
-                        ? 'bg-[#0056FF] text-white shadow-xs'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
-                    )}
-                  >
-                    Home
-                  </button>
-                  {groupedCategories.map((grp) => {
-                    const isCurrent =
-                      activeSectionId === grp.categoryId ||
-                      grp.components.some((c) => activeSectionId === `comp-${c.id}`);
-                    return (
-                      <button
-                        key={grp.category}
-                        type="button"
-                        onClick={() => scrollToSection(grp.categoryId)}
-                        className={cn(
-                          'shrink-0 rounded-full px-2.5 py-1 font-sans text-[11px] font-bold transition-all select-none',
-                          isCurrent
-                            ? 'bg-[#0056FF] text-white shadow-xs'
-                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
-                        )}
-                      >
-                        {grp.category}
-                      </button>
-                    );
-                  })}
-                </div>
+            {/* STICKY CATEGORY NAVIGATION RAIL (Zero Dot, Zero Title Clutter) */}
+            <div className="sticky top-[68px] z-30 -mx-4 border-y border-slate-200/90 bg-white/95 px-4 py-2 shadow-2xs backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+              {/* Mobile & PC Quick-Jump Category Menu Rail */}
+              <div className="no-scrollbar flex w-full items-center gap-1.5 overflow-x-auto py-0.5">
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('ui-library-head')}
+                  className={cn(
+                    'shrink-0 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all select-none',
+                    activeSectionId === 'ui-library-head'
+                      ? 'bg-[#0056FF] text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
+                  )}
+                >
+                  Home
+                </button>
+                {groupedCategories.map((grp) => {
+                  const isCurrent =
+                    activeSectionId === grp.categoryId ||
+                    grp.components.some((c) => activeSectionId === `comp-${c.id}`);
+                  return (
+                    <button
+                      key={grp.category}
+                      type="button"
+                      onClick={() => scrollToSection(grp.categoryId)}
+                      className={cn(
+                        'shrink-0 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all select-none',
+                        isCurrent
+                          ? 'bg-[#0056FF] text-white shadow-xs'
+                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
+                      )}
+                    >
+                      {grp.category}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -608,75 +600,14 @@ export function UiLibraryView() {
                   }}
                 />
 
-                {/* Ambient Horizon Arc Glow at Bottom */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center opacity-60">
-                  <div className="h-16 w-full max-w-3xl rounded-t-[100%] border-t border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
-                </div>
-
                 <div className="relative z-10 space-y-4 sm:space-y-6">
-                  {/* Top Status & Hub Switcher Bar */}
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    {/* Live System Badge */}
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700 sm:px-3 sm:py-1">
-                        <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
-                        v0.2.12 LIVE
-                      </span>
-                      <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC]/60 px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase sm:px-3 sm:py-1">
-                        SNPI Enterprise UI System
-                      </span>
-                    </div>
-
-                    {/* Related Hub Navigation Menu (UI Library & Open API) */}
-                    <div className="flex items-center gap-1 self-start rounded-full border border-slate-200/90 bg-white p-1 shadow-xs sm:self-auto">
-                      <button
-                        type="button"
-                        onClick={() => setActiveTab('library', true)}
-                        className={cn(
-                          'flex items-center gap-2 rounded-full px-3 py-1.5 font-sans text-xs font-bold transition-all sm:px-4 sm:py-2',
-                          activeTab === 'library'
-                            ? 'bg-[#0056FF] text-white shadow-xs'
-                            : 'text-slate-600 hover:text-slate-900',
-                        )}
-                      >
-                        <Layers className="size-3.5 stroke-[2.2]" />
-                        <span>UI Library</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setActiveTab('openapi', true)}
-                        className={cn(
-                          'flex items-center gap-2 rounded-full px-3 py-1.5 font-sans text-xs font-bold transition-all sm:px-4 sm:py-2',
-                          activeTab === 'openapi'
-                            ? 'bg-[#0056FF] text-white shadow-xs'
-                            : 'text-slate-600 hover:text-slate-900',
-                        )}
-                      >
-                        <FileText className="size-3.5 stroke-[2]" />
-                        <span>Open API</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Monumental Hook Title - Clear Mobile View: "UI Library" Name Only */}
-                  <div className="max-w-3xl space-y-2 sm:space-y-3">
-                    <h1 className="font-sans text-3xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl">
-                      <span className="sm:hidden">UI Library</span>
-                      <span className="hidden sm:inline">
-                        Interactive UI Library.
-                        <span className="block text-[#0056FF]">Built for Production.</span>
-                      </span>
+                  {/* Clean Title & Minimal Subtitle */}
+                  <div className="max-w-2xl space-y-1.5 sm:space-y-2">
+                    <h1 className="font-sans text-3xl font-black tracking-tight text-slate-950 sm:text-5xl md:text-6xl">
+                      UI Library
                     </h1>
-                    {/* Clear View: Less description on mobile, concise instruction */}
-                    <p className="font-sans text-xs text-slate-600 sm:text-base sm:leading-relaxed">
-                      <span className="sm:hidden">
-                        73 production components. Tap a menu category or scroll below to explore.
-                      </span>
-                      <span className="hidden sm:inline">
-                        Interactive component catalog, enterprise design tokens, and universal AI
-                        agent prompt specifications. Engineered with strict flat design, WCAG AA
-                        accessibility, 44px touch targets, and instant 1-click prompt export.
-                      </span>
+                    <p className="font-sans text-xs text-slate-600 sm:text-sm">
+                      Production components and enterprise design tokens.
                     </p>
                   </div>
 
@@ -687,7 +618,7 @@ export function UiLibraryView() {
                       <div className="flex items-center gap-2 px-2.5 text-slate-500 sm:px-3">
                         <Terminal className="size-3.5 text-[#0056FF] sm:size-4" />
                         <span className="font-mono text-[11px] font-semibold text-slate-900 sm:text-xs">
-                          npx snp-ui@latest add @components
+                          npx snpi-ui@latest add @components
                         </span>
                       </div>
                       <button
@@ -779,53 +710,15 @@ export function UiLibraryView() {
               </div>
             </section>
 
-            {/* COMPONENT DEMOS ARRANGED BY CATEGORY WITH PROMINENT SECTION HEADERS */}
+            {/* COMPONENT DEMOS ARRANGED BY CATEGORY */}
             <div className="space-y-12">
               {groupedCategories.map((group) => {
                 return (
                   <div
                     key={group.category}
                     id={group.categoryId}
-                    className="scroll-mt-36 space-y-6"
+                    className="scroll-mt-36 space-y-8"
                   >
-                    {/* PROMINENT CATEGORY SECTION BANNER: Instant recognition of where user stands */}
-                    <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-r from-[#EFF5FF] via-white to-white p-5 shadow-2xs sm:p-6">
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="flex size-11 items-center justify-center rounded-xl bg-[#0056FF] font-mono text-sm font-black text-white shadow-xs">
-                            0{group.groupNumber}
-                          </span>
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
-                                Menu Section · 0{group.groupNumber} of 0{groupedCategories.length}
-                              </span>
-                              <span className="rounded-[4px] border border-slate-200 bg-white px-2 py-0.5 font-mono text-[9px] font-bold text-slate-600">
-                                {group.components.length} Components
-                              </span>
-                            </div>
-                            <h2 className="font-sans text-xl font-black text-slate-950 sm:text-2xl">
-                              {group.category}
-                            </h2>
-                          </div>
-                        </div>
-
-                        {/* Quick Component Jump Links inside this category */}
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          {group.components.map((comp, idx) => (
-                            <button
-                              key={comp.id}
-                              type="button"
-                              onClick={() => scrollToSection(`comp-${comp.id}`)}
-                              className="cursor-pointer rounded-lg border border-slate-200 bg-white px-2.5 py-1 font-sans text-xs font-semibold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]"
-                            >
-                              0{idx + 1}. {comp.name}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
                     {/* Demos Inside This Category */}
                     <div className="space-y-8">
                       {group.components.map((comp, compIdx) => {
@@ -836,66 +729,26 @@ export function UiLibraryView() {
                           <section
                             key={comp.id}
                             id={sectionId}
-                            className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-8"
+                            className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-8"
                           >
-                            {/* Top Header Row with Exact Controls (Matching Reference media_1793457954613_79aaf0a5.png) */}
+                            {/* Top Header Row with Number, Name, Category Badge, Description */}
                             <div className="mb-4">
-                              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                                {/* Left Side: Number, Name, Category Badge, Description */}
-                                <div>
-                                  <div className="flex flex-wrap items-center gap-2">
-                                    <span className="font-mono text-xs font-black text-[#0056FF]">
-                                      0{group.groupNumber}.0{compIdx + 1}
-                                    </span>
-                                    <h2 className="font-sans text-lg font-black text-slate-950 sm:text-xl">
-                                      {comp.name}
-                                    </h2>
-                                    <span className="rounded-[4px] border border-slate-200 px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider text-slate-500 uppercase">
-                                      {comp.category}
-                                    </span>
-                                  </div>
-                                  {comp.description && (
-                                    <p className="mt-1 font-sans text-xs text-slate-500 sm:text-sm">
-                                      {comp.description}
-                                    </p>
-                                  )}
-                                </div>
-
-                                {/* Right Toolbar: Copy Button Only */}
-                                <div className="flex shrink-0 items-center">
-                                  {/* 1-Click Copy AI Agent Prompt / Code Button */}
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      handleCopyPrompt(
-                                        comp.id,
-                                        comp.codeSnippet || generateAiAgentPrompt(comp),
-                                      )
-                                    }
-                                    title={
-                                      copiedPromptId === comp.id
-                                        ? 'Code Copied to Clipboard!'
-                                        : 'Copy Component Code'
-                                    }
-                                    aria-label="Copy Component Code"
-                                    className={cn(
-                                      'group/tip relative flex size-8 cursor-pointer items-center justify-center rounded-[8px] border transition-all active:scale-95',
-                                      copiedPromptId === comp.id
-                                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                                        : 'border-slate-200 bg-white text-slate-600 hover:border-[#0056FF] hover:bg-[#E3E7FC]/40 hover:text-[#0056FF]',
-                                    )}
-                                  >
-                                    {copiedPromptId === comp.id ? (
-                                      <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
-                                    ) : (
-                                      <Copy className="size-3.5 stroke-[2]" />
-                                    )}
-                                    <span className="pointer-events-none absolute -top-8 left-1/2 z-30 -translate-x-1/2 rounded-md bg-slate-900 px-2 py-0.5 text-[10px] font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity group-hover/tip:opacity-100">
-                                      Copy Code
-                                    </span>
-                                  </button>
-                                </div>
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="font-mono text-xs font-black text-[#0056FF]">
+                                  0{group.groupNumber}.0{compIdx + 1}
+                                </span>
+                                <h2 className="font-sans text-lg font-black text-slate-950 sm:text-xl">
+                                  {comp.name}
+                                </h2>
+                                <span className="rounded-[4px] border border-slate-200 px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider text-slate-500 uppercase">
+                                  {comp.category}
+                                </span>
                               </div>
+                              {comp.description && (
+                                <p className="mt-1 hidden font-sans text-xs text-slate-500 sm:block sm:text-sm">
+                                  {comp.description}
+                                </p>
+                              )}
 
                               {/* Subtle Divider Line */}
                               <div className="mt-4 border-b border-slate-100" />
@@ -904,11 +757,11 @@ export function UiLibraryView() {
                             {/* Clean Stage Canvas (Default Full Size) & NPX Install Bar Below */}
                             {currentTab === 'preview' && (
                               <div className="space-y-3">
-                                {/* Default Full Size Stage */}
-                                <div className="relative flex min-h-[420px] w-full items-center justify-center overflow-hidden rounded-2xl bg-[#FAFAFA] p-4 sm:p-8">
+                                {/* Default Full Size Stage (Overflow-Visible to prevent dropdown/popover clipping) */}
+                                <div className="relative flex min-h-[320px] w-full items-center justify-center rounded-2xl bg-[#FAFAFA] p-2.5 sm:min-h-[420px] sm:p-8">
                                   {/* Subtle Background Grid Pattern */}
                                   <div
-                                    className="pointer-events-none absolute inset-0 opacity-[0.35]"
+                                    className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-[0.35]"
                                     style={{
                                       backgroundImage:
                                         'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FAFAFA 0.75px)',
@@ -917,53 +770,84 @@ export function UiLibraryView() {
                                     }}
                                   />
 
-                                  {/* Ambient Horizon Arc Glow */}
-                                  <div className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center opacity-70">
-                                    <div className="h-20 w-full max-w-2xl rounded-t-[100%] border-t-2 border-[#0056FF]/30 bg-gradient-to-t from-[#0056FF]/10 to-transparent blur-[1px]" />
-                                  </div>
-
                                   {/* Full Size Component Render */}
-                                  <div className="relative z-10 flex w-full max-w-4xl items-center justify-center py-6">
+                                  <div className="relative z-10 flex w-full max-w-4xl items-center justify-center py-2 sm:py-6">
                                     {renderFeedComponentDemo(comp.id, stateBundle)}
                                   </div>
                                 </div>
 
                                 {/* Component Specific NPX Command Bar Below Demo */}
-                                <div className="flex flex-col gap-2 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-2.5">
-                                  <div className="flex min-w-0 items-center gap-2">
-                                    <Terminal className="size-4 shrink-0 text-[#0056FF]" />
-                                    <span className="shrink-0 font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-                                      Install Command:
-                                    </span>
-                                    <code className="truncate rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/60 px-2.5 py-1 font-mono text-xs font-bold text-[#0056FF]">
-                                      npx snp-ui@latest add {comp.id}
+                                <div className="flex flex-col gap-2.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-2.5">
+                                  <div className="flex min-w-0 flex-wrap items-center gap-2">
+                                    <div className="flex items-center gap-1.5 text-slate-500">
+                                      <Terminal className="size-3.5 text-[#0056FF]" />
+                                      <span className="shrink-0 font-mono text-[10px] font-bold tracking-wider uppercase">
+                                        Install:
+                                      </span>
+                                    </div>
+                                    <code className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/60 px-2.5 py-1 font-mono text-xs font-bold break-all text-[#0056FF] sm:break-normal">
+                                      npx snpi-ui@latest add {comp.id}
                                     </code>
                                   </div>
 
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      handleCopyInstall(comp.id, `npx snp-ui@latest add ${comp.id}`)
-                                    }
-                                    className={cn(
-                                      'flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1 font-mono text-xs font-bold transition-all active:scale-95',
-                                      copiedInstallId === comp.id
-                                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                                        : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-                                    )}
-                                  >
-                                    {copiedInstallId === comp.id ? (
-                                      <>
-                                        <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
-                                        <span>Copied!</span>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <Copy className="size-3.5 stroke-[2]" />
-                                        <span>Copy Command</span>
-                                      </>
-                                    )}
-                                  </button>
+                                  <div className="flex w-full items-center gap-2 sm:w-auto">
+                                    {/* Copy Install Command Button */}
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        handleCopyInstall(
+                                          comp.id,
+                                          `npx snpi-ui@latest add ${comp.id}`,
+                                        )
+                                      }
+                                      className={cn(
+                                        'flex flex-1 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95 sm:flex-none sm:py-1',
+                                        copiedInstallId === comp.id
+                                          ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                                      )}
+                                      title={`Copy install command for ${comp.name}`}
+                                    >
+                                      {copiedInstallId === comp.id ? (
+                                        <>
+                                          <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
+                                          <span>Command Copied!</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Copy className="size-3.5 stroke-[2]" />
+                                          <span>Copy Command</span>
+                                        </>
+                                      )}
+                                    </button>
+
+                                    {/* 1-Click Copy AI Agent Prompt Button */}
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
+                                      }
+                                      className={cn(
+                                        'flex flex-1 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95 sm:flex-none sm:py-1',
+                                        copiedPromptId === comp.id
+                                          ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                                      )}
+                                      title={`Copy AI agent prompt specification for ${comp.name}`}
+                                    >
+                                      {copiedPromptId === comp.id ? (
+                                        <>
+                                          <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
+                                          <span>Prompt Copied!</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Sparkles className="size-3.5 stroke-[2] text-[#0056FF]" />
+                                          <span>Copy Prompt Text</span>
+                                        </>
+                                      )}
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             )}
@@ -1334,36 +1218,31 @@ function renderFeedComponentDemo(
 
     case 'chip':
       return (
-        <div className="flex w-full flex-col items-center gap-5">
+        <div className="flex w-full flex-col items-center">
           {/* Filter Stage */}
-          <div className="w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  Student Discipline Filter Chips
-                </h4>
-                <p className="font-sans text-xs text-slate-500">
-                  Select tags to query matching student enrollment profiles
-                </p>
-              </div>
+          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs sm:p-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <h4 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
+                Filter Chips
+              </h4>
               <button
                 type="button"
                 onClick={() => state.setSelectedChips(['All'])}
                 className="font-mono text-xs font-bold text-[#0056FF] hover:underline"
               >
-                Reset All
+                Reset
               </button>
             </div>
 
-            <div className="mt-4 space-y-3">
+            <div className="mt-3.5 space-y-3">
               <div>
-                <span className="mb-2 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                  Academic Disciplines:
+                <span className="mb-1.5 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                  Disciplines:
                 </span>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   {[
                     'All',
-                    'Software Engineering',
+                    'Software',
                     'Computer Science',
                     'Cybersecurity',
                     'Information Systems',
@@ -1384,10 +1263,10 @@ function renderFeedComponentDemo(
               </div>
 
               <div>
-                <span className="mb-2 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                  Enrollment Status:
+                <span className="mb-1.5 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                  Status:
                 </span>
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   {['Enrolled', 'Active Term', 'Graduating 2026', 'On Leave'].map((label) => {
                     const isActive = state.selectedChips.includes(label);
                     return (
@@ -1404,13 +1283,16 @@ function renderFeedComponentDemo(
               </div>
             </div>
 
-            <div className="mt-5 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3.5 font-mono text-xs text-slate-700">
-              Query Result:{' '}
-              <strong className="text-[#0056FF]">
-                {state.selectedChips.includes('All') ? '1,840' : state.selectedChips.length * 312}
-              </strong>{' '}
-              active student records matching filters:{' '}
-              <strong>[{state.selectedChips.join(', ')}]</strong>
+            <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/60 px-3 py-2 font-mono text-xs text-slate-700">
+              <span>
+                Records:{' '}
+                <strong className="text-[#0056FF]">
+                  {state.selectedChips.includes('All') ? '1,840' : state.selectedChips.length * 312}
+                </strong>
+              </span>
+              <span className="max-w-[160px] truncate font-bold text-slate-900 sm:max-w-none">
+                [{state.selectedChips.join(', ')}]
+              </span>
             </div>
           </div>
         </div>
@@ -1448,22 +1330,17 @@ function renderFeedComponentDemo(
           </div>
 
           {/* Interactive Switches Panel */}
-          <div className="w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  Campus Automation Telemetry Switches
-                </h4>
-                <p className="font-sans text-xs text-slate-500">
-                  Toggle distributed microservices and hardware gate scanners
-                </p>
-              </div>
-              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                Enterprise Mode
+          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs sm:p-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <h4 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
+                Telemetry Switches
+              </h4>
+              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                Enterprise
               </span>
             </div>
 
-            <div className="mt-4 space-y-3 font-sans">
+            <div className="mt-4 space-y-2.5 font-sans">
               {[
                 {
                   id: 'sync',
@@ -1496,32 +1373,35 @@ function renderFeedComponentDemo(
               ].map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-[4px] border border-slate-100 bg-slate-50 p-4 transition-all hover:border-slate-200 hover:bg-white"
+                  className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 p-3 transition-all hover:border-slate-200 hover:bg-white sm:p-3.5"
                 >
-                  <div className="pr-4">
-                    <div className="flex items-center gap-2">
+                  <div className="min-w-0 pr-3">
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                       <span className="text-xs font-bold text-slate-900">{item.title}</span>
                       <span
                         className={cn(
-                          'rounded-[4px] px-2 py-0.5 font-mono text-[9px] font-bold uppercase',
+                          'rounded-[4px] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase',
                           item.checked
                             ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
                             : 'border border-slate-200 bg-slate-100 text-slate-500',
                         )}
                       >
-                        {item.checked ? 'Active · 100% Operational' : 'Paused · Standby'}
+                        <span className="sm:hidden">{item.checked ? 'Active' : 'Standby'}</span>
+                        <span className="hidden sm:inline">
+                          {item.checked ? 'Active · 100% Operational' : 'Paused · Standby'}
+                        </span>
                       </span>
                     </div>
-                    <p className="mt-0.5 text-[11px] text-slate-500">{item.desc}</p>
+                    <p className="mt-0.5 hidden text-[11px] text-slate-500 sm:block">{item.desc}</p>
                   </div>
                   <LibrarySwitch checked={item.checked} onCheckedChange={item.setter} />
                 </div>
               ))}
             </div>
 
-            <div className="mt-5 flex items-center justify-between rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3.5 font-mono text-xs text-slate-700">
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/60 px-3 py-2 font-mono text-[11px] text-slate-700 sm:text-xs">
               <span>
-                Active Services:{' '}
+                Active:{' '}
                 <strong className="text-[#0056FF]">
                   {
                     [
@@ -1535,7 +1415,7 @@ function renderFeedComponentDemo(
                 </strong>
               </span>
               <span>
-                Cluster Latency: <strong className="text-slate-900">12ms</strong>
+                Latency: <strong className="text-slate-900">12ms</strong>
               </span>
               <span>
                 Health: <strong className="text-emerald-700">OPTIMAL</strong>
@@ -1547,19 +1427,14 @@ function renderFeedComponentDemo(
 
     case 'dropdown':
       return (
-        <div className="flex w-full flex-col items-center gap-5">
-          <div className="w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  Design Tokens & Campus Selectors
-                </h4>
-                <p className="font-sans text-xs text-slate-500">
-                  Select typography pairings and campus branch configurations
-                </p>
-              </div>
-              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                Live Selection
+        <div className="flex w-full flex-col items-center">
+          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs sm:p-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <h4 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
+                Campus Selectors
+              </h4>
+              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                Live
               </span>
             </div>
 

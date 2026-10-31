@@ -4,7 +4,7 @@ import { BranchTable } from '@/features/branches/components/branch-table';
 
 export const metadata = {
   title: 'School Branches · Organization · SNP-SMS',
-  description: 'Manage campus locations and branch branches across SNP International School',
+  description: 'Manage campus locations and branch branches across SNPI International School',
 };
 
 export default function BranchesPage() {

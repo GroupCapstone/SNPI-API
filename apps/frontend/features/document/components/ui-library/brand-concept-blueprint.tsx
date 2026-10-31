@@ -9,12 +9,42 @@ import { cn } from '@/lib/utils';
 export function BrandConceptBlueprint() {
   const [copiedToken, setCopiedToken] = React.useState<string | null>(null);
 
-  const handleCopy = (token: string, label: string) => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(token);
+  const handleCopy = async (token: string, label: string) => {
+    if (typeof window === 'undefined') return;
+    let ok = false;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(token);
+        ok = true;
+      }
+    } catch {
+      // Fall through to fallback
     }
-    setCopiedToken(label);
-    setTimeout(() => setCopiedToken(null), 2000);
+
+    if (!ok) {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = token;
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.opacity = '0';
+        textArea.setAttribute('readonly', '');
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        ok = true;
+      } catch (e) {
+        console.error('Copy token failed:', e);
+      }
+    }
+
+    if (ok) {
+      setCopiedToken(label);
+      setTimeout(() => setCopiedToken(null), 2000);
+    }
   };
 
   const cssTokens = `:root {
@@ -303,7 +333,7 @@ export function BrandConceptBlueprint() {
               Official Identity Asset
             </span>
             <h3 className="font-sans text-xl font-extrabold text-slate-950 sm:text-2xl">
-              SNP International School Logo
+              SNPI International School Logo
             </h3>
             <p className="max-w-md font-sans text-xs text-slate-600 sm:text-sm">
               The official institutional seal and brand mark for all digital interfaces, print
@@ -318,7 +348,7 @@ export function BrandConceptBlueprint() {
               <div className="relative size-14 shrink-0 overflow-hidden rounded-full border border-slate-100 bg-white p-1 shadow-2xs">
                 <Image
                   src="/images/logo.png"
-                  alt="SNP International School Logo - Light Canvas"
+                  alt="SNPI International School Logo - Light Canvas"
                   width={56}
                   height={56}
                   className="size-full object-contain"
@@ -336,7 +366,7 @@ export function BrandConceptBlueprint() {
               <div className="relative size-14 shrink-0 overflow-hidden rounded-full border border-white/40 bg-white p-1 shadow-2xs">
                 <Image
                   src="/images/logo.png"
-                  alt="SNP International School Logo - Soft Lavender Canvas"
+                  alt="SNPI International School Logo - Soft Lavender Canvas"
                   width={56}
                   height={56}
                   className="size-full object-contain"

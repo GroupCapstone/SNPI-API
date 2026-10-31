@@ -74,7 +74,7 @@ export default function LoginPage() {
           <div className="flex justify-center">
             <Image
               src="/images/logo.png"
-              alt="SNP International School Logo"
+              alt="SNPI International School Logo"
               width={80}
               height={80}
               className="size-20 object-contain"

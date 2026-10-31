@@ -198,7 +198,7 @@ export const StudentProfile: React.FC<StudentProfileProps> = ({ studentId }) => 
   const schoolName =
     typeof student.schoolId === 'object' && student.schoolId !== null
       ? `${student.schoolId.code} · ${student.schoolId.nameEn}`
-      : String(student.schoolId || 'SNP School Network');
+      : String(student.schoolId || 'SNPI School Network');
 
   const primaryGuardian =
     student.guardians?.find((g) => g.isPrimary) ||

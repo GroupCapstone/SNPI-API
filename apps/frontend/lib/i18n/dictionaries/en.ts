@@ -2,10 +2,10 @@ import type { TranslationDictionary } from '../types';
 
 export const en: TranslationDictionary = {
   common: {
-    appName: 'SNP School Management System',
-    appNameKh: 'SNP International School',
-    schoolName: 'SNP International School',
-    schoolNameKh: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី',
+    appName: 'SNPI School Management System',
+    appNameKh: 'SNPI International School',
+    schoolName: 'SNPI International School',
+    schoolNameKh: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី អាយ',
     save: 'Save',
     cancel: 'Cancel',
     delete: 'Delete',
@@ -136,10 +136,10 @@ export const en: TranslationDictionary = {
     greetingEvening: 'Good evening',
     greetingGeneric: 'Good day',
     overviewSuperAdmin:
-      'Central administrative overview of SNP International School multi-branch system.',
+      'Central administrative overview of SNPI International School multi-branch system.',
     overviewBranchManager:
       'Campus operations, staff management, and academic roster for your branch.',
-    overviewGeneric: 'Welcome to the SNP International School portal.',
+    overviewGeneric: 'Welcome to the SNPI International School portal.',
     allCampuses: 'All Campuses',
     activeBranch: 'Active Branch',
     singleCampus: 'Single Campus',
@@ -348,7 +348,7 @@ export const en: TranslationDictionary = {
   },
   branch: {
     title: 'School Branches',
-    subtitle: 'Manage campus locations and branch branches across SNP International School',
+    subtitle: 'Manage campus locations and branch branches across SNPI International School',
     multiBranchMgmt: 'Multi-Branch Management',
     addBranch: 'Add Branch',
     dialogTitleAdd: 'Add New Branch',

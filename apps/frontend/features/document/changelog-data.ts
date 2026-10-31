@@ -9,6 +9,24 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "31.10.2026",
+    "commitHash": "dc26051",
+    "description": "Pretty-print code blocks with syntax highlighting and bakong-inspired layout"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
+    "commitHash": "c127141",
+    "description": "Remove class catalog, certificate ledger, and rest api directory sections"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
+    "commitHash": "cfdd732",
+    "description": "Redesign 4 service cards with prominent top icon, protocol pill, and route capsule"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
     "commitHash": "c9ae516",
     "description": "Streamline mobile navigation and cleanup demo viewports"
   },
@@ -137,23 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "afcf5a8",
     "description": "Implement stacked resting deck with hover/tap expansion and brand light day mode"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "3ed5f95",
-    "description": "Sync real-time changelog for navigation bar and active menu gradient redesign"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "308d343",
-    "description": "Remove right toc and enforce 100% strict brand color design palette"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "38590fa",
-    "description": "Record frontsite school integration studio and zero public crud policy"
   }
 ];

@@ -9,11 +9,11 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'SNP-SMS',
-    template: '%s · SNP-SMS',
+    default: 'SNPI-SMS',
+    template: '%s · SNPI-SMS',
   },
-  description: 'SNP Integrated Multi-Branch School Management System',
-  applicationName: 'SNP-SMS',
+  description: 'SNPI Integrated Multi-Branch School Management System',
+  applicationName: 'SNPI-SMS',
   icons: {
     icon: '/images/logo.png',
     apple: '/images/logo.png',

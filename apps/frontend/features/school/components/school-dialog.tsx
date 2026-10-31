@@ -189,7 +189,7 @@ export const SchoolDialog = ({ open, onOpenChange, school }: SchoolDialogProps) 
               </label>
               <Input
                 {...register('nameEn')}
-                placeholder="e.g. SNP International School"
+                placeholder="e.g. SNPI International School"
                 error={Boolean(errors.nameEn)}
               />
               {errors.nameEn && (

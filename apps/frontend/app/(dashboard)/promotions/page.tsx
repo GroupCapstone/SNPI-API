@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { TermResultTable } from '@/features/term-results/components/term-result-table';
 
 export const metadata: Metadata = {
-  title: 'Student Promotion & Repeat Records | SNP Management System',
+  title: 'Student Promotion & Repeat Records | SNPI Management System',
   description:
     'Track academic promotion, level progression, and repeat status across all student cohorts.',
 };

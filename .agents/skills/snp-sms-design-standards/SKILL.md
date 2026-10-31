@@ -284,6 +284,19 @@ Refer to `cyber-armor-nav-manual.md` for the aerospace mecha HUD console specifi
 - **Strictly Light-Day-First Modern UI**: All telemetry monitors, packet streams, and documentation cards must strictly use **Pure White (`#FFFFFF`)** or **Ice Tint (`#EFF5FF`)** backgrounds with Soft Lavender borders (`#CAD3F5`), Deep Navy (`#0A1A4A`) high-contrast text, and Royal Blue (`#0056FF`) accent pills.
 - **Zero Dark Hacker Inversion**: Never invert page sections into high-contrast dark terminal boxes or hacker consoles in documentation views.
 
+### 7.11 Mandatory Zero Blue Dot & Clean Navigation Standard (Zero Dots & Zero Shifting Breadcrumbs)
+- **Strict Prohibition of Blue Indicator Dots**: Under no circumstances should animated pinging or static blue dots (`animate-ping bg-[#0056FF]`, live indicator status dots, pulsing waypoint rings) be used in navigation bars, breadcrumbs, titles, sub-headers, or status pills. Never use this blue dot style anywhere in the application or documentation.
+- **Clean Sticky Sub-Navigation Rails**: Sticky sub-navigation bars must strictly render clean, direct category jump pills (`Home`, `Navigation`, `Inputs`, `Feedback`, `Display`, `AI Kit`, `Forms`) without dynamic location breadcrumbs, shifting title texts, or pulsing dots taking up horizontal space.
+
+### 7.12 Mandatory Full Brand Name SNPI Rule (Always SNPI, Never Bare SNP)
+- **Full Brand Identity**: The institutional identity of this platform is **SNPI** (SNPI International School / SNPI-SMS).
+- **Prohibition on Bare "SNP"**: Never truncate or refer to the institution as bare "SNP". Always use **SNPI** across all UI copy, documentation headers, component registries, badges, school titles, and metadata.
+- **Official References**:
+  - Educational Institution: **SNPI International School** (Khmer: **សាលាអន្តរជាតិ អេស អ៊ិន ភី អាយ · SNPI INTERNATIONAL SCHOOL**)
+  - System / Monorepo: **SNPI-SMS**
+  - Package: **`snpi-ui`**
+  - Custom Domain: **`*.snpi.edu.kh`**
+
 
 
 
