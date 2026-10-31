@@ -15,6 +15,9 @@ This skill establishes the mandatory workflow for recording skill updates, API c
 ## 1. Core Rule & Objective
 
 * **Always Record Changes**: Every time a skill is modified, an API endpoint is added/altered, or a commit is prepared, the changelog must be updated immediately so the development team and external partners can track progress in real-time.
+* **Mandatory Developer Attribution & Human-Readable Summary**:
+  - Always write clean, easy-to-read human summaries (mini-article format) explaining the feature, bug fix, or architecture enhancement.
+  - Always clearly attribute which developer performed the work (`Developer: <Name>`), both in `CHANGELOG.md`, in `/document` changelog cards, and in all real-time Telegram bot alerts.
 * **Dual Output Synchronization**:
   1. **Live Technical Document**: [`apps/frontend/features/document/changelog-data.ts`](file:///Users/Apple16/Desktop/SNP-SMS/apps/frontend/features/document/changelog-data.ts), displayed on [`/document`](http://localhost:3000/document).
   2. **Root Repository Log**: [`CHANGELOG.md`](file:///Users/Apple16/Desktop/SNP-SMS/CHANGELOG.md).

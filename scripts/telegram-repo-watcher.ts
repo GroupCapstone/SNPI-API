@@ -375,10 +375,15 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
     const securitySummary =
       security.totalAlerts > 0 ? `${security.totalAlerts} open advisories` : '0 alerts (clean)';
 
-    const pushMessage = `<b>[PUSH · FIX]</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${escapeHtml(packageVersion)}</b>
-<b>${escapeHtml(commit.message)}</b>
+    // Generate clean human summary from conventional commit
+    const humanSummary = commit.message
+      .replace(/^(feat|fix|docs|refactor|test|chore|style)(\([^)]+\))?:\s*/i, '')
+      .replace(/^./, (c) => c.toUpperCase());
 
-• <b>Author:</b> ${escapeHtml(authorDisplay)}
+    const pushMessage = `<b>[PUSH · FIX]</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${escapeHtml(packageVersion)}</b>
+<b>${escapeHtml(humanSummary)}</b>
+
+• <b>Developer:</b> ${escapeHtml(authorDisplay)}
 • <b>Commit:</b> <code>${escapeHtml(commit.hash)}</code>
 • <b>Changes:</b> ${diffSummary}
 • <b>Security:</b> ${securitySummary}
