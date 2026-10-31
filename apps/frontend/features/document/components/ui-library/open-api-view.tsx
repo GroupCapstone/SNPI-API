@@ -7,7 +7,6 @@ import {
   Check,
   Copy,
   Server,
-  Search,
   Calendar,
   CircleAlert,
   CircleCheck,
@@ -15,11 +14,8 @@ import {
   Layers,
   Radio,
   ShieldCheck,
-  User,
-  ExternalLink,
   ChevronRight,
   ArrowRight,
-  BookOpen,
   Terminal,
   FileText,
   Info,
@@ -28,6 +24,7 @@ import {
 } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import { cn } from '@/lib/utils';
+import { PrettyCodeBlock } from './pretty-code-block';
 
 // ============================================================================
 // DATA STRUCTURES: BACKEND API & SYNDICATION SPECIFICATIONS
@@ -139,81 +136,13 @@ const PUBLIC_FEEDS_SPECS: PublicFeedSpec[] = [
   },
 ];
 
-interface ClassRosterItem {
-  id: string;
-  code: string;
-  name: string;
-  instructor: string;
-  department: string;
-  schedule: string;
-  room: string;
-  enrolled: number;
-  capacity: number;
-  status: 'Open' | 'Filling Fast' | 'Waitlist';
-}
-
-const SAMPLE_CLASSES_CATALOG: ClassRosterItem[] = [
-  {
-    id: 'cls-01',
-    code: 'CLS-2026-CS101',
-    name: 'Introduction to Computer Science & Algorithms',
-    instructor: 'Dr. Vannak Keo',
-    department: 'Software Engineering',
-    schedule: 'Mon / Wed 08:00 - 10:00',
-    room: 'Lab Room 302 (Main Campus)',
-    enrolled: 26,
-    capacity: 30,
-    status: 'Open',
-  },
-  {
-    id: 'cls-02',
-    code: 'CLS-2026-NET201',
-    name: 'Advanced Enterprise Network Architecture',
-    instructor: 'Prof. Sophea Chhum',
-    department: 'Network Engineering',
-    schedule: 'Tue / Thu 10:30 - 12:30',
-    room: 'Cisco Networking Lab A',
-    enrolled: 29,
-    capacity: 30,
-    status: 'Filling Fast',
-  },
-  {
-    id: 'cls-03',
-    code: 'CLS-2026-DATA301',
-    name: 'Distributed Database Systems & Sharding',
-    instructor: 'Eng. Ratanak Tea',
-    department: 'Data Engineering',
-    schedule: 'Mon / Fri 13:30 - 15:30',
-    room: 'Lecture Hall 104',
-    enrolled: 24,
-    capacity: 35,
-    status: 'Open',
-  },
-  {
-    id: 'cls-04',
-    code: 'CLS-2026-SEC401',
-    name: 'Applied Cryptography & Zero Trust Defenses',
-    instructor: 'Dr. Mengly Sor',
-    department: 'Cybersecurity',
-    schedule: 'Wed / Fri 16:00 - 18:00',
-    room: 'Security Operations Center (SOC)',
-    enrolled: 25,
-    capacity: 25,
-    status: 'Waitlist',
-  },
-  {
-    id: 'cls-05',
-    code: 'CLS-2026-AI501',
-    name: 'Autonomous AI Agent Architecture & Swarms',
-    instructor: 'Lead Arch. Sokha Chan',
-    department: 'Artificial Intelligence',
-    schedule: 'Sat 08:30 - 12:00',
-    room: 'AI Innovation Studio',
-    enrolled: 18,
-    capacity: 25,
-    status: 'Open',
-  },
-];
+const SAMPLE_ERROR_RESPONSE = {
+  statusCode: 404,
+  error: 'Not Found',
+  message: 'Feed publication window closed or entity expired.',
+  timestamp: '2026-10-31T16:20:00.000Z',
+  documentationUrl: 'https://snp.edu.kh/document/openapi#public-feeds',
+};
 
 interface LiveStreamEvent {
   id: string;
@@ -261,83 +190,12 @@ const INITIAL_STREAM_EVENTS: LiveStreamEvent[] = [
   },
 ];
 
-interface RestEndpointSummary {
-  method: 'GET' | 'POST' | 'PATCH' | 'DELETE';
-  path: string;
-  scope: string;
-  rateLimit: string;
-  cacheControl: string;
-  description: string;
-}
-
-const BACKEND_PUBLIC_ENDPOINTS: RestEndpointSummary[] = [
-  {
-    method: 'GET',
-    path: '/api/v1/health',
-    scope: 'Public',
-    rateLimit: '120 req / 1 min',
-    cacheControl: 'no-store',
-    description: 'Cluster health and MongoDB replica set status.',
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/reports/certificates/verify/:code',
-    scope: 'Public',
-    rateLimit: '60 req / 15 min',
-    cacheControl: 'no-store',
-    description: 'SHA-256 ledger proof & tamper-detection verification (ADR-0006).',
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/classes',
-    scope: 'Public Projection',
-    rateLimit: '120 req / 1 min',
-    cacheControl: 'public, max-age=60',
-    description: 'Syndicated course catalog, schedules, and seat quotas.',
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/public/rss/announcements.xml',
-    scope: 'Public',
-    rateLimit: '300 req / 5 min',
-    cacheControl: 'public, max-age=300',
-    description: 'RSS 2.0 XML feed of campus news and notices.',
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/public/feed/alerts.json',
-    scope: 'Public',
-    rateLimit: '300 req / 5 min',
-    cacheControl: 'public, max-age=60',
-    description: 'JSON feed of high-priority emergency advisories.',
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/stream/events',
-    scope: 'Public SSE',
-    rateLimit: '50 concurrent',
-    cacheControl: 'text/event-stream',
-    description: 'Persistent Server-Sent Events stream for live mutations.',
-  },
-  {
-    method: 'GET',
-    path: '/api/v1/docs/openapi.json',
-    scope: 'Public Contract',
-    rateLimit: '120 req / 1 min',
-    cacheControl: 'public, max-age=3600',
-    description: 'OpenAPI 3.1.0 machine-readable specification.',
-  },
-];
-
 const GUIDE_NAV_ITEMS = [
   { id: 'open-api-head', label: 'Overview', tag: '01' },
   { id: 'available-services', label: 'Core Services', tag: '02' },
   { id: 'public-feeds', label: 'Public Feeds (RSS 2.0)', tag: '03' },
-  { id: 'class-catalog-api', label: 'Class Catalog REST API', tag: '04' },
-  { id: 'certificate-ledger-api', label: 'Certificate Ledger API', tag: '05' },
-  { id: 'realtime-stream', label: 'Real-Time SSE Stream', tag: '06' },
-  { id: 'rest-api-directory', label: 'API Directory', tag: '07' },
-  { id: 'changelogs', label: 'Releases', tag: '08' },
+  { id: 'realtime-stream', label: 'Real-Time SSE Stream', tag: '04' },
+  { id: 'changelogs', label: 'Releases', tag: '05' },
 ];
 
 // ============================================================================
@@ -354,22 +212,14 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
   );
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
 
-  // Feed preview format state (xml or json)
-  const [feedFormatTab, setFeedFormatTab] = React.useState<Record<string, 'xml' | 'json'>>({
-    'feed-news-rss': 'xml',
-    'feed-alerts-json': 'json',
-    'feed-calendar-json': 'json',
+  // Feed specimen status tab (success, notfound, or xml)
+  const [feedResponseTab, setFeedResponseTab] = React.useState<
+    Record<string, 'success' | 'notfound' | 'xml'>
+  >({
+    'feed-news-rss': 'success',
+    'feed-alerts-json': 'success',
+    'feed-calendar-json': 'success',
   });
-
-  // Class Roster filter state
-  const [classSearch, setClassSearch] = React.useState<string>('');
-  const [classFilterStatus, setClassFilterStatus] = React.useState<string>('All');
-  const [classCodeLanguage, setClassCodeLanguage] = React.useState<
-    'curl' | 'typescript' | 'python'
-  >('curl');
-
-  // Verification Ledger state
-  const [verifyStatusTab, setVerifyStatusTab] = React.useState<'valid' | 'tampered'>('valid');
 
   // SSE Stream telemetry
   const [streamLatency] = React.useState<number>(14);
@@ -434,13 +284,13 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
     <div ref={rootRef} className="min-h-screen w-full bg-[#FFFFFF] text-[#0A1A4A]">
       <div className="mx-auto flex max-w-7xl items-start gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
         {/* =================================================================== */}
-        {/* MINIMAL LEFT NAVIGATION (DESKTOP ONLY) */}
+        {/* SLEEK LEFT NAVIGATION (BAKONG REFERENCE AESTHETIC) */}
         {/* =================================================================== */}
-        <aside className="sticky top-28 hidden w-60 shrink-0 space-y-4 self-start md:block">
-          <div className="rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 shadow-xs">
-            <div className="mb-2 border-b border-[#CAD3F5] px-3 py-2">
+        <aside className="sticky top-28 hidden w-64 shrink-0 space-y-4 self-start md:block">
+          <div className="rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 shadow-xs">
+            <div className="mb-2.5 border-b border-[#CAD3F5]/80 px-2.5 pb-2">
               <span className="text-[11px] font-black tracking-widest text-[#0056FF] uppercase">
-                Directory
+                On This Page
               </span>
             </div>
 
@@ -452,14 +302,21 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
                     className={cn(
-                      'flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs font-semibold transition-colors',
+                      'group flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-xs transition-all',
                       isActive
-                        ? 'border-l-2 border-[#0056FF] bg-[#EFF5FF] text-[#0056FF]'
-                        : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                        ? 'border border-[#0056FF]/25 bg-[#EFF5FF] font-bold text-[#0056FF] shadow-2xs'
+                        : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF]/70 hover:text-[#0056FF]',
                     )}
                   >
                     <span className="truncate">{item.label}</span>
-                    <span className="font-mono text-[10px] text-[#0056FF] opacity-60">
+                    <span
+                      className={cn(
+                        'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-bold transition-colors',
+                        isActive
+                          ? 'bg-[#0056FF] text-white'
+                          : 'bg-[#E3E7FC]/60 text-[#0056FF] group-hover:bg-[#E3E7FC]',
+                      )}
+                    >
                       {item.tag}
                     </span>
                   </button>
@@ -748,13 +605,13 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
 
             <div className="space-y-3.5">
               {PUBLIC_FEEDS_SPECS.map((feed) => {
-                const currentFormat = feedFormatTab[feed.id] || (feed.sampleXml ? 'xml' : 'json');
+                const currentStatus = feedResponseTab[feed.id] || 'success';
                 const hasXml = Boolean(feed.sampleXml);
 
                 return (
                   <div
                     key={feed.id}
-                    className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs"
+                    className="overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs"
                   >
                     {/* Feed Header */}
                     <div className="flex flex-col gap-2.5 border-b border-[#CAD3F5] bg-[#EFF5FF] p-3.5 sm:flex-row sm:items-center sm:justify-between sm:p-4">
@@ -789,49 +646,102 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                       </div>
                     </div>
 
-                    {/* Specimen Tabs & Code Container */}
-                    <div className="space-y-2 p-3.5 sm:p-4">
-                      <div className="flex items-center justify-between border-b border-[#CAD3F5] pb-2">
-                        <span className="text-[11px] font-bold tracking-wider text-[#0056FF] uppercase">
-                          Sample Response
-                        </span>
-                        <div className="flex items-center gap-1 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-0.5">
+                    {/* Specimen Tabs & Pretty Code Container (Bakong Reference Aesthetic) */}
+                    <div className="space-y-3 p-3.5 sm:p-4">
+                      <div className="flex flex-col gap-2 border-b border-[#CAD3F5] pb-2.5 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] font-black tracking-widest text-[#0056FF] uppercase">
+                            Sample Response
+                          </span>
+                          <span className="rounded-full bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
+                            RFC-7807 Compliant
+                          </span>
+                        </div>
+
+                        {/* Status Response Tabs (Success, XML, NotFound) */}
+                        <div className="flex flex-wrap items-center gap-1 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-1">
+                          <button
+                            onClick={() =>
+                              setFeedResponseTab((prev) => ({ ...prev, [feed.id]: 'success' }))
+                            }
+                            className={cn(
+                              'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all',
+                              currentStatus === 'success'
+                                ? 'bg-[#0056FF] text-white shadow-xs'
+                                : 'text-[#0A1A4A] hover:bg-[#E3E7FC] hover:text-[#0056FF]',
+                            )}
+                          >
+                            <span className="size-1.5 rounded-full bg-emerald-400" />
+                            <span>Success (200 OK)</span>
+                          </button>
+
                           {hasXml && (
                             <button
                               onClick={() =>
-                                setFeedFormatTab((prev) => ({ ...prev, [feed.id]: 'xml' }))
+                                setFeedResponseTab((prev) => ({ ...prev, [feed.id]: 'xml' }))
                               }
                               className={cn(
-                                'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
-                                currentFormat === 'xml'
-                                  ? 'bg-[#0056FF] text-[#FFFFFF]'
-                                  : 'text-[#0A1A4A] hover:text-[#0056FF]',
+                                'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all',
+                                currentStatus === 'xml'
+                                  ? 'bg-[#0056FF] text-white shadow-xs'
+                                  : 'text-[#0A1A4A] hover:bg-[#E3E7FC] hover:text-[#0056FF]',
                               )}
                             >
-                              XML
+                              <span className="size-1.5 rounded-full bg-sky-400" />
+                              <span>RSS 2.0 XML</span>
                             </button>
                           )}
+
                           <button
                             onClick={() =>
-                              setFeedFormatTab((prev) => ({ ...prev, [feed.id]: 'json' }))
+                              setFeedResponseTab((prev) => ({ ...prev, [feed.id]: 'notfound' }))
                             }
                             className={cn(
-                              'rounded px-2.5 py-0.5 text-xs font-semibold transition-colors',
-                              currentFormat === 'json'
-                                ? 'bg-[#0056FF] text-[#FFFFFF]'
-                                : 'text-[#0A1A4A] hover:text-[#0056FF]',
+                              'flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all',
+                              currentStatus === 'notfound'
+                                ? 'bg-[#0056FF] text-white shadow-xs'
+                                : 'text-[#0A1A4A] hover:bg-[#E3E7FC] hover:text-[#0056FF]',
                             )}
                           >
-                            JSON
+                            <span className="size-1.5 rounded-full bg-rose-400" />
+                            <span>NotFound (404)</span>
                           </button>
                         </div>
                       </div>
 
-                      <pre className="max-h-52 overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
-                        {currentFormat === 'xml' && feed.sampleXml
-                          ? feed.sampleXml
-                          : JSON.stringify(feed.sampleJson, null, 2)}
-                      </pre>
+                      {/* Pretty-Printed Code Window */}
+                      {currentStatus === 'success' && (
+                        <PrettyCodeBlock
+                          code={JSON.stringify(feed.sampleJson, null, 2)}
+                          language="json"
+                          title={`${feed.id}.json`}
+                          statusBadge="200 OK"
+                          statusType="success"
+                          maxHeight="max-h-72"
+                        />
+                      )}
+
+                      {currentStatus === 'xml' && feed.sampleXml && (
+                        <PrettyCodeBlock
+                          code={feed.sampleXml}
+                          language="xml"
+                          title={`${feed.id}.xml`}
+                          statusBadge="200 OK · XML"
+                          statusType="info"
+                          maxHeight="max-h-72"
+                        />
+                      )}
+
+                      {currentStatus === 'notfound' && (
+                        <PrettyCodeBlock
+                          code={JSON.stringify(SAMPLE_ERROR_RESPONSE, null, 2)}
+                          language="json"
+                          title="error-404.json"
+                          statusBadge="404 NOT FOUND"
+                          statusType="error"
+                          maxHeight="max-h-56"
+                        />
+                      )}
                     </div>
                   </div>
                 );
@@ -891,36 +801,35 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               </div>
             </div>
 
-            {/* Client Listener Code */}
-            <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+            {/* Client Listener Code (Pretty-Printed) */}
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  EventSource Listener
+                  EventSource JavaScript Client Listener
                 </span>
-                <button
-                  onClick={() =>
-                    handleCopy(
-                      `const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');\nsse.addEventListener('class.seat_reserved', (e) => console.log(JSON.parse(e.data)));`,
-                      'sse-spec',
-                    )
-                  }
-                  className="flex items-center gap-1 text-xs font-semibold text-[#0056FF] hover:underline"
-                >
-                  {copiedId === 'sse-spec' ? (
-                    <Check className="h-3 w-3" />
-                  ) : (
-                    <Copy className="h-3 w-3" />
-                  )}
-                  <span>{copiedId === 'sse-spec' ? 'Copied' : 'Copy'}</span>
-                </button>
+                <span className="text-[11px] font-medium text-[#0A1A4A]/60">
+                  Zero-dependency Browser Native API
+                </span>
               </div>
-              <pre className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] p-3 font-mono text-xs leading-relaxed text-[#0A1A4A]">
-                {`const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');
+              <PrettyCodeBlock
+                code={`const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');
+
+// Listen for real-time seat reservation updates
 sse.addEventListener('class.seat_reserved', (event) => {
-  const packet = JSON.parse(event.data);
-  console.log('Live seat mutation:', packet);
+  const mutation = JSON.parse(event.data);
+  console.log('Live seat mutation received:', mutation);
+});
+
+// Automatic reconnection on transient drops
+sse.addEventListener('error', (err) => {
+  console.warn('SSE connection dropped, retrying in 3s...', err);
 });`}
-              </pre>
+                language="javascript"
+                title="sse-client.js"
+                statusBadge="HTTP/2 STREAM"
+                statusType="info"
+                maxHeight="max-h-64"
+              />
             </div>
           </section>
 
