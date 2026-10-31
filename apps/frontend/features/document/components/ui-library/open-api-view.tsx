@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 
 import {
   Check,
@@ -19,6 +20,12 @@ import {
   ShieldCheck,
   User,
   ExternalLink,
+  ChevronRight,
+  ArrowRight,
+  BookOpen,
+  Terminal,
+  FileText,
+  Info,
 } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import {
@@ -1095,149 +1102,154 @@ export function AcademicPortal() {
 ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
   };
 
+  const currentHeadingObj = DOC_TOC_HEADINGS.find((h) => h.id === activeDocSection);
+  const currentBreadcrumbLabel = currentHeadingObj ? currentHeadingObj.title : 'Overview';
+
   return (
     <div
       ref={rootRef}
       className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white"
     >
-      {/* Main Grid Container (Exact same max-w-[1560px] 3-column layout matching UI Library) */}
-      <div className="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row">
-          {/* COLUMN 1: Left Sticky Sidebar Navigation (Permanently Pinned Like Navbar) */}
-          <aside className="w-full shrink-0 lg:sticky lg:top-20 lg:z-30 lg:w-60 lg:self-start xl:w-64">
-            <div className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-6 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              {/* Filter Input */}
-              <GeometricInput
-                inputSize="sm"
-                placeholder="Filter endpoints..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
-              />
-
-              {/* Primary Nav Capsules (Strictly Light Theme - Zero Black/Dark Buttons) */}
-              <div className="space-y-1.5 font-sans">
-                {(() => {
-                  return (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedCategory('All Modules');
-                          setSearchQuery('');
-                          scrollToDocSection('open-api-head');
-                        }}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'open-api-head' ||
-                            activeDocSection === 'introduction'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Overview</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToDocSection('public-feeds')}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'public-feeds'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Live Feeds & RSS</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToDocSection('developer-embed')}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'developer-embed'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Embed Studio</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToDocSection('class-catalog-registration')}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'class-catalog-registration'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Class Table & Register</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToDocSection('realtime-stream')}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'realtime-stream'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Real-Time Stream</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedCategory('All Modules');
-                          setSearchQuery('');
-                          scrollToDocSection('endpoints-available');
-                        }}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'endpoints-available'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Endpoints Catalog</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToDocSection('api-doc')}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'api-doc' || activeDocSection === 'status-codes'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Live Tester</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => scrollToDocSection('protected-endpoints')}
-                        className={cn(
-                          'flex w-full cursor-pointer items-center justify-between rounded-full border px-4 py-2 text-left font-sans text-xs font-bold transition-all',
-                          activeDocSection === 'protected-endpoints'
-                            ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                            : 'border-slate-200/90 bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-                        )}
-                      >
-                        <span>Protected APIs</span>
-                      </button>
-                    </>
-                  );
-                })()}
+      {/* Nextra Docs Container (Authentic 3-Column Markdown-Powered Docs Architecture) */}
+      <div className="mx-auto max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8">
+        <div className="flex gap-8">
+          {/* COLUMN 1: Nextra Left Sidebar Navigation Tree */}
+          <aside className="sticky top-20 hidden max-h-[calc(100vh-6rem)] w-64 shrink-0 [scrollbar-width:thin] overflow-y-auto pr-3 lg:block">
+            <div className="space-y-5">
+              {/* Nextra Search Input */}
+              <div className="relative">
+                <div className="relative flex items-center">
+                  <Search className="absolute left-2.5 size-3.5 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Search docs..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full rounded-md border border-slate-200 bg-slate-50/70 py-1.5 pr-8 pl-8 font-sans text-xs text-slate-900 transition-all placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-none"
+                  />
+                  <kbd className="absolute right-2 rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-slate-400 shadow-2xs">
+                    /
+                  </kbd>
+                </div>
               </div>
 
-              {/* Endpoint Modules / Categories with Active Highlights */}
-              <div className="space-y-4 font-sans text-xs">
-                <div className="flex items-center justify-between pb-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
-                  <span>API Modules</span>
-                  <span className="text-[#0056FF]">{categories.length}</span>
+              {/* Group 1: Getting Started */}
+              <div className="space-y-1">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                  Getting Started
                 </div>
-                {/* Continuous Vertical Line Tracker Track (Zero Dots, Pure Precision Line) */}
-                <div className="relative space-y-0.5 border-l-2 border-slate-200/90 pl-3 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('All Modules');
+                    setSearchQuery('');
+                    scrollToDocSection('open-api-head');
+                  }}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'open-api-head'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Overview</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('introduction')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'introduction' ||
+                      ['purpose', 'scope', 'overall-api'].includes(activeDocSection)
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Introduction &amp; Scope</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('who-can-access')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'who-can-access'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Access Control (RBAC)</span>
+                </button>
+              </div>
+
+              {/* Group 2: Public Syndication */}
+              <div className="space-y-1 pt-2">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                  Public Syndication
+                </div>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('public-feeds')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'public-feeds'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Public Feeds &amp; RSS 2.0</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('developer-embed')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'developer-embed'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Developer Embed Studio</span>
+                </button>
+              </div>
+
+              {/* Group 3: Academic Engines */}
+              <div className="space-y-1 pt-2">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                  Academic Services
+                </div>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('class-catalog-registration')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'class-catalog-registration'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Live Class Table &amp; Intake</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('realtime-stream')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'realtime-stream'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Real-Time Stream (SSE)</span>
+                </button>
+              </div>
+
+              {/* Group 4: REST API Modules */}
+              <div className="space-y-1 pt-2">
+                <div className="flex items-center justify-between px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                  <span>REST Endpoints</span>
+                  <span className="font-mono text-[10px] text-[#0056FF]">{categories.length}</span>
+                </div>
+                <div className="space-y-0.5">
                   {categories.map((cat) => {
                     const isSelected = selectedCategory === cat.name;
                     return (
@@ -1250,23 +1262,19 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           scrollToDocSection('endpoints-available');
                         }}
                         className={cn(
-                          'group relative flex w-full cursor-pointer items-center justify-between rounded-r-lg py-1.5 pr-2 pl-2.5 text-left font-sans text-xs transition-all duration-150 select-none',
+                          'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                           isSelected
-                            ? '-ml-[2px] bg-[#0056FF]/[0.07] font-bold text-[#0056FF]'
-                            : 'font-normal text-slate-600 hover:translate-x-0.5 hover:bg-slate-50 hover:text-slate-950',
+                            ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                            : 'font-normal text-slate-600 hover:bg-slate-100 hover:text-slate-900',
                         )}
                       >
-                        {isSelected && (
-                          <span
-                            aria-hidden="true"
-                            className="absolute top-0 bottom-0 -left-[2px] w-[2.5px] rounded-[1px] bg-[#0056FF] shadow-[0_0_8px_rgba(0,86,255,0.5)]"
-                          />
-                        )}
                         <span className="truncate">{cat.name}</span>
                         <span
                           className={cn(
-                            'font-mono text-[10px] font-bold',
-                            isSelected ? 'text-[#0056FF]' : 'text-slate-400',
+                            'py-0.2 rounded px-1.5 font-mono text-[10px]',
+                            isSelected
+                              ? 'bg-[#0056FF]/20 font-bold text-[#0056FF]'
+                              : 'bg-slate-100 text-slate-400',
                           )}
                         >
                           {cat.count}
@@ -1275,73 +1283,285 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     );
                   })}
                 </div>
+              </div>
 
-                {/* Documentation Section Links */}
-                <div className="border-t border-slate-200/80 pt-3">
-                  <div className="pb-2 font-mono text-[10px] font-bold text-slate-400 uppercase">
-                    <span>Quick Sections</span>
-                  </div>
-                  <div className="space-y-1.5">
-                    {[
-                      { id: 'open-api-head', label: 'Overview' },
-                      { id: 'introduction', label: 'Introduction' },
-                      { id: 'who-can-access', label: 'Access Matrix' },
-                      { id: 'endpoints-available', label: 'Endpoints Catalog' },
-                      { id: 'api-doc', label: 'Interactive Tester' },
-                      { id: 'status-codes', label: 'Status Codes' },
-                      { id: 'changelogs', label: 'Change Logs' },
-                    ].map((doc) => {
-                      const isCurrentActive =
-                        activeDocSection === doc.id ||
-                        (doc.id === 'introduction' &&
-                          ['purpose', 'scope', 'overall-api'].includes(activeDocSection)) ||
-                        (doc.id === 'endpoints-available' &&
-                          activeDocSection === 'protected-endpoints');
-                      return (
-                        <button
-                          key={doc.id}
-                          type="button"
-                          onClick={() => scrollToDocSection(doc.id)}
-                          className={cn(
-                            'flex w-full cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-left font-sans text-xs font-semibold transition-all',
-                            isCurrentActive
-                              ? 'bg-[#0056FF] font-bold text-white'
-                              : 'bg-white text-slate-700 hover:bg-slate-50',
-                          )}
-                        >
-                          <span className="truncate">{doc.label}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+              {/* Group 5: Developer Reference */}
+              <div className="space-y-1 pt-2">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                  Developer Reference
                 </div>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('api-doc')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'api-doc'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Interactive API Probe</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('protected-endpoints')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'protected-endpoints'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">Protected Endpoints</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('status-codes')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'status-codes'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">HTTP Status Codes</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('changelogs')}
+                  className={cn(
+                    'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
+                    activeDocSection === 'changelogs'
+                      ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
+                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  )}
+                >
+                  <span className="truncate">API Change Logs</span>
+                </button>
               </div>
             </div>
           </aside>
 
-          {/* COLUMN 2: Center Main Content Feed */}
-          <main className="min-w-0 flex-1 space-y-12">
-            {/* HERO HEAD TITLE: Specific to Open API (Monumental Big As Footer Style) */}
-            <section id="open-api-head" className="scroll-mt-24 space-y-4">
-              <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-10">
-                <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
-                  <div>
-                    <h1 className="font-sans text-5xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-8xl">
-                      Open API
-                    </h1>
-                  </div>
+          {/* COLUMN 2: Nextra Center Main Markdown Prose */}
+          <main className="max-w-4xl min-w-0 flex-1 space-y-10 lg:px-2">
+            {/* Nextra Breadcrumb Bar */}
+            <nav
+              aria-label="Breadcrumb"
+              className="flex items-center gap-2 font-sans text-xs text-slate-400"
+            >
+              <button
+                type="button"
+                onClick={() => scrollToDocSection('open-api-head')}
+                className="cursor-pointer transition-colors hover:text-slate-700"
+              >
+                Docs
+              </button>
+              <span className="text-slate-300">/</span>
+              <button
+                type="button"
+                onClick={() => scrollToDocSection('open-api-head')}
+                className="cursor-pointer transition-colors hover:text-slate-700"
+              >
+                Open API
+              </button>
+              <span className="text-slate-300">/</span>
+              <span className="font-semibold text-slate-900">{currentBreadcrumbLabel}</span>
+            </nav>
 
-                  <div className="shrink-0">
-                    <GeometricHeaderStamp
-                      codeA="47"
-                      titleA="MODULES"
-                      codeB="193"
-                      titleB="ENDPOINTS"
-                    />
-                  </div>
+            {/* Nextra Clean Document Header */}
+            <header
+              id="open-api-head"
+              className="scroll-mt-24 space-y-3 border-b border-slate-200/80 pb-6"
+            >
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
+                  Nextra Docs Starter Kit
+                </span>
+                <span className="font-sans text-xs text-slate-400">
+                  REST &amp; Syndication v1.4
+                </span>
+              </div>
+              <h1 className="group flex items-center font-sans text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
+                <span>Open API Reference</span>
+                <a
+                  href="#open-api-head"
+                  className="ml-2 text-slate-300 opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  #
+                </a>
+              </h1>
+              <p className="max-w-3xl font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
+                Simple, powerful and flexible markdown-powered docs site. Built with Next.js.
+                Exposes public RSS 2.0 XML and JSON syndication feeds, responsive developer embed
+                widgets, live academic class catalogs, and real-time Server-Sent Events (SSE).
+              </p>
+            </header>
+
+            {/* Nextra Callout: Multi-Branch & Security */}
+            <div className="rounded-lg border border-blue-200 bg-blue-50/70 p-4 text-slate-800">
+              <div className="flex gap-3">
+                <div className="mt-0.5 size-5 shrink-0 text-[#0056FF]">
+                  <CircleAlert className="size-5" />
+                </div>
+                <div className="space-y-1 text-xs sm:text-sm">
+                  <p className="font-semibold text-[#0056FF]">
+                    Multi-Branch Scoping &amp; Public Rate Limits
+                  </p>
+                  <p className="leading-relaxed text-slate-600">
+                    Public syndication feeds and read-only catalogs require no authorization headers
+                    and are safeguarded by edge rate limits (2,000 req / 15m). Authenticated
+                    administrative mutations require{' '}
+                    <code className="rounded bg-blue-100/70 px-1 py-0.5 font-mono text-xs text-blue-900">
+                      Authorization: Bearer &lt;token&gt;
+                    </code>{' '}
+                    and{' '}
+                    <code className="rounded bg-blue-100/70 px-1 py-0.5 font-mono text-xs text-blue-900">
+                      X-Branch-Id: &lt;branch&gt;
+                    </code>
+                    .
+                  </p>
                 </div>
               </div>
-            </section>
+            </div>
+
+            {/* Nextra Feature Cards */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div
+                onClick={() => scrollToDocSection('public-feeds')}
+                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
+                    <Radio className="size-4" />
+                  </div>
+                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                    →
+                  </span>
+                </div>
+                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  Public Feeds &amp; RSS 2.0
+                </h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                  Live XML and JSON syndication feeds for emergency alerts, announcements, and
+                  certificates.
+                </p>
+              </div>
+
+              <div
+                onClick={() => scrollToDocSection('developer-embed')}
+                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
+                    <Code className="size-4" />
+                  </div>
+                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                    →
+                  </span>
+                </div>
+                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  Developer Embed Studio
+                </h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                  Embed responsive widgets in iFrame, Web Component, or React formats with live
+                  sandbox controls.
+                </p>
+              </div>
+
+              <div
+                onClick={() => scrollToDocSection('class-catalog-registration')}
+                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
+                    <Layers className="size-4" />
+                  </div>
+                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                    →
+                  </span>
+                </div>
+                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  Live Class Table &amp; Intake
+                </h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                  Active academic roster table with live seat meters and simulated public student
+                  registration.
+                </p>
+              </div>
+
+              <div
+                onClick={() => scrollToDocSection('realtime-stream')}
+                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
+                    <Terminal className="size-4" />
+                  </div>
+                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                    →
+                  </span>
+                </div>
+                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  Real-Time SSE Stream
+                </h3>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                  Server-Sent Events event terminal with latency metrics and live packet
+                  broadcasting.
+                </p>
+              </div>
+            </div>
+
+            {/* Nextra Steps Quickstart */}
+            <div className="space-y-4 rounded-xl border border-slate-200/90 bg-slate-50/50 p-5">
+              <h3 className="font-sans text-sm font-bold text-slate-900">
+                Integration Quickstart in 3 Steps
+              </h3>
+              <div className="relative ml-3 space-y-5 border-l-2 border-slate-200 pl-6">
+                <div className="relative">
+                  <div className="absolute top-0 -left-[31px] flex size-6 items-center justify-center rounded-full border-2 border-white bg-[#0056FF] font-mono text-xs font-bold text-white shadow-xs">
+                    1
+                  </div>
+                  <h4 className="font-sans text-xs font-bold text-slate-900">
+                    Choose Your Data Ingestion Channel
+                  </h4>
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                    Subscribe to public XML RSS feeds, consume JSON endpoints, or open a live SSE
+                    stream connection for instant updates.
+                  </p>
+                </div>
+                <div className="relative">
+                  <div className="absolute top-0 -left-[31px] flex size-6 items-center justify-center rounded-full border-2 border-white bg-[#0056FF] font-mono text-xs font-bold text-white shadow-xs">
+                    2
+                  </div>
+                  <h4 className="font-sans text-xs font-bold text-slate-900">
+                    Scope Requests by Campus Branch
+                  </h4>
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                    Append{' '}
+                    <code className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[11px] text-[#0056FF]">
+                      ?branch=BR-01
+                    </code>{' '}
+                    or header{' '}
+                    <code className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[11px] text-slate-700">
+                      X-Branch-Id: BR-01
+                    </code>{' '}
+                    to target your local campus.
+                  </p>
+                </div>
+                <div className="relative">
+                  <div className="absolute top-0 -left-[31px] flex size-6 items-center justify-center rounded-full border-2 border-white bg-[#0056FF] font-mono text-xs font-bold text-white shadow-xs">
+                    3
+                  </div>
+                  <h4 className="font-sans text-xs font-bold text-slate-900">
+                    Embed Widgets or Handle Events
+                  </h4>
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                    Copy pre-built snippets from the Developer Embed Studio to drop class rosters
+                    and registration forms directly into your CMS.
+                  </p>
+                </div>
+              </div>
+            </div>
 
             {/* Section 1: Introduction */}
             <section id="introduction" className="scroll-mt-24 space-y-6">
@@ -2049,17 +2269,20 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
               </div>
 
               {/* Class Catalog Roster Card */}
-              <div className="space-y-4 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+              <div className="space-y-4 rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs">
                 {/* Search & Filter Toolbar */}
                 <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
                   <div className="w-full sm:w-72">
-                    <GeometricInput
-                      inputSize="sm"
-                      placeholder="Search classes, codes, instructors..."
-                      value={classSearch}
-                      onChange={(e) => setClassSearch(e.target.value)}
-                      icon={<Search className="h-3.5 w-3.5 text-[#0056FF]" />}
-                    />
+                    <div className="relative flex items-center">
+                      <Search className="absolute left-3 size-3.5 text-slate-400" />
+                      <input
+                        type="text"
+                        placeholder="Search classes, codes, instructors..."
+                        value={classSearch}
+                        onChange={(e) => setClassSearch(e.target.value)}
+                        className="w-full rounded-md border border-slate-200 bg-slate-50/70 py-1.5 pr-3 pl-8.5 font-sans text-xs text-slate-900 transition-all placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-none"
+                      />
+                    </div>
                   </div>
 
                   <div className="flex w-full items-center gap-1.5 overflow-x-auto pb-1 sm:w-auto sm:pb-0">
@@ -2082,16 +2305,16 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 </div>
 
                 {/* Table representation */}
-                <div className="overflow-x-auto rounded-xl border border-slate-200">
-                  <table className="w-full text-left font-sans text-xs">
-                    <thead className="border-b border-slate-200 bg-slate-50 font-mono text-[11px] font-bold text-slate-600 uppercase">
+                <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-2xs">
+                  <table className="w-full border-collapse text-left font-sans text-xs">
+                    <thead className="border-b border-slate-200 bg-slate-50/80 font-mono text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
                       <tr>
-                        <th className="px-3.5 py-3">Code / Dept</th>
-                        <th className="px-3.5 py-3">Course Title &amp; Instructor</th>
-                        <th className="px-3.5 py-3">Schedule &amp; Room</th>
-                        <th className="px-3.5 py-3 text-center">Seat Capacity</th>
-                        <th className="px-3.5 py-3 text-center">Status</th>
-                        <th className="px-3.5 py-3 text-right">Action</th>
+                        <th className="px-4 py-3">Code / Dept</th>
+                        <th className="px-4 py-3">Course Title &amp; Instructor</th>
+                        <th className="px-4 py-3">Schedule &amp; Room</th>
+                        <th className="px-4 py-3 text-center">Seat Capacity</th>
+                        <th className="px-4 py-3 text-center">Status</th>
+                        <th className="px-4 py-3 text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 bg-white">
@@ -2108,19 +2331,19 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
                           return (
                             <tr key={item.id} className="transition-colors hover:bg-slate-50/80">
-                              <td className="px-3.5 py-3 font-mono">
+                              <td className="px-4 py-3.5 font-mono">
                                 <div className="font-bold text-[#0056FF]">{item.code}</div>
                                 <div className="text-[10px] text-slate-400">{item.department}</div>
                               </td>
-                              <td className="px-3.5 py-3">
+                              <td className="px-4 py-3.5">
                                 <div className="font-bold text-slate-900">{item.name}</div>
                                 <div className="text-[11px] text-slate-500">{item.instructor}</div>
                               </td>
-                              <td className="px-3.5 py-3 font-mono text-[11px]">
+                              <td className="px-4 py-3.5 font-mono text-[11px]">
                                 <div className="text-slate-800">{item.schedule}</div>
                                 <div className="text-slate-400">{item.room}</div>
                               </td>
-                              <td className="px-3.5 py-3 text-center">
+                              <td className="px-4 py-3.5 text-center">
                                 <div className="font-mono text-xs font-bold text-slate-900">
                                   {item.enrolled} / {item.capacity}
                                 </div>
@@ -2138,7 +2361,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                   />
                                 </div>
                               </td>
-                              <td className="px-3.5 py-3 text-center">
+                              <td className="px-4 py-3.5 text-center">
                                 <span
                                   className={cn(
                                     'inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[10.5px] font-bold',
@@ -2153,7 +2376,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                   {item.status}
                                 </span>
                               </td>
-                              <td className="px-3.5 py-3 text-right">
+                              <td className="px-4 py-3.5 text-right">
                                 <button
                                   type="button"
                                   onClick={() => {
@@ -2207,7 +2430,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           onChange={(e) =>
                             setRegForm((prev) => ({ ...prev, studentName: e.target.value }))
                           }
-                          className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-semibold text-slate-900 focus:border-[#0056FF] focus:outline-none"
+                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
                         />
                       </div>
 
@@ -2223,7 +2446,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           onChange={(e) =>
                             setRegForm((prev) => ({ ...prev, email: e.target.value }))
                           }
-                          className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-semibold text-slate-900 focus:border-[#0056FF] focus:outline-none"
+                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
                         />
                       </div>
 
@@ -2238,7 +2461,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           onChange={(e) =>
                             setRegForm((prev) => ({ ...prev, phone: e.target.value }))
                           }
-                          className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-semibold text-slate-900 focus:border-[#0056FF] focus:outline-none"
+                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
                         />
                       </div>
 
@@ -2251,7 +2474,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           onChange={(e) =>
                             setRegForm((prev) => ({ ...prev, classId: e.target.value }))
                           }
-                          className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-semibold text-slate-900 focus:border-[#0056FF] focus:outline-none"
+                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
                         >
                           {classesList.map((c) => (
                             <option key={c.id} value={c.code}>
@@ -2270,7 +2493,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           onChange={(e) =>
                             setRegForm((prev) => ({ ...prev, branchId: e.target.value }))
                           }
-                          className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-semibold text-slate-900 focus:border-[#0056FF] focus:outline-none"
+                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
                         >
                           <option value="BR-01">BR-01 (Main Campus)</option>
                           <option value="BR-02">BR-02 (Tuol Kork)</option>
@@ -2286,7 +2509,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           type="date"
                           value={regForm.dob}
                           onChange={(e) => setRegForm((prev) => ({ ...prev, dob: e.target.value }))}
-                          className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-semibold text-slate-900 focus:border-[#0056FF] focus:outline-none"
+                          className="mt-1 w-full rounded-[4px] border border-slate-300 bg-white px-3 py-1.5 font-sans text-xs font-medium text-slate-900 transition-colors focus:border-[#0056FF] focus:outline-none"
                         />
                       </div>
                     </div>
@@ -2298,7 +2521,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                       <button
                         type="submit"
                         disabled={isSubmittingReg}
-                        className="rounded-[4px] border-0 bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-xs hover:bg-[#0040CC] disabled:opacity-50"
+                        className="cursor-pointer rounded-[4px] border-0 bg-[#0056FF] px-5 py-2 font-sans text-xs font-bold text-white shadow-xs hover:bg-[#0040CC] disabled:opacity-50"
                       >
                         {isSubmittingReg
                           ? 'Submitting Registration...'
@@ -3094,7 +3317,90 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 </div>
               </div>
             </section>
+
+            {/* Nextra Pagination Navigation Footer */}
+            <div className="mt-12 border-t border-slate-200/80 pt-6">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <Link
+                  href="/document/design-system"
+                  className="group flex flex-col rounded-lg border border-slate-200 bg-white p-4 transition-all hover:border-[#0056FF] hover:bg-slate-50/50"
+                >
+                  <span className="font-mono text-[10.5px] tracking-wider text-slate-400 uppercase">
+                    Previous
+                  </span>
+                  <span className="font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                    ← UI Component Library
+                  </span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => scrollToDocSection('endpoints-available')}
+                  className="group flex cursor-pointer flex-col rounded-lg border border-slate-200 bg-white p-4 text-right transition-all hover:border-[#0056FF] hover:bg-slate-50/50"
+                >
+                  <span className="font-mono text-[10.5px] tracking-wider text-slate-400 uppercase">
+                    Next
+                  </span>
+                  <span className="font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                    Endpoints Reference →
+                  </span>
+                </button>
+              </div>
+              <div className="mt-6 flex flex-col items-center justify-between gap-2 pb-8 font-sans text-xs text-slate-400 sm:flex-row">
+                <span>Last updated on October 31, 2026</span>
+                <span>
+                  Simple, powerful and flexible markdown-powered docs site. Built with Next.js.
+                </span>
+              </div>
+            </div>
           </main>
+
+          {/* COLUMN 3: Nextra Right Sidebar Table of Contents ("On this page") */}
+          <aside className="sticky top-20 hidden max-h-[calc(100vh-6rem)] w-56 shrink-0 [scrollbar-width:thin] overflow-y-auto pl-4 xl:block 2xl:w-64">
+            <div className="space-y-4">
+              <div className="font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                On this page
+              </div>
+              <nav className="space-y-1 border-l-2 border-slate-200/90 pl-3">
+                {DOC_TOC_HEADINGS.map((heading) => {
+                  const isActive = activeDocSection === heading.id;
+                  return (
+                    <button
+                      key={heading.id}
+                      type="button"
+                      onClick={() => scrollToDocSection(heading.id)}
+                      className={cn(
+                        'block w-full cursor-pointer truncate py-1 text-left text-xs transition-colors',
+                        heading.level === 2 ? 'pl-2.5 text-[11px]' : 'font-medium',
+                        isActive
+                          ? '-ml-[14px] border-l-2 border-[#0056FF] pl-[12px] font-bold text-[#0056FF]'
+                          : 'text-slate-500 hover:text-slate-900',
+                      )}
+                    >
+                      {heading.title}
+                    </button>
+                  );
+                })}
+              </nav>
+
+              <div className="space-y-2 border-t border-slate-200/80 pt-4 text-xs text-slate-500">
+                <a
+                  href="#open-api-head"
+                  className="flex items-center gap-1.5 transition-colors hover:text-[#0056FF]"
+                >
+                  <ExternalLink className="size-3" />
+                  <span>Edit this page on GitHub</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-[#0056FF]"
+                >
+                  <span>Back to top</span>
+                  <span>↑</span>
+                </button>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

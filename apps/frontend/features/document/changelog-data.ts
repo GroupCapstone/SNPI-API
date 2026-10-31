@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "d451d0d",
+    "description": "Record zero gradient and zero black/gray rule enforcement"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "39f2c5c",
     "description": "Eradicate all CSS gradients, black, and gray from component library and enforce pure flat solid brand tokens"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "c445400",
     "description": "Configure Vercel build dependencies and optional Linux oxide binaries"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "fcd71dc",
-    "description": "Move brand identity into document footer link with logo, 3 colors, and code color tokens"
   }
 ];
