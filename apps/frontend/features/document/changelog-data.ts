@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "1ddce36",
+    "description": "Replace dark terminal packet monitor with light modern ui and record rule"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "7efd4c6",
     "description": "Sync real-time commit history"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "1da4370",
     "description": "Expand Brand Identity & Colors with 7-token bento grid, application matrix, and do-dont rules"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "e6d6680",
-    "description": "Record real-time changelog for Rail TOC paper plane flight navigator redesign"
   }
 ];

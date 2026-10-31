@@ -253,19 +253,19 @@ export function BrandConceptBlueprint() {
         {/* 04 White */}
         <div
           onClick={() => handleCopy('#FFFFFF', 'White')}
-          className="group relative flex min-h-[160px] cursor-pointer flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 text-slate-950 transition-all duration-200 hover:bg-slate-50 active:scale-[0.99] sm:col-span-6 md:col-span-3"
+          className="group relative flex min-h-[160px] cursor-pointer flex-col justify-between rounded-2xl border-2 border-[#CAD3F5] bg-white p-5 text-[#0A1A4A] shadow-xs transition-all duration-200 hover:border-[#0056FF] active:scale-[0.99] sm:col-span-6 md:col-span-3"
           title="Click to copy HEX: #FFFFFF"
         >
           <div className="flex items-start justify-between">
-            <span className="font-sans text-4xl font-extrabold tracking-tighter text-slate-950 select-none">
+            <span className="font-sans text-4xl font-extrabold tracking-tighter text-[#0A1A4A] select-none">
               04
             </span>
-            <span className="font-mono text-xs font-bold text-slate-400">
+            <span className="rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
               {copiedToken === 'White' ? 'Copied!' : '#FFFFFF'}
             </span>
           </div>
           <div className="space-y-0.5">
-            <h4 className="font-sans text-base font-bold text-slate-950">White</h4>
+            <h4 className="font-sans text-base font-bold text-[#0A1A4A]">White</h4>
             <p className="font-mono text-[11px] text-slate-500">Document Canvas Base</p>
           </div>
         </div>
@@ -349,59 +349,80 @@ export function BrandConceptBlueprint() {
       </div>
 
       {/* SYSTEM COLOR APPLICATION MATRIX ("EVERY PLACE NEED THAT COLOR") */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7 dark:border-slate-800 dark:bg-slate-900/40">
-        <div className="mb-5 flex flex-col gap-1 border-b border-slate-100 pb-4 dark:border-slate-800">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-[1px] bg-[#0056FF]" />
-            <h3 className="font-sans text-base font-bold text-slate-950 dark:text-white">
+      <div className="rounded-2xl border border-[#CAD3F5] bg-white p-6 shadow-xs sm:p-7">
+        <div className="mb-6 flex flex-col gap-1 border-b border-[#CAD3F5]/60 pb-4">
+          <div className="flex items-center gap-2.5">
+            <span className="size-2.5 rounded-[2px] bg-[#0056FF]" />
+            <h3 className="font-sans text-lg font-black tracking-tight text-slate-950">
               System Color Application Matrix
             </h3>
           </div>
-          <p className="font-sans text-xs text-slate-500 dark:text-slate-400">
+          <p className="font-sans text-xs font-medium text-slate-600">
             Authoritative token mappings across user interface components, interactive states, and
             surfaces.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {applicationMatrix.map((item) => (
             <div
               key={item.name}
-              className="flex flex-col justify-between rounded-xl border border-slate-200/80 bg-slate-50/70 p-4 transition-all hover:border-[#0056FF]/40 hover:bg-white dark:border-slate-800 dark:bg-slate-900/60 dark:hover:bg-slate-900"
+              className={cn(
+                'flex flex-col justify-between rounded-xl border p-5 transition-all',
+                item.name === 'White'
+                  ? 'border-2 border-[#CAD3F5] bg-white shadow-xs hover:border-[#0056FF] md:col-span-2'
+                  : item.name === 'Soft Lavender'
+                    ? 'border border-[#CAD3F5] bg-[#E3E7FC]/40 hover:border-[#0056FF]'
+                    : item.name === 'Ice Tint'
+                      ? 'border border-[#CAD3F5] bg-[#EFF5FF]/70 hover:border-[#0056FF]'
+                      : 'border border-[#CAD3F5] bg-white shadow-xs hover:border-[#0056FF]',
+              )}
             >
               <div>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
                     {/* Color Swatch */}
                     <div
                       className={cn(
-                        'size-5 shrink-0 rounded-[3px]',
-                        item.hasBorder && 'border border-slate-300 dark:border-slate-600',
+                        'flex size-7 shrink-0 items-center justify-center rounded-lg shadow-xs',
+                        item.name === 'White'
+                          ? 'border-2 border-[#CAD3F5] bg-white ring-2 ring-[#CAD3F5]/30'
+                          : 'border border-[#CAD3F5]',
                       )}
                       style={{ background: item.colorPreview }}
                     />
-                    <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-white">
-                      {item.name}
-                    </h4>
+                    <div>
+                      <h4 className="font-sans text-sm font-black text-[#0A1A4A]">{item.name}</h4>
+                      <span className="font-mono text-[11px] font-bold text-slate-500">
+                        {item.surface}
+                      </span>
+                    </div>
                   </div>
-                  <span className="font-mono text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                  <span className="rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
                     {item.hex}
                   </span>
                 </div>
 
-                <div className="mt-2.5">
-                  <span className="rounded-[3px] bg-white px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] ring-1 ring-slate-200 dark:bg-slate-800 dark:text-blue-300 dark:ring-slate-700">
+                <div className="mt-3.5 space-y-2">
+                  <span
+                    className={cn(
+                      'inline-block rounded-md border px-2.5 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase',
+                      item.name === 'Royal Blue'
+                        ? 'border-[#0056FF] bg-[#0056FF] text-white'
+                        : item.name === 'Azure Blue'
+                          ? 'border-[#2277FF] bg-[#2277FF] text-white'
+                          : 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]',
+                    )}
+                  >
                     {item.role}
                   </span>
-                  <p className="mt-2 font-sans text-[11px] leading-relaxed text-slate-600 dark:text-slate-300">
-                    {item.applied}
-                  </p>
+                  <p className="font-sans text-xs leading-relaxed text-slate-700">{item.applied}</p>
                 </div>
               </div>
 
-              <div className="mt-3 flex items-center justify-between border-t border-slate-200/60 pt-2 font-mono text-[9px] text-slate-500 dark:border-slate-800">
-                <span>SURFACE: {item.surface}</span>
-                <span>{item.contrast}</span>
+              <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 font-mono text-[10px] text-slate-500">
+                <span className="font-bold text-slate-600">SURFACE: {item.surface}</span>
+                <span className="font-bold text-[#0056FF]">{item.contrast}</span>
               </div>
             </div>
           ))}
@@ -411,16 +432,16 @@ export function BrandConceptBlueprint() {
       {/* BRAND COLOR DO'S AND DON'TS ("AD DO DONT") */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* DO PANEL */}
-        <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/30 p-6 dark:border-emerald-950/60 dark:bg-emerald-950/10">
-          <div className="mb-4 flex items-center gap-2 border-b border-emerald-200/60 pb-3 dark:border-emerald-900/40">
+        <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/50 p-6">
+          <div className="mb-4 flex items-center gap-2 border-b border-emerald-200/60 pb-3">
             <div className="flex size-5 items-center justify-center rounded-[3px] bg-emerald-600 text-white">
               <Check className="size-3.5 stroke-[2.5]" />
             </div>
             <div>
-              <h3 className="font-sans text-sm font-bold text-emerald-950 dark:text-emerald-200">
+              <h3 className="font-sans text-sm font-bold text-emerald-950">
                 Brand Color Best Practices (DO)
               </h3>
-              <p className="font-sans text-[11px] text-emerald-700 dark:text-emerald-400">
+              <p className="font-sans text-[11px] text-emerald-700">
                 Approved conventions for colors and elevations.
               </p>
             </div>
@@ -429,14 +450,12 @@ export function BrandConceptBlueprint() {
           <div className="space-y-3">
             {dos.map((item, idx) => (
               <div key={idx} className="flex items-start gap-2.5">
-                <span className="mt-1 flex size-3.5 shrink-0 items-center justify-center rounded-[2px] bg-emerald-600/15 font-mono text-[9px] font-bold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">
+                <span className="mt-1 flex size-3.5 shrink-0 items-center justify-center rounded-[2px] bg-emerald-600/15 font-mono text-[9px] font-bold text-emerald-700">
                   {idx + 1}
                 </span>
                 <div>
-                  <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-slate-100">
-                    {item.rule}
-                  </h4>
-                  <p className="font-sans text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
+                  <h4 className="font-sans text-xs font-bold text-slate-900">{item.rule}</h4>
+                  <p className="font-sans text-[11px] leading-relaxed text-slate-600">
                     {item.desc}
                   </p>
                 </div>
@@ -446,16 +465,16 @@ export function BrandConceptBlueprint() {
         </div>
 
         {/* DON'T PANEL */}
-        <div className="rounded-2xl border border-rose-200/80 bg-rose-50/30 p-6 dark:border-rose-950/60 dark:bg-rose-950/10">
-          <div className="mb-4 flex items-center gap-2 border-b border-rose-200/60 pb-3 dark:border-rose-900/40">
+        <div className="rounded-2xl border border-rose-200/80 bg-rose-50/50 p-6">
+          <div className="mb-4 flex items-center gap-2 border-b border-rose-200/60 pb-3">
             <div className="flex size-5 items-center justify-center rounded-[3px] bg-rose-600 text-white">
               <X className="size-3.5 stroke-[2.5]" />
             </div>
             <div>
-              <h3 className="font-sans text-sm font-bold text-rose-950 dark:text-rose-200">
+              <h3 className="font-sans text-sm font-bold text-rose-950">
                 Prohibited Anti-Patterns (DON'T)
               </h3>
-              <p className="font-sans text-[11px] text-rose-700 dark:text-rose-400">
+              <p className="font-sans text-[11px] text-rose-700">
                 Strict workspace and brand design restrictions.
               </p>
             </div>
@@ -464,14 +483,12 @@ export function BrandConceptBlueprint() {
           <div className="space-y-3">
             {donts.map((item, idx) => (
               <div key={idx} className="flex items-start gap-2.5">
-                <span className="mt-1 flex size-3.5 shrink-0 items-center justify-center rounded-[2px] bg-rose-600/15 font-mono text-[9px] font-bold text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">
+                <span className="mt-1 flex size-3.5 shrink-0 items-center justify-center rounded-[2px] bg-rose-600/15 font-mono text-[9px] font-bold text-rose-700">
                   {idx + 1}
                 </span>
                 <div>
-                  <h4 className="font-sans text-xs font-bold text-slate-900 dark:text-slate-100">
-                    {item.rule}
-                  </h4>
-                  <p className="font-sans text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
+                  <h4 className="font-sans text-xs font-bold text-slate-900">{item.rule}</h4>
+                  <p className="font-sans text-[11px] leading-relaxed text-slate-600">
                     {item.desc}
                   </p>
                 </div>
@@ -482,13 +499,13 @@ export function BrandConceptBlueprint() {
       </div>
 
       {/* CODE COLOR TOKENS (CSS VARIABLES & TYPESCRIPT TOKENS) */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7 dark:border-slate-800 dark:bg-slate-900/50">
+      <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h4 className="font-sans text-base font-bold text-slate-950 dark:text-white">
+            <h4 className="font-sans text-base font-bold text-slate-950">
               Code Color Tokens (CSS Variables & TypeScript)
             </h4>
-            <p className="font-sans text-xs text-slate-500 dark:text-slate-400">
+            <p className="font-sans text-xs text-slate-500">
               Ready-to-use style tokens for stylesheets, theme configs, and application components.
             </p>
           </div>
@@ -514,7 +531,7 @@ export function BrandConceptBlueprint() {
             <button
               type="button"
               onClick={() => handleCopy(tsTokens, 'ts-tokens')}
-              className="inline-flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-slate-200 bg-slate-100 px-3 py-1.5 font-sans text-xs font-bold text-slate-800 transition-all select-none hover:bg-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-slate-200 bg-slate-100 px-3 py-1.5 font-sans text-xs font-bold text-slate-800 transition-all select-none hover:bg-slate-200"
             >
               {copiedToken === 'ts-tokens' ? (
                 <>
@@ -532,7 +549,7 @@ export function BrandConceptBlueprint() {
         </div>
 
         {/* CSS Code Box */}
-        <div className="mt-4 overflow-hidden rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4 text-[#0056FF]">
+        <div className="mt-4 overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] p-4 text-[#0056FF]">
           <pre className="font-mono text-xs leading-relaxed text-[#0056FF]">
             <code>{cssTokens}</code>
           </pre>
