@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "813330f",
+    "description": "Record real-time changelog for condensed readme"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "c0b1893",
     "description": "Condense to ultra-short summary and remove monorepo structure section"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "578d4f3",
     "description": "Record e11eaf9 into changelog and documentation portal"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "e11eaf9",
-    "description": "Implement cyber armor mecha modular navigation bar"
   }
 ];
