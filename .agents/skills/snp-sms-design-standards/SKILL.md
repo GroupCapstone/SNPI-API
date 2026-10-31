@@ -271,5 +271,11 @@ Refer to `cyber-armor-nav-manual.md` for the aerospace mecha HUD console specifi
 - Zero-dot strict compliance across all states.
 - Light day first metallic finish (`#FFFFFF` to `#EEF2F8` gradient with `#CAD3F5` perimeter stroke).
 
+### 7.9 Display-Only Open API Specification (Zero Access Mode & Zero Credential Exposure)
+- **Zero Access Mode Columns**: Never render an "ACCESS MODE" column, "[Lock] Read-Only" badges, or access-permission UI tags in public catalogs or OpenAPI tables.
+- **Strictly Display Only**: All public catalogs, syndication feeds, and embed previews must serve strictly as visual, display-only specifications for external frontsite integration.
+- **Zero Credential Headers or Inspection Code**: Never display, instruct, or include credential headers (`X-Subscription-Key`, auth tokens, secret keys) or credential flags (`withCredentials: true`) in client-side code snippets or documentation. Endpoints must be presented purely as standard public display feeds without user credential inspection.
+
+
 
 
