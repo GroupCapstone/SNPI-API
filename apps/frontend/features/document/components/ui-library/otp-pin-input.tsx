@@ -36,7 +36,6 @@ export function OtpPinInput({
   onError,
   autoFocus = false,
 }: OtpPinInputProps) {
-  const isDark = theme === 'dark';
   const [digits, setDigits] = React.useState<string[]>(Array(length).fill(''));
   const [status, setStatus] = React.useState<'idle' | 'validating' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = React.useState<string>(
@@ -206,33 +205,16 @@ export function OtpPinInput({
   return (
     <div
       className={cn(
-        'relative w-full max-w-lg overflow-hidden rounded-2xl border transition-colors duration-150',
-        isDark
-          ? 'border-slate-800 bg-[#000B26] text-slate-100'
-          : 'border-slate-200/90 bg-white text-slate-900',
+        'relative w-full max-w-lg overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white text-slate-900 transition-colors duration-150',
         className,
       )}
     >
       {/* Header */}
-      <div
-        className={cn(
-          'flex items-center justify-between border-b px-5 py-3.5',
-          isDark ? 'border-slate-800 bg-slate-900/40' : 'border-slate-100 bg-slate-50/60',
-        )}
-      >
-        <div className="flex items-center gap-2">
-          <div
-            className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border',
-              isDark
-                ? 'border-slate-700 bg-slate-800 text-cyan-400'
-                : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
-            )}
-          >
-            <Key className="size-3.5" />
-          </div>
+      <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/70 px-5 py-3.5">
+        <div className="flex items-center gap-2.5">
+          <Key className="size-4 shrink-0 text-[#0056FF]" />
           <div>
-            <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950 dark:text-white">
+            <h4 className="font-sans text-xs font-bold tracking-tight text-slate-950">
               Two-Factor Authentication
             </h4>
             <p className="font-mono text-[10px] text-slate-400">07 SMS Auto-Fill (one-time-code)</p>
@@ -244,12 +226,12 @@ export function OtpPinInput({
           className={cn(
             'inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase transition-colors',
             status === 'success'
-              ? 'border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+              ? 'border border-emerald-500/20 bg-emerald-50 text-emerald-700'
               : status === 'error'
-                ? 'border border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400'
+                ? 'border border-red-500/20 bg-red-50 text-red-700'
                 : digits.some(Boolean)
-                  ? 'border border-cyan-500/20 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400'
-                  : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400',
+                  ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
+                  : 'bg-slate-100 text-slate-600',
           )}
         >
           {status === 'success' ? (
@@ -274,7 +256,7 @@ export function OtpPinInput({
 
       <div className="space-y-6 p-6 sm:p-8">
         <div className="space-y-1 text-center">
-          <p className="font-sans text-xs font-semibold text-slate-900 dark:text-slate-200">
+          <p className="font-sans text-xs font-semibold text-slate-900">
             Enter the 6-digit verification code sent to your registered telephone.
           </p>
           <p className="font-mono text-[11px] text-slate-400">
@@ -321,20 +303,15 @@ export function OtpPinInput({
                 className={cn(
                   // 01 Segmented Cells: Tabular width and fixed height
                   'size-11 rounded-[4px] border text-center font-mono text-xl font-bold tabular-nums transition-all duration-150 outline-none select-none sm:size-14 sm:text-2xl',
-                  'focus:ring-2 focus:ring-[#0056FF]',
+                  'focus:ring-2 focus:ring-[#0056FF]/30 focus:border-[#0056FF]',
                   // 06 Error Shake Recolor
                   isError
-                    ? 'border-red-500 bg-red-500/10 text-red-600 focus:ring-red-500 dark:text-red-400'
+                    ? 'border-red-500 bg-red-50 text-red-700'
                     : isSuccess
-                      ? 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                      : // 05 Filled vs. Empty: subtle cyan tint for filled cells
-                        isFilled
-                        ? isDark
-                          ? 'border-cyan-500/80 bg-cyan-950/30 text-cyan-400'
-                          : 'border-cyan-500 bg-cyan-50/70 text-cyan-700'
-                        : isDark
-                          ? 'border-slate-700 bg-slate-900/80 text-white placeholder-slate-600'
-                          : 'border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400',
+                      ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                      : isFilled
+                        ? 'border-[#0056FF] bg-[#E3E7FC]/40 text-[#0056FF]'
+                        : 'border-slate-300 bg-white text-slate-900 placeholder-slate-400',
                 )}
               />
             );
@@ -348,9 +325,9 @@ export function OtpPinInput({
           className={cn(
             'min-h-[20px] text-center font-mono text-xs font-medium transition-colors',
             status === 'error'
-              ? 'font-bold text-red-600 dark:text-red-400'
+              ? 'font-bold text-red-600'
               : status === 'success'
-                ? 'font-bold text-emerald-600 dark:text-emerald-400'
+                ? 'font-bold text-emerald-600'
                 : 'text-slate-500',
           )}
         >
@@ -358,33 +335,26 @@ export function OtpPinInput({
         </div>
 
         {/* Interactive Testing Quick-Actions */}
-        <div
-          className={cn(
-            'flex flex-wrap items-center justify-center gap-2 rounded-[4px] border p-3 font-mono text-[11px]',
-            isDark
-              ? 'border-slate-800 bg-slate-900/50 text-slate-400'
-              : 'border-slate-200 bg-slate-50/70 text-slate-600',
-          )}
-        >
+        <div className="flex flex-wrap items-center justify-center gap-2 rounded-[4px] border border-slate-200 bg-slate-50/70 p-3 font-mono text-[11px] text-slate-600">
           <span className="font-bold text-slate-400">Quick Test:</span>
           <button
             type="button"
             onClick={() => handleQuickPaste('842910')}
-            className="rounded-[4px] border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-bold text-emerald-600 transition-colors hover:bg-emerald-500/20 dark:text-emerald-400"
+            className="rounded-[4px] border border-emerald-500/30 bg-emerald-50 px-2 py-0.5 font-bold text-emerald-700 transition-colors hover:bg-emerald-100"
           >
             Paste 842910 (Valid)
           </button>
           <button
             type="button"
             onClick={() => handleQuickPaste('000000')}
-            className="rounded-[4px] border border-red-500/30 bg-red-500/10 px-2 py-0.5 font-bold text-red-600 transition-colors hover:bg-red-500/20 dark:text-red-400"
+            className="rounded-[4px] border border-red-500/30 bg-red-50 px-2 py-0.5 font-bold text-red-700 transition-colors hover:bg-red-100"
           >
             Paste 000000 (Shake)
           </button>
           <button
             type="button"
             onClick={handleClear}
-            className="rounded-[4px] border border-slate-300 bg-white px-2 py-0.5 font-bold text-slate-700 transition-colors hover:text-slate-950 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
+            className="rounded-[4px] border border-slate-300 bg-white px-2 py-0.5 font-bold text-slate-700 transition-colors hover:text-slate-950"
           >
             Clear
           </button>
@@ -392,12 +362,7 @@ export function OtpPinInput({
       </div>
 
       {/* Footer Details */}
-      <div
-        className={cn(
-          'flex items-center justify-between border-t px-5 py-3 font-mono text-[11px] text-slate-500',
-          isDark ? 'border-slate-800 bg-slate-900/30' : 'border-slate-100 bg-slate-50/50',
-        )}
-      >
+      <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50/50 px-5 py-3 font-mono text-[11px] text-slate-500">
         <div className="flex items-center gap-1.5">
           <Smartphone className="size-3.5 text-slate-400" />
           <span>Didn&apos;t receive code? Resend SMS in 42s</span>

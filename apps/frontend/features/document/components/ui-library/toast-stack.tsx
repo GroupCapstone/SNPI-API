@@ -368,20 +368,15 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={cn(
-          'relative flex w-full flex-col overflow-hidden rounded-2xl border p-4 shadow-xl backdrop-blur-md transition-all',
+          'relative flex w-full flex-col overflow-hidden rounded-[4px] border p-4 shadow-lg backdrop-blur-md transition-all',
           colors.border,
           colors.bg,
           colors.text,
         )}
       >
         <div className="flex items-start gap-3">
-          {/* 03 Icon System: Inline SVG sized at 18px */}
-          <div
-            className={cn(
-              'mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-[4px] border',
-              colors.badgeBg,
-            )}
-          >
+          {/* 03 Icon System: Bare icon with zero background container */}
+          <div className="mt-0.5 flex shrink-0 items-center justify-center">
             <IconComponent size={18} className={cn('stroke-[2.2]', colors.iconColor)} />
           </div>
 
@@ -397,12 +392,12 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
                 {config.label}
               </span>
               {item.title && (
-                <h4 className="truncate font-sans text-xs font-bold tracking-tight text-slate-900 dark:text-white">
+                <h4 className="truncate font-sans text-xs font-bold tracking-tight text-slate-900">
                   {item.title}
                 </h4>
               )}
             </div>
-            <p className="font-sans text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+            <p className="font-sans text-xs leading-relaxed text-slate-600">
               {item.message}
             </p>
           </div>
@@ -412,13 +407,7 @@ function ToastCard({ toast: item, onDismiss, theme = 'light' }: ToastCardProps) 
             type="button"
             onClick={triggerExit}
             aria-label="Dismiss notification"
-            className={cn(
-              'flex size-7 shrink-0 items-center justify-center rounded-[4px] border transition-colors outline-none',
-              'focus-visible:ring-2 focus-visible:ring-[#0056FF]',
-              isDark
-                ? 'border-slate-800 bg-slate-900/60 text-slate-400 hover:text-white'
-                : 'border-slate-200 bg-slate-50 text-slate-500 hover:text-slate-900',
-            )}
+            className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-200 bg-white text-slate-500 hover:text-slate-900 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[#0056FF]"
           >
             <X className="size-3.5" />
           </button>
@@ -617,7 +606,7 @@ export function ToastStackDemo() {
         <button
           type="button"
           onClick={fireSuccess}
-          className="flex flex-col items-start gap-1 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-4 text-left transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10 active:scale-[0.98]"
+          className="flex flex-col items-start gap-1 rounded-[4px] border border-emerald-500/30 bg-emerald-500/5 p-4 text-left transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10 active:scale-[0.98]"
         >
           <Check className="size-5 stroke-[2.5] text-emerald-600" />
           <span className="mt-1 font-mono text-xs font-bold text-emerald-700">
@@ -630,7 +619,7 @@ export function ToastStackDemo() {
         <button
           type="button"
           onClick={fireError}
-          className="flex flex-col items-start gap-1 rounded-2xl border border-rose-500/30 bg-rose-500/5 p-4 text-left transition-all hover:border-rose-500/50 hover:bg-rose-500/10 active:scale-[0.98]"
+          className="flex flex-col items-start gap-1 rounded-[4px] border border-rose-500/30 bg-rose-500/5 p-4 text-left transition-all hover:border-rose-500/50 hover:bg-rose-500/10 active:scale-[0.98]"
         >
           <CircleAlert className="size-5 stroke-[2.5] text-rose-600" />
           <span className="mt-1 font-mono text-xs font-bold text-rose-700">
@@ -643,7 +632,7 @@ export function ToastStackDemo() {
         <button
           type="button"
           onClick={fireWarning}
-          className="flex flex-col items-start gap-1 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 text-left transition-all hover:border-amber-500/50 hover:bg-amber-500/10 active:scale-[0.98]"
+          className="flex flex-col items-start gap-1 rounded-[4px] border border-amber-500/30 bg-amber-500/5 p-4 text-left transition-all hover:border-amber-500/50 hover:bg-amber-500/10 active:scale-[0.98]"
         >
           <TriangleAlert className="size-5 stroke-[2.5] text-amber-600" />
           <span className="mt-1 font-mono text-xs font-bold text-amber-700">
@@ -656,7 +645,7 @@ export function ToastStackDemo() {
         <button
           type="button"
           onClick={fireInfo}
-          className="flex flex-col items-start gap-1 rounded-2xl border border-blue-500/30 bg-blue-500/5 p-4 text-left transition-all hover:border-blue-500/50 hover:bg-blue-500/10 active:scale-[0.98]"
+          className="flex flex-col items-start gap-1 rounded-[4px] border border-blue-500/30 bg-blue-500/5 p-4 text-left transition-all hover:border-blue-500/50 hover:bg-blue-500/10 active:scale-[0.98]"
         >
           <Info className="size-5 stroke-[2.5] text-[#0056FF]" />
           <span className="mt-1 font-mono text-xs font-bold text-[#0056FF]">
@@ -667,10 +656,10 @@ export function ToastStackDemo() {
       </div>
 
       {/* Rapid Burst Action & Feature Showcase */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 dark:border-slate-800 dark:bg-slate-900/40">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-[4px] border border-slate-200/80 bg-slate-50/60 p-4">
         <div className="space-y-0.5">
-          <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900 dark:text-white">
-            <Sparkles className="size-3.5 text-[#0056FF] dark:text-[#38BDF8]" />
+          <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900">
+            <Sparkles className="size-3.5 text-[#0056FF]" />
             <span>01 Container Overflow Demonstration</span>
           </div>
           <p className="font-sans text-xs text-slate-500">
@@ -682,7 +671,7 @@ export function ToastStackDemo() {
         <button
           type="button"
           onClick={fireRapidBurst}
-          className="flex items-center gap-2 rounded-[4px] bg-slate-900 px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-slate-800"
+          className="flex items-center gap-2 rounded-[4px] bg-[#0056FF] px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700"
         >
           <Play className="size-3.5" />
           <span>FIRE RAPID BURST (5 TOASTS)</span>
@@ -690,7 +679,7 @@ export function ToastStackDemo() {
       </div>
 
       {/* Interactive Preview Canvas with Toast Container */}
-      <div className="relative min-h-[360px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/50 p-6 shadow-inner transition-colors">
+      <div className="relative min-h-[360px] w-full overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-slate-50/50 p-6 shadow-inner transition-colors">
         <div className="max-w-md space-y-3">
           <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
             Sandbox Viewport &middot; Hover To Freeze Countdown

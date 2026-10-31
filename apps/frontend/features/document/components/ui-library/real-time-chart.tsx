@@ -385,28 +385,25 @@ export function RealTimeChart({
     <div
       ref={containerRef}
       className={cn(
-        'relative w-full max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border p-5 transition-colors select-none',
-        isDark ? 'border-slate-800 bg-[#00081C]' : 'border-slate-200 bg-white shadow-xs',
+        'relative w-full max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white p-5 shadow-xs transition-colors select-none',
         className,
       )}
     >
       {/* Chart Header & 08 Legend */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4 dark:border-slate-800/80">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="flex size-6 items-center justify-center rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/15 dark:text-cyan-400">
-              <Activity className="size-3.5" />
-            </span>
-            <h3 className="font-sans text-sm font-bold text-slate-900 dark:text-white">
+            <Activity className="size-4 shrink-0 text-[#0056FF]" />
+            <h3 className="font-sans text-sm font-bold text-slate-900">
               Real-Time Metrics Telemetry
             </h3>
             {isPaused && (
-              <span className="rounded-[4px] border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 font-mono text-[9px] font-bold text-amber-600 dark:text-amber-400">
+              <span className="rounded-[4px] border border-amber-500/30 bg-amber-50 px-2 py-0.5 font-mono text-[9px] font-bold text-amber-700">
                 PAUSED
               </span>
             )}
           </div>
-          <p className="font-sans text-xs text-slate-500 dark:text-slate-400">
+          <p className="font-sans text-xs text-slate-500">
             60fps Canvas streaming engine &middot; Click canvas to pause/resume
           </p>
         </div>
@@ -416,17 +413,14 @@ export function RealTimeChart({
           {DEFAULT_SERIES_CONFIG.map((s) => (
             <div
               key={s.id}
-              className={cn(
-                'flex items-center gap-2 rounded-[4px] border px-2.5 py-1 transition-colors',
-                isDark ? 'border-slate-800 bg-slate-900/60' : 'border-slate-200 bg-slate-50',
-              )}
+              className="flex items-center gap-2 rounded-[4px] border border-slate-200 bg-slate-50 px-2.5 py-1 transition-colors"
             >
               <span
                 className="size-2 rounded-full shadow-xs"
                 style={{ backgroundColor: s.color }}
               />
               <span className="text-[11px] text-slate-500">{s.name}:</span>
-              <span className="font-bold text-slate-900 dark:text-white">
+              <span className="font-bold text-slate-900">
                 {latestValues[s.id] ?? 0}
                 {s.unit}
               </span>
@@ -491,7 +485,7 @@ export function RealTimeChart({
       </div>
 
       {/* Control Footer */}
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3 font-mono text-xs dark:border-slate-800/80">
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3 font-mono text-xs">
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -499,15 +493,15 @@ export function RealTimeChart({
             className={cn(
               'flex items-center gap-1.5 rounded-[4px] border px-3 py-1 font-bold transition-colors',
               isPaused
-                ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                : 'border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300',
+                ? 'border-emerald-500/30 bg-emerald-50 text-emerald-700'
+                : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100',
             )}
           >
             {isPaused ? <Play className="size-3" /> : <Pause className="size-3" />}
             <span>{isPaused ? 'Resume Stream' : 'Pause Stream'}</span>
           </button>
 
-          <div className="flex items-center gap-1 border-l border-slate-200 pl-2 dark:border-slate-800">
+          <div className="flex items-center gap-1 border-l border-slate-200 pl-2">
             <span className="text-[11px] text-slate-400">RATE:</span>
             {[500, 1000, 2000].map((rate) => (
               <button
@@ -518,7 +512,7 @@ export function RealTimeChart({
                   'rounded-[4px] px-2 py-0.5 text-[10px] font-bold transition-colors',
                   speedMs === rate
                     ? 'bg-[#0056FF] text-white'
-                    : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400',
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
                 )}
               >
                 {rate === 500 ? '2x' : rate === 1000 ? '1x' : '0.5x'}

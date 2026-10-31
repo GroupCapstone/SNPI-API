@@ -95,8 +95,6 @@ export function ColorContrastChecker({
   theme = 'light',
   className,
 }: ColorContrastCheckerProps) {
-  const isDark = theme === 'dark';
-
   const [foreground, setForeground] = React.useState<string>(initialForeground);
   const [background, setBackground] = React.useState<string>(initialBackground);
 
@@ -131,15 +129,12 @@ export function ColorContrastChecker({
   return (
     <div
       className={cn(
-        'w-full space-y-6 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border p-6 transition-colors',
-        isDark
-          ? 'border-slate-800 bg-[#00081C] text-slate-100'
-          : 'border-slate-200 bg-white text-slate-900 shadow-xs',
+        'w-full space-y-6 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white text-slate-900 p-6 shadow-xs transition-colors',
         className,
       )}
     >
       {/* Header & Overall Metric */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5 dark:border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div className="space-y-1">
           <div className="flex items-center gap-2.5">
             <Eye className="size-5 text-[#0056FF]" />
@@ -147,19 +142,19 @@ export function ColorContrastChecker({
               WCAG 2.1 Contrast Ratio Inspector
             </h3>
           </div>
-          <p className="font-sans text-xs text-slate-500 dark:text-slate-400">
+          <p className="font-sans text-xs text-slate-500">
             Real-time relative luminance calculation ($L_1 + 0.05) / (L_2 + 0.05)$ for accessibility
             conformance.
           </p>
         </div>
 
         {/* Big Contrast Ratio Display */}
-        <div className="flex items-center gap-3 rounded-[4px] border border-slate-200 bg-slate-50/80 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="flex items-center gap-3 rounded-[4px] border border-slate-200 bg-slate-50/80 px-4 py-2.5">
           <div className="text-right">
             <span className="block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
               CONTRAST RATIO
             </span>
-            <span className="font-mono text-2xl font-black text-slate-900 tabular-nums dark:text-white">
+            <span className="font-mono text-2xl font-black text-slate-900 tabular-nums">
               {ratio.toFixed(2)}:1
             </span>
           </div>
