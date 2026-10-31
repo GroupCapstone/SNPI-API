@@ -73,7 +73,7 @@ export function DurationPickerDemo() {
 
 // 2. Password Input with Live Strength Meter
 export function PasswordInputDemo() {
-  const [password, setPassword] = React.useState('SNP@SecPass2026');
+  const [password, setPassword] = React.useState('SNPI@SecPass2026');
   const [show, setShow] = React.useState(false);
 
   const hasLength = password.length >= 8;

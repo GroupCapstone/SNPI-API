@@ -13,7 +13,7 @@ const foundations = [
   {
     title: 'One central system',
     description:
-      'A shared platform designed for every SNP campus branch with unified DB structure.',
+      'A shared platform designed for every SNPI campus branch with unified DB structure.',
     icon: Database,
   },
   {

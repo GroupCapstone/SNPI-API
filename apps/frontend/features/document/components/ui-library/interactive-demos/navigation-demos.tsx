@@ -87,7 +87,7 @@ export function RailTocDemo() {
       code: '{ id: "submenu-content", label: "Submenu Content", depth: 2 }',
     },
     features: {
-      summary: 'Production enterprise pillars for the SNP-SMS platform.',
+      summary: 'Production enterprise pillars for the SNPI-SMS platform.',
       note: '7-layer modular monolith, constant-time crypto, and WCAG AA/AAA compliance.',
       tag: 'ENTERPRISE',
       code: 'npm run smoke && npm run test:api && npm run deploy:verify',
@@ -177,9 +177,6 @@ export function RailTocDemo() {
           </div>
           <div>
             <h3 className="font-sans text-xs font-bold text-slate-950">Rail TOC</h3>
-            <p className="font-sans text-[11px] text-slate-500">
-              A table of contents with a paper plane that flies to the section you&apos;re reading.
-            </p>
           </div>
         </div>
 
@@ -403,12 +400,12 @@ export function HookSidebarDemo() {
   ];
 
   return (
-    <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs">
+    <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
       {/* Header and Controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
-          <h3 className="font-sans text-xs font-bold text-slate-950">Hook Sidebar</h3>
-          <p className="font-sans text-[11px] text-slate-500">
+          <h3 className="font-sans text-sm font-bold text-slate-950">Hook Sidebar</h3>
+          <p className="mt-0.5 font-sans text-xs text-slate-500">
             Click an item to spring the accent rail down to it. Hovering draws a second, dimmer
             rail.
           </p>
@@ -568,7 +565,15 @@ export function CyberArmorNavDemo() {
   const [activeConsoleTab, setActiveConsoleTab] = React.useState('portfolio');
   const [activeDocsTab, setActiveDocsTab] = React.useState('library');
 
-  // Full 8-Tab Mecha Console matching the reference image
+  // Focused 4-Tab Set for Mobile (fits 100% with zero overflow or clipping)
+  const mobileMechaTabs: HangingTabItem[] = [
+    { id: 'home', label: 'Home' },
+    { id: 'portfolio', label: 'Portfolio' },
+    { id: 'services', label: 'Services' },
+    { id: 'contact', label: 'Contact' },
+  ];
+
+  // Full 8-Tab Mecha Console matching the reference image for Desktop
   const fullMechaTabs: HangingTabItem[] = [
     { id: 'home', label: 'Home' },
     { id: 'blog', label: 'Blog' },
@@ -587,50 +592,46 @@ export function CyberArmorNavDemo() {
     { id: 'changelog', label: 'CHANGELOG', icon: Code },
   ];
 
-  return (
-    <div className="w-full space-y-8">
-      {/* Description Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-              Aerospace HUD Console Standard
-            </span>
-          </div>
-          <h3 className="font-sans text-sm font-bold text-slate-900">
-            Cyber Armor Modular Navigation Bar
-          </h3>
-          <p className="font-sans text-xs text-slate-500">
-            Chamfered 45° stepped armor plates, physical double-seam divider lines, and luminous
-            Royal Blue (#0056FF) active glow indicator.
-          </p>
-        </div>
+  const activeMobileTab = mobileMechaTabs.some((t) => t.id === activeConsoleTab)
+    ? activeConsoleTab
+    : 'portfolio';
 
-        <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-          <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
-            45° Chamfered Wings
-          </span>
-          <span className="rounded-md border border-slate-200 bg-white px-2 py-0.5">
-            Double-Seam Milled
-          </span>
-          <span className="rounded-md border border-blue-200 bg-blue-50 px-2 py-0.5 font-bold text-[#0056FF]">
-            Royal Blue Glow
-          </span>
-        </div>
+  return (
+    <div className="w-full space-y-6">
+      {/* Description Header */}
+      <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <h3 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
+          Cyber Armor Navigation
+        </h3>
+        <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+          Modular Dock
+        </span>
       </div>
 
-      {/* Instance 1: Full 8-Tab Mecha Console (Matching Reference Image) */}
-      <div className="space-y-3">
+      {/* Instance 1: Command Console */}
+      <div className="space-y-1.5">
         <div className="flex items-center justify-between">
           <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-            Instance 01 &middot; 8-Segment Command Console (Full Reference Style)
+            Command Console
           </span>
           <span className="font-mono text-[10px] text-slate-500">
             Active: <strong className="text-slate-900 uppercase">{activeConsoleTab}</strong>
           </span>
         </div>
 
-        <div className="flex w-full items-center justify-center overflow-x-auto py-4">
+        {/* Mobile: 4 Focused Tabs that fit cleanly with zero overflow */}
+        <div className="flex w-full items-center justify-center px-1 py-2 sm:hidden">
+          <CyberArmorNav
+            items={mobileMechaTabs}
+            activeId={activeMobileTab}
+            onSelect={setActiveConsoleTab}
+            showIcons={false}
+            size="sm"
+          />
+        </div>
+
+        {/* Desktop: Full 8 Tabs */}
+        <div className="no-scrollbar hidden w-full items-center justify-center overflow-x-auto px-1 py-3 sm:flex sm:py-4">
           <CyberArmorNav
             items={fullMechaTabs}
             activeId={activeConsoleTab}
@@ -642,23 +643,32 @@ export function CyberArmorNavDemo() {
       </div>
 
       {/* Instance 2: 3-Tab System Documentation Navigation Bar */}
-      <div className="space-y-3">
+      <div className="space-y-1.5">
         <div className="flex items-center justify-between">
           <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-            Instance 02 &middot; 3-Segment System Docs Console
+            System Docs Console
           </span>
           <span className="font-mono text-[10px] text-slate-500">
             Active: <strong className="text-slate-900 uppercase">{activeDocsTab}</strong>
           </span>
         </div>
 
-        <div className="flex w-full items-center justify-center overflow-x-auto py-4">
+        <div className="flex w-full items-center justify-center px-1 py-2 sm:py-4">
+          <CyberArmorNav
+            items={systemDocTabs}
+            activeId={activeDocsTab}
+            onSelect={setActiveDocsTab}
+            showIcons={true}
+            size="sm"
+            className="sm:hidden"
+          />
           <CyberArmorNav
             items={systemDocTabs}
             activeId={activeDocsTab}
             onSelect={setActiveDocsTab}
             showIcons={true}
             size="md"
+            className="hidden sm:inline-flex"
           />
         </div>
       </div>

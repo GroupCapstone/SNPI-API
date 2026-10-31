@@ -139,7 +139,9 @@ function highlightGenericLine(line: string): React.ReactNode[] {
     }
     const token = match[0];
     if (
-      /^(const|let|var|new|async|await|return|function|import|from|export|class|if|else)$/.test(token)
+      /^(const|let|var|new|async|await|return|function|import|from|export|class|if|else)$/.test(
+        token,
+      )
     ) {
       tokens.push(
         <span key={match.index} className="font-semibold text-[#F472B6]">
@@ -191,11 +193,36 @@ export function PrettyCodeBlock({
 }: PrettyCodeBlockProps) {
   const [copied, setCopied] = React.useState(false);
 
-  const handleCopy = () => {
-    if (typeof window !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(code);
+  const handleCopy = async () => {
+    if (typeof window === 'undefined') return;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        return;
+      }
+    } catch {
+      // Fall through to textarea fallback
+    }
+
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = code;
+      textArea.style.position = 'fixed';
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+      textArea.style.opacity = '0';
+      textArea.setAttribute('readonly', '');
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error('Copy failed:', e);
     }
   };
 
@@ -218,9 +245,7 @@ export function PrettyCodeBlock({
             <span className="size-2.5 rounded-full bg-[#27C93F] transition-opacity hover:opacity-80" />
           </div>
           {title && (
-            <span className="font-mono text-[11px] font-medium text-slate-400">
-              {title}
-            </span>
+            <span className="font-mono text-[11px] font-medium text-slate-400">{title}</span>
           )}
         </div>
 
@@ -230,10 +255,12 @@ export function PrettyCodeBlock({
             <span
               className={cn(
                 'rounded-md px-2 py-0.5 font-mono text-[10px] font-bold uppercase',
-                statusType === 'success' && 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
-                statusType === 'error' && 'bg-rose-500/15 text-rose-400 border border-rose-500/30',
-                statusType === 'warning' && 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
-                statusType === 'info' && 'bg-sky-500/15 text-sky-400 border border-sky-500/30',
+                statusType === 'success' &&
+                  'border border-emerald-500/30 bg-emerald-500/15 text-emerald-400',
+                statusType === 'error' && 'border border-rose-500/30 bg-rose-500/15 text-rose-400',
+                statusType === 'warning' &&
+                  'border border-amber-500/30 bg-amber-500/15 text-amber-400',
+                statusType === 'info' && 'border border-sky-500/30 bg-sky-500/15 text-sky-400',
               )}
             >
               {statusBadge}
@@ -261,7 +288,12 @@ export function PrettyCodeBlock({
       </div>
 
       {/* Code Area with Syntax Highlighting */}
-      <div className={cn('overflow-x-auto overflow-y-auto p-4 font-mono text-[12px] leading-relaxed', maxHeight)}>
+      <div
+        className={cn(
+          'overflow-x-auto overflow-y-auto p-4 font-mono text-[12px] leading-relaxed',
+          maxHeight,
+        )}
+      >
         <pre className="table w-full border-collapse">
           <tbody>
             {lines.map((line, idx) => (
@@ -271,7 +303,7 @@ export function PrettyCodeBlock({
                     {idx + 1}
                   </td>
                 )}
-                <td className="whitespace-pre font-mono text-slate-200">
+                <td className="font-mono whitespace-pre text-slate-200">
                   {language === 'json'
                     ? highlightJsonLine(line)
                     : language === 'xml'

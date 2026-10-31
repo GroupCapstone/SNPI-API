@@ -117,7 +117,7 @@ export const ProgramDialog = ({ open, onOpenChange, program }: ProgramDialogProp
           <DialogDescription>
             {isEdit
               ? 'Update the details and status of this educational program.'
-              : 'Add a new educational program offering at SNP International School.'}
+              : 'Add a new educational program offering at SNPI International School.'}
           </DialogDescription>
         </DialogHeader>
 

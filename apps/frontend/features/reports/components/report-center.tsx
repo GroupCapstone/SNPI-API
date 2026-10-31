@@ -63,7 +63,7 @@ const PreviewPanel = ({ preview }: { preview: ReportPreview }) => {
         <div className="flex items-start justify-between gap-4">
           <div>
             <CardTitle className="text-lg text-[#023e8a]">
-              {String(school.nameEn ?? 'SNP School')}
+              {String(school.nameEn ?? 'SNPI School')}
             </CardTitle>
             <p className="mt-1 text-sm text-slate-600">
               {String(student.studentId ?? '')} ·{' '}

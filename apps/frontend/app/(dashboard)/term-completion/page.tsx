@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { TermResultTable } from '@/features/term-results/components/term-result-table';
 
 export const metadata: Metadata = {
-  title: 'Term Completion Workflow | SNP Management System',
+  title: 'Term Completion Workflow | SNPI Management System',
   description:
     'Complete academic terms, close student enrollments, and automatically re-enroll promoted students into the next period.',
 };

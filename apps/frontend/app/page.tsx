@@ -27,7 +27,7 @@ export default function HomePage() {
         <div className="relative flex size-20 items-center justify-center rounded-2xl border border-slate-200 bg-white p-2">
           <Image
             src="/images/logo.png"
-            alt="SNP International School Logo"
+            alt="SNPI International School Logo"
             width={64}
             height={64}
             className="size-full object-contain"

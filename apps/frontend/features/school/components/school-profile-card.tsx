@@ -93,7 +93,7 @@ export const SchoolProfileCard = () => {
             <div className="flex size-14 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white p-1">
               <Image
                 src="/images/logo.png"
-                alt="SNP International School Logo"
+                alt="SNPI International School Logo"
                 width={52}
                 height={52}
                 className="size-full object-contain"

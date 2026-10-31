@@ -4,7 +4,7 @@ import { CertificateRegistry } from '@/features/certificates/components/certific
 import { PermissionGuard } from '@/features/auth/components/permission-guard';
 
 export const metadata: Metadata = {
-  title: 'Certificates & Graduations | SNP Management System',
+  title: 'Certificates & Graduations | SNPI Management System',
   description: 'View, issue, and verify official completion and merit certificates.',
 };
 

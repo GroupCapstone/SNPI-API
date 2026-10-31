@@ -9,7 +9,15 @@ import { cn } from '@/lib/utils';
 const CORNER = 6;
 const DASH = 'repeating-linear-gradient(to top, transparent 0 2px, currentColor 2px 4px)';
 
-export type HookSidebarItem = string | { label: string; href?: string };
+export type HookSidebarItem =
+  | string
+  | {
+      label: string;
+      href?: string;
+      icon?: React.ReactNode;
+      onClick?: () => void;
+      id?: string;
+    };
 
 export type HookSidebarProps = Omit<ComponentProps<'nav'>, 'onChange'> & {
   /** Rows rendered as the vertical list. A plain string or an object with a label is a nav item, and href turns it into a link. */
@@ -118,7 +126,7 @@ export function HookSidebar({
     const observer = new ResizeObserver(measure);
     observer.observe(list);
     return () => observer.disconnect();
-  }, [items.length]);
+  }, [items]);
 
   const activeY = activeIndex < 0 ? null : (centers[activeIndex] ?? null);
   const hoverY = hoverIndex === null ? null : (centers[hoverIndex] ?? null);
@@ -155,6 +163,13 @@ export function HookSidebar({
         onMouseLeave={() => setPointerInside(false)}
         className="relative flex flex-col gap-0.5"
       >
+        {/* Background Neutral Dashed Rail Track */}
+        <span
+          aria-hidden
+          style={dashed ? { backgroundImage: DASH } : { backgroundColor: 'currentColor' }}
+          className="pointer-events-none absolute top-1 bottom-1 left-0.5 w-px text-slate-200"
+        />
+
         <Rail
           from={hoverFrom}
           y={hoverY}
@@ -167,6 +182,8 @@ export function HookSidebar({
         {items.map((item, index) => {
           const text = labelOf(item);
           const href = hrefOf(item);
+          const icon = typeof item === 'object' ? item.icon : undefined;
+          const customOnClick = typeof item === 'object' ? item.onClick : undefined;
           const isActive = index === activeIndex;
           const setRef = (el: HTMLElement | null) => {
             itemRefs.current[index] = el;
@@ -183,14 +200,24 @@ export function HookSidebar({
               setFocusInside(true);
             },
             onBlur: () => setFocusInside(false),
-            onClick: () => select(index),
+            onClick: () => {
+              customOnClick?.();
+              select(index);
+            },
             className: cn(
-              'rounded-lg py-1.5 pr-2 pl-5 text-left font-sans text-xs transition-colors duration-200 select-none motion-reduce:transition-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0056FF]',
+              'group flex w-full cursor-pointer items-center rounded-lg py-1 pr-2 pl-5 text-left font-sans text-xs transition-colors duration-150 select-none motion-reduce:transition-none focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[#0056FF]',
               isActive
                 ? 'font-bold text-slate-950'
-                : 'font-normal text-slate-500 hover:text-slate-900',
+                : 'font-normal text-slate-600 hover:text-slate-950',
             ),
           };
+
+          const rowContent = (
+            <span className="flex min-w-0 items-center gap-2">
+              {icon}
+              <span className="truncate">{text}</span>
+            </span>
+          );
 
           return href ? (
             <Link
@@ -200,7 +227,7 @@ export function HookSidebar({
               href={href}
               aria-current={isActive ? 'page' : undefined}
             >
-              {text}
+              {rowContent}
             </Link>
           ) : (
             <button
@@ -210,7 +237,7 @@ export function HookSidebar({
               type="button"
               aria-current={isActive ? 'true' : undefined}
             >
-              {text}
+              {rowContent}
             </button>
           );
         })}

@@ -4,7 +4,7 @@ import { AcademicRuleSplitView } from '@/features/academic-rules/components/acad
 import { PermissionGuard } from '@/features/auth/components/permission-guard';
 
 export const metadata: Metadata = {
-  title: 'Academic Rules & Grade Schemes | SNP Management System',
+  title: 'Academic Rules & Grade Schemes | SNPI Management System',
   description: 'Manage versioned grade schemes, assessment policies, and progression rules.',
 };
 

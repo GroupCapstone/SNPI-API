@@ -14,8 +14,8 @@ const generalFields: DomainFieldDefinition[] = [
     descriptionKh:
       'ឈ្មោះផ្លូវការជាភាសាអង់គ្លេស ប្រើប្រាស់លើវិក្កយបត្រ ព្រឹត្តិបត្រពិន្ទុ និងវិញ្ញាបនបត្រ',
     type: 'string',
-    defaultValue: 'SNP International School',
-    placeholder: 'e.g. SNP International School',
+    defaultValue: 'SNPI International School',
+    placeholder: 'e.g. SNPI International School',
   },
   {
     key: 'SCHOOL_NAME_KH',

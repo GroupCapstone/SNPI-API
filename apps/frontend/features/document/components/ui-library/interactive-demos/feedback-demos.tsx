@@ -104,7 +104,12 @@ export function NotificationBellDemo() {
   ];
 
   return (
-    <div className="relative flex w-full max-w-md flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
+    <div
+      className={cn(
+        'relative flex w-full max-w-md flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs transition-all duration-200',
+        isOpen ? 'pb-72 sm:pb-80' : 'pb-5',
+      )}
+    >
       <span className="pb-3 font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
         Notification Bell & Popover
       </span>
@@ -127,7 +132,7 @@ export function NotificationBellDemo() {
         </button>
 
         {isOpen && (
-          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-30 w-72 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl">
+          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-30 w-[calc(100vw-64px)] max-w-[320px] -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl sm:w-80">
             <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <span className="font-sans text-xs font-bold text-slate-900">Notifications</span>
               <button
@@ -138,7 +143,7 @@ export function NotificationBellDemo() {
                 Reset
               </button>
             </div>
-            <div className="mt-2 space-y-2">
+            <div className="no-scrollbar mt-2 max-h-60 space-y-2 overflow-y-auto">
               {notifications.map((n, i) => (
                 <div key={i} className="rounded-xl border border-slate-100 bg-slate-50 p-2">
                   <div className="flex items-center justify-between font-mono text-[10px] text-slate-400">
@@ -221,10 +226,6 @@ export function StatusPage404Demo() {
               5 ARCHETYPES
             </span>
           </div>
-          <p className="font-sans text-[11px] text-slate-500">
-            Multi-mode brand status screens supporting 404, 403, 500, 503, and 401 with flat
-            geometry.
-          </p>
         </div>
 
         {/* HTTP Status Code Selector */}

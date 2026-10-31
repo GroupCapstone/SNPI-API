@@ -223,3 +223,21 @@ Use these specific skill identifiers and command strings to instruct the agent:
     | `SKILL-RAILTOC` | `.agents/skills/snp-sms-design-standards/rail-toc-flight-tracker-manual.md` | Rail TOC Flight Tracker Navigation Manual (Origami paper plane flight navigation, directional turning, solid/dashed rail states, r4 buttons) | `apply skill rail-toc` |
     | `SKILL-ROYAL` | `.agents/skills/snp-sms-design-standards/royal-blue-brand-system-manual.md` | Royal Blue Brand Colors, Futurewave Gradients, Light Day First, Zero-Dot UI Standards, and Deduplicated Components Standard | `apply skill royal` |
     | `SKILL-CYBER-NAV` | `.agents/skills/snp-sms-design-standards/cyber-armor-nav-manual.md` | Cyber Armor Modular Navigation & Aerospace Mecha HUD Console Manual (45° chamfered armor plates, double-seam milled dividers, Royal Blue glow) | `apply skill cyber-nav` |
+
+---
+
+## 11. Mandatory Zero Blue Dot & Clean Navigation Standard — ABSOLUTE STANDARD
+
+- **Strict Prohibition — Zero Blue Indicator Dots**: Under no circumstances should animated pinging or static blue dots (`animate-ping bg-[#0056FF]`, live indicator status dots, pulsing waypoint rings) be used in navigation bars, breadcrumbs, titles, sub-headers, or status pills. Never use this blue dot style anywhere in the application or documentation.
+- **Clean Sticky Sub-Navigation Rails**: Sticky sub-navigation bars must strictly render clean, direct category jump pills (`Home`, `Navigation`, `Inputs`, `Feedback`, `Display`, `AI Kit`, `Forms`) without dynamic location breadcrumbs, shifting title texts, or pulsing dots taking up horizontal space.
+
+---
+
+## 12. Mandatory Full Brand Name SNPI Rule — ALWAYS USE FULL NAME SNPI (NEVER TRUNCATE TO SNP)
+
+- **Mandatory Full Institutional Identity**: Always use the full institutional name **SNPI** (or **SNPI-SMS**), never truncate or abbreviate to bare "SNP".
+- **Strict Brand Naming Invariants**:
+  - Educational Institution: **SNPI International School** (Khmer: **សាលាអន្តរជាតិ អេស អ៊ិន ភី អាយ · SNPI INTERNATIONAL SCHOOL**), never "SNP International School".
+  - Enterprise Platform: **SNPI-SMS** / **SNPI Management System**, never "SNP-SMS" or "SNP Management System" without the "I".
+  - Documentation, Badges & Labels: Always display **SNPI** (e.g. `SNPI ENTERPRISE UI SYSTEM`, `SNPI UI Library`, `snpi-ui`, `*.snpi.edu.kh`).
+  - Code & Metadata: Page titles, descriptions, and placeholder names must strictly refer to **SNPI** / **SNPI-SMS**.

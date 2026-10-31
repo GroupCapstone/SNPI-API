@@ -4,7 +4,7 @@ import { PermissionGuard } from '@/features/auth/components/permission-guard';
 import { TimetableGrid } from '@/features/timetable/components/timetable-grid';
 
 export const metadata: Metadata = {
-  title: 'Class Timetable & Schedule | SNP Management System',
+  title: 'Class Timetable & Schedule | SNPI Management System',
   description: 'View class schedules, shift hours, and weekly room allocations.',
 };
 

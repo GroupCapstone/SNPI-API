@@ -560,7 +560,7 @@ export const EmployeeForm = ({ initialData, isEdit = false }: EmployeeFormProps)
               <h1 className="text-2xl font-bold tracking-tight text-slate-950">
                 {isEdit ? 'Edit Employee Master Record' : 'Register New Employee Master'}
               </h1>
-              <Badge tone="neutral">SNP HR Master</Badge>
+              <Badge tone="neutral">SNPI HR Master</Badge>
             </div>
             <p className="mt-0.5 text-xs text-slate-500">
               {isEdit

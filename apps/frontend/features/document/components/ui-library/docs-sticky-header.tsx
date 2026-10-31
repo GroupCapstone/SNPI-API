@@ -18,6 +18,7 @@ import {
   Plus,
 } from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
+import { HookSidebar } from './hook-sidebar';
 import { useDocsNav } from './docs-nav-context';
 import { COMPONENT_CATEGORIES, COMPONENT_LIBRARY_REGISTRY } from './component-registry';
 import { cn } from '@/lib/utils';
@@ -322,22 +323,21 @@ export function DocsStickyHeader({
                                 </span>
                               </button>
 
-                              {/* Folder File Items */}
+                              {/* Folder File Items (Hook Sidebar with Dashed Rail Style) */}
                               {!isCollapsed && (
-                                <div className="ml-3 space-y-0.5 border-l border-slate-100 pl-4">
-                                  {grp.items.map((comp) => (
-                                    <button
-                                      key={comp.id}
-                                      type="button"
-                                      onClick={() =>
-                                        handleMobileNavigate('library', `comp-${comp.id}`)
-                                      }
-                                      className="group flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-left font-sans text-xs text-slate-600 transition-colors hover:bg-[#EFF5FF] hover:text-[#0056FF]"
-                                    >
-                                      <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-[#0056FF]" />
-                                      <span className="truncate">{comp.name}</span>
-                                    </button>
-                                  ))}
+                                <div className="ml-3 pl-1">
+                                  <HookSidebar
+                                    items={grp.items.map((comp) => ({
+                                      label: comp.name,
+                                      icon: (
+                                        <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                                      ),
+                                      onClick: () =>
+                                        handleMobileNavigate('library', `comp-${comp.id}`),
+                                    }))}
+                                    dashed={true}
+                                    color="#0056FF"
+                                  />
                                 </div>
                               )}
                             </div>
@@ -346,27 +346,39 @@ export function DocsStickyHeader({
                       )}
                     </div>
 
-                    {/* Documentation Sections */}
+                    {/* Documentation Sections (Hook Sidebar with Dashed Rail Style) */}
                     <div className="mt-3 border-t border-slate-100 pt-2.5">
                       <span className="mb-1.5 block font-mono text-[10px] font-bold text-slate-400 uppercase">
                         Documentation
                       </span>
-                      <div className="space-y-0.5">
-                        {[
-                          { id: 'brand-blueprint', label: 'Brand Blueprint' },
-                          { id: 'design-principles', label: 'Design Standards' },
-                          { id: 'touch-targets', label: 'Touch Targets' },
-                        ].map((doc) => (
-                          <button
-                            key={doc.id}
-                            type="button"
-                            onClick={() => handleMobileNavigate('library', doc.id)}
-                            className="group flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-left font-sans text-xs text-slate-600 transition-colors hover:bg-[#EFF5FF] hover:text-[#0056FF]"
-                          >
-                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-[#0056FF]" />
-                            <span className="truncate">{doc.label}</span>
-                          </button>
-                        ))}
+                      <div className="ml-1">
+                        <HookSidebar
+                          items={[
+                            {
+                              label: 'Brand Blueprint',
+                              icon: (
+                                <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                              ),
+                              onClick: () => handleMobileNavigate('library', 'brand-blueprint'),
+                            },
+                            {
+                              label: 'Design Standards',
+                              icon: (
+                                <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                              ),
+                              onClick: () => handleMobileNavigate('library', 'design-principles'),
+                            },
+                            {
+                              label: 'Touch Targets',
+                              icon: (
+                                <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
+                              ),
+                              onClick: () => handleMobileNavigate('library', 'touch-targets'),
+                            },
+                          ]}
+                          dashed={true}
+                          color="#0056FF"
+                        />
                       </div>
                     </div>
                   </div>

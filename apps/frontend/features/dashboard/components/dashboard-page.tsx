@@ -1271,7 +1271,7 @@ export function DashboardPage({ initialPerspective }: DashboardPageProps) {
                   <span>
                     {language === 'kh'
                       ? 'សាលាអន្តរជាតិ អេស អ៊ិន ភី · កម្ពុជា'
-                      : 'SNP International School · Cambodia'}
+                      : 'SNPI International School · Cambodia'}
                   </span>
                   {hasPermission('school.view.all_branches') && (
                     <Link

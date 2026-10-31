@@ -33,7 +33,7 @@ export const STATUS_DIRECTORY: Record<StatusCode, StatusMeta> = {
   404: {
     code: 404,
     title: 'Page Coordinates Not Found',
-    tagline: 'Resource not located in SNP-SMS routing directory',
+    tagline: 'Resource not located in SNPI-SMS routing directory',
     description:
       'The requested route coordinates or document resource could not be located on this cluster branch.',
     remediation: 'Verify the route URL or navigate back to the developer document portal.',
@@ -72,7 +72,7 @@ export const STATUS_DIRECTORY: Record<StatusCode, StatusMeta> = {
     tagline: 'Invalid session signature or token expired',
     description:
       'This API gateway endpoint requires a valid constant-time HMAC bearer authorization header.',
-    remediation: 'Sign in through the SNP-SMS identity gateway to refresh your session keys.',
+    remediation: 'Sign in through the SNPI-SMS identity gateway to refresh your session keys.',
     badge: 'HTTP 401 · UNAUTHORIZED',
   },
 };
@@ -427,7 +427,7 @@ export function StatusPage404({
                   <span className="size-2.5 rounded-full bg-emerald-400" />
                 </div>
                 <span className="font-mono text-xs font-bold text-slate-800">
-                  SNP TERMINAL DECK · ERROR {activeCode}
+                  SNPI TERMINAL DECK · ERROR {activeCode}
                 </span>
               </div>
               <div className="flex items-center gap-2 font-mono text-[10px] text-slate-500">

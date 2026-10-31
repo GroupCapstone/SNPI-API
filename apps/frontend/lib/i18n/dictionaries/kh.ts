@@ -2,10 +2,10 @@ import type { TranslationDictionary } from '../types';
 
 export const kh: TranslationDictionary = {
   common: {
-    appName: 'ប្រព័ន្ធគ្រប់គ្រងសាលារៀន អេស អ៊ិន ភី',
-    appNameKh: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី',
-    schoolName: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី',
-    schoolNameKh: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី',
+    appName: 'ប្រព័ន្ធគ្រប់គ្រងសាលារៀន អេស អ៊ិន ភី អាយ',
+    appNameKh: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី អាយ',
+    schoolName: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី អាយ',
+    schoolNameKh: 'សាលាអន្តរជាតិ អេស អ៊ិន ភី អាយ',
     save: 'រក្សាទុក',
     cancel: 'បោះបង់',
     delete: 'លុប',
@@ -345,7 +345,7 @@ export const kh: TranslationDictionary = {
   },
   branch: {
     title: 'សាខាសាលារៀន',
-    subtitle: 'គ្រប់គ្រងទីតាំងសាខា និងព័ត៌មានលម្អិតសាខានីមួយៗនៃសាលារៀន SNP',
+    subtitle: 'គ្រប់គ្រងទីតាំងសាខា និងព័ត៌មានលម្អិតសាខានីមួយៗនៃសាលារៀន SNPI',
     multiBranchMgmt: 'ការគ្រប់គ្រងពហុសាខា',
     addBranch: 'បង្កើតសាខាថ្មី',
     dialogTitleAdd: 'បង្កើតសាខាថ្មី',

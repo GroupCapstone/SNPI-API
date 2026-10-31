@@ -204,7 +204,7 @@ export const StudentReportsView = () => {
       <div className="hidden p-6 print:block">
         <div className="border-b-2 border-[#00509d] pb-4 text-center">
           <h2 className="text-xl font-bold text-[#023e8a]">
-            សាលាអន្តរជាតិ អេស អ៊ិន ភី · SNP INTERNATIONAL SCHOOL
+            សាលាអន្តរជាតិ អេស អ៊ិន ភី អាយ · SNPI INTERNATIONAL SCHOOL
           </h2>
           <h3 className="mt-1 text-base font-semibold tracking-wide text-slate-800 uppercase">
             {copy.officialTitle}

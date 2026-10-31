@@ -84,7 +84,7 @@ export const ResetPasswordDialog = ({ open, onOpenChange, user }: ResetPasswordD
   const handleCopyCredentials = async () => {
     if (!successResult) return;
     const portalUrl = typeof window !== 'undefined' ? `${window.location.origin}/login` : '';
-    const textToCopy = `SNP School Management System - Account Credentials\nUsername: ${user.username}\nTemporary Password: ${successResult.temporaryPassword}\nLogin Portal: ${portalUrl}\n\n*Note: You will be prompted to set your own private password upon signing in.`;
+    const textToCopy = `SNPI School Management System - Account Credentials\nUsername: ${user.username}\nTemporary Password: ${successResult.temporaryPassword}\nLogin Portal: ${portalUrl}\n\n*Note: You will be prompted to set your own private password upon signing in.`;
 
     try {
       await navigator.clipboard.writeText(textToCopy);

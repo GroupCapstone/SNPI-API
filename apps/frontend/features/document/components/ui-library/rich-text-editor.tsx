@@ -149,7 +149,7 @@ export interface RichTextEditorProps {
 }
 
 export function RichTextEditor({
-  initialContent = '<p>Welcome to the <strong>SNP-SMS</strong> institutional document editor. Select text to apply formatting, or try pasting HTML from other sources.</p>',
+  initialContent = '<p>Welcome to the <strong>SNPI-SMS</strong> institutional document editor. Select text to apply formatting, or try pasting HTML from other sources.</p>',
   onChange,
   placeholder = 'Type your formatted content here...',
   theme = 'light',
@@ -640,7 +640,7 @@ export function RichTextEditor({
 
 export function RichTextEditorDemo() {
   const [editorContent, setEditorContent] = React.useState<string>(
-    '<h2>SNP-SMS Academic Ledger Protocol</h2><p>Student evaluations and credit transfers are authenticated using <strong>constant-time cryptographic checks</strong>. Never store plaintext credentials or allow unsanitized input in institutional archives.</p><ul><li>Automatic allowlist filtering</li><li>Scheme rejection for <code>javascript:</code> and <code>data:</code></li><li>Preserved caret selection on toolbar clicks</li></ul>',
+    '<h2>SNPI-SMS Academic Ledger Protocol</h2><p>Student evaluations and credit transfers are authenticated using <strong>constant-time cryptographic checks</strong>. Never store plaintext credentials or allow unsanitized input in institutional archives.</p><ul><li>Automatic allowlist filtering</li><li>Scheme rejection for <code>javascript:</code> and <code>data:</code></li><li>Preserved caret selection on toolbar clicks</li></ul>',
   );
 
   const simulateMaliciousPaste = () => {
