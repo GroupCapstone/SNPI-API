@@ -18,6 +18,7 @@ import {
   VolumeX,
 } from '@/components/icons';
 import { RailToc, type RailTocItem } from '../rail-toc';
+import { HookSidebar, type HookSidebarItem } from '../hook-sidebar';
 import { IconBar } from '../icon-bar';
 import { CyberArmorNav, type HangingTabItem } from '../hanging-tabs-nav';
 
@@ -373,53 +374,123 @@ export function BounceSidebarDemo() {
   );
 }
 
-// 3. Hook Sidebar (Kinetic Pull Hook Drawer)
+// 3. Hook Sidebar (A vertical navigation list with a dashed rail that marks the active item)
 export function HookSidebarDemo() {
-  const [isHooked, setIsHooked] = React.useState(false);
+  const [dashed, setDashed] = React.useState(true);
+  const [accentColor, setAccentColor] = React.useState('#0056FF');
+  const [displayIndex, setDisplayIndex] = React.useState(0);
+  const [navIndex, setNavIndex] = React.useState(1);
+
+  const displayItems: HookSidebarItem[] = [
+    { label: 'Folder' },
+    { label: 'Code block' },
+    { label: 'Bento Grid' },
+    { label: 'Data Table' },
+  ];
+
+  const navigationItems: HookSidebarItem[] = [
+    { label: 'Gooey nav' },
+    { label: 'Hook Sidebar' },
+    { label: 'Rail TOC' },
+    { label: 'Bottom Sheet' },
+  ];
+
+  const colorPresets = [
+    { label: 'Royal Blue', value: '#0056FF' },
+    { label: 'Rare Orange', value: '#FC4C01' },
+    { label: 'Azure', value: '#2277FF' },
+    { label: 'Emerald', value: '#10B981' },
+  ];
 
   return (
-    <div className="relative flex h-60 w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-      {/* Sliding Drawer */}
-      <div
-        className={cn(
-          'absolute top-0 bottom-0 left-0 z-10 flex w-48 flex-col justify-between border-r border-slate-200 bg-white p-4 shadow-md transition-transform duration-300 ease-out',
-          isHooked ? 'translate-x-0' : '-translate-x-full',
-        )}
-      >
-        <div className="space-y-2">
-          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-            Hook Panel
-          </span>
-          <div className="space-y-1 font-sans text-xs font-medium text-slate-700">
-            <div className="rounded-lg bg-slate-100 p-2">Direct Ledger #09</div>
-            <div className="rounded-lg bg-slate-100 p-2">Batch Transfer Gate</div>
-            <div className="rounded-lg bg-slate-100 p-2">Audit Checkpoints</div>
+    <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs">
+      {/* Header and Controls */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+        <div>
+          <h3 className="font-sans text-xs font-bold text-slate-950">Hook Sidebar</h3>
+          <p className="font-sans text-[11px] text-slate-500">
+            Click an item to spring the accent rail down to it. Hovering draws a second, dimmer
+            rail.
+          </p>
+        </div>
+
+        {/* Style Controls */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Dashed / Solid Toggle */}
+          <button
+            type="button"
+            onClick={() => setDashed(!dashed)}
+            className="cursor-pointer rounded-[4px] border-0 bg-slate-100 px-2.5 py-1 font-sans text-[11px] font-semibold text-slate-700 transition-all select-none hover:bg-slate-200"
+          >
+            {dashed ? 'Dashed Rail' : 'Solid Rail'}
+          </button>
+
+          {/* Color Switcher */}
+          <div className="flex items-center gap-1 rounded-[4px] bg-slate-50 p-1">
+            {colorPresets.map((preset) => (
+              <button
+                key={preset.value}
+                type="button"
+                onClick={() => setAccentColor(preset.value)}
+                style={{ backgroundColor: preset.value }}
+                className={cn(
+                  'size-4 cursor-pointer rounded-full transition-transform select-none',
+                  accentColor === preset.value
+                    ? 'scale-125 ring-2 ring-slate-900 ring-offset-1'
+                    : 'opacity-70 hover:opacity-100',
+                )}
+                title={preset.label}
+              />
+            ))}
           </div>
         </div>
-        <button
-          type="button"
-          onClick={() => setIsHooked(false)}
-          className="rounded-lg border border-slate-200 py-1 font-sans text-xs text-slate-600 hover:bg-slate-100"
-        >
-          Close Drawer
-        </button>
       </div>
 
-      {/* Kinetic Hook Anchor Tab */}
-      <button
-        type="button"
-        onClick={() => setIsHooked(!isHooked)}
-        className={cn(
-          'absolute top-1/2 z-20 flex -translate-y-1/2 items-center gap-1 rounded-r-xl border border-l-0 border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-3 font-sans text-xs font-bold text-[#0056FF] shadow-xs transition-all duration-300',
-          isHooked ? 'left-48' : 'left-0',
-        )}
-      >
-        <Compass className="animate-spin-slow size-4" />
-        <span>HOOK</span>
-      </button>
+      {/* Two-Column Stacked Demo Presentation */}
+      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        {/* Left Column: Display Group */}
+        <div className="rounded-xl border border-slate-100 bg-[#F8FAFC] p-5">
+          <HookSidebar
+            label="Display"
+            items={displayItems}
+            value={displayIndex}
+            onChange={(idx) => setDisplayIndex(idx)}
+            color={accentColor}
+            dashed={dashed}
+          />
+        </div>
 
-      <div className="flex flex-1 items-center justify-center pl-16 text-center font-sans text-xs text-slate-500">
-        Tap the kinetic hook tab to pull out the drawer
+        {/* Right Column: Navigation Group */}
+        <div className="rounded-xl border border-slate-100 bg-[#F8FAFC] p-5">
+          <HookSidebar
+            label="Navigation"
+            items={navigationItems}
+            value={navIndex}
+            onChange={(idx) => setNavIndex(idx)}
+            color={accentColor}
+            dashed={dashed}
+          />
+        </div>
+      </div>
+
+      {/* Active State Telemetry Footer */}
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 font-mono text-[11px] text-slate-500">
+        <div>
+          Active Display:{' '}
+          <span className="font-bold text-slate-900">
+            {typeof displayItems[displayIndex] === 'string'
+              ? displayItems[displayIndex]
+              : (displayItems[displayIndex] as { label: string }).label}
+          </span>
+        </div>
+        <div>
+          Active Navigation:{' '}
+          <span className="font-bold text-slate-900" style={{ color: accentColor }}>
+            {typeof navigationItems[navIndex] === 'string'
+              ? navigationItems[navIndex]
+              : (navigationItems[navIndex] as { label: string }).label}
+          </span>
+        </div>
       </div>
     </div>
   );

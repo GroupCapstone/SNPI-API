@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `d7b657d`
+
+- Record Rail TOC light redesign and circular waypoint nodes
+
 ### Version 0.2.11 (31.10.2026) - `a301963`
 
 - Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `afe1383`
 
 - Enforce rounded-[4px] primary corner radius and responsive mobile border-t vs web border standards
-
-### Version 0.2.11 (31.10.2026) - `be675a4`
-
-- Synchronize recent local commits
 
