@@ -19,8 +19,6 @@ import {
   Terminal,
   FileText,
   Info,
-  Lock,
-  Zap,
 } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import { cn } from '@/lib/utils';
@@ -144,58 +142,11 @@ const SAMPLE_ERROR_RESPONSE = {
   documentationUrl: 'https://snp.edu.kh/document/openapi#public-feeds',
 };
 
-interface LiveStreamEvent {
-  id: string;
-  timestamp: string;
-  channel: string;
-  eventName: string;
-  payload: string;
-}
-
-const INITIAL_STREAM_EVENTS: LiveStreamEvent[] = [
-  {
-    id: 'ev-1',
-    timestamp: '16:40:12',
-    channel: 'announcements.live',
-    eventName: 'announcement.published',
-    payload: '{"id":"ANN-2026-001","title":"Semester 1 Registration Open"}',
-  },
-  {
-    id: 'ev-2',
-    timestamp: '16:41:04',
-    channel: 'classes.roster.BR-01',
-    eventName: 'class.seat_reserved',
-    payload: '{"code":"CLS-2026-CS101","enrolled":27,"capacity":30,"status":"Filling Fast"}',
-  },
-  {
-    id: 'ev-3',
-    timestamp: '16:41:45',
-    channel: 'alerts.emergency',
-    eventName: 'alert.broadcast',
-    payload: '{"id":"ALT-2026-904","headline":"Gate 2 Maintenance Notice","severity":"advisory"}',
-  },
-  {
-    id: 'ev-4',
-    timestamp: '16:42:10',
-    channel: 'classes.roster.BR-01',
-    eventName: 'class.seat_reserved',
-    payload: '{"code":"CLS-2026-NET201","enrolled":30,"capacity":30,"status":"Waitlist"}',
-  },
-  {
-    id: 'ev-5',
-    timestamp: '16:43:02',
-    channel: 'credentials.ledger',
-    eventName: 'certificate.committed',
-    payload: '{"code":"SNPI-2026-CS-8891","status":"COMMITTED_TAMPER_PROOF","height":18402}',
-  },
-];
-
 const GUIDE_NAV_ITEMS = [
   { id: 'open-api-head', label: 'Overview', tag: '01' },
   { id: 'available-services', label: 'Core Services', tag: '02' },
   { id: 'public-feeds', label: 'Public Feeds (RSS 2.0)', tag: '03' },
-  { id: 'realtime-stream', label: 'Real-Time SSE Stream', tag: '04' },
-  { id: 'changelogs', label: 'Releases', tag: '05' },
+  { id: 'changelogs', label: 'Releases', tag: '04' },
 ];
 
 // ============================================================================
@@ -220,11 +171,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
     'feed-alerts-json': 'success',
     'feed-calendar-json': 'success',
   });
-
-  // SSE Stream telemetry
-  const [streamLatency] = React.useState<number>(14);
-  const [streamSubscribers] = React.useState<number>(1428);
-  const [streamEvents] = React.useState<LiveStreamEvent[]>(INITIAL_STREAM_EVENTS);
 
   // Copy helper with robust fallback
   const handleCopy = async (text: string, id: string) => {
@@ -427,7 +373,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               <span className="text-xs font-black tracking-wider text-[#0056FF] uppercase">
                 Available Services & Endpoints
               </span>
-              <span className="text-[11px] font-medium text-[#0A1A4A]/60">4 Core Services</span>
+              <span className="text-[11px] font-medium text-[#0A1A4A]/60">3 Core Services</span>
             </div>
 
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3.5">
@@ -563,49 +509,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </span>
                   <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
                     Proof Verified
-                  </span>
-                </div>
-              </button>
-
-              {/* Card 04: Real-Time SSE Stream */}
-              <button
-                onClick={() => scrollToSection('realtime-stream')}
-                className="group flex w-full flex-col justify-between rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3.5 text-left shadow-xs transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] active:scale-[0.99] sm:p-4"
-              >
-                <div className="flex w-full items-start justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                      <Zap className="size-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                          04 · Stream
-                        </span>
-                        <span className="rounded border border-[#CAD3F5]/60 bg-[#EFF5FF] px-1.5 py-0.5 text-[9px] font-semibold text-[#0056FF]">
-                          HTTP/2 SSE
-                        </span>
-                      </div>
-                      <h3 className="truncate text-sm font-bold text-[#0A1A4A] group-hover:text-[#0056FF]">
-                        Real-Time SSE Stream
-                      </h3>
-                    </div>
-                  </div>
-                  <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-white text-[#0056FF] transition-all group-hover:border-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white">
-                    <ChevronRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                  </div>
-                </div>
-
-                <p className="mt-1 truncate text-xs text-[#0A1A4A]/70">
-                  Instant push events with zero polling.
-                </p>
-
-                <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
-                  <span className="font-mono text-[11px] text-[#0056FF]">
-                    GET /api/v1/stream/events
-                  </span>
-                  <span className="text-[10px] font-semibold text-[#0A1A4A]/60">
-                    Sub-50ms Latency
                   </span>
                 </div>
               </button>
@@ -776,91 +679,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           </section>
 
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 4: REAL-TIME SSE STREAM */}
-          {/* ----------------------------------------------------------------- */}
-          <section id="realtime-stream" className="space-y-4 border-t border-[#CAD3F5] pt-8">
-            <div className="space-y-1">
-              <span className="font-mono text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                Server-Sent Events
-              </span>
-              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
-                Real-Time SSE Stream
-              </h2>
-              <p className="text-xs font-medium text-[#0A1A4A]/75">
-                HTTP/2 Server-Sent Events channel streaming live academic mutations and alerts.
-              </p>
-            </div>
-
-            {/* Live Packet Stream Monitor (Light Modern Design) */}
-            <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] shadow-xs">
-              <div className="flex items-center justify-between border-b border-[#CAD3F5] bg-[#EFF5FF] p-3 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#0056FF] opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0056FF]" />
-                  </span>
-                  <span className="font-bold text-[#0A1A4A]">Live Packet Monitor</span>
-                  <span className="text-[11px] text-[#0A1A4A]/60">({streamLatency}ms avg)</span>
-                </div>
-                <span className="rounded bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                  text/event-stream
-                </span>
-              </div>
-
-              <div className="max-h-56 space-y-2 overflow-y-auto p-3">
-                {streamEvents.map((ev) => (
-                  <div
-                    key={ev.id}
-                    className="flex flex-col gap-1 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-2.5 text-xs sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="rounded bg-[#FFFFFF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                        {ev.eventName}
-                      </span>
-                      <span className="font-mono text-[11px] text-[#0A1A4A]/80">{ev.channel}</span>
-                    </div>
-                    <code className="truncate font-mono text-[11px] text-[#0A1A4A]">
-                      {ev.payload}
-                    </code>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Client Listener Code (Pretty-Printed) */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wider text-[#0056FF] uppercase">
-                  EventSource JavaScript Client Listener
-                </span>
-                <span className="text-[11px] font-medium text-[#0A1A4A]/60">
-                  Zero-dependency Browser Native API
-                </span>
-              </div>
-              <PrettyCodeBlock
-                code={`const sse = new EventSource('https://api.snp.edu.kh/api/v1/stream/events?channel=classes.roster.BR-01');
-
-// Listen for real-time seat reservation updates
-sse.addEventListener('class.seat_reserved', (event) => {
-  const mutation = JSON.parse(event.data);
-  console.log('Live seat mutation received:', mutation);
-});
-
-// Automatic reconnection on transient drops
-sse.addEventListener('error', (err) => {
-  console.warn('SSE connection dropped, retrying in 3s...', err);
-});`}
-                language="javascript"
-                title="sse-client.js"
-                statusBadge="HTTP/2 STREAM"
-                statusType="info"
-                maxHeight="max-h-64"
-              />
-            </div>
-          </section>
-
-          {/* ----------------------------------------------------------------- */}
-          {/* SECTION 5: RELEASES */}
+          {/* SECTION 4: RELEASES */}
           {/* ----------------------------------------------------------------- */}
           <section id="changelogs" className="space-y-3 border-t border-[#CAD3F5] pt-8">
             <div className="flex items-center justify-between">
