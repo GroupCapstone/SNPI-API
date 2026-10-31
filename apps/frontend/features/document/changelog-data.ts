@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "38590fa",
+    "description": "Record frontsite school integration studio and zero public crud policy"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "5f5c018",
     "description": "Secure public read-only syndication and add frontsite school data integration studio"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "555f4c0",
     "description": "Sync real-time changelog for readme rewrite"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "0d6b9ef",
-    "description": "Rewrite readme to standard enterprise format with zero links and short summary"
   }
 ];
