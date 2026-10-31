@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (31.10.2026) - `ee38ab0`
+
+- Remove base url box from standalone hero view
+
 ### Version 0.2.13 (31.10.2026) - `7970746`
 
 - Condense service card and hero descriptions to ultra-minimal single-line copy
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `38ac6e6`
 
 - Redesign open-api page with Nextra Docs Starter Kit architecture
-
-### Version 0.2.12 (31.10.2026) - `d451d0d`
-
-- Record zero gradient and zero black/gray rule enforcement
 

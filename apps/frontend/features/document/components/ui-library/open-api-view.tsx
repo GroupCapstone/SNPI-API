@@ -457,12 +457,9 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
         {/* =================================================================== */}
         <aside className="sticky top-28 hidden w-60 shrink-0 space-y-4 self-start md:block">
           <div className="rounded-xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 shadow-xs">
-            <div className="mb-2 flex items-center justify-between border-b border-[#CAD3F5] px-3 py-2">
+            <div className="mb-2 border-b border-[#CAD3F5] px-3 py-2">
               <span className="text-[11px] font-black tracking-widest text-[#0056FF] uppercase">
                 Directory
-              </span>
-              <span className="rounded bg-[#E3E7FC] px-1.5 py-0.5 text-[10px] font-bold text-[#0056FF]">
-                Read Only
               </span>
             </div>
 
@@ -517,17 +514,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
             <div className="flex flex-1 flex-col justify-between rounded-3xl border border-[#CAD3F5] bg-[#EFF5FF] p-6 shadow-xs sm:p-10">
               {/* Top Context & Headline */}
               <div className="space-y-4">
-                {/* Context Badge */}
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#FFFFFF] px-3.5 py-1 text-xs font-bold text-[#0056FF] shadow-xs">
-                    <Radio className="size-3.5 text-[#0056FF]" />
-                    <span>SNP Public Developer Hub</span>
-                  </span>
-                  <span className="inline-flex items-center rounded-full bg-[#E3E7FC] px-3 py-1 text-xs font-bold text-[#0056FF]">
-                    Free Public Access
-                  </span>
-                </div>
-
                 {/* Big Clear Headline */}
                 <h1 className="text-3xl leading-[1.12] font-black tracking-tight text-[#0A1A4A] sm:text-5xl lg:text-6xl">
                   Welcome to SNP Open API
