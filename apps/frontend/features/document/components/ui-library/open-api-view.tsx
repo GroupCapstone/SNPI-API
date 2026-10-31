@@ -555,49 +555,15 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 </div>
               </div>
 
-              {/* Bottom Actions: Base URL Bar & Glide to Services Button */}
-              <div className="mt-8 space-y-3">
-                {/* Instant Base URL Bar */}
-                <div className="flex flex-col gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] p-3 shadow-2xs sm:flex-row sm:items-center sm:justify-between sm:p-3.5">
-                  <div className="flex min-w-0 items-center gap-2.5">
-                    <span className="shrink-0 rounded-md bg-[#0056FF] px-2.5 py-1 font-mono text-[10px] font-bold text-white uppercase">
-                      BASE URL
-                    </span>
-                    <span className="truncate font-mono text-xs font-bold text-[#0A1A4A] sm:text-sm">
-                      https://api.snp.edu.kh/api/v1
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 border-t border-[#CAD3F5]/60 pt-2 sm:border-t-0 sm:pt-0">
-                    <span className="font-mono text-xs font-semibold text-[#0056FF]">
-                      HTTP/2 · Public
-                    </span>
-                    <button
-                      onClick={() => handleCopy('https://api.snp.edu.kh/api/v1', 'base-url')}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 text-xs font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
-                    >
-                      {copiedId === 'base-url' ? (
-                        <>
-                          <Check className="size-3.5 text-[#0056FF]" />
-                          <span>Copied</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="size-3.5 text-[#0056FF]" />
-                          <span>Copy URL</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-
+              {/* Bottom Actions: Glide to Services Button */}
+              <div className="mt-8">
                 {/* Dedicated Scroll Cue to Screen 2 */}
                 <button
                   onClick={() => scrollToSection('available-services')}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] py-3 text-xs font-bold text-[#0056FF] shadow-2xs transition-all hover:bg-[#EFF5FF] active:scale-[0.99]"
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] py-3.5 text-xs font-bold text-[#0056FF] shadow-xs transition-all hover:bg-[#EFF5FF] active:scale-[0.99] sm:w-auto sm:px-8"
                 >
                   <span>Explore 4 Core Services</span>
-                  <ArrowRight className="size-4 rotate-90" />
+                  <ArrowRight className="size-4 rotate-90 sm:rotate-0" />
                 </button>
               </div>
             </div>
