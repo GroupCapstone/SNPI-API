@@ -31,7 +31,7 @@ export interface DocsStickyHeaderProps {
 
 const OPEN_API_SECTIONS = [
   { id: 'open-api-head', label: 'Welcome & Overview' },
-  { id: 'available-services', label: '3 Core Services' },
+  { id: 'available-services', label: '2 Core Services' },
   { id: 'public-feeds', label: 'Public Feeds & RSS 2.0' },
   { id: 'changelogs', label: 'Syndication Releases' },
 ];
