@@ -19,12 +19,6 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     description: 'Ephemeral feedback banner with auto-dismiss and instant Undo recovery.',
   },
   {
-    id: 'fab',
-    name: 'FAB (Floating Action Button)',
-    category: 'Actions & Triggers',
-    description: 'Elevated circular trigger floating above surface for the primary action.',
-  },
-  {
     id: 'chip',
     name: 'Chip',
     category: 'Selection & Filters',
@@ -53,12 +47,6 @@ export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
     name: 'Hanging Tabs Nav',
     category: 'Header Navigation',
     description: 'Inverted trapezoid folder tabs suspended from the ceiling baseline.',
-  },
-  {
-    id: 'icon-bar',
-    name: 'Icon Bar',
-    category: 'Navigation',
-    description: 'Bloom-open label reveal horizontal toolbar with status dot and roving tabindex.',
   },
   {
     id: 'input',
@@ -221,18 +209,6 @@ function renderRealMiniDemo(
         </div>
       );
 
-    case 'fab':
-      return (
-        <div className="flex items-center justify-center py-2">
-          <div className="relative flex size-12 items-center justify-center rounded-full border border-[#0056FF] bg-[#0056FF] text-white shadow-[0_4px_14px_rgba(0,86,255,0.4)] transition-transform hover:scale-105 active:scale-95">
-            <Plus className="size-5 stroke-[2.5]" />
-            <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full border border-white bg-[#2277FF] font-mono text-[9px] font-bold text-white">
-              +
-            </span>
-          </div>
-        </div>
-      );
-
     case 'chip':
       return (
         <div className="flex flex-wrap items-center justify-center gap-1.5">
@@ -360,19 +336,6 @@ function renderRealMiniDemo(
           <div className="relative flex h-11 w-20 flex-col items-center justify-center rounded-b-xl border border-t-0 border-slate-300 bg-slate-100/80 pt-1">
             <Layers className="size-3.5 text-slate-600" />
             <span className="mt-0.5 font-sans text-[9px] font-bold text-slate-600">Library</span>
-          </div>
-        </div>
-      );
-
-    case 'icon-bar':
-      return (
-        <div className="flex items-center justify-center pt-2">
-          <div className="flex h-8 items-center gap-1 rounded-xl border border-slate-800 bg-[#0A0D14] px-2 text-[10px] text-white">
-            <span className="relative flex items-center gap-1 rounded-lg bg-white/10 px-2 py-0.5 font-bold">
-              <span>Pen</span>
-            </span>
-            <span className="px-1 font-mono text-slate-500">Eraser</span>
-            <span className="px-1 font-mono text-slate-500">Fill</span>
           </div>
         </div>
       );
