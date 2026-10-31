@@ -27,7 +27,7 @@ export function FolderDemo() {
   ];
 
   return (
-    <div className="w-full max-w-lg space-y-4 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white p-5 shadow-xs">
+    <div className="w-full max-w-lg space-y-4 border-slate-200 bg-white p-5 shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
       <div className="flex items-center justify-between">
         <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Interactive Document Folder
@@ -47,7 +47,7 @@ export function FolderDemo() {
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex w-full items-center justify-between text-left focus:outline-none cursor-pointer"
+            className="flex w-full cursor-pointer items-center justify-between text-left focus:outline-none"
           >
             <div className="flex items-center gap-3">
               <Folder className="size-5 text-[#0056FF]" />
@@ -413,7 +413,7 @@ export function FaqDemo() {
   ];
 
   return (
-    <div className="w-full max-w-lg space-y-4 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white p-5 shadow-xs">
+    <div className="w-full max-w-lg space-y-4 border-slate-200 bg-white p-5 shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
       <div className="flex items-center justify-between">
         <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
           Institutional FAQ Accordion
@@ -433,8 +433,10 @@ export function FaqDemo() {
                 type="button"
                 onClick={() => setOpenIdx(isOpen ? null : idx)}
                 className={cn(
-                  'flex w-full items-center justify-between p-3.5 text-left font-sans text-xs font-bold transition-colors cursor-pointer',
-                  isOpen ? 'bg-[#E3E7FC]/30 text-[#0056FF]' : 'bg-slate-50/70 text-slate-900 hover:bg-slate-100/70',
+                  'flex w-full cursor-pointer items-center justify-between p-3.5 text-left font-sans text-xs font-bold transition-colors',
+                  isOpen
+                    ? 'bg-[#E3E7FC]/30 text-[#0056FF]'
+                    : 'bg-slate-50/70 text-slate-900 hover:bg-slate-100/70',
                 )}
               >
                 <span>{faq.q}</span>

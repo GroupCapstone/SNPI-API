@@ -1265,7 +1265,7 @@ function renderFeedComponentDemo(
           </div>
 
           {/* Interactive Workspace Canvas with Speed-Dial */}
-          <div className="relative w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="relative w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1391,7 +1391,7 @@ function renderFeedComponentDemo(
       return (
         <div className="flex w-full flex-col items-center gap-5">
           {/* Filter Stage */}
-          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1503,7 +1503,7 @@ function renderFeedComponentDemo(
           </div>
 
           {/* Interactive Switches Panel */}
-          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1603,7 +1603,7 @@ function renderFeedComponentDemo(
     case 'dropdown':
       return (
         <div className="flex w-full flex-col items-center gap-5">
-          <div className="w-full max-w-xl max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">
@@ -1845,7 +1845,7 @@ function renderFeedComponentDemo(
             </div>
           ) : (
             /* MODE 2: Daily Active Students Metrics Card (User Image 2 Reference) */
-            <div className="w-full max-w-lg max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
+            <div className="w-full max-w-lg border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
               <div className="flex items-start justify-between">
                 <div>
                   <h4 className="font-sans text-base font-black text-slate-900">
@@ -1930,7 +1930,7 @@ function renderFeedComponentDemo(
             ))}
           </div>
 
-          <div className="w-full max-w-xl space-y-4 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 shadow-md">
+          <div className="w-full max-w-xl space-y-4 border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
                 <h4 className="font-sans text-sm font-bold text-slate-900">

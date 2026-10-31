@@ -324,7 +324,7 @@ export function ModalDialogDemo() {
   return (
     <div className="w-full space-y-6">
       {/* Live In-Stage Modal Dialog Surface - Responsive: Mobile rounded-t-2xl border-t | PC Web sm:rounded-2xl sm:border */}
-      <div className="w-full max-w-xl max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border border-slate-200/90 bg-white p-6 text-left shadow-md">
+      <div className="w-full max-w-xl border-slate-200/90 bg-white p-6 text-left shadow-md max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-x-0 max-sm:border-t max-sm:border-b-0 sm:rounded-2xl sm:border">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
             <h4 className="font-sans text-sm font-bold text-slate-900">

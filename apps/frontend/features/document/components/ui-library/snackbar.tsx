@@ -88,7 +88,7 @@ export function LibrarySnackbar({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       className={cn(
-        'max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:w-full max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:fixed sm:bottom-6 sm:left-1/2 sm:-translate-x-1/2 sm:w-[calc(100%-2rem)] sm:max-w-lg sm:rounded-2xl sm:border border-slate-200 z-50 flex flex-col overflow-hidden bg-white text-[#09172B] shadow-2xl backdrop-blur-xl transition-all duration-200 select-none',
+        'z-50 flex flex-col overflow-hidden border-slate-200 bg-white text-[#09172B] shadow-2xl backdrop-blur-xl transition-all duration-200 select-none max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:w-full max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-x-0 max-sm:border-t max-sm:border-b-0 sm:fixed sm:bottom-6 sm:left-1/2 sm:w-[calc(100%-2rem)] sm:max-w-lg sm:-translate-x-1/2 sm:rounded-2xl sm:border',
         className,
       )}
     >
@@ -122,8 +122,7 @@ export function LibrarySnackbar({
               variant === 'info' && 'text-sky-700 hover:bg-sky-50 focus-visible:ring-sky-500',
               variant === 'warning' &&
                 'text-amber-700 hover:bg-amber-50 focus-visible:ring-amber-500',
-              variant === 'error' &&
-                'text-rose-700 hover:bg-rose-50 focus-visible:ring-rose-500',
+              variant === 'error' && 'text-rose-700 hover:bg-rose-50 focus-visible:ring-rose-500',
               variant === 'default' &&
                 'text-[#0056FF] hover:bg-[#E3E7FC] focus-visible:ring-[#0056FF]',
             )}
@@ -201,7 +200,7 @@ export function NativeSnackbarInline({
   return (
     <div className="w-full max-w-lg space-y-3">
       {/* Native Snackbar Outer Frame (Strict Clean Light Day Mode & Responsive Border) */}
-      <div className="relative overflow-hidden max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white text-[#09172B] shadow-xl">
+      <div className="relative overflow-hidden border-slate-200 bg-white text-[#09172B] shadow-xl max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
         <div className="flex items-center justify-between gap-3 px-4 py-3 sm:px-5">
           {/* Status Icon (No Background Color Behind Icon) */}
           <div className="flex shrink-0 items-center">

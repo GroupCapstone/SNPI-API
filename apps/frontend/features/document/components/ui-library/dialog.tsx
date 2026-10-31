@@ -56,7 +56,7 @@ export function LibraryDialog({
       <div
         role="dialog"
         aria-modal="true"
-        className="relative z-50 w-full max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-t max-sm:border-x-0 max-sm:border-b-0 sm:rounded-2xl sm:border sm:border-slate-200 sm:max-w-lg bg-white p-6 text-slate-900 shadow-xl transition-all"
+        className="relative z-50 w-full bg-white p-6 text-slate-900 shadow-xl transition-all max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-x-0 max-sm:border-t max-sm:border-b-0 sm:max-w-lg sm:rounded-2xl sm:border sm:border-slate-200"
       >
         <div className="flex items-start justify-between gap-4">
           <div>

@@ -34,7 +34,9 @@ export function LibraryFab({
     default: isExtended
       ? 'h-12 px-5 text-sm font-bold gap-2.5 rounded-[4px]'
       : 'h-12 w-12 rounded-[4px]',
-    small: isExtended ? 'h-10 px-4 text-xs font-bold gap-2 rounded-[4px]' : 'h-10 w-10 rounded-[4px]',
+    small: isExtended
+      ? 'h-10 px-4 text-xs font-bold gap-2 rounded-[4px]'
+      : 'h-10 w-10 rounded-[4px]',
   };
 
   return (

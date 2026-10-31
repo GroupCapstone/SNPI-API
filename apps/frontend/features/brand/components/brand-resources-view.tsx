@@ -23,8 +23,8 @@ export function BrandResourcesView() {
               Brand Resources &amp; Downloads
             </h1>
             <p className="font-sans text-sm text-slate-600 sm:text-base">
-              Download official brand assets, turnkey presentation decks, print templates, digital badge vectors,
-              and design token JSONs.
+              Download official brand assets, turnkey presentation decks, print templates, digital
+              badge vectors, and design token JSONs.
             </p>
           </div>
         </div>
@@ -35,7 +35,9 @@ export function BrandResourcesView() {
         {/* Master Asset Packs */}
         <section className="space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Official Vectors</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Official Vectors
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950">
               Master Asset Downloads
             </h2>
@@ -69,7 +71,9 @@ export function BrandResourcesView() {
         {/* Turnkey Templates */}
         <section className="space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Turnkey Collateral</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Turnkey Collateral
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950">
               Templates &amp; Presentations
             </h2>
@@ -110,7 +114,9 @@ export function BrandResourcesView() {
         {/* E-Resources & Swag */}
         <section className="space-y-6">
           <div className="border-b border-[#CAD3F5] pb-3">
-            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">Swag &amp; Merchandise</span>
+            <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+              Swag &amp; Merchandise
+            </span>
             <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950">
               Merchandise Specs &amp; E-Resources
             </h2>

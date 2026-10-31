@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `6f2f41c`
+
+- Add brand hub, standards, and resources portals with strict royal blue palette, jump nav, and zero outside colors
+
 ### Version 0.2.11 (31.10.2026) - `7d5867c`
 
 - Align 3-tab cyber armor navigation dock with uppercase labels, code changelog icon, and glowing active underline
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `0963776`
 
 - V0.2.9 release checkpoint with navigation redesign and CI quality gate fixes
-
-### Version 0.2.9 (31.10.2026) - `ae44792`
-
-- Upgrade hanging tabs navigation with UI Library first kinetic animations and real-time status tracker box
 

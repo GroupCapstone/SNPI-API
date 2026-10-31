@@ -28,13 +28,7 @@ export interface HangingTabsNavProps {
  * High-tech aerospace / mecha console with dual top stepped armor wings,
  * drop bottom bracket, chamfered 45° corner caps, and debossed tech grooves.
  */
-function CyberChassisSvg({
-  tabCount = 3,
-  className,
-}: {
-  tabCount?: number;
-  className?: string;
-}) {
+function CyberChassisSvg({ tabCount = 3, className }: { tabCount?: number; className?: string }) {
   const is2Tabs = tabCount === 2;
 
   // 3-tab path: 3 elevated wings aligned with 3 modular buttons
@@ -161,25 +155,65 @@ function CyberChassisSvg({
         <>
           {/* Left Wing Debossed Tech Slot & Royal Blue Accent */}
           <rect x="264" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
-          <rect x="270" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+          <rect
+            x="270"
+            y="4"
+            width="22"
+            height="2"
+            rx="1"
+            fill="#0056FF"
+            filter="url(#royalGlow)"
+          />
 
           {/* Right Wing Debossed Tech Slot & Royal Blue Accent */}
           <rect x="664" y="3.5" width="72" height="3" rx="1.5" fill="#CAD3F5" />
-          <rect x="708" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+          <rect
+            x="708"
+            y="4"
+            width="22"
+            height="2"
+            rx="1"
+            fill="#0056FF"
+            filter="url(#royalGlow)"
+          />
         </>
       ) : (
         <>
           {/* Wing 1 Debossed Tech Slot & Royal Blue Accent */}
           <rect x="135" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
-          <rect x="140" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+          <rect
+            x="140"
+            y="4"
+            width="22"
+            height="2"
+            rx="1"
+            fill="#0056FF"
+            filter="url(#royalGlow)"
+          />
 
           {/* Wing 2 Debossed Tech Slot & Royal Blue Accent */}
           <rect x="465" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
-          <rect x="490" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+          <rect
+            x="490"
+            y="4"
+            width="22"
+            height="2"
+            rx="1"
+            fill="#0056FF"
+            filter="url(#royalGlow)"
+          />
 
           {/* Wing 3 Debossed Tech Slot & Royal Blue Accent */}
           <rect x="795" y="3.5" width="70" height="3" rx="1.5" fill="#CAD3F5" />
-          <rect x="840" y="4" width="22" height="2" rx="1" fill="#0056FF" filter="url(#royalGlow)" />
+          <rect
+            x="840"
+            y="4"
+            width="22"
+            height="2"
+            rx="1"
+            fill="#0056FF"
+            filter="url(#royalGlow)"
+          />
         </>
       )}
 

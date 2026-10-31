@@ -23,7 +23,7 @@ export function LibraryBottomNav({ items, activeId, onSelect, className }: Libra
     <nav
       aria-label="Bottom Navigation Demo"
       className={cn(
-        'flex h-16 w-full items-center justify-around border-t border-slate-200 border-x-0 border-b-0 rounded-none bg-white/95 px-2 text-slate-800 shadow-sm backdrop-blur-xl sm:rounded-2xl sm:border sm:border-slate-200/80 sm:max-w-md sm:mx-auto',
+        'flex h-16 w-full items-center justify-around rounded-none border-x-0 border-t border-b-0 border-slate-200 bg-white/95 px-2 text-slate-800 shadow-sm backdrop-blur-xl sm:mx-auto sm:max-w-md sm:rounded-2xl sm:border sm:border-slate-200/80',
         className,
       )}
     >

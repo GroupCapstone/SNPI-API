@@ -129,7 +129,7 @@ export function ColorContrastChecker({
   return (
     <div
       className={cn(
-        'w-full space-y-6 max-sm:rounded-none max-sm:border-y max-sm:border-x-0 sm:rounded-2xl sm:border border-slate-200 bg-white text-slate-900 p-6 shadow-xs transition-colors',
+        'w-full space-y-6 border-slate-200 bg-white p-6 text-slate-900 shadow-xs transition-colors max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
         className,
       )}
     >
