@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `9aecb3d`
+
+- Redesign Rail TOC paper plane flight navigator with 3D faceted jet, de Casteljau contrail, and telemetry deck
+
 ### Version 0.2.11 (31.10.2026) - `afbd722`
 
 - Record removal of header status badge
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `0fcfaf0`
 
 - V0.2.11 release checkpoint with system architecture lexicon, cyber armor nav, and royal blue brand system
-
-### Version 0.2.11 (31.10.2026) - `6496ddb`
-
-- Format components and documentation with prettier
 
