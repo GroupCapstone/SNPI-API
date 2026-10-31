@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `7efd4c6`
+
+- Sync real-time commit history
+
 ### Version 0.2.11 (31.10.2026) - `0110d62`
 
 - Document display-only open-api rules and format open-api-view
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `e6d6680`
 
 - Record real-time changelog for Rail TOC paper plane flight navigator redesign
-
-### Version 0.2.11 (31.10.2026) - `9aecb3d`
-
-- Redesign Rail TOC paper plane flight navigator with 3D faceted jet, de Casteljau contrail, and telemetry deck
 
