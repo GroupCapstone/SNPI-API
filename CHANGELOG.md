@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.13 (01.11.2026) - `d670a24`
+
+- Remove security remediation log from README per standard
+
+### Version 0.2.13 (01.11.2026) - `af52d17`
+
+- Record README security remediation section
+
 ### Version 0.2.13 (01.11.2026) - `e9af90d`
 
 - Add standard security vulnerability remediation log to README
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `096fc41`
 
 - Enforce anti-gray anti-blur high-contrast brand tokens and rule
-
-### Version 0.2.12 (31.10.2026) - `cb2f90c`
-
-- Update navbar to solid white with blue active text and redesign system color matrix to high-contrast light day mode
-
-### Version 0.2.12 (31.10.2026) - `1ddce36`
-
-- Replace dark terminal packet monitor with light modern ui and record rule
 
