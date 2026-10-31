@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "7d5867c",
+    "description": "Align 3-tab cyber armor navigation dock with uppercase labels, code changelog icon, and glowing active underline"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "1bb47eb",
     "description": "Remove 15 specified components and redesign 10 core components with zero dark mode, bare icons, and rounded-[4px] standard"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "ae44792",
     "description": "Upgrade hanging tabs navigation with UI Library first kinetic animations and real-time status tracker box"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "a62fcd4",
-    "description": "Remove preview and prompt buttons and convert copy prompt to icon-only action"
   }
 ];

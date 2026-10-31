@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `7d5867c`
+
+- Align 3-tab cyber armor navigation dock with uppercase labels, code changelog icon, and glowing active underline
+
 ### Version 0.2.11 (31.10.2026) - `1bb47eb`
 
 - Remove 15 specified components and redesign 10 core components with zero dark mode, bare icons, and rounded-[4px] standard
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.9 (31.10.2026) - `ae44792`
 
 - Upgrade hanging tabs navigation with UI Library first kinetic animations and real-time status tracker box
-
-### Version 0.2.9 (31.10.2026) - `a62fcd4`
-
-- Remove preview and prompt buttons and convert copy prompt to icon-only action
 
