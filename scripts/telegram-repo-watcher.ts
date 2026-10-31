@@ -8,8 +8,37 @@ import * as path from 'node:path';
  * GitHub security quality checks, and live API health.
  */
 
-const DEFAULT_BOT_TOKEN = '***REMOVED***';
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_BOT_TOKEN;
+function resolveBotToken(): string {
+  if (process.env.TELEGRAM_BOT_TOKEN) return process.env.TELEGRAM_BOT_TOKEN;
+  if (process.env.TELEGRAM_BOT__TOKEN) return process.env.TELEGRAM_BOT__TOKEN;
+  try {
+    const envLocal = path.join(ROOT_DIR, '.env.local');
+    if (fs.existsSync(envLocal)) {
+      const content = fs.readFileSync(envLocal, 'utf-8');
+      const match = content.match(/TELEGRAM_BOT_?_?TOKEN=([^\r\n]+)/);
+      if (match && match[1]) return match[1].trim();
+    }
+  } catch {
+    // ignore
+  }
+  return '';
+}
+
+function resolveChatId(): string | number | null {
+  if (process.env.TELEGRAM_CHAT_ID) return process.env.TELEGRAM_CHAT_ID;
+  try {
+    const envLocal = path.join(ROOT_DIR, '.env.local');
+    if (fs.existsSync(envLocal)) {
+      const content = fs.readFileSync(envLocal, 'utf-8');
+      const match = content.match(/TELEGRAM_CHAT_ID=([^\r\n]+)/);
+      if (match && match[1]) return match[1].trim();
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
 const ROOT_DIR = path.resolve(__dirname, '..');
 const CACHE_FILE = path.join(ROOT_DIR, '.telegram-watch-cache.json');
 
@@ -74,39 +103,20 @@ function formatAuthor(author: string, email: string): string {
 
 function formatDiffSummary(diffStat: string, changedFiles: string[]): string {
   const filesMatch = diffStat.match(/(\d+)\s+file/);
-  const insMatch = diffStat.match(/(\d+)\s+insertion/);
-  const delMatch = diffStat.match(/(\d+)\s+deletion/);
-
   const count = filesMatch ? filesMatch[1] : String(changedFiles.length || 0);
-  const ins = insMatch ? `+${insMatch[1]}` : '+0';
-  const del = delMatch ? `-${delMatch[1]}` : '-0';
 
   if (changedFiles.length > 0 && changedFiles.length <= 3) {
     const names = changedFiles.map((f) => path.basename(f)).join(', ');
-    return `${count} files (${ins}, ${del}) · <code>${escapeHtml(names)}</code>`;
+    return `${count} files updated (${escapeHtml(names)})`;
   }
-  return `${count} files (${ins}, ${del})`;
+  return `${count} files updated`;
 }
 
 function getSecurityInlineSummary(security: SecurityStatus): string {
   if (security.totalAlerts === 0) {
-    return 'Clean (0 alerts)';
+    return 'All security checks clean';
   }
-  const map = new Map<string, { package: string; severity: string; count: number }>();
-  for (const a of security.openAlerts) {
-    const key = `${a.package}:${a.severity}`;
-    if (!map.has(key)) {
-      map.set(key, { package: a.package, severity: a.severity.toUpperCase(), count: 1 });
-    } else {
-      map.get(key)!.count += 1;
-    }
-  }
-  const items = Array.from(map.values())
-    .slice(0, 2)
-    .map((g) => `${escapeHtml(g.package)} · ${g.severity}${g.count > 1 ? ` x${g.count}` : ''}`)
-    .join(', ');
-
-  return `${security.totalAlerts} open (${items})`;
+  return `${security.totalAlerts} advisories under review`;
 }
 
 function getTrackerSummary(apiHealth: {
@@ -115,13 +125,18 @@ function getTrackerSummary(apiHealth: {
   latencyMs: number;
 }): string {
   if (apiHealth.online) {
-    return `Operational (HTTP ${apiHealth.statusCode || 200}, ${apiHealth.latencyMs}ms)`;
+    return 'All systems operational';
   }
-  return `Offline / Standby (HTTP ${apiHealth.statusCode || 0})`;
+  return 'Services undergoing maintenance';
 }
 
 async function sendTelegramMessage(chatId: string | number, text: string): Promise<boolean> {
-  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+  const botToken = resolveBotToken();
+  if (!botToken) {
+    console.error('Cannot send message: TELEGRAM_BOT_TOKEN is not configured.');
+    return false;
+  }
+  const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
   try {
     const res = await fetch(url, {
       method: 'POST',
@@ -150,14 +165,17 @@ async function sendTelegramMessage(chatId: string | number, text: string): Promi
  * Auto-detects chat ID from recent bot updates
  */
 async function getActiveChatId(): Promise<string | number | null> {
-  const envChatId = process.env.TELEGRAM_CHAT_ID;
+  const envChatId = resolveChatId();
   if (envChatId) return envChatId;
 
   const cache = loadCache();
   if (cache.chatId) return cache.chatId;
 
+  const botToken = resolveBotToken();
+  if (!botToken) return null;
+
   try {
-    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`);
+    const res = await fetch(`https://api.telegram.org/bot${botToken}/getUpdates`);
     const data = (await res.json()) as {
       ok: boolean;
       result?: Array<{
@@ -401,14 +419,19 @@ export async function runWatcherCycle(options: { forceAlert?: boolean } = {}): P
       headerBadge = '[SNPI · TRACKER DEGRADED]';
     }
 
+    const repoSlug = getRepoSlug();
+    const commitUrl = `https://github.com/${repoSlug}/commit/${commit.hash}`;
+    const releaseUrl = `https://github.com/${repoSlug}/releases`;
+
     const consolidatedMessage = `<b>${headerBadge}</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${escapeHtml(packageVersion)}</b>
 <b>${escapeHtml(humanSummary)}</b>
 
 • <b>Developer:</b> ${escapeHtml(authorDisplay)}
-• <b>Commit:</b> <code>${escapeHtml(commit.hash)}</code>
+• <b>Commit:</b> <a href="${commitUrl}">${escapeHtml(commit.hash)}</a>
 • <b>Changes:</b> ${diffSummary}
 • <b>Security:</b> ${securitySummary}
 • <b>Tracker:</b> ${trackerSummary}
+• <b>Release:</b> <a href="${releaseUrl}">Release Notes</a>
 • <b>Time:</b> ${formatHumanTime()}`;
 
     // Send ONE consolidated message
@@ -457,14 +480,19 @@ async function main() {
     const { packageVersion } = inspectVersionAndRelease();
     const security = inspectSecurityQuality();
     const apiHealth = await inspectLiveApi();
+    const repoSlug = getRepoSlug();
+    const commitUrl = `https://github.com/${repoSlug}/commit/${commit.hash}`;
+    const releaseUrl = `https://github.com/${repoSlug}/releases`;
+
     console.log(`Sending diagnostic test message to Chat ID: ${chatId}...`);
     const testMessage = `<b>[SNPI · TRACKER STATUS]</b> <code>${escapeHtml(commit.branch)}</code> · <b>v${packageVersion}</b>
 <b>Live Repository &amp; Quality Monitor Operational</b>
 
 • <b>Developer:</b> ${escapeHtml(formatAuthor(commit.author, commit.email))}
-• <b>Commit:</b> <code>${escapeHtml(commit.hash)}</code>
+• <b>Commit:</b> <a href="${commitUrl}">${escapeHtml(commit.hash)}</a>
 • <b>Security:</b> ${getSecurityInlineSummary(security)}
 • <b>Tracker:</b> ${getTrackerSummary(apiHealth)}
+• <b>Release:</b> <a href="${releaseUrl}">Release Notes</a>
 • <b>Time:</b> ${formatHumanTime()}`;
 
     const success = await sendTelegramMessage(chatId, testMessage);

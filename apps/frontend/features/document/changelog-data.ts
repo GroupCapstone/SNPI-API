@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.14",
     "date": "01.11.2026",
+    "commitHash": "aa64a62",
+    "developer": "史力爱卫",
+    "description": "Bump monorepo version to v0.2.14"
+  },
+  {
+    "version": "0.2.14",
+    "date": "01.11.2026",
     "commitHash": "acaeca5",
     "developer": "史力爱卫",
     "description": "Format scripts and sync changelog for release checkpoint v0.2.14"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "2c262de",
     "developer": "史力爱卫",
     "description": "Remove Read Only badge and top context pills from hero and directory"
-  },
-  {
-    "version": "0.2.14",
-    "date": "31.10.2026",
-    "commitHash": "ee38ab0",
-    "developer": "史力爱卫",
-    "description": "Remove base url box from standalone hero view"
   }
 ];
