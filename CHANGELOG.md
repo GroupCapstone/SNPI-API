@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `b8c52f2`
+
+- Remove category banner cards and display component demo cards directly
+
 ### Version 0.2.11 (31.10.2026) - `5bb52b1`
 
 - Apply automated prettier code formatting across brand and ui-library components
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.10 (31.10.2026) - `ccec8cf`
 
 - Eliminate explicit any in data-table and remove prepare script from shared package
-
-### Version 0.2.10 (31.10.2026) - `4e1fe42`
-
-- V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes
 

@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Bell, Check, Alert, Info, X, FaceSmile, Sparkles } from '@/components/icons';
+import { Bell, Check, Alert, Info, X, Sparkles } from '@/components/icons';
 
 // 1. Toast Notification Stack
 export function ToastDemo() {
@@ -82,60 +82,6 @@ export function ToastDemo() {
           ))
         )}
       </div>
-    </div>
-  );
-}
-
-// 2. Emoji Reaction Picker
-export function EmojiReactionDemo() {
-  const [reactions, setReactions] = React.useState([
-    { emoji: '👍', count: 18, reacted: true },
-    { emoji: '❤️', count: 9, reacted: false },
-    { emoji: '🔥', count: 24, reacted: true },
-    { emoji: '🎉', count: 12, reacted: false },
-    { emoji: '🚀', count: 15, reacted: false },
-  ]);
-
-  const toggleReaction = (idx: number) => {
-    setReactions(
-      reactions.map((r, i) =>
-        i === idx ? { ...r, reacted: !r.reacted, count: r.reacted ? r.count - 1 : r.count + 1 } : r,
-      ),
-    );
-  };
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Social & Lesson Emoji Reactions
-      </span>
-
-      <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-        {reactions.map((r, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => toggleReaction(idx)}
-            className={cn(
-              'flex items-center gap-1.5 rounded-full border px-3 py-1 font-sans text-xs font-bold transition-transform hover:scale-105 active:scale-95',
-              r.reacted
-                ? 'border-[#0056FF] bg-[#E3E7FC] text-[#0056FF] shadow-xs'
-                : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300',
-            )}
-          >
-            <span className="text-sm">{r.emoji}</span>
-            <span className="font-mono text-[11px]">{r.count}</span>
-          </button>
-        ))}
-
-        <div className="flex size-7 items-center justify-center rounded-full border border-dashed border-slate-300 text-slate-400 hover:border-[#0056FF] hover:text-[#0056FF]">
-          <FaceSmile className="size-3.5" />
-        </div>
-      </div>
-
-      <p className="font-sans text-xs text-slate-500">
-        Instant visual feedback for collaborative student & teacher engagement.
-      </p>
     </div>
   );
 }

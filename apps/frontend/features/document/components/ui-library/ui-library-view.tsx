@@ -6,7 +6,6 @@ import {
   LibrarySnackbar,
   NativeSnackbarInline,
   type SnackbarVariant,
-  BorderBeamInteractiveShowcase,
   LibrarySwitch,
   LibraryChip,
   LibraryFab,
@@ -19,56 +18,34 @@ import {
   RailTocDemo,
   BounceSidebarDemo,
   HookSidebarDemo,
-  ProximitySidebarDemo,
-  ScrollProgressDemo,
   GooeyNavDemo,
   CyberArmorNavDemo,
   IconBarDemo,
   DurationPickerDemo,
-  OtpInputDemo,
   PasswordInputDemo,
   ThemeSelectorDemo,
-  DeleteButtonDemo,
   TaskListDemo,
-  EmojiReactionDemo,
   NotificationBellDemo,
   FolderDemo,
-  GitHubActivityDemo,
   StepPlayerDemo,
   AnimatedCounterDemo,
   VoiceNoteDemo,
   FaqDemo,
   GridRevealDemo,
-  WebSearchDemo,
-  HangingTabsNavDemo,
-  NumberTickerDemo,
-  GlitchTextDemo,
   BlurInDemo,
-  BentoCardDemo,
-  TiltCardDemo,
-  BorderBeamDemo,
-  HeroSectionDemo,
-  PricingMatrixDemo,
   MarqueeSectionDemo,
   FloatingLabelFormDemo,
   MultiStepWizardDemo,
   FileDropzoneDemo,
   PaymentCardDemo,
   CommandPaletteDemo,
-  ModalDialogDemo,
-  ConfettiCannonDemo,
-  DrawerSheetDemo,
-  ImageLightboxDemo,
   DataTableDemo,
-  SpotlightBentoGridDemo,
   CipherTextDecoderDemo,
-  DatePickerDemo,
   SearchableDropdownDemo,
   ToastStackDemo,
   SkeletonLoadingScreenDemo,
   RealTimeChartDemo,
   RichTextEditorDemo,
-  ColorContrastCheckerDemo,
   generateAiAgentPrompt,
 } from '@/features/document/components/ui-library';
 import {
@@ -199,27 +176,14 @@ export function UiLibraryView() {
   const [dropdownCampus, setDropdownCampus] = React.useState('siem-reap');
 
   // 10. Card interactive states (Folder mode & Metrics mode)
-  const [cardPresentationMode, setCardPresentationMode] = React.useState<
-    'border-beam' | 'folder' | 'metrics'
-  >('border-beam');
+  const [cardPresentationMode, setCardPresentationMode] = React.useState<'folder' | 'metrics'>(
+    'folder',
+  );
   const [cardRevealed, setCardRevealed] = React.useState(false);
   const [cardSlidOut, setCardSlidOut] = React.useState(false);
   const [metricsTimeRange, setMetricsTimeRange] = React.useState<'30D' | '90D' | '1Y' | 'All'>(
     '30D',
   );
-
-  // 11. Hanging Tabs state
-  const [hangingNavTab, setHangingNavTab] = React.useState('newswire');
-  const [hangingNavSize, setHangingNavSize] = React.useState<'sm' | 'md' | 'lg'>('md');
-
-  // 12. Input & Search state
-  const [inputDemoText, setInputDemoText] = React.useState('Dara Sok');
-  const [inputDemoVariant, setInputDemoVariant] = React.useState<
-    'blue' | 'azure' | 'soft-lavender' | 'black' | 'outline'
-  >('blue');
-  const [inputDemoSize, setInputDemoSize] = React.useState<'sm' | 'md' | 'lg'>('md');
-  const [inputDemoLoading, setInputDemoLoading] = React.useState(false);
-  const [inputDemoDisabled, setInputDemoDisabled] = React.useState(false);
 
   const sidebarContainerRef = React.useRef<HTMLDivElement>(null);
 
@@ -389,20 +353,6 @@ export function UiLibraryView() {
     setCardSlidOut,
     metricsTimeRange,
     setMetricsTimeRange,
-    hangingNavTab,
-    setHangingNavTab,
-    hangingNavSize,
-    setHangingNavSize,
-    inputDemoText,
-    setInputDemoText,
-    inputDemoVariant,
-    setInputDemoVariant,
-    inputDemoSize,
-    setInputDemoSize,
-    inputDemoLoading,
-    setInputDemoLoading,
-    inputDemoDisabled,
-    setInputDemoDisabled,
   };
 
   return (
@@ -1108,28 +1058,14 @@ function renderFeedComponentDemo(
     setDropdownValue: (v: string) => void;
     dropdownCampus: string;
     setDropdownCampus: (c: string) => void;
-    cardPresentationMode: 'border-beam' | 'folder' | 'metrics';
-    setCardPresentationMode: (m: 'border-beam' | 'folder' | 'metrics') => void;
+    cardPresentationMode: 'folder' | 'metrics';
+    setCardPresentationMode: (m: 'folder' | 'metrics') => void;
     cardRevealed: boolean;
     setCardRevealed: (r: boolean) => void;
     cardSlidOut: boolean;
     setCardSlidOut: (s: boolean) => void;
     metricsTimeRange: '30D' | '90D' | '1Y' | 'All';
     setMetricsTimeRange: (r: '30D' | '90D' | '1Y' | 'All') => void;
-    hangingNavTab: string;
-    setHangingNavTab: (t: string) => void;
-    hangingNavSize: 'sm' | 'md' | 'lg';
-    setHangingNavSize: (s: 'sm' | 'md' | 'lg') => void;
-    inputDemoText: string;
-    setInputDemoText: (t: string) => void;
-    inputDemoVariant: 'blue' | 'azure' | 'soft-lavender' | 'black' | 'outline';
-    setInputDemoVariant: (v: 'blue' | 'azure' | 'soft-lavender' | 'black' | 'outline') => void;
-    inputDemoSize: 'sm' | 'md' | 'lg';
-    setInputDemoSize: (s: 'sm' | 'md' | 'lg') => void;
-    inputDemoLoading: boolean;
-    setInputDemoLoading: (l: boolean) => void;
-    inputDemoDisabled: boolean;
-    setInputDemoDisabled: (d: boolean) => void;
   },
 ) {
   switch (id) {
@@ -1697,18 +1633,6 @@ function renderFeedComponentDemo(
           <div className="flex flex-wrap items-center justify-center rounded-[4px] border border-slate-200 bg-white p-1 shadow-xs">
             <button
               type="button"
-              onClick={() => state.setCardPresentationMode('border-beam')}
-              className={cn(
-                'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold transition-all',
-                state.cardPresentationMode === 'border-beam'
-                  ? 'bg-[#0056FF] text-white shadow-none'
-                  : 'text-slate-600 hover:text-slate-900',
-              )}
-            >
-              Border Beam Card
-            </button>
-            <button
-              type="button"
               onClick={() => state.setCardPresentationMode('folder')}
               className={cn(
                 'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold transition-all',
@@ -1733,10 +1657,7 @@ function renderFeedComponentDemo(
             </button>
           </div>
 
-          {/* MODE 1: Border Beam Card (Instrument Panel & 4-Dash Constant Velocity Physics) */}
-          {state.cardPresentationMode === 'border-beam' ? (
-            <BorderBeamInteractiveShowcase />
-          ) : state.cardPresentationMode === 'folder' ? (
+          {state.cardPresentationMode === 'folder' ? (
             <div className="relative w-full max-w-lg pt-6 select-none">
               {/* Sliding Credit / Student Card */}
               <div
@@ -1887,89 +1808,6 @@ function renderFeedComponentDemo(
         </div>
       );
 
-    case 'input':
-      return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Variant Selector */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {(['blue', 'azure', 'soft-lavender', 'black', 'outline'] as const).map((v) => (
-              <GeometricButton
-                key={v}
-                variant={state.inputDemoVariant === v ? 'blue' : 'outline'}
-                size="sm"
-                isActive={state.inputDemoVariant === v}
-                onClick={() => state.setInputDemoVariant(v)}
-              >
-                {v === 'blue'
-                  ? 'Royal Blue'
-                  : v === 'azure'
-                    ? 'Azure'
-                    : v === 'soft-lavender'
-                      ? 'Lavender'
-                      : v === 'black'
-                        ? 'Black'
-                        : 'Outline'}
-              </GeometricButton>
-            ))}
-          </div>
-
-          <div className="w-full max-w-xl space-y-4 border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <div>
-                <h4 className="font-sans text-sm font-bold text-slate-900">
-                  Pill Input & Search Bar
-                </h4>
-                <p className="font-sans text-xs text-slate-500">
-                  Capsule contour with 2px brand border tokens
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => state.setInputDemoLoading(!state.inputDemoLoading)}
-                  className="rounded-[4px] border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] text-slate-600 hover:border-[#0056FF]"
-                >
-                  {state.inputDemoLoading ? 'Loading ON' : 'Loading OFF'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => state.setInputDemoDisabled(!state.inputDemoDisabled)}
-                  className="rounded-[4px] border border-slate-200 px-2.5 py-0.5 font-mono text-[10px] text-slate-600 hover:border-[#0056FF]"
-                >
-                  {state.inputDemoDisabled ? 'Disabled' : 'Enabled'}
-                </button>
-              </div>
-            </div>
-
-            <GeometricInput
-              type="search"
-              placeholder="Search components, students, or endpoints..."
-              value={state.inputDemoText}
-              onChange={(e) => state.setInputDemoText(e.target.value)}
-              clearable
-              onClear={() => state.setInputDemoText('')}
-              icon={<Search className="h-4 w-4 text-[#0056FF]" />}
-              variant={state.inputDemoVariant}
-              inputSize={state.inputDemoSize}
-              isLoading={state.inputDemoLoading}
-              disabled={state.inputDemoDisabled}
-            />
-
-            <div className="flex items-center justify-between rounded-2xl border border-[#CAD3F5] bg-[#E3E7FC]/60 p-3.5 font-mono text-xs text-slate-700">
-              <span>
-                Value: &quot;<strong className="text-[#0056FF]">{state.inputDemoText}</strong>&quot;
-              </span>
-              <span>
-                Length: <strong>{state.inputDemoText.length} chars</strong>
-              </span>
-              <span>
-                Variant: <strong className="uppercase">{state.inputDemoVariant}</strong>
-              </span>
-            </div>
-          </div>
-        </div>
-      );
-
     // ==========================================
     // NAVIGATION GROUP (Interactive Demos)
     // ==========================================
@@ -1979,28 +1817,22 @@ function renderFeedComponentDemo(
       return <BounceSidebarDemo />;
     case 'hook-sidebar':
       return <HookSidebarDemo />;
-    case 'proximity-sidebar':
-      return <ProximitySidebarDemo />;
-    case 'scroll-progress':
-      return <ScrollProgressDemo />;
     case 'gooey-nav':
       return <GooeyNavDemo />;
     case 'cyber-armor-nav':
       return <CyberArmorNavDemo />;
+    case 'icon-bar':
+      return <IconBarDemo />;
 
     // ==========================================
     // INPUTS GROUP (Interactive Demos)
     // ==========================================
     case 'duration-picker':
       return <DurationPickerDemo />;
-    case 'otp-input':
-      return <OtpInputDemo />;
     case 'password-input':
       return <PasswordInputDemo />;
     case 'theme-selector':
       return <ThemeSelectorDemo />;
-    case 'delete-button':
-      return <DeleteButtonDemo />;
     case 'task-list':
       return <TaskListDemo />;
 
@@ -2012,10 +1844,6 @@ function renderFeedComponentDemo(
       return <ToastStackDemo />;
     case 'skeleton-loading-screen':
       return <SkeletonLoadingScreenDemo />;
-    case 'color-contrast-checker':
-      return <ColorContrastCheckerDemo />;
-    case 'emoji-reaction':
-      return <EmojiReactionDemo />;
     case 'notification-bell':
       return <NotificationBellDemo />;
 
@@ -2024,8 +1852,6 @@ function renderFeedComponentDemo(
     // ==========================================
     case 'folder':
       return <FolderDemo />;
-    case 'github-activity':
-      return <GitHubActivityDemo />;
     case 'step-player':
       return <StepPlayerDemo />;
     case 'animated-counter':
@@ -2044,50 +1870,18 @@ function renderFeedComponentDemo(
     // ==========================================
     case 'grid-reveal':
       return <GridRevealDemo />;
-    case 'web-search':
-      return <WebSearchDemo />;
-
-    // ==========================================
-    // NAVIGATION (Hanging Tabs & Navigation)
-    // ==========================================
-    case 'hanging-tabs-nav':
-    case 'navigation-menu':
-      return <HangingTabsNavDemo />;
-    case 'icon-bar':
-      return <IconBarDemo />;
 
     // ==========================================
     // TEXT EFFECTS (Component Templates)
     // ==========================================
-    case 'number-ticker':
-      return <NumberTickerDemo />;
-    case 'glitch-text':
-      return <GlitchTextDemo />;
     case 'blur-in':
       return <BlurInDemo />;
     case 'cipher-decode':
       return <CipherTextDecoderDemo />;
 
     // ==========================================
-    // CARDS (Component Templates)
-    // ==========================================
-    case 'bento-card':
-      return <BentoCardDemo />;
-    case 'tilt-card':
-      return <TiltCardDemo />;
-    case 'border-beam':
-    case 'border-beam-card':
-      return <BorderBeamDemo />;
-
-    // ==========================================
     // SECTIONS (Component Templates)
     // ==========================================
-    case 'hero-section':
-      return <HeroSectionDemo />;
-    case 'feature-bento':
-      return <SpotlightBentoGridDemo />;
-    case 'pricing-matrix':
-      return <PricingMatrixDemo />;
     case 'marquee-section':
       return <MarqueeSectionDemo />;
 
@@ -2102,8 +1896,6 @@ function renderFeedComponentDemo(
       return <FileDropzoneDemo />;
     case 'payment-card':
       return <PaymentCardDemo />;
-    case 'date-picker':
-      return <DatePickerDemo />;
     case 'searchable-dropdown':
       return <SearchableDropdownDemo />;
     case 'rich-text-editor':
@@ -2114,14 +1906,6 @@ function renderFeedComponentDemo(
     // ==========================================
     case 'command-palette':
       return <CommandPaletteDemo />;
-    case 'modal-dialog':
-      return <ModalDialogDemo />;
-    case 'confetti-cannon':
-      return <ConfettiCannonDemo />;
-    case 'drawer-sheet':
-      return <DrawerSheetDemo />;
-    case 'image-lightbox':
-      return <ImageLightboxDemo />;
 
     default:
       return null;

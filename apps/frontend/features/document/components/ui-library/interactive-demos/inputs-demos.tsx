@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Clock, Key, Eye, EyeOff, Sun, Laptop, Trash, Check, Plus } from '@/components/icons';
-import { OtpPinInputInteractiveDemo } from '../otp-pin-input';
+import { Clock, Key, Eye, EyeOff, Sun, Laptop, Check, Plus } from '@/components/icons';
 
 // 1. Duration Picker
 export function DurationPickerDemo() {
@@ -72,12 +71,7 @@ export function DurationPickerDemo() {
   );
 }
 
-// 2. OTP Input (6-Digit Security PIN)
-export function OtpInputDemo() {
-  return <OtpPinInputInteractiveDemo />;
-}
-
-// 3. Password Input with Live Strength Meter
+// 2. Password Input with Live Strength Meter
 export function PasswordInputDemo() {
   const [password, setPassword] = React.useState('SNP@SecPass2026');
   const [show, setShow] = React.useState(false);
@@ -212,69 +206,6 @@ export function ThemeSelectorDemo() {
           );
         })}
       </div>
-    </div>
-  );
-}
-
-// 5. Delete Button (Safety-Gated Two-Step Hold/Confirm)
-export function DeleteButtonDemo() {
-  const [stage, setStage] = React.useState<'idle' | 'confirm' | 'deleted'>('idle');
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Safety-Gated Delete Trigger
-      </span>
-
-      <div className="flex justify-center pt-2">
-        {stage === 'idle' && (
-          <button
-            type="button"
-            onClick={() => setStage('confirm')}
-            className="flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2 font-sans text-xs font-bold text-rose-700 transition-all hover:border-rose-400 hover:bg-rose-100"
-          >
-            <Trash className="size-3.5" />
-            <span>Delete Academic Record</span>
-          </button>
-        )}
-
-        {stage === 'confirm' && (
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setStage('deleted')}
-              className="flex items-center gap-1.5 rounded-full bg-rose-600 px-4 py-2 font-sans text-xs font-bold text-white shadow-xs hover:bg-rose-700"
-            >
-              <Check className="size-3.5" />
-              <span>Confirm Delete</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setStage('idle')}
-              className="rounded-full border border-slate-200 px-3 py-2 font-sans text-xs font-semibold text-slate-600 hover:bg-slate-50"
-            >
-              Cancel
-            </button>
-          </div>
-        )}
-
-        {stage === 'deleted' && (
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-xs font-bold text-slate-500">Record Purged</span>
-            <button
-              type="button"
-              onClick={() => setStage('idle')}
-              className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-sans text-xs text-slate-700 hover:bg-slate-200"
-            >
-              Reset
-            </button>
-          </div>
-        )}
-      </div>
-
-      <p className="font-sans text-xs text-slate-500">
-        Cognitive friction prevents accidental loss before destructive execution.
-      </p>
     </div>
   );
 }

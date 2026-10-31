@@ -183,57 +183,6 @@ export function GravityLettersDemo() {
   );
 }
 
-// 4. GitHub Activity Component (Contribution Heat Map)
-export function GitHubActivityDemo() {
-  const weeks = Array.from({ length: 18 }, () =>
-    Array.from({ length: 5 }, () => Math.floor(Math.random() * 4)),
-  );
-
-  const colors = [
-    'bg-slate-100', // 0
-    'bg-blue-200', // 1
-    'bg-blue-400', // 2
-    'bg-[#0056FF]', // 3
-  ];
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-          Monorepo Git Activity Heatmap
-        </span>
-        <span className="font-mono text-xs font-bold text-[#0056FF]">342 Commits</span>
-      </div>
-
-      <div className="flex justify-center gap-1 overflow-x-auto py-2">
-        {weeks.map((week, wIdx) => (
-          <div key={wIdx} className="flex flex-col gap-1">
-            {week.map((level, dIdx) => (
-              <div
-                key={dIdx}
-                className={cn(
-                  'size-3 rounded-xs transition-transform hover:scale-125',
-                  colors[level],
-                )}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-
-      <div className="flex items-center justify-between font-mono text-[10px] text-slate-400">
-        <span>Less</span>
-        <div className="flex gap-1">
-          {colors.map((c, i) => (
-            <div key={i} className={cn('size-2.5 rounded-xs', c)} />
-          ))}
-        </div>
-        <span>More</span>
-      </div>
-    </div>
-  );
-}
-
 // 5. Step Player Component
 export function StepPlayerDemo() {
   const [currentStep, setCurrentStep] = React.useState(2);

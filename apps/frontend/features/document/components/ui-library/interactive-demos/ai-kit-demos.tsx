@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Sparkles, Search, Check, Globe, Database, Terminal } from '@/components/icons';
+import { Sparkles, Check, Globe, Database, Terminal } from '@/components/icons';
 
 // 1. Fluid Orb (Luminescent Morphing Gradient Sphere)
 export function FluidOrbDemo() {
@@ -133,68 +133,6 @@ export function MatrixOrbDemo() {
         >
           {online ? 'Active' : 'Standby'}
         </button>
-      </div>
-    </div>
-  );
-}
-
-// 4. Web Search (AI Agent Live Search Component)
-export function WebSearchDemo() {
-  const [query, setQuery] = React.useState('Cambodia National Higher Education curriculum rules');
-  const [isSearching, setIsSearching] = React.useState(false);
-
-  const sources = [
-    { title: 'MoEYS Official Standards', domain: 'moeys.gov.kh' },
-    { title: 'National Qualifications Framework', domain: 'acc.edu.kh' },
-    { title: 'SNP Academic Statutes', domain: 'snp.edu.kh' },
-  ];
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSearching(true);
-    setTimeout(() => setIsSearching(false), 800);
-  };
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Agentic Web Search & Synthesis
-      </span>
-
-      <form onSubmit={handleSearch} className="relative">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search institutional standards..."
-          className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-20 pl-9 font-sans text-xs font-semibold text-slate-900 focus:border-[#0056FF] focus:bg-white focus:outline-none"
-        />
-        <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-[#0056FF]" />
-        <button
-          type="submit"
-          className="absolute top-1/2 right-1.5 -translate-y-1/2 rounded-lg bg-[#0056FF] px-2.5 py-1 font-sans text-[11px] font-bold text-white hover:bg-blue-700"
-        >
-          Search
-        </button>
-      </form>
-
-      {/* Cited Sources */}
-      <div className="space-y-1.5">
-        <span className="font-mono text-[10px] font-bold text-slate-400 uppercase">
-          Cited Regulatory Sources
-        </span>
-        <div className="flex flex-wrap gap-1.5">
-          {sources.map((s, idx) => (
-            <div
-              key={idx}
-              className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px]"
-            >
-              <Globe className="size-3 text-[#0056FF]" />
-              <span className="font-sans font-semibold text-slate-800">{s.title}</span>
-              <span className="font-mono text-[9px] text-slate-400">({s.domain})</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
