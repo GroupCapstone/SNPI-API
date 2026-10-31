@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.12",
     "date": "31.10.2026",
+    "commitHash": "5116c27",
+    "description": "Redesign mobile hero with simple welcoming hook and tactile service cards"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
     "commitHash": "c2efdc5",
     "description": "Simplify hero and implement psychological reading layout"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "d3b461f",
     "description": "Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "02011a6",
-    "description": "Record Hook Sidebar implementation and Rail TOC fixes"
   }
 ];
