@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `d3b461f`
+
+- Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console
+
 ### Version 0.2.11 (31.10.2026) - `02011a6`
 
 - Record Hook Sidebar implementation and Rail TOC fixes
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `6f2f41c`
 
 - Add brand hub, standards, and resources portals with strict royal blue palette, jump nav, and zero outside colors
-
-### Version 0.2.11 (31.10.2026) - `7d5867c`
-
-- Align 3-tab cyber armor navigation dock with uppercase labels, code changelog icon, and glowing active underline
 
