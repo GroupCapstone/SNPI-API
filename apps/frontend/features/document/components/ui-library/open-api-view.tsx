@@ -1106,7 +1106,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
   return (
     <div
       ref={rootRef}
-      className="min-h-screen bg-white text-slate-900 selection:bg-[#0056FF] selection:text-white"
+      className="min-h-screen bg-white text-[#0A1A4A] selection:bg-[#0056FF] selection:text-white"
     >
       {/* Nextra Docs Container (Authentic 3-Column Markdown-Powered Docs Architecture) */}
       <div className="mx-auto max-w-[1600px] px-4 py-6 sm:px-6 lg:px-8">
@@ -1117,15 +1117,15 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
               {/* Nextra Search Input */}
               <div className="relative">
                 <div className="relative flex items-center">
-                  <Search className="absolute left-2.5 size-3.5 text-slate-400" />
+                  <Search className="absolute left-2.5 size-3.5 text-[#2277FF]" />
                   <input
                     type="text"
                     placeholder="Search docs..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full rounded-md border border-slate-200 bg-slate-50/70 py-1.5 pr-8 pl-8 font-sans text-xs text-slate-900 transition-all placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-none"
+                    className="w-full rounded-md border border-[#CAD3F5] bg-[#EFF5FF] py-1.5 pr-8 pl-8 font-sans text-xs text-[#0A1A4A] transition-all placeholder:text-[#2277FF] focus:border-[#0056FF] focus:bg-white focus:outline-none"
                   />
-                  <kbd className="absolute right-2 rounded border border-slate-200 bg-white px-1.5 py-0.5 font-mono text-[10px] text-slate-400 shadow-2xs">
+                  <kbd className="absolute right-2 rounded border border-[#CAD3F5] bg-white px-1.5 py-0.5 font-mono text-[10px] text-[#2277FF] shadow-2xs">
                     /
                   </kbd>
                 </div>
@@ -1133,7 +1133,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               {/* Group 1: Getting Started */}
               <div className="space-y-1">
-                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-[#2277FF] uppercase">
                   Getting Started
                 </div>
                 <button
@@ -1147,7 +1147,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'open-api-head'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Overview</span>
@@ -1160,7 +1160,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     activeDocSection === 'introduction' ||
                       ['purpose', 'scope', 'overall-api'].includes(activeDocSection)
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Introduction &amp; Scope</span>
@@ -1172,7 +1172,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'who-can-access'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Access Control (RBAC)</span>
@@ -1181,7 +1181,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               {/* Group 2: Public Syndication */}
               <div className="space-y-1 pt-2">
-                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-[#2277FF] uppercase">
                   Public Syndication
                 </div>
                 <button
@@ -1191,7 +1191,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'public-feeds'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Public Feeds &amp; RSS 2.0</span>
@@ -1203,7 +1203,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'developer-embed'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Developer Embed Studio</span>
@@ -1212,7 +1212,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               {/* Group 3: Academic Engines */}
               <div className="space-y-1 pt-2">
-                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-[#2277FF] uppercase">
                   Academic Services
                 </div>
                 <button
@@ -1222,7 +1222,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'class-catalog-registration'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Class Roster &amp; Frontsite Studio</span>
@@ -1234,7 +1234,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'realtime-stream'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Real-Time Stream (SSE)</span>
@@ -1243,7 +1243,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               {/* Group 4: REST API Modules */}
               <div className="space-y-1 pt-2">
-                <div className="flex items-center justify-between px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="flex items-center justify-between px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-[#2277FF] uppercase">
                   <span>REST Endpoints</span>
                   <span className="font-mono text-[10px] text-[#0056FF]">{categories.length}</span>
                 </div>
@@ -1263,7 +1263,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                           isSelected
                             ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                            : 'font-normal text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                            : 'font-normal text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                         )}
                       >
                         <span className="truncate">{cat.name}</span>
@@ -1272,7 +1272,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                             'py-0.2 rounded px-1.5 font-mono text-[10px]',
                             isSelected
                               ? 'bg-[#0056FF]/20 font-bold text-[#0056FF]'
-                              : 'bg-slate-100 text-slate-400',
+                              : 'bg-[#EFF5FF] text-[#2277FF]',
                           )}
                         >
                           {cat.count}
@@ -1285,7 +1285,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               {/* Group 5: Developer Reference */}
               <div className="space-y-1 pt-2">
-                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
+                <div className="px-2.5 py-1 font-mono text-[10.5px] font-bold tracking-wider text-[#2277FF] uppercase">
                   Developer Reference
                 </div>
                 <button
@@ -1295,7 +1295,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'api-doc'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Interactive API Probe</span>
@@ -1307,7 +1307,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'protected-endpoints'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">Protected Endpoints</span>
@@ -1319,7 +1319,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'status-codes'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">HTTP Status Codes</span>
@@ -1331,7 +1331,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     'group flex w-full cursor-pointer items-center justify-between rounded-md px-2.5 py-1.5 text-left font-sans text-xs transition-colors',
                     activeDocSection === 'changelogs'
                       ? 'bg-[#0056FF]/10 font-bold text-[#0056FF]'
-                      : 'font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                      : 'font-medium text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                   )}
                 >
                   <span className="truncate">API Change Logs</span>
@@ -1341,54 +1341,54 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
           </aside>
 
           {/* COLUMN 2: Nextra Center Main Markdown Prose */}
-          <main className="max-w-4xl min-w-0 flex-1 space-y-10 lg:px-2">
+          <main className="max-w-5xl min-w-0 flex-1 space-y-10 lg:px-4">
             {/* Nextra Breadcrumb Bar */}
             <nav
               aria-label="Breadcrumb"
-              className="flex items-center gap-2 font-sans text-xs text-slate-400"
+              className="flex items-center gap-2 font-sans text-xs text-[#2277FF]"
             >
               <button
                 type="button"
                 onClick={() => scrollToDocSection('open-api-head')}
-                className="cursor-pointer transition-colors hover:text-slate-700"
+                className="cursor-pointer transition-colors hover:text-[#0A1A4A]/80"
               >
                 Docs
               </button>
-              <span className="text-slate-300">/</span>
+              <span className="text-[#CAD3F5]">/</span>
               <button
                 type="button"
                 onClick={() => scrollToDocSection('open-api-head')}
-                className="cursor-pointer transition-colors hover:text-slate-700"
+                className="cursor-pointer transition-colors hover:text-[#0A1A4A]/80"
               >
                 Open API
               </button>
-              <span className="text-slate-300">/</span>
-              <span className="font-semibold text-slate-900">{currentBreadcrumbLabel}</span>
+              <span className="text-[#CAD3F5]">/</span>
+              <span className="font-semibold text-[#0A1A4A]">{currentBreadcrumbLabel}</span>
             </nav>
 
             {/* Nextra Clean Document Header */}
             <header
               id="open-api-head"
-              className="scroll-mt-24 space-y-3 border-b border-slate-200/80 pb-6"
+              className="scroll-mt-24 space-y-3 border-b border-[#CAD3F5] pb-6"
             >
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
                   Nextra Docs Starter Kit
                 </span>
-                <span className="font-sans text-xs text-slate-400">
+                <span className="font-sans text-xs text-[#2277FF]">
                   REST &amp; Syndication v1.4
                 </span>
               </div>
-              <h1 className="group flex items-center font-sans text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">
+              <h1 className="group flex items-center font-sans text-3xl font-extrabold tracking-tight text-[#0A1A4A] sm:text-4xl">
                 <span>Open API Reference</span>
                 <a
                   href="#open-api-head"
-                  className="ml-2 text-slate-300 opacity-0 transition-opacity group-hover:opacity-100"
+                  className="ml-2 text-[#CAD3F5] opacity-0 transition-opacity group-hover:opacity-100"
                 >
                   #
                 </a>
               </h1>
-              <p className="max-w-3xl font-sans text-sm leading-relaxed text-slate-600 sm:text-base">
+              <p className="max-w-3xl font-sans text-sm leading-relaxed text-[#0A1A4A]/70 sm:text-base">
                 Simple, powerful and flexible markdown-powered docs site. Built with Next.js.
                 Exposes public RSS 2.0 XML and JSON syndication feeds, responsive developer embed
                 widgets, live academic class catalogs, and real-time Server-Sent Events (SSE).
@@ -1396,7 +1396,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
             </header>
 
             {/* Nextra Callout: Multi-Branch & Security */}
-            <div className="rounded-lg border border-blue-200 bg-blue-50/70 p-4 text-slate-800">
+            <div className="rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-4 text-[#0A1A4A]">
               <div className="flex gap-3">
                 <div className="mt-0.5 size-5 shrink-0 text-[#0056FF]">
                   <CircleAlert className="size-5" />
@@ -1405,15 +1405,15 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   <p className="font-semibold text-[#0056FF]">
                     Multi-Branch Scoping &amp; Public Rate Limits
                   </p>
-                  <p className="leading-relaxed text-slate-600">
+                  <p className="leading-relaxed text-[#0A1A4A]/70">
                     Public syndication feeds and read-only catalogs require no authorization headers
                     and are safeguarded by edge rate limits (2,000 req / 15m). Authenticated
                     administrative mutations require{' '}
-                    <code className="rounded bg-blue-100/70 px-1 py-0.5 font-mono text-xs text-blue-900">
+                    <code className="rounded bg-[#E3E7FC] px-1 py-0.5 font-mono text-xs text-[#0056FF]">
                       Authorization: Bearer &lt;token&gt;
                     </code>{' '}
                     and{' '}
-                    <code className="rounded bg-blue-100/70 px-1 py-0.5 font-mono text-xs text-blue-900">
+                    <code className="rounded bg-[#E3E7FC] px-1 py-0.5 font-mono text-xs text-[#0056FF]">
                       X-Branch-Id: &lt;branch&gt;
                     </code>
                     .
@@ -1426,20 +1426,20 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div
                 onClick={() => scrollToDocSection('public-feeds')}
-                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+                className="group cursor-pointer rounded-lg border border-[#CAD3F5] bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
                     <Radio className="size-4" />
                   </div>
-                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                  <span className="font-mono text-xs text-[#2277FF] transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
                     →
                   </span>
                 </div>
-                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                <h3 className="mt-3 font-sans text-sm font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
                   Public Feeds &amp; RSS 2.0
                 </h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                <p className="mt-1 text-xs leading-relaxed text-[#2277FF]">
                   Live XML and JSON syndication feeds for emergency alerts, announcements, and
                   certificates.
                 </p>
@@ -1447,20 +1447,20 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               <div
                 onClick={() => scrollToDocSection('developer-embed')}
-                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+                className="group cursor-pointer rounded-lg border border-[#CAD3F5] bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
                     <Code className="size-4" />
                   </div>
-                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                  <span className="font-mono text-xs text-[#2277FF] transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
                     →
                   </span>
                 </div>
-                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                <h3 className="mt-3 font-sans text-sm font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
                   Developer Embed Studio
                 </h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                <p className="mt-1 text-xs leading-relaxed text-[#2277FF]">
                   Embed responsive widgets in iFrame, Web Component, or React formats with live
                   sandbox controls.
                 </p>
@@ -1468,40 +1468,40 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               <div
                 onClick={() => scrollToDocSection('class-catalog-registration')}
-                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+                className="group cursor-pointer rounded-lg border border-[#CAD3F5] bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
                     <Layers className="size-4" />
                   </div>
-                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                  <span className="font-mono text-xs text-[#2277FF] transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
                     →
                   </span>
                 </div>
-                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                <h3 className="mt-3 font-sans text-sm font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
                   Class Roster &amp; Frontsite Studio
                 </h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                <p className="mt-1 text-xs leading-relaxed text-[#2277FF]">
                   Syndicated live catalog, real-time SSE updates, and school frontsite integration.
                 </p>
               </div>
 
               <div
                 onClick={() => scrollToDocSection('realtime-stream')}
-                className="group cursor-pointer rounded-lg border border-slate-200/90 bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
+                className="group cursor-pointer rounded-lg border border-[#CAD3F5] bg-white p-4.5 transition-all hover:border-[#0056FF] hover:shadow-xs"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex size-8 items-center justify-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
                     <Terminal className="size-4" />
                   </div>
-                  <span className="font-mono text-xs text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
+                  <span className="font-mono text-xs text-[#2277FF] transition-all group-hover:translate-x-0.5 group-hover:text-[#0056FF]">
                     →
                   </span>
                 </div>
-                <h3 className="mt-3 font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                <h3 className="mt-3 font-sans text-sm font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
                   Real-Time SSE Stream
                 </h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                <p className="mt-1 text-xs leading-relaxed text-[#2277FF]">
                   Server-Sent Events event terminal with latency metrics and live packet
                   broadcasting.
                 </p>
@@ -1509,19 +1509,19 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
             </div>
 
             {/* Nextra Steps Quickstart */}
-            <div className="space-y-4 rounded-xl border border-slate-200/90 bg-slate-50/50 p-5">
-              <h3 className="font-sans text-sm font-bold text-slate-900">
+            <div className="space-y-4 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
+              <h3 className="font-sans text-sm font-bold text-[#0A1A4A]">
                 Integration Quickstart in 3 Steps
               </h3>
-              <div className="relative ml-3 space-y-5 border-l-2 border-slate-200 pl-6">
+              <div className="relative ml-3 space-y-5 border-l-2 border-[#CAD3F5] pl-6">
                 <div className="relative">
                   <div className="absolute top-0 -left-[31px] flex size-6 items-center justify-center rounded-full border-2 border-white bg-[#0056FF] font-mono text-xs font-bold text-white shadow-xs">
                     1
                   </div>
-                  <h4 className="font-sans text-xs font-bold text-slate-900">
+                  <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Choose Your Data Ingestion Channel
                   </h4>
-                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                     Subscribe to public XML RSS feeds, consume JSON endpoints, or open a live SSE
                     stream connection for instant updates.
                   </p>
@@ -1530,16 +1530,16 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   <div className="absolute top-0 -left-[31px] flex size-6 items-center justify-center rounded-full border-2 border-white bg-[#0056FF] font-mono text-xs font-bold text-white shadow-xs">
                     2
                   </div>
-                  <h4 className="font-sans text-xs font-bold text-slate-900">
+                  <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Scope Requests by Campus Branch
                   </h4>
-                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                     Append{' '}
-                    <code className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[11px] text-[#0056FF]">
+                    <code className="rounded bg-[#EFF5FF] px-1 py-0.5 font-mono text-[11px] text-[#0056FF]">
                       ?branch=BR-01
                     </code>{' '}
                     or header{' '}
-                    <code className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[11px] text-slate-700">
+                    <code className="rounded bg-[#EFF5FF] px-1 py-0.5 font-mono text-[11px] text-[#0A1A4A]/80">
                       X-Branch-Id: BR-01
                     </code>{' '}
                     to target your local campus.
@@ -1549,10 +1549,10 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   <div className="absolute top-0 -left-[31px] flex size-6 items-center justify-center rounded-full border-2 border-white bg-[#0056FF] font-mono text-xs font-bold text-white shadow-xs">
                     3
                   </div>
-                  <h4 className="font-sans text-xs font-bold text-slate-900">
+                  <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Embed Widgets or Handle Events
                   </h4>
-                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                     Copy pre-built snippets from the Developer Embed Studio to drop class rosters
                     and registration forms directly into your CMS.
                   </p>
@@ -1562,14 +1562,14 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
             {/* Section 1: Introduction */}
             <section id="introduction" className="scroll-mt-24 space-y-6">
-              <h2 className="text-base font-bold tracking-tight text-slate-950">Introduction</h2>
+              <h2 className="text-base font-bold tracking-tight text-[#0A1A4A]">Introduction</h2>
 
               {/* 1. Purpose */}
               <div id="purpose" className="scroll-mt-24 space-y-2">
-                <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
+                <h3 className="font-mono text-xs font-bold tracking-wider text-[#0A1A4A] uppercase">
                   1. Purpose
                 </h3>
-                <p className="font-sans text-xs leading-relaxed text-slate-600">
+                <p className="font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                   This document describes the technical REST API specification of the SNPI
                   Integrated Multi-Branch School Management System (SNPI-SMS). The primary audience
                   is third-party integrators, mobile developers, campus IT staff, and administrative
@@ -1579,10 +1579,10 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               {/* 2. Scope */}
               <div id="scope" className="scroll-mt-24 space-y-2">
-                <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
+                <h3 className="font-mono text-xs font-bold tracking-wider text-[#0A1A4A] uppercase">
                   2. Scope
                 </h3>
-                <p className="font-sans text-xs leading-relaxed text-slate-600">
+                <p className="font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                   Defines all accessible API surfaces, multi-branch scoping headers (X-Branch-Id),
                   who can access each resource, authentication and token refresh lifecycles, and
                   defense mechanisms safeguarding sensitive financial and academic mutations.
@@ -1591,32 +1591,32 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
               {/* 3. Overall API */}
               <div id="overall-api" className="scroll-mt-24 space-y-3">
-                <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
+                <h3 className="font-mono text-xs font-bold tracking-wider text-[#0A1A4A] uppercase">
                   3. Overall API
                 </h3>
                 <div className="grid grid-cols-1 gap-3 font-mono text-xs sm:grid-cols-2">
-                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                  <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-white p-3.5 transition-all hover:border-[#0056FF]">
+                    <span className="text-[11px] font-semibold tracking-wider text-[#2277FF] uppercase">
                       Base URL
                     </span>
                     <p className="truncate font-bold text-[#0056FF]">
                       http://localhost:4000/api/v1
                     </p>
                   </div>
-                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                  <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-white p-3.5 transition-all hover:border-[#0056FF]">
+                    <span className="text-[11px] font-semibold tracking-wider text-[#2277FF] uppercase">
                       Payload Format
                     </span>
-                    <p className="font-bold text-slate-800">JSON (application/json)</p>
+                    <p className="font-bold text-[#0A1A4A]">JSON (application/json)</p>
                   </div>
-                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                  <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-white p-3.5 transition-all hover:border-[#0056FF]">
+                    <span className="text-[11px] font-semibold tracking-wider text-[#2277FF] uppercase">
                       Authorization
                     </span>
-                    <p className="font-bold text-[#000B26]">Bearer &lt;access_token&gt;</p>
+                    <p className="font-bold text-[#0A1A4A]">Bearer &lt;access_token&gt;</p>
                   </div>
-                  <div className="space-y-1 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40">
-                    <span className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                  <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-white p-3.5 transition-all hover:border-[#0056FF]">
+                    <span className="text-[11px] font-semibold tracking-wider text-[#2277FF] uppercase">
                       Campus Isolation
                     </span>
                     <p className="font-bold text-[#0056FF]">X-Branch-Id: &lt;branch_id&gt;</p>
@@ -1628,13 +1628,13 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
             {/* Section 2: Who Can Access The API (Modern Card Grid - No Table) */}
             <section
               id="who-can-access"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-4 border-t border-[#CAD3F5] pt-8"
             >
               <div>
-                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                <h2 className="text-base font-bold tracking-tight text-[#0A1A4A]">
                   Who Can Access The API
                 </h2>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[#2277FF]">
                   Access is strictly governed by Role-Based Access Control (RBAC) and campus branch
                   boundaries.
                 </p>
@@ -1644,32 +1644,32 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 {ACCESS_ROLES.map((role) => (
                   <div
                     key={role.role}
-                    className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                    className="flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF] hover:bg-[#EFF5FF]"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2">
                         <span className="inline-flex items-center rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-sans text-xs font-bold text-[#0056FF]">
                           {role.role}
                         </span>
-                        <span className="font-mono text-[10px] font-semibold text-slate-400 uppercase">
+                        <span className="font-mono text-[10px] font-semibold text-[#2277FF] uppercase">
                           RBAC Scope
                         </span>
                       </div>
-                      <p className="mt-2.5 font-sans text-xs font-semibold text-slate-800">
+                      <p className="mt-2.5 font-sans text-xs font-semibold text-[#0A1A4A]">
                         {role.targetAudience}
                       </p>
-                      <div className="mt-3 space-y-1.5 rounded-lg border border-slate-100 bg-slate-50/70 p-3">
-                        <div className="font-sans text-[11px] font-bold text-slate-900">
+                      <div className="mt-3 space-y-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3">
+                        <div className="font-sans text-[11px] font-bold text-[#0A1A4A]">
                           {role.accessScope}
                         </div>
-                        <p className="font-mono text-[11px] leading-relaxed text-slate-600">
+                        <p className="font-mono text-[11px] leading-relaxed text-[#0A1A4A]/70">
                           {role.allowedEndpoints}
                         </p>
                       </div>
                     </div>
-                    <div className="mt-3.5 border-t border-slate-100 pt-2.5">
-                      <span className="font-sans text-[11px] text-slate-500">
-                        <strong className="font-semibold text-slate-700">Security: </strong>
+                    <div className="mt-3.5 border-t border-[#CAD3F5] pt-2.5">
+                      <span className="font-sans text-[11px] text-[#2277FF]">
+                        <strong className="font-semibold text-[#0A1A4A]/80">Security: </strong>
                         {role.securityMethod}
                       </span>
                     </div>
@@ -1678,19 +1678,19 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
               </div>
 
               {/* Interactive Access Control & Scope Simulator */}
-              <div className="mt-6 space-y-4 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-5">
-                <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center">
+              <div className="mt-6 space-y-4 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
+                <div className="flex flex-col justify-between gap-3 border-b border-[#CAD3F5] pb-3 sm:flex-row sm:items-center">
                   <div>
-                    <h3 className="flex items-center gap-2 font-sans text-sm font-bold text-slate-900">
+                    <h3 className="flex items-center gap-2 font-sans text-sm font-bold text-[#0A1A4A]">
                       <ShieldCheck className="size-4 text-[#0056FF]" />
                       <span>Access Control &amp; Token Scope Simulator</span>
                     </h3>
-                    <p className="font-sans text-xs text-slate-500">
+                    <p className="font-sans text-xs text-[#2277FF]">
                       Select an actor role to inspect generated request headers and test
                       authorization defense boundaries.
                     </p>
                   </div>
-                  <span className="rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-xs font-bold text-[#0056FF]">
+                  <span className="rounded-md border border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-xs font-bold text-[#0056FF]">
                     Active: {ACCESS_ROLES[simulatedRoleIndex].role}
                   </span>
                 </div>
@@ -1709,7 +1709,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                         simulatedRoleIndex === idx
                           ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-200',
+                          : 'border border-[#CAD3F5] bg-white text-[#0A1A4A]/80 hover:bg-[#E3E7FC]',
                       )}
                     >
                       {r.role}
@@ -1720,28 +1720,28 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 {/* Simulated Headers & Actions */}
                 <div className="grid grid-cols-1 gap-4 pt-1 font-sans text-xs md:grid-cols-2">
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                    <span className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Generated Client Headers
                     </span>
-                    <div className="space-y-1 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3 font-mono text-[11px] text-[#CAD3F5]">
+                    <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-[11px] text-[#CAD3F5]">
                       <div>
-                        <span className="text-slate-400">Accept:</span> application/json
+                        <span className="text-[#2277FF]">Accept:</span> application/json
                       </div>
                       <div>
-                        <span className="text-slate-400">Authorization:</span>{' '}
+                        <span className="text-[#2277FF]">Authorization:</span>{' '}
                         {simulatedRoleIndex === 0
                           ? '<None — Anonymous Guest>'
                           : `Bearer snp_token_${ACCESS_ROLES[simulatedRoleIndex].role.toLowerCase().replace(/[^a-z]/g, '_')}_active`}
                       </div>
                       <div>
-                        <span className="text-slate-400">X-Branch-Id:</span>{' '}
+                        <span className="text-[#2277FF]">X-Branch-Id:</span>{' '}
                         {simulatedRoleIndex === 0 ? '<None>' : 'BR-01 (Phnom Penh Main)'}
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                    <span className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Test Authorization Response
                     </span>
                     <div className="space-y-2">
@@ -1756,7 +1756,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 'HTTP 200 OK — Allowed: Public endpoint accessible without session',
                             });
                           }}
-                          className="rounded-[4px] border border-0 border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-800 hover:border-[#0056FF]"
+                          className="rounded-[4px] border border-0 border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-[#0A1A4A] hover:border-[#0056FF]"
                         >
                           GET /api/v1/health
                         </button>
@@ -1771,7 +1771,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 'HTTP 200 OK — Allowed: Scoped to BR-01 class schedule catalog',
                             });
                           }}
-                          className="rounded-[4px] border border-0 border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-800 hover:border-[#0056FF]"
+                          className="rounded-[4px] border border-0 border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-[#0A1A4A] hover:border-[#0056FF]"
                         >
                           GET /api/v1/classes
                         </button>
@@ -1788,7 +1788,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 : 'HTTP 403 Forbidden — Blocked: Missing permission payment.create.own_branch',
                             });
                           }}
-                          className="rounded-[4px] border border-0 border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-800 hover:border-[#0056FF]"
+                          className="rounded-[4px] border border-0 border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-[#0A1A4A] hover:border-[#0056FF]"
                         >
                           POST /api/v1/payments
                         </button>
@@ -1800,8 +1800,8 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                             'rounded-xl border p-3 font-mono text-[11px]',
                             simulatedTestFeedback.status === 200 ||
                               simulatedTestFeedback.status === 201
-                              ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
-                              : 'border-rose-200 bg-rose-50 text-rose-900',
+                              ? 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A]'
+                              : 'border-[#0056FF] bg-[#EFF5FF] text-[#0A1A4A]',
                           )}
                         >
                           <div className="font-bold">{simulatedTestFeedback.endpoint}</div>
@@ -1817,7 +1817,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
             {/* Section 3: Public Feeds & Live Syndication (RSS & JSON) */}
             <section
               id="public-feeds"
-              className="scroll-mt-24 space-y-6 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-6 border-t border-[#CAD3F5] pt-8"
             >
               <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                 <div>
@@ -1825,12 +1825,12 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
                       SYNDICATION & FEEDS
                     </span>
-                    <span className="font-mono text-xs text-slate-400">Zero Auth Required</span>
+                    <span className="font-mono text-xs text-[#2277FF]">Zero Auth Required</span>
                   </div>
-                  <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                  <h2 className="mt-2 text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                     Public APIs & Live Data Feeds
                   </h2>
-                  <p className="mt-1 max-w-2xl text-xs text-slate-500">
+                  <p className="mt-1 max-w-2xl text-xs text-[#2277FF]">
                     Expose standardized RSS 2.0 XML, JSON syndication, and public REST endpoints for
                     external CMS platforms, mobile widgets, news aggregators, and credential
                     verification.
@@ -1847,12 +1847,12 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   return (
                     <div
                       key={feed.id}
-                      className="flex flex-col justify-between rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]/50"
+                      className="flex flex-col justify-between rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs transition-all duration-150 hover:border-[#0056FF] hover:bg-[#EFF5FF]/50"
                     >
                       <div>
                         {/* Header metadata */}
                         <div className="flex items-center justify-between gap-2">
-                          <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 font-sans text-[11px] font-semibold text-slate-700">
+                          <span className="rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 font-sans text-[11px] font-semibold text-[#0A1A4A]/80">
                             {feed.category}
                           </span>
                           <span className="font-mono text-[10px] font-bold text-[#0056FF]">
@@ -1860,16 +1860,16 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           </span>
                         </div>
 
-                        <h3 className="mt-2.5 font-sans text-sm font-bold text-slate-900">
+                        <h3 className="mt-2.5 font-sans text-sm font-bold text-[#0A1A4A]">
                           {feed.title}
                         </h3>
-                        <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
+                        <p className="mt-1 font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                           {feed.description}
                         </p>
 
                         {/* Endpoint Box */}
-                        <div className="mt-3.5 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 font-mono text-xs">
-                          <div className="truncate font-bold text-slate-800">
+                        <div className="mt-3.5 flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-2 font-mono text-xs">
+                          <div className="truncate font-bold text-[#0A1A4A]">
                             <span className="mr-2 text-[#0056FF]">GET</span>
                             {feed.endpoint}
                           </div>
@@ -1878,16 +1878,16 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                             onClick={() =>
                               handleCopy(`https://snp.edu.kh${feed.endpoint}`, feed.id)
                             }
-                            className="ml-2 inline-flex items-center gap-1 rounded-[4px] border-0 bg-white px-2 py-1 font-mono text-[11px] font-semibold text-slate-700 shadow-xs hover:text-[#0056FF]"
+                            className="ml-2 inline-flex items-center gap-1 rounded-[4px] border-0 bg-white px-2 py-1 font-mono text-[11px] font-semibold text-[#0A1A4A]/80 shadow-xs hover:text-[#0056FF]"
                           >
                             {copiedId === feed.id ? (
                               <>
-                                <Check className="size-3 text-emerald-600" />
+                                <Check className="size-3 text-[#0056FF]" />
                                 <span>Copied</span>
                               </>
                             ) : (
                               <>
-                                <Copy className="size-3 text-slate-400" />
+                                <Copy className="size-3 text-[#2277FF]" />
                                 <span>Copy URL</span>
                               </>
                             )}
@@ -1897,7 +1897,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         {/* Format Switcher */}
                         {isXmlAvailable && (
                           <div className="mt-3 flex items-center gap-2">
-                            <span className="font-mono text-[10px] font-bold text-slate-400 uppercase">
+                            <span className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                               Format:
                             </span>
                             <button
@@ -1909,7 +1909,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 'rounded-[4px] border-0 px-2 py-0.5 font-mono text-[11px] font-bold transition-colors',
                                 format === 'rss'
                                   ? 'bg-[#0056FF] text-white'
-                                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+                                  : 'bg-[#EFF5FF] text-[#0A1A4A]/70 hover:bg-[#E3E7FC]',
                               )}
                             >
                               XML RSS 2.0
@@ -1923,7 +1923,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 'rounded-[4px] border-0 px-2 py-0.5 font-mono text-[11px] font-bold transition-colors',
                                 format === 'json'
                                   ? 'bg-[#0056FF] text-white'
-                                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+                                  : 'bg-[#EFF5FF] text-[#0A1A4A]/70 hover:bg-[#E3E7FC]',
                               )}
                             >
                               JSON Feed
@@ -1932,7 +1932,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         )}
 
                         {/* Code preview */}
-                        <div className="mt-3 max-h-44 overflow-y-auto rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3 font-mono text-[11px] text-slate-200">
+                        <div className="mt-3 max-h-44 overflow-y-auto rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-[11px] text-[#CAD3F5]">
                           <pre className="overflow-x-auto whitespace-pre">
                             {format === 'rss' && feed.sampleXml
                               ? feed.sampleXml
@@ -1941,11 +1941,11 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         </div>
                       </div>
 
-                      <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-                        <span className="font-mono text-[11px] text-slate-500">
-                          Format: <strong className="text-slate-800">{feed.format}</strong>
+                      <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5] pt-3">
+                        <span className="font-mono text-[11px] text-[#2277FF]">
+                          Format: <strong className="text-[#0A1A4A]">{feed.format}</strong>
                         </span>
-                        <span className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-emerald-600">
+                        <span className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-[#0056FF]">
                           <CircleCheck className="size-3" />
                           Public Access
                         </span>
@@ -1959,7 +1959,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
             {/* Section 4: Developer Embed Studio & Live Sandbox */}
             <section
               id="developer-embed"
-              className="scroll-mt-24 space-y-6 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-6 border-t border-[#CAD3F5] pt-8"
             >
               <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                 <div>
@@ -1967,14 +1967,14 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
                       EMBED STUDIO
                     </span>
-                    <span className="font-mono text-xs text-slate-400">
+                    <span className="font-mono text-xs text-[#2277FF]">
                       Third-Party Integration
                     </span>
                   </div>
-                  <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                  <h2 className="mt-2 text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                     Developer Embed Studio &amp; Live Sandbox
                   </h2>
-                  <p className="mt-1 max-w-2xl text-xs text-slate-500">
+                  <p className="mt-1 max-w-2xl text-xs text-[#2277FF]">
                     Embed live institutional schedules, academic rosters, and notices into any
                     external web application using plug-and-play iFrames, Web Components, or React
                     widgets.
@@ -1983,10 +1983,10 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
               </div>
 
               {/* Embed Configuration Panel */}
-              <div className="space-y-5 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
-                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+              <div className="space-y-5 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs">
+                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#CAD3F5] pb-4">
                   {/* Format Tabs */}
-                  <div className="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 p-1">
+                  <div className="flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-1">
                     <button
                       type="button"
                       onClick={() => setEmbedFormat('iframe')}
@@ -1994,7 +1994,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                         embedFormat === 'iframe'
                           ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900',
+                          : 'text-[#0A1A4A]/70 hover:text-[#0A1A4A]',
                       )}
                     >
                       iFrame
@@ -2006,7 +2006,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                         embedFormat === 'webcomponent'
                           ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900',
+                          : 'text-[#0A1A4A]/70 hover:text-[#0A1A4A]',
                       )}
                     >
                       Web Component
@@ -2018,7 +2018,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                         embedFormat === 'react'
                           ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900',
+                          : 'text-[#0A1A4A]/70 hover:text-[#0A1A4A]',
                       )}
                     >
                       React
@@ -2030,7 +2030,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                         embedFormat === 'rss'
                           ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900',
+                          : 'text-[#0A1A4A]/70 hover:text-[#0A1A4A]',
                       )}
                     >
                       RSS URL
@@ -2039,7 +2039,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
 
                   {/* Viewport switchers */}
                   <div className="flex items-center gap-1.5 font-sans text-xs">
-                    <span className="mr-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
+                    <span className="mr-1 font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Viewport:
                     </span>
                     <button
@@ -2049,7 +2049,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-2.5 py-1 font-semibold transition-colors',
                         embedViewport === 'desktop'
                           ? 'bg-[#0056FF] text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+                          : 'bg-[#EFF5FF] text-[#0A1A4A]/70 hover:bg-[#E3E7FC]',
                       )}
                     >
                       Desktop (100%)
@@ -2061,7 +2061,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-2.5 py-1 font-semibold transition-colors',
                         embedViewport === 'tablet'
                           ? 'bg-[#0056FF] text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+                          : 'bg-[#EFF5FF] text-[#0A1A4A]/70 hover:bg-[#E3E7FC]',
                       )}
                     >
                       Tablet (768px)
@@ -2073,7 +2073,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         'rounded-[4px] border-0 px-2.5 py-1 font-semibold transition-colors',
                         embedViewport === 'mobile'
                           ? 'bg-[#0056FF] text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+                          : 'bg-[#EFF5FF] text-[#0A1A4A]/70 hover:bg-[#E3E7FC]',
                       )}
                     >
                       Mobile (380px)
@@ -2084,13 +2084,13 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 {/* Props Customizer Toolbar */}
                 <div className="grid grid-cols-1 gap-3 font-sans text-xs sm:grid-cols-3">
                   <div>
-                    <label className="block font-mono text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="block font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Campus Branch
                     </label>
                     <select
                       value={embedBranch}
                       onChange={(e) => setEmbedBranch(e.target.value)}
-                      className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-800 focus:border-[#0056FF] focus:outline-none"
+                      className="mt-1 w-full rounded-lg border border-[#CAD3F5] bg-white px-3 py-1.5 font-semibold text-[#0A1A4A] focus:border-[#0056FF] focus:outline-none"
                     >
                       <option value="BR-01">BR-01 (Main Campus)</option>
                       <option value="BR-02">BR-02 (Tuol Kork)</option>
@@ -2099,13 +2099,13 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   </div>
 
                   <div>
-                    <label className="block font-mono text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="block font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Theme Palette
                     </label>
                     <select
                       value={embedTheme}
                       onChange={(e) => setEmbedTheme(e.target.value as 'light' | 'dark')}
-                      className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-800 focus:border-[#0056FF] focus:outline-none"
+                      className="mt-1 w-full rounded-lg border border-[#CAD3F5] bg-white px-3 py-1.5 font-semibold text-[#0A1A4A] focus:border-[#0056FF] focus:outline-none"
                     >
                       <option value="light">Light Day (Default)</option>
                       <option value="dark">Dark UI</option>
@@ -2113,13 +2113,13 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   </div>
 
                   <div>
-                    <label className="block font-mono text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="block font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Max Items Display
                     </label>
                     <select
                       value={embedLimit}
                       onChange={(e) => setEmbedLimit(Number(e.target.value))}
-                      className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-semibold text-slate-800 focus:border-[#0056FF] focus:outline-none"
+                      className="mt-1 w-full rounded-lg border border-[#CAD3F5] bg-white px-3 py-1.5 font-semibold text-[#0A1A4A] focus:border-[#0056FF] focus:outline-none"
                     >
                       <option value="3">3 Classes</option>
                       <option value="5">5 Classes</option>
@@ -2129,15 +2129,15 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 </div>
 
                 {/* Generated Snippet Box */}
-                <div className="relative rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4 text-white">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-2 font-mono text-xs">
-                    <span className="text-slate-400">
+                <div className="relative rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 text-white">
+                  <div className="flex items-center justify-between border-b border-[#CAD3F5] pb-2 font-mono text-xs">
+                    <span className="text-[#2277FF]">
                       Embed Snippet ({embedFormat.toUpperCase()})
                     </span>
                     <button
                       type="button"
                       onClick={() => handleCopy(generateEmbedSnippet(), 'embed-snippet')}
-                      className="inline-flex items-center gap-1.5 rounded-[4px] border-0 bg-[#0056FF] px-2.5 py-1 font-sans text-xs font-bold text-white hover:bg-[#0040CC]"
+                      className="inline-flex items-center gap-1.5 rounded-[4px] border-0 bg-[#0056FF] px-2.5 py-1 font-sans text-xs font-bold text-white hover:bg-[#2277FF]"
                     >
                       {copiedId === 'embed-snippet' ? (
                         <>
@@ -2160,21 +2160,21 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 {/* Live Responsive Embed Sandbox Preview */}
                 <div className="space-y-2 pt-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                    <span className="font-mono text-[10px] font-bold tracking-wider text-[#2277FF] uppercase">
                       Live Sandbox Preview ({embedViewport})
                     </span>
-                    <span className="font-mono text-[10px] font-semibold text-emerald-600">
+                    <span className="font-mono text-[10px] font-semibold text-[#0056FF]">
                       Live Interactive Mode
                     </span>
                   </div>
 
-                  <div className="flex justify-center overflow-hidden rounded-2xl border border-dashed border-slate-300 bg-slate-50/60 p-4">
+                  <div className="flex justify-center overflow-hidden rounded-2xl border border-dashed border-[#CAD3F5] bg-[#EFF5FF] p-4">
                     <div
                       className={cn(
                         'w-full overflow-hidden rounded-xl border p-4 shadow-sm transition-all duration-300',
                         embedTheme === 'dark'
-                          ? 'border-slate-800 bg-[#0A0D14] text-white'
-                          : 'border-slate-200 bg-white text-slate-900',
+                          ? 'border-[#CAD3F5] bg-[#EFF5FF] text-white'
+                          : 'border-[#CAD3F5] bg-white text-[#0A1A4A]',
                         embedViewport === 'mobile'
                           ? 'max-w-[380px]'
                           : embedViewport === 'tablet'
@@ -2183,13 +2183,13 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                       )}
                     >
                       {/* Mini Widget Content */}
-                      <div className="flex items-center justify-between border-b border-slate-200/80 pb-3">
+                      <div className="flex items-center justify-between border-b border-[#CAD3F5] pb-3">
                         <div>
-                          <div className="flex items-center gap-1.5 font-sans text-xs font-bold text-slate-900">
+                          <div className="flex items-center gap-1.5 font-sans text-xs font-bold text-[#0A1A4A]">
                             <span className="h-3 w-1 rounded-[1px] bg-[#0056FF]" />
                             <span>SNP Institute Class Roster</span>
                           </div>
-                          <span className="font-mono text-[10px] text-slate-400">
+                          <span className="font-mono text-[10px] text-[#2277FF]">
                             Branch: {embedBranch} · Term 1 2026
                           </span>
                         </div>
@@ -2202,23 +2202,23 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         {classesList.slice(0, embedLimit).map((c) => (
                           <div
                             key={c.id}
-                            className="flex flex-col justify-between gap-2 rounded-lg border border-slate-100 bg-slate-50/70 p-2.5 transition-colors hover:bg-slate-100/60 sm:flex-row sm:items-center"
+                            className="flex flex-col justify-between gap-2 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-2.5 transition-colors hover:bg-[#EFF5FF] sm:flex-row sm:items-center"
                           >
                             <div>
                               <div className="flex items-center gap-2">
                                 <span className="font-mono text-[11px] font-bold text-[#0056FF]">
                                   {c.code}
                                 </span>
-                                <span className="max-w-[220px] truncate font-sans text-xs font-semibold text-slate-800">
+                                <span className="max-w-[220px] truncate font-sans text-xs font-semibold text-[#0A1A4A]">
                                   {c.name}
                                 </span>
                               </div>
-                              <div className="mt-0.5 font-mono text-[10.5px] text-slate-500">
+                              <div className="mt-0.5 font-mono text-[10.5px] text-[#2277FF]">
                                 {c.instructor} · {c.schedule}
                               </div>
                             </div>
                             <div className="flex shrink-0 items-center gap-2">
-                              <span className="font-mono text-xs font-bold text-slate-700">
+                              <span className="font-mono text-xs font-bold text-[#0A1A4A]/80">
                                 {c.enrolled}/{c.capacity}
                               </span>
                               <button
@@ -2227,7 +2227,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                   setSelectedFrontsiteClass(c);
                                   scrollToDocSection('class-catalog-registration');
                                 }}
-                                className="cursor-pointer rounded-[4px] border border-slate-200 bg-slate-50 px-2.5 py-1 font-sans text-xs font-bold text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+                                className="cursor-pointer rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1 font-sans text-xs font-bold text-[#0A1A4A]/80 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
                               >
                                 View in Studio
                               </button>
@@ -2244,7 +2244,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
             {/* Section 5: Public Class Roster & Frontsite School Integration Studio */}
             <section
               id="class-catalog-registration"
-              className="scroll-mt-24 space-y-6 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-6 border-t border-[#CAD3F5] pt-8"
             >
               <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                 <div>
@@ -2252,12 +2252,12 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                     <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
                       ACADEMIC ROSTER &amp; FRONTSITE INTEGRATION
                     </span>
-                    <span className="font-mono text-xs text-slate-400">External Dev Studio</span>
+                    <span className="font-mono text-xs text-[#2277FF]">External Dev Studio</span>
                   </div>
-                  <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                  <h2 className="mt-2 text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                     Live Class Roster &amp; Frontsite Integration Studio
                   </h2>
-                  <p className="mt-1 max-w-3xl text-xs text-slate-500">
+                  <p className="mt-1 max-w-3xl text-xs text-[#2277FF]">
                     Syndicated public class catalog (
                     <code className="font-mono text-[#0056FF]">GET /api/v1/public/classes</code>).
                     Explore how external developer teams building partner school portals consume
@@ -2267,13 +2267,13 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
               </div>
 
               {/* Zero Public CRUD Policy Callout */}
-              <div className="flex items-start gap-3.5 rounded-lg border border-slate-200 bg-slate-50/90 p-4 text-xs text-slate-700">
+              <div className="flex items-start gap-3.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-4 text-xs text-[#0A1A4A]/80">
                 <ShieldCheck className="mt-0.5 size-4.5 shrink-0 text-[#0056FF]" />
                 <div className="space-y-1">
-                  <div className="font-bold text-slate-900">
+                  <div className="font-bold text-[#0A1A4A]">
                     Zero Public Mutation Policy (Bearer Auth Protected)
                   </div>
-                  <p className="text-slate-600">
+                  <p className="text-[#0A1A4A]/70">
                     Write operations (student admissions, enrollment intake, and course mutations
                     via <code className="font-mono text-[#0056FF]">POST /api/v1/registrations</code>
                     ) are strictly restricted to authenticated developer backend services holding
@@ -2284,18 +2284,18 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
               </div>
 
               {/* Class Catalog Roster Card */}
-              <div className="space-y-4 rounded-xl border border-slate-200/90 bg-white p-5 shadow-xs">
+              <div className="space-y-4 rounded-xl border border-[#CAD3F5] bg-white p-5 shadow-xs">
                 {/* Search & Filter Toolbar */}
                 <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
                   <div className="w-full sm:w-72">
                     <div className="relative flex items-center">
-                      <Search className="absolute left-3 size-3.5 text-slate-400" />
+                      <Search className="absolute left-3 size-3.5 text-[#2277FF]" />
                       <input
                         type="text"
                         placeholder="Search classes, codes, instructors..."
                         value={classSearch}
                         onChange={(e) => setClassSearch(e.target.value)}
-                        className="w-full rounded-md border border-slate-200 bg-slate-50/70 py-1.5 pr-3 pl-8.5 font-sans text-xs text-slate-900 transition-all placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-none"
+                        className="w-full rounded-md border border-[#CAD3F5] bg-[#EFF5FF] py-1.5 pr-3 pl-8.5 font-sans text-xs text-[#0A1A4A] transition-all placeholder:text-[#2277FF] focus:border-[#0056FF] focus:bg-white focus:outline-none"
                       />
                     </div>
                   </div>
@@ -2310,7 +2310,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           'cursor-pointer rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                           classFilterStatus === st
                             ? 'bg-[#0056FF] text-white shadow-xs'
-                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+                            : 'bg-[#EFF5FF] text-[#0A1A4A]/70 hover:bg-[#E3E7FC]',
                         )}
                       >
                         {st}
@@ -2320,9 +2320,9 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 </div>
 
                 {/* Table representation */}
-                <div className="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-2xs">
+                <div className="overflow-x-auto rounded-lg border border-[#CAD3F5] bg-white shadow-2xs">
                   <table className="w-full border-collapse text-left font-sans text-xs">
-                    <thead className="border-b border-slate-200 bg-slate-50/80 font-mono text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
+                    <thead className="border-b border-[#CAD3F5] bg-[#EFF5FF] font-mono text-[11px] font-semibold tracking-wider text-[#2277FF] uppercase">
                       <tr>
                         <th className="px-4 py-3">Code / Dept</th>
                         <th className="px-4 py-3">Course Title &amp; Instructor</th>
@@ -2332,10 +2332,10 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         <th className="px-4 py-3 text-right">Studio Preview</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 bg-white">
+                    <tbody className="divide-y divide-[#CAD3F5] bg-white">
                       {filteredClasses.length === 0 ? (
                         <tr>
-                          <td colSpan={6} className="px-4 py-8 text-center text-slate-500">
+                          <td colSpan={6} className="px-4 py-8 text-center text-[#2277FF]">
                             No classes matching your criteria.
                           </td>
                         </tr>
@@ -2350,23 +2350,23 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                               key={item.id}
                               className={cn(
                                 'transition-colors',
-                                isSelected ? 'bg-[#EFF5FF]/80' : 'hover:bg-slate-50/80',
+                                isSelected ? 'bg-[#EFF5FF]/80' : 'hover:bg-[#EFF5FF]',
                               )}
                             >
                               <td className="px-4 py-3.5 font-mono">
                                 <div className="font-bold text-[#0056FF]">{item.code}</div>
-                                <div className="text-[10px] text-slate-400">{item.department}</div>
+                                <div className="text-[10px] text-[#2277FF]">{item.department}</div>
                               </td>
                               <td className="px-4 py-3.5">
-                                <div className="font-bold text-slate-900">{item.name}</div>
-                                <div className="text-[11px] text-slate-500">{item.instructor}</div>
+                                <div className="font-bold text-[#0A1A4A]">{item.name}</div>
+                                <div className="text-[11px] text-[#2277FF]">{item.instructor}</div>
                               </td>
                               <td className="px-4 py-3.5 font-mono text-[11px]">
-                                <div className="text-slate-800">{item.schedule}</div>
-                                <div className="text-slate-400">{item.room}</div>
+                                <div className="text-[#0A1A4A]">{item.schedule}</div>
+                                <div className="text-[#2277FF]">{item.room}</div>
                               </td>
                               <td className="px-4 py-3.5 text-center">
-                                <div className="flex items-center justify-center gap-1.5 font-mono text-xs font-bold text-slate-900">
+                                <div className="flex items-center justify-center gap-1.5 font-mono text-xs font-bold text-[#0A1A4A]">
                                   <span>
                                     {item.enrolled} / {item.capacity}
                                   </span>
@@ -2374,14 +2374,14 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                     <span className="inline-block size-2 animate-ping rounded-full bg-[#0056FF]" />
                                   )}
                                 </div>
-                                <div className="mx-auto mt-1 h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
+                                <div className="mx-auto mt-1 h-1.5 w-24 overflow-hidden rounded-full bg-[#EFF5FF]">
                                   <div
                                     className={cn(
                                       'h-full rounded-full transition-all duration-300',
                                       percent >= 100
-                                        ? 'bg-rose-500'
+                                        ? 'bg-[#EFF5FF]0'
                                         : percent >= 85
-                                          ? 'bg-amber-500'
+                                          ? 'bg-[#EFF5FF]0'
                                           : 'bg-[#0056FF]',
                                     )}
                                     style={{ width: `${Math.min(100, percent)}%` }}
@@ -2393,11 +2393,11 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                   className={cn(
                                     'inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[10.5px] font-bold',
                                     item.status === 'Open' &&
-                                      'border border-emerald-200 bg-emerald-50 text-emerald-700',
+                                      'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]',
                                     item.status === 'Filling Fast' &&
-                                      'border border-amber-200 bg-amber-50 text-amber-700',
+                                      'border border-[#2277FF] bg-[#EFF5FF] text-[#2277FF]',
                                     item.status === 'Waitlist' &&
-                                      'border border-slate-300 bg-slate-100 text-slate-700',
+                                      'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A]/80',
                                   )}
                                 >
                                   {item.status}
@@ -2414,7 +2414,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                     'cursor-pointer rounded-[4px] border px-2.5 py-1 font-sans text-xs font-bold transition-all',
                                     isSelected
                                       ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                                      : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                                      : 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A]/80 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
                                   )}
                                 >
                                   {isSelected ? 'Selected' : 'Preview in UI'}
@@ -2429,29 +2429,29 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                 </div>
 
                 {/* Frontsite School Data Integration Studio */}
-                <div className="mt-8 space-y-5 rounded-xl border border-slate-200 bg-slate-50/70 p-5 sm:p-6">
+                <div className="mt-8 space-y-5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-5 sm:p-6">
                   {/* Studio Navigation Header */}
-                  <div className="flex flex-col justify-between gap-4 border-b border-slate-200 pb-4 sm:flex-row sm:items-center">
+                  <div className="flex flex-col justify-between gap-4 border-b border-[#CAD3F5] pb-4 sm:flex-row sm:items-center">
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-[11px] font-bold text-[#0056FF] uppercase">
                           FRONTSITE INTEGRATION STUDIO
                         </span>
-                        <span className="rounded-full bg-emerald-100 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+                        <span className="rounded-full bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                           Scenario Demo
                         </span>
                       </div>
-                      <h3 className="mt-1 font-sans text-base font-bold text-slate-900">
+                      <h3 className="mt-1 font-sans text-base font-bold text-[#0A1A4A]">
                         External Partner School Portal: Live Data Ingestion
                       </h3>
-                      <p className="font-sans text-xs text-slate-500">
+                      <p className="font-sans text-xs text-[#2277FF]">
                         Illustrating how an external developer team ingests syndication endpoints
                         and renders a live responsive student course UI.
                       </p>
                     </div>
 
                     {/* View Switcher Tabs */}
-                    <div className="flex items-center rounded-lg border border-slate-200 bg-white p-1 shadow-2xs">
+                    <div className="flex items-center rounded-lg border border-[#CAD3F5] bg-white p-1 shadow-2xs">
                       {[
                         { id: 'preview-ui', label: 'Frontsite Live UI', icon: Layers },
                         { id: 'json-feed', label: 'Live JSON API', icon: Code },
@@ -2474,7 +2474,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                               'flex cursor-pointer items-center gap-1.5 rounded-[4px] border-0 px-3 py-1.5 font-sans text-xs font-bold transition-all',
                               isActive
                                 ? 'bg-[#0056FF] text-white shadow-xs'
-                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                                : 'text-[#0A1A4A]/70 hover:bg-[#EFF5FF] hover:text-[#0A1A4A]',
                             )}
                           >
                             <Icon className="size-3.5" />
@@ -2489,18 +2489,18 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   {frontsiteStudioTab === 'preview-ui' && (
                     <div className="space-y-4">
                       {/* Controls Bar for Testing Real-Time SSE Reactivity */}
-                      <div className="flex flex-col items-start justify-between gap-3 rounded-lg border border-slate-200 bg-white p-3.5 sm:flex-row sm:items-center">
+                      <div className="flex flex-col items-start justify-between gap-3 rounded-lg border border-[#CAD3F5] bg-white p-3.5 sm:flex-row sm:items-center">
                         <div className="flex items-center gap-2.5">
                           <span className="relative flex size-2.5">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                            <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500" />
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#2277FF] opacity-75" />
+                            <span className="bg-[#EFF5FF]0 relative inline-flex size-2.5 rounded-full" />
                           </span>
-                          <span className="font-mono text-xs font-semibold text-slate-700">
+                          <span className="font-mono text-xs font-semibold text-[#0A1A4A]/80">
                             Live Stream:{' '}
-                            <span className="font-bold text-emerald-700">classes.roster.BR-01</span>
+                            <span className="font-bold text-[#0056FF]">classes.roster.BR-01</span>
                           </span>
-                          <span className="text-slate-300">|</span>
-                          <span className="font-sans text-xs text-slate-500">
+                          <span className="text-[#CAD3F5]">|</span>
+                          <span className="font-sans text-xs text-[#2277FF]">
                             Push simulated background changes to observe immediate UI reactivity.
                           </span>
                         </div>
@@ -2510,7 +2510,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                             type="button"
                             onClick={handleSimulateRealtimeSseUpdate}
                             disabled={isSimulatingSseUpdate}
-                            className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border-0 bg-[#0056FF] px-3 py-1.5 font-sans text-xs font-bold text-white shadow-xs hover:bg-[#0040CC] disabled:opacity-50"
+                            className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border-0 bg-[#0056FF] px-3 py-1.5 font-sans text-xs font-bold text-white shadow-xs hover:bg-[#2277FF] disabled:opacity-50"
                           >
                             <Zap className="size-3.5" />
                             <span>
@@ -2522,7 +2522,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                           <button
                             type="button"
                             onClick={handleResetCatalog}
-                            className="flex cursor-pointer items-center gap-1 rounded-[4px] border border-slate-200 bg-slate-100 px-2.5 py-1.5 font-sans text-xs font-bold text-slate-600 hover:bg-slate-200"
+                            className="flex cursor-pointer items-center gap-1 rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 font-sans text-xs font-bold text-[#0A1A4A]/70 hover:bg-[#E3E7FC]"
                             title="Reset Catalog to Seed Data"
                           >
                             <RotateCcw className="size-3" />
@@ -2532,9 +2532,9 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                       </div>
 
                       {/* Mock External School Student Portal Shell */}
-                      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                      <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-white shadow-sm">
                         {/* Mock School Portal Header */}
-                        <div className="flex flex-col justify-between gap-3 border-b border-[#0047D4] bg-[#0056FF] p-4 text-white sm:flex-row sm:items-center">
+                        <div className="flex flex-col justify-between gap-3 border-b border-[#2277FF] bg-[#0056FF] p-4 text-white sm:flex-row sm:items-center">
                           <div className="flex items-center gap-3">
                             <div className="flex size-9 items-center justify-center rounded-lg bg-white font-mono text-sm font-black text-[#0056FF] shadow-xs">
                               RS
@@ -2549,10 +2549,10 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="rounded-md bg-white/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-slate-200">
+                            <span className="rounded-md bg-white/10 px-2.5 py-1 font-mono text-[11px] font-semibold text-[#CAD3F5]">
                               Syndication: Active
                             </span>
-                            <span className="rounded-md bg-emerald-500/20 px-2.5 py-1 font-mono text-[11px] font-bold text-emerald-300">
+                            <span className="bg-[#EFF5FF]0/20 rounded-md px-2.5 py-1 font-mono text-[11px] font-bold text-[#E3E7FC]">
                               SSE Connected
                             </span>
                           </div>
@@ -2561,10 +2561,10 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                         {/* Courses Grid Rendered From Live JSON */}
                         <div className="p-5">
                           <div className="mb-4 flex items-center justify-between">
-                            <span className="font-sans text-xs font-bold tracking-wider text-slate-400 uppercase">
+                            <span className="font-sans text-xs font-bold tracking-wider text-[#2277FF] uppercase">
                               Active Course Offerings ({filteredClasses.length} Courses Available)
                             </span>
-                            <span className="font-mono text-[11px] text-slate-400">
+                            <span className="font-mono text-[11px] text-[#2277FF]">
                               Selected:{' '}
                               <strong className="text-[#0056FF]">
                                 {selectedFrontsiteClass.code}
@@ -2588,12 +2588,12 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                       ? 'border-[#0056FF] bg-[#EFF5FF] ring-2 ring-[#0056FF]/30'
                                       : isSelected
                                         ? 'border-[#0056FF] bg-[#EFF5FF]/40 shadow-xs'
-                                        : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-2xs',
+                                        : 'border-[#CAD3F5] bg-white hover:border-[#CAD3F5] hover:shadow-2xs',
                                   )}
                                 >
                                   {/* Card Top: Dept & Code */}
                                   <div className="flex items-center justify-between">
-                                    <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-bold text-slate-600">
+                                    <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0A1A4A]/70">
                                       {cls.department}
                                     </span>
                                     <span className="font-mono text-xs font-bold text-[#0056FF]">
@@ -2602,18 +2602,18 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                   </div>
 
                                   {/* Course Title */}
-                                  <h4 className="mt-2 font-sans text-sm font-bold text-slate-900">
+                                  <h4 className="mt-2 font-sans text-sm font-bold text-[#0A1A4A]">
                                     {cls.name}
                                   </h4>
 
                                   {/* Instructor & Location */}
-                                  <div className="mt-2.5 space-y-1 font-sans text-xs text-slate-500">
+                                  <div className="mt-2.5 space-y-1 font-sans text-xs text-[#2277FF]">
                                     <div className="flex items-center gap-1.5">
-                                      <User className="size-3.5 text-slate-400" />
+                                      <User className="size-3.5 text-[#2277FF]" />
                                       <span>{cls.instructor}</span>
                                     </div>
                                     <div className="flex items-center gap-1.5 font-mono text-[11px]">
-                                      <Calendar className="size-3.5 text-slate-400" />
+                                      <Calendar className="size-3.5 text-[#2277FF]" />
                                       <span>
                                         {cls.schedule} · {cls.room}
                                       </span>
@@ -2621,17 +2621,17 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                   </div>
 
                                   {/* Live Seat Availability Meter */}
-                                  <div className="mt-4 border-t border-slate-100 pt-3">
+                                  <div className="mt-4 border-t border-[#CAD3F5] pt-3">
                                     <div className="flex items-center justify-between font-mono text-[11px]">
-                                      <span className="font-bold text-slate-700">
+                                      <span className="font-bold text-[#0A1A4A]/80">
                                         Capacity: {cls.enrolled} / {cls.capacity}
                                       </span>
                                       <span
                                         className={cn(
                                           'font-bold',
-                                          cls.status === 'Open' && 'text-emerald-600',
-                                          cls.status === 'Filling Fast' && 'text-amber-600',
-                                          cls.status === 'Waitlist' && 'text-slate-600',
+                                          cls.status === 'Open' && 'text-[#0056FF]',
+                                          cls.status === 'Filling Fast' && 'text-[#2277FF]',
+                                          cls.status === 'Waitlist' && 'text-[#0A1A4A]/70',
                                         )}
                                       >
                                         {cls.status === 'Open' &&
@@ -2642,14 +2642,14 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                       </span>
                                     </div>
 
-                                    <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                                    <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[#EFF5FF]">
                                       <div
                                         className={cn(
                                           'h-full rounded-full transition-all duration-300',
                                           percent >= 100
-                                            ? 'bg-rose-500'
+                                            ? 'bg-[#EFF5FF]0'
                                             : percent >= 85
-                                              ? 'bg-amber-500'
+                                              ? 'bg-[#EFF5FF]0'
                                               : 'bg-[#0056FF]',
                                         )}
                                         style={{ width: `${Math.min(100, percent)}%` }}
@@ -2665,7 +2665,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                         <span>Updated via SSE</span>
                                       </span>
                                     ) : (
-                                      <span className="font-mono text-[10px] text-slate-400">
+                                      <span className="font-mono text-[10px] text-[#2277FF]">
                                         Read-only syndicated
                                       </span>
                                     )}
@@ -2695,12 +2695,12 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   {frontsiteStudioTab === 'json-feed' && (
                     <div className="space-y-4">
                       {/* URL bar & Action */}
-                      <div className="flex flex-col items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-3 sm:flex-row">
-                        <div className="flex w-full items-center gap-2 font-mono text-xs text-slate-700 sm:w-auto">
-                          <span className="rounded bg-emerald-100 px-2 py-0.5 font-bold text-emerald-800">
+                      <div className="flex flex-col items-center justify-between gap-3 rounded-lg border border-[#CAD3F5] bg-white p-3 sm:flex-row">
+                        <div className="flex w-full items-center gap-2 font-mono text-xs text-[#0A1A4A]/80 sm:w-auto">
+                          <span className="rounded bg-[#E3E7FC] px-2 py-0.5 font-bold text-[#0056FF]">
                             GET
                           </span>
-                          <span className="text-slate-900">
+                          <span className="text-[#0A1A4A]">
                             https://snpis.kesararamwithdigital.tech/api/v1/public/classes?branch=BR-01
                           </span>
                         </div>
@@ -2726,12 +2726,12 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                               'json',
                             )
                           }
-                          className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-slate-200 bg-slate-100 px-3 py-1.5 font-sans text-xs font-bold text-slate-700 hover:bg-slate-200"
+                          className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1.5 font-sans text-xs font-bold text-[#0A1A4A]/80 hover:bg-[#E3E7FC]"
                         >
                           {frontsiteCopied === 'json' ? (
                             <>
-                              <Check className="size-3.5 text-emerald-600" />
-                              <span className="text-emerald-700">Copied JSON!</span>
+                              <Check className="size-3.5 text-[#0056FF]" />
+                              <span className="text-[#0056FF]">Copied JSON!</span>
                             </>
                           ) : (
                             <>
@@ -2743,7 +2743,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                       </div>
 
                       {/* JSON Response View */}
-                      <div className="rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4 font-mono text-[11px] text-slate-800">
+                      <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 font-mono text-[11px] text-[#0A1A4A]">
                         <pre className="max-h-[460px] overflow-x-auto overflow-y-auto whitespace-pre">
                           {JSON.stringify(
                             {
@@ -2769,7 +2769,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                   {frontsiteStudioTab === 'code-snippets' && (
                     <div className="space-y-4">
                       {/* Code Sub-tabs */}
-                      <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                      <div className="flex items-center justify-between border-b border-[#CAD3F5] pb-2">
                         <div className="flex items-center gap-1">
                           {[
                             { id: 'react', label: 'React Hook (useSchoolClasses)' },
@@ -2785,7 +2785,7 @@ ${baseUrl}/api/v1/public/rss/announcements.xml?branch=${embedBranch}`;
                                 'cursor-pointer rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                                 integrationCodeTab === t.id
                                   ? 'bg-[#0056FF] text-white shadow-xs'
-                                  : 'bg-transparent text-slate-600 hover:bg-slate-200',
+                                  : 'bg-transparent text-[#0A1A4A]/70 hover:bg-[#E3E7FC]',
                               )}
                             >
                               {t.label}
@@ -2897,9 +2897,9 @@ export default async function CoursesPage() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {classes.map((cls) => (
         <div key={cls.id} className="p-4 rounded-lg border bg-white shadow-sm">
-          <div className="text-xs font-mono font-bold text-blue-600">{cls.code}</div>
-          <h3 className="font-bold text-slate-900">{cls.name}</h3>
-          <p className="text-sm text-slate-500">{cls.instructor} · {cls.room}</p>
+          <div className="text-xs font-mono font-bold text-[#0056FF]">{cls.code}</div>
+          <h3 className="font-bold text-[#0A1A4A]">{cls.name}</h3>
+          <p className="text-sm text-[#2277FF]">{cls.instructor} · {cls.room}</p>
           <div className="mt-2 text-xs font-medium">
             Seats: {cls.enrolled}/{cls.capacity} ({cls.status})
           </div>
@@ -2913,12 +2913,12 @@ export default async function CoursesPage() {
 
                             handleCopyFrontsiteContent(code, 'snippet');
                           }}
-                          className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 font-sans text-xs font-bold text-slate-700 hover:bg-slate-50"
+                          className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-[#CAD3F5] bg-white px-2.5 py-1 font-sans text-xs font-bold text-[#0A1A4A]/80 hover:bg-[#EFF5FF]"
                         >
                           {frontsiteCopied === 'snippet' ? (
                             <>
-                              <Check className="size-3 text-emerald-600" />
-                              <span className="text-emerald-700">Copied!</span>
+                              <Check className="size-3 text-[#0056FF]" />
+                              <span className="text-[#0056FF]">Copied!</span>
                             </>
                           ) : (
                             <>
@@ -2930,7 +2930,7 @@ export default async function CoursesPage() {
                       </div>
 
                       {/* Code Snippet Box */}
-                      <div className="rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4 font-mono text-[11px] text-slate-800">
+                      <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 font-mono text-[11px] text-[#0A1A4A]">
                         <pre className="max-h-[460px] overflow-x-auto overflow-y-auto whitespace-pre">
                           {integrationCodeTab === 'react' &&
                             `import { useEffect, useState } from 'react';
@@ -3034,9 +3034,9 @@ export default async function CoursesPage() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {classes.map((cls) => (
         <div key={cls.id} className="p-4 rounded-lg border bg-white shadow-sm">
-          <div className="text-xs font-mono font-bold text-blue-600">{cls.code}</div>
-          <h3 className="font-bold text-slate-900">{cls.name}</h3>
-          <p className="text-sm text-slate-500">{cls.instructor} · {cls.room}</p>
+          <div className="text-xs font-mono font-bold text-[#0056FF]">{cls.code}</div>
+          <h3 className="font-bold text-[#0A1A4A]">{cls.name}</h3>
+          <p className="text-sm text-[#2277FF]">{cls.instructor} · {cls.room}</p>
           <div className="mt-2 text-xs font-medium">
             Seats: {cls.enrolled}/{cls.capacity} ({cls.status})
           </div>
@@ -3057,12 +3057,12 @@ export default async function CoursesPage() {
                   {/* TAB 4: Developer Auth & CRUD Policy */}
                   {frontsiteStudioTab === 'auth-policy' && (
                     <div className="space-y-4">
-                      <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
-                        <div className="flex items-center gap-2 font-sans text-xs font-bold text-amber-900">
-                          <Lock className="size-4 text-amber-700" />
+                      <div className="rounded-lg border border-[#2277FF] bg-[#EFF5FF] p-4">
+                        <div className="flex items-center gap-2 font-sans text-xs font-bold text-[#0A1A4A]">
+                          <Lock className="size-4 text-[#2277FF]" />
                           <span>RESTRICTED WRITE ACCESS · DEVELOPER BEARER TOKEN REQUIRED</span>
                         </div>
-                        <p className="mt-1 text-xs text-amber-800">
+                        <p className="mt-1 text-xs text-[#2277FF]">
                           To protect academic integrity, all write operations (class creation,
                           roster adjustments, and student intake registration) are completely
                           disabled for public users and guest frontsites. Zero public buttons are
@@ -3071,21 +3071,21 @@ export default async function CoursesPage() {
                         </p>
                       </div>
 
-                      <div className="space-y-3 rounded-lg border border-slate-200 bg-white p-4 font-sans text-xs">
-                        <h4 className="font-bold text-slate-900">
+                      <div className="space-y-3 rounded-lg border border-[#CAD3F5] bg-white p-4 font-sans text-xs">
+                        <h4 className="font-bold text-[#0A1A4A]">
                           Authorized Mutation Endpoint:{' '}
                           <code className="font-mono text-[#0056FF]">
                             POST /api/v1/registrations
                           </code>
                         </h4>
-                        <p className="text-slate-600">
+                        <p className="text-[#0A1A4A]/70">
                           Authenticated school backend services use this endpoint to submit
                           registrations on behalf of verified students.
                         </p>
 
-                        <div className="rounded-lg border border-slate-200/90 bg-[#F8FAFC] p-3 font-mono text-[11px] text-slate-800">
-                          <div className="mb-2 flex items-center justify-between border-b border-slate-200 pb-2">
-                            <span className="font-bold text-slate-600">
+                        <div className="rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-[11px] text-[#0A1A4A]">
+                          <div className="mb-2 flex items-center justify-between border-b border-[#CAD3F5] pb-2">
+                            <span className="font-bold text-[#0A1A4A]/70">
                               Authenticated Developer cURL
                             </span>
                             <button
@@ -3123,27 +3123,27 @@ export default async function CoursesPage() {
                         </div>
 
                         <div className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-3">
-                          <div className="rounded-md border border-slate-200 bg-slate-50 p-2.5">
-                            <div className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                          <div className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] p-2.5">
+                            <div className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                               Required Header
                             </div>
-                            <div className="font-mono text-xs font-bold text-slate-900">
+                            <div className="font-mono text-xs font-bold text-[#0A1A4A]">
                               Authorization: Bearer
                             </div>
                           </div>
-                          <div className="rounded-md border border-slate-200 bg-slate-50 p-2.5">
-                            <div className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                          <div className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] p-2.5">
+                            <div className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                               Rate Limit
                             </div>
-                            <div className="font-mono text-xs font-bold text-slate-900">
+                            <div className="font-mono text-xs font-bold text-[#0A1A4A]">
                               30 writes / minute
                             </div>
                           </div>
-                          <div className="rounded-md border border-slate-200 bg-slate-50 p-2.5">
-                            <div className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                          <div className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] p-2.5">
+                            <div className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                               Audit Logging
                             </div>
-                            <div className="font-mono text-xs font-bold text-slate-900">
+                            <div className="font-mono text-xs font-bold text-[#0A1A4A]">
                               Logged &amp; Immutable
                             </div>
                           </div>
@@ -3158,7 +3158,7 @@ export default async function CoursesPage() {
             {/* Section 6: Real-Time Updates Engine (SSE / Polling) */}
             <section
               id="realtime-stream"
-              className="scroll-mt-24 space-y-6 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-6 border-t border-[#CAD3F5] pt-8"
             >
               <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                 <div>
@@ -3166,14 +3166,14 @@ export default async function CoursesPage() {
                     <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
                       STREAMING &amp; WEBSOCKETS
                     </span>
-                    <span className="font-mono text-xs text-slate-400">
+                    <span className="font-mono text-xs text-[#2277FF]">
                       Server-Sent Events (SSE)
                     </span>
                   </div>
-                  <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+                  <h2 className="mt-2 text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                     Real-Time Updates Engine
                   </h2>
-                  <p className="mt-1 max-w-2xl text-xs text-slate-500">
+                  <p className="mt-1 max-w-2xl text-xs text-[#2277FF]">
                     Subscribe to instant push notifications and academic state mutations using
                     Server-Sent Events (SSE) or bi-directional WebSocket connections.
                   </p>
@@ -3181,29 +3181,29 @@ export default async function CoursesPage() {
               </div>
 
               {/* Real-time Stream Terminal & Console */}
-              <div className="space-y-4 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
+              <div className="space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs">
                 {/* HUD Bar */}
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CAD3F5] pb-4">
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2">
                       <span
                         className={cn(
                           'h-2.5 w-2.5 rounded-full',
-                          isStreamActive ? 'animate-pulse bg-emerald-500' : 'bg-slate-300',
+                          isStreamActive ? 'bg-[#EFF5FF]0 animate-pulse' : 'bg-[#E3E7FC]',
                         )}
                       />
-                      <span className="font-mono text-xs font-bold text-slate-900">
+                      <span className="font-mono text-xs font-bold text-[#0A1A4A]">
                         {isStreamActive ? 'STREAM ACTIVE' : 'STREAM PAUSED'}
                       </span>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+                    <div className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[11px] text-[#0A1A4A]/70">
                       Latency: <strong className="text-[#0056FF]">{streamLatency}ms</strong>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] text-slate-600">
+                    <div className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[11px] text-[#0A1A4A]/70">
                       Subscribers:{' '}
-                      <strong className="text-slate-800">{streamConnectedClients}</strong>
+                      <strong className="text-[#0A1A4A]">{streamConnectedClients}</strong>
                     </div>
                   </div>
 
@@ -3214,8 +3214,8 @@ export default async function CoursesPage() {
                       className={cn(
                         'inline-flex items-center gap-1.5 rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold text-white transition-colors',
                         isStreamActive
-                          ? 'bg-slate-700 hover:bg-slate-800'
-                          : 'bg-[#0056FF] hover:bg-[#0040CC]',
+                          ? 'bg-[#0056FF] hover:bg-[#0056FF]'
+                          : 'bg-[#0056FF] hover:bg-[#2277FF]',
                       )}
                     >
                       {isStreamActive ? (
@@ -3240,7 +3240,7 @@ export default async function CoursesPage() {
                           priority: 'high',
                         })
                       }
-                      className="rounded-[4px] border-0 bg-slate-100 px-3 py-1 font-sans text-xs font-bold text-slate-700 hover:bg-slate-200"
+                      className="rounded-[4px] border-0 bg-[#EFF5FF] px-3 py-1 font-sans text-xs font-bold text-[#0A1A4A]/80 hover:bg-[#E3E7FC]"
                     >
                       Simulate Event
                     </button>
@@ -3248,7 +3248,7 @@ export default async function CoursesPage() {
                     <button
                       type="button"
                       onClick={() => setStreamEvents([])}
-                      className="rounded-[4px] border-0 bg-slate-100 px-2.5 py-1 font-sans text-xs font-semibold text-slate-500 hover:text-slate-900"
+                      className="rounded-[4px] border-0 bg-[#EFF5FF] px-2.5 py-1 font-sans text-xs font-semibold text-[#2277FF] hover:text-[#0A1A4A]"
                     >
                       Clear
                     </button>
@@ -3256,15 +3256,15 @@ export default async function CoursesPage() {
                 </div>
 
                 {/* Event Feed Stream Terminal */}
-                <div className="space-y-2 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4 text-slate-200">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-2 font-mono text-[11px] text-slate-400">
+                <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 text-[#CAD3F5]">
+                  <div className="flex items-center justify-between border-b border-[#CAD3F5] pb-2 font-mono text-[11px] text-[#2277FF]">
                     <span>LIVE EVENT LOGS (/api/v1/stream/events)</span>
                     <span>PROTO: SSE (text/event-stream)</span>
                   </div>
 
                   <div className="max-h-56 space-y-1.5 overflow-y-auto font-mono text-[11px]">
                     {streamEvents.length === 0 ? (
-                      <div className="py-6 text-center text-slate-500">
+                      <div className="py-6 text-center text-[#2277FF]">
                         Stream connected. Waiting for incoming broadcast packets...
                       </div>
                     ) : (
@@ -3273,14 +3273,14 @@ export default async function CoursesPage() {
                           key={ev.id}
                           className="flex flex-col gap-1 rounded-lg bg-white/[0.04] p-2 transition-colors hover:bg-white/[0.07] sm:flex-row sm:items-center sm:gap-2.5"
                         >
-                          <span className="shrink-0 text-slate-500">[{ev.timestamp}]</span>
-                          <span className="shrink-0 rounded bg-[#0056FF]/30 px-1.5 py-0.5 text-[10px] font-bold text-[#38BDF8]">
+                          <span className="shrink-0 text-[#2277FF]">[{ev.timestamp}]</span>
+                          <span className="shrink-0 rounded bg-[#0056FF]/30 px-1.5 py-0.5 text-[10px] font-bold text-[#2277FF]">
                             {ev.eventName}
                           </span>
-                          <span className="max-w-[140px] shrink-0 truncate text-[10px] text-slate-400">
+                          <span className="max-w-[140px] shrink-0 truncate text-[10px] text-[#2277FF]">
                             {ev.channel}
                           </span>
-                          <span className="truncate font-sans text-xs text-slate-300">
+                          <span className="truncate font-sans text-xs text-[#CAD3F5]">
                             {ev.payload}
                           </span>
                         </div>
@@ -3294,13 +3294,13 @@ export default async function CoursesPage() {
             {/* Section 7: What Other Developers Can Get (Modern Card Grid - No Table) */}
             <section
               id="endpoints-available"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-4 border-t border-[#CAD3F5] pt-8"
             >
               <div>
-                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                <h2 className="text-base font-bold tracking-tight text-[#0A1A4A]">
                   What Other Developers Can Get (Read & Integration Surface)
                 </h2>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[#2277FF]">
                   Standardized endpoints consumable by client applications, mobile portals, and
                   reporting integrations using standard HTTP GET queries.
                 </p>
@@ -3308,11 +3308,11 @@ export default async function CoursesPage() {
 
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 {filteredEndpoints.length === 0 ? (
-                  <div className="col-span-full rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
-                    <p className="font-sans text-sm font-semibold text-slate-600">
+                  <div className="col-span-full rounded-2xl border border-dashed border-[#CAD3F5] bg-[#EFF5FF] p-8 text-center">
+                    <p className="font-sans text-sm font-semibold text-[#0A1A4A]/70">
                       No matching endpoints found
                     </p>
-                    <p className="mt-1 font-sans text-xs text-slate-400">
+                    <p className="mt-1 font-sans text-xs text-[#2277FF]">
                       Try searching for another keyword or select &quot;All Modules&quot;
                     </p>
                   </div>
@@ -3320,25 +3320,25 @@ export default async function CoursesPage() {
                   filteredEndpoints.map((ep) => (
                     <div
                       key={ep.path + ep.method}
-                      className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                      className="flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-white p-4 transition-all duration-150 hover:border-[#0056FF] hover:bg-[#EFF5FF]"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2">
                           <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[11px] font-bold text-[#0056FF]">
                             {ep.method}
                           </span>
-                          <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 font-sans text-[10px] font-semibold text-slate-600">
+                          <span className="rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-sans text-[10px] font-semibold text-[#0A1A4A]/70">
                             {ep.category}
                           </span>
                         </div>
-                        <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
+                        <div className="mt-2.5 font-mono text-xs font-bold text-[#0A1A4A]">
                           {ep.path}
                         </div>
-                        <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
+                        <p className="mt-1 font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                           {ep.description}
                         </p>
                       </div>
-                      <div className="mt-3 border-t border-slate-100 pt-2">
+                      <div className="mt-3 border-t border-[#CAD3F5] pt-2">
                         <span className="font-mono text-[10.5px] font-medium text-[#0056FF]">
                           Permission: {ep.requiredPermission}
                         </span>
@@ -3352,13 +3352,13 @@ export default async function CoursesPage() {
             {/* Section 4: What Endpoints Must Be Protected & How (Modern Card Grid - No Table) */}
             <section
               id="protected-endpoints"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-4 border-t border-[#CAD3F5] pt-8"
             >
               <div>
-                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                <h2 className="text-base font-bold tracking-tight text-[#0A1A4A]">
                   What Endpoints Must Be Protected & How
                 </h2>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[#2277FF]">
                   High-impact write and mutation operations enforced with multi-layer defense
                   mechanisms to prevent financial tampering and unauthorized grade alterations.
                 </p>
@@ -3368,21 +3368,21 @@ export default async function CoursesPage() {
                 {PROTECTED_MUTATION_ENDPOINTS.map((item) => (
                   <div
                     key={item.path + item.method}
-                    className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                    className="flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-white p-4.5 transition-all duration-150 hover:border-[#0056FF] hover:bg-[#EFF5FF]"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex items-center rounded-md border border-slate-200/90 bg-[#F8FAFC] px-2.5 py-0.5 font-mono text-[11px] font-bold text-white">
+                        <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 font-mono text-[11px] font-bold text-white">
                           {item.method}
                         </span>
-                        <span className="font-sans text-[11px] font-bold text-slate-700">
+                        <span className="font-sans text-[11px] font-bold text-[#0A1A4A]/80">
                           {item.domain}
                         </span>
                       </div>
-                      <div className="mt-2.5 font-mono text-xs font-bold text-slate-950">
+                      <div className="mt-2.5 font-mono text-xs font-bold text-[#0A1A4A]">
                         {item.path}
                       </div>
-                      <p className="mt-2 font-sans text-xs leading-relaxed text-slate-600">
+                      <p className="mt-2 font-sans text-xs leading-relaxed text-[#0A1A4A]/70">
                         {item.whyProtected}
                       </p>
                     </div>
@@ -3396,19 +3396,19 @@ export default async function CoursesPage() {
               </div>
 
               {/* Interactive Access Control & Scope Simulator */}
-              <div className="mt-6 space-y-4 rounded-2xl border border-slate-200/90 bg-slate-50/70 p-5">
-                <div className="flex flex-col justify-between gap-3 border-b border-slate-200 pb-3 sm:flex-row sm:items-center">
+              <div className="mt-6 space-y-4 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF] p-5">
+                <div className="flex flex-col justify-between gap-3 border-b border-[#CAD3F5] pb-3 sm:flex-row sm:items-center">
                   <div>
-                    <h3 className="flex items-center gap-2 font-sans text-sm font-bold text-slate-900">
+                    <h3 className="flex items-center gap-2 font-sans text-sm font-bold text-[#0A1A4A]">
                       <ShieldCheck className="size-4 text-[#0056FF]" />
                       <span>Access Control &amp; Token Scope Simulator</span>
                     </h3>
-                    <p className="font-sans text-xs text-slate-500">
+                    <p className="font-sans text-xs text-[#2277FF]">
                       Select an actor role to inspect generated request headers and test
                       authorization defense boundaries.
                     </p>
                   </div>
-                  <span className="rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-xs font-bold text-[#0056FF]">
+                  <span className="rounded-md border border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-xs font-bold text-[#0056FF]">
                     Active: {ACCESS_ROLES[simulatedRoleIndex].role}
                   </span>
                 </div>
@@ -3427,7 +3427,7 @@ export default async function CoursesPage() {
                         'rounded-[4px] border-0 px-3 py-1 font-sans text-xs font-bold transition-all',
                         simulatedRoleIndex === idx
                           ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-200',
+                          : 'border border-[#CAD3F5] bg-white text-[#0A1A4A]/80 hover:bg-[#E3E7FC]',
                       )}
                     >
                       {r.role}
@@ -3438,28 +3438,28 @@ export default async function CoursesPage() {
                 {/* Simulated Headers & Actions */}
                 <div className="grid grid-cols-1 gap-4 pt-1 font-sans text-xs md:grid-cols-2">
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                    <span className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Generated Client Headers
                     </span>
-                    <div className="space-y-1 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3 font-mono text-[11px] text-[#CAD3F5]">
+                    <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-[11px] text-[#CAD3F5]">
                       <div>
-                        <span className="text-slate-400">Accept:</span> application/json
+                        <span className="text-[#2277FF]">Accept:</span> application/json
                       </div>
                       <div>
-                        <span className="text-slate-400">Authorization:</span>{' '}
+                        <span className="text-[#2277FF]">Authorization:</span>{' '}
                         {simulatedRoleIndex === 0
                           ? '<None — Anonymous Guest>'
                           : `Bearer snp_token_${ACCESS_ROLES[simulatedRoleIndex].role.toLowerCase().replace(/[^a-z]/g, '_')}_active`}
                       </div>
                       <div>
-                        <span className="text-slate-400">X-Branch-Id:</span>{' '}
+                        <span className="text-[#2277FF]">X-Branch-Id:</span>{' '}
                         {simulatedRoleIndex === 0 ? '<None>' : 'BR-01 (Phnom Penh Main)'}
                       </div>
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="font-mono text-[10px] font-bold text-slate-500 uppercase">
+                    <span className="font-mono text-[10px] font-bold text-[#2277FF] uppercase">
                       Test Authorization Response
                     </span>
                     <div className="space-y-2">
@@ -3474,7 +3474,7 @@ export default async function CoursesPage() {
                                 'HTTP 200 OK — Allowed: Public endpoint accessible without session',
                             });
                           }}
-                          className="rounded-[4px] border border-0 border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-800 hover:border-[#0056FF]"
+                          className="rounded-[4px] border border-0 border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-[#0A1A4A] hover:border-[#0056FF]"
                         >
                           GET /api/v1/health
                         </button>
@@ -3489,7 +3489,7 @@ export default async function CoursesPage() {
                                 'HTTP 200 OK — Allowed: Scoped to BR-01 class schedule catalog',
                             });
                           }}
-                          className="rounded-[4px] border border-0 border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-800 hover:border-[#0056FF]"
+                          className="rounded-[4px] border border-0 border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-[#0A1A4A] hover:border-[#0056FF]"
                         >
                           GET /api/v1/classes
                         </button>
@@ -3506,7 +3506,7 @@ export default async function CoursesPage() {
                                 : 'HTTP 403 Forbidden — Blocked: Missing permission payment.create.own_branch',
                             });
                           }}
-                          className="rounded-[4px] border border-0 border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-800 hover:border-[#0056FF]"
+                          className="rounded-[4px] border border-0 border-[#CAD3F5] bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-[#0A1A4A] hover:border-[#0056FF]"
                         >
                           POST /api/v1/payments
                         </button>
@@ -3518,8 +3518,8 @@ export default async function CoursesPage() {
                             'rounded-xl border p-3 font-mono text-[11px]',
                             simulatedTestFeedback.status === 200 ||
                               simulatedTestFeedback.status === 201
-                              ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
-                              : 'border-rose-200 bg-rose-50 text-rose-900',
+                              ? 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A]'
+                              : 'border-[#0056FF] bg-[#EFF5FF] text-[#0A1A4A]',
                           )}
                         >
                           <div className="font-bold">{simulatedTestFeedback.endpoint}</div>
@@ -3533,12 +3533,12 @@ export default async function CoursesPage() {
             </section>
 
             {/* Section 5: Interactive API Explorer */}
-            <section id="api-doc" className="scroll-mt-24 space-y-8 border-t border-slate-200 pt-8">
+            <section id="api-doc" className="scroll-mt-24 space-y-8 border-t border-[#CAD3F5] pt-8">
               <div>
-                <h2 className="text-base font-bold tracking-tight text-slate-950">
+                <h2 className="text-base font-bold tracking-tight text-[#0A1A4A]">
                   Interactive API Explorer
                 </h2>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[#2277FF]">
                   Select any endpoint below to inspect request/response schemas, copy terminal cURL
                   commands, or send live test requests directly to the running backend.
                 </p>
@@ -3547,16 +3547,16 @@ export default async function CoursesPage() {
               {/* Status Codes Cards (No Table) */}
               <div id="status-codes" className="scroll-mt-24 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-mono text-xs font-bold tracking-wider text-slate-800 uppercase">
+                  <h3 className="font-mono text-xs font-bold tracking-wider text-[#0A1A4A] uppercase">
                     HTTP Status Codes Standard
                   </h3>
-                  <span className="font-mono text-[11px] text-slate-400">REST RFC 9110</span>
+                  <span className="font-mono text-[11px] text-[#2277FF]">REST RFC 9110</span>
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {STATUS_CODES.map((st) => (
                     <div
                       key={st.code}
-                      className="flex flex-col justify-between rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all hover:border-[#0056FF]/40 hover:bg-[#F8FAFC]"
+                      className="flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-white p-3.5 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF]"
                     >
                       <div className="flex items-center gap-2">
                         <span
@@ -3564,16 +3564,16 @@ export default async function CoursesPage() {
                             'inline-flex items-center rounded-md px-2 py-0.5 font-mono text-xs font-black',
                             st.code.startsWith('2')
                               ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
-                              : 'border border-slate-200/90 bg-[#F8FAFC] text-white',
+                              : 'border border-[#CAD3F5] bg-[#EFF5FF] text-white',
                           )}
                         >
                           {st.code}
                         </span>
-                        <span className="font-sans text-xs font-bold text-slate-900">
+                        <span className="font-sans text-xs font-bold text-[#0A1A4A]">
                           {st.status}
                         </span>
                       </div>
-                      <p className="mt-2 font-sans text-[11.5px] leading-relaxed text-slate-600">
+                      <p className="mt-2 font-sans text-[11.5px] leading-relaxed text-[#0A1A4A]/70">
                         {st.desc}
                       </p>
                     </div>
@@ -3590,9 +3590,9 @@ export default async function CoursesPage() {
                     <div
                       key={item.id}
                       id={item.id}
-                      className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/80 bg-white/90 p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF]/40 hover:shadow-lg"
+                      className="scroll-mt-24 space-y-4 rounded-2xl border border-[#CAD3F5] bg-white/90 p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-300 hover:border-[#0056FF] hover:shadow-lg"
                     >
-                      <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
+                      <div className="flex flex-col justify-between gap-3 border-b border-[#CAD3F5] pb-4 sm:flex-row sm:items-center">
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
                             <span
@@ -3605,12 +3605,12 @@ export default async function CoursesPage() {
                             >
                               {item.method}
                             </span>
-                            <span className="font-mono text-xs font-bold text-slate-900">
+                            <span className="font-mono text-xs font-bold text-[#0A1A4A]">
                               {item.path}
                             </span>
                           </div>
-                          <p className="text-xs font-bold text-slate-800">{item.title}</p>
-                          <p className="font-sans text-xs text-slate-600">{item.summary}</p>
+                          <p className="text-xs font-bold text-[#0A1A4A]">{item.title}</p>
+                          <p className="font-sans text-xs text-[#0A1A4A]/70">{item.summary}</p>
                         </div>
 
                         <div className="flex items-center gap-2">
@@ -3628,13 +3628,13 @@ export default async function CoursesPage() {
 
                       {/* Metadata Badges */}
                       <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
-                        <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                        <div className="rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1 text-[#0A1A4A]/80">
                           Permission: <strong className="text-[#0056FF]">{item.permission}</strong>
                         </div>
-                        <div className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-slate-700">
+                        <div className="rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1 text-[#0A1A4A]/80">
                           Scope Header:{' '}
                           <strong
-                            className={item.scopeHeader ? 'text-[#0056FF]' : 'text-slate-400'}
+                            className={item.scopeHeader ? 'text-[#0056FF]' : 'text-[#2277FF]'}
                           >
                             {item.scopeHeader ? 'X-Branch-Id Required' : 'None'}
                           </strong>
@@ -3643,28 +3643,28 @@ export default async function CoursesPage() {
 
                       {/* Live Test Output Display */}
                       {liveRes && (
-                        <div className="space-y-1.5 rounded-xl border border-slate-200/80 bg-slate-50/80 p-3 font-mono text-xs shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
+                        <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-mono text-xs shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
                           <div className="flex items-center justify-between">
                             <span
                               className={
                                 liveRes.status === 200
                                   ? 'font-bold text-[#0056FF]'
-                                  : 'font-bold text-[#000B26]'
+                                  : 'font-bold text-[#0A1A4A]'
                               }
                             >
                               Live Response: HTTP {liveRes.status}
                             </span>
-                            <span className="text-slate-500">{liveRes.latency}ms</span>
+                            <span className="text-[#2277FF]">{liveRes.latency}ms</span>
                           </div>
-                          <pre className="max-h-32 overflow-y-auto rounded-lg border border-slate-200 bg-white p-2 text-[11px] text-slate-800">
+                          <pre className="max-h-32 overflow-y-auto rounded-lg border border-[#CAD3F5] bg-white p-2 text-[11px] text-[#0A1A4A]">
                             {JSON.stringify(liveRes.body, null, 2)}
                           </pre>
                         </div>
                       )}
 
                       {/* Code Snippet Card */}
-                      <div className="overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
-                        <div className="flex items-center justify-between border-b border-slate-200/80 bg-slate-100/80 px-3.5 py-2 font-mono text-xs">
+                      <div className="overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8)]">
+                        <div className="flex items-center justify-between border-b border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 font-mono text-xs">
                           <div className="flex items-center gap-1.5">
                             <GeometricButton
                               size="sm"
@@ -3700,7 +3700,7 @@ export default async function CoursesPage() {
                               copiedId === item.id ? (
                                 <Check className="size-3 text-[#0056FF]" />
                               ) : (
-                                <Copy className="size-3 text-slate-600" />
+                                <Copy className="size-3 text-[#0A1A4A]/70" />
                               )
                             }
                           >
@@ -3708,7 +3708,7 @@ export default async function CoursesPage() {
                           </GeometricButton>
                         </div>
 
-                        <pre className="max-h-64 overflow-x-auto bg-white p-3.5 font-mono text-xs leading-relaxed text-slate-800">
+                        <pre className="max-h-64 overflow-x-auto bg-white p-3.5 font-mono text-xs leading-relaxed text-[#0A1A4A]">
                           <code>{generateSnippet(item, codeType)}</code>
                         </pre>
                       </div>
@@ -3721,14 +3721,14 @@ export default async function CoursesPage() {
             {/* Section 6: Change Logs & Real-Time Releases (Placed at Bottom of Page - No Table) */}
             <section
               id="changelogs"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200 pt-8"
+              className="scroll-mt-24 space-y-4 border-t border-[#CAD3F5] pt-8"
             >
               <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
                 <div>
-                  <h2 className="text-base font-bold tracking-tight text-slate-950">
+                  <h2 className="text-base font-bold tracking-tight text-[#0A1A4A]">
                     Change Logs & Checkpoints
                   </h2>
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 text-xs text-[#2277FF]">
                     Live repository release status, deployment checkpoints, and version ledger.
                   </p>
                 </div>
@@ -3738,14 +3738,14 @@ export default async function CoursesPage() {
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
                     branch: main
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 font-mono text-[11px] font-bold text-slate-700">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 font-mono text-[11px] font-bold text-[#0A1A4A]/80">
                     checkpoint: v{CHANGE_LOGS[0]?.version || '0.2.7'}
                   </span>
                   <a
                     href="https://github.com/shiliaiwei/SNP-SMS"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center rounded-full border border-slate-200/90 bg-[#F8FAFC] px-3 py-1 font-mono text-[11px] font-bold text-white transition-colors hover:bg-[#0056FF]"
+                    className="inline-flex items-center rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 font-mono text-[11px] font-bold text-white transition-colors hover:bg-[#0056FF]"
                   >
                     GitHub Status [PASSED]
                   </a>
@@ -3757,7 +3757,7 @@ export default async function CoursesPage() {
                 {(expandedChangelog ? CHANGE_LOGS : CHANGE_LOGS.slice(0, 3)).map((log) => (
                   <div
                     key={log.version + (log.commitHash || '')}
-                    className="flex flex-col justify-between gap-2 rounded-xl border border-slate-200/90 bg-white p-3.5 transition-all duration-150 hover:border-[#0056FF]/40 hover:bg-[#F8FAFC] sm:flex-row sm:items-center"
+                    className="flex flex-col justify-between gap-2 rounded-xl border border-[#CAD3F5] bg-white p-3.5 transition-all duration-150 hover:border-[#0056FF] hover:bg-[#EFF5FF] sm:flex-row sm:items-center"
                   >
                     <div className="flex flex-wrap items-center gap-2.5">
                       {/* Version Badge */}
@@ -3767,19 +3767,19 @@ export default async function CoursesPage() {
 
                       {/* Commit Hash Badge */}
                       {log.commitHash && (
-                        <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-slate-700">
+                        <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#0A1A4A]/80">
                           {log.commitHash}
                         </span>
                       )}
 
                       {/* Concise Summary (Short & Descriptionless) */}
-                      <span className="font-sans text-xs font-semibold text-slate-800">
+                      <span className="font-sans text-xs font-semibold text-[#0A1A4A]">
                         {log.description}
                       </span>
                     </div>
 
                     {/* Date Badge */}
-                    <span className="shrink-0 font-mono text-[11px] text-slate-400">
+                    <span className="shrink-0 font-mono text-[11px] text-[#2277FF]">
                       {log.date}
                     </span>
                   </div>
@@ -3803,45 +3803,45 @@ export default async function CoursesPage() {
             {/* SECTION 8: Privacy Policy */}
             <section
               id="privacy-policy"
-              className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.02)]"
+              className="scroll-mt-24 space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.02)]"
             >
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
                   LEGAL & SECURITY
                 </span>
-                <span className="font-mono text-xs text-slate-400">Updated: 30.10.2026</span>
+                <span className="font-mono text-xs text-[#2277FF]">Updated: 30.10.2026</span>
               </div>
-              <h2 className="text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                 Privacy & Data Protection Policy
               </h2>
-              <p className="text-sm leading-relaxed text-slate-600">
+              <p className="text-sm leading-relaxed text-[#0A1A4A]/70">
                 The SNP-SMS platform implements strict data privacy, multi-tenant isolation, and
                 zero-trust security controls. All access to student lifecycles, staff profiles, and
                 academic records adheres to international data privacy standards and Cambodian
                 national digital education regulations.
               </p>
               <div className="grid gap-3 pt-2 sm:grid-cols-3">
-                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
-                  <div className="font-sans text-xs font-bold text-slate-900">Tenant Isolation</div>
-                  <p className="mt-1 font-sans text-xs text-slate-500">
+                <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+                  <div className="font-sans text-xs font-bold text-[#0A1A4A]">Tenant Isolation</div>
+                  <p className="mt-1 font-sans text-xs text-[#2277FF]">
                     Queries and mutations strictly enforce school and branch scoping server-side.
                     Zero cross-tenant data leakage.
                   </p>
                 </div>
-                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
-                  <div className="font-sans text-xs font-bold text-slate-900">
+                <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+                  <div className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Cryptographic Hygiene
                   </div>
-                  <p className="mt-1 font-sans text-xs text-slate-500">
+                  <p className="mt-1 font-sans text-xs text-[#2277FF]">
                     Credentials, tokens, and webhooks verify via constant-time checks. Passwords use
                     argon2 hashing.
                   </p>
                 </div>
-                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
-                  <div className="font-sans text-xs font-bold text-slate-900">
+                <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+                  <div className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Audit & Non-Repudiation
                   </div>
-                  <p className="mt-1 font-sans text-xs text-slate-500">
+                  <p className="mt-1 font-sans text-xs text-[#2277FF]">
                     Every state mutation generates an immutable cryptographic ledger entry with
                     caller identity and timestamp.
                   </p>
@@ -3852,46 +3852,46 @@ export default async function CoursesPage() {
             {/* SECTION 9: Terms of Service */}
             <section
               id="terms-of-service"
-              className="scroll-mt-24 space-y-4 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.02)]"
+              className="scroll-mt-24 space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-6 shadow-[0_1px_4px_rgba(0,0,0,0.02)]"
             >
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center rounded-md border border-slate-200 bg-slate-100 px-2.5 py-0.5 font-mono text-xs font-bold text-slate-700">
+                <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0A1A4A]/80">
                   PLATFORM AGREEMENT
                 </span>
-                <span className="font-mono text-xs text-slate-400">Effective: 30.10.2026</span>
+                <span className="font-mono text-xs text-[#2277FF]">Effective: 30.10.2026</span>
               </div>
-              <h2 className="text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+              <h2 className="text-xl font-bold tracking-tight text-[#0A1A4A] sm:text-2xl">
                 Terms of Service & API Usage
               </h2>
-              <p className="text-sm leading-relaxed text-slate-600">
+              <p className="text-sm leading-relaxed text-[#0A1A4A]/70">
                 By accessing the SNPI-SMS APIs, design library, or developer documentation portal,
                 organizations and authorized integrators agree to comply with rate limits,
                 role-based scope boundaries, and responsible disclosure obligations.
               </p>
               <div className="grid gap-3 pt-2 sm:grid-cols-3">
-                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
-                  <div className="font-sans text-xs font-bold text-slate-900">
+                <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+                  <div className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Authorized Integrations
                   </div>
-                  <p className="mt-1 font-sans text-xs text-slate-500">
+                  <p className="mt-1 font-sans text-xs text-[#2277FF]">
                     API calls require active JWT Bearer tokens or dedicated service account keys
                     with least-privilege RBAC.
                   </p>
                 </div>
-                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
-                  <div className="font-sans text-xs font-bold text-slate-900">
+                <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+                  <div className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Rate Limits & SLAs
                   </div>
-                  <p className="mt-1 font-sans text-xs text-slate-500">
+                  <p className="mt-1 font-sans text-xs text-[#2277FF]">
                     Default 2,000 requests per 15-minute window per IP. Burst mutation guards apply
                     on financial accounting endpoints.
                   </p>
                 </div>
-                <div className="rounded-xl border border-slate-200/80 bg-slate-50/60 p-3.5">
-                  <div className="font-sans text-xs font-bold text-slate-900">
+                <div className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5">
+                  <div className="font-sans text-xs font-bold text-[#0A1A4A]">
                     Service Reliability
                   </div>
-                  <p className="mt-1 font-sans text-xs text-slate-500">
+                  <p className="mt-1 font-sans text-xs text-[#2277FF]">
                     Target 99.95% uptime with automated MongoDB replica set failover and serverless
                     edge distribution.
                   </p>
@@ -3900,33 +3900,33 @@ export default async function CoursesPage() {
             </section>
 
             {/* Nextra Pagination Navigation Footer */}
-            <div className="mt-12 border-t border-slate-200/80 pt-6">
+            <div className="mt-12 border-t border-[#CAD3F5] pt-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Link
                   href="/document/design-system"
-                  className="group flex flex-col rounded-lg border border-slate-200 bg-white p-4 transition-all hover:border-[#0056FF] hover:bg-slate-50/50"
+                  className="group flex flex-col rounded-lg border border-[#CAD3F5] bg-white p-4 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF]"
                 >
-                  <span className="font-mono text-[10.5px] tracking-wider text-slate-400 uppercase">
+                  <span className="font-mono text-[10.5px] tracking-wider text-[#2277FF] uppercase">
                     Previous
                   </span>
-                  <span className="font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  <span className="font-sans text-sm font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
                     ← UI Component Library
                   </span>
                 </Link>
                 <button
                   type="button"
                   onClick={() => scrollToDocSection('endpoints-available')}
-                  className="group flex cursor-pointer flex-col rounded-lg border border-slate-200 bg-white p-4 text-right transition-all hover:border-[#0056FF] hover:bg-slate-50/50"
+                  className="group flex cursor-pointer flex-col rounded-lg border border-[#CAD3F5] bg-white p-4 text-right transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF]"
                 >
-                  <span className="font-mono text-[10.5px] tracking-wider text-slate-400 uppercase">
+                  <span className="font-mono text-[10.5px] tracking-wider text-[#2277FF] uppercase">
                     Next
                   </span>
-                  <span className="font-sans text-sm font-bold text-slate-900 transition-colors group-hover:text-[#0056FF]">
+                  <span className="font-sans text-sm font-bold text-[#0A1A4A] transition-colors group-hover:text-[#0056FF]">
                     Endpoints Reference →
                   </span>
                 </button>
               </div>
-              <div className="mt-6 flex flex-col items-center justify-between gap-2 pb-8 font-sans text-xs text-slate-400 sm:flex-row">
+              <div className="mt-6 flex flex-col items-center justify-between gap-2 pb-8 font-sans text-xs text-[#2277FF] sm:flex-row">
                 <span>Last updated on October 31, 2026</span>
                 <span>
                   Simple, powerful and flexible markdown-powered docs site. Built with Next.js.
@@ -3934,54 +3934,6 @@ export default async function CoursesPage() {
               </div>
             </div>
           </main>
-
-          {/* COLUMN 3: Nextra Right Sidebar Table of Contents ("On this page") */}
-          <aside className="sticky top-20 hidden max-h-[calc(100vh-6rem)] w-56 shrink-0 [scrollbar-width:thin] overflow-y-auto pl-4 xl:block 2xl:w-64">
-            <div className="space-y-4">
-              <div className="font-mono text-[10.5px] font-bold tracking-wider text-slate-400 uppercase">
-                On this page
-              </div>
-              <nav className="space-y-1 border-l-2 border-slate-200/90 pl-3">
-                {DOC_TOC_HEADINGS.map((heading) => {
-                  const isActive = activeDocSection === heading.id;
-                  return (
-                    <button
-                      key={heading.id}
-                      type="button"
-                      onClick={() => scrollToDocSection(heading.id)}
-                      className={cn(
-                        'block w-full cursor-pointer truncate py-1 text-left text-xs transition-colors',
-                        heading.level === 2 ? 'pl-2.5 text-[11px]' : 'font-medium',
-                        isActive
-                          ? '-ml-[14px] border-l-2 border-[#0056FF] pl-[12px] font-bold text-[#0056FF]'
-                          : 'text-slate-500 hover:text-slate-900',
-                      )}
-                    >
-                      {heading.title}
-                    </button>
-                  );
-                })}
-              </nav>
-
-              <div className="space-y-2 border-t border-slate-200/80 pt-4 text-xs text-slate-500">
-                <a
-                  href="#open-api-head"
-                  className="flex items-center gap-1.5 transition-colors hover:text-[#0056FF]"
-                >
-                  <ExternalLink className="size-3" />
-                  <span>Edit this page on GitHub</span>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="flex cursor-pointer items-center gap-1.5 transition-colors hover:text-[#0056FF]"
-                >
-                  <span>Back to top</span>
-                  <span>↑</span>
-                </button>
-              </div>
-            </div>
-          </aside>
         </div>
       </div>
     </div>

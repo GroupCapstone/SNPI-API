@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `38590fa`
+
+- Record frontsite school integration studio and zero public crud policy
+
 ### Version 0.2.11 (31.10.2026) - `5f5c018`
 
 - Secure public read-only syndication and add frontsite school data integration studio
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `555f4c0`
 
 - Sync real-time changelog for readme rewrite
-
-### Version 0.2.11 (31.10.2026) - `0d6b9ef`
-
-- Rewrite readme to standard enterprise format with zero links and short summary
 
