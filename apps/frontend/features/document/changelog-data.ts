@@ -9,6 +9,18 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "01.11.2026",
+    "commitHash": "e9af90d",
+    "description": "Add standard security vulnerability remediation log to README"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
+    "commitHash": "e70bf64",
+    "description": "Sync security documentation report commit"
+  },
+  {
+    "version": "0.2.13",
+    "date": "01.11.2026",
     "commitHash": "4a46a37",
     "description": "Record security audit and remediation report history"
   },
@@ -143,17 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "1ddce36",
     "description": "Replace dark terminal packet monitor with light modern ui and record rule"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "7efd4c6",
-    "description": "Sync real-time commit history"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "0110d62",
-    "description": "Document display-only open-api rules and format open-api-view"
   }
 ];
