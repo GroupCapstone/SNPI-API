@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.13",
     "date": "31.10.2026",
+    "commitHash": "de98cab",
+    "description": "Optimize mobile hero view, update active menu style, and sync v0.2.13 changelog"
+  },
+  {
+    "version": "0.2.13",
+    "date": "31.10.2026",
     "commitHash": "68d77ba",
     "description": "Standalone mobile hero with big typography and concise hook description"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "39f2c5c",
     "description": "Eradicate all CSS gradients, black, and gray from component library and enforce pure flat solid brand tokens"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "70a42c7",
-    "description": "Sync real-time changelog for open-api redesign"
   }
 ];

@@ -534,9 +534,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 </h1>
 
                 {/* Less Description: Concise, punchy, high-impact */}
-                <p className="max-w-2xl text-sm leading-relaxed font-medium text-[#0A1A4A]/80 sm:text-base sm:leading-relaxed">
-                  Direct, read-only access to live campus announcements, course rosters, and
-                  tamper-proof diploma verification — free, open, and zero API keys needed.
+                <p className="max-w-xl text-sm font-medium leading-relaxed text-[#0A1A4A]/75 sm:text-base">
+                  Free public REST APIs and live feeds for campus announcements, course schedules, and certificate verification.
                 </p>
 
                 {/* 3 Quick Value Chips */}
@@ -645,9 +644,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                  Live institutional announcements, urgent emergency alerts, and academic
-                  milestones.
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Live announcements and emergency alerts.
                 </p>
 
                 <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
@@ -687,9 +685,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                  Query active courses, schedules, instructor details, and real-time available
-                  seats.
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Active course schedules and live seat quotas.
                 </p>
 
                 <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
@@ -727,9 +724,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                  Instantly verify student degrees with tamper-proof ADR-0006 cryptographic ledger
-                  proofs.
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Tamper-proof student diploma validation.
                 </p>
 
                 <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
@@ -771,9 +767,8 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                <p className="mt-2 text-xs leading-normal text-[#0A1A4A]/75">
-                  Receive instant push events for announcements and seat reservations without
-                  polling.
+                <p className="mt-1 text-xs text-[#0A1A4A]/70 truncate">
+                  Instant push events with zero polling.
                 </p>
 
                 <div className="mt-2.5 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2">
