@@ -87,28 +87,28 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
       },
       black: {
         button: isActive
-          ? 'border-0 bg-black text-white shadow-none'
-          : 'border-0 bg-slate-900 text-white hover:bg-black',
+          ? 'border-0 bg-[#0056FF] text-white shadow-none'
+          : 'border-0 bg-[#0056FF]/10 text-[#0056FF] hover:bg-[#0056FF]/20',
       },
       'soft-lavender': {
         button: isActive
-          ? 'border-0 bg-[#CAD3F5] text-[#000B26] shadow-none'
-          : 'border-0 bg-[#E3E7FC] text-[#000B26] hover:bg-[#D5DBF9]',
+          ? 'border-0 bg-[#CAD3F5] text-[#0A1A4A] shadow-none'
+          : 'border-0 bg-[#E3E7FC] text-[#0A1A4A] hover:bg-[#D5DBF9]',
       },
       white: {
         button: isActive
-          ? 'border-0 bg-slate-900 text-white shadow-none'
-          : 'border-0 bg-slate-100 text-slate-800 hover:bg-slate-200',
+          ? 'border-0 bg-[#0056FF] text-white shadow-none'
+          : 'border border-slate-200 bg-white text-slate-800 hover:bg-slate-50',
       },
       futurewave: {
         button: isActive
-          ? 'border-0 bg-gradient-to-r from-[#2277FF] via-[#5C93FF] to-[#AEC2FF] text-white shadow-none'
-          : 'border-0 bg-gradient-to-r from-[#2277FF]/15 to-[#AEC2FF]/25 text-[#000B26] hover:opacity-90',
+          ? 'border-0 bg-[#2277FF] text-white shadow-none'
+          : 'border-0 bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
       },
       midnight: {
         button: isActive
-          ? 'border-0 bg-gradient-to-r from-[#000B26] via-[#002D8A] to-[#0056FF] text-white shadow-none'
-          : 'border-0 bg-gradient-to-r from-[#000B26] to-[#002D8A] text-white hover:to-[#0056FF]',
+          ? 'border-0 bg-[#0056FF] text-white shadow-none'
+          : 'border-0 bg-[#E3E7FC] text-[#0056FF] hover:bg-[#CAD3F5]',
       },
       // Palette-preserving aliases for legacy callers
       green: {
@@ -118,28 +118,28 @@ export const GeometricButton = React.forwardRef<HTMLButtonElement, GeometricButt
       },
       purple: {
         button: isActive
-          ? 'border-0 bg-[#CAD3F5] text-[#000B26] shadow-none'
-          : 'border-0 bg-[#E3E7FC] text-[#000B26] hover:bg-[#D5DBF9]',
+          ? 'border-0 bg-[#CAD3F5] text-[#0A1A4A] shadow-none'
+          : 'border-0 bg-[#E3E7FC] text-[#0A1A4A] hover:bg-[#D5DBF9]',
       },
       orange: {
         button: isActive
-          ? 'border-0 bg-black text-white shadow-none'
-          : 'border-0 bg-slate-900 text-white hover:bg-black',
+          ? 'border-0 bg-[#2277FF] text-white shadow-none'
+          : 'border-0 bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
       },
       navy: {
         button: isActive
-          ? 'border-0 bg-gradient-to-r from-[#000B26] to-[#0056FF] text-white shadow-none'
-          : 'border-0 bg-[#000B26] text-white hover:bg-black',
+          ? 'border-0 bg-[#0056FF] text-white shadow-none'
+          : 'border-0 bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
       },
       cyan: {
         button: isActive
-          ? 'border-0 bg-gradient-to-r from-[#2277FF] to-[#AEC2FF] text-white shadow-none'
+          ? 'border-0 bg-[#2277FF] text-white shadow-none'
           : 'border-0 bg-[#2277FF]/15 text-[#0056FF]',
       },
       outline: {
         button: isActive
-          ? 'border-0 bg-slate-900 text-white shadow-none'
-          : 'border-0 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-950',
+          ? 'border-0 bg-[#0056FF] text-white shadow-none'
+          : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
       },
       ghost: {
         button: isActive

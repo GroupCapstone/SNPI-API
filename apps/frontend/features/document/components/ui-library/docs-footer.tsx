@@ -143,26 +143,21 @@ export function DocsFooter({ className }: DocsFooterProps) {
   ];
 
   return (
-    <footer className={cn('relative w-full pt-16 select-none sm:pt-24', className)}>
-      {/* Top Atmospheric Radiant Blue Horizon Glow */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-40 overflow-hidden">
-        <div className="absolute top-0 left-1/2 h-56 w-[130%] max-w-[1600px] -translate-x-1/2 rounded-[100%] bg-gradient-to-t from-[#0056FF]/25 via-[#2277FF]/15 to-transparent blur-3xl" />
-      </div>
-
-      {/* Main Curved Top Footer Capsule Container (Wiz-Style Architectural Layout) */}
-      <div className="relative mx-auto w-full max-w-[1560px] overflow-hidden rounded-t-[36px] border-x border-t border-slate-700/50 bg-[#101423] px-6 pt-12 pb-8 shadow-2xl sm:rounded-t-[44px] sm:px-10 md:rounded-t-[48px] lg:px-14">
+    <footer className={cn('relative w-full pt-12 select-none sm:pt-16', className)}>
+      {/* Main Curved Top Footer Capsule Container */}
+      <div className="relative mx-auto w-full max-w-[1560px] overflow-hidden rounded-t-[36px] border-x border-t border-slate-200/90 bg-[#F8FAFC] px-6 pt-12 pb-8 shadow-xs sm:rounded-t-[44px] sm:px-10 md:rounded-t-[48px] lg:px-14">
         {/* Upper Navigation Section */}
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 lg:gap-12">
           {/* Brand Sparkle Mark ✦ */}
           <div className="md:col-span-1 lg:col-span-1">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-white/5 ring-1 ring-white/10 transition-transform hover:scale-105">
-              <StarMarkIcon className="size-6 text-white" />
+            <div className="flex size-10 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] transition-transform hover:scale-105">
+              <StarMarkIcon className="size-6 text-[#0056FF]" />
             </div>
           </div>
 
           {/* Column 1: PLATFORM */}
           <div className="space-y-4 md:col-span-3 lg:col-span-3">
-            <h4 className="font-mono text-xs font-bold tracking-widest text-slate-400 uppercase">
+            <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
               Platform
             </h4>
             <ul className="space-y-2.5">
@@ -170,7 +165,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="font-sans text-xs text-slate-300 transition-colors hover:text-white"
+                    className="font-sans text-xs text-slate-600 transition-colors hover:text-[#0056FF]"
                   >
                     {link.label}
                   </Link>
@@ -181,7 +176,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
 
           {/* Column 2: LEARN */}
           <div className="space-y-4 md:col-span-3 lg:col-span-3">
-            <h4 className="font-mono text-xs font-bold tracking-widest text-slate-400 uppercase">
+            <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
               Learn
             </h4>
             <ul className="space-y-2.5">
@@ -189,7 +184,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="font-sans text-xs text-slate-300 transition-colors hover:text-white"
+                    className="font-sans text-xs text-slate-600 transition-colors hover:text-[#0056FF]"
                   >
                     {link.label}
                   </Link>
@@ -200,7 +195,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
 
           {/* Column 3: COMPANY */}
           <div className="space-y-4 md:col-span-3 lg:col-span-3">
-            <h4 className="font-mono text-xs font-bold tracking-widest text-slate-400 uppercase">
+            <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
               Company
             </h4>
             <ul className="space-y-2.5">
@@ -208,7 +203,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="font-sans text-xs text-slate-300 transition-colors hover:text-white"
+                    className="font-sans text-xs text-slate-600 transition-colors hover:text-[#0056FF]"
                   >
                     {link.label}
                   </Link>
@@ -224,20 +219,20 @@ export function DocsFooter({ className }: DocsFooterProps) {
               <button
                 type="button"
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700/60 bg-white/5 px-3 py-1.5 font-sans text-xs font-semibold text-slate-200 transition-colors hover:border-slate-600 hover:bg-white/10 hover:text-white"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-sans text-xs font-semibold text-slate-800 transition-colors hover:border-[#0056FF] hover:text-[#0056FF]"
               >
-                <GlobeIcon className="size-3.5 text-slate-400" />
+                <GlobeIcon className="size-3.5 text-slate-500" />
                 <span>{selectedLang === 'en' ? 'English (US)' : 'Khmer (KH)'}</span>
                 <ChevronDownIcon
                   className={cn(
-                    'size-3.5 text-slate-400 transition-transform duration-150',
+                    'size-3.5 text-slate-500 transition-transform duration-150',
                     langDropdownOpen && 'rotate-180',
                   )}
                 />
               </button>
 
               {langDropdownOpen && (
-                <div className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-xl border border-slate-700 bg-[#161B2E] p-1 shadow-2xl">
+                <div className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
                   <button
                     type="button"
                     onClick={() => {
@@ -248,7 +243,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
                       'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left font-sans text-xs font-medium transition-colors',
                       selectedLang === 'en'
                         ? 'bg-[#0056FF] text-white'
-                        : 'text-slate-300 hover:bg-white/5 hover:text-white',
+                        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900',
                     )}
                   >
                     <span>English (US)</span>
@@ -264,7 +259,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
                       'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-left font-sans text-xs font-medium transition-colors',
                       selectedLang === 'kh'
                         ? 'bg-[#0056FF] text-white'
-                        : 'text-slate-300 hover:bg-white/5 hover:text-white',
+                        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900',
                     )}
                   >
                     <span>Khmer (KH)</span>
@@ -275,13 +270,13 @@ export function DocsFooter({ className }: DocsFooterProps) {
             </div>
 
             {/* Social Icons Row: X, LinkedIn, Bluesky, RSS */}
-            <div className="flex items-center gap-4 text-slate-400">
+            <div className="flex items-center gap-4 text-slate-500">
               <a
                 href="https://x.com"
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="X (Twitter)"
-                className="transition-colors hover:text-white"
+                className="transition-colors hover:text-[#0056FF]"
               >
                 <XIcon className="size-4" />
               </a>
@@ -290,7 +285,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="LinkedIn"
-                className="transition-colors hover:text-white"
+                className="transition-colors hover:text-[#0056FF]"
               >
                 <LinkedInIcon className="size-4" />
               </a>
@@ -299,14 +294,14 @@ export function DocsFooter({ className }: DocsFooterProps) {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="Bluesky"
-                className="transition-colors hover:text-white"
+                className="transition-colors hover:text-[#0056FF]"
               >
                 <BlueskyIcon className="size-4" />
               </a>
               <Link
                 href="/document/changelog.rss"
                 aria-label="RSS Feed"
-                className="transition-colors hover:text-white"
+                className="transition-colors hover:text-[#0056FF]"
               >
                 <RssIcon className="size-4" />
               </Link>
@@ -315,14 +310,14 @@ export function DocsFooter({ className }: DocsFooterProps) {
         </div>
 
         {/* Thin Horizontal Divider Line */}
-        <div className="my-8 w-full border-t border-slate-800/80" />
+        <div className="my-8 w-full border-t border-slate-200" />
 
         {/* Bottom Bar: Copyright Left | Legal Links Right */}
-        <div className="flex flex-col gap-4 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2 font-sans font-medium">
             <span>&copy; 2026 SNPI-SMS, Inc.</span>
-            <span className="text-slate-600">&middot;</span>
-            <span className="inline-flex items-center rounded-md border border-slate-700 bg-white/5 px-2 py-0.5 font-mono text-[10px] font-bold text-[#AEC2FF]">
+            <span className="text-slate-400">&middot;</span>
+            <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
               v{currentVersion}
             </span>
           </div>
@@ -332,7 +327,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
               <Link
                 key={link.label}
                 href={link.href}
-                className="transition-colors hover:text-slate-200"
+                className="transition-colors hover:text-[#0056FF]"
               >
                 {link.label}
               </Link>

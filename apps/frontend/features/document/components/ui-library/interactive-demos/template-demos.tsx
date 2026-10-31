@@ -86,8 +86,8 @@ export function RetroGridDemo() {
           backgroundSize: '36px 36px',
         }}
       />
-      {/* Horizon Glow */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0056FF]/15 via-transparent to-transparent" />
+      {/* Brand Accent Bar */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#0056FF]" />
 
       <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/95 p-4 text-center text-[#09172B] shadow-md backdrop-blur-md">
         <h4 className="font-sans text-sm font-bold text-[#09172B]">Retro Cyber Grid</h4>
@@ -194,16 +194,7 @@ export function TextShimmerDemo() {
   return (
     <div className="flex w-full max-w-md flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-xs">
       <div className="relative inline-block overflow-hidden font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-        <span
-          className={cn(
-            'animate-shimmer inline-block bg-gradient-to-r from-slate-900 via-[#0056FF] to-slate-900 bg-[length:200%_auto] bg-clip-text text-transparent',
-            speed === 'fast' && 'animate-shimmer-fast',
-          )}
-          style={{
-            animation:
-              speed === 'fast' ? 'shimmer 1.5s linear infinite' : 'shimmer 3s linear infinite',
-          }}
-        >
+        <span className="inline-block text-[#0056FF]">
           SNPI Autonomous Campus
         </span>
       </div>
@@ -426,8 +417,8 @@ export function PaymentCardDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-      {/* Holographic Card Preview */}
-      <div className="relative overflow-hidden rounded-2xl border border-blue-900 bg-gradient-to-tr from-[#000B26] via-[#0056FF] to-blue-900 p-5 text-white shadow-xl">
+      {/* Brand Tuition Card Preview */}
+      <div className="relative overflow-hidden rounded-2xl border border-[#0056FF] bg-[#0056FF] p-5 text-white shadow-xs">
         <div className="flex items-center justify-between">
           <span className="font-mono text-xs font-bold tracking-widest uppercase">
             SNPI TUITION CARD

@@ -332,7 +332,7 @@ export function SearchableDropdown({
           className={cn(
             'absolute left-0 z-50 mt-1.5 w-full min-w-[280px] overflow-hidden rounded-[4px] border shadow-xl transition-all duration-150',
             isDark
-              ? 'border-slate-800 bg-[#000B26] text-slate-100'
+              ? 'border-slate-200/90 bg-white text-slate-900'
               : 'border-slate-200/90 bg-white text-slate-900',
           )}
         >

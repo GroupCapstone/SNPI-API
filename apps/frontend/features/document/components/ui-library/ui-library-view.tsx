@@ -526,7 +526,7 @@ export function UiLibraryView() {
           <main className="min-w-0 flex-1 space-y-12">
             {/* HERO HEAD TITLE: Specific to UI Library (Monumental Big As Footer Style) */}
             <section id="ui-library-head" className="scroll-mt-24 space-y-4">
-              <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-gradient-to-b from-white via-slate-50/50 to-[#E3E7FC]/30 p-6 shadow-xs sm:p-10">
+              <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-10">
                 <div className="relative z-10 flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
                   <div>
                     <h1 className="font-sans text-5xl font-black tracking-tight text-slate-950 sm:text-6xl md:text-7xl lg:text-8xl">
@@ -836,22 +836,22 @@ export function UiLibraryView() {
                                 </div>
 
                                 {/* Complete Monospace Prompt Box */}
-                                <div className="relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0B0F19] p-5 text-slate-100 shadow-md">
-                                  <div className="mb-3 flex items-center justify-between border-b border-slate-800 pb-3">
+                                <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-5 text-slate-900 shadow-2xs">
+                                  <div className="mb-3 flex items-center justify-between border-b border-slate-200 pb-3">
                                     <div className="flex items-center gap-2">
-                                      <span className="rounded-[3px] bg-[#0056FF]/20 px-2 py-0.5 font-mono text-[10px] font-bold text-[#CAD3F5]">
+                                      <span className="rounded-[3px] bg-[#0056FF]/10 px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                                         SPEC
                                       </span>
-                                      <span className="font-mono text-[11px] font-semibold text-slate-400">
+                                      <span className="font-mono text-[11px] font-semibold text-slate-600">
                                         {comp.id}-ai-agent-mvp-prompt.md
                                       </span>
                                     </div>
-                                    <span className="rounded-md border border-slate-700 bg-slate-800/80 px-2.5 py-0.5 font-mono text-[10px] text-cyan-400">
+                                    <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
                                       Universal AI Prompt
                                     </span>
                                   </div>
 
-                                  <pre className="max-h-96 [scrollbar-width:thin] overflow-auto font-mono text-xs leading-relaxed text-slate-200 select-all">
+                                  <pre className="max-h-96 [scrollbar-width:thin] overflow-auto font-mono text-xs leading-relaxed text-slate-800 select-all">
                                     <code>{generateAiAgentPrompt(comp)}</code>
                                   </pre>
                                 </div>
@@ -1665,7 +1665,7 @@ function renderFeedComponentDemo(
                 onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
                 className={cn(
                   'relative mx-auto w-[94%] cursor-pointer rounded-2xl p-6 transition-all duration-300 ease-out',
-                  'border border-blue-400/30 bg-gradient-to-br from-[#0056FF] via-[#0047D4] to-[#0035A0]',
+                  'border border-[#0056FF] bg-[#0056FF]',
                   'text-white shadow-xl',
                   state.cardSlidOut ? '-translate-y-12 scale-[1.02]' : 'translate-y-0',
                 )}

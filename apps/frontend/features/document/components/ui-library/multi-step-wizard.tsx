@@ -234,28 +234,20 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
   return (
     <div
       className={cn(
-        'relative w-full overflow-hidden transition-colors duration-150 max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
-        isDark
-          ? 'border-slate-800 bg-[#000B26] text-slate-100'
-          : 'border-slate-200/90 bg-white text-slate-900',
+        'relative w-full overflow-hidden border-slate-200/90 bg-white text-slate-900 transition-colors duration-150 max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
         className,
       )}
     >
       {/* ======================================================== */}
-      {/* 02 PROGRESS BAR: 2px gradient fill across top of form     */}
+      {/* 02 PROGRESS BAR: 2px solid Royal Blue fill across top of form */}
       {/* ======================================================== */}
-      <div
-        className={cn(
-          'relative h-[2px] w-full overflow-hidden',
-          isDark ? 'bg-slate-800' : 'bg-slate-100',
-        )}
-      >
+      <div className="relative h-[2px] w-full overflow-hidden bg-slate-100">
         <div
           role="progressbar"
           aria-valuenow={progressPercent}
           aria-valuemin={0}
           aria-valuemax={100}
-          className="h-full bg-gradient-to-r from-[#0056FF] via-[#2563EB] to-[#38BDF8] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="h-full bg-[#0056FF] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ width: `${progressPercent}%` }}
         />
       </div>

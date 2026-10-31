@@ -357,7 +357,7 @@ export function CipherTextDecoder({ theme = 'light', className }: CipherTextDeco
       className={cn(
         'relative w-full overflow-hidden transition-colors duration-150 max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
         isDark
-          ? 'border-slate-800 bg-[#000B26] text-slate-100'
+          ? 'border-slate-200/90 bg-white text-slate-900'
           : 'border-slate-200/90 bg-white text-slate-900',
         className,
       )}
