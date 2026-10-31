@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `5bb52b1`
+
+- Apply automated prettier code formatting across brand and ui-library components
+
 ### Version 0.2.11 (31.10.2026) - `6f2f41c`
 
 - Add brand hub, standards, and resources portals with strict royal blue palette, jump nav, and zero outside colors
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.10 (31.10.2026) - `4e1fe42`
 
 - V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes
-
-### Version 0.2.9 (31.10.2026) - `0963776`
-
-- V0.2.9 release checkpoint with navigation redesign and CI quality gate fixes
 

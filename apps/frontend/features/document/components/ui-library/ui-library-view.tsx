@@ -606,31 +606,14 @@ export function UiLibraryView() {
             </div>
 
             {/* COMPONENT DEMOS ARRANGED BY CATEGORY */}
-            <div className="space-y-16">
+            <div className="space-y-10">
               {groupedCategories.map((group) => {
                 return (
                   <div
                     key={group.category}
                     id={group.categoryId}
-                    className="scroll-mt-24 space-y-8"
+                    className="scroll-mt-24 space-y-10"
                   >
-                    {/* Category Header Banner */}
-                    <div className="flex items-center justify-between rounded-2xl border border-slate-200/90 bg-white px-5 py-3 shadow-xs transition-all">
-                      <div className="flex items-center gap-3">
-                        <span className="flex size-7 items-center justify-center rounded-[4px] bg-[#0056FF] font-mono text-xs font-black text-white">
-                          0{group.groupNumber}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-sans text-sm font-black tracking-tight text-slate-950 uppercase sm:text-base">
-                            {group.category}
-                          </h3>
-                          <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                            {group.components.length} Components
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
                     {/* Demos Inside This Category */}
                     <div className="space-y-10">
                       {group.components.map((comp, compIdx) => {

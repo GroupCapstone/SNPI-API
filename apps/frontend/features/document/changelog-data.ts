@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "5bb52b1",
+    "description": "Apply automated prettier code formatting across brand and ui-library components"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "6f2f41c",
     "description": "Add brand hub, standards, and resources portals with strict royal blue palette, jump nav, and zero outside colors"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "4e1fe42",
     "description": "V0.2.10 release checkpoint with Rail TOC skill, button border radius standard, and CI fixes"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "0963776",
-    "description": "V0.2.9 release checkpoint with navigation redesign and CI quality gate fixes"
   }
 ];
