@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "816a753",
+    "description": "Remove sticky category banners, redundant flow labels, enforce light mode, and strip icon background containers"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "d356019",
     "description": "Merge 3-tab cyber navigation menu and apply royal blue active styling"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "cafb0ec",
     "description": "Arrange demos by flow group and synchronize sequential line tracker without rank jumping"
-  },
-  {
-    "version": "0.2.9",
-    "date": "31.10.2026",
-    "commitHash": "f10e1e2",
-    "description": "Apply floating capsule dock nav and purge legacy hanging tabs header"
   }
 ];
