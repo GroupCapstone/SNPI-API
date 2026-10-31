@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `afcf5a8`
+
+- Implement stacked resting deck with hover/tap expansion and brand light day mode
+
 ### Version 0.2.11 (31.10.2026) - `3ed5f95`
 
 - Sync real-time changelog for navigation bar and active menu gradient redesign
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `0bddca0`
 
 - Compile backend typescript output to dist directory for Vercel deployment
-
-### Version 0.2.11 (31.10.2026) - `813330f`
-
-- Record real-time changelog for condensed readme
 

@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "afcf5a8",
+    "description": "Implement stacked resting deck with hover/tap expansion and brand light day mode"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "3ed5f95",
     "description": "Sync real-time changelog for navigation bar and active menu gradient redesign"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "0bddca0",
     "description": "Compile backend typescript output to dist directory for Vercel deployment"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "813330f",
-    "description": "Record real-time changelog for condensed readme"
   }
 ];
