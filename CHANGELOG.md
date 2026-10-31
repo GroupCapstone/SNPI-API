@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.14 (01.11.2026) - `aa64a62` (Developer: **史力爱卫**)
+
+- Bump monorepo version to v0.2.14
+
 ### Version 0.2.14 (01.11.2026) - `acaeca5` (Developer: **史力爱卫**)
 
 - Format scripts and sync changelog for release checkpoint v0.2.14
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (31.10.2026) - `2c262de` (Developer: **史力爱卫**)
 
 - Remove Read Only badge and top context pills from hero and directory
-
-### Version 0.2.14 (31.10.2026) - `ee38ab0` (Developer: **史力爱卫**)
-
-- Remove base url box from standalone hero view
 
