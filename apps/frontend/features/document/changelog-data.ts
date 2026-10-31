@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "02011a6",
+    "description": "Record Hook Sidebar implementation and Rail TOC fixes"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "a50eee9",
     "description": "Implement Hook Sidebar dashed spring rail and fix Rail TOC scroll tracking"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "7d5867c",
     "description": "Align 3-tab cyber armor navigation dock with uppercase labels, code changelog icon, and glowing active underline"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "1bb47eb",
-    "description": "Remove 15 specified components and redesign 10 core components with zero dark mode, bare icons, and rounded-[4px] standard"
   }
 ];

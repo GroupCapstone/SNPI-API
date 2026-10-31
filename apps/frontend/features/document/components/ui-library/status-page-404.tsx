@@ -197,13 +197,13 @@ export function StatusPage404({
     <div
       data-slot="status-page-404"
       className={cn(
-        'relative flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-950',
+        'relative flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-xs',
         className,
       )}
     >
       {/* OPTIONAL INLINE CONTROLS BAR */}
       {showControls && (
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50/70 p-3.5 dark:border-slate-800 dark:bg-slate-900/60">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-[#F8FAFC] p-3.5">
           {/* Mode Switcher Tabs */}
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="mr-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
@@ -226,7 +226,7 @@ export function StatusPage404({
                   'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-sans text-xs font-bold transition-all select-none',
                   activeMode === m.id
                     ? 'bg-[#0056FF] text-white shadow-none'
-                    : 'bg-white text-slate-700 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700',
+                    : 'bg-white text-slate-700 hover:bg-slate-100',
                 )}
               >
                 {m.label}
@@ -247,8 +247,8 @@ export function StatusPage404({
                 className={cn(
                   'cursor-pointer rounded-[4px] border-0 px-2 py-0.5 font-mono text-[11px] font-bold transition-all select-none',
                   activeCode === code
-                    ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-950'
-                    : 'bg-slate-200/80 text-slate-600 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-400',
+                    ? 'bg-[#0056FF] text-white'
+                    : 'bg-slate-200/80 text-slate-700 hover:bg-slate-300',
                 )}
               >
                 {code}
@@ -259,12 +259,12 @@ export function StatusPage404({
       )}
 
       {/* RENDER ACTIVE MODE */}
-      <div className="relative min-h-[460px] w-full">
+      <div className="relative min-h-[460px] w-full bg-white">
         {/* ========================================================= */}
         {/* MODE 1: RADAR SPATIAL EXPLORER (INSPIRED BY USER IMAGE 1) */}
         {/* ========================================================= */}
         {activeMode === 'radar' && (
-          <div className="relative flex flex-col items-center justify-center p-8 text-center sm:p-12">
+          <div className="relative flex flex-col items-center justify-center bg-white p-8 text-center sm:p-12">
             {/* Top Capsule CTA Navigation */}
             <Link
               href={homeHref}
@@ -278,15 +278,7 @@ export function StatusPage404({
             <div className="relative mt-8 flex size-64 items-center justify-center sm:size-72">
               {/* Concentric Radar Rings */}
               <svg className="absolute inset-0 size-full" viewBox="0 0 280 280">
-                <circle
-                  cx="140"
-                  cy="140"
-                  r="130"
-                  fill="none"
-                  stroke="#E3E7FC"
-                  strokeWidth="1.5"
-                  className="dark:stroke-slate-800"
-                />
+                <circle cx="140" cy="140" r="130" fill="none" stroke="#E3E7FC" strokeWidth="1.5" />
                 <circle
                   cx="140"
                   cy="140"
@@ -295,17 +287,8 @@ export function StatusPage404({
                   stroke="#E3E7FC"
                   strokeWidth="1"
                   strokeDasharray="4 4"
-                  className="dark:stroke-slate-800"
                 />
-                <circle
-                  cx="140"
-                  cy="140"
-                  r="60"
-                  fill="none"
-                  stroke="#E3E7FC"
-                  strokeWidth="1.5"
-                  className="dark:stroke-slate-800"
-                />
+                <circle cx="140" cy="140" r="60" fill="none" stroke="#E3E7FC" strokeWidth="1.5" />
                 <circle cx="140" cy="140" r="4" fill="#0056FF" />
 
                 {/* Radar Crosshairs */}
@@ -317,7 +300,6 @@ export function StatusPage404({
                   stroke="#E3E7FC"
                   strokeWidth="1"
                   strokeDasharray="2 4"
-                  className="dark:stroke-slate-800"
                 />
                 <line
                   x1="10"
@@ -327,14 +309,13 @@ export function StatusPage404({
                   stroke="#E3E7FC"
                   strokeWidth="1"
                   strokeDasharray="2 4"
-                  className="dark:stroke-slate-800"
                 />
 
                 {/* Rotating Radar Sweep Beam */}
                 <g className="origin-center animate-[spin_4s_linear_infinite]">
                   <defs>
                     <linearGradient id="radarSweep" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#0056FF" stopOpacity="0.45" />
+                      <stop offset="0%" stopColor="#0056FF" stopOpacity="0.35" />
                       <stop offset="100%" stopColor="#0056FF" stopOpacity="0" />
                     </linearGradient>
                   </defs>
@@ -345,13 +326,13 @@ export function StatusPage404({
 
               {/* Floating Extruded Status Digits (Inspired by Image 1) */}
               <div className="relative z-10 flex items-center justify-center gap-1 select-none">
-                <span className="inline-block -rotate-12 font-sans text-7xl font-black text-[#0056FF] drop-shadow-[0_4px_12px_rgba(0,86,255,0.3)] sm:text-8xl">
+                <span className="inline-block -rotate-12 font-sans text-7xl font-black text-[#0056FF] drop-shadow-[0_4px_12px_rgba(0,86,255,0.25)] sm:text-8xl">
                   {String(activeCode)[0]}
                 </span>
-                <span className="inline-block rotate-3 font-sans text-8xl font-black text-[#2277FF] drop-shadow-[0_4px_12px_rgba(34,119,255,0.3)] sm:text-9xl">
+                <span className="inline-block rotate-3 font-sans text-8xl font-black text-[#2277FF] drop-shadow-[0_4px_12px_rgba(34,119,255,0.25)] sm:text-9xl">
                   {String(activeCode)[1]}
                 </span>
-                <span className="inline-block rotate-12 font-sans text-7xl font-black text-[#0056FF] drop-shadow-[0_4px_12px_rgba(0,86,255,0.3)] sm:text-8xl">
+                <span className="inline-block rotate-12 font-sans text-7xl font-black text-[#0056FF] drop-shadow-[0_4px_12px_rgba(0,86,255,0.25)] sm:text-8xl">
                   {String(activeCode)[2]}
                 </span>
               </div>
@@ -359,15 +340,13 @@ export function StatusPage404({
 
             {/* Title & Telemetry Description */}
             <div className="mt-6 max-w-lg space-y-2">
-              <span className="rounded-full bg-[#E3E7FC] px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF] dark:bg-blue-950/60 dark:text-blue-300">
+              <span className="rounded-full bg-[#E3E7FC] px-3 py-1 font-mono text-[10px] font-bold text-[#0056FF]">
                 {meta.badge}
               </span>
-              <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl dark:text-white">
+              <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                 {resolvedTitle}
               </h2>
-              <p className="font-sans text-xs text-slate-600 sm:text-sm dark:text-slate-400">
-                {resolvedDesc}
-              </p>
+              <p className="font-sans text-xs text-slate-600 sm:text-sm">{resolvedDesc}</p>
             </div>
 
             {/* Radar Coordinates Footer */}
@@ -385,13 +364,13 @@ export function StatusPage404({
         {/* MODE 2: BRUTALIST BARCODE LEDGER (INSPIRED BY USER IMAGE 2) */}
         {/* ========================================================= */}
         {activeMode === 'barcode' && (
-          <div className="relative flex flex-col items-center justify-center bg-[#000000] p-10 text-center text-white sm:p-16">
+          <div className="relative flex flex-col items-center justify-center bg-white p-10 text-center text-slate-900 sm:p-16">
             {/* Subtle Right Border Divider Line (Exact Image 2 Detail) */}
-            <div className="absolute top-0 right-10 bottom-0 w-[1px] bg-[#0056FF]/40 sm:right-16" />
+            <div className="absolute top-0 right-10 bottom-0 w-[1px] bg-[#0056FF]/30 sm:right-16" />
 
             {/* Cryptographic High-Density Barcode Graphic */}
             <div className="flex flex-col items-center space-y-3">
-              <svg viewBox="0 0 240 70" className="h-16 w-56 fill-white" aria-hidden="true">
+              <svg viewBox="0 0 240 70" className="h-16 w-56 fill-slate-950" aria-hidden="true">
                 {/* Generated Barcode Bars */}
                 {[
                   4, 12, 16, 22, 28, 38, 44, 48, 56, 68, 74, 82, 90, 96, 104, 112, 120, 130, 136,
@@ -406,20 +385,20 @@ export function StatusPage404({
                   />
                 ))}
               </svg>
-              <span className="font-mono text-xs font-bold tracking-[0.35em] text-white uppercase">
+              <span className="font-mono text-xs font-bold tracking-[0.35em] text-slate-900 uppercase">
                 E R R O R · {activeCode}
               </span>
             </div>
 
             {/* Editorial Heading (Exact Image 2 Style) */}
             <div className="mt-8 space-y-2">
-              <h2 className="font-serif text-3xl font-normal tracking-wide text-white sm:text-5xl">
+              <h2 className="font-serif text-3xl font-normal tracking-wide text-slate-950 sm:text-5xl">
                 Pagina non trovata
               </h2>
-              <p className="font-mono text-xs text-slate-400">{meta.tagline}</p>
+              <p className="font-mono text-xs text-slate-500">{meta.tagline}</p>
             </div>
 
-            {/* Hot Pill CTA Button (Image 2 Red Accent adapted to Brand Royal Blue / Radiant Azure) */}
+            {/* Hot Pill CTA Button */}
             <Link
               href={homeHref}
               className="mt-8 inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-bold tracking-wider text-white uppercase transition-all hover:bg-[#2277FF] active:scale-[0.98]"
@@ -428,7 +407,7 @@ export function StatusPage404({
             </Link>
 
             {/* Cryptographic Nonce Ledger Hash */}
-            <div className="mt-8 font-mono text-[10px] text-slate-500">
+            <div className="mt-8 font-mono text-[10px] text-slate-400">
               LEDGER_TX: 0x404_F8B92 · SHA-256 CONSTANT TIME VERIFIED
             </div>
           </div>
@@ -438,38 +417,34 @@ export function StatusPage404({
         {/* MODE 3: CYBER MECHA TERMINAL (INSPIRED BY USER IMAGE 3) */}
         {/* ========================================================= */}
         {activeMode === 'terminal' && (
-          <div className="relative flex flex-col bg-gradient-to-b from-[#000B26] via-[#001036] to-[#000B26] p-6 text-white sm:p-8">
-            {/* Starry Constellation Backdrop with Pyramid Apex Icon (Exact Image 3 Detail) */}
-            <div className="mb-4 flex items-center justify-between border-b border-blue-950 pb-3">
-              <div className="flex items-center gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="size-6 text-[#2277FF]"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <polygon points="12,2 22,20 2,20" strokeWidth="1.5" />
-                  <circle cx="12" cy="14" r="3" fill="#0056FF" stroke="none" />
-                </svg>
-                <span className="font-mono text-xs font-bold text-blue-200">
+          <div className="relative flex flex-col bg-[#F8FAFC] p-6 text-slate-900 sm:p-8">
+            {/* Window Header with Unix Window Dots */}
+            <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5">
+                  <span className="size-2.5 rounded-full bg-rose-400" />
+                  <span className="size-2.5 rounded-full bg-amber-400" />
+                  <span className="size-2.5 rounded-full bg-emerald-400" />
+                </div>
+                <span className="font-mono text-xs font-bold text-slate-800">
                   SNP TERMINAL DECK · ERROR {activeCode}
                 </span>
               </div>
-              <div className="flex items-center gap-2 font-mono text-[10px] text-slate-400">
+              <div className="flex items-center gap-2 font-mono text-[10px] text-slate-500">
                 <span className="inline-block size-2 animate-ping rounded-full bg-[#0056FF]" />
-                <span>DAEMON ACTIVE</span>
+                <span className="font-bold text-[#0056FF]">DAEMON ACTIVE</span>
               </div>
             </div>
 
             {/* Interactive Terminal Output Console */}
-            <div className="no-scrollbar h-64 space-y-1.5 overflow-y-auto rounded-lg bg-black/60 p-4 font-mono text-xs text-blue-100 select-text">
-              <p className="text-blue-400">
+            <div className="no-scrollbar h-64 space-y-1.5 overflow-y-auto rounded-lg border border-slate-200/90 bg-white p-4 font-mono text-xs text-slate-800 shadow-inner select-text">
+              <p className="font-semibold text-[#0056FF]">
                 [ * ] ...you came back. HTTP status {activeCode} encountered.
               </p>
-              <p className="text-slate-400">
+              <p className="text-slate-500">
                 3 commands in the log. The cluster haven&apos;t forgotten.
               </p>
-              <p className="text-slate-500">
+              <p className="text-slate-400">
                 Type &apos;help&apos; to continue, or &apos;home&apos; to return.
               </p>
 
@@ -480,10 +455,10 @@ export function StatusPage404({
                     className={cn(
                       'leading-relaxed',
                       line.startsWith('>')
-                        ? 'font-bold text-white'
+                        ? 'font-bold text-slate-950'
                         : line.startsWith('[NODE') || line.startsWith('[STATUS')
-                          ? 'text-[#2277FF]'
-                          : 'text-slate-300',
+                          ? 'font-bold text-[#0056FF]'
+                          : 'text-slate-600',
                     )}
                   >
                     {line}
@@ -494,13 +469,13 @@ export function StatusPage404({
 
             {/* Quick Command Suggestion Chips */}
             <div className="mt-3 flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
-              <span className="text-slate-400">QUICK CMDS:</span>
+              <span className="font-bold text-slate-400">QUICK CMDS:</span>
               {(['help', 'status', 'ping', 'whoami', 'ls', 'home', 'clear'] as const).map((cmd) => (
                 <button
                   key={cmd}
                   type="button"
                   onClick={() => executeCommand(cmd)}
-                  className="cursor-pointer rounded-[3px] border border-blue-900 bg-blue-950/60 px-2 py-0.5 text-blue-300 transition-colors hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
+                  className="cursor-pointer rounded-[3px] border border-slate-200 bg-white px-2 py-0.5 text-slate-700 transition-colors hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
                 >
                   &gt; {cmd}
                 </button>
@@ -513,7 +488,7 @@ export function StatusPage404({
                 e.preventDefault();
                 if (terminalInput.trim()) executeCommand(terminalInput);
               }}
-              className="mt-3 flex items-center gap-2 rounded-lg border border-blue-900 bg-black/70 px-3 py-2 font-mono text-xs"
+              className="mt-3 flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-xs shadow-2xs"
             >
               <span className="font-bold text-[#0056FF]">&gt;</span>
               <input
@@ -521,11 +496,11 @@ export function StatusPage404({
                 value={terminalInput}
                 onChange={(e) => setTerminalInput(e.target.value)}
                 placeholder="type 'help', 'status', 'home' or enter command..."
-                className="w-full bg-transparent text-white outline-hidden placeholder:text-slate-600"
+                className="w-full bg-transparent text-slate-900 outline-hidden placeholder:text-slate-400"
               />
               <button
                 type="submit"
-                className="rounded-[3px] bg-[#0056FF] px-2.5 py-1 text-[10px] font-bold text-white hover:bg-blue-600"
+                className="cursor-pointer rounded-[3px] bg-[#0056FF] px-2.5 py-1 text-[10px] font-bold text-white transition-all hover:bg-blue-700"
               >
                 EXEC
               </button>
@@ -537,26 +512,16 @@ export function StatusPage404({
         {/* MODE 4: CRT PHOSPHOR NOISE (INSPIRED BY USER IMAGE 4) */}
         {/* ========================================================= */}
         {activeMode === 'noise' && (
-          <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#0A0D14] p-10 text-center text-white sm:p-16">
-            {/* Synthesized SVG Procedural Noise Grain Filter */}
-            <svg
-              className="pointer-events-none absolute inset-0 size-full opacity-35"
-              aria-hidden="true"
-            >
-              <filter id="crtNoiseFilter">
-                <feTurbulence
-                  type="fractalNoise"
-                  baseFrequency="0.75"
-                  numOctaves="3"
-                  stitchTiles="stitch"
-                />
-                <feColorMatrix type="saturate" values="0" />
-              </filter>
-              <rect width="100%" height="100%" filter="url(#crtNoiseFilter)" />
-            </svg>
-
-            {/* CRT Horizontal Scanlines Overlay */}
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.35)_50%)] bg-[length:100%_4px]" />
+          <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#F8FAFC] p-10 text-center text-slate-900 sm:p-16">
+            {/* Subtle Grid Canvas */}
+            <div
+              className="pointer-events-none absolute inset-0 opacity-40"
+              style={{
+                backgroundImage:
+                  'linear-gradient(to right, #E2E8F0 1px, transparent 1px), linear-gradient(to bottom, #E2E8F0 1px, transparent 1px)',
+                backgroundSize: '20px 20px',
+              }}
+            />
 
             {/* Content (Exact Image 4 Style) */}
             <div className="relative z-10 space-y-3">
@@ -564,19 +529,19 @@ export function StatusPage404({
                 ERROR {activeCode}
               </span>
 
-              {/* Chromatic Aberration Glitch Heading */}
-              <h2 className="relative font-sans text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
+              {/* Heading */}
+              <h2 className="relative font-sans text-3xl font-extrabold tracking-tight text-slate-950 sm:text-5xl">
                 Sorry, we can&apos;t find that page
               </h2>
 
-              <p className="mx-auto max-w-md font-sans text-xs text-slate-400 sm:text-sm">
+              <p className="mx-auto max-w-md font-sans text-xs text-slate-600 sm:text-sm">
                 {meta.description}
               </p>
 
               <div className="pt-5">
                 <Link
                   href={homeHref}
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-6 py-2.5 font-sans text-xs font-bold text-white backdrop-blur-xs transition-all hover:bg-white/20"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-bold text-white transition-all hover:bg-[#2277FF]"
                 >
                   <span>Re-establish Carrier Signal →</span>
                 </Link>
@@ -584,7 +549,7 @@ export function StatusPage404({
             </div>
 
             {/* Decibel / Carrier Frequency Telemetry */}
-            <div className="relative z-10 mt-10 font-mono text-[10px] text-slate-500">
+            <div className="relative z-10 mt-10 font-mono text-[10px] text-slate-400">
               CARRIER: 104.2 MHz · SIGNAL NOISE RATIO: -38.4 dB · LOSS DETECTED
             </div>
           </div>
@@ -594,10 +559,10 @@ export function StatusPage404({
         {/* MODE 5: GRAVITY KINETIC BLOCKS (INSPIRED BY USER IMAGE 5) */}
         {/* ========================================================= */}
         {activeMode === 'gravity' && (
-          <div className="relative flex flex-col items-center justify-between overflow-hidden bg-[#FAFBFD] p-8 text-center sm:p-12 dark:bg-slate-950">
+          <div className="relative flex flex-col items-center justify-between overflow-hidden bg-white p-8 text-center sm:p-12">
             {/* Top Text (Exact Image 5 Style) */}
             <div className="space-y-3">
-              <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-4xl dark:text-white">
+              <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-4xl">
                 We can&apos;t find the page you&apos;re looking for.
               </h2>
               <div className="flex items-center justify-center gap-3">
@@ -611,7 +576,7 @@ export function StatusPage404({
                 <button
                   type="button"
                   onClick={() => setGravityTumbled(!gravityTumbled)}
-                  className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-300 bg-white px-4 py-2 font-sans text-xs font-bold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                  className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-slate-300 bg-white px-4 py-2 font-sans text-xs font-bold text-slate-700 hover:bg-slate-100"
                 >
                   <RotateCw className="size-3.5" />
                   <span>{gravityTumbled ? 'Align Modules' : 'Tumble Modules'}</span>
@@ -728,7 +693,7 @@ export function StatusPage404({
                 <span className="font-mono text-[9px]">RBAC SCOPES</span>
               </motion.div>
 
-              {/* Card 5: Midnight Mesh Network Card (Midnight Surge) */}
+              {/* Card 5: Cluster Mesh Card (Light Slate & Royal Blue) */}
               <motion.div
                 animate={
                   gravityTumbled
@@ -743,12 +708,12 @@ export function StatusPage404({
                         transition: { type: 'spring', stiffness: 270, damping: 21 },
                       }
                 }
-                className="hidden h-52 w-32 shrink-0 flex-col justify-between rounded-xl bg-[#000B26] p-3 text-white shadow-xs sm:flex"
+                className="hidden h-52 w-32 shrink-0 flex-col justify-between rounded-xl border border-slate-200 bg-[#F1F5F9] p-3 text-slate-800 shadow-xs sm:flex"
               >
-                <span className="font-mono text-[9px] font-bold text-blue-300">CLUSTER</span>
+                <span className="font-mono text-[9px] font-bold text-[#0056FF]">CLUSTER</span>
                 <svg
                   viewBox="0 0 40 40"
-                  className="size-12 self-center stroke-blue-400"
+                  className="size-12 self-center stroke-[#0056FF]"
                   fill="none"
                 >
                   <circle cx="10" cy="10" r="3" fill="#2277FF" />
@@ -758,7 +723,7 @@ export function StatusPage404({
                   <line x1="10" y1="10" x2="20" y2="30" strokeWidth="1.5" />
                   <line x1="30" y1="10" x2="20" y2="30" strokeWidth="1.5" />
                 </svg>
-                <span className="font-mono text-[9px] text-slate-400">MESH RS0</span>
+                <span className="font-mono text-[9px] text-slate-500">MESH RS0</span>
               </motion.div>
             </div>
           </div>

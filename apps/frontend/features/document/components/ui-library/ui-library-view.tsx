@@ -579,7 +579,7 @@ export function UiLibraryView() {
                           >
                             {/* Component Card Header */}
                             <div className="flex flex-col justify-between gap-3 border-b border-slate-100 pb-4 sm:flex-row sm:items-center">
-                              <div>
+                              <div className="min-w-0 flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
                                   <span className="font-mono text-xs font-black text-[#0056FF]">
                                     0{group.groupNumber}.0{compIdx + 1}
@@ -596,7 +596,7 @@ export function UiLibraryView() {
                                 </p>
                               </div>
 
-                              <div className="flex flex-wrap items-center gap-2">
+                              <div className="flex shrink-0 items-center gap-2">
                                 {/* 1. Direct 1-Click Copy AI Agent Prompt Button (Icons Only) */}
                                 <button
                                   type="button"
