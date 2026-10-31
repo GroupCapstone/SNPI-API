@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.12",
     "date": "31.10.2026",
+    "commitHash": "8f54289",
+    "description": "Update repository url references to SNPI-SMS"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
     "commitHash": "f889207",
     "description": "Bump version to 0.2.12 and sync documentation changelog"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "a301963",
     "description": "Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground"
-  },
-  {
-    "version": "0.2.12",
-    "date": "31.10.2026",
-    "commitHash": "2c4d6bc",
-    "description": "Record real-time changelog for Status Page 404 multi-archetype component"
   }
 ];

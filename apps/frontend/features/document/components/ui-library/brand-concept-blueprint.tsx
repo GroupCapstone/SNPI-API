@@ -474,7 +474,7 @@ export function BrandConceptBlueprint() {
             </div>
             <div>
               <h3 className="font-sans text-sm font-black text-rose-950">
-                Prohibited Anti-Patterns (DON'T)
+                Prohibited Anti-Patterns (DON&apos;T)
               </h3>
               <p className="font-sans text-xs font-semibold text-rose-800">
                 Strict workspace and brand design restrictions.

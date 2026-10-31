@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.12 (31.10.2026) - `8f54289`
+
+- Update repository url references to SNPI-SMS
+
 ### Version 0.2.12 (31.10.2026) - `f889207`
 
 - Bump version to 0.2.12 and sync documentation changelog
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.12 (31.10.2026) - `a301963`
 
 - Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground
-
-### Version 0.2.12 (31.10.2026) - `2c4d6bc`
-
-- Record real-time changelog for Status Page 404 multi-archetype component
 
