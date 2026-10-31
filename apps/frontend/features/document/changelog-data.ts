@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "fcd71dc",
+    "description": "Move brand identity into document footer link with logo, 3 colors, and code color tokens"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "d12d066",
     "description": "Remove 23 requested components, obsolete demo code, and unused standalone files"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "fb6aa66",
     "description": "Record real-time commit checkpoint for Royal Blue brand system"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "d1b80a7",
-    "description": "Implement Royal Blue brand system, Zero-Dot standard, Light Day First policy, and component deduplication"
   }
 ];

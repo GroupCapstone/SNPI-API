@@ -31,6 +31,9 @@
     "typecheck:turbo": "turbo run typecheck",
     "lint:turbo": "turbo run lint"
   },
+  "dependencies": {
+    "typescript": "^5.8.2"
+  },
   "devDependencies": {
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
