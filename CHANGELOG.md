@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `308d343`
+
+- Remove right toc and enforce 100% strict brand color design palette
+
 ### Version 0.2.11 (31.10.2026) - `38590fa`
 
 - Record frontsite school integration studio and zero public crud policy
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `c0b1893`
 
 - Condense to ultra-short summary and remove monorepo structure section
-
-### Version 0.2.11 (31.10.2026) - `555f4c0`
-
-- Sync real-time changelog for readme rewrite
 

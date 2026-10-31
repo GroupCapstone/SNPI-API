@@ -9,6 +9,12 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.11",
     "date": "31.10.2026",
+    "commitHash": "308d343",
+    "description": "Remove right toc and enforce 100% strict brand color design palette"
+  },
+  {
+    "version": "0.2.11",
+    "date": "31.10.2026",
     "commitHash": "38590fa",
     "description": "Record frontsite school integration studio and zero public crud policy"
   },
@@ -149,11 +155,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "date": "31.10.2026",
     "commitHash": "c0b1893",
     "description": "Condense to ultra-short summary and remove monorepo structure section"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "555f4c0",
-    "description": "Sync real-time changelog for readme rewrite"
   }
 ];
