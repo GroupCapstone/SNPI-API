@@ -181,7 +181,7 @@ export function StatusPage404({
       case 'home':
         newHistory.push('Navigating to system portal...');
         if (typeof window !== 'undefined') {
-          window.location.href = homeHref;
+          window.location.assign(homeHref);
         }
         break;
       default:
