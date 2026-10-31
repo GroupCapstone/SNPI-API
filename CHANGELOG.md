@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.11 (31.10.2026) - `e6d6680`
+
+- Record real-time changelog for Rail TOC paper plane flight navigator redesign
+
 ### Version 0.2.11 (31.10.2026) - `9aecb3d`
 
 - Redesign Rail TOC paper plane flight navigator with 3D faceted jet, de Casteljau contrail, and telemetry deck
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.11 (31.10.2026) - `1f7a253`
 
 - Synchronize release checkpoint v0.2.11 to developer documentation portal
-
-### Version 0.2.11 (31.10.2026) - `0fcfaf0`
-
-- V0.2.11 release checkpoint with system architecture lexicon, cyber armor nav, and royal blue brand system
 
