@@ -43,6 +43,80 @@ function saveCache(cache: WatchCache): void {
 /**
  * Dispatches a formatted message to Telegram Bot API
  */
+function escapeHtml(str: string): string {
+  return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function formatHumanTime(date = new Date()): string {
+  const dateStr = date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+  const timeStr = date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
+  return `${dateStr}, ${timeStr}`;
+}
+
+function formatAuthor(author: string, email: string): string {
+  const cleanName = (author || 'Developer').trim();
+  if (email && email.includes('@users.noreply.github.com')) {
+    const handleMatch = email.match(/(?:\d+\+)?([^@]+)@users\.noreply\.github\.com/);
+    if (handleMatch && handleMatch[1] && handleMatch[1].toLowerCase() !== cleanName.toLowerCase()) {
+      return `${cleanName} (@${handleMatch[1]})`;
+    }
+  }
+  return cleanName;
+}
+
+function formatDiffSummary(diffStat: string, changedFiles: string[]): string {
+  const filesMatch = diffStat.match(/(\d+)\s+file/);
+  const insMatch = diffStat.match(/(\d+)\s+insertion/);
+  const delMatch = diffStat.match(/(\d+)\s+deletion/);
+
+  const count = filesMatch ? filesMatch[1] : String(changedFiles.length || 0);
+  const ins = insMatch ? `+${insMatch[1]}` : '+0';
+  const del = delMatch ? `-${delMatch[1]}` : '-0';
+
+  if (changedFiles.length > 0 && changedFiles.length <= 3) {
+    const names = changedFiles.map((f) => path.basename(f)).join(', ');
+    return `${count} files (${ins}, ${del}) · <code>${escapeHtml(names)}</code>`;
+  }
+  return `${count} files (${ins}, ${del})`;
+}
+
+function formatSecurityAlerts(alerts: SecurityStatus['openAlerts']): string {
+  const map = new Map<
+    string,
+    { package: string; severity: string; count: number; summary: string }
+  >();
+  for (const a of alerts) {
+    const key = `${a.package}:${a.severity}`;
+    if (!map.has(key)) {
+      map.set(key, {
+        package: a.package,
+        severity: a.severity.toUpperCase(),
+        count: 1,
+        summary: a.summary.replace(/<[^>]*>?/gm, '').trim(),
+      });
+    } else {
+      map.get(key)!.count += 1;
+    }
+  }
+
+  const grouped = Array.from(map.values());
+  return grouped
+    .slice(0, 3)
+    .map(
+      (g) =>
+        `• <b>${escapeHtml(g.package)}</b> · <code>${g.severity}</code>${g.count > 1 ? ` (x${g.count})` : ''}\n  ${escapeHtml(g.summary)}`,
+    )
+    .join('\n');
+}
+
 async function sendTelegramMessage(chatId: string | number, text: string): Promise<boolean> {
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
   try {
@@ -118,6 +192,7 @@ function inspectLatestCommit(): {
   message: string;
   branch: string;
   changedFiles: string[];
+  diffStat: string;
 } {
   const format = '%h|%an|%ae|%ad|%s';
   const out = execSync(`git log -1 --pretty=format:"${format}" --date=short`, {
@@ -142,7 +217,24 @@ function inspectLatestCommit(): {
     // ignore
   }
 
-  return { hash, author, email, date, message, branch, changedFiles };
+  let diffStat = '';
+  try {
+    diffStat = execSync(`git diff --shortstat ${hash}^!`, {
+      cwd: ROOT_DIR,
+      encoding: 'utf-8',
+    }).trim();
+  } catch {
+    try {
+      diffStat = execSync(`git diff-tree --shortstat ${hash}`, {
+        cwd: ROOT_DIR,
+        encoding: 'utf-8',
+      }).trim();
+    } catch {
+      // ignore
+    }
+  }
+
+  return { hash, author, email, date, message, branch, changedFiles, diffStat };
 }
 
 /**
@@ -188,7 +280,10 @@ interface SecurityStatus {
 
 function getRepoSlug(): string {
   try {
-    const remoteUrl = execSync('git remote get-url origin', { cwd: ROOT_DIR, encoding: 'utf-8' }).trim();
+    const remoteUrl = execSync('git remote get-url origin', {
+      cwd: ROOT_DIR,
+      encoding: 'utf-8',
+    }).trim();
     const match = remoteUrl.match(/github\.com[/:]([^/]+)\/([^/.]+)/);
     if (match) return `${match[1]}/${match[2].replace(/\.git$/, '')}`;
   } catch {
