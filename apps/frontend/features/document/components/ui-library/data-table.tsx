@@ -320,10 +320,8 @@ export function DataTable<T extends Record<string, any>>({
           {/* 07 Sticky Thead with dynamic shadow */}
           <thead
             className={cn(
-              'sticky top-0 z-10 transition-shadow duration-150 bg-[#EFF5FF]',
-              hasScrolled
-                ? 'border-b border-[#CAD3F5] shadow-xs'
-                : 'border-b border-[#CAD3F5]',
+              'sticky top-0 z-10 bg-[#EFF5FF] transition-shadow duration-150',
+              hasScrolled ? 'border-b border-[#CAD3F5] shadow-xs' : 'border-b border-[#CAD3F5]',
             )}
           >
             <tr>
@@ -792,22 +790,14 @@ export function DataTableDemo() {
       sortable: true,
       type: 'string',
       width: '130px',
-      render: (val) => (
-        <span className="font-mono text-xs font-bold text-[#0056FF]">
-          {val}
-        </span>
-      ),
+      render: (val) => <span className="font-mono text-xs font-bold text-[#0056FF]">{val}</span>,
     },
     {
       key: 'name',
       header: 'Student Name',
       sortable: true,
       type: 'string',
-      render: (val) => (
-        <span className="font-sans text-xs font-bold text-[#0A1A4A]">
-          {val}
-        </span>
-      ),
+      render: (val) => <span className="font-sans text-xs font-bold text-[#0A1A4A]">{val}</span>,
     },
     {
       key: 'program',
@@ -833,11 +823,7 @@ export function DataTableDemo() {
           <span
             className={cn(
               'font-mono text-xs font-black tabular-nums',
-              isHigh
-                ? 'text-emerald-700'
-                : isLow
-                  ? 'text-rose-700'
-                  : 'text-[#0A1A4A]',
+              isHigh ? 'text-emerald-700' : isLow ? 'text-rose-700' : 'text-[#0A1A4A]',
             )}
           >
             {num.toFixed(2)}

@@ -7,153 +7,153 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
-    "commitHash": "db2b477",
+    "commitHash": "0590a40",
+    "description": "Bump version to 0.2.12 and sync documentation changelog"
+  },
+  {
+    "version": "0.2.12",
+    "date": "31.10.2026",
+    "commitHash": "096fc41",
     "description": "Enforce anti-gray anti-blur high-contrast brand tokens and rule"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "cb2f90c",
     "description": "Update navbar to solid white with blue active text and redesign system color matrix to high-contrast light day mode"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "1ddce36",
     "description": "Replace dark terminal packet monitor with light modern ui and record rule"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "7efd4c6",
     "description": "Sync real-time commit history"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "0110d62",
     "description": "Document display-only open-api rules and format open-api-view"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "c6ce7eb",
     "description": "Remove 10 deprecated components from catalog and registry"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "49f052c",
     "description": "Redesign into minimal one-way subscription-gated guide"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "afcf5a8",
     "description": "Implement stacked resting deck with hover/tap expansion and brand light day mode"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "3ed5f95",
     "description": "Sync real-time changelog for navigation bar and active menu gradient redesign"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "308d343",
     "description": "Remove right toc and enforce 100% strict brand color design palette"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "38590fa",
     "description": "Record frontsite school integration studio and zero public crud policy"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "5f5c018",
     "description": "Secure public read-only syndication and add frontsite school data integration studio"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "38ac6e6",
     "description": "Redesign open-api page with Nextra Docs Starter Kit architecture"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "d451d0d",
     "description": "Record zero gradient and zero black/gray rule enforcement"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "39f2c5c",
     "description": "Eradicate all CSS gradients, black, and gray from component library and enforce pure flat solid brand tokens"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "70a42c7",
     "description": "Sync real-time changelog for open-api redesign"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "f022bc5",
     "description": "Complete redesign with public feeds, embed studio, class table, and real-time sse"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "863b601",
     "description": "Record Vercel deployment fix and light theme enforcement"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "d3b461f",
     "description": "Resolve Vercel deployment builds, lock UI header toolbar to single row, and enforce 100% brand light theme on 404 console"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "02011a6",
     "description": "Record Hook Sidebar implementation and Rail TOC fixes"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "a50eee9",
     "description": "Implement Hook Sidebar dashed spring rail and fix Rail TOC scroll tracking"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "d7b657d",
     "description": "Record Rail TOC light redesign and circular waypoint nodes"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "a301963",
     "description": "Redesign Rail TOC to exact light-theme reference with circular waypoint nodes and clean documentation playground"
   },
   {
-    "version": "0.2.11",
+    "version": "0.2.12",
     "date": "31.10.2026",
     "commitHash": "2c4d6bc",
     "description": "Record real-time changelog for Status Page 404 multi-archetype component"
-  },
-  {
-    "version": "0.2.11",
-    "date": "31.10.2026",
-    "commitHash": "2125659",
-    "description": "Create multi-archetype Status Page 404 with 5 brand modes and HTTP status code engine"
   }
 ];
