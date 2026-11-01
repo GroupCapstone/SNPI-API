@@ -124,8 +124,12 @@ npm run changelog:sync
 
 ---
 
-## 5. Mandatory Pre-Push CI & Deployment Quality Gate Rule
+## 5. Mandatory Pre-Push CI, Dual-Developer Sync & Deployment Quality Gate Rule
 
+- **Mandatory Dual-Developer Git Reconciliation & Merge Gate (`npm run git:sync`)**:
+  - Two developers actively collaborate on this repository. Before attempting any commit push or release checkpoint, the system must **ALWAYS run `npm run git:sync`** (or `git fetch origin` followed by `git merge origin/<branch> --no-edit`).
+  - If remote has incoming commits from the other developer, merge them immediately into the working tree. Never overwrite or force-push over collaborator code.
+  - If conflicts occur, resolve them cleanly, run the full verification pipeline (`npm run typecheck`, `npm run deploy:verify`), and commit the merged result before pushing.
 - **Zero Push on Failed Deploy or CI**: Never run `git push`, push release tags, or publish checkpoints if any GitHub deployment, build, test, or CI workflow is failed or failing on `main`.
 - **Pre-Push Deployment Gate (`npm run deploy:verify`)**: Always execute `npm run deploy:verify` prior to pushing to ensure all deployment manifests exist (`vercel.json`, `apps/backend/vercel.json`, `apps/frontend/vercel.json`, Kubernetes manifests), production builds compile with zero errors, and recent GitHub Actions workflows on `main` are green.
 - **Immediate Failure Resolution**: If a workflow fails on GitHub Actions, diagnosing and fixing the failure is the immediate top priority. Pushing further feature code is blocked until all 17 GitHub checks are green.
