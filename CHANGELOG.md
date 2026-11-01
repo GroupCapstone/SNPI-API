@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (01.11.2026) - `23cc63f` (Developer: **史力爱卫**)
+
+- Enforce dual-developer remote reconciliation and force merge gate before push [PASSED]
+
 ### Version 0.2.15 (01.11.2026) - `05c37b3` (Developer: **史力爱卫**)
 
 - Audit component demos to enforce 0px blur flat standard, anti-blur and zero guide clutter [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (31.10.2026) - `c127141` (Developer: **史力爱卫**)
 
 - Remove class catalog, certificate ledger, and rest api directory sections
-
-### Version 0.2.14 (31.10.2026) - `cfdd732` (Developer: **史力爱卫**)
-
-- Redesign 4 service cards with prominent top icon, protocol pill, and route capsule
 
