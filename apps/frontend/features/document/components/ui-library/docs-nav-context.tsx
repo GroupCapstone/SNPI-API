@@ -21,8 +21,11 @@ export function DocsNavProvider({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const isLibraryPath = pathname?.startsWith('/document/design-system');
-  const isChangelogPath = pathname?.startsWith('/document/changelog');
+  const isLibraryPath =
+    pathname?.startsWith('/document/design-system') ||
+    pathname === '/design-system' ||
+    pathname === '/ui-library';
+  const isChangelogPath = pathname?.startsWith('/document/changelog') || pathname === '/changelog';
   const pathDerivedTab: DocsTab = isLibraryPath
     ? 'library'
     : isChangelogPath
@@ -38,8 +41,10 @@ export function DocsNavProvider({
   React.useEffect(() => {
     const handlePopState = () => {
       if (typeof window !== 'undefined') {
-        const isLib = window.location.pathname.startsWith('/document/design-system');
-        const isChange = window.location.pathname.startsWith('/document/changelog');
+        const p = window.location.pathname;
+        const isLib =
+          p.startsWith('/document/design-system') || p === '/design-system' || p === '/ui-library';
+        const isChange = p.startsWith('/document/changelog') || p === '/changelog';
         setActiveTabState(isLib ? 'library' : isChange ? 'release' : 'openapi');
       }
     };
@@ -51,8 +56,15 @@ export function DocsNavProvider({
     (tab: DocsTab, updateHistory = true) => {
       setActiveTabState(tab);
       if (updateHistory) {
-        const targetPath =
-          tab === 'library'
+        const isDocsSubdomain =
+          typeof window !== 'undefined' && window.location.host.startsWith('docs.snpi.edu.kh');
+        const targetPath = isDocsSubdomain
+          ? tab === 'library'
+            ? '/design-system'
+            : tab === 'release'
+              ? '/changelog'
+              : '/'
+          : tab === 'library'
             ? '/document/design-system'
             : tab === 'release'
               ? '/document/changelog'

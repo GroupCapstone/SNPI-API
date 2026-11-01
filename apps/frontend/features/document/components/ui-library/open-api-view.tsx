@@ -19,6 +19,9 @@ import {
   FileText,
   Info,
   ShieldCheck,
+  Globe,
+  Zap,
+  Sparkles,
 } from '@/components/icons';
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import { cn } from '@/lib/utils';
@@ -313,50 +316,210 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
         {/* =================================================================== */}
         <main className="max-w-5xl min-w-0 flex-1 space-y-8 pb-24 sm:space-y-10">
           {/* ----------------------------------------------------------------- */}
-          {/* SECTION 1: STANDALONE WELCOME HERO SCREEN (MOBILE ONE-SECTION)   */}
+          {/* SECTION 1: CREATIVE INTERACTIVE API GATEWAY HERO SCREEN           */}
           {/* ----------------------------------------------------------------- */}
-          <section
-            id="open-api-head"
-            className="flex min-h-[calc(100vh-92px)] flex-col justify-between pt-1 pb-4 sm:min-h-0 sm:pb-6"
-          >
-            {/* The Integrated Standalone Welcome Card */}
-            <div className="flex flex-1 flex-col justify-between rounded-3xl border border-[#CAD3F5] bg-[#EFF5FF] p-6 shadow-xs sm:p-10">
-              {/* Top Context & Headline */}
-              <div className="space-y-4">
-                {/* Big Clear Headline */}
-                <h1 className="text-3xl leading-[1.12] font-black tracking-tight text-[#0A1A4A] sm:text-5xl lg:text-6xl">
-                  Welcome to SNPI Open API
-                </h1>
+          <section id="open-api-head" className="scroll-mt-24 space-y-4">
+            <div className="relative overflow-hidden rounded-3xl border border-[#CAD3F5] bg-gradient-to-b from-white via-[#EFF5FF]/40 to-white p-5 shadow-xs sm:p-10">
+              {/* Subtle Geometric Background Dot Grid */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.35]"
+                style={{
+                  backgroundImage:
+                    'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FFFFFF 0.75px)',
+                  backgroundSize: '20px 20px',
+                  backgroundPosition: '0 0, 10px 10px',
+                }}
+              />
 
-                {/* Less Description: Concise, punchy, high-impact */}
-                <p className="max-w-xl text-sm leading-relaxed font-medium text-[#0A1A4A]/75 sm:text-base">
-                  Free public REST APIs and live feeds for campus announcements and course
-                  schedules.
-                </p>
-
-                {/* Quick Value Chips */}
-                <div className="flex flex-wrap items-center gap-2 pt-1">
-                  <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
-                    <Check className="size-3.5 text-[#0056FF]" />
-                    <span>No API Key Required</span>
+              <div className="relative z-10 space-y-6 sm:space-y-8">
+                {/* Top Eyebrow Tag Strip */}
+                <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#CAD3F5]/60 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="size-2 animate-pulse rounded-full bg-emerald-500" />
+                    <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
+                      SNPI Open Syndication Gateway
+                    </span>
                   </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#FFFFFF] px-3 py-1.5 text-xs font-semibold text-[#0A1A4A]">
-                    <Check className="size-3.5 text-[#0056FF]" />
-                    <span>Live Campus Feeds</span>
+                  <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+                    <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/80 px-2 py-0.5 font-bold text-[#0056FF]">
+                      Zero Auth Required
+                    </span>
+                    <span>·</span>
+                    <span>Sub-50ms Edge Cache</span>
+                    <span>·</span>
+                    <span>CORS Open</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Bottom Actions: Glide to Services Button */}
-              <div className="mt-8">
-                {/* Dedicated Scroll Cue to Screen 2 */}
-                <button
-                  onClick={() => scrollToSection('available-services')}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#CAD3F5] bg-[#FFFFFF] py-3.5 text-xs font-bold text-[#0056FF] shadow-xs transition-all hover:bg-[#EFF5FF] active:scale-[0.99] sm:w-auto sm:px-8"
-                >
-                  <span>Explore Core Services</span>
-                  <ArrowRight className="size-4 rotate-90 sm:rotate-0" />
-                </button>
+                {/* Playful Headline + Public Status Pill */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <h1 className="font-sans text-3xl font-black tracking-tight text-[#0A1A4A] sm:text-5xl md:text-6xl">
+                      OPEN API <span className="text-[#0056FF]">GATEWAY</span>
+                    </h1>
+                    <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-xs font-bold text-[#0056FF] shadow-2xs">
+                      <Globe className="size-3.5 text-[#0056FF]" />
+                      <span>Live Public Syndication</span>
+                    </div>
+                  </div>
+                  <p className="max-w-xl font-sans text-xs text-slate-600 sm:text-sm">
+                    Edge-cached public feeds, RSS 2.0 syndication channels, and institutional campus
+                    schedules with zero API keys required.
+                  </p>
+                </div>
+
+                {/* Visual Converging API Node Gateway Canvas */}
+                <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-2xs sm:p-6">
+                  <div className="relative z-10 flex flex-col items-center justify-between gap-6 md:flex-row">
+                    {/* Left Syndication Feed Card */}
+                    <div className="w-full md:w-auto">
+                      <button
+                        type="button"
+                        onClick={() => scrollToSection('public-feeds')}
+                        className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95"
+                      >
+                        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                          <Radio className="size-4.5" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                              01 · Feed
+                            </span>
+                            <span className="py-0.2 rounded border border-[#CAD3F5] bg-white px-1.5 font-mono text-[8px] font-bold text-[#0056FF]">
+                              RSS 2.0 XML
+                            </span>
+                          </div>
+                          <span className="block text-xs font-bold text-[#0A1A4A]">
+                            Campus News & Notices
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+
+                    {/* Center Core Gateway Hub */}
+                    <div className="my-2 flex flex-col items-center justify-center text-center md:my-0">
+                      <div className="relative flex size-20 items-center justify-center rounded-3xl border-2 border-[#0056FF] bg-gradient-to-br from-[#0056FF] to-[#2277FF] text-white shadow-[0_0_24px_rgba(0,86,255,0.25)] sm:size-24">
+                        <Server className="size-10 stroke-[2.2] sm:size-12" />
+                        <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-emerald-400">
+                          <span className="size-2 animate-ping rounded-full bg-emerald-600" />
+                        </span>
+                      </div>
+                      <span className="mt-3 font-mono text-xs font-black tracking-widest text-[#0A1A4A] uppercase">
+                        SNPI EDGE GATEWAY
+                      </span>
+                      <span className="font-mono text-[10px] font-semibold text-[#0056FF]">
+                        GET /api/v1/public/*
+                      </span>
+                    </div>
+
+                    {/* Right Syndication Feed Cards */}
+                    <div className="flex w-full flex-col gap-2.5 md:w-auto">
+                      <button
+                        type="button"
+                        onClick={() => scrollToSection('public-feeds')}
+                        className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95"
+                      >
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                          <Zap className="size-4" />
+                        </div>
+                        <div>
+                          <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                            02 · Alerts
+                          </span>
+                          <span className="block text-xs font-bold text-[#0A1A4A]">
+                            Emergency Advisories (JSON)
+                          </span>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => scrollToSection('public-feeds')}
+                        className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95"
+                      >
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                          <Calendar className="size-4" />
+                        </div>
+                        <div>
+                          <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                            03 · Calendar
+                          </span>
+                          <span className="block text-xs font-bold text-[#0A1A4A]">
+                            Term Milestones (JSON)
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tactile Value Chips */}
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-2xs">
+                    <ShieldCheck className="size-3 text-[#0056FF]" />
+                    <span>No Auth Token Needed</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-2xs">
+                    <Zap className="size-3 text-[#0056FF]" />
+                    <span>Sub-50ms Edge CDN</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-2xs">
+                    <Globe className="size-3 text-[#0056FF]" />
+                    <span>CORS Unrestricted</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
+                    <Check className="size-3 text-[#0056FF]" />
+                    <span>RSS 2.0 & JSON Feed</span>
+                  </div>
+                </div>
+
+                {/* Base URL Quickstart Bar & Action Hook */}
+                <div className="flex flex-col gap-2.5 pt-2 sm:flex-row sm:items-center sm:gap-3">
+                  {/* 1-Click Base URL Copy */}
+                  <div className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-white p-1 shadow-2xs sm:justify-start sm:rounded-2xl sm:p-1.5">
+                    <div className="flex items-center gap-2 px-2.5 text-slate-500 sm:px-3">
+                      <Terminal className="size-3.5 text-[#0056FF] sm:size-4" />
+                      <span className="font-mono text-[11px] font-bold text-slate-900 sm:text-xs">
+                        GET https://api.snpi.edu.kh/api/v1/public
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleCopy('https://api.snpi.edu.kh/api/v1/public', 'hero-base-url')
+                      }
+                      className={cn(
+                        'flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1 font-sans text-xs font-bold transition-all active:scale-95 sm:rounded-xl sm:px-3 sm:py-1.5',
+                        copiedId === 'hero-base-url'
+                          ? 'border border-emerald-500/40 bg-emerald-50 text-emerald-700'
+                          : 'bg-[#EFF5FF] text-[#0056FF] hover:bg-[#0056FF] hover:text-white',
+                      )}
+                    >
+                      {copiedId === 'hero-base-url' ? (
+                        <>
+                          <Check className="size-3 stroke-[2.5] text-emerald-600 sm:size-3.5" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="size-3 stroke-[2] sm:size-3.5" />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Explore Services Action Button */}
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('available-services')}
+                    className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95 sm:rounded-2xl sm:px-6 sm:py-3"
+                  >
+                    <span>Explore Core Services</span>
+                    <ArrowRight className="size-4 stroke-[2]" />
+                  </button>
+                </div>
               </div>
             </div>
           </section>

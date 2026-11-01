@@ -13,6 +13,12 @@ export function middleware(request: NextRequest) {
     if (pathname === '/design-system' || pathname === '/ui-library') {
       return NextResponse.rewrite(new URL('/document/design-system', request.url));
     }
+    if (pathname === '/changelog') {
+      return NextResponse.rewrite(new URL('/document/changelog', request.url));
+    }
+    if (pathname === '/open-api') {
+      return NextResponse.rewrite(new URL('/document/open-api', request.url));
+    }
   }
 
   return NextResponse.next();

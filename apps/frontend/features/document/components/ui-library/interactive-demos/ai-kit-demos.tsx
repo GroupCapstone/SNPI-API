@@ -32,17 +32,13 @@ export function FluidOrbDemo() {
           />
 
           {/* Morphing Inner Sphere */}
-          <div className="relative flex size-24 items-center justify-center rounded-full bg-[#0056FF] shadow-inner">
-            <div className="flex size-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-md">
-              <Sparkles className="animate-spin-slow size-8 text-white drop-shadow-md" />
+          <div className="relative flex size-24 items-center justify-center rounded-full bg-[#0056FF]">
+            <div className="flex size-16 items-center justify-center rounded-full bg-white/20">
+              <Sparkles className="animate-spin-slow size-8 text-white" />
             </div>
           </div>
         </button>
       </div>
-
-      <p className="font-sans text-xs text-slate-500">
-        Tap the luminescent orb to simulate real-time agent neural synthesis.
-      </p>
     </div>
   );
 }
@@ -58,14 +54,7 @@ export function GridRevealDemo() {
   ];
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-          Grid Matrix Laser Reveal
-        </span>
-        <span className="font-mono text-[10px] font-bold text-slate-400">4 Active Nodes</span>
-      </div>
-
+    <div className="w-full max-w-md space-y-3 rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-none">
       <div className="grid grid-cols-2 gap-2.5">
         {cards.map((card, idx) => {
           const isActive = activeCard === idx;
@@ -75,9 +64,9 @@ export function GridRevealDemo() {
               type="button"
               onClick={() => setActiveCard(idx)}
               className={cn(
-                'relative flex flex-col justify-between overflow-hidden rounded-2xl border p-3.5 text-left transition-all',
+                'relative flex cursor-pointer flex-col justify-between overflow-hidden rounded-2xl border p-3.5 text-left transition-all',
                 isActive
-                  ? 'border-[#0056FF] bg-[#E3E7FC]/40 shadow-xs'
+                  ? 'border-[#0056FF] bg-[#E3E7FC]/40 shadow-none'
                   : 'border-slate-200 bg-slate-50 hover:border-slate-300',
               )}
             >
@@ -101,14 +90,7 @@ export function MatrixOrbDemo() {
   const [online, setOnline] = React.useState(true);
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center text-[#09172B] shadow-md">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-        <span className="font-mono text-xs font-bold tracking-wider text-slate-700 uppercase">
-          Cybernetic Telemetry Orb
-        </span>
-        <span className="font-mono text-[10px] font-bold text-emerald-600">ACTIVE 99.8%</span>
-      </div>
-
+    <div className="w-full max-w-md space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center text-[#09172B] shadow-none">
       <div className="flex min-h-[150px] items-center justify-center py-2">
         <div className="relative flex size-28 items-center justify-center">
           {/* Concentric Rotating Rings */}
@@ -127,7 +109,7 @@ export function MatrixOrbDemo() {
         <button
           type="button"
           onClick={() => setOnline(!online)}
-          className="text-[#0056FF] hover:underline"
+          className="cursor-pointer font-bold text-[#0056FF] hover:underline"
         >
           {online ? 'Active' : 'Standby'}
         </button>

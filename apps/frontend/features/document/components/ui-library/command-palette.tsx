@@ -355,10 +355,7 @@ export function CommandPalette({
             onClick={(e) => e.stopPropagation()}
             onKeyDown={handleKeyDown}
             className={cn(
-              'relative w-full max-w-xl overflow-hidden shadow-2xl transition-all duration-150 max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-x-0 max-sm:border-t max-sm:border-b-0 sm:rounded-2xl sm:border',
-              isDark
-                ? 'border-slate-200/90 bg-white text-slate-900'
-                : 'border-slate-200/90 bg-white text-slate-900 shadow-slate-900/15',
+              'relative w-full max-w-xl overflow-hidden border border-[#CAD3F5] bg-white text-slate-900 shadow-none transition-all duration-150 max-sm:fixed max-sm:inset-x-0 max-sm:bottom-0 max-sm:rounded-t-2xl max-sm:rounded-b-none max-sm:border-x-0 max-sm:border-t max-sm:border-b-0 max-sm:border-[#CAD3F5] sm:rounded-2xl sm:border sm:border-[#CAD3F5]',
               className,
             )}
           >

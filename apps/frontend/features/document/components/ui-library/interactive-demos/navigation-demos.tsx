@@ -375,21 +375,15 @@ export function BounceSidebarDemo() {
 export function HookSidebarDemo() {
   const [dashed, setDashed] = React.useState(true);
   const [accentColor, setAccentColor] = React.useState('#0056FF');
-  const [displayIndex, setDisplayIndex] = React.useState(0);
-  const [navIndex, setNavIndex] = React.useState(1);
-
-  const displayItems: HookSidebarItem[] = [
-    { label: 'Folder' },
-    { label: 'Code block' },
-    { label: 'Bento Grid' },
-    { label: 'Data Table' },
-  ];
+  const [selectedIndex, setSelectedIndex] = React.useState(2);
 
   const navigationItems: HookSidebarItem[] = [
-    { label: 'Gooey nav' },
-    { label: 'Hook Sidebar' },
-    { label: 'Rail TOC' },
-    { label: 'Bottom Sheet' },
+    { label: 'Overview' },
+    { label: 'Architecture' },
+    { label: 'Components' },
+    { label: 'Security Policy' },
+    { label: 'Open API' },
+    { label: 'Changelog' },
   ];
 
   const colorPresets = [
@@ -400,94 +394,57 @@ export function HookSidebarDemo() {
   ];
 
   return (
-    <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
-      {/* Header and Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-        <div>
-          <h3 className="font-sans text-sm font-bold text-slate-950">Hook Sidebar</h3>
-          <p className="mt-0.5 font-sans text-xs text-slate-500">
-            Click an item to spring the accent rail down to it. Hovering draws a second, dimmer
-            rail.
-          </p>
-        </div>
+    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
+      {/* Style Controls Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <button
+          type="button"
+          onClick={() => setDashed(!dashed)}
+          className="cursor-pointer rounded-[4px] border-0 bg-slate-100 px-2.5 py-1 font-sans text-[11px] font-semibold text-slate-700 transition-all select-none hover:bg-slate-200"
+        >
+          {dashed ? 'Dashed Rail' : 'Solid Rail'}
+        </button>
 
-        {/* Style Controls */}
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Dashed / Solid Toggle */}
-          <button
-            type="button"
-            onClick={() => setDashed(!dashed)}
-            className="cursor-pointer rounded-[4px] border-0 bg-slate-100 px-2.5 py-1 font-sans text-[11px] font-semibold text-slate-700 transition-all select-none hover:bg-slate-200"
-          >
-            {dashed ? 'Dashed Rail' : 'Solid Rail'}
-          </button>
-
-          {/* Color Switcher */}
-          <div className="flex items-center gap-1 rounded-[4px] bg-slate-50 p-1">
-            {colorPresets.map((preset) => (
-              <button
-                key={preset.value}
-                type="button"
-                onClick={() => setAccentColor(preset.value)}
-                style={{ backgroundColor: preset.value }}
-                className={cn(
-                  'size-4 cursor-pointer rounded-full transition-transform select-none',
-                  accentColor === preset.value
-                    ? 'scale-125 ring-2 ring-slate-900 ring-offset-1'
-                    : 'opacity-70 hover:opacity-100',
-                )}
-                title={preset.label}
-              />
-            ))}
-          </div>
+        {/* Color Switcher */}
+        <div className="flex items-center gap-1 rounded-[4px] bg-slate-50 p-1">
+          {colorPresets.map((preset) => (
+            <button
+              key={preset.value}
+              type="button"
+              onClick={() => setAccentColor(preset.value)}
+              style={{ backgroundColor: preset.value }}
+              className={cn(
+                'size-4 cursor-pointer rounded-full transition-transform select-none',
+                accentColor === preset.value
+                  ? 'scale-125 ring-2 ring-slate-900 ring-offset-1'
+                  : 'opacity-70 hover:opacity-100',
+              )}
+              title={preset.label}
+            />
+          ))}
         </div>
       </div>
 
-      {/* Two-Column Stacked Demo Presentation */}
-      <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {/* Left Column: Display Group */}
-        <div className="rounded-xl border border-slate-100 bg-[#F8FAFC] p-5">
-          <HookSidebar
-            label="Display"
-            items={displayItems}
-            value={displayIndex}
-            onChange={(idx) => setDisplayIndex(idx)}
-            color={accentColor}
-            dashed={dashed}
-          />
-        </div>
-
-        {/* Right Column: Navigation Group */}
-        <div className="rounded-xl border border-slate-100 bg-[#F8FAFC] p-5">
-          <HookSidebar
-            label="Navigation"
-            items={navigationItems}
-            value={navIndex}
-            onChange={(idx) => setNavIndex(idx)}
-            color={accentColor}
-            dashed={dashed}
-          />
-        </div>
+      {/* Single Clean HookSidebar Stage */}
+      <div className="mt-4 rounded-xl border border-slate-100 bg-[#F8FAFC] p-5">
+        <HookSidebar
+          label="Navigation Tree"
+          items={navigationItems}
+          value={selectedIndex}
+          onChange={(idx) => setSelectedIndex(idx)}
+          color={accentColor}
+          dashed={dashed}
+        />
       </div>
 
       {/* Active State Telemetry Footer */}
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3 font-mono text-[11px] text-slate-500">
-        <div>
-          Active Display:{' '}
-          <span className="font-bold text-slate-900">
-            {typeof displayItems[displayIndex] === 'string'
-              ? displayItems[displayIndex]
-              : (displayItems[displayIndex] as { label: string }).label}
-          </span>
-        </div>
-        <div>
-          Active Navigation:{' '}
-          <span className="font-bold text-slate-900" style={{ color: accentColor }}>
-            {typeof navigationItems[navIndex] === 'string'
-              ? navigationItems[navIndex]
-              : (navigationItems[navIndex] as { label: string }).label}
-          </span>
-        </div>
+      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2.5 font-mono text-[11px] text-slate-500">
+        <span>Active Node:</span>
+        <span className="font-bold text-slate-900" style={{ color: accentColor }}>
+          {typeof navigationItems[selectedIndex] === 'string'
+            ? navigationItems[selectedIndex]
+            : (navigationItems[selectedIndex] as { label: string }).label}
+        </span>
       </div>
     </div>
   );
@@ -507,10 +464,7 @@ export function GooeyNavDemo() {
 
   return (
     <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-mono text-[10px] font-bold text-slate-400 uppercase">
-        Fluid Gooey Pill Switcher
-      </span>
-      <div className="relative mt-3 inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
+      <div className="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
         {tabs.map((tab) => {
           const isActive = selected === tab.id;
           return (
@@ -562,19 +516,10 @@ export function IconBarDemo() {
 
 // 9. Cyber Armor Modular Nav (Aerospace / Mecha HUD Console)
 export function CyberArmorNavDemo() {
-  const [activeConsoleTab, setActiveConsoleTab] = React.useState('portfolio');
-  const [activeDocsTab, setActiveDocsTab] = React.useState('library');
+  const [activeTab, setActiveTab] = React.useState('portfolio');
 
-  // Focused 4-Tab Set for Mobile (fits 100% with zero overflow or clipping)
-  const mobileMechaTabs: HangingTabItem[] = [
-    { id: 'home', label: 'Home' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'services', label: 'Services' },
-    { id: 'contact', label: 'Contact' },
-  ];
-
-  // Full 8-Tab Mecha Console matching the reference image for Desktop
-  const fullMechaTabs: HangingTabItem[] = [
+  // Full 8-Tab Mecha Console matching the reference specification
+  const mechaTabs: HangingTabItem[] = [
     { id: 'home', label: 'Home' },
     { id: 'blog', label: 'Blog' },
     { id: 'portfolio', label: 'Portfolio' },
@@ -585,92 +530,25 @@ export function CyberArmorNavDemo() {
     { id: 'contact', label: 'Contact Us' },
   ];
 
-  // 3-Tab System Documentation Navigation
-  const systemDocTabs: HangingTabItem[] = [
-    { id: 'library', label: 'UI LIBRARY', icon: Layers },
-    { id: 'openapi', label: 'OPEN API', icon: FileText },
-    { id: 'changelog', label: 'CHANGELOG', icon: Code },
-  ];
-
-  const activeMobileTab = mobileMechaTabs.some((t) => t.id === activeConsoleTab)
-    ? activeConsoleTab
-    : 'portfolio';
-
   return (
-    <div className="w-full space-y-6">
-      {/* Description Header */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-        <h3 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
-          Cyber Armor Navigation
-        </h3>
-        <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-          Modular Dock
-        </span>
-      </div>
-
-      {/* Instance 1: Command Console */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-            Command Console
-          </span>
-          <span className="font-mono text-[10px] text-slate-500">
-            Active: <strong className="text-slate-900 uppercase">{activeConsoleTab}</strong>
-          </span>
-        </div>
-
-        {/* Mobile: 4 Focused Tabs that fit cleanly with zero overflow */}
-        <div className="flex w-full items-center justify-center px-1 py-2 sm:hidden">
+    <div className="flex w-full flex-col items-center justify-center gap-5 py-4">
+      {/* Single Responsive Cyber Armor Nav */}
+      <div className="no-scrollbar w-full overflow-x-auto py-2">
+        <div className="flex w-full min-w-fit items-center justify-center px-1">
           <CyberArmorNav
-            items={mobileMechaTabs}
-            activeId={activeMobileTab}
-            onSelect={setActiveConsoleTab}
-            showIcons={false}
-            size="sm"
-          />
-        </div>
-
-        {/* Desktop: Full 8 Tabs */}
-        <div className="no-scrollbar hidden w-full items-center justify-center overflow-x-auto px-1 py-3 sm:flex sm:py-4">
-          <CyberArmorNav
-            items={fullMechaTabs}
-            activeId={activeConsoleTab}
-            onSelect={setActiveConsoleTab}
+            items={mechaTabs}
+            activeId={activeTab}
+            onSelect={setActiveTab}
             showIcons={false}
             size="md"
           />
         </div>
       </div>
 
-      {/* Instance 2: 3-Tab System Documentation Navigation Bar */}
-      <div className="space-y-1.5">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-            System Docs Console
-          </span>
-          <span className="font-mono text-[10px] text-slate-500">
-            Active: <strong className="text-slate-900 uppercase">{activeDocsTab}</strong>
-          </span>
-        </div>
-
-        <div className="flex w-full items-center justify-center px-1 py-2 sm:py-4">
-          <CyberArmorNav
-            items={systemDocTabs}
-            activeId={activeDocsTab}
-            onSelect={setActiveDocsTab}
-            showIcons={true}
-            size="sm"
-            className="sm:hidden"
-          />
-          <CyberArmorNav
-            items={systemDocTabs}
-            activeId={activeDocsTab}
-            onSelect={setActiveDocsTab}
-            showIcons={true}
-            size="md"
-            className="hidden sm:inline-flex"
-          />
-        </div>
+      {/* Clean Active State Telemetry Badge */}
+      <div className="flex items-center gap-2 rounded-full border border-slate-200/90 bg-white px-4 py-1.5 font-mono text-xs shadow-2xs">
+        <span className="text-slate-400">ACTIVE:</span>
+        <strong className="font-bold text-[#0056FF] uppercase">{activeTab}</strong>
       </div>
     </div>
   );

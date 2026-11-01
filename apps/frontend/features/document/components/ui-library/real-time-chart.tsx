@@ -448,10 +448,7 @@ export function RealTimeChart({
               top: `${hoveredPoint.tooltipTop}px`,
             }}
             className={cn(
-              'pointer-events-none absolute z-20 w-44 rounded-[4px] border p-2.5 shadow-2xl backdrop-blur-md transition-all duration-75',
-              isDark
-                ? 'border-slate-700 bg-slate-900/95 text-white shadow-cyan-950/40'
-                : 'border-slate-200 bg-white/95 text-slate-900 shadow-slate-900/15',
+              'pointer-events-none absolute z-20 w-44 rounded-[4px] border border-[#CAD3F5] bg-white p-2.5 text-slate-900 shadow-none transition-all duration-75',
             )}
           >
             <div className="flex items-center justify-between border-b border-slate-100 pb-1.5 font-mono text-[10px] dark:border-slate-800">

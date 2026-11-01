@@ -330,10 +330,7 @@ export function SearchableDropdown({
       {isOpen && (
         <div
           className={cn(
-            'absolute left-0 z-50 mt-1.5 w-full min-w-[280px] overflow-hidden rounded-[4px] border shadow-xl transition-all duration-150',
-            isDark
-              ? 'border-slate-200/90 bg-white text-slate-900'
-              : 'border-slate-200/90 bg-white text-slate-900',
+            'absolute left-0 z-50 mt-1.5 w-full min-w-[280px] overflow-hidden rounded-[4px] border border-[#CAD3F5] bg-white text-slate-900 shadow-none transition-all duration-150',
           )}
         >
           {/* 03 Auto-Focused Search Input */}

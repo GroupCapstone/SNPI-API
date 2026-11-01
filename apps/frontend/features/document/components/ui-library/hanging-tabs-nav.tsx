@@ -38,6 +38,8 @@ function CyberChassisSvg({
   className?: string;
 }) {
   const is2Tabs = tabCount === 2;
+  const is3Tabs = tabCount === 3;
+  const safeActive = Math.max(0, Math.min(tabCount - 1, activeIdx));
 
   // 3-tab path: 3 elevated wings aligned with 3 modular buttons
   const path3 = `M 18,10 
@@ -115,6 +117,43 @@ function CyberChassisSvg({
             L 780,11 
             L 981,11`;
 
+  // Dynamic geometry for multi-tab consoles (>3 tabs, e.g. 8 tabs)
+  const usableWidth = 964; // 982 - 18
+  const tabWidth = usableWidth / tabCount;
+  const tabCenter = Math.round(18 + (safeActive + 0.5) * tabWidth);
+  const wingHalfWidth = Math.min(Math.round(tabWidth * 0.44), 48);
+  const wingStart = Math.max(24, tabCenter - wingHalfWidth);
+  const wingEnd = Math.min(976, tabCenter + wingHalfWidth);
+  const chamfer = 12;
+
+  const multiTabPath = `M 18,10 
+            L ${Math.max(18, wingStart - chamfer)},10 
+            L ${wingStart},0 
+            L ${wingEnd},0 
+            L ${Math.min(982, wingEnd + chamfer)},10 
+            L 982,10 
+            L 1000,28 
+            L 1000,40 
+            L 982,58 
+            L 860,58 
+            L 840,68 
+            L 160,68 
+            L 140,58 
+            L 18,58 
+            L 0,40 
+            L 0,28 
+            Z`;
+
+  const multiTabTopBevel = `M 19,11 
+            L ${Math.max(19, wingStart - chamfer)},11 
+            L ${wingStart},1.5 
+            L ${wingEnd},1.5 
+            L ${Math.min(981, wingEnd + chamfer)},11 
+            L 981,11`;
+
+  const activePath = is2Tabs ? path2 : is3Tabs ? path3 : multiTabPath;
+  const activeTopBevel = is2Tabs ? topBevel2 : is3Tabs ? topBevel3 : multiTabTopBevel;
+
   return (
     <svg
       className={cn(
@@ -134,7 +173,7 @@ function CyberChassisSvg({
 
       {/* Main Outer Chassis Path (Chamfered Ears, Stepped Armor Wings, Bottom Drop Bracket - Pure Solid White #FFFFFF, Zero Blue) */}
       <path
-        d={is2Tabs ? path2 : path3}
+        d={activePath}
         fill="#FFFFFF"
         stroke="#CAD3F5"
         strokeWidth="1.75"
@@ -143,7 +182,7 @@ function CyberChassisSvg({
 
       {/* Top Inner Bevel Highlight (1px Milled Aluminum Glint) */}
       <path
-        d={is2Tabs ? topBevel2 : topBevel3}
+        d={activeTopBevel}
         stroke="#FFFFFF"
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -160,9 +199,9 @@ function CyberChassisSvg({
             width="72"
             height="3"
             rx="1.5"
-            fill={activeIdx === 0 ? '#0056FF' : '#CAD3F5'}
+            fill={safeActive === 0 ? '#0056FF' : '#CAD3F5'}
           />
-          {activeIdx === 0 && (
+          {safeActive === 0 && (
             <rect
               x="270"
               y="4"
@@ -181,9 +220,9 @@ function CyberChassisSvg({
             width="72"
             height="3"
             rx="1.5"
-            fill={activeIdx === 1 ? '#0056FF' : '#CAD3F5'}
+            fill={safeActive === 1 ? '#0056FF' : '#CAD3F5'}
           />
-          {activeIdx === 1 && (
+          {safeActive === 1 && (
             <rect
               x="708"
               y="4"
@@ -195,7 +234,7 @@ function CyberChassisSvg({
             />
           )}
         </>
-      ) : (
+      ) : is3Tabs ? (
         <>
           {/* Wing 1 Debossed Tech Slot & Glint Accent */}
           <rect
@@ -204,9 +243,9 @@ function CyberChassisSvg({
             width="70"
             height="3"
             rx="1.5"
-            fill={activeIdx === 0 ? '#0056FF' : '#CAD3F5'}
+            fill={safeActive === 0 ? '#0056FF' : '#CAD3F5'}
           />
-          {activeIdx === 0 && (
+          {safeActive === 0 && (
             <rect
               x="140"
               y="4"
@@ -225,9 +264,9 @@ function CyberChassisSvg({
             width="70"
             height="3"
             rx="1.5"
-            fill={activeIdx === 1 ? '#0056FF' : '#CAD3F5'}
+            fill={safeActive === 1 ? '#0056FF' : '#CAD3F5'}
           />
-          {activeIdx === 1 && (
+          {safeActive === 1 && (
             <rect
               x="490"
               y="4"
@@ -246,9 +285,9 @@ function CyberChassisSvg({
             width="70"
             height="3"
             rx="1.5"
-            fill={activeIdx === 2 ? '#0056FF' : '#CAD3F5'}
+            fill={safeActive === 2 ? '#0056FF' : '#CAD3F5'}
           />
-          {activeIdx === 2 && (
+          {safeActive === 2 && (
             <rect
               x="840"
               y="4"
@@ -259,6 +298,45 @@ function CyberChassisSvg({
               filter="url(#royalGlow)"
             />
           )}
+        </>
+      ) : (
+        <>
+          {/* Multi-Tab Dynamic LED Slot Directly Above Active Tab */}
+          <rect
+            x={tabCenter - Math.round(wingHalfWidth * 0.75)}
+            y="3.5"
+            width={Math.round(wingHalfWidth * 1.5)}
+            height="3"
+            rx="1.5"
+            fill="#0056FF"
+          />
+          <rect
+            x={tabCenter - 11}
+            y="4"
+            width="22"
+            height="2"
+            rx="1"
+            fill="#FFFFFF"
+            filter="url(#royalGlow)"
+          />
+
+          {/* Subtle Secondary Tech Slots For Inactive Tabs */}
+          {Array.from({ length: tabCount }).map((_, idx) => {
+            if (idx === safeActive) return null;
+            const c = Math.round(18 + (idx + 0.5) * tabWidth);
+            return (
+              <rect
+                key={idx}
+                x={c - 12}
+                y="6"
+                width="24"
+                height="2"
+                rx="1"
+                fill="#CAD3F5"
+                opacity="0.6"
+              />
+            );
+          })}
         </>
       )}
 
@@ -340,23 +418,37 @@ export function CyberArmorNav({
 }: HangingTabsNavProps) {
   const [hoveredId, setHoveredId] = React.useState<string | null>(null);
 
+  const isMultiTab = items.length > 5;
+
   const containerHeights = {
-    sm: 'h-[44px]',
-    md: 'h-[50px]',
-    lg: 'h-[56px]',
+    sm: 'h-[40px] sm:h-[44px]',
+    md: isMultiTab ? 'h-[44px] sm:h-[48px]' : 'h-[46px] sm:h-[50px]',
+    lg: 'h-[50px] sm:h-[56px]',
   }[size];
 
-  const buttonHeights = {
-    sm: 'h-[32px] px-2 sm:px-3.5',
-    md: 'h-[36px] px-2.5 sm:px-6',
-    lg: 'h-[42px] px-4 sm:px-8',
-  }[size];
+  const buttonHeights = isMultiTab
+    ? {
+        sm: 'h-[28px] px-1.5 sm:px-2.5',
+        md: 'h-[32px] sm:h-[34px] px-2 sm:px-3 md:px-3.5',
+        lg: 'h-[36px] sm:h-[40px] px-2.5 sm:px-4 md:px-5',
+      }[size]
+    : {
+        sm: 'h-[32px] px-2.5 sm:px-3.5',
+        md: 'h-[36px] px-3 sm:px-5 md:px-6',
+        lg: 'h-[42px] px-4 sm:px-7 md:px-8',
+      }[size];
 
-  const textSizes = {
-    sm: 'text-[10px] sm:text-[11px]',
-    md: 'text-[11px] sm:text-[13px]',
-    lg: 'text-xs sm:text-base',
-  }[size];
+  const textSizes = isMultiTab
+    ? {
+        sm: 'text-[9px] sm:text-[10px]',
+        md: 'text-[10px] sm:text-[11px] md:text-xs',
+        lg: 'text-xs sm:text-sm',
+      }[size]
+    : {
+        sm: 'text-[10px] sm:text-[11px]',
+        md: 'text-[11px] sm:text-[13px]',
+        lg: 'text-xs sm:text-base',
+      }[size];
 
   const activeIdx = items.findIndex((item) => item.id === activeId);
 
@@ -364,7 +456,10 @@ export function CyberArmorNav({
     <nav
       aria-label="Modular Mecha Cyber Navigation"
       className={cn(
-        'relative inline-flex items-center justify-center p-[8px_16px] select-none',
+        'relative inline-flex max-w-full items-center justify-center select-none',
+        isMultiTab
+          ? 'w-full min-w-[620px] px-3.5 sm:min-w-0 sm:px-6'
+          : 'p-[6px_10px] sm:p-[8px_16px]',
         'drop-shadow-[0_4px_16px_rgba(0,0,0,0.06)]',
         containerHeights,
         className,
@@ -374,7 +469,12 @@ export function CyberArmorNav({
       <CyberChassisSvg tabCount={items.length} activeIdx={activeIdx >= 0 ? activeIdx : 0} />
 
       {/* 2. Overlaid Button Cell Segments */}
-      <div className="relative z-10 flex h-full items-center">
+      <div
+        className={cn(
+          'relative z-10 flex h-full items-center',
+          isMultiTab ? 'w-full justify-between' : 'justify-center',
+        )}
+      >
         {items.map((tab, idx) => {
           const isActive = activeId === tab.id;
           const isHovered = hoveredId === tab.id;
@@ -382,12 +482,12 @@ export function CyberArmorNav({
           const isLast = idx === items.length - 1;
 
           const buttonContent = (
-            <div className="relative flex items-center justify-center gap-2">
+            <div className="relative flex items-center justify-center gap-1.5 sm:gap-2">
               {/* Optional Kinetic Micro-Icon */}
               {showIcons && Icon && (
                 <Icon
                   className={cn(
-                    'size-4 transition-transform duration-150',
+                    'size-3.5 shrink-0 transition-transform duration-150 sm:size-4',
                     isActive
                       ? 'stroke-[2.5] text-slate-950'
                       : isHovered
@@ -397,10 +497,10 @@ export function CyberArmorNav({
                 />
               )}
 
-              {/* High-Contrast Bold Label: ONLY Black Color Text and Bold for Active Menu */}
+              {/* High-Contrast Bold Label: strictly whitespace-nowrap to prevent ugly wrapping */}
               <span
                 className={cn(
-                  'font-sans tracking-wider uppercase transition-colors duration-150',
+                  'shrink-0 font-sans tracking-wider whitespace-nowrap uppercase transition-colors duration-150',
                   textSizes,
                   isActive
                     ? 'font-black text-black text-slate-950'
@@ -417,6 +517,7 @@ export function CyberArmorNav({
           // Default Background for Active Menu (Zero Active Blue, Clean Seamless Chassis)
           const sharedClasses = cn(
             'group relative flex items-center justify-center cursor-pointer transition-all duration-150 mx-0.5 rounded-[8px]',
+            isMultiTab ? 'flex-1 min-w-0' : 'shrink-0',
             buttonHeights,
             isActive
               ? 'bg-transparent text-slate-950 font-black'
@@ -455,8 +556,13 @@ export function CyberArmorNav({
 
               {/* Physical Vertical Seam: Soft Slate-Lavender Seam Line between tabs */}
               {!isLast && (
-                <div className="relative mx-1.5 flex h-4 w-[1px] items-center">
-                  <span className="h-full w-[1px] bg-[#CAD3F5]" />
+                <div
+                  className={cn(
+                    'relative flex shrink-0 items-center',
+                    isMultiTab ? 'mx-0.5 sm:mx-1' : 'mx-1 sm:mx-1.5',
+                  )}
+                >
+                  <span className="h-3.5 w-[1px] bg-[#CAD3F5] sm:h-4" />
                 </div>
               )}
             </React.Fragment>

@@ -49,8 +49,11 @@ export function DocsStickyHeader({
   const menuRef = React.useRef<HTMLDivElement>(null);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
 
-  const isLibraryPath = pathname?.startsWith('/document/design-system');
-  const isChangelogPath = pathname?.startsWith('/document/changelog');
+  const isLibraryPath =
+    pathname?.startsWith('/document/design-system') ||
+    pathname === '/design-system' ||
+    pathname === '/ui-library';
+  const isChangelogPath = pathname?.startsWith('/document/changelog') || pathname === '/changelog';
   const pathDerivedTab = isLibraryPath ? 'library' : isChangelogPath ? 'release' : 'openapi';
 
   const normalizedPropTab = propActiveTab === 'document' ? 'openapi' : propActiveTab;
@@ -211,7 +214,7 @@ export function DocsStickyHeader({
 
           {/* Mobile Dropdown Panel (Right Side) */}
           {mobileMenuOpen && (
-            <div className="animate-in fade-in zoom-in-95 absolute top-[calc(100%+8px)] right-0 w-[min(calc(100vw-32px),360px)] overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl duration-150">
+            <div className="animate-in fade-in zoom-in-95 absolute top-[calc(100%+8px)] right-0 w-[min(calc(100vw-32px),360px)] overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-none duration-150">
               {/* Top Primary Page Switcher Tabs (Pill Style) */}
               <div className="mb-4">
                 <span className="mb-2 block font-mono text-[10px] font-bold text-slate-400 uppercase">

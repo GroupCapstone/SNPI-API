@@ -61,6 +61,17 @@ import {
   X,
   Terminal,
   ArrowRight,
+  Compass,
+  Layers,
+  Bot,
+  Zap,
+  ShieldCheck,
+  Globe,
+  Radio,
+  SquarePen,
+  Table,
+  Bell,
+  Sliders,
 } from '@/components/icons';
 import { useDocsNav } from './docs-nav-context';
 import { cn } from '@/lib/utils';
@@ -586,12 +597,12 @@ export function UiLibraryView() {
               </div>
             </div>
 
-            {/* HERO HEAD TITLE: Ultra-Hook Homepage Section with High-Impact Developer Experience */}
+            {/* HERO HEAD TITLE: Ultra-Creative Interactive Engine Hero */}
             <section id="ui-library-head" className="scroll-mt-36 space-y-4">
-              <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white via-[#F8FAFC]/60 to-white p-4 shadow-xs sm:rounded-3xl sm:p-10">
+              <div className="relative overflow-hidden rounded-3xl border border-[#CAD3F5] bg-gradient-to-b from-white via-[#EFF5FF]/40 to-white p-5 shadow-xs sm:p-10">
                 {/* Subtle Geometric Background Dot Grid */}
                 <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.4]"
+                  className="pointer-events-none absolute inset-0 opacity-[0.35]"
                   style={{
                     backgroundImage:
                       'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FFFFFF 0.75px)',
@@ -600,24 +611,241 @@ export function UiLibraryView() {
                   }}
                 />
 
-                <div className="relative z-10 space-y-4 sm:space-y-6">
-                  {/* Clean Title & Minimal Subtitle */}
-                  <div className="max-w-2xl space-y-1.5 sm:space-y-2">
-                    <h1 className="font-sans text-3xl font-black tracking-tight text-slate-950 sm:text-5xl md:text-6xl">
-                      UI Library
-                    </h1>
-                    <p className="font-sans text-xs text-slate-600 sm:text-sm">
-                      Production components and enterprise design tokens.
+                <div className="relative z-10 space-y-6 sm:space-y-8">
+                  {/* Top Eyebrow Tag Strip */}
+                  <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#CAD3F5]/60 pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="size-2 animate-pulse rounded-full bg-[#0056FF]" />
+                      <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
+                        SNPI Enterprise Design System
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
+                      <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/80 px-2 py-0.5 font-bold text-[#0056FF]">
+                        73 Primitives
+                      </span>
+                      <span>·</span>
+                      <span>0px Blur</span>
+                      <span>·</span>
+                      <span>Pure Flat Depth</span>
+                    </div>
+                  </div>
+
+                  {/* Playful Headline + Kinetic Interactive Mode Pill */}
+                  <div className="flex flex-col gap-2">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                      <h1 className="font-sans text-3xl font-black tracking-tight text-[#0A1A4A] sm:text-5xl md:text-6xl">
+                        CREATIVE <span className="text-[#0056FF]">PRIMITIVES</span>
+                      </h1>
+                      <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-xs font-bold text-[#0056FF] shadow-2xs">
+                        <Sparkles className="size-3.5 text-[#0056FF]" />
+                        <span>Interactive HUD</span>
+                      </div>
+                    </div>
+                    <p className="max-w-xl font-sans text-xs text-slate-600 sm:text-sm">
+                      Production web components and mathematical tokens designed for high-density
+                      enterprise interfaces.
                     </p>
                   </div>
 
+                  {/* Visual Converging Fiber-Optic Integration Canvas */}
+                  <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-2xs sm:p-6">
+                    <div className="relative z-10 flex flex-col items-center justify-between gap-6 md:flex-row">
+                      {/* Left Satellite Stack */}
+                      <div className="flex w-full flex-col gap-2.5 sm:grid sm:grid-cols-3 md:flex md:w-auto md:flex-col">
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection('cat-navigation')}
+                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
+                        >
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                            <Compass className="size-4" />
+                          </div>
+                          <div>
+                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                              01 Stack
+                            </span>
+                            <span className="block text-xs font-bold text-[#0A1A4A]">
+                              Navigation & Docks
+                            </span>
+                          </div>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection('cat-forms')}
+                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
+                        >
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                            <SquarePen className="size-4" />
+                          </div>
+                          <div>
+                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                              02 Engine
+                            </span>
+                            <span className="block text-xs font-bold text-[#0A1A4A]">
+                              Rich Text Editor
+                            </span>
+                          </div>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection('cat-ai-kit')}
+                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
+                        >
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                            <Bot className="size-4" />
+                          </div>
+                          <div>
+                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                              03 Agent
+                            </span>
+                            <span className="block text-xs font-bold text-[#0A1A4A]">
+                              AI Prompt Generator
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+
+                      {/* Center Core Engine Node */}
+                      <div className="my-2 flex flex-col items-center justify-center text-center md:my-0">
+                        <div className="relative flex size-20 items-center justify-center rounded-3xl border-2 border-[#0056FF] bg-gradient-to-br from-[#0056FF] to-[#2277FF] text-white shadow-[0_0_24px_rgba(0,86,255,0.25)] sm:size-24">
+                          <Layers className="size-10 stroke-[2.2] sm:size-12" />
+                          <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-emerald-400">
+                            <span className="size-2 animate-ping rounded-full bg-emerald-600" />
+                          </span>
+                        </div>
+                        <span className="mt-3 font-mono text-xs font-black tracking-widest text-[#0A1A4A] uppercase">
+                          SNPI CORE ENGINE
+                        </span>
+                        <span className="font-mono text-[10px] font-semibold text-[#0056FF]">
+                          Mathematical Token Matrix
+                        </span>
+                      </div>
+
+                      {/* Right Satellite Stack */}
+                      <div className="flex w-full flex-col gap-2.5 sm:grid sm:grid-cols-3 md:flex md:w-auto md:flex-col">
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection('cat-display')}
+                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
+                        >
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                            <Table className="size-4" />
+                          </div>
+                          <div>
+                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                              04 Data
+                            </span>
+                            <span className="block text-xs font-bold text-[#0A1A4A]">
+                              Enterprise Tables
+                            </span>
+                          </div>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection('cat-feedback')}
+                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
+                        >
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                            <Bell className="size-4" />
+                          </div>
+                          <div>
+                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                              05 Motion
+                            </span>
+                            <span className="block text-xs font-bold text-[#0A1A4A]">
+                              Toasts & Modals
+                            </span>
+                          </div>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection('cat-inputs')}
+                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
+                        >
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
+                            <Sliders className="size-4" />
+                          </div>
+                          <div>
+                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                              06 Inputs
+                            </span>
+                            <span className="block text-xs font-bold text-[#0A1A4A]">
+                              44px Ergonomics
+                            </span>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Playful Tactile Pill Constellation */}
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-navigation')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                    >
+                      <Compass className="size-3 text-[#0056FF]" />
+                      <span>Navigation</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-feedback')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                    >
+                      <Bell className="size-3 text-[#0056FF]" />
+                      <span>Feedback</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-display')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                    >
+                      <Table className="size-3 text-[#0056FF]" />
+                      <span>Displays</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-ai-kit')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                    >
+                      <Bot className="size-3 text-[#0056FF]" />
+                      <span>AI Kit</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-forms')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                    >
+                      <SquarePen className="size-3 text-[#0056FF]" />
+                      <span>Forms</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-templates')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                    >
+                      <LayoutGrid className="size-3 text-[#0056FF]" />
+                      <span>Templates</span>
+                    </button>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
+                      <ShieldCheck className="size-3" />
+                      <span>0px Blur</span>
+                    </span>
+                  </div>
+
                   {/* Interactive Terminal Quickstart Bar & Action Hook */}
-                  <div className="flex flex-col gap-2.5 pt-1 sm:flex-row sm:items-center sm:gap-3 sm:pt-2">
+                  <div className="flex flex-col gap-2.5 pt-2 sm:flex-row sm:items-center sm:gap-3">
                     {/* 1-Click Copy Package Command */}
-                    <div className="flex items-center justify-between rounded-xl border border-slate-200/90 bg-white p-1 shadow-2xs sm:justify-start sm:rounded-2xl sm:p-1.5">
+                    <div className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-white p-1 shadow-2xs sm:justify-start sm:rounded-2xl sm:p-1.5">
                       <div className="flex items-center gap-2 px-2.5 text-slate-500 sm:px-3">
                         <Terminal className="size-3.5 text-[#0056FF] sm:size-4" />
-                        <span className="font-mono text-[11px] font-semibold text-slate-900 sm:text-xs">
+                        <span className="font-mono text-[11px] font-bold text-slate-900 sm:text-xs">
                           npx snpi-ui@latest add @components
                         </span>
                       </div>
@@ -628,7 +856,7 @@ export function UiLibraryView() {
                           'flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1 font-sans text-xs font-bold transition-all active:scale-95 sm:rounded-xl sm:px-3 sm:py-1.5',
                           copiedQuickstart
                             ? 'border border-emerald-500/40 bg-emerald-50 text-emerald-700'
-                            : 'bg-slate-100 text-slate-700 hover:bg-[#0056FF] hover:text-white',
+                            : 'bg-[#EFF5FF] text-[#0056FF] hover:bg-[#0056FF] hover:text-white',
                         )}
                       >
                         {copiedQuickstart ? (
@@ -649,62 +877,11 @@ export function UiLibraryView() {
                     <button
                       type="button"
                       onClick={() => scrollToSection('cat-navigation')}
-                      className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0048D9] active:scale-95 sm:rounded-2xl sm:px-5 sm:py-2.5"
+                      className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95 sm:rounded-2xl sm:px-6 sm:py-3"
                     >
-                      <span>Explore 73 Components</span>
-                      <ArrowRight className="size-3.5 stroke-[2]" />
+                      <span>Explore 28 Components</span>
+                      <ArrowRight className="size-4 stroke-[2]" />
                     </button>
-                  </div>
-
-                  {/* 4-Metric Grid Hook */}
-                  <div className="grid grid-cols-2 gap-3 pt-3 sm:grid-cols-4">
-                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
-                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
-                        {COMPONENT_LIBRARY_REGISTRY.length}
-                      </span>
-                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
-                        Total Components
-                      </span>
-                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
-                        100% interactive live feed
-                      </span>
-                    </div>
-
-                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
-                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
-                        0px
-                      </span>
-                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
-                        Blur Shadows
-                      </span>
-                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
-                        Strict flat architecture
-                      </span>
-                    </div>
-
-                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
-                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
-                        44px
-                      </span>
-                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
-                        Touch Targets
-                      </span>
-                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
-                        Mobile-first ergonomics
-                      </span>
-                    </div>
-
-                    <div className="rounded-2xl border border-slate-200/90 bg-white p-4">
-                      <span className="block font-sans text-2xl font-black text-slate-950 sm:text-3xl">
-                        1-Click
-                      </span>
-                      <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
-                        AI Prompt Export
-                      </span>
-                      <span className="mt-1 block font-sans text-[11px] text-slate-500">
-                        Universal Antigravity & Cursor
-                      </span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -771,7 +948,7 @@ export function UiLibraryView() {
                                   />
 
                                   {/* Full Size Component Render */}
-                                  <div className="relative z-10 flex w-full max-w-4xl items-center justify-center py-2 sm:py-6">
+                                  <div className="no-scrollbar relative z-10 flex w-full max-w-full items-center justify-center overflow-x-auto px-1 py-2 sm:py-6">
                                     {renderFeedComponentDemo(comp.id, stateBundle)}
                                   </div>
                                 </div>
@@ -1188,7 +1365,7 @@ function renderFeedComponentDemo(
             </GeometricButton>
           </div>
 
-          {/* Official Native Snackbar In-Stage Demo (Obsidian Surface & Material Standards) */}
+          {/* Official Native Snackbar In-Stage Demo */}
           <NativeSnackbarInline
             message={state.snackbarMsg}
             variant={state.snackbarVariant}
@@ -1199,100 +1376,48 @@ function renderFeedComponentDemo(
             }}
             onClose={() => state.setSnackbarOpen(false)}
           />
-
-          {/* Real-time Status Card */}
-          <div className="flex w-full max-w-lg items-center justify-between rounded-xl border border-slate-200/90 bg-white px-4 py-2.5 font-mono text-[11px] text-slate-600 shadow-xs">
-            <span>
-              Global State:{' '}
-              <strong className="text-[#0056FF]">
-                {state.snackbarOpen ? 'ACTIVE (BOTTOM-CENTER)' : 'IDLE (DISMISSED)'}
-              </strong>
-            </span>
-            <span className="h-3 w-[1px] bg-slate-200" />
-            <span>Surface: Light Card (#FFFFFF)</span>
-            <span className="h-3 w-[1px] bg-slate-200" />
-            <span>Touch: ≥ 44×44px</span>
-          </div>
         </div>
       );
 
     case 'chip':
       return (
         <div className="flex w-full flex-col items-center">
-          {/* Filter Stage */}
-          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs sm:p-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-              <h4 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
-                Filter Chips
-              </h4>
-              <button
-                type="button"
-                onClick={() => state.setSelectedChips(['All'])}
-                className="font-mono text-xs font-bold text-[#0056FF] hover:underline"
-              >
-                Reset
-              </button>
-            </div>
-
-            <div className="mt-3.5 space-y-3">
-              <div>
-                <span className="mb-1.5 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                  Disciplines:
-                </span>
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  {[
-                    'All',
-                    'Software',
-                    'Computer Science',
-                    'Cybersecurity',
-                    'Information Systems',
-                    'Data Science',
-                  ].map((label) => {
-                    const isActive = state.selectedChips.includes(label);
-                    return (
-                      <LibraryChip
-                        key={label}
-                        active={isActive}
-                        onClick={() => state.toggleChip(label)}
-                      >
-                        {label}
-                      </LibraryChip>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div>
-                <span className="mb-1.5 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                  Status:
-                </span>
-                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  {['Enrolled', 'Active Term', 'Graduating 2026', 'On Leave'].map((label) => {
-                    const isActive = state.selectedChips.includes(label);
-                    return (
-                      <LibraryChip
-                        key={label}
-                        active={isActive}
-                        onClick={() => state.toggleChip(label)}
-                      >
-                        {label}
-                      </LibraryChip>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/60 px-3 py-2 font-mono text-xs text-slate-700">
-              <span>
-                Records:{' '}
-                <strong className="text-[#0056FF]">
-                  {state.selectedChips.includes('All') ? '1,840' : state.selectedChips.length * 312}
-                </strong>
-              </span>
-              <span className="max-w-[160px] truncate font-bold text-slate-900 sm:max-w-none">
-                [{state.selectedChips.join(', ')}]
-              </span>
+          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+              {[
+                'All Disciplines',
+                'Software Engineering',
+                'Cybersecurity',
+                'Computer Science',
+                'Information Systems',
+                'Data Science',
+                'Artificial Intelligence',
+              ].map((label) => {
+                const isActive = state.selectedChips.includes(label);
+                return (
+                  <LibraryChip
+                    key={label}
+                    active={isActive}
+                    onClick={() => {
+                      if (label === 'All Disciplines') {
+                        state.setSelectedChips(['All Disciplines']);
+                      } else {
+                        const next = state.selectedChips.filter((c) => c !== 'All Disciplines');
+                        if (next.includes(label)) {
+                          const filtered = next.filter((c) => c !== label);
+                          state.setSelectedChips(
+                            filtered.length === 0 ? ['All Disciplines'] : filtered,
+                          );
+                        } else {
+                          state.setSelectedChips([...next, label]);
+                        }
+                      }
+                    }}
+                  >
+                    {label}
+                  </LibraryChip>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -1331,16 +1456,7 @@ function renderFeedComponentDemo(
 
           {/* Interactive Switches Panel */}
           <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs sm:p-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-              <h4 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
-                Telemetry Switches
-              </h4>
-              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                Enterprise
-              </span>
-            </div>
-
-            <div className="mt-4 space-y-2.5 font-sans">
+            <div className="space-y-2.5 font-sans">
               {[
                 {
                   id: 'sync',
@@ -1428,99 +1544,58 @@ function renderFeedComponentDemo(
     case 'dropdown':
       return (
         <div className="flex w-full flex-col items-center">
-          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs sm:p-6">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-              <h4 className="font-sans text-xs font-bold text-slate-900 sm:text-sm">
-                Campus Selectors
-              </h4>
-              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                Live
-              </span>
-            </div>
+          <div className="w-full max-w-lg rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
+            <LibraryDropdown
+              label="Campus Location Branch"
+              value={state.dropdownCampus}
+              onChange={(val) => state.setDropdownCampus(val)}
+              options={[
+                {
+                  value: 'siem-reap',
+                  label: 'Siem Reap Main Campus',
+                  description: '2,450 Enrolled Students · Science Wing',
+                },
+                {
+                  value: 'phnom-penh',
+                  label: 'Phnom Penh Innovation Hub',
+                  description: '3,120 Enrolled Students · Tech Tower',
+                },
+                {
+                  value: 'battambang',
+                  label: 'Battambang Regional Center',
+                  description: '1,080 Enrolled Students · Campus A',
+                },
+                {
+                  value: 'kampong-cham',
+                  label: 'Kampong Cham Learning Center',
+                  description: '890 Enrolled Students · Campus B',
+                },
+              ]}
+            />
 
-            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <LibraryDropdown
-                label="Brand Typography Engine"
-                value={state.dropdownValue}
-                onChange={(val) => state.setDropdownValue(val)}
-                options={[
-                  {
-                    value: 'sora',
-                    label: 'Sora — Geometric Sans',
-                    description: 'Official Google Fonts identity sans',
-                  },
-                  {
-                    value: 'inter',
-                    label: 'Inter — UI Standard Sans',
-                    description: 'Functional high-density micro UI',
-                  },
-                  {
-                    value: 'mono',
-                    label: 'IBM Plex Mono — Code Standards',
-                    description: 'High-contrast data display',
-                  },
-                  {
-                    value: 'syne',
-                    label: 'Syne — Distinctive Editorial Sans',
-                    description: 'Expressive headings typography',
-                  },
-                ]}
-              />
-
-              <LibraryDropdown
-                label="Campus Location Branch"
-                value={state.dropdownCampus}
-                onChange={(val) => state.setDropdownCampus(val)}
-                options={[
-                  {
-                    value: 'siem-reap',
-                    label: 'Siem Reap Main Campus',
-                    description: '2,450 Enrolled Students · Science Wing',
-                  },
-                  {
-                    value: 'phnom-penh',
-                    label: 'Phnom Penh Innovation Hub',
-                    description: '3,120 Enrolled Students · Tech Tower',
-                  },
-                  {
-                    value: 'battambang',
-                    label: 'Battambang Regional Center',
-                    description: '1,080 Enrolled Students · Campus A',
-                  },
-                ]}
-              />
-            </div>
-
-            {/* Real-time Font Preview */}
-            <div className="mt-5 rounded-[4px] border border-slate-200 bg-slate-50 p-4">
-              <div className="flex items-center justify-between pb-2 font-mono text-[10px] text-slate-400 uppercase">
-                <span>Selected Typography Sample</span>
-                <span className="font-bold text-[#0056FF]">
-                  {state.dropdownValue.toUpperCase()}
-                </span>
+            {/* Real-time Campus Summary Card */}
+            <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div className="flex items-center justify-between font-mono text-[10px] text-slate-400 uppercase">
+                <span>Selected Campus</span>
+                <span className="font-bold text-[#0056FF]">ACTIVE BRANCH</span>
               </div>
-              <div
-                className="font-sans text-xl font-black text-slate-950"
-                style={{
-                  fontFamily:
-                    state.dropdownValue === 'mono'
-                      ? 'monospace'
-                      : state.dropdownValue === 'inter'
-                        ? 'Inter, sans-serif'
-                        : 'Sora, sans-serif',
-                }}
-              >
-                SNPI-SMS Higher Education Portal 2026
+              <div className="mt-1 font-sans text-base font-black text-slate-950 sm:text-lg">
+                {state.dropdownCampus === 'siem-reap'
+                  ? 'Siem Reap Main Campus'
+                  : state.dropdownCampus === 'phnom-penh'
+                    ? 'Phnom Penh Innovation Hub'
+                    : state.dropdownCampus === 'battambang'
+                      ? 'Battambang Regional Center'
+                      : 'Kampong Cham Learning Center'}
               </div>
-              <p className="mt-1 text-xs text-slate-500">
-                Active Branch:{' '}
-                <strong className="text-slate-800">
-                  {state.dropdownCampus === 'siem-reap'
-                    ? 'Siem Reap Main Campus'
-                    : state.dropdownCampus === 'phnom-penh'
-                      ? 'Phnom Penh Innovation Hub'
-                      : 'Battambang Regional Center'}
-                </strong>
+              <p className="mt-1 font-mono text-xs text-slate-500">
+                {state.dropdownCampus === 'siem-reap'
+                  ? '2,450 Enrolled Students · Science Wing · High Performance Cluster'
+                  : state.dropdownCampus === 'phnom-penh'
+                    ? '3,120 Enrolled Students · Tech Tower · Cyber Security Lab'
+                    : state.dropdownCampus === 'battambang'
+                      ? '1,080 Enrolled Students · Campus A · Agro-Tech Innovation'
+                      : '890 Enrolled Students · Campus B · Digital Media Center'}
               </p>
             </div>
           </div>
@@ -1529,183 +1604,92 @@ function renderFeedComponentDemo(
 
     case 'card':
       return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Card Presentation Mode Switcher */}
-          <div className="flex flex-wrap items-center justify-center rounded-[4px] border border-slate-200 bg-white p-1 shadow-xs">
-            <button
-              type="button"
-              onClick={() => state.setCardPresentationMode('folder')}
+        <div className="flex w-full flex-col items-center">
+          <div className="relative w-full max-w-lg pt-4 select-none">
+            {/* Sliding Student Credential Card */}
+            <div
+              onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
               className={cn(
-                'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold transition-all',
-                state.cardPresentationMode === 'folder'
-                  ? 'bg-[#0056FF] text-white shadow-none'
-                  : 'text-slate-600 hover:text-slate-900',
+                'relative mx-auto w-[94%] cursor-pointer rounded-2xl p-6 transition-all duration-300 ease-out',
+                'border border-[#0056FF] bg-[#0056FF]',
+                'text-white shadow-none',
+                state.cardSlidOut ? '-translate-y-12 scale-[1.02]' : 'translate-y-0',
               )}
             >
-              Card Folder Mode
-            </button>
-            <button
-              type="button"
-              onClick={() => state.setCardPresentationMode('metrics')}
-              className={cn(
-                'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold transition-all',
-                state.cardPresentationMode === 'metrics'
-                  ? 'bg-[#0056FF] text-white shadow-none'
-                  : 'text-slate-600 hover:text-slate-900',
-              )}
-            >
-              Daily Metrics Mode
-            </button>
-          </div>
-
-          {state.cardPresentationMode === 'folder' ? (
-            <div className="relative w-full max-w-lg pt-6 select-none">
-              {/* Sliding Credit / Student Card */}
-              <div
-                onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
-                className={cn(
-                  'relative mx-auto w-[94%] cursor-pointer rounded-2xl p-6 transition-all duration-300 ease-out',
-                  'border border-[#0056FF] bg-[#0056FF]',
-                  'text-white shadow-xl',
-                  state.cardSlidOut ? '-translate-y-12 scale-[1.02]' : 'translate-y-0',
-                )}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-black tracking-widest text-blue-100 uppercase">
-                      SNPI-SMS STUDENT PASS
-                    </span>
-                  </div>
-                  <div className="h-7 w-9 rounded-[4px] border border-amber-300/40 bg-amber-400/30 shadow-inner" />
-                </div>
-
-                <div className="mt-8 font-mono text-xl font-black tracking-widest text-white sm:text-2xl">
-                  {state.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
-                </div>
-
-                <div className="mt-6 flex items-end justify-between font-mono text-xs">
-                  <div>
-                    <span className="block text-[10px] text-blue-200 uppercase">Student Name</span>
-                    <span className="text-sm font-bold text-white">DARA SOK</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-[10px] text-blue-200 uppercase">Valid Thru</span>
-                    <span className="text-sm font-bold text-white">08/29</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-[10px] text-blue-200 uppercase">CVV</span>
-                    <span className="text-sm font-bold text-blue-100">
-                      {state.cardRevealed ? '742' : '•••'}
-                    </span>
-                  </div>
-                </div>
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-black tracking-widest text-blue-100 uppercase">
+                  SNPI-SMS STUDENT PASS
+                </span>
+                <div className="h-7 w-9 rounded-[4px] border border-amber-300/40 bg-amber-400/30 shadow-inner" />
               </div>
 
-              {/* Curved Folder Pocket Base */}
-              <div className="relative z-20 -mt-16 w-full rounded-[4px] border border-slate-200/90 bg-white p-6 text-slate-900 shadow-xl">
-                <div className="flex items-center justify-between border-b border-dashed border-slate-200 pb-4">
-                  <button
-                    type="button"
-                    onClick={() => state.setCardRevealed(!state.cardRevealed)}
-                    className="flex cursor-pointer items-center gap-2 rounded-[4px] border border-slate-200 px-3.5 py-1.5 font-sans text-xs font-semibold transition-all hover:border-[#0056FF]"
-                  >
-                    {state.cardRevealed ? (
-                      <EyeOff className="size-3.5 text-[#0056FF]" />
-                    ) : (
-                      <Eye className="size-3.5 text-slate-600" />
-                    )}
-                    <span>{state.cardRevealed ? 'Hide Details' : 'Reveal Details'}</span>
-                  </button>
-
-                  <div className="flex items-center gap-4 font-mono text-xs">
-                    <div>
-                      <span className="block text-[9px] text-slate-400 uppercase">Expiry</span>
-                      <strong className="text-slate-800">08/29</strong>
-                    </div>
-                    <div>
-                      <span className="block text-[9px] text-slate-400 uppercase">CVV</span>
-                      <strong className="text-slate-800">
-                        {state.cardRevealed ? '742' : '•••'}
-                      </strong>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between">
-                  <div>
-                    <h4 className="font-sans text-sm font-bold text-slate-900">Dara Sok</h4>
-                    <p className="font-mono text-xs text-slate-500">
-                      {state.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
-                    className="cursor-pointer rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
-                  >
-                    {state.cardSlidOut ? 'Insert Card' : 'Pull Card'}
-                  </button>
-                </div>
+              <div className="mt-8 font-mono text-xl font-black tracking-widest text-white sm:text-2xl">
+                {state.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
               </div>
-            </div>
-          ) : (
-            /* MODE 2: Daily Active Students Metrics Card (User Image 2 Reference) */
-            <div className="w-full max-w-lg border-slate-200/90 bg-white p-6 shadow-md max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-              <div className="flex items-start justify-between">
+
+              <div className="mt-6 flex items-end justify-between font-mono text-xs">
                 <div>
-                  <h4 className="font-sans text-base font-black text-slate-900">
-                    Daily active students
-                  </h4>
-                  <p className="font-sans text-xs text-slate-500">12,340 a day · Term 1 2026</p>
+                  <span className="block text-[10px] text-blue-200 uppercase">Student Name</span>
+                  <span className="text-sm font-bold text-white">DARA SOK</span>
                 </div>
-
-                <div className="flex items-center rounded-[4px] border border-slate-200 bg-slate-50 p-1 font-mono text-xs">
-                  {(['30D', '90D', '1Y', 'All'] as const).map((r) => (
-                    <button
-                      key={r}
-                      type="button"
-                      onClick={() => state.setMetricsTimeRange(r)}
-                      className={cn(
-                        'cursor-pointer rounded-[4px] px-2.5 py-0.5 font-bold transition-colors',
-                        state.metricsTimeRange === r
-                          ? 'bg-[#0056FF] text-white shadow-none'
-                          : 'text-slate-600 hover:text-slate-950',
-                      )}
-                    >
-                      {r}
-                    </button>
-                  ))}
+                <div className="text-right">
+                  <span className="block text-[10px] text-blue-200 uppercase">Valid Thru</span>
+                  <span className="text-sm font-bold text-white">08/29</span>
                 </div>
-              </div>
-
-              <div className="mt-5 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/60 p-4">
-                <div className="flex items-center justify-between font-mono text-xs text-slate-500">
-                  <span>Saturday, Oct 30, 2026</span>
-                  <span className="font-bold text-[#0056FF]">+8.5% growth</span>
+                <div className="text-right">
+                  <span className="block text-[10px] text-blue-200 uppercase">CVV</span>
+                  <span className="text-sm font-bold text-blue-100">
+                    {state.cardRevealed ? '742' : '•••'}
+                  </span>
                 </div>
-                <div className="mt-1 font-sans text-3xl font-black text-slate-950">
-                  10,119 students
-                </div>
-                <p className="mt-0.5 font-sans text-xs text-slate-600">
-                  14,002 seven day average vs a week earlier
-                </p>
-              </div>
-
-              {/* Bar Graph Simulation */}
-              <div className="mt-5 flex h-20 w-full items-end gap-2 pt-2">
-                {[38, 45, 42, 58, 64, 60, 72, 68, 85, 92, 88, 100].map((val, i) => (
-                  <div
-                    key={i}
-                    style={{ height: `${val}%` }}
-                    className={cn(
-                      'flex-1 cursor-pointer rounded-t-sm transition-all duration-200 hover:opacity-80',
-                      i >= 8 ? 'bg-[#0056FF]' : 'bg-[#E3E7FC]',
-                    )}
-                  />
-                ))}
               </div>
             </div>
-          )}
+
+            {/* Curved Folder Pocket Base */}
+            <div className="relative z-20 -mt-16 w-full rounded-2xl border border-[#CAD3F5] bg-white p-5 text-slate-900 shadow-none sm:p-6">
+              <div className="flex items-center justify-between border-b border-dashed border-slate-200 pb-4">
+                <button
+                  type="button"
+                  onClick={() => state.setCardRevealed(!state.cardRevealed)}
+                  className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 px-3.5 py-1.5 font-sans text-xs font-semibold transition-all hover:border-[#0056FF]"
+                >
+                  {state.cardRevealed ? (
+                    <EyeOff className="size-3.5 text-[#0056FF]" />
+                  ) : (
+                    <Eye className="size-3.5 text-slate-600" />
+                  )}
+                  <span>{state.cardRevealed ? 'Hide Details' : 'Reveal Details'}</span>
+                </button>
+
+                <div className="flex items-center gap-4 font-mono text-xs">
+                  <div>
+                    <span className="block text-[9px] text-slate-400 uppercase">Expiry</span>
+                    <strong className="text-slate-800">08/29</strong>
+                  </div>
+                  <div>
+                    <span className="block text-[9px] text-slate-400 uppercase">CVV</span>
+                    <strong className="text-slate-800">{state.cardRevealed ? '742' : '•••'}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <div>
+                  <h4 className="font-sans text-sm font-bold text-slate-900">Dara Sok</h4>
+                  <p className="font-mono text-xs text-slate-500">
+                    {state.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
+                  className="cursor-pointer rounded-lg border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
+                >
+                  {state.cardSlidOut ? 'Insert Pass' : 'Pull Pass'}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       );
 
