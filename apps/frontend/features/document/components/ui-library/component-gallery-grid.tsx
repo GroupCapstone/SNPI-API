@@ -281,7 +281,7 @@ function renderRealMiniDemo(
             <ChevronDown className="size-3.5 text-slate-400" />
           </button>
           {state.miniDropdownOpen && (
-            <div className="absolute top-full z-20 mt-1 w-full rounded-xl border border-slate-200 bg-white p-1 text-xs shadow-lg">
+            <div className="absolute top-full z-20 mt-1 w-full rounded-xl border border-[#CAD3F5] bg-white p-1 text-xs shadow-none">
               {['Siem Reap Campus', 'Phnom Penh Branch', 'Battambang Wing'].map((campus) => (
                 <div
                   key={campus}

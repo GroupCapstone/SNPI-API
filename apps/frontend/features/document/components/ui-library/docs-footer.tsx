@@ -55,27 +55,32 @@ function ChevronDownIcon({ className }: { className?: string }) {
   );
 }
 
-// Social Icons (SVG Vectors, Zero Emojis)
-function XIcon({ className }: { className?: string }) {
+// Social & Developer Icons (SVG Vectors, Zero Emojis)
+function GitHubIcon({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+      />
     </svg>
   );
 }
 
-function LinkedInIcon({ className }: { className?: string }) {
+function TerminalIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-    </svg>
-  );
-}
-
-function BlueskyIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 568 501" fill="currentColor" className={className}>
-      <path d="M123.12 35.77c59.41 44.78 125.17 135.53 160.88 190.58 35.71-55.05 101.47-145.8 160.88-190.58C489.3-2.53 568-28.7 568 66.7c0 19.06-10.96 160.36-17.4 183.39-22.37 80.05-103.73 100.5-176.2 88.13 126.68 21.6 158.98 92.42 89.28 163.85-83.32 85.39-161.74-21.41-179.76-74.88-1.54-4.57-2.31-7.07-2.31-7.07s-.77 2.5-2.31 7.07c-18.02 53.47-96.44 160.27-179.76 74.88-69.7-71.43-37.4-142.25 89.28-163.85-72.47 12.37-153.83-8.08-176.2-88.13C10.96 227.06 0 85.76 0 66.7 0-28.7 78.7-2.53 123.12 35.77Z" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <polyline points="4 17 10 11 4 5" />
+      <line x1="12" y1="19" x2="20" y2="19" />
     </svg>
   );
 }
@@ -101,45 +106,48 @@ function RssIcon({ className }: { className?: string }) {
 export function DocsFooter({ className }: DocsFooterProps) {
   const [selectedLang, setSelectedLang] = React.useState<'en' | 'kh'>('en');
   const [langDropdownOpen, setLangDropdownOpen] = React.useState(false);
-  const currentVersion = CHANGE_LOGS[0]?.version || '0.2.7';
+  const currentVersion = CHANGE_LOGS[0]?.version || '0.2.14';
 
+  // 1. Real UI Library Primitives & Sections
+  const uiLibraryLinks = [
+    { label: 'Navigation & Cyber Armor', href: '/document/design-system#cat-navigation' },
+    { label: 'Rich Text Editor & Forms', href: '/document/design-system#cat-forms' },
+    { label: 'Feedback & Toast Stack', href: '/document/design-system#cat-feedback' },
+    { label: 'Data Tables & Display', href: '/document/design-system#cat-display' },
+    { label: 'AI Agent Prompt Primitives', href: '/document/design-system#cat-ai-kit' },
+    { label: 'Design Standards & Tokens', href: '/document/design-system#design-principles' },
+    { label: '44px Touch Targets (a11y)', href: '/document/design-system#touch-targets' },
+  ];
+
+  // 2. Real Open API Gateway Feeds & Services
+  const openApiLinks = [
+    { label: 'Public Syndication Gateway', href: '/document#public-feeds' },
+    { label: 'RSS 2.0 Campus Notices', href: '/document#public-feeds' },
+    { label: 'Emergency Alerts (JSON)', href: '/document#public-feeds' },
+    { label: 'Academic Term Calendar', href: '/document#public-feeds' },
+    { label: '47 Modular Monolith Services', href: '/document#available-services' },
+    { label: 'Edge Caching & Zero Auth', href: '/document#open-api-head' },
+    { label: 'Release Changelog Checkpoints', href: '/document/changelog' },
+  ];
+
+  // 3. Real School Management System (SMS) Routes
   const platformLinks = [
-    { label: 'Student Lifecycle', href: '/document#endpoints-available' },
-    { label: 'Academic Operations', href: '/document#overall-api' },
-    { label: 'Examination & Grading', href: '/document#endpoints-available' },
-    { label: 'Finance & Fee Ledger', href: '/document#endpoints-available' },
-    { label: 'Modular Monolith API', href: '/document#quickstart-guide' },
-    { label: 'Security & Access Control', href: '/document#security-policies' },
-    { label: 'Developer Documentation', href: '/document' },
+    { label: 'Executive Dashboard', href: '/dashboard' },
+    { label: 'Student Admissions & Records', href: '/students' },
+    { label: 'Classes & Curriculum', href: '/classes' },
+    { label: 'Campus Timetable', href: '/timetable' },
+    { label: 'Attendance & Leave Tracking', href: '/attendance' },
+    { label: 'Tuition & Fee Accounting', href: '/finance/tuition' },
+    { label: 'Academic Performance Reports', href: '/reports' },
   ];
 
-  const learnLinks = [
-    { label: 'Brand & Colors', href: '/document/design-system#brand-identity' },
-    { label: 'Architecture Standards', href: '/document/design-system#design-principles' },
-    { label: 'Design System Manual', href: '/document/design-system' },
-    { label: 'Monorepo Security Policy', href: '/document#security-policies' },
-    { label: '10 UI Core Components', href: '/document/design-system#component-gallery' },
-    { label: 'Verification Pipeline', href: '/document#verification-suite' },
-    { label: 'Changelog Portal', href: '/document/changelog' },
-    { label: 'Quickstart Guide', href: '/document#quickstart-guide' },
-  ];
-
-  const companyLinks = [
-    { label: 'About SNPI-SMS', href: '/document#purpose' },
-    { label: 'Engineering Team', href: '/document#developer-workflow' },
-    { label: 'Institutional Governance', href: '/document#system-roles' },
-    { label: 'Campus Life & Events', href: '/document#endpoints-available' },
-    { label: 'Contact Administration', href: 'mailto:support@snpi.edu.kh' },
-    { label: 'Trust & Compliance', href: '/document#privacy-policy' },
-    { label: 'Partner Network', href: '/document#institution-types' },
-  ];
-
-  const legalLinks = [
-    { label: 'Status', href: '/document#realtime-status' },
-    { label: 'Privacy Policy', href: '/document#privacy-policy' },
-    { label: 'Terms of Use', href: '/document#terms-of-service' },
-    { label: 'Modern Slavery Statement', href: '/document#modern-slavery' },
-    { label: 'Cookie Preferences', href: '/document#cookie-preferences' },
+  // Authentic Footer Legal / Anchors (Zero Fake Boilerplate)
+  const bottomNavLinks = [
+    { label: 'UI Library', href: '/document/design-system' },
+    { label: 'Open API', href: '/document' },
+    { label: 'Changelog', href: '/document/changelog' },
+    { label: 'Dashboard', href: '/dashboard' },
+    { label: 'GitHub Monorepo', href: 'https://github.com/Tan-Saphea/SNPI-SMS' },
   ];
 
   return (
@@ -150,15 +158,57 @@ export function DocsFooter({ className }: DocsFooterProps) {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 lg:gap-12">
           {/* Brand Sparkle Mark ✦ */}
           <div className="md:col-span-1 lg:col-span-1">
-            <div className="flex size-10 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] transition-transform hover:scale-105">
+            <Link
+              href="/document"
+              title="SNPI-SMS Developer Portal"
+              className="flex size-10 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] transition-transform hover:scale-105"
+            >
               <StarMarkIcon className="size-6 text-[#0056FF]" />
-            </div>
+            </Link>
           </div>
 
-          {/* Column 1: PLATFORM */}
+          {/* Column 1: UI LIBRARY */}
           <div className="space-y-4 md:col-span-3 lg:col-span-3">
             <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
-              Platform
+              UI Library
+            </h4>
+            <ul className="space-y-2.5">
+              {uiLibraryLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="font-sans text-xs text-slate-600 transition-colors hover:text-[#0056FF]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 2: OPEN API */}
+          <div className="space-y-4 md:col-span-3 lg:col-span-3">
+            <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
+              Open API
+            </h4>
+            <ul className="space-y-2.5">
+              {openApiLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="font-sans text-xs text-slate-600 transition-colors hover:text-[#0056FF]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: SMS PLATFORM */}
+          <div className="space-y-4 md:col-span-3 lg:col-span-3">
+            <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
+              SMS Platform
             </h4>
             <ul className="space-y-2.5">
               {platformLinks.map((link) => (
@@ -174,45 +224,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
             </ul>
           </div>
 
-          {/* Column 2: LEARN */}
-          <div className="space-y-4 md:col-span-3 lg:col-span-3">
-            <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
-              Learn
-            </h4>
-            <ul className="space-y-2.5">
-              {learnLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="font-sans text-xs text-slate-600 transition-colors hover:text-[#0056FF]"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: COMPANY */}
-          <div className="space-y-4 md:col-span-3 lg:col-span-3">
-            <h4 className="font-mono text-xs font-bold tracking-widest text-[#0056FF] uppercase">
-              Company
-            </h4>
-            <ul className="space-y-2.5">
-              {companyLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="font-sans text-xs text-slate-600 transition-colors hover:text-[#0056FF]"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Right Section: Language Selector & Social Icons */}
+          {/* Right Section: Language Selector & Real Social/Code Links */}
           <div className="flex flex-col items-start gap-6 md:col-span-2 md:items-end lg:col-span-2">
             {/* Language Selector Dropdown Button */}
             <div className="relative">
@@ -232,7 +244,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
               </button>
 
               {langDropdownOpen && (
-                <div className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-xl border border-slate-200 bg-white p-1 shadow-lg">
+                <div className="absolute right-0 z-50 mt-1.5 w-36 overflow-hidden rounded-xl border border-[#CAD3F5] bg-white p-1 shadow-none">
                   <button
                     type="button"
                     onClick={() => {
@@ -269,41 +281,35 @@ export function DocsFooter({ className }: DocsFooterProps) {
               )}
             </div>
 
-            {/* Social Icons Row: X, LinkedIn, Bluesky, RSS */}
-            <div className="flex items-center gap-4 text-slate-500">
+            {/* Authentic Developer Links: GitHub Monorepo, RSS Feed, Open API Gateway */}
+            <div className="flex items-center gap-3.5 text-slate-500">
               <a
-                href="https://x.com"
+                href="https://github.com/Tan-Saphea/SNPI-SMS"
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="X (Twitter)"
-                className="transition-colors hover:text-[#0056FF]"
+                aria-label="GitHub Repository"
+                title="SNPI-SMS Monorepo on GitHub"
+                className="flex size-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
               >
-                <XIcon className="size-4" />
+                <GitHubIcon className="size-4" />
               </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="LinkedIn"
-                className="transition-colors hover:text-[#0056FF]"
-              >
-                <LinkedInIcon className="size-4" />
-              </a>
-              <a
-                href="https://bsky.app"
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label="Bluesky"
-                className="transition-colors hover:text-[#0056FF]"
-              >
-                <BlueskyIcon className="size-4" />
-              </a>
+
               <Link
-                href="/document/changelog.rss"
-                aria-label="RSS Feed"
-                className="transition-colors hover:text-[#0056FF]"
+                href="/document#public-feeds"
+                aria-label="RSS 2.0 Syndication Feed"
+                title="Public Feeds & RSS 2.0"
+                className="flex size-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
               >
                 <RssIcon className="size-4" />
+              </Link>
+
+              <Link
+                href="/document"
+                aria-label="Open API Gateway"
+                title="Open API Gateway"
+                className="flex size-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+              >
+                <TerminalIcon className="size-4" />
               </Link>
             </div>
           </div>
@@ -312,10 +318,10 @@ export function DocsFooter({ className }: DocsFooterProps) {
         {/* Thin Horizontal Divider Line */}
         <div className="my-8 w-full border-t border-slate-200" />
 
-        {/* Bottom Bar: Copyright Left | Legal Links Right */}
+        {/* Bottom Bar: Copyright Left | Real Working Navigation Links Right */}
         <div className="flex flex-col gap-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2 font-sans font-medium">
-            <span>&copy; 2026 SNPI-SMS, Inc.</span>
+            <span>&copy; 2026 SNPI-SMS Platform</span>
             <span className="text-slate-400">&middot;</span>
             <span className="inline-flex items-center rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
               v{currentVersion}
@@ -323,7 +329,7 @@ export function DocsFooter({ className }: DocsFooterProps) {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 font-sans text-xs">
-            {legalLinks.map((link) => (
+            {bottomNavLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}

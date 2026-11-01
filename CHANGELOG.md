@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (01.11.2026) - `6e526a3` (Developer: **史力爱卫**)
+
+- Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts
+
 ### Version 0.2.14 (01.11.2026) - `aa64a62` (Developer: **史力爱卫**)
 
 - Bump monorepo version to v0.2.14
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (31.10.2026) - `c9ae516` (Developer: **史力爱卫**)
 
 - Streamline mobile navigation and cleanup demo viewports
-
-### Version 0.2.14 (31.10.2026) - `2c262de` (Developer: **史力爱卫**)
-
-- Remove Read Only badge and top context pills from hero and directory
 

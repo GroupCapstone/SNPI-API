@@ -32,11 +32,8 @@ export function ToastDemo() {
   };
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-          Toast Notification Stack
-        </span>
+    <div className="w-full max-w-md space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
+      <div className="flex items-center justify-end border-b border-slate-100 pb-2.5">
         <div className="flex gap-1.5">
           <button
             type="button"
@@ -106,14 +103,10 @@ export function NotificationBellDemo() {
   return (
     <div
       className={cn(
-        'relative flex w-full max-w-md flex-col items-center rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs transition-all duration-200',
+        'relative flex w-full max-w-md flex-col items-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-none transition-all duration-200',
         isOpen ? 'pb-72 sm:pb-80' : 'pb-5',
       )}
     >
-      <span className="pb-3 font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Notification Bell & Popover
-      </span>
-
       <div className="relative inline-block">
         <button
           type="button"
@@ -121,18 +114,18 @@ export function NotificationBellDemo() {
             setIsOpen(!isOpen);
             if (!isOpen) setUnreadCount(0);
           }}
-          className="relative flex size-12 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 shadow-xs transition-transform hover:scale-105 hover:border-[#0056FF] hover:text-[#0056FF] active:scale-95"
+          className="relative flex size-12 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 shadow-none transition-transform hover:scale-105 hover:border-[#0056FF] hover:text-[#0056FF] active:scale-95"
         >
           <Bell className="size-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs">
+            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-none">
               {unreadCount}
             </span>
           )}
         </button>
 
         {isOpen && (
-          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-30 w-[calc(100vw-64px)] max-w-[320px] -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl sm:w-80">
+          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-30 w-[calc(100vw-64px)] max-w-[320px] -translate-x-1/2 rounded-2xl border border-[#CAD3F5] bg-white p-3 text-left shadow-none sm:w-80">
             <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <span className="font-sans text-xs font-bold text-slate-900">Notifications</span>
               <button
@@ -214,21 +207,10 @@ export function StatusPage404Demo() {
   const activeMeta = STATUS_DIRECTORY[selectedCode];
 
   return (
-    <div className="w-full max-w-4xl space-y-5 rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs">
-      {/* Header Deck */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <h3 className="font-sans text-xs font-bold text-slate-950">
-              Status Page 404 & Error Console
-            </h3>
-            <span className="rounded-[4px] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
-              5 ARCHETYPES
-            </span>
-          </div>
-        </div>
-
-        {/* HTTP Status Code Selector */}
+    <div className="w-full max-w-4xl space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
+      {/* HTTP Status Code Selector */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+        <span className="font-mono text-xs font-bold text-slate-500 uppercase">Status Codes:</span>
         <div className="flex flex-wrap items-center gap-1.5">
           {statusCodes.map((sc) => (
             <button
@@ -238,7 +220,7 @@ export function StatusPage404Demo() {
               className={cn(
                 'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-mono text-xs font-bold transition-all select-none',
                 selectedCode === sc.code
-                  ? 'bg-[#0056FF] text-white shadow-xs'
+                  ? 'bg-[#0056FF] text-white'
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
               )}
             >
@@ -290,7 +272,7 @@ export function StatusPage404Demo() {
       </div>
 
       {/* Live Component Preview */}
-      <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-2xs">
+      <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-none">
         <StatusPage404
           mode={selectedMode}
           statusCode={selectedCode}
@@ -298,23 +280,6 @@ export function StatusPage404Demo() {
           homeLabel="Return to Document Library"
           showControls={false}
         />
-      </div>
-
-      {/* Usage Specification Callout */}
-      <div className="rounded-lg border border-slate-200/80 bg-[#F8FAFC] p-3.5 font-sans text-xs text-slate-600">
-        <div className="font-bold text-slate-900">Drop-in Implementation Pattern:</div>
-        <div className="mt-1 font-mono text-[11px] text-[#0056FF]">
-          import &#123; StatusPage404 &#125; from
-          &apos;@/features/document/components/ui-library&apos;;
-        </div>
-        <p className="mt-1 text-[11px] leading-relaxed">
-          Embed directly inside Next.js <code className="font-mono">app/not-found.tsx</code> or
-          error boundary handlers. Pass <code className="font-mono">mode=&quot;radar&quot;</code>,{' '}
-          <code className="font-mono">&quot;barcode&quot;</code>,{' '}
-          <code className="font-mono">&quot;terminal&quot;</code>,{' '}
-          <code className="font-mono">&quot;noise&quot;</code>, or{' '}
-          <code className="font-mono">&quot;gravity&quot;</code>.
-        </p>
       </div>
     </div>
   );

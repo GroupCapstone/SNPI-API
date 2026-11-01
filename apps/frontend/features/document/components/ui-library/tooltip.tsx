@@ -74,7 +74,7 @@ export function LibraryTooltip({
         <div
           role="tooltip"
           className={cn(
-            'animate-in fade-in zoom-in-95 pointer-events-none absolute z-50 flex items-center gap-1.5 rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-slate-800 shadow-md duration-100',
+            'animate-in fade-in zoom-in-95 pointer-events-none absolute z-50 flex items-center gap-1.5 rounded-[4px] border border-[#CAD3F5] bg-white px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-slate-800 shadow-none duration-100',
             positionStyles[position],
             className,
           )}

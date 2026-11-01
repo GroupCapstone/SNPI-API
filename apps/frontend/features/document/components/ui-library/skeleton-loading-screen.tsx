@@ -381,37 +381,37 @@ function ContentListPattern({ isLoaded }: { isLoaded: boolean; theme?: 'light' |
 
 export function SkeletonLoadingScreenDemo() {
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
-  const [activeTab, setActiveTab] = React.useState<'all' | 'profile' | 'grid' | 'list'>('all');
+  const [activeTab, setActiveTab] = React.useState<'grid' | 'profile' | 'list'>('grid');
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-5">
       {/* Inject self-contained pure CSS keyframes & shimmer styles */}
       <style dangerouslySetInnerHTML={{ __html: SKELETON_STYLES }} />
 
       {/* Control Bar: Active State Toggle, Pattern Switcher */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CAD3F5] pb-3">
-        <div className="flex flex-wrap items-center gap-4">
-          {/* Pattern filter tabs */}
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-xs font-bold tracking-wider text-slate-500 uppercase">
-              Pattern:
-            </span>
-            {(['all', 'profile', 'grid', 'list'] as const).map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(tab)}
-                className={cn(
-                  'rounded-[4px] px-2.5 py-1 font-mono text-[11px] font-bold capitalize transition-colors',
-                  activeTab === tab
-                    ? 'border border-[#0056FF] bg-[#0056FF] text-white'
-                    : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
-                )}
-              >
-                {tab === 'all' ? 'All Patterns' : tab}
-              </button>
-            ))}
-          </div>
+        <div className="flex flex-wrap items-center gap-1.5">
+          {(
+            [
+              { id: 'grid', label: 'Card Grid' },
+              { id: 'profile', label: 'Profile Header' },
+              { id: 'list', label: 'Data List' },
+            ] as const
+          ).map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id)}
+              className={cn(
+                'cursor-pointer rounded-[4px] px-3 py-1 font-mono text-xs font-bold transition-colors select-none',
+                activeTab === tab.id
+                  ? 'border border-[#0056FF] bg-[#0056FF] text-white'
+                  : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         {/* Primary Interactive Toggle: Loading vs Loaded */}
@@ -419,7 +419,7 @@ export function SkeletonLoadingScreenDemo() {
           type="button"
           onClick={() => setIsLoaded(!isLoaded)}
           className={cn(
-            'flex items-center gap-2 rounded-[4px] border px-4 py-2 font-mono text-xs font-bold shadow-xs transition-all active:scale-[0.98]',
+            'flex cursor-pointer items-center gap-2 rounded-[4px] border px-4 py-1.5 font-mono text-xs font-bold transition-all active:scale-[0.98]',
             isLoaded
               ? 'border-emerald-300 bg-[#ECFDF5] text-emerald-800 hover:bg-emerald-100'
               : 'border-[#0056FF] bg-[#0056FF] text-white hover:bg-[#2277FF]',
@@ -430,73 +430,12 @@ export function SkeletonLoadingScreenDemo() {
         </button>
       </div>
 
-      {/* Feature Description Card (Image 1 High-Contrast Light-Day Fix) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF] p-4 shadow-xs">
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-[#0A1A4A]">
-            <Sparkles className="size-3.5 text-[#0056FF]" />
-            <span>CSS-Only Shimmer (Zero JavaScript Render Overhead)</span>
-          </div>
-          <p className="font-sans text-xs text-[#334155]">
-            Shimmer gradient sweeps left to right via pure CSS <code>::after</code> pseudo-elements,
-            disabling automatically under <code>prefers-reduced-motion</code>.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 font-mono text-[11px]">
-          <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-bold text-[#0056FF]">
-            1.8s Ease Loop
-          </span>
-          <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-bold text-[#0056FF]">
-            CLS = 0 Sizing
-          </span>
-        </div>
+      {/* Single Clean Active Pattern Render */}
+      <div className="w-full">
+        {activeTab === 'grid' && <CardGridPattern isLoaded={isLoaded} />}
+        {activeTab === 'profile' && <ProfileHeaderPattern isLoaded={isLoaded} />}
+        {activeTab === 'list' && <ContentListPattern isLoaded={isLoaded} />}
       </div>
-
-      {/* Pattern 1: Profile Header */}
-      {(activeTab === 'all' || activeTab === 'profile') && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-              Pattern 01 &middot; Profile Header
-            </span>
-            <span className="font-mono text-[10px] font-medium text-slate-600">
-              Avatar Circle + Typography Lines + Action Badges
-            </span>
-          </div>
-          <ProfileHeaderPattern isLoaded={isLoaded} />
-        </div>
-      )}
-
-      {/* Pattern 2: Card Grid */}
-      {(activeTab === 'all' || activeTab === 'grid') && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-              Pattern 02 &middot; Responsive Card Grid
-            </span>
-            <span className="font-mono text-[10px] font-medium text-slate-600">
-              16:9 Media Aspect Ratio + Title + Author Row
-            </span>
-          </div>
-          <CardGridPattern isLoaded={isLoaded} />
-        </div>
-      )}
-
-      {/* Pattern 3: Content List */}
-      {(activeTab === 'all' || activeTab === 'list') && (
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-              Pattern 03 &middot; Content Audit List
-            </span>
-            <span className="font-mono text-[10px] font-medium text-slate-600">
-              40x40 Thumbnail Icon + Two-Line Text + Status Badge
-            </span>
-          </div>
-          <ContentListPattern isLoaded={isLoaded} />
-        </div>
-      )}
     </div>
   );
 }

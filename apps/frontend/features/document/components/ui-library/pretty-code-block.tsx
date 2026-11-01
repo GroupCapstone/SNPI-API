@@ -231,7 +231,7 @@ export function PrettyCodeBlock({
   return (
     <div
       className={cn(
-        'group relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0F172A] shadow-lg transition-all',
+        'group relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0F172A] shadow-none transition-all',
         className,
       )}
     >

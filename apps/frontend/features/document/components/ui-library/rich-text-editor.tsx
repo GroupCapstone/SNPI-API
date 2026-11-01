@@ -7,18 +7,24 @@ import {
   Italic,
   Underline,
   Strikethrough,
+  Heading1,
   Heading2,
+  Heading3,
   List,
   ListOrdered,
   Quote,
   Code,
   Link as LinkIcon,
   RotateCcw,
-  Sparkles,
+  RotateCw,
+  Minus,
   ShieldCheck,
   Check,
-  Copy,
-  Layers,
+  FileText,
+  Terminal,
+  CircleAlert,
+  Bin,
+  SquarePen,
 } from '@/components/icons';
 
 // ============================================================================
@@ -45,6 +51,7 @@ const ALLOWED_TAGS = new Set([
   'BLOCKQUOTE',
   'CODE',
   'PRE',
+  'HR',
   'A',
 ]);
 
@@ -70,8 +77,21 @@ export function sanitizeHtmlAllowlist(rawHtml: string): string {
     const el = node as HTMLElement;
     const tagName = el.tagName.toUpperCase();
 
-    // Strip dangerous tags completely including their children (scripts, styles, iframes)
-    if (['SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'EMBED', 'NOSCRIPT', 'SVG'].includes(tagName)) {
+    // Strip dangerous tags completely including their children (scripts, styles, iframes, etc.)
+    if (
+      [
+        'SCRIPT',
+        'STYLE',
+        'IFRAME',
+        'OBJECT',
+        'EMBED',
+        'NOSCRIPT',
+        'SVG',
+        'FORM',
+        'INPUT',
+        'BUTTON',
+      ].includes(tagName)
+    ) {
       return null;
     }
 
@@ -96,7 +116,7 @@ export function sanitizeHtmlAllowlist(rawHtml: string): string {
         if (allowedAttrSet.has(attrName)) {
           const val = attr.value;
           if (attrName === 'href') {
-            // 05 URL Scheme Guard: reject javascript:, data:, vbscript:
+            // URL Scheme Guard: reject javascript:, data:, vbscript:
             const cleanVal = val.trim().toLowerCase();
             if (
               cleanVal.startsWith('javascript:') ||
@@ -141,28 +161,30 @@ export function sanitizeHtmlAllowlist(rawHtml: string): string {
 
 export interface RichTextEditorProps {
   initialContent?: string;
+  value?: string;
   onChange?: (html: string) => void;
   placeholder?: string;
-  theme?: 'light' | 'dark';
   className?: string;
   minHeight?: number;
 }
 
 export function RichTextEditor({
-  initialContent = '<p>Welcome to the <strong>SNPI-SMS</strong> institutional document editor. Select text to apply formatting, or try pasting HTML from other sources.</p>',
+  initialContent,
+  value,
   onChange,
-  placeholder = 'Type your formatted content here...',
-  theme = 'light',
+  placeholder = 'Type institutional document content here...',
   className,
-  minHeight = 180,
+  minHeight = 220,
 }: RichTextEditorProps) {
-  const isDark = theme === 'dark';
   const editorRef = React.useRef<HTMLDivElement>(null);
 
   // 06 HTML Source View state
   const [isHtmlView, setIsHtmlView] = React.useState<boolean>(false);
-  const [rawHtml, setRawHtml] = React.useState<string>(initialContent);
+  const [rawHtml, setRawHtml] = React.useState<string>(initialContent || value || '');
   const [sanitizedNotice, setSanitizedNotice] = React.useState<string | null>(null);
+
+  // Live telemetry metrics
+  const [metrics, setMetrics] = React.useState({ words: 0, chars: 0, readTime: 1 });
 
   // 03 Live State Sync for active formatting buttons
   const [activeStates, setActiveStates] = React.useState<{ [key: string]: boolean }>({
@@ -172,24 +194,42 @@ export function RichTextEditor({
     strikeThrough: false,
     insertUnorderedList: false,
     insertOrderedList: false,
+    h1: false,
     h2: false,
+    h3: false,
     blockquote: false,
   });
 
-  // Populate initial content once on mount
+  // Calculate live telemetry
+  const updateMetrics = React.useCallback(() => {
+    if (typeof window === 'undefined') return;
+    const text = editorRef.current?.innerText || '';
+    const cleanText = text.trim();
+    const words = cleanText ? cleanText.split(/\s+/).length : 0;
+    const chars = text.length;
+    const readTime = Math.max(1, Math.ceil(words / 200));
+    setMetrics({ words, chars, readTime });
+  }, []);
+
+  // Sync content when value or initialContent changes externally
   React.useEffect(() => {
-    if (editorRef.current && !editorRef.current.innerHTML) {
-      editorRef.current.innerHTML = sanitizeHtmlAllowlist(initialContent);
+    const targetContent = value !== undefined ? value : initialContent;
+    if (targetContent !== undefined && editorRef.current) {
+      const sanitized = sanitizeHtmlAllowlist(targetContent);
+      if (editorRef.current.innerHTML !== sanitized) {
+        editorRef.current.innerHTML = sanitized;
+        setRawHtml(sanitized);
+        updateMetrics();
+      }
     }
-  }, [initialContent]);
+  }, [value, initialContent, updateMetrics]);
 
   // 03 Live State Sync: queries active document command state under current caret
   const updateActiveStates = React.useCallback(() => {
     if (isHtmlView || typeof document === 'undefined') return;
 
     try {
-      const isH2 = document.queryCommandValue('formatBlock') === 'h2';
-      const isQuote = document.queryCommandValue('formatBlock') === 'blockquote';
+      const block = (document.queryCommandValue('formatBlock') || '').toLowerCase();
 
       setActiveStates({
         bold: document.queryCommandState('bold'),
@@ -198,18 +238,21 @@ export function RichTextEditor({
         strikeThrough: document.queryCommandState('strikeThrough'),
         insertUnorderedList: document.queryCommandState('insertUnorderedList'),
         insertOrderedList: document.queryCommandState('insertOrderedList'),
-        h2: isH2,
-        blockquote: isQuote,
+        h1: block === 'h1',
+        h2: block === 'h2',
+        h3: block === 'h3',
+        blockquote: block === 'blockquote',
       });
     } catch {
       // Ignored if queryCommandState is unavailable
     }
-  }, [isHtmlView]);
+    updateMetrics();
+  }, [isHtmlView, updateMetrics]);
 
   // 02 Command Toolbar execution seam
-  const exec = (command: string, value: string | undefined = undefined) => {
+  const exec = (command: string, cmdValue: string | undefined = undefined) => {
     if (isHtmlView) return;
-    document.execCommand(command, false, value);
+    document.execCommand(command, false, cmdValue);
     if (editorRef.current) {
       const html = editorRef.current.innerHTML;
       setRawHtml(html);
@@ -218,7 +261,7 @@ export function RichTextEditor({
     updateActiveStates();
   };
 
-  // 05 URL Scheme Guard when adding hyperlinks
+  // URL Scheme Guard when adding hyperlinks
   const handleInsertLink = () => {
     if (isHtmlView) return;
     const url = window.prompt('Enter link URL (e.g. https://snpi.edu.kh):', 'https://');
@@ -227,15 +270,14 @@ export function RichTextEditor({
     const trimmed = url.trim();
     const lower = trimmed.toLowerCase();
 
-    // 05 URL Scheme Guard: reject javascript:, data:, vbscript:
+    // URL Scheme Guard: reject javascript:, data:, vbscript:
     if (
       lower.startsWith('javascript:') ||
       lower.startsWith('data:') ||
       lower.startsWith('vbscript:')
     ) {
-      alert(
-        'Security Warning: Disallowed URL scheme. javascript:, data:, and vbscript: are blocked.',
-      );
+      setSanitizedNotice('Blocked unsafe URL scheme (javascript: / data:). Link was rejected.');
+      setTimeout(() => setSanitizedNotice(null), 3500);
       return;
     }
 
@@ -246,7 +288,7 @@ export function RichTextEditor({
 
     document.execCommand('createLink', false, safeUrl);
 
-    // Apply 05 rel="noopener nofollow" and target="_blank"
+    // Apply rel="noopener nofollow" and target="_blank"
     if (editorRef.current) {
       const links = editorRef.current.querySelectorAll('a');
       links.forEach((a) => {
@@ -269,7 +311,7 @@ export function RichTextEditor({
     const cleanHtml = htmlData ? sanitizeHtmlAllowlist(htmlData) : textData;
     document.execCommand('insertHTML', false, cleanHtml);
 
-    setSanitizedNotice('Pasted HTML stripped to safe allowlist (scripts & unknown tags removed).');
+    setSanitizedNotice('Pasted HTML stripped to safe allowlist (scripts & foreign tags removed).');
     setTimeout(() => setSanitizedNotice(null), 3500);
 
     if (editorRef.current) {
@@ -280,7 +322,7 @@ export function RichTextEditor({
     updateActiveStates();
   };
 
-  // 08 Keyboard Shortcuts: Ctrl/Cmd + B, I, U, K
+  // Keyboard Shortcuts: Ctrl/Cmd + B, I, U, K, Z
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.metaKey || e.ctrlKey) {
       const key = e.key.toLowerCase();
@@ -303,8 +345,7 @@ export function RichTextEditor({
   // 06 HTML Source View Toggle
   const toggleHtmlView = () => {
     if (isHtmlView) {
-      // Switching from HTML source view back to visual WYSIWYG:
-      // Re-sanitize whatever was typed in raw textarea to guarantee safety
+      // Switching from HTML source view back to visual WYSIWYG
       const clean = sanitizeHtmlAllowlist(rawHtml);
       setRawHtml(clean);
       if (editorRef.current) {
@@ -312,6 +353,7 @@ export function RichTextEditor({
       }
       setIsHtmlView(false);
       onChange?.(clean);
+      setTimeout(updateMetrics, 50);
     } else {
       // Switching from WYSIWYG to raw HTML textarea
       if (editorRef.current) {
@@ -334,235 +376,324 @@ export function RichTextEditor({
   return (
     <div
       className={cn(
-        'w-full overflow-hidden rounded-2xl border transition-colors',
-        isDark
-          ? 'border-slate-800 bg-[#00081C] text-slate-100'
-          : 'border-slate-200 bg-white text-slate-900 shadow-xs',
+        'w-full overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white text-slate-900 shadow-xs transition-all',
         className,
       )}
     >
       {/* ======================================================== */}
-      {/* 02 COMMAND TOOLBAR (role="toolbar")                      */}
+      {/* 02 HIGH-TECH COMMAND TOOLBAR (role="toolbar")            */}
       {/* 07 Selection-Safe Buttons (onMouseDown preventDefault)   */}
       {/* ======================================================== */}
       <div
         role="toolbar"
         aria-label="Formatting controls"
-        className={cn(
-          'flex flex-wrap items-center justify-between gap-1 border-b px-3 py-2 font-mono text-xs select-none',
-          isDark
-            ? 'border-slate-800 bg-slate-900/60 text-slate-300'
-            : 'border-slate-100 bg-slate-50 text-slate-700',
-        )}
+        className="flex flex-wrap items-center justify-between gap-1.5 border-b border-[#CAD3F5] bg-[#EFF5FF]/80 px-3 py-2 font-mono text-xs backdrop-blur-xs select-none"
       >
         <div className="flex flex-wrap items-center gap-1">
-          {/* Bold */}
+          {/* History Group: Undo & Redo */}
+          <button
+            type="button"
+            disabled={isHtmlView}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => exec('undo')}
+            title="Undo (Ctrl+Z / ⌘Z)"
+            aria-label="Undo"
+            className="flex size-7 items-center justify-center rounded-[5px] border border-transparent text-slate-700 transition-all hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF] active:scale-95 disabled:opacity-40"
+          >
+            <RotateCcw className="size-3.5" />
+          </button>
+          <button
+            type="button"
+            disabled={isHtmlView}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => exec('redo')}
+            title="Redo (Ctrl+Y / ⌘⇧Z)"
+            aria-label="Redo"
+            className="flex size-7 items-center justify-center rounded-[5px] border border-transparent text-slate-700 transition-all hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF] active:scale-95 disabled:opacity-40"
+          >
+            <RotateCw className="size-3.5" />
+          </button>
+
+          <span className="mx-1 h-4 w-[1px] bg-[#CAD3F5]" />
+
+          {/* Inline Text Styles: Bold, Italic, Underline, Strikethrough */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('bold')}
+            title="Bold (⌘B)"
             aria-label="Bold (Ctrl+B)"
             aria-pressed={activeStates.bold}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.bold
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <Bold className="size-3.5" />
           </button>
 
-          {/* Italic */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('italic')}
+            title="Italic (⌘I)"
             aria-label="Italic (Ctrl+I)"
             aria-pressed={activeStates.italic}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.italic
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <Italic className="size-3.5" />
           </button>
 
-          {/* Underline */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('underline')}
+            title="Underline (⌘U)"
             aria-label="Underline (Ctrl+U)"
             aria-pressed={activeStates.underline}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.underline
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <Underline className="size-3.5" />
           </button>
 
-          {/* Strikethrough */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('strikeThrough')}
+            title="Strikethrough"
             aria-label="Strikethrough"
             aria-pressed={activeStates.strikeThrough}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.strikeThrough
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <Strikethrough className="size-3.5" />
           </button>
 
-          <span className="mx-0.5 h-4 w-px bg-slate-200 dark:bg-slate-800" />
+          <span className="mx-1 h-4 w-[1px] bg-[#CAD3F5]" />
 
-          {/* Heading 2 */}
+          {/* Heading Levels: H1, H2, H3 */}
+          <button
+            type="button"
+            disabled={isHtmlView}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => exec('formatBlock', activeStates.h1 ? '<p>' : '<h1>')}
+            title="Heading 1"
+            aria-label="Heading 1"
+            aria-pressed={activeStates.h1}
+            className={cn(
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
+              activeStates.h1
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
+            )}
+          >
+            <Heading1 className="size-3.5" />
+          </button>
+
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('formatBlock', activeStates.h2 ? '<p>' : '<h2>')}
+            title="Heading 2"
             aria-label="Heading 2"
             aria-pressed={activeStates.h2}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.h2
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <Heading2 className="size-3.5" />
           </button>
 
-          {/* Bullet List */}
+          <button
+            type="button"
+            disabled={isHtmlView}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => exec('formatBlock', activeStates.h3 ? '<p>' : '<h3>')}
+            title="Heading 3"
+            aria-label="Heading 3"
+            aria-pressed={activeStates.h3}
+            className={cn(
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
+              activeStates.h3
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
+            )}
+          >
+            <Heading3 className="size-3.5" />
+          </button>
+
+          <span className="mx-1 h-4 w-[1px] bg-[#CAD3F5]" />
+
+          {/* Structure: Bullet List, Numbered List, Quote, Code Block, Divider */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('insertUnorderedList')}
+            title="Bullet list"
             aria-label="Bullet list"
             aria-pressed={activeStates.insertUnorderedList}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.insertUnorderedList
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <List className="size-3.5" />
           </button>
 
-          {/* Numbered List */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('insertOrderedList')}
+            title="Numbered list"
             aria-label="Numbered list"
             aria-pressed={activeStates.insertOrderedList}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.insertOrderedList
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <ListOrdered className="size-3.5" />
           </button>
 
-          {/* Blockquote */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('formatBlock', activeStates.blockquote ? '<p>' : '<blockquote>')}
+            title="Quote block"
             aria-label="Quote block"
             aria-pressed={activeStates.blockquote}
             className={cn(
-              'flex size-7 items-center justify-center rounded-[4px] border transition-all',
+              'flex size-7 items-center justify-center rounded-[5px] border transition-all active:scale-95',
               activeStates.blockquote
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] font-bold text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-transparent text-slate-600 hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800',
+                ? 'border-[#0056FF] bg-[#E3E7FC] font-black text-[#0056FF] shadow-2xs'
+                : 'border-transparent text-slate-700 hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
             )}
           >
             <Quote className="size-3.5" />
           </button>
 
-          {/* Code */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('formatBlock', '<pre>')}
+            title="Code block"
             aria-label="Code block"
-            className="flex size-7 items-center justify-center rounded-[4px] border border-transparent text-slate-600 transition-all hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800"
+            className="flex size-7 items-center justify-center rounded-[5px] border border-transparent text-slate-700 transition-all hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF] active:scale-95"
           >
-            <Code className="size-3.5" />
+            <Terminal className="size-3.5" />
           </button>
 
-          {/* Link */}
+          <button
+            type="button"
+            disabled={isHtmlView}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => exec('insertHorizontalRule')}
+            title="Horizontal Divider Line"
+            aria-label="Insert Divider Line"
+            className="flex size-7 items-center justify-center rounded-[5px] border border-transparent text-slate-700 transition-all hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF] active:scale-95"
+          >
+            <Minus className="size-3.5" />
+          </button>
+
+          <span className="mx-1 h-4 w-[1px] bg-[#CAD3F5]" />
+
+          {/* Link & Clear Format */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={handleInsertLink}
+            title="Insert Safe Hyperlink (⌘K)"
             aria-label="Insert Link (Ctrl+K)"
-            className="flex size-7 items-center justify-center rounded-[4px] border border-transparent text-slate-600 transition-all hover:bg-slate-200/60 dark:text-slate-400 dark:hover:bg-slate-800"
+            className="flex size-7 items-center justify-center rounded-[5px] border border-transparent text-slate-700 transition-all hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF] active:scale-95"
           >
             <LinkIcon className="size-3.5" />
           </button>
 
-          <span className="mx-0.5 h-4 w-px bg-slate-200 dark:bg-slate-800" />
-
-          {/* Clear Format */}
           <button
             type="button"
             disabled={isHtmlView}
             onMouseDown={(e) => e.preventDefault()}
             onClick={() => exec('removeFormat')}
+            title="Clear Formatting"
             aria-label="Clear formatting"
-            className="flex size-7 items-center justify-center rounded-[4px] border border-transparent text-[11px] font-bold text-slate-500 transition-all hover:bg-slate-200/60 hover:text-slate-900 dark:hover:bg-slate-800"
+            className="flex size-7 items-center justify-center rounded-[5px] border border-transparent font-mono text-[11px] font-bold text-slate-500 transition-all hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF] active:scale-95"
           >
             T<span className="text-[9px] line-through">x</span>
           </button>
         </div>
 
-        {/* 06 HTML Source View Toggle */}
-        <div className="flex items-center gap-1.5 pt-1 sm:pt-0">
+        {/* 06 Modern Visual / HTML Source Segmented Mode Switch */}
+        <div className="flex items-center rounded-lg border border-[#CAD3F5] bg-[#E3E7FC]/60 p-0.5">
           <button
             type="button"
-            onClick={toggleHtmlView}
+            onClick={() => {
+              if (isHtmlView) toggleHtmlView();
+            }}
             className={cn(
-              'flex items-center gap-1 rounded-[4px] border px-2.5 py-1 font-mono text-[11px] font-bold transition-colors',
-              isHtmlView
-                ? 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] dark:border-cyan-500/40 dark:bg-cyan-500/20 dark:text-cyan-400'
-                : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300',
+              'flex items-center gap-1.5 rounded-md px-2.5 py-1 font-mono text-[11px] font-bold transition-all',
+              !isHtmlView
+                ? 'border border-[#CAD3F5] bg-white text-[#0056FF] shadow-2xs'
+                : 'text-slate-600 hover:text-slate-900',
             )}
           >
-            <Code className="size-3" />
-            <span>{isHtmlView ? 'Visual Mode' : '</> HTML Source'}</span>
+            <SquarePen className="size-3 text-[#0056FF]" />
+            <span>Visual</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              if (!isHtmlView) toggleHtmlView();
+            }}
+            className={cn(
+              'flex items-center gap-1.5 rounded-md px-2.5 py-1 font-mono text-[11px] font-bold transition-all',
+              isHtmlView
+                ? 'border border-[#CAD3F5] bg-white text-[#0056FF] shadow-2xs'
+                : 'text-slate-600 hover:text-slate-900',
+            )}
+          >
+            <Code className="size-3 text-[#0056FF]" />
+            <span>&lt;/&gt; HTML</span>
           </button>
         </div>
       </div>
 
       {/* Sanitized notice banner */}
       {sanitizedNotice && (
-        <div className="flex items-center gap-1.5 border-b border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 font-mono text-[11px] text-emerald-600 dark:text-emerald-400">
-          <ShieldCheck className="size-3.5" />
+        <div className="flex items-center gap-2 border-b border-emerald-200 bg-emerald-50 px-4 py-2 font-mono text-xs font-semibold text-emerald-800">
+          <ShieldCheck className="size-4 shrink-0 text-emerald-600" />
           <span>{sanitizedNotice}</span>
         </div>
       )}
@@ -573,13 +704,20 @@ export function RichTextEditor({
       {isHtmlView ? (
         <textarea
           value={rawHtml}
-          onChange={(e) => setRawHtml(e.target.value)}
+          onChange={(e) => {
+            setRawHtml(e.target.value);
+            const text = e.target.value;
+            const cleanText = text.trim();
+            const words = cleanText ? cleanText.split(/\s+/).length : 0;
+            setMetrics({
+              words,
+              chars: text.length,
+              readTime: Math.max(1, Math.ceil(words / 200)),
+            });
+          }}
           style={{ minHeight: `${minHeight}px` }}
           aria-label="Raw HTML Source"
-          className={cn(
-            'w-full resize-y p-4 font-mono text-xs leading-relaxed outline-none',
-            isDark ? 'bg-slate-950 text-cyan-300' : 'bg-slate-900 text-slate-100',
-          )}
+          className="w-full resize-y border-none bg-[#0A1A4A] p-5 font-mono text-xs leading-relaxed text-cyan-200 outline-none selection:bg-[#0056FF] selection:text-white"
         />
       ) : (
         <div
@@ -595,39 +733,49 @@ export function RichTextEditor({
           data-placeholder={placeholder}
           style={{ minHeight: `${minHeight}px` }}
           className={cn(
-            'p-4 font-sans text-xs leading-relaxed transition-colors outline-none focus:outline-none',
-            '[&_h2]:mt-3 [&_h2]:mb-2 [&_h2]:text-base [&_h2]:font-bold',
-            '[&_p]:mb-2.5',
-            '[&_ul]:mb-2.5 [&_ul]:list-disc [&_ul]:pl-5',
-            '[&_ol]:mb-2.5 [&_ol]:list-decimal [&_ol]:pl-5',
-            '[&_blockquote]:mb-2.5 [&_blockquote]:border-l-2 [&_blockquote]:border-[#0056FF] [&_blockquote]:pl-3 [&_blockquote]:italic dark:[&_blockquote]:border-cyan-400',
-            '[&_pre]:mb-2.5 [&_pre]:rounded-xl [&_pre]:bg-slate-100 [&_pre]:p-2.5 [&_pre]:font-mono [&_pre]:dark:bg-slate-900',
-            '[&_code]:rounded-md [&_code]:bg-slate-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:dark:bg-slate-800',
-            '[&_a]:text-[#0056FF] [&_a]:underline [&_a]:dark:text-[#38BDF8]',
+            'p-5 font-sans text-sm leading-relaxed text-[#0A1A4A] transition-colors outline-none selection:bg-[#E3E7FC] selection:text-[#0056FF] focus:outline-none sm:p-6',
+            '[&_h1]:mt-2 [&_h1]:mb-3 [&_h1]:border-b [&_h1]:border-slate-100 [&_h1]:pb-2 [&_h1]:text-xl [&_h1]:font-black [&_h1]:tracking-tight [&_h1]:text-[#0A1A4A]',
+            '[&_h2]:mt-4 [&_h2]:mb-2 [&_h2]:text-base [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-[#0A1A4A]',
+            '[&_h3]:mt-3 [&_h3]:mb-1.5 [&_h3]:text-sm [&_h3]:font-bold [&_h3]:text-slate-800',
+            '[&_p]:mb-3 [&_p]:text-[13.5px] [&_p]:leading-relaxed [&_p]:text-slate-700',
+            '[&_ul]:mb-3 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul]:text-slate-700',
+            '[&_ol]:mb-3 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ol]:text-slate-700',
+            '[&_blockquote]:my-3.5 [&_blockquote]:rounded-r-xl [&_blockquote]:border-l-[3.5px] [&_blockquote]:border-[#0056FF] [&_blockquote]:bg-[#EFF5FF] [&_blockquote]:p-3.5 [&_blockquote]:text-[#0A1A4A] [&_blockquote]:italic [&_blockquote]:shadow-2xs',
+            '[&_pre]:my-3.5 [&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-slate-800 [&_pre]:bg-[#0A1A4A] [&_pre]:p-4 [&_pre]:font-mono [&_pre]:text-xs [&_pre]:text-cyan-200',
+            '[&_code]:rounded-md [&_code]:border [&_code]:border-[#CAD3F5]/80 [&_code]:bg-[#E3E7FC] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_code]:font-bold [&_code]:text-[#0056FF]',
+            '[&_a]:font-medium [&_a]:text-[#0056FF] [&_a]:underline [&_a]:decoration-[#0056FF]/40 [&_a]:underline-offset-2 [&_a]:hover:text-[#2277FF]',
+            '[&_hr]:my-4 [&_hr]:border-t [&_hr]:border-[#CAD3F5]',
           )}
         />
       )}
 
-      {/* Editor Status Bar */}
-      <div
-        className={cn(
-          'flex flex-wrap items-center justify-between gap-2 border-t px-4 py-2 font-mono text-[10px]',
-          isDark
-            ? 'border-slate-800/80 bg-slate-900/40 text-slate-500'
-            : 'border-slate-100 bg-slate-50 text-slate-400',
-        )}
-      >
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1">
-            <ShieldCheck className="size-3 text-emerald-500" />
+      {/* Editor Telemetry & Status Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#CAD3F5] bg-[#EFF5FF]/80 px-4 py-2.5 font-mono text-[11px] text-slate-600">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="flex items-center gap-1.5 font-bold text-[#0056FF]">
+            <ShieldCheck className="size-3.5 text-[#0056FF]" />
             <span>Sanitized Allowlist Active</span>
           </span>
-          <span>&middot;</span>
-          <span>URL Schemes Guarded</span>
+          <span className="text-slate-300">·</span>
+          <span className="text-slate-500">Scheme Guard (http, https, mailto)</span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span>Shortcuts: ⌘+B &middot; ⌘+I &middot; ⌘+U &middot; ⌘+K</span>
+        <div className="flex flex-wrap items-center gap-3.5">
+          <span className="font-semibold text-slate-600">
+            Words: <strong className="font-bold text-slate-900">{metrics.words}</strong>
+          </span>
+          <span className="text-slate-300">·</span>
+          <span className="font-semibold text-slate-600">
+            Characters: <strong className="font-bold text-slate-900">{metrics.chars}</strong>
+          </span>
+          <span className="text-slate-300">·</span>
+          <span className="text-slate-500">
+            Shortcuts:{' '}
+            <kbd className="rounded border border-slate-300 bg-white px-1 py-0.5">⌘B</kbd>{' '}
+            <kbd className="rounded border border-slate-300 bg-white px-1 py-0.5">⌘I</kbd>{' '}
+            <kbd className="rounded border border-slate-300 bg-white px-1 py-0.5">⌘U</kbd>{' '}
+            <kbd className="rounded border border-slate-300 bg-white px-1 py-0.5">⌘K</kbd>
+          </span>
         </div>
       </div>
     </div>
@@ -638,92 +786,128 @@ export function RichTextEditor({
 // INTERACTIVE DOCUMENTATION DEMO: RichTextEditorDemo
 // ============================================================================
 
-export function RichTextEditorDemo() {
-  const [editorContent, setEditorContent] = React.useState<string>(
-    '<h2>SNPI-SMS Academic Ledger Protocol</h2><p>Student evaluations and credit transfers are authenticated using <strong>constant-time cryptographic checks</strong>. Never store plaintext credentials or allow unsanitized input in institutional archives.</p><ul><li>Automatic allowlist filtering</li><li>Scheme rejection for <code>javascript:</code> and <code>data:</code></li><li>Preserved caret selection on toolbar clicks</li></ul>',
-  );
+const SAMPLE_DOCUMENT = `<h1>SNPI-SMS Autonomous Academic Charter</h1>
+<p>The <strong>State Network Polytechnic Institute (SNPI)</strong> enforces strict data sovereignty, academic credential integrity, and multi-tenant isolation across all distributed campus nodes.</p>
+<blockquote>"All student evaluations, academic degrees, and institutional ledgers must be verified via constant-time cryptographic signatures prior to blockchain persistence."</blockquote>
+<h2>Core Security Invariants</h2>
+<ul>
+  <li><strong>Zero-Trust DOM Sanitizer:</strong> Direct AST traversal strips all <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, and unapproved attributes on paste.</li>
+  <li><strong>URL Scheme Shield:</strong> Prevents <code>javascript:</code>, <code>data:</code>, and <code>vbscript:</code> execution in hyperlinks.</li>
+  <li><strong>Native Caret Retention:</strong> Zero DOM churn preserves active cursor state across all 18 toolbar commands.</li>
+</ul>
+<h2>Cryptographic Ledger Protocol</h2>
+<pre><code>// SNPI Ledger Verification Signature
+const isSignatureValid = crypto.timingSafeEqual(
+  Buffer.from(signature, 'hex'),
+  Buffer.from(computedHash, 'hex')
+);</code></pre>
+<p>Review the official <a href="https://snpi.edu.kh">SNPI Higher Education Portal</a> specification for full REST API parameters.</p>`;
 
-  const simulateMaliciousPaste = () => {
+const SAMPLE_POLICY = `<h2>Institutional Cloud Data Governance</h2>
+<p>Under the <em>SNPI Technical Security Standard</em>, all student transcript requests require dual-officer biometric or MFA authentication.</p>
+<ul>
+  <li>Multi-Campus Replication across Phnom Penh, Siem Reap, and Battambang</li>
+  <li>Automated 24-hour snapshot recovery gates</li>
+  <li>Immutable audit trails recording all grade modifications</li>
+</ul>`;
+
+export function RichTextEditorDemo() {
+  const [editorContent, setEditorContent] = React.useState<string>(SAMPLE_DOCUMENT);
+  const [testFeedback, setTestFeedback] = React.useState<string | null>(null);
+
+  const simulateXssPaste = () => {
     const dirtyHtml = `
-      <div style="background: red; font-size: 30px;">
-        <h3>Suspicious Web Snippet</h3>
-        <script>alert('malicious exploit script');</script>
-        <p style="color: blue;">Legitimate content with inline styles.</p>
-        <a href="javascript:alert('xss')">Dangerous Link</a>
-        <a href="https://snpi.edu.kh">Official Portal Link</a>
-        <iframe src="https://evil.com"></iframe>
+      <div style="background: red; font-size: 32px; color: yellow;">
+        <h3>Suspicious Exploit Vector Test</h3>
+        <script>alert('MALICIOUS SCRIPT EXECUTED - SHOULD BE STRIPPED');</script>
+        <p style="color: blue;">Legitimate content preserved without dangerous markup.</p>
+        <a href="javascript:alert('XSS_ATTACK')">Dangerous Injected Link</a>
+        <a href="https://snpi.edu.kh">Legitimate Educational Link</a>
+        <iframe src="https://untrusted-external-site.com" width="400" height="200"></iframe>
       </div>
     `;
     const clean = sanitizeHtmlAllowlist(dirtyHtml);
-    setEditorContent((prev) => `${prev} <hr/> ${clean}`);
+    setEditorContent((prev) => `${prev}<hr/>${clean}`);
+    setTestFeedback(
+      'Simulated Dirty Paste: <script>, <iframe>, inline styling, and javascript: links were intercepted and cleanly stripped by the allowlist sanitizer.',
+    );
+    setTimeout(() => setTestFeedback(null), 5000);
+  };
+
+  const handleResetDocument = () => {
+    setEditorContent(SAMPLE_DOCUMENT);
+    setTestFeedback('Restored default SNPI-SMS Academic Charter template.');
+    setTimeout(() => setTestFeedback(null), 3000);
+  };
+
+  const handleLoadPolicy = () => {
+    setEditorContent(SAMPLE_POLICY);
+    setTestFeedback('Loaded Institutional Cloud Data Governance template.');
+    setTimeout(() => setTestFeedback(null), 3000);
+  };
+
+  const handleClear = () => {
+    setEditorContent('<p></p>');
+    setTestFeedback('Canvas cleared.');
+    setTimeout(() => setTestFeedback(null), 2500);
   };
 
   return (
-    <div className="w-full space-y-6">
-      {/* Control Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+    <div className="w-full space-y-4">
+      {/* Action Controls Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-2.5 sm:px-3.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={handleResetDocument}
+            className="cursor-pointer rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+          >
+            Academic Charter
+          </button>
+          <button
+            type="button"
+            onClick={handleLoadPolicy}
+            className="cursor-pointer rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+          >
+            Data Policy
+          </button>
+        </div>
+
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-            Security Status:
-          </span>
-          <span className="inline-flex items-center rounded-[4px] border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
-            Allowlist Active
-          </span>
+          <button
+            type="button"
+            onClick={simulateXssPaste}
+            className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-[#0056FF] bg-[#0056FF] px-3 py-1 font-mono text-[11px] font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95"
+          >
+            <ShieldCheck className="size-3.5" />
+            <span>Test XSS Dirty Paste</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleClear}
+            title="Clear canvas"
+            className="flex size-7 cursor-pointer items-center justify-center rounded-[4px] border border-slate-200 bg-white text-slate-600 transition-colors hover:border-slate-400 hover:text-slate-900"
+          >
+            <Bin className="size-3.5" />
+          </button>
         </div>
-
-        {/* Security Test Button */}
-        <button
-          type="button"
-          onClick={simulateMaliciousPaste}
-          className="flex items-center gap-1.5 rounded-[4px] border border-red-500/30 bg-red-500/10 px-3 py-1 font-mono text-xs font-bold text-red-600 transition-colors hover:bg-red-500/20"
-        >
-          <ShieldCheck className="size-3.5" />
-          <span>Simulate Dirty Paste (Strip Scripts)</span>
-        </button>
       </div>
 
-      {/* The Rich Text Editor Instance */}
+      {/* Real-time Test Feedback Banner */}
+      {testFeedback && (
+        <div className="flex items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-2 font-mono text-xs font-semibold text-emerald-900 shadow-2xs">
+          <Check className="size-4 shrink-0 text-emerald-600" />
+          <span>{testFeedback}</span>
+        </div>
+      )}
+
+      {/* The Redesigned Rich Text Editor Instance */}
       <RichTextEditor
-        theme="light"
-        initialContent={editorContent}
+        value={editorContent}
         onChange={setEditorContent}
-        minHeight={200}
+        placeholder="Draft your institutional report or policy document..."
+        minHeight={260}
       />
-
-      {/* Feature & Security Architecture Grid */}
-      <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-4">
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-[#0056FF]">01 Surface</span>
-          <p className="font-bold text-slate-800">contenteditable</p>
-          <p className="text-[11px] text-slate-500">
-            Native DOM surface with role=&quot;textbox&quot;, no iframe.
-          </p>
-        </div>
-
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-emerald-600">04 Sanitizer</span>
-          <p className="font-bold text-slate-800">Detached Allowlist</p>
-          <p className="text-[11px] text-slate-500">
-            Strips script, style, and unknown tags on paste.
-          </p>
-        </div>
-
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-amber-600">05 URL Guard</span>
-          <p className="font-bold text-slate-800">Scheme Shield</p>
-          <p className="text-[11px] text-slate-500">
-            Rejects javascript: & data:; appends noopener.
-          </p>
-        </div>
-
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-2xs">
-          <span className="font-mono text-[10px] font-bold text-purple-600">07 Selection</span>
-          <p className="font-bold text-slate-800">Caret Retention</p>
-          <p className="text-[11px] text-slate-500">
-            Preserves selection range across toolbar clicks.
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

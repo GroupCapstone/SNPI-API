@@ -8,6 +8,13 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
+    "version": "0.2.15",
+    "date": "01.11.2026",
+    "commitHash": "6e526a3",
+    "developer": "史力爱卫",
+    "description": "Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts"
+  },
+  {
     "version": "0.2.14",
     "date": "01.11.2026",
     "commitHash": "aa64a62",
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "c9ae516",
     "developer": "史力爱卫",
     "description": "Streamline mobile navigation and cleanup demo viewports"
-  },
-  {
-    "version": "0.2.14",
-    "date": "31.10.2026",
-    "commitHash": "2c262de",
-    "developer": "史力爱卫",
-    "description": "Remove Read Only badge and top context pills from hero and directory"
   }
 ];

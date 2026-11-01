@@ -101,7 +101,7 @@ export function IconBar({
         aria-orientation="horizontal"
         onKeyDown={handleKeyDown}
         className={cn(
-          'relative flex h-[54px] items-center gap-1 rounded-2xl border border-slate-800/90 bg-[#0A0D14]/95 p-1.5 shadow-2xl backdrop-blur-xl transition-all duration-200 select-none',
+          'relative flex h-[54px] items-center gap-1 rounded-2xl border border-[#CAD3F5] bg-white p-1.5 shadow-none transition-all duration-200 select-none',
           className,
         )}
       >
@@ -135,9 +135,9 @@ export function IconBar({
               className={cn(
                 'group relative flex h-full cursor-pointer items-center gap-2 rounded-[4px] px-3 transition-all duration-200 ease-out outline-none',
                 isSelected
-                  ? 'bg-white/10 text-white shadow-inner ring-1 ring-white/15'
-                  : 'text-slate-400 hover:bg-white/5 hover:text-white',
-                isFocused && !isSelected && 'bg-white/[0.04] ring-1 ring-slate-700',
+                  ? 'bg-[#E3E7FC] text-[#0056FF] ring-1 ring-[#0056FF]/30'
+                  : 'text-slate-600 hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                isFocused && !isSelected && 'bg-[#EFF5FF] ring-1 ring-[#CAD3F5]',
               )}
             >
               {/* Status Indicator Bar (Zero-Dot Standard) */}
@@ -169,11 +169,6 @@ export function IconBar({
           );
         })}
       </div>
-
-      {/* Instructional Caption */}
-      <p className="font-mono text-[11px] text-slate-500">
-        Hover or Tab to a part. Enter pins it, Esc clears.
-      </p>
     </div>
   );
 }

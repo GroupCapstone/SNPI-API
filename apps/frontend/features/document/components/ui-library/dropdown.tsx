@@ -94,7 +94,7 @@ export function LibraryDropdown({
         <div
           role="listbox"
           tabIndex={-1}
-          className="absolute right-0 left-0 z-50 mt-1.5 max-h-60 overflow-y-auto rounded-[4px] border border-slate-200 bg-white p-1 shadow-lg transition-all"
+          className="absolute right-0 left-0 z-50 mt-1.5 max-h-60 overflow-y-auto rounded-[4px] border border-[#CAD3F5] bg-white p-1 shadow-none transition-all"
         >
           {options.map((option) => {
             const isSelected = option.value === value;

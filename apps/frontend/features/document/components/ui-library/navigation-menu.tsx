@@ -13,6 +13,7 @@ import {
   ExternalLink,
   Code,
   Compass,
+  SquarePen,
 } from '@/components/icons';
 
 // ============================================================================
@@ -203,7 +204,7 @@ export function NavigationMenuContent({
         }, 200);
       }}
       className={cn(
-        'animate-in fade-in zoom-in-95 absolute top-full left-1/2 z-50 mt-3 -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-800 bg-[#0A0D14]/95 p-4 text-white shadow-2xl backdrop-blur-2xl transition-all duration-200',
+        'animate-in fade-in zoom-in-95 absolute top-full left-1/2 z-50 mt-3 -translate-x-1/2 overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 text-slate-900 shadow-none transition-all duration-200',
         'w-[min(calc(100vw-2rem),520px)]',
         className,
       )}
@@ -215,27 +216,23 @@ export function NavigationMenuContent({
 }
 
 // ============================================================================
-// OFFICIAL RARE UI FLOATING 3-ISLAND HEADER COMPONENT
+// OFFICIAL SNPI FLOATING 3-ISLAND HEADER COMPONENT
 // ============================================================================
 
 /**
- * RareUiNavigationMenu
+ * SnpiFloatingNavigationMenu (Floating Island Header)
  *
- * Implements the exact 3-island floating dark pill navigation dock from the reference:
- * - Island 1 (Left): [ 🌸 Rare UI ] Brand Pill with coral flower logo
- * - Island 2 (Center): [ Home | Components (Mega Menu) | Sponsors ] Links Pill
- * - Island 3 (Right): [ 🐙 1866 ] GitHub stars pill + [ 🌓 ] Theme toggle circle
+ * Implements the 3-island floating pill navigation dock adhering to the 5 brand tokens:
+ * - Island 1 (Left): [ ✦ SNPI UI ] Brand Pill in Soft Lavender & Royal Blue
+ * - Island 2 (Center): [ Home | Components (Mega Menu) | Documentation ] Links Pill
+ * - Island 3 (Right): [ GitHub 1.8k ] GitHub stars pill + [ HUD Mode ] Toggle
  *
- * Fully adheres to the Navigation Menu usage policy:
- * - Top-level items open mega menu panels laid out with summaries in columns, glyphs, and a CTA card.
- * - Header rows mix panel triggers with plain links styled seamlessly.
- * - Hash placeholders ready for real router routes.
+ * Strict 0px blur shadows, crisp 1px borders (#CAD3F5), high contrast Deep Navy (#0A1A4A).
  */
 export function RareUiNavigationMenu({ className }: { className?: string }) {
   const [activeTab, setActiveTab] = React.useState('components');
   const [stars, setStars] = React.useState(1866);
   const [isStarred, setIsStarred] = React.useState(false);
-  const [isDark, setIsDark] = React.useState(true);
 
   return (
     <div
@@ -245,22 +242,19 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
       )}
     >
       {/* Floating 3-Island Header Row */}
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-        {/* ISLAND 1: Brand Capsule Pill [ 🌸 Rare UI ] */}
-        <div className="flex h-11 items-center gap-2 rounded-full border border-slate-800/90 bg-[#0A0D14] px-4 py-2 text-white shadow-2xl backdrop-blur-xl transition-transform hover:scale-[1.02]">
-          {/* Rare UI Coral Flower Mark */}
-          <svg
-            className="size-4.5 fill-[#FF5500] text-[#FF5500]"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M12 2a3 3 0 0 0-3 3c0 .54.14 1.05.39 1.49C8.07 6.18 6.7 6.64 5.76 7.76A3 3 0 0 0 5 12a3 3 0 0 0 2.24 2.89c-.66.86-.96 1.95-.76 3.03.35 1.83 1.96 3.1 3.82 2.98 1.03-.07 1.96-.58 2.55-1.37.59.79 1.52 1.3 2.55 1.37 1.86.12 3.47-1.15 3.82-2.98.2-1.08-.1-2.17-.76-3.03A3 3 0 0 0 21 12a3 3 0 0 0-.76-4.24c-.94-1.12-2.31-1.58-3.63-1.27.25-.44.39-.95.39-1.49a3 3 0 0 0-5-2z" />
-          </svg>
-          <span className="font-sans text-sm font-black tracking-tight text-white">Rare UI</span>
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        {/* ISLAND 1: Brand Capsule Pill [ ✦ SNPI UI ] */}
+        <div className="flex h-11 items-center gap-2 rounded-full border border-[#CAD3F5] bg-white px-4 py-2 text-slate-900 shadow-none transition-transform hover:scale-[1.02]">
+          <span className="flex size-5 items-center justify-center rounded-full bg-[#E3E7FC] text-[#0056FF]">
+            ✦
+          </span>
+          <span className="font-sans text-xs font-black tracking-tight text-[#0A1A4A]">
+            SNPI UI
+          </span>
         </div>
 
-        {/* ISLAND 2: Center Navigation Menu Pill [ Home | Components | Sponsors ] */}
-        <NavigationMenu className="h-11 rounded-full border border-slate-800/90 bg-[#0A0D14] px-3 shadow-2xl backdrop-blur-xl">
+        {/* ISLAND 2: Center Navigation Menu Pill [ Home | Components | Docs ] */}
+        <NavigationMenu className="h-11 rounded-full border border-[#CAD3F5] bg-white px-3 shadow-none">
           <NavigationMenuList className="gap-1.5">
             {/* Plain Link: Home */}
             <NavigationMenuItem>
@@ -268,20 +262,20 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
                 href="#home"
                 active={activeTab === 'home'}
                 onClick={() => setActiveTab('home')}
-                className="hover:text-white"
+                className="text-slate-600 hover:text-[#0056FF]"
               >
                 Home
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            <span className="font-mono text-xs text-slate-800">|</span>
+            <span className="font-mono text-xs text-slate-300">|</span>
 
             {/* Mega Menu Trigger: Components */}
             <NavigationMenuItem>
               <NavigationMenuTrigger
                 value="components"
                 onClick={() => setActiveTab('components')}
-                className={cn(activeTab === 'components' && 'font-bold text-white')}
+                className={cn(activeTab === 'components' && 'font-bold text-[#0056FF]')}
               >
                 Components
               </NavigationMenuTrigger>
@@ -299,76 +293,76 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
                         </span>
                       </div>
                       <h4 className="mt-2 font-sans text-sm font-extrabold text-[#0A1A4A]">
-                        Border Beam Card
+                        Cyber Armor Nav
                       </h4>
                       <p className="mt-1 font-sans text-[11px] leading-relaxed text-slate-600">
-                        Matte instrument login card with continuous constant-velocity 4-dash ray.
+                        Aerospace mecha HUD console with chamfered armor plates and Royal Blue glow.
                       </p>
                     </div>
 
                     <a
-                      href="#comp-border-beam"
+                      href="#cat-navigation"
                       className="group/cta mt-4 inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#0056FF] hover:underline"
                     >
-                      <span>Explore Beam</span>
+                      <span>Explore Docks</span>
                       <ArrowRight className="size-3 transition-transform group-hover/cta:translate-x-1" />
                     </a>
                   </div>
 
                   {/* Right Column: Key Navigation Panels with Glyphs & Summaries */}
-                  <div className="flex flex-col justify-between gap-2.5 sm:col-span-7">
+                  <div className="flex flex-col justify-between gap-2 sm:col-span-7">
                     <a
-                      href="#comp-snackbar"
-                      className="group/item flex items-start gap-3 rounded-[4px] p-2.5 transition-colors hover:bg-white/5"
+                      href="#cat-forms"
+                      className="group/item flex items-start gap-3 rounded-lg border border-transparent p-2 transition-colors hover:border-[#CAD3F5] hover:bg-[#EFF5FF]"
                     >
-                      <div className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-800 bg-[#161B26] text-[#38BDF8]">
-                        <Bell className="size-3.5" />
+                      <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
+                        <SquarePen className="size-3.5" />
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-sans text-xs font-bold text-slate-100 group-hover/item:text-white">
-                            Native Snackbar
+                          <span className="font-sans text-xs font-bold text-[#0A1A4A] group-hover/item:text-[#0056FF]">
+                            Rich Text Editor
                           </span>
-                          <span className="py-0.2 rounded bg-emerald-500/20 px-1 font-mono text-[9px] text-emerald-400">
+                          <span className="rounded border border-[#CAD3F5] bg-white px-1 font-mono text-[9px] font-bold text-[#0056FF]">
                             v2
                           </span>
                         </div>
-                        <p className="font-sans text-[11px] text-slate-400">
-                          Bottom-anchored obsidian surface with live countdown progress.
+                        <p className="font-sans text-[11px] text-slate-500">
+                          WYSIWYG editor with allowlist sanitizer and URL scheme guard.
                         </p>
                       </div>
                     </a>
 
                     <a
-                      href="#comp-hanging-tabs-nav"
-                      className="group/item flex items-start gap-3 rounded-[4px] p-2.5 transition-colors hover:bg-white/5"
+                      href="#cat-feedback"
+                      className="group/item flex items-start gap-3 rounded-lg border border-transparent p-2 transition-colors hover:border-[#CAD3F5] hover:bg-[#EFF5FF]"
                     >
-                      <div className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-800 bg-[#161B26] text-amber-400">
-                        <Compass className="size-3.5" />
+                      <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
+                        <Bell className="size-3.5" />
                       </div>
                       <div>
-                        <span className="font-sans text-xs font-bold text-slate-100 group-hover/item:text-white">
-                          Hanging Tabs Nav
+                        <span className="font-sans text-xs font-bold text-[#0A1A4A] group-hover/item:text-[#0056FF]">
+                          Toast Stack & Alerts
                         </span>
-                        <p className="font-sans text-[11px] text-slate-400">
-                          Inverted trapezoid folder tabs suspended from the ceiling baseline.
+                        <p className="font-sans text-[11px] text-slate-500">
+                          Dynamic viewport notification toasts with live progress bars.
                         </p>
                       </div>
                     </a>
 
                     <a
                       href="#interactive-feed"
-                      className="group/item flex items-start gap-3 rounded-[4px] p-2.5 transition-colors hover:bg-white/5"
+                      className="group/item flex items-start gap-3 rounded-lg border border-transparent p-2 transition-colors hover:border-[#CAD3F5] hover:bg-[#EFF5FF]"
                     >
-                      <div className="flex size-7 shrink-0 items-center justify-center rounded-[4px] border border-slate-800 bg-[#161B26] text-purple-400">
+                      <div className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]">
                         <Layers className="size-3.5" />
                       </div>
                       <div>
-                        <span className="font-sans text-xs font-bold text-slate-100 group-hover/item:text-white">
-                          65 Core Components
+                        <span className="font-sans text-xs font-bold text-[#0A1A4A] group-hover/item:text-[#0056FF]">
+                          73 Design Primitives
                         </span>
-                        <p className="font-sans text-[11px] text-slate-400">
-                          Single-feed component catalog and mathematical design tokens.
+                        <p className="font-sans text-[11px] text-slate-500">
+                          Complete single-folder component library and tokens.
                         </p>
                       </div>
                     </a>
@@ -377,23 +371,23 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            <span className="font-mono text-xs text-slate-800">|</span>
+            <span className="font-mono text-xs text-slate-300">|</span>
 
-            {/* Plain Link: Sponsors */}
+            {/* Plain Link: Documentation */}
             <NavigationMenuItem>
               <NavigationMenuLink
-                href="#sponsors"
-                active={activeTab === 'sponsors'}
-                onClick={() => setActiveTab('sponsors')}
-                className="hover:text-white"
+                href="/document"
+                active={activeTab === 'docs'}
+                onClick={() => setActiveTab('docs')}
+                className="text-slate-600 hover:text-[#0056FF]"
               >
-                Sponsors
+                Open API
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* ISLAND 3: GitHub Stars Pill [ 🐙 1866 ] */}
+        {/* ISLAND 3: GitHub Stars Pill */}
         <button
           type="button"
           onClick={() => {
@@ -401,30 +395,12 @@ export function RareUiNavigationMenu({ className }: { className?: string }) {
             setStars((prev) => (isStarred ? prev - 1 : prev + 1));
           }}
           className={cn(
-            'flex h-11 items-center gap-2 rounded-[4px] border px-4 py-2 font-mono text-xs font-bold shadow-2xl backdrop-blur-xl transition-all active:scale-95',
-            isStarred
-              ? 'border-amber-500/50 bg-amber-500/10 text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
-              : 'border-slate-800/90 bg-[#0A0D14] text-white hover:border-slate-700',
+            'flex h-11 cursor-pointer items-center gap-2 rounded-full border border-[#CAD3F5] bg-white px-4 py-2 font-mono text-xs font-bold shadow-none transition-all hover:border-[#0056FF] active:scale-95',
+            isStarred ? 'border-[#0056FF] bg-[#E3E7FC] text-[#0056FF]' : 'text-slate-700',
           )}
         >
-          {/* GitHub Octocat Mark */}
-          <svg className="size-4 fill-current" viewBox="0 0 24 24">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.53 1.03 1.53 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.137 20.164 22 16.42 22 12c0-5.523-4.477-10-10-10z" />
-          </svg>
+          <span className="text-[#0056FF]">★</span>
           <span className="tabular-nums">{stars}</span>
-        </button>
-
-        {/* ISLAND 4: Theme Toggle Circle Button [ 🌓 ] */}
-        <button
-          type="button"
-          onClick={() => setIsDark(!isDark)}
-          title={isDark ? 'Switch to Light' : 'Switch to Dark'}
-          className="flex size-11 items-center justify-center rounded-[4px] border border-slate-800/90 bg-[#0A0D14] text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 hover:border-slate-700 active:scale-95"
-        >
-          {/* Half-circle contrast icon */}
-          <svg className="size-4 fill-current" viewBox="0 0 24 24">
-            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 0 1 0-16v16z" />
-          </svg>
         </button>
       </div>
     </div>

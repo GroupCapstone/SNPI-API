@@ -12,11 +12,9 @@ export function DurationPickerDemo() {
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-slate-600">
           <Clock className="size-4 text-[#0056FF]" />
-          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-            Duration Picker
-          </span>
+          <span className="font-mono text-xs font-semibold">Selected Duration:</span>
         </div>
         <span className="rounded-full bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
           {minutes < 60
@@ -94,10 +92,6 @@ export function PasswordInputDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Password Input & Policy
-      </span>
-
       <div className="relative">
         <input
           type={show ? 'text' : 'password'}
@@ -170,10 +164,6 @@ export function ThemeSelectorDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Theme Selector (Light Day Standard)
-      </span>
-
       <div className="grid grid-cols-3 gap-2.5">
         {options.map((opt) => {
           const Icon = opt.icon;

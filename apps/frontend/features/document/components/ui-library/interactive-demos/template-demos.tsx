@@ -35,7 +35,7 @@ export function DotPatternDemo() {
   const [spacing, setSpacing] = React.useState(24);
 
   return (
-    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
+    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-6 shadow-none">
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{
@@ -43,7 +43,7 @@ export function DotPatternDemo() {
           backgroundSize: `${spacing}px ${spacing}px`,
         }}
       />
-      <div className="relative z-10 space-y-2 rounded-xl border border-[#CAD3F5] bg-white/95 p-4 text-center shadow-lg backdrop-blur-md">
+      <div className="relative z-10 space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-4 text-center shadow-none">
         <h4 className="font-sans text-sm font-bold text-slate-900">Precision Linear Grid</h4>
         <p className="font-sans text-xs text-slate-500">
           Pure geometric linear lattice (Zero-Dot Design Standard) with customizable pitch.
@@ -74,7 +74,7 @@ export function RetroGridDemo() {
   const [perspective, setPerspective] = React.useState(true);
 
   return (
-    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-inner">
+    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#F8FAFC] p-6 shadow-none">
       {/* 3D Grid Plane */}
       <div
         className={cn(
@@ -89,7 +89,7 @@ export function RetroGridDemo() {
       {/* Brand Accent Bar */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[#0056FF]" />
 
-      <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/95 p-4 text-center text-[#09172B] shadow-md backdrop-blur-md">
+      <div className="relative z-10 space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-4 text-center text-[#09172B] shadow-none">
         <h4 className="font-sans text-sm font-bold text-[#09172B]">Retro Cyber Grid</h4>
         <p className="font-sans text-xs text-slate-600">
           CSS 3D perspective plane with gradient horizon falloff.
@@ -111,7 +111,7 @@ export function AuroraWavesDemo() {
   const [pulse, setPulse] = React.useState(true);
 
   return (
-    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-inner">
+    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-6 shadow-none">
       {/* Ambient Aurora Glow Blobs */}
       <div
         className={cn(
@@ -127,7 +127,7 @@ export function AuroraWavesDemo() {
       />
       <div className="pointer-events-none absolute top-1/2 left-1/2 size-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0056FF]/15 blur-2xl" />
 
-      <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/90 p-4 text-center text-[#09172B] shadow-md backdrop-blur-lg">
+      <div className="relative z-10 space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-4 text-center text-[#09172B] shadow-none">
         <h4 className="font-sans text-sm font-bold text-[#09172B]">Aurora Ambient Waves</h4>
         <p className="font-sans text-xs text-slate-600">
           High-performance CSS blurred radial gradients for modern hero cards.
@@ -149,7 +149,7 @@ export function InteractiveParticlesDemo() {
   const [count, setCount] = React.useState(16);
 
   return (
-    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-inner">
+    <div className="relative flex h-72 w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#F8FAFC] p-6 shadow-none">
       {/* Simulated Particle Grid */}
       <div className="pointer-events-none absolute inset-0">
         {Array.from({ length: count }).map((_, i) => (
@@ -166,7 +166,7 @@ export function InteractiveParticlesDemo() {
         ))}
       </div>
 
-      <div className="relative z-10 space-y-2 rounded-xl border border-slate-200 bg-white/95 p-4 text-center text-[#09172B] shadow-md backdrop-blur-sm">
+      <div className="relative z-10 space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-4 text-center text-[#09172B] shadow-none">
         <h4 className="font-sans text-sm font-bold text-[#09172B]">Particle Constellation</h4>
         <p className="font-sans text-xs text-slate-600">
           Zero-overhead CSS keyframe floating nodes for technical dashboards.
@@ -264,7 +264,7 @@ export function SpotlightCardDemo() {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setPos((p) => ({ ...p, opacity: 0 }))}
-      className="relative w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 text-[#09172B] shadow-xl"
+      className="relative w-full max-w-md overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-6 text-[#09172B] shadow-none"
     >
       {/* Mouse Spotlight */}
       <div
@@ -338,7 +338,6 @@ export function FloatingLabelFormDemo() {
 
   return (
     <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-      <h4 className="font-sans text-sm font-bold text-slate-900">Floating Label Field</h4>
       <div className="relative">
         <input
           type="text"

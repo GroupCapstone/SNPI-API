@@ -42,6 +42,17 @@ try {
 
 const nextConfig: NextConfig = {
   transpilePackages: ['@snp/shared'],
+  allowedDevOrigins: [
+    'docs.snpi.edu.kh',
+    'snpi.edu.kh',
+    'dashboard.snpi.edu.kh',
+    'api.snpi.edu.kh',
+    '*.snpi.edu.kh',
+    'localhost',
+    'localhost:3000',
+    'localhost:4000',
+    '127.0.0.1',
+  ],
   ...(isDocker
     ? {
         output: 'standalone',

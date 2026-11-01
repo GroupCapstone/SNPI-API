@@ -376,10 +376,8 @@ export function GeometricCard({
     <div
       className={cn(
         'group relative overflow-hidden rounded-2xl transition-all duration-300 ease-out',
-        'border border-slate-200/80 bg-white/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md',
-        isActive
-          ? 'border-[#0056FF] shadow-md ring-2 ring-[#0056FF]/20'
-          : 'hover:-translate-y-1 hover:border-[#0056FF]/40 hover:shadow-[0_12px_28px_rgba(0,86,255,0.08)]',
+        'border border-[#CAD3F5] bg-white shadow-none',
+        isActive ? 'border-[#0056FF] ring-1 ring-[#0056FF]' : 'hover:border-[#0056FF]',
         className,
       )}
     >

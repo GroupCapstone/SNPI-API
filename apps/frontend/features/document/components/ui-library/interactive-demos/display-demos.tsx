@@ -27,20 +27,13 @@ export function FolderDemo() {
   ];
 
   return (
-    <div className="w-full max-w-lg space-y-4 border-slate-200 bg-white p-5 shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-      <div className="flex items-center justify-between">
-        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-          Interactive Document Folder
-        </span>
-        <span className="font-mono text-[10px] text-slate-400">Institutional Archive</span>
-      </div>
-
+    <div className="w-full max-w-lg space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
       <div className="w-full text-left">
         <div
           className={cn(
             'rounded-[4px] border p-4 transition-all',
             isOpen
-              ? 'border-[#0056FF] bg-[#E3E7FC]/20 shadow-xs'
+              ? 'border-[#0056FF] bg-[#E3E7FC]/20 shadow-none'
               : 'border-slate-200 bg-slate-50/70 hover:border-slate-300',
           )}
         >
@@ -108,7 +101,7 @@ export const ledgerConfig = {
   };
 
   return (
-    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-md">
+    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white text-left shadow-none">
       <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-4 py-2.5">
         <div className="flex items-center gap-2">
           <span className="rounded-[3px] bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] font-bold text-slate-700">
@@ -189,12 +182,10 @@ export function StepPlayerDemo() {
   const steps = ['Data Intake', 'Verify Roles', 'Commit Ledger', 'Dispatch Notice'];
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-          Step Player Workflow
-        </span>
-        <span className="font-mono text-xs font-bold text-[#0056FF]">
+    <div className="w-full max-w-md space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 font-mono text-xs">
+        <span className="text-slate-500">PROGRESS:</span>
+        <span className="font-bold text-[#0056FF]">
           Step {currentStep} of {steps.length}
         </span>
       </div>
@@ -211,7 +202,7 @@ export function StepPlayerDemo() {
                 className={cn(
                   'flex size-7 items-center justify-center rounded-full font-mono text-xs font-bold transition-all',
                   isDone && 'bg-emerald-500 text-white',
-                  isCurrent && 'border-2 border-[#0056FF] bg-[#0056FF] text-white shadow-xs',
+                  isCurrent && 'border-2 border-[#0056FF] bg-[#0056FF] text-white',
                   !isDone && !isCurrent && 'bg-slate-100 text-slate-400',
                 )}
               >
@@ -255,11 +246,7 @@ export function AnimatedCounterDemo() {
   const [count, setCount] = React.useState(12840);
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-        Animated Metric Counter
-      </span>
-
+    <div className="w-full max-w-md space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-none">
       <div className="py-2">
         <span className="font-mono text-4xl font-black tracking-tight text-[#0056FF] sm:text-5xl">
           {count.toLocaleString()}
@@ -296,14 +283,9 @@ export function VoiceNoteDemo() {
   const bars = [30, 60, 45, 90, 70, 40, 80, 100, 65, 50, 85, 95, 40, 30, 75, 50, 90, 60];
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
+    <div className="w-full max-w-md space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
       <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-        <div className="flex items-center gap-2">
-          <Volume className="size-4 text-[#0056FF]" />
-          <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-            Voice Note Dispatch
-          </span>
-        </div>
+        <Volume className="size-4 text-[#0056FF]" />
         <span className="font-mono text-xs font-bold text-slate-500">0:42 / 2:15</span>
       </div>
 
@@ -311,7 +293,7 @@ export function VoiceNoteDemo() {
         <button
           type="button"
           onClick={() => setIsPlaying(!isPlaying)}
-          className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#0056FF] text-white shadow-xs hover:bg-blue-700"
+          className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#0056FF] text-white hover:bg-blue-700"
         >
           {isPlaying ? <Pause className="size-4" /> : <Play className="ml-0.5 size-4" />}
         </button>
@@ -362,14 +344,7 @@ export function FaqDemo() {
   ];
 
   return (
-    <div className="w-full max-w-lg space-y-4 border-slate-200 bg-white p-5 shadow-xs max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border">
-      <div className="flex items-center justify-between">
-        <span className="font-sans text-xs font-bold tracking-wider text-slate-800 uppercase">
-          Institutional FAQ Accordion
-        </span>
-        <span className="font-mono text-[10px] text-slate-400">3 Questions</span>
-      </div>
-
+    <div className="w-full max-w-lg space-y-3 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
       <div className="space-y-2">
         {faqs.map((faq, idx) => {
           const isOpen = openIdx === idx;
