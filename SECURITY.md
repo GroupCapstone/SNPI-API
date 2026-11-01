@@ -113,6 +113,7 @@ Prior to publishing any release checkpoint:
 
 Historical security audit findings, vulnerability resolutions, and patch certifications are maintained under `docs/security/`:
 
-| Date       | Scope              | Advisory / Topic                      | Status             | Audit Report                                                                                                                    |
-| ---------- | ------------------ | ------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-11-01 | Monorepo Lockfiles | GHSA-g3hv-75wg-m249 (`minimatch` DoS) | Resolved (0 Vulns) | [Security Audit & Remediation Report](file:///Users/Apple16/Desktop/SNP-SMS/docs/security/security-audit-remediation-report.md) |
+| Date       | Scope              | Advisory / Topic                      | Status                | Audit Report                                                                                                                        |
+| :--------- | :----------------- | :------------------------------------ | :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-11-01 | Full Monorepo      | 77-Point Audit & 42 Security Tests    | Verified (42/42 Pass) | [Security Audit & Automated Test Results](file:///Users/Apple16/Desktop/SNP-SMS/docs/security/security-audit-remediation-report.md) |
+| 2026-11-01 | Monorepo Lockfiles | GHSA-g3hv-75wg-m249 (`minimatch` DoS) | Tracked (Dev Only)    | [Security Audit & Remediation Report](file:///Users/Apple16/Desktop/SNP-SMS/docs/security/security-audit-remediation-report.md)     |

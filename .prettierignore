@@ -16,3 +16,4 @@ apps/frontend/features/document/changelog-data.ts
 .nvmrc
 .node-version
 CITATION.cff
+*.txt

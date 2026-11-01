@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
     "date": "01.11.2026",
+    "commitHash": "aee7c0d",
+    "developer": "史力爱卫",
+    "description": "Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]"
+  },
+  {
+    "version": "0.2.15",
+    "date": "01.11.2026",
     "commitHash": "23cc63f",
     "developer": "史力爱卫",
     "description": "Enforce dual-developer remote reconciliation and force merge gate before push [PASSED]"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "dc26051",
     "developer": "史力爱卫",
     "description": "Pretty-print code blocks with syntax highlighting and bakong-inspired layout"
-  },
-  {
-    "version": "0.2.14",
-    "date": "31.10.2026",
-    "commitHash": "c127141",
-    "developer": "史力爱卫",
-    "description": "Remove class catalog, certificate ledger, and rest api directory sections"
   }
 ];
