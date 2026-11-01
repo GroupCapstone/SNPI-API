@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
     "date": "01.11.2026",
+    "commitHash": "23cc63f",
+    "developer": "史力爱卫",
+    "description": "Enforce dual-developer remote reconciliation and force merge gate before push [PASSED]"
+  },
+  {
+    "version": "0.2.15",
+    "date": "01.11.2026",
     "commitHash": "05c37b3",
     "developer": "史力爱卫",
     "description": "Audit component demos to enforce 0px blur flat standard, anti-blur and zero guide clutter [PASSED]"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "c127141",
     "developer": "史力爱卫",
     "description": "Remove class catalog, certificate ledger, and rest api directory sections"
-  },
-  {
-    "version": "0.2.14",
-    "date": "31.10.2026",
-    "commitHash": "cfdd732",
-    "developer": "史力爱卫",
-    "description": "Redesign 4 service cards with prominent top icon, protocol pill, and route capsule"
   }
 ];

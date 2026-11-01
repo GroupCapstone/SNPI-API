@@ -49,7 +49,9 @@ export function syncDualDevGit(): void {
       console.log('      [PASS] Remote changes from co-developer cleanly merged.');
     } catch (err: unknown) {
       console.error('      [CONFLICT] Merge conflict detected while reconciling remote code.');
-      console.error('      Please resolve conflicting files manually, run verification, and commit.');
+      console.error(
+        '      Please resolve conflicting files manually, run verification, and commit.',
+      );
       throw err;
     }
   } else {

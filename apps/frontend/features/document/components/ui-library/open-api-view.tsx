@@ -368,8 +368,56 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </p>
                 </div>
 
-                {/* Visual Converging API Node Gateway Canvas */}
+                {/* Visual Converging API Node Gateway Canvas (Image 3 Reference) */}
                 <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-2xs sm:p-6">
+                  {/* Radiating Curved SVG Vector Connectors (Desktop / Tablet) */}
+                  <svg
+                    className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
+                    viewBox="0 0 800 240"
+                    fill="none"
+                    preserveAspectRatio="none"
+                  >
+                    {/* Left Curves to Center Hub */}
+                    <path
+                      d="M 230 60 C 320 60, 340 120, 390 120"
+                      stroke="#CAD3F5"
+                      strokeWidth="2"
+                      strokeDasharray="4 4"
+                    />
+                    <path
+                      d="M 230 120 C 310 120, 340 120, 390 120"
+                      stroke="#0056FF"
+                      strokeWidth="2"
+                      strokeOpacity="0.4"
+                    />
+                    <path
+                      d="M 230 180 C 320 180, 340 120, 390 120"
+                      stroke="#CAD3F5"
+                      strokeWidth="2"
+                      strokeDasharray="4 4"
+                    />
+
+                    {/* Right Curves to Center Hub */}
+                    <path
+                      d="M 570 60 C 480 60, 460 120, 410 120"
+                      stroke="#CAD3F5"
+                      strokeWidth="2"
+                      strokeDasharray="4 4"
+                    />
+                    <path
+                      d="M 570 120 C 490 120, 460 120, 410 120"
+                      stroke="#0056FF"
+                      strokeWidth="2"
+                      strokeOpacity="0.4"
+                    />
+                    <path
+                      d="M 570 180 C 480 180, 460 120, 410 120"
+                      stroke="#CAD3F5"
+                      strokeWidth="2"
+                      strokeDasharray="4 4"
+                    />
+                  </svg>
+
                   <div className="relative z-10 flex flex-col items-center justify-between gap-6 md:flex-row">
                     {/* Left Syndication Feed Card */}
                     <div className="w-full md:w-auto">
@@ -454,24 +502,56 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                {/* Tactile Value Chips */}
+                {/* Playful Stacked Capsule Pills Constellation (Image 4 Reference) */}
                 <div className="flex flex-wrap items-center gap-2 pt-1">
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-2xs">
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('public-feeds')}
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FED7AA] bg-[#FFEDD5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#C2410C] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                  >
+                    <span>ZERO AUTH REQUIRED</span>
+                    <span className="font-sans text-[10px] opacity-70">✓</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('public-feeds')}
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#A7F3D0] bg-[#D1FAE5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#065F46] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                  >
+                    <span>SUB-50ms EDGE CDN</span>
+                    <Zap className="size-3 text-[#065F46]" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('public-feeds')}
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0369A1] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                  >
+                    <span>CORS UNRESTRICTED</span>
+                    <Globe className="size-3 text-[#0369A1]" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('public-feeds')}
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDE68A] bg-[#FEF3C7] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#92400E] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                  >
+                    <span>RSS 2.0 & JSON FEED</span>
+                    <Radio className="size-3 text-[#92400E]" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('available-services')}
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                  >
+                    <span>47 MONOLITH SERVICES</span>
+                    <Layers className="size-3 text-[#0056FF]" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('available-services')}
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                  >
+                    <span>RFC 7807 ERROR SPEC</span>
                     <ShieldCheck className="size-3 text-[#0056FF]" />
-                    <span>No Auth Token Needed</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-2xs">
-                    <Zap className="size-3 text-[#0056FF]" />
-                    <span>Sub-50ms Edge CDN</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 shadow-2xs">
-                    <Globe className="size-3 text-[#0056FF]" />
-                    <span>CORS Unrestricted</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
-                    <Check className="size-3 text-[#0056FF]" />
-                    <span>RSS 2.0 & JSON Feed</span>
-                  </div>
+                  </button>
                 </div>
 
                 {/* Base URL Quickstart Bar & Action Hook */}

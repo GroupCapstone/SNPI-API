@@ -252,6 +252,8 @@ export function UiLibraryView() {
 
   // Quickstart terminal copy state
   const [copiedQuickstart, setCopiedQuickstart] = React.useState(false);
+  // Interactive Hero Paradigm Toggle Mode (Flat 0px vs Living Motion FX)
+  const [heroInteractiveMode, setHeroInteractiveMode] = React.useState<'flat' | 'spring'>('flat');
   const handleCopyQuickstart = async () => {
     const success = await copyTextToClipboard('npx snpi-ui@latest add @components');
     if (success) {
@@ -597,7 +599,7 @@ export function UiLibraryView() {
               </div>
             </div>
 
-            {/* HERO HEAD TITLE: Ultra-Creative Interactive Engine Hero */}
+            {/* HERO HEAD TITLE: Ultra-Creative Interactive Engine Hero (References 3 & 4) */}
             <section id="ui-library-head" className="scroll-mt-36 space-y-4">
               <div className="relative overflow-hidden rounded-3xl border border-[#CAD3F5] bg-gradient-to-b from-white via-[#EFF5FF]/40 to-white p-5 shadow-xs sm:p-10">
                 {/* Subtle Geometric Background Dot Grid */}
@@ -631,15 +633,55 @@ export function UiLibraryView() {
                     </div>
                   </div>
 
-                  {/* Playful Headline + Kinetic Interactive Mode Pill */}
-                  <div className="flex flex-col gap-2">
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                      <h1 className="font-sans text-3xl font-black tracking-tight text-[#0A1A4A] sm:text-5xl md:text-6xl">
-                        CREATIVE <span className="text-[#0056FF]">PRIMITIVES</span>
+                  {/* Creative Centerpiece Headline with Embedded Toggle Switch (Image 4 Reference) */}
+                  <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                      <h1 className="font-sans text-4xl leading-none font-black tracking-tight text-[#0A1A4A] select-none sm:text-6xl md:text-7xl">
+                        <span className="block tracking-tight">CREATIVE</span>
+                        <span className="my-1 flex items-center gap-2 sm:gap-4">
+                          <span>PR</span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setHeroInteractiveMode((prev) =>
+                                prev === 'flat' ? 'spring' : 'flat',
+                              )
+                            }
+                            className="group relative inline-flex h-9 w-20 cursor-pointer items-center rounded-full border-2 border-[#0056FF] bg-[#EFF5FF] p-1 shadow-inner transition-all active:scale-95 sm:h-14 sm:w-28 md:h-16 md:w-32"
+                            title="Toggle Interactive Design Paradigm (0px Flat vs Spring FX)"
+                            aria-label="Toggle Interactive Design Paradigm"
+                          >
+                            <span
+                              className={cn(
+                                'inline-flex size-7 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs transition-all duration-300 sm:size-11 sm:text-sm md:size-13',
+                                heroInteractiveMode === 'flat'
+                                  ? 'translate-x-0'
+                                  : 'translate-x-9 bg-[#2277FF] sm:translate-x-14 md:translate-x-16',
+                              )}
+                            >
+                              {heroInteractiveMode === 'flat' ? '0px' : 'FX'}
+                            </span>
+                          </button>
+                          <span>DUCT</span>
+                        </span>
+                        <span className="block text-[#0056FF]">SYSTEM</span>
                       </h1>
-                      <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-xs font-bold text-[#0056FF] shadow-2xs">
-                        <Sparkles className="size-3.5 text-[#0056FF]" />
-                        <span>Interactive HUD</span>
+
+                      {/* Interactive Mode Description Badge (Right/Side) */}
+                      <div className="flex flex-col items-start gap-1.5 font-mono text-xs lg:items-end">
+                        <div className="inline-flex items-center gap-2 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-2 font-bold text-[#0056FF] shadow-2xs">
+                          <Sparkles className="size-3.5 text-[#0056FF]" />
+                          <span>
+                            {heroInteractiveMode === 'flat'
+                              ? 'Flat 0px Standard Active'
+                              : 'Living Spring Physics Active'}
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-slate-500">
+                          {heroInteractiveMode === 'flat'
+                            ? 'Zero blur shadows · AAA high-contrast tokens'
+                            : '<300ms timing · Interruption-resilient velocity'}
+                        </span>
                       </div>
                     </div>
                     <p className="max-w-xl font-sans text-xs text-slate-600 sm:text-sm">
@@ -648,8 +690,56 @@ export function UiLibraryView() {
                     </p>
                   </div>
 
-                  {/* Visual Converging Fiber-Optic Integration Canvas */}
+                  {/* Radiant Curved Fiber-Optic Integration Canvas (Image 3 Reference) */}
                   <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-2xs sm:p-6">
+                    {/* Radiating Curved SVG Vector Connectors (Desktop / Tablet) */}
+                    <svg
+                      className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
+                      viewBox="0 0 800 240"
+                      fill="none"
+                      preserveAspectRatio="none"
+                    >
+                      {/* Left Curves to Center Hub */}
+                      <path
+                        d="M 210 50 C 310 50, 330 120, 390 120"
+                        stroke="#CAD3F5"
+                        strokeWidth="2"
+                        strokeDasharray="4 4"
+                      />
+                      <path
+                        d="M 210 120 C 300 120, 330 120, 390 120"
+                        stroke="#0056FF"
+                        strokeWidth="2"
+                        strokeOpacity="0.4"
+                      />
+                      <path
+                        d="M 210 190 C 310 190, 330 120, 390 120"
+                        stroke="#CAD3F5"
+                        strokeWidth="2"
+                        strokeDasharray="4 4"
+                      />
+
+                      {/* Right Curves to Center Hub */}
+                      <path
+                        d="M 590 50 C 490 50, 470 120, 410 120"
+                        stroke="#CAD3F5"
+                        strokeWidth="2"
+                        strokeDasharray="4 4"
+                      />
+                      <path
+                        d="M 590 120 C 500 120, 470 120, 410 120"
+                        stroke="#0056FF"
+                        strokeWidth="2"
+                        strokeOpacity="0.4"
+                      />
+                      <path
+                        d="M 590 190 C 490 190, 470 120, 410 120"
+                        stroke="#CAD3F5"
+                        strokeWidth="2"
+                        strokeDasharray="4 4"
+                      />
+                    </svg>
+
                     <div className="relative z-10 flex flex-col items-center justify-between gap-6 md:flex-row">
                       {/* Left Satellite Stack */}
                       <div className="flex w-full flex-col gap-2.5 sm:grid sm:grid-cols-3 md:flex md:w-auto md:flex-col">
@@ -783,60 +873,88 @@ export function UiLibraryView() {
                     </div>
                   </div>
 
-                  {/* Playful Tactile Pill Constellation */}
+                  {/* Playful Stacked Capsule Pills Constellation (Image 4 Reference) */}
                   <div className="flex flex-wrap items-center gap-2 pt-1">
                     <button
                       type="button"
                       onClick={() => scrollToSection('cat-navigation')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FED7AA] bg-[#FFEDD5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#C2410C] shadow-2xs transition-all hover:scale-105 active:scale-95"
                     >
-                      <Compass className="size-3 text-[#0056FF]" />
-                      <span>Navigation</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-feedback')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
-                    >
-                      <Bell className="size-3 text-[#0056FF]" />
-                      <span>Feedback</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-display')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
-                    >
-                      <Table className="size-3 text-[#0056FF]" />
-                      <span>Displays</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-ai-kit')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
-                    >
-                      <Bot className="size-3 text-[#0056FF]" />
-                      <span>AI Kit</span>
+                      <span>DESIGN SYSTEMS</span>
+                      <span className="font-sans text-[10px] opacity-70">+</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => scrollToSection('cat-forms')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#A7F3D0] bg-[#D1FAE5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#065F46] shadow-2xs transition-all hover:scale-105 active:scale-95"
                     >
-                      <SquarePen className="size-3 text-[#0056FF]" />
-                      <span>Forms</span>
+                      <span>PROTOTYPING</span>
+                      <span className="font-sans text-[10px] opacity-70">↗</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-ai-kit')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDE68A] bg-[#FEF3C7] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#92400E] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>STORYTELLING</span>
+                      <span className="font-sans text-[10px] opacity-70">“</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-feedback')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0369A1] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>IMPROVING UX</span>
+                      <span className="font-sans text-[10px] opacity-70">✓</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-display')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDBA74] bg-[#FED7AA] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#9A3412] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>MAKING IT POP</span>
+                      <span className="font-sans text-[10px] opacity-70">✦</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-inputs')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDE047] bg-[#FEF08A] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#854D0E] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>ACCESSIBILITY</span>
+                      <span className="font-sans text-[10px] opacity-70">⌖</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-navigation')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>0px BLUR FLAT</span>
+                      <ShieldCheck className="size-3 text-[#0056FF]" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-inputs')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>44px TOUCH TARGETS</span>
+                      <span className="font-sans text-[10px] opacity-70">◎</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollToSection('cat-ai-kit')}
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#E9D5FF] bg-[#F3E8FF] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#6B21A8] shadow-2xs transition-all hover:scale-105 active:scale-95"
+                    >
+                      <span>AI AGENT PROMPT</span>
+                      <Bot className="size-3 text-[#6B21A8]" />
                     </button>
                     <button
                       type="button"
                       onClick={() => scrollToSection('cat-templates')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#E3E7FC] hover:text-[#0056FF] active:scale-95"
+                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#99F6E4] bg-[#CCFBF1] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#115E59] shadow-2xs transition-all hover:scale-105 active:scale-95"
                     >
-                      <LayoutGrid className="size-3 text-[#0056FF]" />
-                      <span>Templates</span>
+                      <span>THINKING SYSTEMS</span>
+                      <span className="font-sans text-[10px] opacity-70">🌐</span>
                     </button>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
-                      <ShieldCheck className="size-3" />
-                      <span>0px Blur</span>
-                    </span>
                   </div>
 
                   {/* Interactive Terminal Quickstart Bar & Action Hook */}
