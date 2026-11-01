@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (01.11.2026) - `aee7c0d` (Developer: **史力爱卫**)
+
+- Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]
+
 ### Version 0.2.15 (01.11.2026) - `23cc63f` (Developer: **史力爱卫**)
 
 - Enforce dual-developer remote reconciliation and force merge gate before push [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (31.10.2026) - `dc26051` (Developer: **史力爱卫**)
 
 - Pretty-print code blocks with syntax highlighting and bakong-inspired layout
-
-### Version 0.2.14 (31.10.2026) - `c127141` (Developer: **史力爱卫**)
-
-- Remove class catalog, certificate ledger, and rest api directory sections
 
