@@ -15,16 +15,17 @@ This skill defines the mandatory protocol that every agent and contributor must 
 
 ## 1. Core Rule & Execution Gate
 
+* **Mandatory Dual-Developer Git Reconciliation & Force Merge Gate (`npm run git:sync`)**: We have two active developers committing to this repository. Before pushing any code, release tag, or checkpoint, the system must **ALWAYS run `npm run git:sync`** (`git fetch origin` and `git merge origin/<branch> --no-edit`). If the other developer has pushed new code to remote, merge all incoming changes into the local working tree first. Never overwrite, discard, or force-push over collaborator commits.
 * **Mandatory Local-Only Commits & Zero Remote Push Without Explicit Command**: In every conversation, session, and task, AI agents and contributors are strictly permitted to make local git commits only. Remote `git push` is strictly prohibited under all circumstances unless the user gives an explicit, direct command.
-* **Never Push Blindly**: A push command must NEVER execute a raw `git push` without first running the standard verification pipeline and synchronizing the changelog.
+* **Never Push Blindly**: A push command must NEVER execute a raw `git push` without first running the standard verification pipeline, remote sync reconciliation, and synchronizing the changelog.
 * **Mandatory Pre-Push CI & Deploy Quality Gate**: If any GitHub deployment or CI workflow is failed on `main`, pushing new commits, tags, or checkpoints is STRICTLY FORBIDDEN. All 17 GitHub checks must be green or verified clean prior to pushing.
 * **Explicit User Command Required**: Pushes are only triggered when the user explicitly commands `push`, `push now`, `publish`, or creates a release checkpoint.
-* **Checkpoint Tagging Standard**: Tag release checkpoints using semantic versioning (`v0.1.x`) with descriptive release annotations.
+* **Checkpoint Tagging Standard**: Tag release checkpoints using semantic versioning (`v0.1.x` / `v0.2.x`) with descriptive release annotations.
 * **Zero Emojis**: All commit messages, tags, summaries, and agent responses must strictly avoid emojis. Use textual badges: `[PASSED]`, `[FAILED]`, `[WARNING]`, `[COMPLETED]`.
 
 ---
 
-## 2. 8-Step Checkpoint & Push Pipeline
+## 2. 9-Step Checkpoint & Push Pipeline
 
 Whenever the user instructs to push or checkpoint, execute the following steps in sequence:
 
@@ -62,24 +63,30 @@ npm run changelog:sync
 ```
 Captures recent commits into both `CHANGELOG.md` and the live developer technical document portal at `apps/frontend/features/document/changelog-data.ts`. Stage and commit these updates if new entries were generated.
 
-### Step 6: Checkpoint Version Tagging (For Milestone / Release Pushes)
+### Step 6: Dual-Developer Git Reconciliation & Force Merge Gate
+```bash
+npm run git:sync
+```
+Fetches remote changes from `origin/<branch>` and merges incoming commits from the other developer into the local tree (`git merge origin/<branch> --no-edit -m "merge(sync): reconcile remote changes from co-developer [PASSED]"`). If merge conflicts arise, cleanly resolve them and re-run verification before proceeding.
+
+### Step 7: Checkpoint Version Tagging (For Milestone / Release Pushes)
 Determine the next patch version based on `package.json` and git tags:
 ```bash
 # Example for tagging release checkpoint
-git tag -a v0.1.9 -m "Release Checkpoint v0.1.9: <Summary of milestone capabilities>"
+git tag -a v0.2.16 -m "Release Checkpoint v0.2.16: <Summary of milestone capabilities> [PASSED]"
 ```
 
-### Step 7: GitHub Remote Push
+### Step 8: GitHub Remote Push
 Ensure large media buffer configuration is active and push commits along with release tags:
 ```bash
 git config http.postBuffer 524288000
 git push origin <branch> --tags
 ```
 
-### Step 8: CI/CD Pipeline Verification & Monitoring
+### Step 9: CI/CD Pipeline Verification & Monitoring
 Confirm that GitHub Actions workflows are triggered and monitor run progress until green:
 ```bash
-gh run list --limit 5
+gh run list --limit 15
 ```
 
 ---
@@ -94,6 +101,7 @@ gh run list --limit 5
 | **4. Live API Test** | `npm run test:api` | 56/56 Endpoints HTTP 200 OK |
 | **5. Deploy Gate** | `npm run deploy:verify` | Manifests valid, build passes, 0 CI failures |
 | **6. Changelog** | `npm run changelog:sync` | Live document & CHANGELOG.md updated |
-| **7. Checkpoint** | `git tag -a <version> -m "..."` | Annotated release tag created |
-| **8. Remote Push** | `git push origin main --tags` | Commits & tags pushed to GitHub |
-| **9. CI Monitor** | `gh run list` | All triggered workflows passing green |
+| **7. Dual-Dev Sync** | `npm run git:sync` | Remote code from 2nd dev fetched & merged |
+| **8. Checkpoint** | `git tag -a <version> -m "..."` | Annotated release tag created |
+| **9. Remote Push** | `git push origin main --tags` | Commits & tags pushed to GitHub |
+| **10. CI Monitor** | `gh run list --limit 15` | All triggered workflows passing green |

@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (01.11.2026) - `05c37b3` (Developer: **史力爱卫**)
+
+- Audit component demos to enforce 0px blur flat standard, anti-blur and zero guide clutter [PASSED]
+
 ### Version 0.2.15 (01.11.2026) - `6e526a3` (Developer: **史力爱卫**)
 
 - Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (31.10.2026) - `cfdd732` (Developer: **史力爱卫**)
 
 - Redesign 4 service cards with prominent top icon, protocol pill, and route capsule
-
-### Version 0.2.14 (31.10.2026) - `c9ae516` (Developer: **史力爱卫**)
-
-- Streamline mobile navigation and cleanup demo viewports
 

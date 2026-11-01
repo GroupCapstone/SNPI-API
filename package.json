@@ -24,6 +24,7 @@
     "seed:protect": "npm run seed:protect --workspace=apps/backend",
     "test:api": "tsx scripts/test-all-apis.ts",
     "deploy:verify": "tsx scripts/verify-deploy-gate.ts",
+    "git:sync": "tsx scripts/dual-dev-git-sync.ts",
     "changelog:sync": "tsx scripts/sync-changelog.ts",
     "watch:telegram": "tsx scripts/telegram-repo-watcher.ts --watch",
     "alert:telegram": "tsx scripts/telegram-repo-watcher.ts --once",

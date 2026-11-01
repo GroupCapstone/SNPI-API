@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
     "date": "01.11.2026",
+    "commitHash": "05c37b3",
+    "developer": "史力爱卫",
+    "description": "Audit component demos to enforce 0px blur flat standard, anti-blur and zero guide clutter [PASSED]"
+  },
+  {
+    "version": "0.2.15",
+    "date": "01.11.2026",
     "commitHash": "6e526a3",
     "developer": "史力爱卫",
     "description": "Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "cfdd732",
     "developer": "史力爱卫",
     "description": "Redesign 4 service cards with prominent top icon, protocol pill, and route capsule"
-  },
-  {
-    "version": "0.2.14",
-    "date": "31.10.2026",
-    "commitHash": "c9ae516",
-    "developer": "史力爱卫",
-    "description": "Streamline mobile navigation and cleanup demo viewports"
   }
 ];
