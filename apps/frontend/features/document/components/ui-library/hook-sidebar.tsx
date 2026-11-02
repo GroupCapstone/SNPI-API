@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 const CORNER = 6;
-const DASH = 'repeating-linear-gradient(to top, transparent 0 2px, currentColor 2px 4px)';
+const DASH = 'repeating-linear-gradient(to top, transparent 0 3px, currentColor 3px 7px)';
 
 export type HookSidebarItem =
   | string
@@ -69,22 +69,24 @@ const Rail = ({ from = 0, y, visible, color, dashed, className }: RailProps) => 
         animate={{ top: from, height: Math.max(0, (y ?? 0) - CORNER - from) }}
         transition={travel}
         style={dashed ? { backgroundImage: DASH } : { backgroundColor: 'currentColor' }}
-        className="absolute left-0.5 w-px"
+        className="absolute left-0.5 w-[2.5px] rounded-full"
       />
       <motion.svg
         initial={false}
         animate={{ top: (y ?? 0) - CORNER }}
         transition={travel}
-        width="12"
-        height="7"
-        viewBox="0 0 12 7"
+        width="14"
+        height="9"
+        viewBox="0 0 14 9"
         fill="none"
         className="absolute left-0.5"
       >
         <path
-          d="M0.5 0a6 6 0 0 0 6 6H12"
+          d="M1.25 0a6 6 0 0 0 6 6h6.75"
           stroke="currentColor"
-          strokeDasharray={dashed ? '2 2' : undefined}
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray={dashed ? '3 3' : undefined}
         />
       </motion.svg>
     </motion.span>
@@ -167,7 +169,7 @@ export function HookSidebar({
         <span
           aria-hidden
           style={dashed ? { backgroundImage: DASH } : { backgroundColor: 'currentColor' }}
-          className="pointer-events-none absolute top-1 bottom-1 left-0.5 w-px text-slate-200"
+          className="pointer-events-none absolute top-1 bottom-1 left-0.5 w-[2.5px] rounded-full text-slate-200"
         />
 
         <Rail

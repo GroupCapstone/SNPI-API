@@ -1,93 +1,96 @@
 ---
 name: snp-sms-push-checkpoint-workflow
 description: >-
-  Mandatory GitHub push and checkpoint protocol for the SNP-SMS monorepo.
-  Executes automated formatting, typechecking, smoke verification, real-time
-  changelog sync, and release checkpoint tagging before pushing commits to GitHub.
+  Mandatory GitHub push, dual-developer sync, checkpoint release, and live CI verification protocol for the SNP-SMS monorepo.
+  Executes automated formatting, full ESLint quality gate, typechecking, smoke verification, real-time
+  changelog sync, release checkpoint tagging, remote push, and automated live GitHub Actions CI monitoring until 100% green.
   Trigger on: "push", "git push", "push now", "checkpoint", "release checkpoint", "publish".
 ---
 
-# SNP-SMS GitHub Push & Checkpoint Workflow
+# SNP-SMS GitHub Push, Checkpoint & CI Verification Workflow
 
-This skill defines the mandatory protocol that every agent and contributor must execute whenever commanded to push, publish, or checkpoint code to GitHub.
+This skill defines the authoritative, mandatory protocol that every agent and contributor must execute whenever commanded to push, publish, or checkpoint code to GitHub.
 
 ---
 
 ## 1. Core Rule & Execution Gate
 
-* **Mandatory Dual-Developer Git Reconciliation & Force Merge Gate (`npm run git:sync`)**: We have two active developers committing to this repository. Before pushing any code, release tag, or checkpoint, the system must **ALWAYS run `npm run git:sync`** (`git fetch origin` and `git merge origin/<branch> --no-edit`). If the other developer has pushed new code to remote, merge all incoming changes into the local working tree first. Never overwrite, discard, or force-push over collaborator commits.
+* **One-Command Automated Execution (`npm run push:checkpoint`)**: Whenever the user commands to push or publish, run the all-in-one automated verification and push pipeline: `npm run push:checkpoint`.
+* **Mandatory Dual-Developer Git Reconciliation Gate (`npm run git:sync`)**: We have two active developers committing to this repository. Before pushing any code, release tag, or checkpoint, the system must **ALWAYS run `npm run git:sync`** (`git fetch origin` and `git merge origin/<branch> --no-edit`). If the other developer has pushed new code to remote, merge all incoming changes into the local working tree first. Never overwrite, discard, or force-push over collaborator commits.
 * **Mandatory Local-Only Commits & Zero Remote Push Without Explicit Command**: In every conversation, session, and task, AI agents and contributors are strictly permitted to make local git commits only. Remote `git push` is strictly prohibited under all circumstances unless the user gives an explicit, direct command.
-* **Never Push Blindly**: A push command must NEVER execute a raw `git push` without first running the standard verification pipeline, remote sync reconciliation, and synchronizing the changelog.
-* **Mandatory Pre-Push CI & Deploy Quality Gate**: If any GitHub deployment or CI workflow is failed on `main`, pushing new commits, tags, or checkpoints is STRICTLY FORBIDDEN. All 17 GitHub checks must be green or verified clean prior to pushing.
-* **Explicit User Command Required**: Pushes are only triggered when the user explicitly commands `push`, `push now`, `publish`, or creates a release checkpoint.
-* **Checkpoint Tagging Standard**: Tag release checkpoints using semantic versioning (`v0.1.x` / `v0.2.x`) with descriptive release annotations.
+* **Never Push Blindly**: A push command must NEVER execute a raw `git push` without first running the standard verification pipeline (format, lint, typecheck, smoke, build), remote sync reconciliation, and synchronizing the changelog.
+* **Mandatory Pre-Push CI & Deploy Quality Gate**: If any GitHub deployment or CI workflow is failed on `main`, pushing new commits, tags, or checkpoints is STRICTLY FORBIDDEN.
+* **Mandatory Post-Push Live CI Monitoring Until 100% Green**: Every push must trigger the automated live CI watcher (`npm run push:verify` or the integrated watcher in `npm run push:checkpoint`). The system MUST actively poll GitHub Actions (`gh run list --commit <SHA>`) and wait until all workflows reach completed `[PASSED]` status. If any check fails, immediately extract the failing logs and report the exact error.
 * **Zero Emojis**: All commit messages, tags, summaries, and agent responses must strictly avoid emojis. Use textual badges: `[PASSED]`, `[FAILED]`, `[WARNING]`, `[COMPLETED]`.
 
 ---
 
-## 2. 9-Step Checkpoint & Push Pipeline
+## 2. 10-Step Automated Checkpoint & Push Pipeline
 
-Whenever the user instructs to push or checkpoint, execute the following steps in sequence:
+Execute `npm run push:checkpoint` to run all 10 steps automatically:
 
-### Step 1: Code Formatting Audit
+### Step 1: Code Formatting Audit & Auto-Fix
 ```bash
-npm run format:check
+npm run format:check || npm run format
 ```
-Assert that Prettier validates all matched files without syntax or style issues. If unformatted, run `npm run format`.
+Asserts that Prettier validates all matched files without syntax or style issues. Automatically formats code if differences exist.
 
-### Step 2: TypeScript Static Analysis
+### Step 2: Full ESLint Quality Gate
+```bash
+npm run lint
+```
+Asserts zero ESLint errors across all packages and apps. Crucial gate that stops JSX, syntax, and typing violations before remote push.
+
+### Step 3: TypeScript Static Analysis
 ```bash
 npm run typecheck
 ```
-Assert zero TypeScript errors across `apps/backend`, `apps/frontend`, and `packages/shared`.
+Asserts zero TypeScript errors across `apps/backend`, `apps/frontend`, and `packages/shared`.
 
-### Step 3: Smoke & Live API Verification
+### Step 4: Monorepo Smoke Tests
 ```bash
-# 1. Verify workspace resolution, database container, and core endpoints
 npm run smoke
-
-# 2. Verify all 47 domain modules respond HTTP 200 OK
-npm run test:api
 ```
+Verifies workspace package resolution, MongoDB replica set health, and core API responses.
 
-### Step 4: Pre-Push Deployment & CI Quality Gate
+### Step 5: Pre-Push Deployment & CI Quality Gate
 ```bash
-# Verifies deployment manifests, builds, and GitHub Actions status on main
 npm run deploy:verify
 ```
-Asserts that all deployment manifests exist, production builds compile without errors, and no recent GitHub workflows on `main` are in a failed state. PUSH IS BLOCKED if any workflow is failing.
+Asserts that all deployment manifests exist (`vercel.json`, Kubernetes configs), production builds compile with zero errors, and recent GitHub workflows on `main` are green.
 
-### Step 5: Real-Time Changelog Synchronization
-```bash
-npm run changelog:sync
-```
-Captures recent commits into both `CHANGELOG.md` and the live developer technical document portal at `apps/frontend/features/document/changelog-data.ts`. Stage and commit these updates if new entries were generated.
-
-### Step 6: Dual-Developer Git Reconciliation & Force Merge Gate
+### Step 6: Dual-Developer Git Reconciliation & Merge Gate
 ```bash
 npm run git:sync
 ```
-Fetches remote changes from `origin/<branch>` and merges incoming commits from the other developer into the local tree (`git merge origin/<branch> --no-edit -m "merge(sync): reconcile remote changes from co-developer [PASSED]"`). If merge conflicts arise, cleanly resolve them and re-run verification before proceeding.
+Fetches remote changes from `origin/<branch>` and merges incoming commits from the other developer into the local tree (`git merge origin/<branch> --no-edit`). Resolves non-conflicting divergent branches cleanly.
 
-### Step 7: Checkpoint Version Tagging (For Milestone / Release Pushes)
-Determine the next patch version based on `package.json` and git tags:
+### Step 7: Real-Time Changelog Synchronization
 ```bash
-# Example for tagging release checkpoint
-git tag -a v0.2.16 -m "Release Checkpoint v0.2.16: <Summary of milestone capabilities> [PASSED]"
+npm run changelog:sync
 ```
+Captures recent commits into both `CHANGELOG.md` and the live developer technical document portal at `apps/frontend/features/document/changelog-data.ts`.
 
-### Step 8: GitHub Remote Push
-Ensure large media buffer configuration is active and push commits along with release tags:
+### Step 8: Working Tree Inspection, Commit & Release Checkpoint Tagging
+```bash
+git add -A && git commit -m "..."
+git tag -a v0.2.x -m "Release Checkpoint v0.2.x: <Summary of capabilities> [PASSED]"
+```
+Auto-increments the semantic patch version and tags the commit with a clean descriptive checkpoint note.
+
+### Step 9: GitHub Remote Push
 ```bash
 git config http.postBuffer 524288000
 git push origin <branch> --tags
 ```
+Pushes all commits and annotated release tags over HTTPS with an expanded 500MB buffer.
 
-### Step 9: CI/CD Pipeline Verification & Monitoring
-Confirm that GitHub Actions workflows are triggered and monitor run progress until green:
+### Step 10: Live CI/CD Pipeline Monitoring & Automated Green Waiter
 ```bash
-gh run list --limit 15
+npm run push:verify
+# or automatically executed via npm run push:checkpoint
 ```
+Polls `gh run list --commit <SHA>` every 10 seconds. Streams live workflow progress and waits until all triggered GitHub Actions runs reach completed and 100% green (`[PASSED]`). If any workflow fails, automatically fetches and dumps the failed logs (`gh run view <ID> --log-failed`).
 
 ---
 
@@ -95,9 +98,16 @@ gh run list --limit 15
 
 | Step | Command | Success Criteria |
 | :--- | :--- | :--- |
-| **1. Formatting** | `npm run format:check` | All matched files use Prettier code style |
-| **2. Typecheck** | `npm run typecheck` | 0 Errors across all workspaces |
-| **3. Smoke Test** | `npm run smoke` | 4/4 Checks Passed |
+| **1. Formatting** | `npm run format:check` | All matched files Prettier compliant |
+| **2. ESLint Quality** | `npm run lint` | 0 ESLint errors across workspaces |
+| **3. Typecheck** | `npm run typecheck` | 0 TypeScript errors across monorepo |
+| **4. Smoke Test** | `npm run smoke` | Core API & database checks passed |
+| **5. Deploy Gate** | `npm run deploy:verify` | Manifests valid, production build passes |
+| **6. Dual-Dev Sync** | `npm run git:sync` | Remote commits cleanly merged |
+| **7. Changelog** | `npm run changelog:sync` | Developer portal & CHANGELOG.md updated |
+| **8. Checkpoint** | `git tag -a <version>` | Annotated release checkpoint created |
+| **9. Remote Push** | `git push origin main --tags` | Commits & tags pushed to GitHub |
+| **10. Live CI Monitor** | `npm run push:verify` | All GitHub Actions runs completed & 100% green |
 | **4. Live API Test** | `npm run test:api` | 56/56 Endpoints HTTP 200 OK |
 | **5. Deploy Gate** | `npm run deploy:verify` | Manifests valid, build passes, 0 CI failures |
 | **6. Changelog** | `npm run changelog:sync` | Live document & CHANGELOG.md updated |

@@ -16,11 +16,20 @@ import {
   ChevronDown,
   Folder,
   Plus,
+  ShieldKey,
 } from '@/components/icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { HookSidebar } from './hook-sidebar';
 import { useDocsNav } from './docs-nav-context';
-import { COMPONENT_CATEGORIES, COMPONENT_LIBRARY_REGISTRY } from './component-registry';
+import {
+  COMPONENT_CATEGORIES,
+  COMPONENT_LIBRARY_REGISTRY,
+  DOCUMENTATION_NAV_ITEMS,
+  M3_COMPONENTS_NAV,
+  PLATFORM_COMPONENTS_NAV,
+  getComponentFreshness,
+  getCategoryHierarchicalNodes,
+} from './component-registry';
 import { cn } from '@/lib/utils';
 
 export interface DocsStickyHeaderProps {
@@ -34,6 +43,11 @@ const OPEN_API_SECTIONS = [
   { id: 'available-services', label: '2 Core Services' },
   { id: 'public-feeds', label: 'Public Feeds & RSS 2.0' },
   { id: 'changelogs', label: 'Syndication Releases' },
+];
+
+const DESIGN_SYSTEM_SECTIONS = [
+  { id: 'brand-blueprint', label: 'Brand Blueprint & Assets' },
+  { id: 'color-ramps-tokens', label: 'Color Ramps & Tokens' },
 ];
 
 export function DocsStickyHeader({
@@ -74,12 +88,20 @@ export function DocsStickyHeader({
     };
   }, [mobileMenuOpen]);
 
-  const [collapsedFolders, setCollapsedFolders] = React.useState<Record<string, boolean>>({});
+  const [expandedFolders, setExpandedFolders] = React.useState<Record<string, boolean>>({});
+  const [expandedParents, setExpandedParents] = React.useState<Record<string, boolean>>({});
 
   const toggleFolder = (category: string) => {
-    setCollapsedFolders((prev) => ({
+    setExpandedFolders((prev) => ({
       ...prev,
       [category]: !prev[category],
+    }));
+  };
+
+  const toggleParentGroup = (parentId: string) => {
+    setExpandedParents((prev) => ({
+      ...prev,
+      [parentId]: !prev[parentId],
     }));
   };
 
@@ -97,47 +119,72 @@ export function DocsStickyHeader({
     }
   };
 
-  // Grouped library components for mobile sidebar navigation (Knowledge Base tree)
-  const groupedComponents = React.useMemo(() => {
+  // Filtered M3 components for mobile sidebar navigation
+  const filteredM3Components = React.useMemo(() => {
     const q = mobileSearch.toLowerCase().trim();
-    return COMPONENT_CATEGORIES.map((category) => {
-      const items = COMPONENT_LIBRARY_REGISTRY.filter((item) => {
-        if (item.category !== category) return false;
-        if (!q) return true;
-        return (
-          item.name.toLowerCase().includes(q) ||
-          item.description.toLowerCase().includes(q) ||
-          item.id.toLowerCase().includes(q)
-        );
-      });
-      return {
-        category,
-        items,
-      };
-    }).filter((group) => group.items.length > 0);
+    if (!q) return M3_COMPONENTS_NAV;
+    return M3_COMPONENTS_NAV.filter((item) => {
+      if (item.name.toLowerCase().includes(q)) return true;
+      if (item.children && item.children.some((c) => c.name.toLowerCase().includes(q))) {
+        return true;
+      }
+      return false;
+    }).map((item) => {
+      if (item.children) {
+        return {
+          ...item,
+          children: item.children.filter((c) =>
+            item.name.toLowerCase().includes(q) ? true : c.name.toLowerCase().includes(q),
+          ),
+        };
+      }
+      return item;
+    });
   }, [mobileSearch]);
 
-  // 3 Menus merged together: UI LIBRARY, OPEN API, and CHANGELOG
+  // Filtered Platform components for mobile sidebar navigation
+  const filteredPlatformComponents = React.useMemo(() => {
+    const q = mobileSearch.toLowerCase().trim();
+    if (!q) return PLATFORM_COMPONENTS_NAV;
+    return PLATFORM_COMPONENTS_NAV.filter((item) =>
+      item.name.toLowerCase().includes(q),
+    );
+  }, [mobileSearch]);
+
+  // Auto-expand mobile parent group if search matches
+  React.useEffect(() => {
+    const q = mobileSearch.toLowerCase().trim();
+    if (!q) return;
+    for (const item of M3_COMPONENTS_NAV) {
+      if (item.isParent && item.children) {
+        if (item.children.some((c) => c.name.toLowerCase().includes(q))) {
+          setExpandedParents((prev) => ({ ...prev, [item.id]: true }));
+        }
+      }
+    }
+  }, [mobileSearch]);
+
+  // 3 Primary Distinct Views: COMPONENT, API, and BLUEPRINT
   const navTabs: HangingTabItem[] = [
     {
       id: 'library',
-      label: 'UI LIBRARY',
+      label: 'COMPONENT',
       icon: Layers,
       href: '/document/design-system',
       onClick: () => setActiveTab('library', false),
     },
     {
       id: 'openapi',
-      label: 'OPEN API',
+      label: 'API',
       icon: FileText,
       href: '/document',
       onClick: () => setActiveTab('openapi', false),
     },
     {
       id: 'release',
-      label: 'CHANGELOG',
-      icon: Code,
-      href: '/document/changelog',
+      label: 'BLUEPRINT',
+      icon: ShieldKey,
+      href: '/document/design',
       onClick: () => setActiveTab('release', false),
     },
   ];
@@ -148,16 +195,16 @@ export function DocsStickyHeader({
         {/* Left: Brand Identity */}
         <Link
           href="/document"
-          className="group z-10 flex items-center gap-3.5 select-none"
+          className="group z-10 flex items-center gap-2.5 select-none sm:gap-3.5"
           title="SNPI-SMS Developer Documentation Portal"
         >
           <BrandMark compact size={38} />
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-lg font-black tracking-tight text-white transition-colors group-hover:text-blue-100 sm:text-xl">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="font-sans text-base font-black tracking-tight text-white transition-colors group-hover:text-blue-100 sm:text-lg md:text-xl">
               SNPI-SMS
             </span>
             <span className="h-4 w-[2px] bg-white/40" />
-            <span className="font-sans text-xs font-bold tracking-wider text-blue-100 uppercase">
+            <span className="font-sans text-[11px] font-bold tracking-wider text-blue-100 uppercase sm:text-xs">
               Docs
             </span>
           </div>
@@ -215,9 +262,9 @@ export function DocsStickyHeader({
           {/* Mobile Dropdown Panel (Right Side) */}
           {mobileMenuOpen && (
             <div className="animate-in fade-in zoom-in-95 absolute top-[calc(100%+8px)] right-0 w-[min(calc(100vw-32px),360px)] overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-none duration-150">
-              {/* Top Primary Page Switcher Tabs (Pill Style) */}
+              {/* Top Primary Page Switcher Tabs (3 Distinct Views: Component, API, Design) */}
               <div className="mb-4">
-                <span className="mb-2 block font-mono text-[10px] font-bold text-slate-400 uppercase">
+                <span className="mb-2 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase sm:text-[11px]">
                   Select Page Hub
                 </span>
                 <div className="grid grid-cols-3 gap-1 rounded-xl bg-slate-100 p-1">
@@ -225,40 +272,40 @@ export function DocsStickyHeader({
                     type="button"
                     onClick={() => handleMobileNavigate('library')}
                     className={cn(
-                      'flex items-center justify-center gap-1.5 rounded-lg py-2 font-sans text-xs font-bold transition-all',
+                      'flex items-center justify-center gap-1 rounded-lg py-2 font-sans text-[11px] font-bold transition-all select-none active:scale-95 sm:text-xs',
                       currentTab === 'library'
                         ? 'bg-[#0056FF] text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900',
                     )}
                   >
-                    <Layers className="size-3.5 stroke-[2]" />
-                    <span>UI Library</span>
+                    <Layers className="size-3.5 shrink-0 stroke-[2]" />
+                    <span className="truncate">Component</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleMobileNavigate('openapi')}
                     className={cn(
-                      'flex items-center justify-center gap-1.5 rounded-lg py-2 font-sans text-xs font-bold transition-all',
+                      'flex items-center justify-center gap-1 rounded-lg py-2 font-sans text-[11px] font-bold transition-all select-none active:scale-95 sm:text-xs',
                       currentTab === 'openapi'
                         ? 'bg-[#0056FF] text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900',
                     )}
                   >
-                    <FileText className="size-3.5 stroke-[2]" />
-                    <span>Open API</span>
+                    <FileText className="size-3.5 shrink-0 stroke-[2]" />
+                    <span className="truncate">API</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleMobileNavigate('release')}
                     className={cn(
-                      'flex items-center justify-center gap-1.5 rounded-lg py-2 font-sans text-xs font-bold transition-all',
+                      'flex items-center justify-center gap-1 rounded-lg py-2 font-sans text-[11px] font-bold transition-all select-none active:scale-95 sm:text-xs',
                       currentTab === 'release'
                         ? 'bg-[#0056FF] text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900',
                     )}
                   >
-                    <Code className="size-3.5 stroke-[2]" />
-                    <span>Release</span>
+                    <ShieldKey className="size-3.5 shrink-0 stroke-[2]" />
+                    <span className="truncate">Blueprint</span>
                   </button>
                 </div>
               </div>
@@ -279,115 +326,258 @@ export function DocsStickyHeader({
               {/* Sidebar Specific Links Scrollable Viewport (Knowledge Base Style) */}
               <div className="no-scrollbar max-h-[min(65vh,480px)] overflow-y-auto pr-1">
                 {currentTab === 'library' ? (
-                  /* UI Library Specific Demos Navigation (Knowledge Base Folder Tree) */
+                  /* UI Library Specific Demos Navigation (Material 3 Hierarchical Component Tree & Documentation) */
                   <div className="space-y-3 font-sans">
-                    {/* Knowledge Base Header Bar */}
-                    <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                      <div className="flex items-center gap-1.5">
-                        <Folder className="size-4 text-[#0056FF]" />
-                        <span className="font-sans text-xs font-bold text-slate-900">
-                          Knowledge base
-                        </span>
+                    {/* DOCUMENTATION SECTION (Image 1: Dotted line guide with Brand Blueprint, Design Standards, Touch Targets) */}
+                    <div className="space-y-1.5 pt-1">
+                      <div className="px-2 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
+                        DOCUMENTATION
                       </div>
-                      <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
-                        {COMPONENT_LIBRARY_REGISTRY.length} Documents
-                      </span>
+                      <div className="ml-2.5 space-y-1 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
+                        {DOCUMENTATION_NAV_ITEMS.map((doc) => (
+                          <Link
+                            key={doc.id}
+                            href={doc.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group flex items-center gap-2 rounded-md px-1.5 py-1 text-xs font-semibold text-slate-700 hover:text-[#0056FF] transition-colors"
+                          >
+                            <FileText className="size-3.5 text-slate-400 group-hover:text-[#0056FF] transition-colors shrink-0" />
+                            <span className="truncate">{doc.name}</span>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Collapsible Folder Categories Tree */}
-                    <div className="space-y-1">
-                      {groupedComponents.length === 0 ? (
+                    {/* Subtle Divider */}
+                    <div className="border-t border-slate-200/80 my-2" />
+
+                    {/* MATERIAL 3 HIERARCHICAL COMPONENTS LIST (Images 2, 3, 4: Zero folder icons, clean rounded pills, collapsed parents by default) */}
+                    <div className="space-y-0.5 pt-1 font-sans text-xs">
+                      {filteredM3Components.length === 0 && filteredPlatformComponents.length === 0 ? (
                         <div className="py-4 text-center font-sans text-xs text-slate-400">
-                          No matching documents found
+                          No matching components found
                         </div>
                       ) : (
-                        groupedComponents.map((grp) => {
-                          const isCollapsed = Boolean(collapsedFolders[grp.category]);
-                          return (
-                            <div key={grp.category} className="space-y-0.5">
-                              {/* Folder Header */}
-                              <button
-                                type="button"
-                                onClick={() => toggleFolder(grp.category)}
-                                className="group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-semibold text-slate-800 transition-colors hover:bg-slate-50 hover:text-[#0056FF]"
-                              >
-                                <div className="flex min-w-0 items-center gap-2">
-                                  {isCollapsed ? (
-                                    <ChevronRight className="size-3.5 shrink-0 text-slate-400" />
-                                  ) : (
-                                    <ChevronDown className="size-3.5 shrink-0 text-slate-400" />
-                                  )}
-                                  <Folder className="size-3.5 shrink-0 text-slate-500 group-hover:text-[#0056FF]" />
-                                  <span className="truncate">{grp.category}</span>
-                                </div>
-                                <span className="font-mono text-[10px] font-normal text-slate-400">
-                                  {grp.items.length}
-                                </span>
-                              </button>
+                        <>
+                          {filteredM3Components.map((item) => {
+                            if (item.isParent && item.children) {
+                              const isExpanded = Boolean(expandedParents[item.id]);
 
-                              {/* Folder File Items (Hook Sidebar with Dashed Rail Style) */}
-                              {!isCollapsed && (
-                                <div className="ml-3 pl-1">
-                                  <HookSidebar
-                                    items={grp.items.map((comp) => ({
-                                      label: comp.name,
-                                      icon: (
-                                        <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                                      ),
-                                      onClick: () =>
-                                        handleMobileNavigate('library', `comp-${comp.id}`),
-                                    }))}
-                                    dashed={true}
-                                    color="#0056FF"
-                                  />
+                              return (
+                                <div key={item.id} className="space-y-0.5">
+                                  {/* Parent Group Header (Default collapsed, tap to toggle) */}
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleParentGroup(item.id)}
+                                    className="group flex w-full cursor-pointer items-center justify-between rounded-full px-3 py-1.5 text-left font-sans text-xs font-medium text-slate-800 transition-colors select-none hover:bg-slate-100 hover:text-slate-950"
+                                  >
+                                    <span className="truncate">{item.name}</span>
+                                    {isExpanded ? (
+                                      <ChevronDown className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                                    ) : (
+                                      <ChevronRight className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                                    )}
+                                  </button>
+
+                                  {/* Child Items Dropdown */}
+                                  {isExpanded && (
+                                    <div className="ml-3.5 space-y-0.5 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
+                                      {item.children.map((child) => {
+                                        const freshness = getComponentFreshness(child);
+                                        const target = child.targetId || `comp-${child.id}`;
+                                        const isComing = child.isFuture;
+
+                                        return (
+                                          <div
+                                            key={child.id}
+                                            onClick={() => {
+                                              if (!isComing && child.targetId) {
+                                                handleMobileNavigate('library', child.targetId);
+                                              }
+                                            }}
+                                            className={cn(
+                                              'group flex w-full items-center justify-between rounded-full px-2.5 py-1 text-left transition-colors select-none',
+                                              isComing
+                                                ? 'cursor-default opacity-75'
+                                                : 'cursor-pointer hover:bg-slate-100',
+                                            )}
+                                          >
+                                            <span
+                                              className={cn(
+                                                'truncate pr-2 font-sans text-xs transition-colors',
+                                                isComing
+                                                  ? 'text-slate-500'
+                                                  : 'text-slate-700 font-medium group-hover:text-slate-950',
+                                              )}
+                                            >
+                                              {child.name}
+                                            </span>
+                                            {freshness && (
+                                              <span
+                                                className={cn(
+                                                  'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
+                                                  freshness === 'new' &&
+                                                    'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
+                                                  freshness === 'updated' &&
+                                                    'border border-slate-300 bg-slate-100/80 text-slate-700',
+                                                  freshness === 'coming' &&
+                                                    'border border-slate-200 bg-slate-50/60 text-slate-400',
+                                                )}
+                                              >
+                                                {freshness === 'new'
+                                                  ? 'New'
+                                                  : freshness === 'updated'
+                                                    ? 'Updated'
+                                                    : 'Coming'}
+                                              </span>
+                                            )}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
                                 </div>
-                              )}
+                              );
+                            }
+
+                            // Standalone Component Item
+                            const freshness = getComponentFreshness(item);
+                            const isComing = item.isFuture;
+
+                            return (
+                              <div
+                                key={item.id}
+                                onClick={() => {
+                                  if (!isComing && item.targetId) {
+                                    handleMobileNavigate('library', item.targetId);
+                                  }
+                                }}
+                                className={cn(
+                                  'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
+                                  isComing
+                                    ? 'cursor-default opacity-75'
+                                    : 'cursor-pointer hover:bg-slate-100',
+                                )}
+                              >
+                                <span
+                                  className={cn(
+                                    'truncate pr-2 font-sans text-xs transition-colors',
+                                    isComing
+                                      ? 'text-slate-500'
+                                      : 'text-slate-800 font-medium hover:text-slate-950',
+                                  )}
+                                >
+                                  {item.name}
+                                </span>
+                                {freshness && (
+                                  <span
+                                    className={cn(
+                                      'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
+                                      freshness === 'new' &&
+                                        'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
+                                      freshness === 'updated' &&
+                                        'border border-slate-300 bg-slate-100/80 text-slate-700',
+                                      freshness === 'coming' &&
+                                        'border border-slate-200 bg-slate-50/60 text-slate-400',
+                                    )}
+                                  >
+                                    {freshness === 'new'
+                                      ? 'New'
+                                      : freshness === 'updated'
+                                        ? 'Updated'
+                                        : 'Coming'}
+                                  </span>
+                                )}
+                              </div>
+                            );
+                          })}
+
+                          {/* PLATFORM COMPONENTS SECTION (Image 6: Clean bullet category header with custom built components) */}
+                          {filteredPlatformComponents.length > 0 && (
+                            <div className="pt-3 space-y-0.5">
+                              <div className="px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5 select-none">
+                                <span className="text-[#0056FF] text-xs leading-none">•</span>
+                                <span>PLATFORM COMPONENTS</span>
+                              </div>
+                              {filteredPlatformComponents.map((item) => {
+                                const freshness = getComponentFreshness(item);
+                                const isComing = item.isFuture;
+
+                                return (
+                                  <div
+                                    key={item.id}
+                                    onClick={() => {
+                                      if (!isComing && item.targetId) {
+                                        handleMobileNavigate('library', item.targetId);
+                                      }
+                                    }}
+                                    className={cn(
+                                      'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
+                                      isComing
+                                        ? 'cursor-default opacity-75'
+                                        : 'cursor-pointer hover:bg-slate-100',
+                                    )}
+                                  >
+                                    <span
+                                      className={cn(
+                                        'truncate pr-2 font-sans text-xs transition-colors',
+                                        isComing
+                                          ? 'text-slate-500'
+                                          : 'text-slate-800 font-medium hover:text-slate-950',
+                                      )}
+                                    >
+                                      {item.name}
+                                    </span>
+                                    {freshness && (
+                                      <span
+                                        className={cn(
+                                          'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
+                                          freshness === 'new' &&
+                                            'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
+                                          freshness === 'updated' &&
+                                            'border border-slate-300 bg-slate-100/80 text-slate-700',
+                                          freshness === 'coming' &&
+                                            'border border-slate-200 bg-slate-50/60 text-slate-400',
+                                        )}
+                                      >
+                                        {freshness === 'new'
+                                          ? 'New'
+                                          : freshness === 'updated'
+                                            ? 'Updated'
+                                            : 'Coming'}
+                                      </span>
+                                    )}
+                                  </div>
+                                );
+                              })}
                             </div>
-                          );
-                        })
+                          )}
+                        </>
                       )}
                     </div>
-
-                    {/* Documentation Sections (Hook Sidebar with Dashed Rail Style) */}
-                    <div className="mt-3 border-t border-slate-100 pt-2.5">
-                      <span className="mb-1.5 block font-mono text-[10px] font-bold text-slate-400 uppercase">
-                        Documentation
-                      </span>
-                      <div className="ml-1">
-                        <HookSidebar
-                          items={[
-                            {
-                              label: 'Brand Blueprint',
-                              icon: (
-                                <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                              ),
-                              onClick: () => handleMobileNavigate('library', 'brand-blueprint'),
-                            },
-                            {
-                              label: 'Design Standards',
-                              icon: (
-                                <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                              ),
-                              onClick: () => handleMobileNavigate('library', 'design-principles'),
-                            },
-                            {
-                              label: 'Touch Targets',
-                              icon: (
-                                <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                              ),
-                              onClick: () => handleMobileNavigate('library', 'touch-targets'),
-                            },
-                          ]}
-                          dashed={true}
-                          color="#0056FF"
-                        />
-                      </div>
-                    </div>
+                  </div>
+                ) : currentTab === 'release' ? (
+                  /* Design System Page Specific Navigation */
+                  <div className="space-y-1.5 font-sans">
+                    <span className="mb-2 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                      Jump to Design Section
+                    </span>
+                    {DESIGN_SYSTEM_SECTIONS.map((sec) => (
+                      <button
+                        key={sec.id}
+                        type="button"
+                        onClick={() => handleMobileNavigate('release', sec.id)}
+                        className="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left font-sans text-xs font-medium text-slate-700 hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+                      >
+                        <span className="truncate">{sec.label}</span>
+                        <ChevronRight className="size-3 text-slate-400" />
+                      </button>
+                    ))}
                   </div>
                 ) : (
                   /* Open API Specific Sections Navigation */
-                  <div className="space-y-1.5">
-                    <span className="mb-2 block font-mono text-[10px] font-bold text-slate-400 uppercase">
+                  <div className="space-y-1.5 font-sans">
+                    <span className="mb-2 block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
                       Jump to API Guide Section
                     </span>
                     {OPEN_API_SECTIONS.map((sec) => (
@@ -395,7 +585,7 @@ export function DocsStickyHeader({
                         key={sec.id}
                         type="button"
                         onClick={() => handleMobileNavigate('openapi', sec.id)}
-                        className="flex w-full items-center justify-between rounded-md px-2 py-2 text-left font-sans text-xs font-medium text-slate-700 hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+                        className="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left font-sans text-xs font-medium text-slate-700 hover:bg-[#EFF5FF] hover:text-[#0056FF]"
                       >
                         <span className="truncate">{sec.label}</span>
                         <ChevronRight className="size-3 text-slate-400" />

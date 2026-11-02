@@ -1,16 +1,18 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
-  BrandConceptBlueprint,
-  LibrarySnackbar,
-  NativeSnackbarInline,
-  type SnackbarVariant,
   LibrarySwitch,
   LibraryChip,
   LibraryDropdown,
   COMPONENT_LIBRARY_REGISTRY,
   COMPONENT_CATEGORIES,
+  DOCUMENTATION_NAV_ITEMS,
+  M3_COMPONENTS_NAV,
+  PLATFORM_COMPONENTS_NAV,
+  type M3NavItem,
+  type DocNavItem,
   GeometricButton,
   GeometricInput,
   GeometricHeaderStamp,
@@ -19,20 +21,17 @@ import {
   CyberArmorNavDemo,
   DurationPickerDemo,
   PasswordInputDemo,
-  ThemeSelectorDemo,
   NotificationBellDemo,
   FolderDemo,
   StepPlayerDemo,
   AnimatedCounterDemo,
   VoiceNoteDemo,
-  FaqDemo,
   GridRevealDemo,
   MarqueeSectionDemo,
   FloatingLabelFormDemo,
   MultiStepWizardDemo,
   FileDropzoneDemo,
   DataTableDemo,
-  CipherTextDecoderDemo,
   ToastStackDemo,
   StatusPage404Demo,
   SkeletonLoadingScreenDemo,
@@ -42,6 +41,11 @@ import {
   generateAiAgentPrompt,
   RadiantIntegrationHub,
   LibraryTooltip,
+  BlankFutureComponent,
+  type ComponentItemDoc,
+  type ComponentFreshness,
+  getComponentFreshness,
+  getCategoryHierarchicalNodes,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -138,10 +142,10 @@ export function UiLibraryView() {
   const [componentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>({});
   const getCompTab = (id: string): 'preview' | 'prompt' => componentTabs[id] || 'preview';
 
-  // Sidebar collapsible category state (Inspired by Knowledge Base reference)
-  const [collapsedCategories, setCollapsedCategories] = React.useState<Record<string, boolean>>({});
+  // Sidebar category expansion state: default all collapsed (no dropdown open initially)
+  const [expandedCategories, setExpandedCategories] = React.useState<Record<string, boolean>>({});
   const toggleCategory = (cat: string) => {
-    setCollapsedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }));
+    setExpandedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }));
   };
 
   // Active section for Line Tracker
@@ -161,14 +165,7 @@ export function UiLibraryView() {
 
   // --- Interactive State for Real Demos in the Feed ---
 
-  // 1. Snackbar state
-  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
-  const [snackbarMsg, setSnackbarMsg] = React.useState(
-    'Student enrollment confirmed for STU-2026-0891.',
-  );
-  const [snackbarVariant, setSnackbarVariant] = React.useState<SnackbarVariant>('success');
-
-  // 2. Bottom Sheet state
+  // 1. Bottom Sheet state
   const [sheetOpen, setSheetOpen] = React.useState(false);
   const [bottomSheetChoice, setBottomSheetChoice] = React.useState(
     'Export Student Roster (CSV / PDF)',
@@ -211,7 +208,7 @@ export function UiLibraryView() {
 
   // 8. Dropdown state
   const [dropdownValue, setDropdownValue] = React.useState('sora');
-  const [dropdownCampus, setDropdownCampus] = React.useState('siem-reap');
+  const [dropdownCampus, setDropdownCampus] = React.useState('phnom-penh');
 
   // 10. Card interactive states (Folder mode & Metrics mode)
   const [cardPresentationMode, setCardPresentationMode] = React.useState<'folder' | 'metrics'>(
@@ -225,7 +222,20 @@ export function UiLibraryView() {
 
   const sidebarContainerRef = React.useRef<HTMLDivElement>(null);
 
-  // Filter 73 components in real-time (preserves canonical COMPONENT_CATEGORIES order)
+  // Menu Category Filter: 'all' | 'ready' | 'coming'
+  const [menuFilter, setMenuFilter] = React.useState<'all' | 'ready' | 'coming'>('all');
+
+  // Parent group expansion state: default collapsed (no child dropdown open initially)
+  const [expandedParents, setExpandedParents] = React.useState<Record<string, boolean>>({});
+
+  const toggleParentGroup = (parentId: string) => {
+    setExpandedParents((prev) => ({
+      ...prev,
+      [parentId]: !prev[parentId],
+    }));
+  };
+
+  // Filter components in real-time with search query
   const filteredComponents = React.useMemo(() => {
     if (!searchQuery.trim()) return COMPONENT_LIBRARY_REGISTRY;
     const q = searchQuery.toLowerCase().trim();
@@ -252,13 +262,93 @@ export function UiLibraryView() {
     }).filter((group) => group.components.length > 0);
   }, [filteredComponents]);
 
+  // Live Feed: strictly built components only (never render unbuilt future component stages until requested)
+  const feedCategories = React.useMemo(() => {
+    return COMPONENT_CATEGORIES.map((category, index) => {
+      const comps = COMPONENT_LIBRARY_REGISTRY.filter(
+        (c) => c.category === category && !c.isFuture,
+      );
+      const categorySlug = category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      return {
+        category,
+        categoryId: `cat-${categorySlug}`,
+        groupNumber: index + 1,
+        components: comps,
+      };
+    }).filter((group) => group.components.length > 0);
+  }, []);
+
+  // Filter M3 components with real-time search query
+  const filteredM3Components = React.useMemo(() => {
+    if (!searchQuery.trim()) return M3_COMPONENTS_NAV;
+    const q = searchQuery.toLowerCase().trim();
+    return M3_COMPONENTS_NAV.filter((item) => {
+      if (item.name.toLowerCase().includes(q)) return true;
+      if (item.children && item.children.some((c) => c.name.toLowerCase().includes(q))) {
+        return true;
+      }
+      return false;
+    }).map((item) => {
+      if (item.children) {
+        return {
+          ...item,
+          children: item.children.filter((c) =>
+            item.name.toLowerCase().includes(q) ? true : c.name.toLowerCase().includes(q),
+          ),
+        };
+      }
+      return item;
+    });
+  }, [searchQuery]);
+
+  // Filter Platform components with real-time search query
+  const filteredPlatformComponents = React.useMemo(() => {
+    if (!searchQuery.trim()) return PLATFORM_COMPONENTS_NAV;
+    const q = searchQuery.toLowerCase().trim();
+    return PLATFORM_COMPONENTS_NAV.filter((item) =>
+      item.name.toLowerCase().includes(q),
+    );
+  }, [searchQuery]);
+
+  // Auto-expand parent group on scroll when encountering child section
+  React.useEffect(() => {
+    if (!activeSectionId) return;
+
+    for (const item of M3_COMPONENTS_NAV) {
+      if (item.isParent && item.children) {
+        const isChildActive = item.children.some(
+          (c) => c.targetId === activeSectionId || `comp-${c.id}` === activeSectionId,
+        );
+        if (isChildActive) {
+          setExpandedParents((prev) => {
+            if (prev[item.id]) return prev;
+            return { ...prev, [item.id]: true };
+          });
+        }
+      }
+    }
+  }, [activeSectionId]);
+
+  // Auto-expand parent group if search query matches child
+  React.useEffect(() => {
+    if (!searchQuery.trim()) return;
+    const q = searchQuery.toLowerCase().trim();
+    for (const item of M3_COMPONENTS_NAV) {
+      if (item.isParent && item.children) {
+        if (item.children.some((c) => c.name.toLowerCase().includes(q))) {
+          setExpandedParents((prev) => ({ ...prev, [item.id]: true }));
+        }
+      }
+    }
+  }, [searchQuery]);
+
   // Interactive Hero Paradigm Toggle Mode (Flat 0px vs Living Motion FX)
-  const [heroInteractiveMode, setHeroInteractiveMode] = React.useState<'flat' | 'spring'>('flat');
+  const [heroInteractiveMode, setHeroInteractiveMode] = React.useState<'flat' | 'spring'>('spring');
 
   // Section IDs for active tracking in Left Sticky Menu (strictly linear sequential flow)
   const scrollSectionIds = React.useMemo(() => {
     const ids = ['ui-library-head', 'interactive-feed'];
-    groupedCategories.forEach((group) => {
+    feedCategories.forEach((group) => {
       ids.push(group.categoryId);
       group.components.forEach((comp) => {
         ids.push(`comp-${comp.id}`);
@@ -266,7 +356,7 @@ export function UiLibraryView() {
     });
     ids.push('brand-identity', 'brand-blueprint', 'design-principles', 'touch-targets');
     return ids;
-  }, [groupedCategories]);
+  }, [feedCategories]);
 
   // Smooth scroll helper with header offset clearance
   const scrollToSection = (id: string) => {
@@ -347,12 +437,6 @@ export function UiLibraryView() {
   };
 
   const stateBundle = {
-    snackbarOpen,
-    setSnackbarOpen,
-    snackbarMsg,
-    setSnackbarMsg,
-    snackbarVariant,
-    setSnackbarVariant,
     sheetOpen,
     setSheetOpen,
     bottomSheetChoice,
@@ -423,130 +507,260 @@ export function UiLibraryView() {
                 <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Search documents"
+                  placeholder="Search components"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2 pr-3 pl-8.5 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-hidden"
                 />
               </div>
 
-              {/* Collapsible Folder Categories Tree */}
-              <div className="space-y-1.5 pt-1 font-sans text-xs">
-                {groupedCategories.length === 0 ? (
+              {/* DOCUMENTATION SECTION (Image 1: Dotted line guide with Brand Blueprint, Design Standards, Touch Targets) */}
+              <div className="space-y-1.5 pt-1">
+                <div className="px-2 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
+                  DOCUMENTATION
+                </div>
+                <div className="ml-2.5 space-y-1 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
+                  {DOCUMENTATION_NAV_ITEMS.map((doc) => (
+                    <Link
+                      key={doc.id}
+                      href={doc.href}
+                      className="group flex items-center gap-2 rounded-md px-1.5 py-1 text-xs font-semibold text-slate-700 hover:text-[#0056FF] transition-colors"
+                    >
+                      <FileText className="size-3.5 text-slate-400 group-hover:text-[#0056FF] transition-colors shrink-0" />
+                      <span className="truncate">{doc.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Subtle Divider */}
+              <div className="border-t border-slate-200/80 my-2" />
+
+              {/* MATERIAL 3 HIERARCHICAL COMPONENTS LIST (Images 2, 3, 4: Zero folder icons, clean rounded pills, collapsed parents by default) */}
+              <div className="space-y-0.5 pt-1 font-sans text-xs">
+                {filteredM3Components.length === 0 && filteredPlatformComponents.length === 0 ? (
                   <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
-                    No matching documents found
+                    No matching components found
                   </div>
                 ) : (
-                  groupedCategories.map((group) => {
-                    const isCollapsed = collapsedCategories[group.category];
-                    const isCategoryActive =
-                      activeSectionId === group.categoryId ||
-                      group.components.some((c) => activeSectionId === `comp-${c.id}`);
+                  <>
+                    {filteredM3Components.map((item) => {
+                      if (item.isParent && item.children) {
+                        const isExpanded = Boolean(expandedParents[item.id]);
+                        const isParentActive = item.children.some(
+                          (c) => activeSectionId === c.targetId || activeSectionId === `comp-${c.id}`,
+                        );
 
-                    return (
-                      <div key={group.category} className="space-y-0.5">
-                        {/* Folder Header */}
-                        <button
-                          type="button"
-                          onClick={() => toggleCategory(group.category)}
+                        return (
+                          <div key={item.id} className="space-y-0.5">
+                            {/* Parent Group Header (Default: collapsed, tap to toggle) */}
+                            <button
+                              type="button"
+                              onClick={() => toggleParentGroup(item.id)}
+                              className={cn(
+                                'group flex w-full cursor-pointer items-center justify-between rounded-full px-3 py-1.5 text-left font-sans text-xs transition-colors select-none',
+                                isParentActive
+                                  ? 'bg-[#EFF5FF] font-bold text-[#0056FF]'
+                                  : 'text-slate-800 font-medium hover:bg-slate-100 hover:text-slate-950',
+                              )}
+                            >
+                              <span className="truncate">{item.name}</span>
+                              {isExpanded ? (
+                                <ChevronDown className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                              ) : (
+                                <ChevronRight className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                              )}
+                            </button>
+
+                            {/* Child Items Dropdown (Revealed on Tap or Auto-Extracted on Scroll) */}
+                            {isExpanded && (
+                              <div className="ml-3.5 space-y-0.5 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
+                                {item.children.map((child) => {
+                                  const freshness = getComponentFreshness(child);
+                                  const target = child.targetId || `comp-${child.id}`;
+                                  const isChildActive = activeSectionId === target;
+                                  const isComing = child.isFuture;
+
+                                  return (
+                                    <div
+                                      key={child.id}
+                                      onClick={() => {
+                                        if (!isComing && child.targetId) {
+                                          scrollToSection(child.targetId);
+                                        }
+                                      }}
+                                      className={cn(
+                                        'group flex w-full items-center justify-between rounded-full px-2.5 py-1 text-left transition-colors select-none',
+                                        isComing
+                                          ? 'cursor-default opacity-75'
+                                          : 'cursor-pointer hover:bg-slate-100',
+                                        isChildActive && 'bg-[#EFF5FF] font-bold text-[#0056FF]',
+                                      )}
+                                    >
+                                      <span
+                                        className={cn(
+                                          'truncate pr-2 font-sans text-xs transition-colors',
+                                          isComing
+                                            ? 'text-slate-500'
+                                            : isChildActive
+                                              ? 'font-bold text-[#0056FF]'
+                                              : 'text-slate-700 font-medium group-hover:text-slate-950',
+                                        )}
+                                      >
+                                        {child.name}
+                                      </span>
+                                      {freshness && (
+                                        <span
+                                          className={cn(
+                                            'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
+                                            freshness === 'new' &&
+                                              'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
+                                            freshness === 'updated' &&
+                                              'border border-slate-300 bg-slate-100/80 text-slate-700',
+                                            freshness === 'coming' &&
+                                              'border border-slate-200 bg-slate-50/60 text-slate-400',
+                                          )}
+                                        >
+                                          {freshness === 'new'
+                                            ? 'New'
+                                            : freshness === 'updated'
+                                              ? 'Updated'
+                                              : 'Coming'}
+                                        </span>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      }
+
+                      // Standalone Component Item (e.g. Components overview, App bars, Badges, Cards, Chips, etc.)
+                      const freshness = getComponentFreshness(item);
+                      const target = item.targetId || `comp-${item.id}`;
+                      const isActive = activeSectionId === target;
+                      const isComing = item.isFuture;
+
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => {
+                            if (!isComing && item.targetId) {
+                              scrollToSection(item.targetId);
+                            }
+                          }}
                           className={cn(
-                            'group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-semibold transition-all select-none',
-                            isCategoryActive
-                              ? 'bg-slate-100 font-bold text-slate-950'
-                              : 'text-slate-700 hover:bg-slate-50 hover:text-slate-950',
+                            'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
+                            isComing
+                              ? 'cursor-default opacity-75'
+                              : 'cursor-pointer hover:bg-slate-100',
+                            isActive && 'bg-[#EFF5FF] font-bold text-[#0056FF]',
                           )}
                         >
-                          <div className="flex min-w-0 items-center gap-2">
-                            {isCollapsed ? (
-                              <ChevronRight className="size-3.5 shrink-0 text-slate-400" />
-                            ) : (
-                              <ChevronDown className="size-3.5 shrink-0 text-slate-400" />
+                          <span
+                            className={cn(
+                              'truncate pr-2 font-sans text-xs transition-colors',
+                              isComing
+                                ? 'text-slate-500'
+                                : isActive
+                                  ? 'font-bold text-[#0056FF]'
+                                  : 'text-slate-800 font-medium hover:text-slate-950',
                             )}
-                            <Folder
-                              className={cn(
-                                'size-3.5 shrink-0 transition-colors',
-                                isCategoryActive
-                                  ? 'text-slate-900'
-                                  : 'text-slate-500 group-hover:text-slate-900',
-                              )}
-                            />
-                            <span className="truncate">{group.category}</span>
-                          </div>
-                          <span className="font-mono text-[10px] font-normal text-slate-400">
-                            {group.components.length}
+                          >
+                            {item.name}
                           </span>
-                        </button>
-
-                        {/* Folder File Items (Hook Sidebar with Dashed Rail Style) */}
-                        {!isCollapsed && (
-                          <div className="ml-3 pl-1">
-                            <HookSidebar
-                              items={group.components.map((comp) => ({
-                                label: comp.name,
-                                icon: (
-                                  <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                                ),
-                                onClick: () => scrollToSection(`comp-${comp.id}`),
-                              }))}
-                              value={group.components.findIndex(
-                                (c) => activeSectionId === `comp-${c.id}`,
+                          {freshness && (
+                            <span
+                              className={cn(
+                                'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
+                                freshness === 'new' &&
+                                  'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
+                                freshness === 'updated' &&
+                                  'border border-slate-300 bg-slate-100/80 text-slate-700',
+                                freshness === 'coming' &&
+                                  'border border-slate-200 bg-slate-50/60 text-slate-400',
                               )}
-                              onChange={(idx) => {
-                                const comp = group.components[idx];
-                                if (comp) scrollToSection(`comp-${comp.id}`);
-                              }}
-                              dashed={true}
-                              color="#0056FF"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })
-                )}
+                            >
+                              {freshness === 'new'
+                                ? 'New'
+                                : freshness === 'updated'
+                                  ? 'Updated'
+                                  : 'Coming'}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
 
-                {/* Documentation Section Links (Hook Sidebar Dashed Rail Style) */}
-                <div className="mt-3 border-t border-slate-100 pt-3">
-                  <div className="pb-1.5 font-mono text-[10px] font-bold text-slate-400 uppercase">
-                    <span>Documentation</span>
-                  </div>
-                  <div className="ml-1">
-                    <HookSidebar
-                      items={[
-                        {
-                          label: 'Brand Blueprint',
-                          icon: (
-                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                          ),
-                          onClick: () => scrollToSection('brand-blueprint'),
-                        },
-                        {
-                          label: 'Design Standards',
-                          icon: (
-                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                          ),
-                          onClick: () => scrollToSection('design-principles'),
-                        },
-                        {
-                          label: 'Touch Targets',
-                          icon: (
-                            <FileText className="size-3 shrink-0 text-slate-400 group-hover:text-slate-900" />
-                          ),
-                          onClick: () => scrollToSection('touch-targets'),
-                        },
-                      ]}
-                      value={['brand-blueprint', 'design-principles', 'touch-targets'].indexOf(
-                        activeSectionId,
-                      )}
-                      onChange={(idx) => {
-                        const docs = ['brand-blueprint', 'design-principles', 'touch-targets'];
-                        if (docs[idx]) scrollToSection(docs[idx]);
-                      }}
-                      dashed={true}
-                      color="#0056FF"
-                    />
-                  </div>
-                </div>
+                    {/* PLATFORM COMPONENTS SECTION (Image 6: Clean bullet category header with custom built components) */}
+                    {filteredPlatformComponents.length > 0 && (
+                      <div className="pt-3 space-y-0.5">
+                        <div className="px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5 select-none">
+                          <span className="text-[#0056FF] text-xs leading-none">•</span>
+                          <span>PLATFORM COMPONENTS</span>
+                        </div>
+                        {filteredPlatformComponents.map((item) => {
+                          const freshness = getComponentFreshness(item);
+                          const target = item.targetId || `comp-${item.id}`;
+                          const isActive = activeSectionId === target;
+                          const isComing = item.isFuture;
+
+                          return (
+                            <div
+                              key={item.id}
+                              onClick={() => {
+                                if (!isComing && item.targetId) {
+                                  scrollToSection(item.targetId);
+                                }
+                              }}
+                              className={cn(
+                                'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
+                                isComing
+                                  ? 'cursor-default opacity-75'
+                                  : 'cursor-pointer hover:bg-slate-100',
+                                isActive && 'bg-[#EFF5FF] font-bold text-[#0056FF]',
+                              )}
+                            >
+                              <span
+                                className={cn(
+                                  'truncate pr-2 font-sans text-xs transition-colors',
+                                  isComing
+                                    ? 'text-slate-500'
+                                    : isActive
+                                      ? 'font-bold text-[#0056FF]'
+                                      : 'text-slate-800 font-medium hover:text-slate-950',
+                                )}
+                              >
+                                {item.name}
+                              </span>
+                              {freshness && (
+                                <span
+                                  className={cn(
+                                    'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
+                                    freshness === 'new' &&
+                                      'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
+                                    freshness === 'updated' &&
+                                      'border border-slate-300 bg-slate-100/80 text-slate-700',
+                                    freshness === 'coming' &&
+                                      'border border-slate-200 bg-slate-50/60 text-slate-400',
+                                  )}
+                                >
+                                  {freshness === 'new'
+                                    ? 'New'
+                                    : freshness === 'updated'
+                                      ? 'Updated'
+                                      : 'Coming'}
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </aside>
@@ -555,25 +769,14 @@ export function UiLibraryView() {
           <main className="min-w-0 flex-1 space-y-10">
             {/* HERO HEAD TITLE: Ultra-Creative Interactive Engine Hero (References 3 & 4) */}
             <section id="ui-library-head" className="scroll-mt-36 space-y-4">
-              <div className="relative overflow-hidden rounded-3xl border border-[#CAD3F5] bg-gradient-to-b from-white via-[#EFF5FF]/40 to-white p-5 shadow-xs sm:p-10">
-                {/* Subtle Geometric Background Dot Grid */}
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-[0.35]"
-                  style={{
-                    backgroundImage:
-                      'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FFFFFF 0.75px)',
-                    backgroundSize: '20px 20px',
-                    backgroundPosition: '0 0, 10px 10px',
-                  }}
-                />
-
+              <div className="relative overflow-visible bg-transparent py-2 sm:py-4">
                 <div className="relative z-10 space-y-6 sm:space-y-8">
                   {/* Creative Centerpiece Headline with Embedded Toggle Switch (Image 4 Reference) */}
                   <div className="flex flex-col gap-3">
                     <div>
-                      <h1 className="font-sans text-4xl leading-none font-black tracking-tight text-[#0A1A4A] select-none sm:text-6xl md:text-7xl">
+                      <h1 className="font-sans text-3xl leading-none font-black tracking-tight text-[#0A1A4A] select-none sm:text-5xl md:text-6xl">
                         <span className="block tracking-tight">CREATIVE</span>
-                        <span className="my-1 flex items-center gap-2 sm:gap-4">
+                        <span className="my-1 flex items-center gap-2 sm:gap-3">
                           <span>PR</span>
                           <button
                             type="button"
@@ -582,19 +785,19 @@ export function UiLibraryView() {
                                 prev === 'flat' ? 'spring' : 'flat',
                               )
                             }
-                            className="group relative inline-flex h-9 w-20 cursor-pointer items-center rounded-full border-2 border-[#0056FF] bg-[#EFF5FF] p-1 shadow-inner transition-all active:scale-95 sm:h-14 sm:w-28 md:h-16 md:w-32"
-                            title="Toggle Interactive Design Paradigm (0px Flat vs Spring FX)"
+                            className="group relative inline-flex h-8 w-18 cursor-pointer items-center rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1 shadow-inner transition-all active:scale-95 sm:h-11 sm:w-22 md:h-12 md:w-24"
+                            title="Toggle Interactive Design Paradigm (Flat vs Spring FX)"
                             aria-label="Toggle Interactive Design Paradigm"
                           >
                             <span
                               className={cn(
-                                'inline-flex size-7 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs transition-all duration-300 sm:size-11 sm:text-sm md:size-13',
+                                'inline-flex size-6 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs transition-all duration-300 sm:size-8 sm:text-xs md:size-9',
                                 heroInteractiveMode === 'flat'
-                                  ? 'translate-x-0'
-                                  : 'translate-x-9 bg-[#2277FF] sm:translate-x-14 md:translate-x-16',
+                                  ? 'translate-x-0 bg-slate-500'
+                                  : 'translate-x-9 bg-[#0056FF] sm:translate-x-11 md:translate-x-12',
                               )}
                             >
-                              {heroInteractiveMode === 'flat' ? '0px' : 'FX'}
+                              FX
                             </span>
                           </button>
                           <span>DUCT</span>
@@ -671,9 +874,9 @@ export function UiLibraryView() {
               </div>
             </section>
 
-            {/* COMPONENT DEMOS ARRANGED BY CATEGORY */}
+            {/* COMPONENT DEMOS ARRANGED BY CATEGORY (BUILT ONLY) */}
             <div className="space-y-12">
-              {groupedCategories.map((group) => {
+              {feedCategories.map((group) => {
                 return (
                   <div
                     key={group.category}
@@ -682,288 +885,71 @@ export function UiLibraryView() {
                   >
                     {/* Demos Inside This Category */}
                     <div className="space-y-8">
-                      {group.components.map((comp, compIdx) => {
+                      {group.components.map((comp) => {
                         const sectionId = `comp-${comp.id}`;
-                        const currentTab = getCompTab(comp.id);
+                        const freshness = getComponentFreshness(comp);
 
                         return (
                           <section
                             key={comp.id}
                             id={sectionId}
-                            className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-8"
+                            className="scroll-mt-24 rounded-3xl border border-[#CAD3F5] bg-white p-4 shadow-xs transition-all hover:border-[#0056FF]/50 hover:shadow-sm sm:p-7"
                           >
-                            {/* Top Header Row - Title Name Only */}
-                            <div className="mb-4">
-                              <h2 className="font-sans text-lg font-black text-slate-950 sm:text-xl">
-                                {comp.name}
-                              </h2>
+                            {/* Top Header Row - Title Name & Specific Install Command Only */}
+                            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                              <div className="flex flex-col gap-0.5">
+                                {freshness && (
+                                  <span
+                                    className={cn(
+                                      'font-mono text-[9px] leading-none font-bold tracking-wider uppercase',
+                                      freshness === 'new' && 'text-[#0056FF]',
+                                      freshness === 'updated' && 'text-amber-600',
+                                    )}
+                                  >
+                                    {freshness === 'new' ? 'NEW' : 'UPDATED'}
+                                  </span>
+                                )}
+                                <h2 className="font-sans text-lg font-black text-[#0A1A4A] sm:text-xl">
+                                  {comp.name}
+                                </h2>
+                              </div>
 
-                              {/* Subtle Divider Line */}
-                              <div className="mt-3 border-b border-slate-100" />
+                              {/* Specific Install Command Pill */}
+                              <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1.5 transition-all hover:border-[#0056FF]/40">
+                                  <Terminal className="size-3.5 shrink-0 text-[#0056FF]" />
+                                  <code className="font-mono text-xs font-bold text-[#0056FF]">
+                                    npx snpi-ui@latest add {comp.id}
+                                  </code>
+                                  <button
+                                    type="button"
+                                    title="Copy install command"
+                                    onClick={() =>
+                                      handleCopyInstall(
+                                        comp.id,
+                                        `npx snpi-ui@latest add ${comp.id}`,
+                                      )
+                                    }
+                                    className="ml-1 cursor-pointer text-[#0A1A4A]/60 transition-colors hover:text-[#0056FF]"
+                                    aria-label={`Copy install command for ${comp.name}`}
+                                  >
+                                    {copiedInstallId === comp.id ? (
+                                      <Check className="size-3.5 stroke-[2.5] text-emerald-600" />
+                                    ) : (
+                                      <Copy className="size-3.5 stroke-[2]" />
+                                    )}
+                                  </button>
+                                </div>
+                              </div>
                             </div>
 
-                            {/* Clean Stage Canvas (Default Full Size) & NPX Install Bar Below */}
-                            {currentTab === 'preview' && (
-                              <div className="space-y-3">
-                                {/* Default Full Size Stage (Overflow-Visible to prevent dropdown/popover clipping) */}
-                                <div className="relative flex min-h-[320px] w-full items-center justify-center rounded-2xl bg-[#FAFAFA] p-2.5 sm:min-h-[420px] sm:p-8">
-                                  {/* Subtle Mathematical Linear Grid Pattern (Zero Radial Dots) */}
-                                  <div
-                                    className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-[0.35]"
-                                    style={{
-                                      backgroundImage: `
-                                        linear-gradient(to right, #CAD3F5 1px, transparent 1px),
-                                        linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)
-                                      `,
-                                      backgroundSize: '28px 28px',
-                                    }}
-                                  />
-
-                                  {/* Full Size Component Render */}
-                                  <div className="no-scrollbar relative z-10 flex w-full max-w-full items-center justify-center overflow-x-auto px-1 py-2 sm:py-6">
-                                    {renderFeedComponentDemo(comp.id, stateBundle)}
-                                  </div>
-                                </div>
-
-                                {/* Component Specific NPX Command Bar Below Demo */}
-                                <div className="flex flex-col gap-2.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-3 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-2.5">
-                                  <div className="flex min-w-0 flex-wrap items-center gap-2">
-                                    <div className="flex items-center gap-1.5 text-slate-500">
-                                      <Terminal className="size-3.5 text-[#0056FF]" />
-                                      <span className="shrink-0 font-mono text-[10px] font-bold tracking-wider uppercase">
-                                        Install:
-                                      </span>
-                                    </div>
-                                    <code className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/60 px-2.5 py-1 font-mono text-xs font-bold break-all text-[#0056FF] sm:break-normal">
-                                      npx snpi-ui@latest add {comp.id}
-                                    </code>
-                                  </div>
-
-                                  <div className="flex items-center gap-1.5 self-end sm:gap-2 sm:self-auto">
-                                    {/* Copy Install Command Button - Standard Popover Tooltip */}
-                                    <LibraryTooltip
-                                      content="Copy CLI Command"
-                                      position="top"
-                                      delayMs={80}
-                                    >
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          handleCopyInstall(
-                                            comp.id,
-                                            `npx snpi-ui@latest add ${comp.id}`,
-                                          )
-                                        }
-                                        className={cn(
-                                          'group relative flex size-8 cursor-pointer items-center justify-center rounded-lg border transition-all duration-200 active:scale-95 sm:size-8.5',
-                                          copiedInstallId === comp.id
-                                            ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
-                                            : 'border-slate-300/80 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-                                        )}
-                                        aria-label="Copy CLI Command"
-                                      >
-                                        {copiedInstallId === comp.id ? (
-                                          <Check className="size-4 stroke-[2.5] text-emerald-600" />
-                                        ) : (
-                                          <Copy className="size-4 stroke-[2] transition-transform group-hover:scale-110" />
-                                        )}
-                                      </button>
-                                    </LibraryTooltip>
-
-                                    {/* 1-Click Copy AI Agent Prompt Button - Standard Popover Tooltip */}
-                                    <LibraryTooltip
-                                      content="Copy AI Prompt"
-                                      position="top"
-                                      delayMs={80}
-                                    >
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
-                                        }
-                                        className={cn(
-                                          'group relative flex size-8 cursor-pointer items-center justify-center rounded-lg border transition-all duration-200 active:scale-95 sm:size-8.5',
-                                          copiedPromptId === comp.id
-                                            ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
-                                            : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white',
-                                        )}
-                                        aria-label="Copy AI Agent Prompt"
-                                      >
-                                        {copiedPromptId === comp.id ? (
-                                          <Check className="size-4 stroke-[2.5] text-emerald-600" />
-                                        ) : (
-                                          <Sparkles className="size-4 stroke-[2] transition-transform group-hover:scale-110" />
-                                        )}
-                                      </button>
-                                    </LibraryTooltip>
-                                  </div>
-                                </div>
+                            {/* Clean Stage Canvas - Zero Background Grid */}
+                            <div className="relative flex min-h-[320px] w-full items-center justify-center rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/20 p-3 sm:min-h-[420px] sm:p-8">
+                              {/* Full Size Component Render */}
+                              <div className="no-scrollbar relative z-10 flex w-full max-w-full items-center justify-center overflow-x-auto px-1 py-2 sm:py-6">
+                                {renderFeedComponentDemo(comp.id, stateBundle, comp)}
                               </div>
-                            )}
-
-                            {/* TAB CONTENT: PROMPT (Universal AI Agent MVP Specification Skill) */}
-                            {currentTab === 'prompt' && (
-                              <div className="space-y-4 pt-2">
-                                {/* Prompt Header & 1-Click Copy Banner */}
-                                <div className="flex flex-col gap-3 rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 sm:flex-row sm:items-center sm:justify-between">
-                                  <div className="flex items-center gap-3">
-                                    <span className="flex size-9 items-center justify-center rounded-[4px] bg-[#0056FF] text-white shadow-xs">
-                                      <Sparkles className="size-4 stroke-[2]" />
-                                    </span>
-                                    <div>
-                                      <div className="flex items-center gap-2">
-                                        <h3 className="font-sans text-xs font-bold text-slate-900">
-                                          Universal AI Agent MVP Prompt Skill
-                                        </h3>
-                                        <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                                          {comp.category}
-                                        </span>
-                                      </div>
-                                      <p className="font-sans text-[11px] text-slate-500">
-                                        Direct MVP instructions for Antigravity, Cursor, Claude 3.5,
-                                        ChatGPT, Copilot, or v0.
-                                      </p>
-                                    </div>
-                                  </div>
-
-                                  <div className="flex items-center gap-2">
-                                    <GeometricButton
-                                      size="sm"
-                                      variant={copiedPromptId === comp.id ? 'blue' : 'outline'}
-                                      onClick={() =>
-                                        handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
-                                      }
-                                      icon={
-                                        copiedPromptId === comp.id ? (
-                                          <Check className="size-3 stroke-[2.2] text-white" />
-                                        ) : (
-                                          <Copy className="size-3 stroke-[2] text-slate-600" />
-                                        )
-                                      }
-                                    >
-                                      {copiedPromptId === comp.id
-                                        ? 'Prompt Copied!'
-                                        : 'Copy AI Prompt'}
-                                    </GeometricButton>
-                                  </div>
-                                </div>
-
-                                {/* Complete Monospace Prompt Box */}
-                                <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-5 text-slate-900 shadow-2xs">
-                                  <div className="mb-3 flex items-center justify-between border-b border-slate-200 pb-3">
-                                    <div className="flex items-center gap-2">
-                                      <span className="rounded-[3px] bg-[#0056FF]/10 px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                                        SPEC
-                                      </span>
-                                      <span className="font-mono text-[11px] font-semibold text-slate-600">
-                                        {comp.id}-ai-agent-mvp-prompt.md
-                                      </span>
-                                    </div>
-                                    <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                                      Universal AI Prompt
-                                    </span>
-                                  </div>
-
-                                  <pre className="max-h-96 [scrollbar-width:thin] overflow-auto font-mono text-xs leading-relaxed text-slate-800 select-all">
-                                    <code>{generateAiAgentPrompt(comp)}</code>
-                                  </pre>
-                                </div>
-
-                                {/* 3 Step Workflow */}
-                                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-                                  <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
-                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                                      01. 1-Click Copy
-                                    </span>
-                                    <p className="mt-1 font-sans text-[11px] text-slate-600">
-                                      Copy the complete structured prompt with full interface
-                                      contract and behavioral rules.
-                                    </p>
-                                  </div>
-                                  <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
-                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                                      02. Paste to Any Agent
-                                    </span>
-                                    <p className="mt-1 font-sans text-[11px] text-slate-600">
-                                      Paste directly into Antigravity, Cursor, Claude 3.5, ChatGPT,
-                                      Copilot, or v0 without modification.
-                                    </p>
-                                  </div>
-                                  <div className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs">
-                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                                      03. Ship Instant MVP
-                                    </span>
-                                    <p className="mt-1 font-sans text-[11px] text-slate-600">
-                                      The AI agent generates the complete standalone component with
-                                      states, a11y, and zero shadows.
-                                    </p>
-                                  </div>
-                                </div>
-
-                                {/* Mental Model & Specs */}
-                                <div className="space-y-1.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-4">
-                                  <h4 className="font-sans text-xs font-bold tracking-wider text-slate-900 uppercase">
-                                    Mental Model & Paradigm
-                                  </h4>
-                                  <p className="font-sans text-xs leading-relaxed text-slate-600">
-                                    {comp.explanation}
-                                  </p>
-                                </div>
-
-                                {/* Real-world Scenarios */}
-                                <div className="space-y-2">
-                                  <h4 className="font-sans text-xs font-bold tracking-wider text-slate-900 uppercase">
-                                    Production Scenarios
-                                  </h4>
-                                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                                    {comp.realWorldExamples.map((ex, i) => (
-                                      <div
-                                        key={i}
-                                        className="rounded-xl border border-slate-200/90 bg-white p-3 text-xs"
-                                      >
-                                        <span className="font-mono text-[10px] font-bold text-[#0056FF]">
-                                          0{i + 1}. {ex.title}
-                                        </span>
-                                        <p className="mt-1 font-sans text-[11px] text-slate-600">
-                                          {ex.scenario}
-                                        </p>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-
-                                {/* Best Practices & Anti-Patterns */}
-                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                  <div className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/40 p-3 text-xs">
-                                    <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                                      Best Practices (DO)
-                                    </span>
-                                    <ul className="space-y-1 font-sans text-[11px] text-slate-700">
-                                      {comp.usageGuidelines.map((g, i) => (
-                                        <li key={i} className="flex items-start gap-1.5">
-                                          <span className="mt-1.5 size-1 shrink-0 rounded-[1px] bg-[#0056FF]" />
-                                          <span>{g.doItem}</span>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-
-                                  <div className="space-y-1.5 rounded-xl border border-rose-200 bg-rose-50/60 p-3 text-xs text-rose-950">
-                                    <span className="font-mono text-[10px] font-bold text-rose-600 uppercase">
-                                      Anti-Patterns (DON&apos;T)
-                                    </span>
-                                    <ul className="space-y-1 font-sans text-[11px] text-slate-700">
-                                      {comp.usageGuidelines.map((g, i) => (
-                                        <li key={i} className="flex items-start gap-1.5">
-                                          <span className="mt-1.5 size-1 shrink-0 rounded-[1px] bg-rose-400" />
-                                          <span>{g.dontItem}</span>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
+                            </div>
                           </section>
                         );
                       })}
@@ -973,51 +959,41 @@ export function UiLibraryView() {
               })}
             </div>
 
-            {/* SECTION: Brand Identity & Colors */}
-            <section
-              id="brand-identity"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
-            >
-              <BrandConceptBlueprint />
-            </section>
-
-            {/* SECTION: Design Standards & Policies */}
-            <section
-              id="design-principles"
-              className="scroll-mt-24 space-y-4 border-t border-slate-200/80 pt-8"
-            >
-              <h2 className="font-sans text-xl font-bold text-slate-950">
-                Flat Design & Zero Shadows Policy
-              </h2>
-              <p className="font-sans text-sm leading-relaxed text-slate-600">
-                Every component adheres to strict flat design principles without dropped blur
-                shadows (`box-shadow: none`). Spatial depth is established strictly through 1px
-                border contrast and background elevation hierarchy.
-              </p>
-
-              <div id="touch-targets" className="scroll-mt-24 space-y-2 pt-2">
-                <h3 className="font-sans text-sm font-bold text-slate-900">
-                  Touch Targets & Accessibility
-                </h3>
-                <p className="font-sans text-sm leading-relaxed text-slate-600">
-                  All interactive elements provide a minimum 44×44px hit target area and exceed WCAG
-                  AA contrast ratios of 4.5:1 on light surfaces.
-                </p>
+            {/* SECTION: Design Standards Relocation Callout */}
+            <section id="brand-identity" className="scroll-mt-24 border-t border-slate-200/80 pt-8">
+              <div className="flex flex-col items-start justify-between gap-4 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/40 p-6 sm:flex-row sm:items-center">
+                <div className="space-y-1">
+                  <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+                    Authoritative Design Hub
+                  </span>
+                  <h3 className="font-sans text-base font-bold text-[#0A1A4A]">
+                    Brand Blueprint &amp; Design Standards
+                  </h3>
+                  <p className="max-w-xl font-sans text-xs leading-relaxed text-slate-600 sm:text-sm">
+                    The 5 Brand Color Tokens, institutional seal, flat design policies, and touch
+                    target standards have moved to the dedicated Design System page.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTab('release');
+                    setTimeout(() => {
+                      document
+                        .getElementById('brand-blueprint')
+                        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                  }}
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white transition-colors hover:bg-[#2277FF]"
+                >
+                  <span>Explore Design System</span>
+                  <ArrowRight className="size-3.5" />
+                </button>
               </div>
             </section>
           </main>
         </div>
       </div>
-
-      {/* Global Interactive Overlays */}
-      <LibrarySnackbar
-        open={snackbarOpen}
-        message={snackbarMsg}
-        variant={snackbarVariant}
-        actionLabel="Undo"
-        onAction={() => setSnackbarOpen(false)}
-        onClose={() => setSnackbarOpen(false)}
-      />
     </div>
   );
 }
@@ -1029,12 +1005,6 @@ export function UiLibraryView() {
 function renderFeedComponentDemo(
   id: string,
   state: {
-    snackbarOpen: boolean;
-    setSnackbarOpen: (o: boolean) => void;
-    snackbarMsg: string;
-    setSnackbarMsg: (m: string) => void;
-    snackbarVariant: SnackbarVariant;
-    setSnackbarVariant: (v: SnackbarVariant) => void;
     sheetOpen: boolean;
     setSheetOpen: (o: boolean) => void;
     bottomSheetChoice: string;
@@ -1073,84 +1043,21 @@ function renderFeedComponentDemo(
     metricsTimeRange: '30D' | '90D' | '1Y' | 'All';
     setMetricsTimeRange: (r: '30D' | '90D' | '1Y' | 'All') => void;
   },
+  comp?: ComponentItemDoc,
 ) {
+  if (comp?.isFuture) {
+    return (
+      <BlankFutureComponent
+        id={comp.id}
+        name={comp.name}
+        category={comp.category}
+        paradigm={comp.paradigm}
+        description={comp.description}
+      />
+    );
+  }
+
   switch (id) {
-    case 'snackbar':
-      return (
-        <div className="flex w-full flex-col items-center gap-6">
-          {/* Controls Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="blue"
-              size="sm"
-              onClick={() => {
-                state.setSnackbarMsg('Student enrollment confirmed for STU-2026-0891.');
-                state.setSnackbarVariant('success');
-                state.setSnackbarOpen(true);
-              }}
-            >
-              <Check className="h-3.5 w-3.5" />
-              <span>Trigger Success (Undo)</span>
-            </GeometricButton>
-            <GeometricButton
-              variant="azure"
-              size="sm"
-              onClick={() => {
-                state.setSnackbarMsg('Batch telemetry sync active across 4 MongoDB cluster nodes.');
-                state.setSnackbarVariant('info');
-                state.setSnackbarOpen(true);
-              }}
-            >
-              <span>Trigger Info</span>
-            </GeometricButton>
-            <GeometricButton
-              variant="soft-lavender"
-              size="sm"
-              onClick={() => {
-                state.setSnackbarMsg('Security authentication token will expire in 5 minutes.');
-                state.setSnackbarVariant('warning');
-                state.setSnackbarOpen(true);
-              }}
-            >
-              <span>Trigger Warning</span>
-            </GeometricButton>
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                state.setSnackbarMsg('Tuition payment gateway timed out (HTTP 504 Gateway Error).');
-                state.setSnackbarVariant('error');
-                state.setSnackbarOpen(true);
-              }}
-            >
-              <span>Trigger Error</span>
-            </GeometricButton>
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                state.setSnackbarOpen(false);
-                state.setSnackbarMsg('Notification dismissed.');
-              }}
-            >
-              <span>Dismiss</span>
-            </GeometricButton>
-          </div>
-
-          {/* Official Native Snackbar In-Stage Demo */}
-          <NativeSnackbarInline
-            message={state.snackbarMsg}
-            variant={state.snackbarVariant}
-            actionLabel="Undo"
-            onAction={() => {
-              state.setSnackbarMsg('Enrollment action reverted successfully.');
-              state.setSnackbarVariant('info');
-            }}
-            onClose={() => state.setSnackbarOpen(false)}
-          />
-        </div>
-      );
-
     case 'chip':
       return (
         <div className="flex w-full flex-col items-center">
@@ -1197,77 +1104,29 @@ function renderFeedComponentDemo(
 
     case 'switch':
       return (
-        <div className="flex w-full flex-col items-center gap-5">
-          {/* Master Controls */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            <GeometricButton
-              variant="blue"
-              size="sm"
-              onClick={() => {
-                state.setSwitchAutoSync(true);
-                state.setSwitchBiometric(true);
-                state.setSwitchSMSAlerts(true);
-                state.setSwitchAuditLog(true);
-              }}
-            >
-              <span>Enable All Systems</span>
-            </GeometricButton>
-            <GeometricButton
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                state.setSwitchAutoSync(false);
-                state.setSwitchBiometric(false);
-                state.setSwitchSMSAlerts(false);
-                state.setSwitchAuditLog(false);
-              }}
-            >
-              <span>Disable All Systems</span>
-            </GeometricButton>
-          </div>
-
+        <div className="flex w-full flex-col items-center">
           {/* Interactive Switches Panel */}
-          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-3.5 shadow-xs sm:p-6">
-            <div className="space-y-2.5 font-sans">
+          <div className="w-full max-w-xl rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-xs sm:p-6">
+            <div className="space-y-3 font-sans">
               {[
                 {
                   id: 'sync',
                   title: 'Auto Sync Telemetry',
-                  desc: 'MongoDB rs0 replica set real-time change stream socket',
                   checked: state.switchAutoSync,
                   setter: state.setSwitchAutoSync,
                 },
                 {
                   id: 'biometric',
                   title: 'Biometric Terminal Active',
-                  desc: 'High-speed optical turnstile gate hardware bridge',
                   checked: state.switchBiometric,
                   setter: state.setSwitchBiometric,
                 },
               ].map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 p-3 transition-all hover:border-slate-200 hover:bg-white sm:p-3.5"
+                  className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF]/40 p-3.5 transition-all hover:bg-white"
                 >
-                  <div className="min-w-0 pr-3">
-                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span className="text-xs font-bold text-slate-900">{item.title}</span>
-                      <span
-                        className={cn(
-                          'rounded-[4px] px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase',
-                          item.checked
-                            ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
-                            : 'border border-slate-200 bg-slate-100 text-slate-500',
-                        )}
-                      >
-                        <span className="sm:hidden">{item.checked ? 'Active' : 'Standby'}</span>
-                        <span className="hidden sm:inline">
-                          {item.checked ? 'Active · 100% Operational' : 'Paused · Standby'}
-                        </span>
-                      </span>
-                    </div>
-                    <p className="mt-0.5 hidden text-[11px] text-slate-500 sm:block">{item.desc}</p>
-                  </div>
+                  <span className="text-xs font-bold text-[#0A1A4A]">{item.title}</span>
                   <LibrarySwitch checked={item.checked} onCheckedChange={item.setter} />
                 </div>
               ))}
@@ -1279,149 +1138,104 @@ function renderFeedComponentDemo(
     case 'dropdown':
       return (
         <div className="flex w-full flex-col items-center">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
+          <div className="w-full max-w-xl rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
             <LibraryDropdown
               label="Campus Location Branch"
               value={state.dropdownCampus}
               onChange={(val) => state.setDropdownCampus(val)}
               options={[
                 {
-                  value: 'siem-reap',
-                  label: 'Siem Reap Main Campus',
-                  description: '2,450 Enrolled Students · Science Wing',
-                },
-                {
                   value: 'phnom-penh',
                   label: 'Phnom Penh Innovation Hub',
-                  description: '3,120 Enrolled Students · Tech Tower',
+                  description: '3,120 Enrolled Students · Tech Tower · Cyber Security Lab',
+                },
+                {
+                  value: 'siem-reap',
+                  label: 'Siem Reap Main Campus',
+                  description: '2,450 Enrolled Students · Science Wing · High Performance Cluster',
                 },
                 {
                   value: 'battambang',
                   label: 'Battambang Regional Center',
-                  description: '1,080 Enrolled Students · Campus A',
+                  description: '1,080 Enrolled Students · Campus A · Agro-Tech Innovation',
                 },
                 {
                   value: 'kampong-cham',
                   label: 'Kampong Cham Learning Center',
-                  description: '890 Enrolled Students · Campus B',
+                  description: '890 Enrolled Students · Campus B · Digital Media Center',
                 },
               ]}
             />
 
-            {/* Real-time Campus Summary Card */}
-            <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <div className="flex items-center justify-between font-mono text-[10px] text-slate-400 uppercase">
-                <span>Selected Campus</span>
-                <span className="font-bold text-[#0056FF]">ACTIVE BRANCH</span>
+            {/* Real-time Campus Content & Telemetry Card */}
+            <div className="mt-5 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/60 p-4.5 sm:p-5">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                  SELECTED CAMPUS
+                </span>
+                <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
+                  ACTIVE BRANCH
+                </span>
               </div>
-              <div className="mt-1 font-sans text-base font-black text-slate-950 sm:text-lg">
-                {state.dropdownCampus === 'siem-reap'
-                  ? 'Siem Reap Main Campus'
-                  : state.dropdownCampus === 'phnom-penh'
-                    ? 'Phnom Penh Innovation Hub'
+
+              <div className="mt-2 font-sans text-base font-black text-[#0A1A4A] sm:text-lg">
+                {state.dropdownCampus === 'phnom-penh'
+                  ? 'Phnom Penh Innovation Hub'
+                  : state.dropdownCampus === 'siem-reap'
+                    ? 'Siem Reap Main Campus'
                     : state.dropdownCampus === 'battambang'
                       ? 'Battambang Regional Center'
                       : 'Kampong Cham Learning Center'}
               </div>
-              <p className="mt-1 font-mono text-xs text-slate-500">
-                {state.dropdownCampus === 'siem-reap'
-                  ? '2,450 Enrolled Students · Science Wing · High Performance Cluster'
-                  : state.dropdownCampus === 'phnom-penh'
-                    ? '3,120 Enrolled Students · Tech Tower · Cyber Security Lab'
+
+              <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
+                {state.dropdownCampus === 'phnom-penh'
+                  ? '3,120 Enrolled Students · Tech Tower · Cyber Security Lab'
+                  : state.dropdownCampus === 'siem-reap'
+                    ? '2,450 Enrolled Students · Science Wing · High Performance Cluster'
                     : state.dropdownCampus === 'battambang'
                       ? '1,080 Enrolled Students · Campus A · Agro-Tech Innovation'
                       : '890 Enrolled Students · Campus B · Digital Media Center'}
               </p>
-            </div>
-          </div>
-        </div>
-      );
 
-    case 'card':
-      return (
-        <div className="flex w-full flex-col items-center">
-          <div className="relative w-full max-w-lg pt-4 select-none">
-            {/* Sliding Student Credential Card */}
-            <div
-              onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
-              className={cn(
-                'relative mx-auto w-[94%] cursor-pointer rounded-2xl p-6 transition-all duration-300 ease-out',
-                'border border-[#0056FF] bg-[#0056FF]',
-                'text-white shadow-none',
-                state.cardSlidOut ? '-translate-y-12 scale-[1.02]' : 'translate-y-0',
-              )}
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs font-black tracking-widest text-blue-100 uppercase">
-                  SNPI-SMS STUDENT PASS
-                </span>
-                <div className="h-7 w-9 rounded-[4px] border border-amber-300/40 bg-amber-400/30 shadow-inner" />
-              </div>
-
-              <div className="mt-8 font-mono text-xl font-black tracking-widest text-white sm:text-2xl">
-                {state.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
-              </div>
-
-              <div className="mt-6 flex items-end justify-between font-mono text-xs">
-                <div>
-                  <span className="block text-[10px] text-blue-200 uppercase">Student Name</span>
-                  <span className="text-sm font-bold text-white">DARA SOK</span>
-                </div>
-                <div className="text-right">
-                  <span className="block text-[10px] text-blue-200 uppercase">Valid Thru</span>
-                  <span className="text-sm font-bold text-white">08/29</span>
-                </div>
-                <div className="text-right">
-                  <span className="block text-[10px] text-blue-200 uppercase">CVV</span>
-                  <span className="text-sm font-bold text-blue-100">
-                    {state.cardRevealed ? '742' : '•••'}
+              {/* Institutional Metrics Grid */}
+              <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[#CAD3F5]/60 pt-3 font-mono">
+                <div className="rounded-lg border border-slate-200/60 bg-white/80 p-2 text-center">
+                  <span className="block text-[9px] text-slate-400 uppercase">Enrolled</span>
+                  <span className="text-xs font-black text-[#0056FF]">
+                    {state.dropdownCampus === 'siem-reap'
+                      ? '2,450'
+                      : state.dropdownCampus === 'phnom-penh'
+                        ? '3,120'
+                        : state.dropdownCampus === 'battambang'
+                          ? '1,080'
+                          : '890'}
                   </span>
                 </div>
-              </div>
-            </div>
-
-            {/* Curved Folder Pocket Base */}
-            <div className="relative z-20 -mt-16 w-full rounded-2xl border border-[#CAD3F5] bg-white p-5 text-slate-900 shadow-none sm:p-6">
-              <div className="flex items-center justify-between border-b border-dashed border-slate-200 pb-4">
-                <button
-                  type="button"
-                  onClick={() => state.setCardRevealed(!state.cardRevealed)}
-                  className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 px-3.5 py-1.5 font-sans text-xs font-semibold transition-all hover:border-[#0056FF]"
-                >
-                  {state.cardRevealed ? (
-                    <EyeOff className="size-3.5 text-[#0056FF]" />
-                  ) : (
-                    <Eye className="size-3.5 text-slate-600" />
-                  )}
-                  <span>{state.cardRevealed ? 'Hide Details' : 'Reveal Details'}</span>
-                </button>
-
-                <div className="flex items-center gap-4 font-mono text-xs">
-                  <div>
-                    <span className="block text-[9px] text-slate-400 uppercase">Expiry</span>
-                    <strong className="text-slate-800">08/29</strong>
-                  </div>
-                  <div>
-                    <span className="block text-[9px] text-slate-400 uppercase">CVV</span>
-                    <strong className="text-slate-800">{state.cardRevealed ? '742' : '•••'}</strong>
-                  </div>
+                <div className="rounded-lg border border-slate-200/60 bg-white/80 p-2 text-center">
+                  <span className="block text-[9px] text-slate-400 uppercase">Active Labs</span>
+                  <span className="text-xs font-black text-slate-800">
+                    {state.dropdownCampus === 'siem-reap'
+                      ? '14 Labs'
+                      : state.dropdownCampus === 'phnom-penh'
+                        ? '22 Labs'
+                        : state.dropdownCampus === 'battambang'
+                          ? '8 Labs'
+                          : '6 Labs'}
+                  </span>
                 </div>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <h4 className="font-sans text-sm font-bold text-slate-900">Dara Sok</h4>
-                  <p className="font-mono text-xs text-slate-500">
-                    {state.cardRevealed ? '9420 8124 0092 0891' : '•••• •••• •••• 0891'}
-                  </p>
+                <div className="rounded-lg border border-slate-200/60 bg-white/80 p-2 text-center">
+                  <span className="block text-[9px] text-slate-400 uppercase">Latency</span>
+                  <span className="text-xs font-black text-emerald-600">
+                    {state.dropdownCampus === 'siem-reap'
+                      ? '8 ms'
+                      : state.dropdownCampus === 'phnom-penh'
+                        ? '4 ms'
+                        : state.dropdownCampus === 'battambang'
+                          ? '12 ms'
+                          : '15 ms'}
+                  </span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => state.setCardSlidOut(!state.cardSlidOut)}
-                  className="cursor-pointer rounded-lg border border-[#CAD3F5] bg-[#E3E7FC] px-4 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-white active:scale-95"
-                >
-                  {state.cardSlidOut ? 'Insert Pass' : 'Pull Pass'}
-                </button>
               </div>
             </div>
           </div>
@@ -1445,8 +1259,6 @@ function renderFeedComponentDemo(
       return <DurationPickerDemo />;
     case 'password-input':
       return <PasswordInputDemo />;
-    case 'theme-selector':
-      return <ThemeSelectorDemo />;
 
     // ==========================================
     // FEEDBACK GROUP (Interactive Demos)
@@ -1464,16 +1276,12 @@ function renderFeedComponentDemo(
     // ==========================================
     // DISPLAY GROUP (Interactive Demos)
     // ==========================================
-    case 'folder':
-      return <FolderDemo />;
     case 'step-player':
       return <StepPlayerDemo />;
     case 'animated-counter':
       return <AnimatedCounterDemo />;
     case 'voice-note':
       return <VoiceNoteDemo />;
-    case 'faq':
-      return <FaqDemo />;
     case 'data-table':
       return <DataTableDemo />;
 
@@ -1482,12 +1290,6 @@ function renderFeedComponentDemo(
     // ==========================================
     case 'grid-reveal':
       return <GridRevealDemo />;
-
-    // ==========================================
-    // TEXT EFFECTS (Component Templates)
-    // ==========================================
-    case 'cipher-decode':
-      return <CipherTextDecoderDemo />;
 
     // ==========================================
     // SECTIONS (Component Templates)
@@ -1508,6 +1310,14 @@ function renderFeedComponentDemo(
       return <RichTextEditorDemo />;
 
     default:
-      return null;
+      return comp ? (
+        <BlankFutureComponent
+          id={comp.id}
+          name={comp.name}
+          category={comp.category}
+          paradigm={comp.paradigm}
+          description={comp.description}
+        />
+      ) : null;
   }
 }

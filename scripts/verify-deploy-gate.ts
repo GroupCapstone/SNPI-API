@@ -36,8 +36,19 @@ async function verifyDeploymentManifests(): Promise<void> {
   }
 }
 
+async function verifyLintQuality(): Promise<void> {
+  console.log('\n[2/4] Verifying code quality & ESLint gate...');
+  try {
+    runCommand('npm run lint');
+    console.log('      [PASS] ESLint passed with 0 errors.');
+  } catch (err: unknown) {
+    const error = err as Error;
+    throw new Error(`ESLint quality check failed: ${error.message}`);
+  }
+}
+
 async function verifyProductionBuilds(): Promise<void> {
-  console.log('\n[2/3] Verifying production bundle compilation...');
+  console.log('\n[3/4] Verifying production bundle compilation...');
   try {
     runCommand('npm run build');
     console.log('      [PASS] Production builds compiled with 0 errors.');
@@ -48,7 +59,7 @@ async function verifyProductionBuilds(): Promise<void> {
 }
 
 async function verifyGitHubWorkflowStatus(): Promise<void> {
-  console.log('\n[3/3] Checking GitHub Actions deployment & CI health on main...');
+  console.log('\n[4/4] Checking GitHub Actions deployment & CI health on main...');
   try {
     const jsonOutput = runCommand(
       'gh run list --branch main --limit 15 --json databaseId,name,status,conclusion,displayTitle',
@@ -105,6 +116,7 @@ async function main() {
 
   try {
     await verifyDeploymentManifests();
+    await verifyLintQuality();
     await verifyProductionBuilds();
     await verifyGitHubWorkflowStatus();
     console.log('\n======================================================');

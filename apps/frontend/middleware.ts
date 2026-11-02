@@ -10,7 +10,10 @@ export function middleware(request: NextRequest) {
     if (pathname === '/') {
       return NextResponse.rewrite(new URL('/document', request.url));
     }
-    if (pathname === '/design-system' || pathname === '/ui-library') {
+    if (pathname === '/design') {
+      return NextResponse.rewrite(new URL('/document/design', request.url));
+    }
+    if (pathname === '/design-system' || pathname === '/components' || pathname === '/ui-library') {
       return NextResponse.rewrite(new URL('/document/design-system', request.url));
     }
     if (pathname === '/changelog') {
@@ -18,6 +21,12 @@ export function middleware(request: NextRequest) {
     }
     if (pathname === '/open-api') {
       return NextResponse.rewrite(new URL('/document/open-api', request.url));
+    }
+    if (pathname === '/scaffold') {
+      return NextResponse.rewrite(new URL('/document/scaffold', request.url));
+    }
+    if (pathname === '/states') {
+      return NextResponse.rewrite(new URL('/document/states', request.url));
     }
   }
 

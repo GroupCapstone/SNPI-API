@@ -598,20 +598,33 @@ export function CipherTextDecoder({ theme = 'light', className }: CipherTextDeco
  * Interactive documentation library preview wrapper.
  */
 export function CipherTextDecoderDemo() {
+  const [key, setKey] = React.useState(0);
+
   return (
     <div className="w-full space-y-4">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2 font-mono text-xs font-bold text-slate-500 uppercase">
-          <span>Cryptographic Decryption Surface</span>
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3 shadow-2xs">
+        <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#0A1A4A]">
+          <Terminal className="size-4 text-[#0056FF]" />
+          <span>Cryptographic Decryption Console</span>
         </div>
 
-        <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <Activity className="size-3 text-emerald-500" />
-          <span>Interactive Nav & Live Lock Counter</span>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-500">
+            <Activity className="size-3 text-emerald-500" />
+            <span>Interactive Nav & Decrypt Engine</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setKey((k) => k + 1)}
+            className="flex cursor-pointer items-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 font-mono text-[10px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
+          >
+            <RotateCw className="size-3" />
+            <span>Restart</span>
+          </button>
         </div>
       </div>
 
-      <CipherTextDecoder theme="light" />
+      <CipherTextDecoder key={key} theme="light" />
     </div>
   );
 }

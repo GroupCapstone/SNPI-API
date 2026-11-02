@@ -18,7 +18,7 @@ import {
 } from '@/components/icons';
 
 export type StatusCode = 404 | 403 | 500 | 503 | 401;
-export type StatusMode = 'radar' | 'barcode' | 'terminal' | 'noise' | 'gravity';
+export type StatusMode = 'radar' | 'barcode' | 'noise' | 'gravity';
 
 export interface StatusMeta {
   code: StatusCode;
@@ -109,14 +109,6 @@ export function StatusPage404({
   const [activeMode, setActiveMode] = React.useState<StatusMode>(initialMode);
   const [activeCode, setActiveCode] = React.useState<StatusCode>(initialCode);
 
-  // Terminal interactive state
-  const [terminalInput, setTerminalInput] = React.useState('');
-  const [terminalHistory, setTerminalHistory] = React.useState<string[]>([
-    '[SYSTEM] Aerospace status telemetry initialized.',
-    `[STATUS] HTTP ${activeCode} detected. Route lookup aborted.`,
-    'Type "help" for available cluster commands.',
-  ]);
-
   // Gravity mode interactive tumbling state
   const [gravityTumbled, setGravityTumbled] = React.useState(true);
 
@@ -132,66 +124,7 @@ export function StatusPage404({
   const meta = STATUS_DIRECTORY[activeCode] || STATUS_DIRECTORY[404];
   const resolvedTitle = customTitle || meta.title;
   const resolvedDesc = customDesc || meta.description;
-  const resolvedHomeLabel = homeLabel || 'Return to System Home';
-
-  // Terminal CLI executor
-  const executeCommand = (cmd: string) => {
-    const trimmed = cmd.trim().toLowerCase();
-    const newHistory = [...terminalHistory, `> ${cmd}`];
-
-    switch (trimmed) {
-      case 'help':
-        newHistory.push(
-          'Available commands: status, ping, whoami, ls, clear, home, help',
-          'Use commands to query cluster node coordinates.',
-        );
-        break;
-      case 'status':
-        newHistory.push(
-          `[NODE STATUS] HTTP ${activeCode} · ${meta.badge}`,
-          `[REMEDIATION] ${meta.remediation}`,
-          '[CLUSTER] MongoDB rs0 · 47 domain modules registered',
-        );
-        break;
-      case 'ping':
-        newHistory.push(
-          'PING snpi.edu.kh (127.0.0.1): 56 data bytes',
-          '64 bytes from snpi.edu.kh: icmp_seq=0 ttl=64 time=11.4 ms',
-          '--- snpi.edu.kh ping statistics --- 0% packet loss',
-        );
-        break;
-      case 'whoami':
-        newHistory.push(
-          'ROLE: GUEST_STUDENT | BRANCH: MAIN_CAMPUS | SCOPES: [read:docs, read:apis]',
-        );
-        break;
-      case 'ls':
-        newHistory.push(
-          'drwxr-xr-x  /dashboard',
-          'drwxr-xr-x  /document',
-          'drwxr-xr-x  /document/design-system',
-          'drwxr-xr-x  /apis (193 endpoints)',
-          'drwxr-xr-x  /changelog',
-        );
-        break;
-      case 'clear':
-        setTerminalHistory([]);
-        setTerminalInput('');
-        return;
-      case 'home':
-        newHistory.push('Navigating to system portal...');
-        if (typeof window !== 'undefined') {
-          window.location.assign(homeHref);
-        }
-        break;
-      default:
-        newHistory.push(`command not found: ${trimmed}. Type "help" for available commands.`);
-        break;
-    }
-
-    setTerminalHistory(newHistory);
-    setTerminalInput('');
-  };
+  const resolvedHomeLabel = homeLabel;
 
   return (
     <div
@@ -213,9 +146,8 @@ export function StatusPage404({
               [
                 { id: 'radar', label: '01 Radar Explorer' },
                 { id: 'barcode', label: '02 Barcode Ledger' },
-                { id: 'terminal', label: '03 Cyber Terminal' },
-                { id: 'noise', label: '04 CRT Phosphor' },
-                { id: 'gravity', label: '05 Gravity Blocks' },
+                { id: 'noise', label: '03 CRT Phosphor' },
+                { id: 'gravity', label: '04 Gravity Blocks' },
               ] as const
             ).map((m) => (
               <button
@@ -266,13 +198,15 @@ export function StatusPage404({
         {activeMode === 'radar' && (
           <div className="relative flex flex-col items-center justify-center bg-white p-8 text-center sm:p-12">
             {/* Top Capsule CTA Navigation */}
-            <Link
-              href={homeHref}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-extrabold text-white transition-all hover:bg-[#0047D4] active:scale-[0.98]"
-            >
-              <span>{resolvedHomeLabel}</span>
-              <ChevronRight className="size-3.5 stroke-[2.5]" />
-            </Link>
+            {resolvedHomeLabel && (
+              <Link
+                href={homeHref}
+                className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-extrabold text-white transition-all hover:bg-[#0047D4] active:scale-[0.98]"
+              >
+                <span>{resolvedHomeLabel}</span>
+                <ChevronRight className="size-3.5 stroke-[2.5]" />
+              </Link>
+            )}
 
             {/* Radar Canvas with Floating Extruded Status Digits */}
             <div className="relative mt-8 flex size-64 items-center justify-center sm:size-72">
@@ -399,12 +333,14 @@ export function StatusPage404({
             </div>
 
             {/* Hot Pill CTA Button */}
-            <Link
-              href={homeHref}
-              className="mt-8 inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-bold tracking-wider text-white uppercase transition-all hover:bg-[#2277FF] active:scale-[0.98]"
-            >
-              <span>VAI ALLA HOME →</span>
-            </Link>
+            {resolvedHomeLabel && (
+              <Link
+                href={homeHref}
+                className="mt-8 inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-bold tracking-wider text-white uppercase transition-all hover:bg-[#2277FF] active:scale-[0.98]"
+              >
+                <span>{resolvedHomeLabel}</span>
+              </Link>
+            )}
 
             {/* Cryptographic Nonce Ledger Hash */}
             <div className="mt-8 font-mono text-[10px] text-slate-400">
@@ -414,102 +350,7 @@ export function StatusPage404({
         )}
 
         {/* ========================================================= */}
-        {/* MODE 3: CYBER MECHA TERMINAL (INSPIRED BY USER IMAGE 3) */}
-        {/* ========================================================= */}
-        {activeMode === 'terminal' && (
-          <div className="relative flex flex-col bg-[#F8FAFC] p-6 text-slate-900 sm:p-8">
-            {/* Window Header with Unix Window Dots */}
-            <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-3">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5">
-                  <span className="size-2.5 rounded-full bg-rose-400" />
-                  <span className="size-2.5 rounded-full bg-amber-400" />
-                  <span className="size-2.5 rounded-full bg-emerald-400" />
-                </div>
-                <span className="font-mono text-xs font-bold text-slate-800">
-                  SNPI TERMINAL DECK · ERROR {activeCode}
-                </span>
-              </div>
-              <div className="flex items-center gap-2 font-mono text-[10px] text-slate-500">
-                <span className="inline-block size-2 animate-ping rounded-full bg-[#0056FF]" />
-                <span className="font-bold text-[#0056FF]">DAEMON ACTIVE</span>
-              </div>
-            </div>
-
-            {/* Interactive Terminal Output Console */}
-            <div className="no-scrollbar h-64 space-y-1.5 overflow-y-auto rounded-lg border border-slate-200/90 bg-white p-4 font-mono text-xs text-slate-800 shadow-inner select-text">
-              <p className="font-semibold text-[#0056FF]">
-                [ * ] ...you came back. HTTP status {activeCode} encountered.
-              </p>
-              <p className="text-slate-500">
-                3 commands in the log. The cluster haven&apos;t forgotten.
-              </p>
-              <p className="text-slate-400">
-                Type &apos;help&apos; to continue, or &apos;home&apos; to return.
-              </p>
-
-              <div className="space-y-1 pt-2">
-                {terminalHistory.map((line, idx) => (
-                  <div
-                    key={idx}
-                    className={cn(
-                      'leading-relaxed',
-                      line.startsWith('>')
-                        ? 'font-bold text-slate-950'
-                        : line.startsWith('[NODE') || line.startsWith('[STATUS')
-                          ? 'font-bold text-[#0056FF]'
-                          : 'text-slate-600',
-                    )}
-                  >
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick Command Suggestion Chips */}
-            <div className="mt-3 flex flex-wrap items-center gap-1.5 font-mono text-[10px]">
-              <span className="font-bold text-slate-400">QUICK CMDS:</span>
-              {(['help', 'status', 'ping', 'whoami', 'ls', 'home', 'clear'] as const).map((cmd) => (
-                <button
-                  key={cmd}
-                  type="button"
-                  onClick={() => executeCommand(cmd)}
-                  className="cursor-pointer rounded-[3px] border border-slate-200 bg-white px-2 py-0.5 text-slate-700 transition-colors hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white"
-                >
-                  &gt; {cmd}
-                </button>
-              ))}
-            </div>
-
-            {/* Live Command Line Input Field */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (terminalInput.trim()) executeCommand(terminalInput);
-              }}
-              className="mt-3 flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-xs shadow-2xs"
-            >
-              <span className="font-bold text-[#0056FF]">&gt;</span>
-              <input
-                type="text"
-                value={terminalInput}
-                onChange={(e) => setTerminalInput(e.target.value)}
-                placeholder="type 'help', 'status', 'home' or enter command..."
-                className="w-full bg-transparent text-slate-900 outline-hidden placeholder:text-slate-400"
-              />
-              <button
-                type="submit"
-                className="cursor-pointer rounded-[3px] bg-[#0056FF] px-2.5 py-1 text-[10px] font-bold text-white transition-all hover:bg-blue-700"
-              >
-                EXEC
-              </button>
-            </form>
-          </div>
-        )}
-
-        {/* ========================================================= */}
-        {/* MODE 4: CRT PHOSPHOR NOISE (INSPIRED BY USER IMAGE 4) */}
+        {/* MODE 3: CRT PHOSPHOR NOISE (INSPIRED BY USER IMAGE 4) */}
         {/* ========================================================= */}
         {activeMode === 'noise' && (
           <div className="relative flex flex-col items-center justify-center overflow-hidden bg-[#F8FAFC] p-10 text-center text-slate-900 sm:p-16">
@@ -538,14 +379,16 @@ export function StatusPage404({
                 {meta.description}
               </p>
 
-              <div className="pt-5">
-                <Link
-                  href={homeHref}
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-bold text-white transition-all hover:bg-[#2277FF]"
-                >
-                  <span>Re-establish Carrier Signal →</span>
-                </Link>
-              </div>
+              {resolvedHomeLabel && (
+                <div className="pt-5">
+                  <Link
+                    href={homeHref}
+                    className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2.5 font-sans text-xs font-bold text-white transition-all hover:bg-[#2277FF]"
+                  >
+                    <span>{resolvedHomeLabel}</span>
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Decibel / Carrier Frequency Telemetry */}
@@ -556,7 +399,7 @@ export function StatusPage404({
         )}
 
         {/* ========================================================= */}
-        {/* MODE 5: GRAVITY KINETIC BLOCKS (INSPIRED BY USER IMAGE 5) */}
+        {/* MODE 4: GRAVITY KINETIC BLOCKS (INSPIRED BY USER IMAGE 5) */}
         {/* ========================================================= */}
         {activeMode === 'gravity' && (
           <div className="relative flex flex-col items-center justify-between overflow-hidden bg-white p-8 text-center sm:p-12">
@@ -566,12 +409,14 @@ export function StatusPage404({
                 We can&apos;t find the page you&apos;re looking for.
               </h2>
               <div className="flex items-center justify-center gap-3">
-                <Link
-                  href={homeHref}
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2 font-sans text-xs font-bold text-white transition-all hover:bg-blue-700"
-                >
-                  <span>Take Me Home</span>
-                </Link>
+                {resolvedHomeLabel && (
+                  <Link
+                    href={homeHref}
+                    className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0056FF] px-6 py-2 font-sans text-xs font-bold text-white transition-all hover:bg-blue-700"
+                  >
+                    <span>{resolvedHomeLabel}</span>
+                  </Link>
+                )}
 
                 <button
                   type="button"

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useDocsNav, type DocsTab } from './docs-nav-context';
 import { OpenApiView } from './open-api-view';
 import { UiLibraryView } from './ui-library-view';
+import { DesignSystemHomeView } from './design-system-home-view';
 
 export interface DocsSpaShellProps {
   defaultTab?: DocsTab;
@@ -21,11 +22,14 @@ export function DocsSpaShell({ defaultTab }: DocsSpaShellProps) {
 
   return (
     <div className="w-full">
-      <div className={activeTab === 'openapi' || activeTab === 'release' ? 'block' : 'hidden'}>
-        <OpenApiView initialSection={activeTab === 'release' ? 'changelogs' : undefined} />
+      <div className={activeTab === 'openapi' ? 'block' : 'hidden'}>
+        <OpenApiView />
       </div>
       <div className={activeTab === 'library' ? 'block' : 'hidden'}>
         <UiLibraryView />
+      </div>
+      <div className={activeTab === 'release' ? 'block' : 'hidden'}>
+        <DesignSystemHomeView />
       </div>
     </div>
   );

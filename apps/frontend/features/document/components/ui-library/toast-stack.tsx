@@ -597,17 +597,17 @@ export function ToastStackDemo() {
 
   return (
     <div className="w-full space-y-4">
-      {/* Sleek Action Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#CAD3F5] bg-white p-3 shadow-xs sm:px-4 sm:py-3">
+      {/* Refined Action Toolbar - Compact & De-Emphasized */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-2xl border border-[#CAD3F5] bg-white p-2.5 shadow-2xs sm:px-3.5 sm:py-2.5">
         {/* Left: Quick Triggers */}
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+        <div className="flex flex-wrap items-center gap-1 sm:gap-1.5">
           {/* Rapid Burst (5 Toasts) */}
           <button
             type="button"
             onClick={fireRapidBurst}
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#0056FF] bg-[#0056FF] px-3 py-1.5 font-mono text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95"
+            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#0056FF] bg-[#0056FF] px-3 py-1.5 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-blue-600 active:scale-95"
           >
-            <Sparkles className="size-3.5 stroke-[2.2]" />
+            <Sparkles className="size-3.5 text-white" />
             <span>Burst Stack (5)</span>
           </button>
 
@@ -615,68 +615,66 @@ export function ToastStackDemo() {
           <button
             type="button"
             onClick={fireConversationArchived}
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 font-mono text-xs font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
+            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1.5 font-sans text-xs font-bold text-[#0056FF] transition-all hover:bg-blue-100/60 active:scale-95"
           >
-            <Undo2 className="size-3.5" />
+            <Undo2 className="size-3.5 text-[#0056FF]" />
             <span>Archive</span>
           </button>
+
+          <span className="mx-0.5 h-4 w-px bg-slate-200" />
 
           {/* Success */}
           <button
             type="button"
             onClick={fireSuccess}
-            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1.5 font-mono text-xs font-bold text-emerald-700 transition-all hover:bg-emerald-100 active:scale-95"
+            className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-emerald-200 bg-emerald-50/60 text-emerald-700 transition-all hover:border-emerald-300 hover:bg-emerald-100 active:scale-95"
             title="Fire Success Toast"
           >
-            <Check className="size-3.5 stroke-[2.2]" />
-            <span className="hidden sm:inline">Success</span>
+            <Check className="size-3.5 stroke-[2]" />
           </button>
 
           {/* Error */}
           <button
             type="button"
             onClick={fireError}
-            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 font-mono text-xs font-bold text-rose-700 transition-all hover:bg-rose-100 active:scale-95"
+            className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-rose-200 bg-rose-50/60 text-rose-700 transition-all hover:border-rose-300 hover:bg-rose-100 active:scale-95"
             title="Fire Error Toast"
           >
-            <CircleAlert className="size-3.5 stroke-[2.2]" />
-            <span className="hidden sm:inline">Error</span>
+            <CircleAlert className="size-3.5 stroke-[2]" />
           </button>
 
           {/* Warning */}
           <button
             type="button"
             onClick={fireWarning}
-            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1.5 font-mono text-xs font-bold text-amber-700 transition-all hover:bg-amber-100 active:scale-95"
+            className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-amber-200 bg-amber-50/60 text-amber-700 transition-all hover:border-amber-300 hover:bg-amber-100 active:scale-95"
             title="Fire Warning Toast"
           >
-            <TriangleAlert className="size-3.5 stroke-[2.2]" />
-            <span className="hidden sm:inline">Warning</span>
+            <TriangleAlert className="size-3.5 stroke-[2]" />
           </button>
 
           {/* Info */}
           <button
             type="button"
             onClick={fireInfo}
-            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1.5 font-mono text-xs font-bold text-[#0056FF] transition-all hover:bg-blue-100 active:scale-95"
+            className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-blue-200 bg-blue-50/60 text-[#0056FF] transition-all hover:border-blue-300 hover:bg-blue-100 active:scale-95"
             title="Fire Info Toast"
           >
-            <Info className="size-3.5 stroke-[2.2]" />
-            <span className="hidden sm:inline">Info</span>
+            <Info className="size-3.5 stroke-[2]" />
           </button>
         </div>
 
         {/* Right: Mode & Clear Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {/* Placement Switcher */}
-          <div className="flex items-center rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-0.5">
+          <div className="flex items-center rounded-lg border border-slate-200 bg-[#EFF5FF] p-1">
             <button
               type="button"
               onClick={() => setContainerMode('inline')}
               className={cn(
-                'cursor-pointer rounded-md px-2 py-1 font-mono text-[10px] font-bold transition-all',
+                'cursor-pointer rounded-md px-2.5 py-1 font-sans text-xs font-bold transition-all',
                 containerMode === 'inline'
-                  ? 'bg-white text-[#0056FF] shadow-2xs'
+                  ? 'bg-white text-[#0056FF] shadow-xs'
                   : 'text-slate-600 hover:text-[#0056FF]',
               )}
             >
@@ -686,9 +684,9 @@ export function ToastStackDemo() {
               type="button"
               onClick={() => setContainerMode('fixed')}
               className={cn(
-                'cursor-pointer rounded-md px-2 py-1 font-mono text-[10px] font-bold transition-all',
+                'cursor-pointer rounded-md px-2.5 py-1 font-sans text-xs font-bold transition-all',
                 containerMode === 'fixed'
-                  ? 'bg-white text-[#0056FF] shadow-2xs'
+                  ? 'bg-white text-[#0056FF] shadow-xs'
                   : 'text-slate-600 hover:text-[#0056FF]',
               )}
             >
@@ -697,18 +695,18 @@ export function ToastStackDemo() {
           </div>
 
           {/* Queue Counter & Dismiss All */}
-          <div className="flex items-center gap-1.5 font-mono text-xs">
-            <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-1 text-[11px] font-bold text-[#0056FF]">
+          <div className="flex items-center gap-1 font-mono text-xs">
+            <span className="rounded-lg border border-[#CAD3F5] bg-[#E3E7FC]/80 px-2.5 py-1 text-xs font-bold text-[#0056FF]">
               {toasts.length} Active
             </span>
             {toasts.length > 0 && (
               <button
                 type="button"
                 onClick={dismissAll}
-                className="flex size-7 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600 active:scale-95"
+                className="flex size-6 cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 transition-all hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 active:scale-95"
                 title="Clear all toasts"
               >
-                <RotateCcw className="size-3.5" />
+                <RotateCcw className="size-3" />
               </button>
             )}
           </div>
@@ -716,19 +714,7 @@ export function ToastStackDemo() {
       </div>
 
       {/* Hero Interactive Toast Stage Canvas */}
-      <div className="relative min-h-[380px] w-full overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#F8FAFC] p-6 shadow-xs sm:min-h-[420px]">
-        {/* Mathematical Linear Grid (Zero Radial Dots) */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, #CAD3F5 1px, transparent 1px),
-              linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)
-            `,
-            backgroundSize: '28px 28px',
-          }}
-        />
-
+      <div className="relative min-h-[380px] w-full overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/20 p-6 shadow-xs sm:min-h-[420px]">
         {/* Stage Status Strip */}
         <div className="relative z-10 flex items-center justify-between font-mono text-[10px] text-slate-400">
           <span className="flex items-center gap-1.5 font-bold text-[#0A1A4A]">

@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (02.11.2026) - `46b3ff9` (Developer: **史力爱卫**)
+
+- Resolve react/jsx-no-comment-textnodes in brand-concept-blueprint [PASSED]
+
 ### Version 0.2.16 (02.11.2026) - `a729c93` (Developer: **史力爱卫**)
 
 - Bump monorepo version to v0.2.16 [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `d0e0dd8` (Developer: **史力爱卫**)
 
 - Record README clean state
-
-### Version 0.2.14 (01.11.2026) - `d670a24` (Developer: **史力爱卫**)
-
-- Remove security remediation log from README per standard
 

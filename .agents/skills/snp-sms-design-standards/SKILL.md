@@ -43,6 +43,17 @@ All design standards, specifications, and component guides must strictly reside 
 - **Precision Line Tracker Navigation Manual**: `.agents/skills/snp-sms-design-standards/line-tracker-navigation-manual.md` (Dotless continuous vertical rail, active indicator segment, zero-scrollbar standard)
 - **Icon Bar & Blueprint Grid Manual**: `.agents/skills/snp-sms-design-standards/icon-bar-toolbar-manual.md` (54px horizontal toolbar, label bloom reveal, active indicator line, zero-dot standard, roving tabindex, r4 radii, 44px banner suite)
 - **Royal Blue Brand & Zero-Dot Manual**: `.agents/skills/snp-sms-design-standards/royal-blue-brand-system-manual.md` (Royal Blue #0056FF, Futurewave gradients, Sora typography, Light Day First, Zero-Dot rule, say less show more result)
+- **Principles for Accessible Design, Layout, States, Grids & Canonical Archetypes Manual**: `.agents/skills/snp-sms-design-standards/accessible-design-principles-manual.md` (Designing, Accessibility Markup, Implementing Accessibility, WCAG 2.1 AAA, native platform controls, Alt Text ≤140 chars, Notification & SMS Architecture, Sentence Case, Pronouns, Punctuation, M3 Custom Color Roles, Multi-Modal Inputs, Selection Architecture, Layout Scaffold, Breakpoints & Adaptive Multi-Device Design, Interaction States & State Layers, Grids, Spacing & Density Scaling, 5 Adaptation Vectors, Canonical Layout Archetypes: Feed, List-Detail, Supporting Pane, and Usability & M3 Expressive Architecture)
+- **Material 3 Color Roles System Manual**: `.agents/skills/snp-sms-design-standards/color-roles-system-manual.md` (26 standard color roles, 6 groups, 3 contrast levels, tone-based surface containers, tone 98 surface, chroma 6 neutral palette, fixed accent colors)
+- **Material 3 Layout Scaffold Manual**: `.agents/skills/snp-sms-design-standards/layout-scaffold-manual.md` (Bars, Rails, Panes, Safety Regions, Jetpack Compose Rulers, Spacing tokens)
+- **Material Design 3 (M3) A-Z Lexicon & Glossary Specification**: `.agents/skills/snp-sms-design-standards/material-a-z-glossary.md` (107 authoritative terms, HCT color science, dynamic schemes, token hierarchies, 35 components, Orbiter & Spatial XR)
+- **Material 3 Future Components & Blank Architecture Specification**: `.agents/skills/snp-sms-design-standards/material-3-future-components-specification.md` (35 M3 future components inventory, BlankFutureComponent blueprint wireframe canvas, isFuture registry flag, touch targets >=44x44px, contrast >=7:1, Day-First design standard)
+- **Component Lifecycle, 7-Day Freshness Tracking & Parent-Child Navigation Specification**: `.agents/skills/snp-sms-design-standards/component-lifecycle-freshness-tracking-manual.md` (7-day automated expiration algorithm, NEW / UPDATED / COMING psychological micro-labels above text, zero-count badges, parent-child collapsed default, tap expansion, and automated scroll extraction rail tracker)
+- **Material 3 Interaction States & State Layers Manual**: `.agents/skills/snp-sms-design-standards/interaction-states-manual.md` (6 canonical states: Enabled, Disabled, Hover, Focused, Pressed, Dragged, State layers 8%/12%/16%, Action/Selection/Input inheritance, container exclusion, FAB hide rule, disabled contrast exemption)
+- **Material 3 Grids, Spacing & Density Scaling Manual**: `.agents/skills/snp-sms-design-standards/grids-spacing-density-manual.md` (4/8/12 adaptive grid columns, 0-64dp spacing tokens, density scale 0 to -3 with 4dp increments without font shrinking, >=44x44px touch targets)
+- **Material 3 Adaptive Breakpoints & 5-Vector Transformation Manual**: `.agents/skills/snp-sms-design-standards/adaptive-breakpoints-manual.md` (5 standard breakpoints: Compact <600dp, Medium 600-839dp, Expanded 840-1199dp, Large 1200-1599dp, Extra-Large >=1600dp; 5 Vectors: Reveal, Divide, Resize, Reposition, Swap; component swapping matrix)
+- **Material 3 Canonical Layout Archetypes Manual**: `.agents/skills/snp-sms-design-standards/canonical-layouts-manual.md` (Feed 1-4 cols, List-Detail 1-pane vs 2-pane co-planar with selection persistence, Supporting Pane 2/3 + 1/3 at 360dp min-width, Levitate layering strategy)
+- **Material 3 Usability & Expressive Architecture Manual**: `.agents/skills/snp-sms-design-standards/usability-expressive-manual.md` (Nielsen Norman 5 pillars: Efficiency, Error reduction, Learnability, Memorability, Satisfaction; 6 Expressive tactics: Size, Containment, Shape, Color, Motion, Typography; Aura breathing case study; V1 Cluttered vs V2 Calm; Primary goal hierarchy)
 
 Do not fragment design rules across multiple folders. Maintain all design documentation in this single location.
 
@@ -297,7 +308,197 @@ Refer to `cyber-armor-nav-manual.md` for the aerospace mecha HUD console specifi
   - Package: **`snpi-ui`**
   - Custom Domain: **`*.snpi.edu.kh`**
 
+### 7.13 Minimal Guide Text, Icon Hover Definitions, Pure Icon Hygiene & Responsive Brand Blueprint Standard
+- **Minimal Guide & Description Text (Title & Buttons Only)**:
+  - Strictly prohibit walls of descriptive text, redundant guide paragraphs, helper instructions, or verbose labels under components and sections.
+  - Every component interface must remain minimal, clean, high-density, and direct: render only the title name, buttons, and direct interactive component controls. Never write redundant guide text.
+- **Mandatory Icon Hover Definition Standard**:
+  - Every interactive icon, icon button, and indicator across desktop and mobile must provide a clean, descriptive hover definition of that place/action via accessible `title` attribute or `LibraryTooltip`. Zero mystery icons.
+- **Pure Icon Hygiene (Zero Shapes or Color Blobs Behind Icons)**:
+  - Strictly never use emojis, informal symbols, or colored shapes/blobs (circles, squares, tinted background patches such as `rounded-full bg-blue-100`, `rounded-lg bg-[#0056FF]`) behind icons.
+  - Icons must always be pure, clean vector marks rendered in authoritative brand colors (`text-[#0056FF]`, `text-[#2277FF]`, `text-slate-700`, `text-white` on standard buttons) without decorative background badge shapes.
+- **Strict Brand Blueprint & Color Token Integrity**:
+  - All page designs, navigation hubs, menus, and component views must strictly respect the 5 primary brand tokens:
+    1. `01 #0056FF` Royal Blue — Core brand base, buttons, active highlights.
+    2. `02 #2277FF` Azure Blue — Interactive accents, hover states.
+    3. `03 #E3E7FC` Soft Lavender — Surface micro-tints, subtle borders (`#CAD3F5`), badge fills.
+    4. `04 #FFFFFF` Pure White — Document canvas base, card foundations.
+    5. `05 #EFF5FF` Ice Tint — Subsurface fills, segment tracks, hover backdrops.
+    - Typography Token: Deep Navy `#0A1A4A` (primary headings & text) / Slate-900 `#0F172A`. Never use muddy slate or dark gray containers.
+- **Universal Web & Mobile Responsive Device First**:
+  - Always engineer and verify layouts, menus, and component demos for both mobile viewports (<640px) and wide desktop screens.
+  - Zero text clipping/truncation, zero horizontal overflow, fluid flex wrapping, and minimum 44x44px touch targets.
+- **Mandatory Zero Links Rule (Never Add Links)**:
+  - Strictly prohibit AI agents from adding markdown links, URL hyperlinks, file scheme links (`file://`), or unnecessary navigation anchor links in responses or generated UI components unless explicitly requested by the user.
+  - Always render references using bold text, plain text, or inline code formatting (`path/to/file.tsx`) with zero clickable hyperlinks.
 
 
 
 
+
+
+### 7.14 Canonical Layout Archetypes Specification
+Refer to `layout-scaffold-manual.md` and `accessible-design-principles-manual.md` for full implementation details:
+- **Feed Archetype**:
+  - Dynamically adapts card/content columns based on window size: Compact (1 col), Medium (2 cols), Expanded (2–3 cols), Large (3 cols), Extra-Large (3–4 cols).
+  - Maintains fluid width cards with uniform gutter spacing (16dp compact, 24dp expanded).
+- **List-Detail Archetype**:
+  - Compact: Single-pane stack with drilldown navigation. Tapping an item navigates to detail view with back button.
+  - Expanded / Large / Extra-Large: Two-pane co-planar layout. Master list on left, detail pane on right, active item indicator highlight.
+- **Supporting Pane Archetype**:
+  - Compact: Stacked vertical order or dismissible bottom sheet.
+  - Expanded+: Primary workspace pane (approx 2/3 width) paired with a permanent or collapsible supporting pane on right (approx 1/3 width, min-width 360dp).
+- **Advanced Layering & Levitate Strategy**:
+  - Modals, dialogs, and elevated sheets levitate above the pane scaffold with high-contrast scrim overlay (`bg-black/50`) and explicit z-index elevation ladder.
+
+### 7.15 Usability & M3 Expressive Architecture Specification
+Refer to `accessible-design-principles-manual.md` for full implementation details:
+- **Nielsen Norman 5 Usability Pillars**:
+  1. Efficiency: Fast, direct task execution with minimal steps.
+  2. Error Reduction: Clear validation, safe undo operations, and immediate recovery instructions.
+  3. Learnability: Obvious mental models using familiar interface metaphors.
+  4. Memorability: Consistent component patterns so returning users immediately know how to operate.
+  5. Satisfaction: Tactile feedback, responsive micro-interactions, and pleasant aesthetics.
+- **6 Expressive Design Tactics**:
+  1. Size: Scaling key elements to establish clear dominance.
+  2. Containment: Framing content within cohesive cards and surfaces.
+  3. Shape: Expressive rounded corners (8px, 12px, 16px, 24px) communicating interactivity.
+  4. Color: Semantic color accents focusing user attention on primary goals.
+  5. Motion: Smooth, physics-based springs (<300ms) guiding visual continuity.
+  6. Typography: High-contrast hierarchy separating headings, labels, and metadata.
+- **Anti-Clutter & Primary Goal Focus (Aura Case Study)**:
+  - V1 Cluttered: Avoid exposing every metric and control simultaneously (cognitive overload).
+  - V2 Calm & Focused: Establish a single primary hero action per screen, grouping secondary actions into progressive disclosure drawers or tabs.
+
+### 7.16 Material Design 3 (M3) A-Z Lexicon Standards
+Refer to `material-a-z-glossary.md` for 107 foundational architectural terms:
+- **3-Tier Design Token Hierarchy**:
+  - Reference Tokens: Global palette values (e.g. `md.ref.palette.primary40`).
+  - System Tokens: Semantic role mappings (e.g. `md.sys.color.primary`).
+  - Component Tokens: Component-specific property assignments (e.g. `md.comp.filled-button.container.color`).
+- **HCT Color Science**:
+  - Hue, Chroma, Tone color space providing true perceptual uniformity and mathematically guaranteed contrast across all generated tonal palettes.
+- **Dynamic Schemes & Accessibility**:
+  - User-generated or content-extracted palettes calibrated across Standard, Medium, and High contrast levels.
+- **Component & Spatial Architecture**:
+  - Canonical coverage of 35 components, XR Orbiters, Spatial Panes, and Jetpack Compose adaptive primitives.
+
+### 7.17 Layout Scaffold Architecture Specification
+Refer to `layout-scaffold-manual.md` for the complete specification:
+- **Three Core Scaffold Regions**:
+  1. Bars: Top App Bar (Small, Center-Aligned, Medium, Large) and Bottom App Bar / Bottom Nav framing the viewport.
+  2. Rails: Navigation Rail (compact/expanded) and Trailing Utility Rails creating perimeter boundary space for actions and tools.
+  3. Panes: Core content canvas hosting 1 to 3 panes (Single Pane, List-Detail, Supporting Pane) in co-planar, docked, or floating configurations.
+- **Safety Regions Integration**:
+  - Explicit margin offsets for hardware camera cutouts, system gesture navigation insets, and foldable physical hinge seams.
+- **Jetpack Compose Rulers**:
+  - Margin Ruler (edge spacing), Baseline Ruler (typography alignment), and Split Anchor Ruler (pane division coordinates).
+- **Standard Spacing Scale**:
+  - Strict adherence to mathematical token increments: 0dp, 4dp, 8dp, 12dp, 16dp, 24dp, 32dp, 40dp, 48dp, 56dp, 64dp.
+
+### 7.18 Material 3 Color Roles System & 26 Roles Specification
+Refer to `color-roles-system-manual.md` for the complete specification:
+- **26 Standard Color Roles Across 6 Groups**:
+  - Primary: `primary`, `on-primary`, `primary-container`, `on-primary-container`, `inverse-primary`.
+  - Secondary: `secondary`, `on-secondary`, `secondary-container`, `on-secondary-container`.
+  - Tertiary: `tertiary`, `on-tertiary`, `tertiary-container`, `on-tertiary-container`.
+  - Error: `error`, `on-error`, `error-container`, `on-error-container`.
+  - Surface: `surface`, `on-surface`, `surface-variant`, `on-surface-variant`, `inverse-surface`, `inverse-on-surface`, `surface-tint`.
+  - Outline: `outline`, `outline-variant`.
+- **Three Contrast Levels**:
+  - Standard (default), Medium (elevated contrast for clarity), and High (maximum contrast meeting WCAG AAA requirements).
+- **Colorful Container On-Roles**:
+  - `on-primary-container`, `on-secondary-container`, `on-tertiary-container`, and `on-error-container` updated for richer, more colorful text and icons in light theme.
+- **Tone-Based Surface Containers (Elevation Replacement)**:
+  - Deprecates white alpha elevation overlays.
+  - Discrete luminance steps: `surface-container-lowest` -> `surface-container-low` -> `surface-container` -> `surface-container-high` -> `surface-container-highest`.
+- **Technical Calibrations**:
+  - Default Light Theme Surface: Tone 98 (calibrated from legacy tone 99 to prevent OLED wash-out).
+  - Neutral Palette Chroma: Set to 6 (calibrated from legacy 4 for subtle, richer warmth).
+  - Dark Theme Surfaces: Darkened for deeper contrast and OLED energy efficiency.
+- **Add-on Fixed Accent Color Roles**:
+  - `*-fixed`, `*-fixed-dim`, `on-*-fixed`, `on-*-fixed-variant` for persistent, non-inverting accent elements across theme switches.
+  - `surface-dim` and `surface-bright` for nuanced ambient canvas depth.
+- **14 Affected Components**:
+  - Badges, Buttons, Extended FAB, FAB, Icon Buttons, Segmented Buttons, Chips, Lists, Menus, Navigation Bar, Navigation Drawer, Navigation Rail, Switches, and Toolbars.
+
+### 7.19 Interaction States & State Layers Specification
+Refer to `accessible-design-principles-manual.md` (Section 15) for full implementation details:
+- **Six Canonical Interaction States**:
+  1. Enabled: Default interactive presentation communicating ready-for-input state.
+  2. Disabled: Communicates non-interactive element via reduced elevation and color desaturation. Disabled states do NOT need to meet standard contrast requirements.
+  3. Hover: Cursor over interactive surface, applying 8% content-color state layer overlay.
+  4. Focused: Keyboard or input focus ring (2px solid `#0056FF` with 2px offset) and 12% state layer.
+  5. Pressed: Active pointer down or keypress engagement, applying 12% content-color state layer.
+  6. Dragged: Component lifted or moving across layout, applying 16% state layer and increased elevation.
+- **State Layers Architecture**:
+  - Semi-transparent overlay (`opacity` 0.08, 0.12, 0.16) using the content color (`on-surface`, `on-primary`) over the base container surface.
+- **Component Inheritance & Exclusion Matrix**:
+  - Inherited By: Action, Selection, and Input components (Buttons, Cards, Checkboxes, Chips, List items, Radio buttons, Segmented buttons, Switches, Text fields).
+  - Excluded From: Container shells and chrome (App bars, Badges, Navigation bar, Navigation drawer, Navigation rail, Dialogs, Toolbars) do NOT inherit states; only child interactive elements within them receive states.
+- **FAB State Exception**:
+  - Unavailable Floating Action Buttons (FABs) must hide completely rather than display as disabled.
+- **Layout Exclusivity**:
+  - Strictly one hover, one focus, one pressed, and one dragged state active at any given moment in the layout.
+
+### 7.20 Grids, Expressive Spacing & Density Scaling Specification
+Refer to `accessible-design-principles-manual.md` (Section 16) for full implementation details:
+- **Three Layout Pillars**:
+  - Grids: Consistent foundation adapting column structures across breakpoints (4 cols compact, 8 cols medium, 12 cols expanded/large/extra-large).
+  - Spacing: Groups related information via proximity and directs visual attention to key calls-to-action.
+  - Density: Allows users to see and compare higher volumes of information in data-heavy screens without shrinking typography.
+- **Spacing Token Scale**:
+  - Increments: 0dp, 4dp, 8dp, 12dp, 16dp, 24dp, 32dp, 40dp, 48dp, 56dp, 64dp.
+- **Component Density Scale**:
+  - 0 (Default): Standard spacious layout.
+  - -1, -2, -3 (High Density): Decreases vertical container height and padding by 4dp increments per step while strictly preserving font size and line height.
+- **Target Bounds Invariant**:
+  - All interactive elements must maintain minimum 48x48dp (or >=44x44px) touch targets regardless of chosen density scale.
+- **Prohibited Dense Areas**:
+  - Never apply high density to focused selection dialogs, confirmation modals, or snackbars.
+
+### 7.21 Adaptive Breakpoints & 5-Vector Transformation Specification
+Refer to `accessible-design-principles-manual.md` (Section 17) for full implementation details:
+- **Five Standard Breakpoint Classes**:
+  1. Compact (<600dp): Mobile phones, folded foldable devices. Single-pane default.
+  2. Medium (600–839dp): Small tablets, unfolded foldable devices. Transition to dual-pane or collapsed rail.
+  3. Expanded (840–1199dp): Full-sized tablets, landscape foldables, small laptops. Dual-pane co-planar default.
+  4. Large (1200–1599dp): Desktop monitors, large laptops. Multi-pane, persistent navigation rail/drawer.
+  5. Extra-Large (≥1600dp): Ultra-wide monitors, multi-window setups. 3-pane workspaces.
+- **The Five Transformation Vectors**:
+  1. Reveal: Expose secondary navigation rails, contextual panels, or action toolbars.
+  2. Divide: Transition single-pane stacks to 2–3 co-planar panes (1 pane <840dp, 2 panes 840–1599dp, 3 panes ≥1600dp).
+  3. Resize: Fluidly stretch or constrain container widths, maintaining 40–60 characters per line readability.
+  4. Reposition: Shift mobile bottom action sheets and navigation to leading vertical rails or top bars.
+  5. Swap: Substitute functionally equivalent components:
+     - Bottom Nav -> Collapsed Navigation Rail -> Expanded Navigation Drawer
+     - Bottom Sheet -> Side Sheet / Dropdown Menu
+     - Full-Screen Dialog -> Standard Centered Modal Dialog
+
+### 7.22 Multi-Modal Inputs & Selection Architecture Specification
+Refer to `accessible-design-principles-manual.md` (Sections 12 & 13) for full implementation details:
+- **Multi-Modal Input Support**:
+  - Unified handling of mouse, trackpad, physical keyboard, stylus, and touch inputs simultaneously.
+  - Show visible mouse pointer when pointing device connects; separate mouse-drag text selection from touch-drag view scrolling.
+  - Semantic cursor morphology: `default`, `pointer`, `text`, `col-resize`, `row-resize`.
+  - Secondary click context menus; suppress virtual on-screen keyboards when hardware keyboard is detected.
+- **Selection Architecture**:
+  - Three Canonical Selection Indicators: Surface tint (`#EFF5FF` with `#0056FF` keyline border), Checkmark icon, Checkbox component.
+  - Single-Select Active Pills: Pill shape indicators on navigation rails, drawers, and tabs.
+  - Touch Selection Protocol: Long-press to activate multi-select, tap avatar shortcut, Contextual Action Bar with `[N Selected]`, and batch drag without reordering conflicts.
+  - Pointer Checkbox Visibility: Permanent visibility on primary data tables; reveal-on-hover or reveal-on-first-select on secondary feeds.
+
+### 7.23 Mandatory Blueprint Menu Primary Sections Invariant (Brand Colors & Color Ramps Tokens — NEVER CHANGE)
+In the Blueprint menu (`DesignSystemHomeView` / `/document/design`), the two primary anchor sections:
+1. **Brand Colors** (`#brand-blueprint` / `BrandConceptBlueprint`):
+   - 01 Royal Blue (`#0056FF`) — Primary base brand anchor
+   - 02 Azure Blue (`#2277FF`) — Interactive accent
+   - 03 Soft Lavender (`#E3E7FC`) — Micro-tint & badges
+   - 04 White (`#FFFFFF`) — Document canvas base
+   - 05 Ice Tint (`#EFF5FF`) — Subsurface card fill
+   - SNPI International School Logo (`bg-[#FFFFFF]` White Canvas and `bg-[#E3E7FC]` Lavender Canvas)
+2. **Color Ramps & Semantic Tokens** (`#color-ramps-tokens` / `ColorRampsTokens`):
+   - Contrast-checked color ramps across Brand (`primary`), Accents (`accent`, `accent-2`), Neutral, and Status (`success`, `warning`, `error`, `info`)
+   - Interactive filters: Category pills (`ALL`, `BRAND`, `ACCENT`, `NEUTRAL`, `STATUS`), Format switchers (`HEX`, `CSS`), and Contrast validators (`AA`, `AAA`)
+
+**IMMUTABILITY INVARIANT**: These two sections must **ALWAYS remain primary, top-level (indexes 01 and 02 in `SIDEBAR_TREE`), and permanently intact**. Under no circumstances should AI agents or developers modify, remove, hide, reorder, or replace these two core foundation sections. They represent the permanent, sticky visual foundation of the SNPI enterprise design system.

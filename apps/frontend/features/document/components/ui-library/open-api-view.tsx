@@ -320,23 +320,12 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
           {/* SECTION 1: CREATIVE INTERACTIVE API GATEWAY HERO SCREEN           */}
           {/* ----------------------------------------------------------------- */}
           <section id="open-api-head" className="scroll-mt-24 space-y-4">
-            <div className="relative overflow-hidden rounded-3xl border border-[#CAD3F5] bg-gradient-to-b from-white via-[#EFF5FF]/40 to-white p-5 shadow-xs sm:p-10">
-              {/* Subtle Geometric Background Dot Grid */}
-              <div
-                className="pointer-events-none absolute inset-0 opacity-[0.35]"
-                style={{
-                  backgroundImage:
-                    'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FFFFFF 0.75px)',
-                  backgroundSize: '20px 20px',
-                  backgroundPosition: '0 0, 10px 10px',
-                }}
-              />
-
+            <div className="relative overflow-visible bg-transparent py-2 sm:py-4">
               <div className="relative z-10 space-y-6 sm:space-y-8">
                 {/* Playful Headline + Public Status Pill */}
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <h1 className="font-sans text-3xl font-black tracking-tight text-[#0A1A4A] sm:text-5xl md:text-6xl">
+                    <h1 className="font-sans text-3xl font-black tracking-tight text-[#0A1A4A] sm:text-4xl md:text-5xl">
                       OPEN API <span className="text-[#0056FF]">GATEWAY</span>
                     </h1>
                     <div className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3 py-1 font-mono text-xs font-bold text-[#0056FF] shadow-2xs">
