@@ -70,6 +70,30 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/design',
+        destination: '/document/design',
+        permanent: false,
+      },
+      {
+        source: '/design-system',
+        destination: '/document/design',
+        permanent: false,
+      },
+      {
+        source: '/components',
+        destination: '/document/design-system',
+        permanent: false,
+      },
+      {
+        source: '/api-docs',
+        destination: '/document',
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

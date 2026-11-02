@@ -3,19 +3,15 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 import {
-  Compass,
   Layers,
-  FileText,
   Settings,
-  ChevronRight,
   BookOpen,
   Code,
-  Sparkles,
-  ChevronLeft,
   Menu,
   Play,
   Volume,
-  VolumeX,
+  User,
+  Check,
 } from '@/components/icons';
 import { RailToc, type RailTocItem } from '../rail-toc';
 import { HookSidebar, type HookSidebarItem } from '../hook-sidebar';
@@ -386,65 +382,64 @@ export function HookSidebarDemo() {
     { label: 'Changelog' },
   ];
 
+  // 3 Primary Brand Rail Colors Only
   const colorPresets = [
     { label: 'Royal Blue', value: '#0056FF' },
-    { label: 'Rare Orange', value: '#FC4C01' },
-    { label: 'Azure', value: '#2277FF' },
-    { label: 'Emerald', value: '#10B981' },
+    { label: 'Azure Blue', value: '#2277FF' },
+    { label: 'Deep Navy', value: '#0A1A4A' },
   ];
 
   return (
-    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
-      {/* Style Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-        <button
-          type="button"
-          onClick={() => setDashed(!dashed)}
-          className="cursor-pointer rounded-[4px] border-0 bg-slate-100 px-2.5 py-1 font-sans text-[11px] font-semibold text-slate-700 transition-all select-none hover:bg-slate-200"
-        >
-          {dashed ? 'Dashed Rail' : 'Solid Rail'}
-        </button>
+    <div className="flex w-full flex-col items-center gap-6 py-2">
+      <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
+        {/* Style & 3-Color Picker Controls Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CAD3F5] pb-4">
+          {/* 3 Brand Color Swatches */}
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-xs font-bold text-[#0A1A4A] uppercase">
+              Rail Color:
+            </span>
+            <div className="flex items-center gap-2">
+              {colorPresets.map((preset) => (
+                <button
+                  key={preset.value}
+                  type="button"
+                  title={`${preset.label} (${preset.value})`}
+                  onClick={() => setAccentColor(preset.value)}
+                  style={{ backgroundColor: preset.value }}
+                  className={cn(
+                    'size-7 cursor-pointer rounded-full transition-transform select-none',
+                    accentColor.toLowerCase() === preset.value.toLowerCase()
+                      ? 'scale-115 ring-2 ring-[#0056FF] ring-offset-2'
+                      : 'opacity-75 hover:scale-105 hover:opacity-100',
+                  )}
+                />
+              ))}
+            </div>
+          </div>
 
-        {/* Color Switcher */}
-        <div className="flex items-center gap-1 rounded-[4px] bg-slate-50 p-1">
-          {colorPresets.map((preset) => (
-            <button
-              key={preset.value}
-              type="button"
-              onClick={() => setAccentColor(preset.value)}
-              style={{ backgroundColor: preset.value }}
-              className={cn(
-                'size-4 cursor-pointer rounded-full transition-transform select-none',
-                accentColor === preset.value
-                  ? 'scale-125 ring-2 ring-slate-900 ring-offset-1'
-                  : 'opacity-70 hover:opacity-100',
-              )}
-              title={preset.label}
-            />
-          ))}
+          {/* Solid / Dashed Toggle */}
+          <button
+            type="button"
+            title={dashed ? 'Switch to solid spring rail' : 'Switch to dashed spring rail'}
+            onClick={() => setDashed(!dashed)}
+            className="cursor-pointer rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 font-mono text-xs font-semibold text-[#0A1A4A] transition-all hover:bg-[#E3E7FC]"
+          >
+            {dashed ? 'Dashed Rail' : 'Solid Rail'}
+          </button>
         </div>
-      </div>
 
-      {/* Single Clean HookSidebar Stage */}
-      <div className="mt-4 rounded-xl border border-slate-100 bg-[#F8FAFC] p-5">
-        <HookSidebar
-          label="Navigation Tree"
-          items={navigationItems}
-          value={selectedIndex}
-          onChange={(idx) => setSelectedIndex(idx)}
-          color={accentColor}
-          dashed={dashed}
-        />
-      </div>
-
-      {/* Active State Telemetry Footer */}
-      <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-2.5 font-mono text-[11px] text-slate-500">
-        <span>Active Node:</span>
-        <span className="font-bold text-slate-900" style={{ color: accentColor }}>
-          {typeof navigationItems[selectedIndex] === 'string'
-            ? navigationItems[selectedIndex]
-            : (navigationItems[selectedIndex] as { label: string }).label}
-        </span>
+        {/* Clean HookSidebar Stage */}
+        <div className="mt-4 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF]/50 p-5">
+          <HookSidebar
+            label="Navigation Tree"
+            items={navigationItems}
+            value={selectedIndex}
+            onChange={(idx) => setSelectedIndex(idx)}
+            color={accentColor}
+            dashed={dashed}
+          />
+        </div>
       </div>
     </div>
   );
@@ -452,9 +447,11 @@ export function HookSidebarDemo() {
 
 import { RareUiNavigationMenu } from '../navigation-menu';
 
-// 6. Gooey Navigation (Fluid Sliding Capsule Pill)
+// 6. Gooey Navigation (Confirmed Design + Corner Brand Border Archetypes)
 export function GooeyNavDemo() {
   const [selected, setSelected] = React.useState('day');
+  const [cornerSelected, setCornerSelected] = React.useState('month');
+
   const tabs = [
     { id: 'day', label: 'Day' },
     { id: 'week', label: 'Week' },
@@ -463,29 +460,88 @@ export function GooeyNavDemo() {
   ];
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-xs">
-      <div className="relative inline-flex rounded-full border border-slate-200 bg-slate-100 p-1">
-        {tabs.map((tab) => {
-          const isActive = selected === tab.id;
-          return (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setSelected(tab.id)}
-              className={cn(
-                'relative z-10 cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all duration-200',
-                isActive
-                  ? 'bg-[#0056FF] text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900',
-              )}
-            >
-              {tab.label}
-            </button>
-          );
-        })}
+    <div className="flex w-full flex-col gap-8 py-2">
+      {/* DEMO 1: Classic Fluid Capsule Pill (Confirmed Design) */}
+      <div className="flex flex-col gap-3">
+        <div className="border-b border-[#CAD3F5] pb-2">
+          <h3 className="font-mono text-xs font-bold tracking-wide text-[#0A1A4A] uppercase">
+            01. Fluid Capsule Pill (Classic Gooey Nav)
+          </h3>
+        </div>
+
+        <div className="flex w-full flex-col items-center justify-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-xs">
+          <div className="relative inline-flex rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1">
+            {tabs.map((tab) => {
+              const isActive = selected === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  title={`Select ${tab.label} timeline view`}
+                  onClick={() => setSelected(tab.id)}
+                  className={cn(
+                    'relative z-10 cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all duration-200 select-none',
+                    isActive
+                      ? 'bg-[#0056FF] text-white shadow-xs'
+                      : 'text-[#0A1A4A] hover:text-[#0056FF]',
+                  )}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
-      <div className="mt-3 font-sans text-xs text-slate-500">
-        Selected Timeline: <strong className="text-slate-800 uppercase">{selected}</strong>
+
+      {/* DEMO 2: Corner Brand Border Gooey Nav (New Demo below it) */}
+      <div className="flex flex-col gap-3">
+        <div className="border-b border-[#CAD3F5] pb-2">
+          <h3 className="font-mono text-xs font-bold tracking-wide text-[#0A1A4A] uppercase">
+            02. Corner Brand Border Gooey Nav
+          </h3>
+        </div>
+
+        <div className="flex w-full flex-col items-center justify-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-xs">
+          {/* Technical Corner Brand Border Container */}
+          <div className="relative p-3">
+            {/* 4 Technical Corner L-Brackets */}
+            <span className="pointer-events-none absolute top-0 left-0 size-3 border-t-2 border-l-2 border-[#0056FF]" />
+            <span className="pointer-events-none absolute top-0 right-0 size-3 border-t-2 border-r-2 border-[#0056FF]" />
+            <span className="pointer-events-none absolute bottom-0 left-0 size-3 border-b-2 border-l-2 border-[#0056FF]" />
+            <span className="pointer-events-none absolute right-0 bottom-0 size-3 border-r-2 border-b-2 border-[#0056FF]" />
+
+            {/* Navigation Track with Corner Accents */}
+            <div className="relative inline-flex items-center gap-1 rounded border border-[#CAD3F5] bg-[#EFF5FF] p-1">
+              {tabs.map((tab) => {
+                const isActive = cornerSelected === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    title={`Select ${tab.label}`}
+                    onClick={() => setCornerSelected(tab.id)}
+                    className={cn(
+                      'relative cursor-pointer rounded px-4 py-1.5 font-mono text-xs font-bold transition-all duration-200 select-none',
+                      isActive
+                        ? 'bg-[#0056FF] text-white shadow-2xs'
+                        : 'text-[#0A1A4A] hover:bg-white hover:text-[#0056FF]',
+                    )}
+                  >
+                    {/* Inner Corner Accent on Active Tab */}
+                    {isActive && (
+                      <>
+                        <span className="pointer-events-none absolute top-0.5 left-0.5 size-1.5 border-t border-l border-white/70" />
+                        <span className="pointer-events-none absolute right-0.5 bottom-0.5 size-1.5 border-r border-b border-white/70" />
+                      </>
+                    )}
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -501,20 +557,15 @@ export function IconBarDemo() {
   const [selectedTool, setSelectedTool] = React.useState('pen');
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-6 py-6">
+    <div className="flex w-full flex-col items-center justify-center py-4">
       <IconBar selectedId={selectedTool} onSelect={setSelectedTool} />
-
-      <div className="flex items-center gap-3 rounded-full border border-slate-200/90 bg-white px-4 py-1.5 shadow-2xs">
-        <span className="font-mono text-[11px] text-slate-500">Active Tool:</span>
-        <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
-          {selectedTool || 'None (Cleared)'}
-        </span>
-      </div>
     </div>
   );
 }
 
-// 9. Cyber Armor Modular Nav (Aerospace / Mecha HUD Console)
+// =========================================================================
+// 9. Cyber Armor Modular Nav
+// =========================================================================
 export function CyberArmorNavDemo() {
   const [activeTab, setActiveTab] = React.useState('portfolio');
 
@@ -532,7 +583,6 @@ export function CyberArmorNavDemo() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-5 py-4">
-      {/* Single Responsive Cyber Armor Nav */}
       <div className="no-scrollbar w-full overflow-x-auto py-2">
         <div className="flex w-full min-w-fit items-center justify-center px-1">
           <CyberArmorNav
@@ -543,12 +593,6 @@ export function CyberArmorNavDemo() {
             size="md"
           />
         </div>
-      </div>
-
-      {/* Clean Active State Telemetry Badge */}
-      <div className="flex items-center gap-2 rounded-full border border-slate-200/90 bg-white px-4 py-1.5 font-mono text-xs shadow-2xs">
-        <span className="text-slate-400">ACTIVE:</span>
-        <strong className="font-bold text-[#0056FF] uppercase">{activeTab}</strong>
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ export interface RadiantIntegrationHubProps {
   className?: string;
 }
 
-// 6 Kinetic Brand Card Visual Styles (Exact Archetype from Status Page 404 Mode 5)
+// 6 Kinetic Brand Card Visual Styles (Compact Responsive Sizing)
 const CARD_PALETTE = [
   // 0: Soft Ice Tint
   {
@@ -38,11 +38,11 @@ const CARD_PALETTE = [
     accent: '#0056FF',
     subtext: 'text-blue-500',
     tag: 'BÉZIER SPEC',
-    height: 'h-44 sm:h-48',
-    width: 'w-32 sm:w-36',
-    tumbledRotate: -7.5,
-    tumbledY: 10,
-    shadow: 'shadow-[0_12px_28px_rgba(0,86,255,0.14)]',
+    height: 'h-36 md:h-40 lg:h-44',
+    width: 'w-24 md:w-26 lg:w-28',
+    tumbledRotate: -5.5,
+    tumbledY: 6,
+    shadow: 'shadow-[0_12px_24px_rgba(0,86,255,0.12)]',
   },
   // 1: Solid Brand Royal Blue
   {
@@ -52,11 +52,11 @@ const CARD_PALETTE = [
     accent: '#FFFFFF',
     subtext: 'text-blue-200',
     tag: 'SYSTEM CORE',
-    height: 'h-48 sm:h-52',
-    width: 'w-34 sm:w-38',
-    tumbledRotate: -3.5,
+    height: 'h-40 md:h-44 lg:h-48',
+    width: 'w-26 md:w-28 lg:w-30',
+    tumbledRotate: -2.5,
     tumbledY: -2,
-    shadow: 'shadow-[0_16px_36px_rgba(0,86,255,0.25)]',
+    shadow: 'shadow-[0_14px_30px_rgba(0,86,255,0.22)]',
   },
   // 2: Signal / Sunny Yellow (Center Elevated Card)
   {
@@ -66,11 +66,11 @@ const CARD_PALETTE = [
     accent: '#0A1A4A',
     subtext: 'text-amber-950/70',
     tag: 'TOKEN SPEC',
-    height: 'h-52 sm:h-56',
-    width: 'w-36 sm:w-40',
+    height: 'h-44 md:h-48 lg:h-52',
+    width: 'w-28 md:w-30 lg:w-32',
     tumbledRotate: 0.5,
-    tumbledY: -12,
-    shadow: 'shadow-[0_18px_38px_rgba(250,204,21,0.3)]',
+    tumbledY: -10,
+    shadow: 'shadow-[0_16px_34px_rgba(250,204,21,0.28)]',
   },
   // 3: Solid Interactive Azure Blue
   {
@@ -80,11 +80,11 @@ const CARD_PALETTE = [
     accent: '#FFFFFF',
     subtext: 'text-sky-100',
     tag: 'LAYOUT MESH',
-    height: 'h-46 sm:h-50',
-    width: 'w-34 sm:w-38',
-    tumbledRotate: 4.5,
-    tumbledY: 4,
-    shadow: 'shadow-[0_16px_36px_rgba(34,119,255,0.25)]',
+    height: 'h-38 md:h-42 lg:h-46',
+    width: 'w-26 md:w-28 lg:w-30',
+    tumbledRotate: 3,
+    tumbledY: 3,
+    shadow: 'shadow-[0_14px_30px_rgba(34,119,255,0.22)]',
   },
   // 4: Mint Emerald
   {
@@ -94,11 +94,11 @@ const CARD_PALETTE = [
     accent: '#FFFFFF',
     subtext: 'text-emerald-100',
     tag: 'ACTION SPEC',
-    height: 'h-44 sm:h-48',
-    width: 'w-32 sm:w-36',
-    tumbledRotate: 8,
-    tumbledY: 10,
-    shadow: 'shadow-[0_14px_30px_rgba(16,185,129,0.25)]',
+    height: 'h-36 md:h-40 lg:h-44',
+    width: 'w-24 md:w-26 lg:w-28',
+    tumbledRotate: 5.5,
+    tumbledY: 6,
+    shadow: 'shadow-[0_12px_24px_rgba(16,185,129,0.22)]',
   },
   // 5: Soft Lavender / White Mesh
   {
@@ -108,11 +108,11 @@ const CARD_PALETTE = [
     accent: '#0056FF',
     subtext: 'text-slate-500',
     tag: 'INTELLIGENCE',
-    height: 'h-46 sm:h-50',
-    width: 'w-32 sm:w-36',
-    tumbledRotate: 11.5,
-    tumbledY: 16,
-    shadow: 'shadow-[0_12px_28px_rgba(10,26,74,0.1)]',
+    height: 'h-38 md:h-42 lg:h-46',
+    width: 'w-24 md:w-26 lg:w-28',
+    tumbledRotate: 8.5,
+    tumbledY: 12,
+    shadow: 'shadow-[0_12px_24px_rgba(10,26,74,0.08)]',
   },
 ];
 
@@ -160,22 +160,24 @@ export function RadiantIntegrationHub({
   };
 
   return (
-    <div className={cn('relative w-full py-2 select-none', className)}>
+    <div
+      className={cn('relative mx-auto w-full max-w-2xl py-2 select-none lg:max-w-3xl', className)}
+    >
       {/* =================================================================== */}
       {/* DESKTOP: 6 KINETIC TUMBLED CARDS (ZERO ICONS, MINIMAL TEXT)         */}
       {/* =================================================================== */}
-      <div className="relative hidden h-64 w-full items-end justify-center gap-3 overflow-visible pb-2 select-none md:flex">
+      <div className="relative hidden h-56 w-full items-end justify-center gap-1.5 overflow-visible pb-2 select-none md:flex md:gap-2 lg:gap-2.5">
         {allNodes.map((node, idx) => {
           const isActive = idx === activeIdx;
           const isHovered = idx === hoveredIdx;
-          const isElevated = isActive || isHovered;
+          const isElevated = isHovered;
           const style = CARD_PALETTE[idx % CARD_PALETTE.length];
 
           // Kinetic animation parameters matching the reference archetype
-          const targetY = isElevated ? -24 : style.tumbledY;
+          const targetY = isElevated ? -16 : style.tumbledY;
           const targetRotate = isElevated ? 0 : style.tumbledRotate;
-          const targetScale = isElevated ? 1.07 : 1;
-          const targetZ = isElevated ? 30 : 10 + idx;
+          const targetScale = isElevated ? 1.04 : 1;
+          const targetZ = isElevated ? 40 : 10 + idx;
 
           return (
             <motion.div

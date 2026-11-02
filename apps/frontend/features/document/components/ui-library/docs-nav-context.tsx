@@ -25,7 +25,11 @@ export function DocsNavProvider({
     pathname?.startsWith('/document/design-system') ||
     pathname === '/design-system' ||
     pathname === '/ui-library';
-  const isChangelogPath = pathname?.startsWith('/document/changelog') || pathname === '/changelog';
+  const isChangelogPath =
+    pathname?.startsWith('/document/changelog') ||
+    pathname === '/changelog' ||
+    pathname?.startsWith('/document/design') ||
+    pathname === '/design';
   const pathDerivedTab: DocsTab = isLibraryPath
     ? 'library'
     : isChangelogPath
@@ -44,7 +48,11 @@ export function DocsNavProvider({
         const p = window.location.pathname;
         const isLib =
           p.startsWith('/document/design-system') || p === '/design-system' || p === '/ui-library';
-        const isChange = p.startsWith('/document/changelog') || p === '/changelog';
+        const isChange =
+          p.startsWith('/document/changelog') ||
+          p === '/changelog' ||
+          p.startsWith('/document/design') ||
+          p === '/design';
         setActiveTabState(isLib ? 'library' : isChange ? 'release' : 'openapi');
       }
     };
@@ -67,7 +75,7 @@ export function DocsNavProvider({
           : tab === 'library'
             ? '/document/design-system'
             : tab === 'release'
-              ? '/document/changelog'
+              ? '/document/design'
               : '/document';
         if (pathname !== targetPath) {
           router.push(targetPath);

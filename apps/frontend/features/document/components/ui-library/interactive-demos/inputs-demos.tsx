@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Clock, Key, Eye, EyeOff, Sun, Laptop, Check, Plus } from '@/components/icons';
+import { Clock, Key, Eye, EyeOff, Check, Plus } from '@/components/icons';
 
 // 1. Duration Picker
 export function DurationPickerDemo() {
@@ -147,54 +147,6 @@ export function PasswordInputDemo() {
             <span>{c.label}</span>
           </div>
         ))}
-      </div>
-    </div>
-  );
-}
-
-// 4. Theme Selector (Strict Light Day Focus)
-export function ThemeSelectorDemo() {
-  const [theme, setTheme] = React.useState<'day' | 'lavender' | 'system'>('day');
-
-  const options = [
-    { id: 'day', label: 'Day Pure', icon: Sun, desc: 'Pure white canvas' },
-    { id: 'lavender', label: 'Soft Tint', icon: Sun, desc: 'Lavender #E3E7FC' },
-    { id: 'system', label: 'System Day', icon: Laptop, desc: 'Auto light match' },
-  ] as const;
-
-  return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
-      <div className="grid grid-cols-3 gap-2.5">
-        {options.map((opt) => {
-          const Icon = opt.icon;
-          const isActive = theme === opt.id;
-          return (
-            <button
-              key={opt.id}
-              type="button"
-              onClick={() => setTheme(opt.id)}
-              className={cn(
-                'flex flex-col items-center gap-2 rounded-2xl border p-3.5 text-center transition-all',
-                isActive
-                  ? 'border-[#0056FF] bg-[#E3E7FC]/40 text-[#0056FF] shadow-xs'
-                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white',
-              )}
-            >
-              <div
-                className={cn(
-                  'flex size-8 items-center justify-center rounded-xl',
-                  isActive ? 'bg-[#0056FF] text-white' : 'bg-slate-200 text-slate-600',
-                )}
-              >
-                <Icon className="size-4" />
-              </div>
-              <div>
-                <span className="block font-sans text-xs font-bold">{opt.label}</span>
-                <span className="font-mono text-[9px] text-slate-400">{opt.desc}</span>
-              </div>
-            </button>
-          );
-        })}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 {
   "name": "snp-sms-monorepo",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -26,6 +26,8 @@
     "deploy:verify": "tsx scripts/verify-deploy-gate.ts",
     "git:sync": "tsx scripts/dual-dev-git-sync.ts",
     "changelog:sync": "tsx scripts/sync-changelog.ts",
+    "push:checkpoint": "tsx scripts/automated-push-checkpoint.ts",
+    "push:verify": "tsx scripts/verify-ci-status.ts",
     "watch:telegram": "tsx scripts/telegram-repo-watcher.ts --watch",
     "alert:telegram": "tsx scripts/telegram-repo-watcher.ts --once",
     "test:telegram": "tsx scripts/telegram-repo-watcher.ts --test",

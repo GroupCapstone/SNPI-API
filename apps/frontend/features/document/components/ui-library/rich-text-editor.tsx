@@ -841,40 +841,43 @@ export function RichTextEditorDemo() {
   return (
     <div className="w-full space-y-4">
       {/* Action Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-slate-200/90 bg-[#F8FAFC] p-2.5 sm:px-3.5">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-[#CAD3F5] bg-white p-2.5 shadow-2xs sm:px-3.5">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="pr-1 font-mono text-[10px] font-bold text-slate-400 uppercase">
+            Templates:
+          </span>
           <button
             type="button"
             onClick={handleResetDocument}
-            className="cursor-pointer rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+            className="cursor-pointer rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
           >
             Academic Charter
           </button>
           <button
             type="button"
             onClick={handleLoadPolicy}
-            className="cursor-pointer rounded-[4px] border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-colors hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]"
+            className="cursor-pointer rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
           >
             Data Policy
           </button>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             type="button"
             onClick={simulateXssPaste}
-            className="flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-[#0056FF] bg-[#0056FF] px-3 py-1 font-mono text-[11px] font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95"
+            className="flex cursor-pointer items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
           >
-            <ShieldCheck className="size-3.5" />
-            <span>Test XSS Dirty Paste</span>
+            <ShieldCheck className="size-3 text-[#0056FF]" />
+            <span>Test Sanitizer Paste</span>
           </button>
           <button
             type="button"
             onClick={handleClear}
             title="Clear canvas"
-            className="flex size-7 cursor-pointer items-center justify-center rounded-[4px] border border-slate-200 bg-white text-slate-600 transition-colors hover:border-slate-400 hover:text-slate-900"
+            className="flex size-7 cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 transition-all hover:border-rose-300 hover:bg-rose-50 hover:text-rose-600 active:scale-95"
           >
-            <Bin className="size-3.5" />
+            <Bin className="size-3" />
           </button>
         </div>
       </div>

@@ -89,70 +89,185 @@ export function ToastDemo() {
   );
 }
 
-// 3. Notification Bell with Animated Dropdown
+// 3. Notification Bell with Interactive Notification Center
 export function NotificationBellDemo() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [unreadCount, setUnreadCount] = React.useState(3);
+  const [filter, setFilter] = React.useState<'all' | 'academic' | 'security'>('all');
+  const [items, setItems] = React.useState([
+    {
+      id: 1,
+      title: 'New Attendance Roster submitted',
+      desc: 'Section CS-2026-A submitted morning biometric roster for review.',
+      time: '10m ago',
+      branch: 'PP-02',
+      category: 'academic',
+      read: false,
+    },
+    {
+      id: 2,
+      title: 'Cryptographic Signature Key Rotated',
+      desc: 'Automatic HMAC rotation completed for campus gateway cluster.',
+      time: '1h ago',
+      branch: 'SR-01',
+      category: 'security',
+      read: false,
+    },
+    {
+      id: 3,
+      title: 'Tuition Fee invoice dispatched',
+      desc: 'Consolidated batch invoices issued for Term 1 Semester fees.',
+      time: '3h ago',
+      branch: 'BT-03',
+      category: 'academic',
+      read: false,
+    },
+  ]);
 
-  const notifications = [
-    { title: 'New Attendance Roster submitted', time: '10m ago', branch: 'MB-01' },
-    { title: 'Grade Revision Approved for STU-492', time: '1h ago', branch: 'TK-02' },
-    { title: 'Tuition Fee invoice dispatched', time: '3h ago', branch: 'SS-03' },
-  ];
+  const unreadCount = items.filter((n) => !n.read).length;
+
+  const toggleRead = (id: number) => {
+    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, read: !item.read } : item)));
+  };
+
+  const markAllRead = () => {
+    setItems((prev) => prev.map((item) => ({ ...item, read: true })));
+  };
+
+  const triggerNewNotification = () => {
+    const newItem = {
+      id: Date.now(),
+      title: 'Campus Gateway Telemetry Synced',
+      desc: 'Real-time heartbeat packet received from Phnom Penh Innovation Hub.',
+      time: 'Just now',
+      branch: 'PP-02',
+      category: 'security' as const,
+      read: false,
+    };
+    setItems((prev) => [newItem, ...prev]);
+  };
+
+  const filteredItems = items.filter((item) =>
+    filter === 'all' ? true : item.category === filter,
+  );
 
   return (
-    <div
-      className={cn(
-        'relative flex w-full max-w-md flex-col items-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-none transition-all duration-200',
-        isOpen ? 'pb-72 sm:pb-80' : 'pb-5',
-      )}
-    >
+    <div className="relative flex w-full max-w-xl flex-col items-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-xs sm:p-6">
+      {/* Top Controls Bar */}
+      <div className="mb-4 flex w-full items-center justify-between border-b border-slate-100 pb-3">
+        <div className="flex items-center gap-2">
+          <span className="font-sans text-xs font-bold text-[#0A1A4A]">
+            Campus Notification Center
+          </span>
+          <span className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+            {unreadCount} Unread
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={triggerNewNotification}
+          title="Simulate incoming campus alert notification"
+          className="flex cursor-pointer items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
+        >
+          <Sparkles className="size-3 text-[#0056FF]" />
+          <span>Simulate Alert</span>
+        </button>
+      </div>
+
+      {/* Bell Action Hub */}
       <div className="relative inline-block">
         <button
           type="button"
-          onClick={() => {
-            setIsOpen(!isOpen);
-            if (!isOpen) setUnreadCount(0);
-          }}
-          className="relative flex size-12 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-slate-700 shadow-none transition-transform hover:scale-105 hover:border-[#0056FF] hover:text-[#0056FF] active:scale-95"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle notifications"
+          title={isOpen ? 'Close Notification Center' : 'Open Notification Center'}
+          className={cn(
+            'relative flex size-12 cursor-pointer items-center justify-center rounded-2xl border transition-all active:scale-95',
+            isOpen
+              ? 'border-[#0056FF] bg-[#EFF5FF] text-[#0056FF] shadow-xs'
+              : 'border-[#CAD3F5] bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
+          )}
         >
           <Bell className="size-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-none">
+            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white ring-2 ring-white">
               {unreadCount}
             </span>
           )}
         </button>
 
+        {/* Floating Notification Popover Dropdown */}
         {isOpen && (
-          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-30 w-[calc(100vw-64px)] max-w-[320px] -translate-x-1/2 rounded-2xl border border-[#CAD3F5] bg-white p-3 text-left shadow-none sm:w-80">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-              <span className="font-sans text-xs font-bold text-slate-900">Notifications</span>
-              <button
-                type="button"
-                onClick={() => setUnreadCount(3)}
-                className="font-mono text-[10px] text-[#0056FF] hover:underline"
-              >
-                Reset
-              </button>
+          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-50 w-[calc(100vw-48px)] max-w-sm -translate-x-1/2 rounded-2xl border border-[#CAD3F5] bg-white p-3.5 text-left shadow-[0_16px_40px_rgba(0,86,255,0.12)] sm:w-96">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <span className="font-sans text-xs font-bold text-[#0A1A4A]">Institutional Feed</span>
+              {unreadCount > 0 && (
+                <button
+                  type="button"
+                  onClick={markAllRead}
+                  className="font-mono text-[10px] font-bold text-[#0056FF] hover:underline"
+                >
+                  Mark all as read
+                </button>
+              )}
             </div>
-            <div className="no-scrollbar mt-2 max-h-60 space-y-2 overflow-y-auto">
-              {notifications.map((n, i) => (
-                <div key={i} className="rounded-xl border border-slate-100 bg-slate-50 p-2">
-                  <div className="flex items-center justify-between font-mono text-[10px] text-slate-400">
-                    <span>{n.branch}</span>
-                    <span>{n.time}</span>
-                  </div>
-                  <p className="mt-1 font-sans text-xs font-semibold text-slate-800">{n.title}</p>
-                </div>
+
+            {/* Category Filter Pills */}
+            <div className="mt-2.5 flex items-center gap-1">
+              {(['all', 'academic', 'security'] as const).map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setFilter(cat)}
+                  className={cn(
+                    'cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] font-bold uppercase transition-all',
+                    filter === cat
+                      ? 'bg-[#0056FF] text-white'
+                      : 'border border-slate-200 bg-slate-50 text-slate-500 hover:text-slate-800',
+                  )}
+                >
+                  {cat}
+                </button>
               ))}
+            </div>
+
+            {/* Notification Item Cards */}
+            <div className="no-scrollbar mt-3 max-h-64 space-y-2 overflow-y-auto pr-1">
+              {filteredItems.length === 0 ? (
+                <div className="py-6 text-center font-mono text-xs text-slate-400">
+                  No notifications matching filter.
+                </div>
+              ) : (
+                filteredItems.map((n) => (
+                  <div
+                    key={n.id}
+                    onClick={() => toggleRead(n.id)}
+                    className={cn(
+                      'cursor-pointer rounded-xl border p-2.5 transition-all select-none',
+                      n.read
+                        ? 'border-slate-100 bg-slate-50/50 opacity-70'
+                        : 'border-[#CAD3F5] bg-[#EFF5FF]/40 hover:bg-[#EFF5FF]',
+                    )}
+                  >
+                    <div className="flex items-center justify-between font-mono text-[10px]">
+                      <span className="rounded border border-slate-200/80 bg-white px-1.5 py-0.5 font-bold text-[#0056FF]">
+                        {n.branch}
+                      </span>
+                      <span className="text-slate-400">{n.time}</span>
+                    </div>
+                    <p className="mt-1 font-sans text-xs font-bold text-[#0A1A4A]">{n.title}</p>
+                    <p className="mt-0.5 font-sans text-[11px] leading-snug text-slate-500">
+                      {n.desc}
+                    </p>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         )}
       </div>
 
       <p className="pt-3 font-sans text-xs text-slate-500">
-        Tap the bell to inspect recent institutional activity.
+        Click bell to reveal the floating popover feed. Tap cards to toggle read status.
       </p>
     </div>
   );
@@ -177,20 +292,14 @@ export function StatusPage404Demo() {
       tag: 'EDITORIAL',
     },
     {
-      id: 'terminal',
-      label: '03 Cyber Terminal',
-      desc: 'Interactive CLI command console with constellation lines, glowing apex, and live prompt.',
-      tag: 'INTERACTIVE CLI',
-    },
-    {
       id: 'noise',
-      label: '04 CRT Phosphor',
+      label: '03 CRT Phosphor',
       desc: 'Synthesized procedural SVG noise texture, CRT scanlines, chromatic glitch split, and decibels.',
       tag: 'GLITCH CRT',
     },
     {
       id: 'gravity',
-      label: '05 Gravity Blocks',
+      label: '04 Gravity Blocks',
       desc: 'Kinetic architectural brand cards with spring physics tumbling and interactive re-alignment.',
       tag: 'KINETIC MOTION',
     },
@@ -207,21 +316,27 @@ export function StatusPage404Demo() {
   const activeMeta = STATUS_DIRECTORY[selectedCode];
 
   return (
-    <div className="w-full max-w-4xl space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
+    <div className="w-full max-w-4xl space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
       {/* HTTP Status Code Selector */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-        <span className="font-mono text-xs font-bold text-slate-500 uppercase">Status Codes:</span>
+        <div className="flex items-center gap-2">
+          <span className="font-sans text-xs font-bold text-[#0A1A4A]">
+            Status Archetype Engine
+          </span>
+          <span className="font-mono text-[10px] text-slate-400">Select Code:</span>
+        </div>
         <div className="flex flex-wrap items-center gap-1.5">
           {statusCodes.map((sc) => (
             <button
               key={sc.code}
               type="button"
               onClick={() => setSelectedCode(sc.code)}
+              title={`Simulate HTTP ${sc.code} error state`}
               className={cn(
-                'cursor-pointer rounded-[4px] border-0 px-2.5 py-1 font-mono text-xs font-bold transition-all select-none',
+                'cursor-pointer rounded-md px-2.5 py-1 font-mono text-xs font-bold transition-all select-none active:scale-95',
                 selectedCode === sc.code
-                  ? 'bg-[#0056FF] text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+                  ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-2xs'
+                  : 'border border-slate-200 bg-white text-slate-600 hover:border-[#CAD3F5] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
               )}
             >
               {sc.code}
@@ -231,7 +346,7 @@ export function StatusPage404Demo() {
       </div>
 
       {/* Visual Mode Picker Strip */}
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {archetypes.map((arch) => {
           const isSelected = selectedMode === arch.id;
           return (
@@ -239,6 +354,7 @@ export function StatusPage404Demo() {
               key={arch.id}
               type="button"
               onClick={() => setSelectedMode(arch.id)}
+              title={`Switch archetype to ${arch.label}: ${arch.desc}`}
               className={cn(
                 'flex cursor-pointer flex-col justify-between rounded-xl border p-2.5 text-left transition-all select-none',
                 isSelected
@@ -273,13 +389,7 @@ export function StatusPage404Demo() {
 
       {/* Live Component Preview */}
       <div className="overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-none">
-        <StatusPage404
-          mode={selectedMode}
-          statusCode={selectedCode}
-          homeHref="/document/design-system"
-          homeLabel="Return to Document Library"
-          showControls={false}
-        />
+        <StatusPage404 mode={selectedMode} statusCode={selectedCode} showControls={false} />
       </div>
     </div>
   );

@@ -13,12 +13,6 @@ export interface GalleryComponentItem {
 
 export const GALLERY_COMPONENTS: GalleryComponentItem[] = [
   {
-    id: 'snackbar',
-    name: 'Snackbar',
-    category: 'Feedback & Overlays',
-    description: 'Ephemeral feedback banner with auto-dismiss and instant Undo recovery.',
-  },
-  {
     id: 'chip',
     name: 'Chip',
     category: 'Selection & Filters',
@@ -63,7 +57,6 @@ interface ComponentGalleryGridProps {
 
 export function ComponentGalleryGrid({ onSelectComponent, selectedId }: ComponentGalleryGridProps) {
   // Mini interactive state for each card inside the catalog
-  const [miniSnackbarUndone, setMiniSnackbarUndone] = React.useState(false);
   const [miniSwitch, setMiniSwitch] = React.useState(true);
   const [miniSelectedChip, setMiniSelectedChip] = React.useState('All');
   const [miniBottomNav, setMiniBottomNav] = React.useState('home');
@@ -109,8 +102,6 @@ export function ComponentGalleryGrid({ onSelectComponent, selectedId }: Componen
                 }}
               >
                 {renderRealMiniDemo(item.id, {
-                  miniSnackbarUndone,
-                  setMiniSnackbarUndone,
                   miniSwitch,
                   setMiniSwitch,
                   miniSelectedChip,
@@ -166,8 +157,6 @@ export function ComponentGalleryGrid({ onSelectComponent, selectedId }: Componen
 function renderRealMiniDemo(
   id: string,
   state: {
-    miniSnackbarUndone: boolean;
-    setMiniSnackbarUndone: React.Dispatch<React.SetStateAction<boolean>>;
     miniSwitch: boolean;
     setMiniSwitch: React.Dispatch<React.SetStateAction<boolean>>;
     miniSelectedChip: string;
@@ -187,28 +176,6 @@ function renderRealMiniDemo(
   },
 ) {
   switch (id) {
-    case 'snackbar':
-      return (
-        <div className="flex w-full items-center justify-between rounded-xl border border-slate-200/90 bg-[#EFF5FF] px-3 py-2 text-slate-800 shadow-2xs">
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-1 rounded-[1px] bg-[#0056FF]" />
-            <span className="font-sans text-[11px] font-medium text-slate-800">
-              {state.miniSnackbarUndone ? 'Action undone' : 'STU-2026 enrolled'}
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              state.setMiniSnackbarUndone(!state.miniSnackbarUndone);
-            }}
-            className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] transition-transform active:scale-95"
-          >
-            {state.miniSnackbarUndone ? 'Reset' : 'Undo'}
-          </button>
-        </div>
-      );
-
     case 'chip':
       return (
         <div className="flex flex-wrap items-center justify-center gap-1.5">

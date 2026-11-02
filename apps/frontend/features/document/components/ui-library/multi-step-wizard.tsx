@@ -1004,22 +1004,38 @@ export function MultiStepWizard({ theme = 'light', className, onComplete }: Mult
  * Demo wrapper featuring theme toggle, persistence reset, and status header.
  */
 export function MultiStepWizardInteractiveDemo() {
+  const [wizardKey, setWizardKey] = React.useState(0);
+
+  const handleReset = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('snp_enrollment_wizard_state');
+    }
+    setWizardKey((k) => k + 1);
+  };
+
   return (
     <div className="w-full space-y-4">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2 font-mono text-xs font-bold text-slate-500 uppercase">
-          <span>Candidate Enrollment Pipeline</span>
+      <div className="flex flex-wrap items-center justify-between gap-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3 shadow-2xs">
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-xs font-bold text-[#0A1A4A] uppercase">
+            Candidate Enrollment Pipeline
+          </span>
+          <span className="inline-flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+            SESSION STORAGE SYNCED
+          </span>
         </div>
 
-        <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
-          <span className="inline-flex items-center rounded-[4px] border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
-            SESSION ACTIVE
-          </span>
-          <span>sessionStorage Persistence Active</span>
-        </div>
+        <button
+          type="button"
+          onClick={handleReset}
+          className="flex cursor-pointer items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
+        >
+          <RotateCcw className="size-3" />
+          <span>Reset Session</span>
+        </button>
       </div>
 
-      <MultiStepWizard theme="light" />
+      <MultiStepWizard key={wizardKey} theme="light" />
     </div>
   );
 }

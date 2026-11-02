@@ -333,36 +333,112 @@ export function MarqueeSectionDemo() {
 
 // 5.1 Floating Label Form
 export function FloatingLabelFormDemo() {
-  const [focused, setFocused] = React.useState(false);
-  const [val, setVal] = React.useState('');
+  const [formData, setFormData] = React.useState({
+    fullName: 'Dara Sok',
+    email: 'dara.sok@student.snpi.edu.kh',
+    studentId: 'STU-2026-0891',
+    branch: 'phnom-penh',
+  });
+  const [submitted, setSubmitted] = React.useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3500);
+  };
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-xs">
-      <div className="relative">
-        <input
-          type="text"
-          id="student-id-field"
-          value={val}
-          onChange={(e) => setVal(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          className="peer w-full rounded-[4px] border border-slate-200 px-4 pt-5 pb-2 font-sans text-xs font-semibold text-slate-900 transition-colors outline-none focus:border-[#0056FF]"
-        />
-        <label
-          htmlFor="student-id-field"
-          className={cn(
-            'pointer-events-none absolute left-4 font-sans text-xs font-semibold text-slate-400 transition-all',
-            focused || val
-              ? 'top-1.5 font-mono text-[9px] font-bold text-[#0056FF]'
-              : 'top-3.5 text-xs text-slate-400',
-          )}
-        >
-          National Student ID (e.g. STU-2026)
-        </label>
+    <div className="w-full max-w-xl space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">
+            Candidate Registration Form
+          </h4>
+          <p className="font-mono text-[10px] text-slate-500">
+            Material-Style Floating Labels · 44px Hit Target
+          </p>
+        </div>
+        <span className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+          LIVE FORM
+        </span>
       </div>
-      <p className="font-sans text-xs text-slate-500">
-        Material-style animated label transition adhering to 44px hit standards.
-      </p>
+
+      <form onSubmit={handleSubmit} className="space-y-3.5">
+        {/* Field 1: Full Name */}
+        <div className="relative">
+          <input
+            type="text"
+            id="floating-full-name"
+            value={formData.fullName}
+            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            placeholder=" "
+            className="peer h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pt-4 pb-1 font-sans text-xs font-bold text-[#0A1A4A] transition-all outline-none focus:border-[#0056FF] focus:ring-2 focus:ring-[#0056FF]/20"
+          />
+          <label
+            htmlFor="floating-full-name"
+            className="pointer-events-none absolute top-1.5 left-4 font-mono text-[9px] font-bold text-[#0056FF] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-sans peer-placeholder-shown:text-xs peer-placeholder-shown:font-medium peer-placeholder-shown:text-slate-400 peer-focus:top-1.5 peer-focus:font-mono peer-focus:text-[9px] peer-focus:font-bold peer-focus:text-[#0056FF]"
+          >
+            Candidate Full Legal Name
+          </label>
+        </div>
+
+        {/* Field 2: Email */}
+        <div className="relative">
+          <input
+            type="email"
+            id="floating-email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder=" "
+            className="peer h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pt-4 pb-1 font-sans text-xs font-bold text-[#0A1A4A] transition-all outline-none focus:border-[#0056FF] focus:ring-2 focus:ring-[#0056FF]/20"
+          />
+          <label
+            htmlFor="floating-email"
+            className="pointer-events-none absolute top-1.5 left-4 font-mono text-[9px] font-bold text-[#0056FF] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-sans peer-placeholder-shown:text-xs peer-placeholder-shown:font-medium peer-placeholder-shown:text-slate-400 peer-focus:top-1.5 peer-focus:font-mono peer-focus:text-[9px] peer-focus:font-bold peer-focus:text-[#0056FF]"
+          >
+            Institutional Campus Email Address
+          </label>
+        </div>
+
+        {/* Field 3: Student ID */}
+        <div className="relative">
+          <input
+            type="text"
+            id="floating-student-id"
+            value={formData.studentId}
+            onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
+            placeholder=" "
+            className="peer h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pt-4 pb-1 font-mono text-xs font-bold text-[#0A1A4A] transition-all outline-none focus:border-[#0056FF] focus:ring-2 focus:ring-[#0056FF]/20"
+          />
+          <label
+            htmlFor="floating-student-id"
+            className="pointer-events-none absolute top-1.5 left-4 font-mono text-[9px] font-bold text-[#0056FF] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-sans peer-placeholder-shown:text-xs peer-placeholder-shown:font-medium peer-placeholder-shown:text-slate-400 peer-focus:top-1.5 peer-focus:font-mono peer-focus:text-[9px] peer-focus:font-bold peer-focus:text-[#0056FF]"
+          >
+            National Student ID (STU-XXXX-XXXX)
+          </label>
+        </div>
+
+        {/* Form Action Controls */}
+        <div className="flex items-center justify-between pt-2">
+          <span className="font-mono text-[10px] text-slate-400">All fields validated via Zod</span>
+          <button
+            type="submit"
+            className="cursor-pointer rounded-xl border border-[#0056FF] bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95"
+          >
+            {submitted ? 'Record Registered!' : 'Register Candidate'}
+          </button>
+        </div>
+      </form>
+
+      {submitted && (
+        <div className="animate-in fade-in flex items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-50 p-3 font-sans text-xs font-semibold text-emerald-800">
+          <Check className="size-4 text-emerald-600" />
+          <span>
+            Candidate record for {formData.fullName} ({formData.studentId}) successfully registered
+            into campus directory!
+          </span>
+        </div>
+      )}
     </div>
   );
 }

@@ -121,3 +121,15 @@ npm run test
 npm run build
 npm run format:check
 ```
+
+---
+
+## 5. Mandatory UI Agent Design Implementation Invariants (Every Skill & Agent)
+
+Whenever designing, styling, refactoring, or generating UI components, navigation menus, or documentation views across the entire platform, all AI agents must strictly enforce:
+1. **Minimal Guide Text**: Only render title and buttons/controls; never write walls of descriptive paragraphs or redundant guide text.
+2. **Mandatory Icon Hover Definitions**: Every interactive icon and icon button must show an accessible definition/action label on hover via `title` or tooltip.
+3. **Pure Icon Hygiene**: Never use emojis, informal symbols, or decorative background shapes/colored blobs (`bg-blue-100 rounded-full`, `bg-[#0056FF] rounded-lg`) behind icons.
+4. **Brand Blueprint Compliance**: Exclusively respect the 5 primary brand tokens (`#0056FF`, `#2277FF`, `#E3E7FC`, `#FFFFFF`, `#EFF5FF`) and high-contrast `#0A1A4A` Deep Navy text.
+5. **Universal Web & Mobile Responsive Device First**: Always engineer for fluid responsive behavior across both mobile viewports and desktop with zero clipping and >=44x44px touch targets.
+6. **Mandatory Zero Links Rule (Never Add Links)**: Under no circumstances should AI agents add markdown links, URL hyperlinks, file scheme links (`file://`), or unnecessary anchor links in responses or generated UI components unless explicitly requested by the user. Use plain text or code font.

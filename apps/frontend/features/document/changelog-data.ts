@@ -8,6 +8,13 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
+    "version": "0.2.17",
+    "date": "02.11.2026",
+    "commitHash": "46b3ff9",
+    "developer": "史力爱卫",
+    "description": "Resolve react/jsx-no-comment-textnodes in brand-concept-blueprint [PASSED]"
+  },
+  {
     "version": "0.2.16",
     "date": "02.11.2026",
     "commitHash": "a729c93",
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "d0e0dd8",
     "developer": "史力爱卫",
     "description": "Record README clean state"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "d670a24",
-    "developer": "史力爱卫",
-    "description": "Remove security remediation log from README per standard"
   }
 ];

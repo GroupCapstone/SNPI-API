@@ -7,7 +7,7 @@ import {
 
 export const metadata: Metadata = {
   title: {
-    default: 'SNPI-SMS Open API & Design Library',
+    default: 'SNPI-SMS API Docs & Design System',
     template: '%s · SNPI-SMS Docs',
   },
   description:

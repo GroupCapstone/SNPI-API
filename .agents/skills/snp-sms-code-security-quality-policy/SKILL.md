@@ -87,3 +87,24 @@ All AI coding assistants (including Antigravity, Claude, Copilot, Codex, and sub
 
 ### 3.5 Real-Time Technical Documentation & Changelog Sync
 - AI agents must execute `npm run changelog:sync` whenever architectural changes, skills, or features are implemented to keep `CHANGELOG.md` and the live developer document portal in real-time alignment.
+
+### 3.6 Mandatory UI Agent Design Implementation Invariants (Every Skill & Agent)
+Whenever designing, styling, refactoring, or generating UI components, navigation menus, or documentation views across the entire platform, all AI agents must strictly enforce:
+1. **Minimal Guide Text**: Only render title and buttons/controls; never write walls of descriptive paragraphs or redundant guide text.
+2. **Mandatory Icon Hover Definitions**: Every interactive icon and icon button must show an accessible definition/action label on hover via `title` or tooltip.
+3. **Pure Icon Hygiene**: Never use emojis, informal symbols, or decorative background shapes/colored blobs (`bg-blue-100 rounded-full`, `bg-[#0056FF] rounded-lg`) behind icons.
+4. **Brand Blueprint Compliance**: Exclusively respect the 5 primary brand tokens (`#0056FF`, `#2277FF`, `#E3E7FC`, `#FFFFFF`, `#EFF5FF`) and high-contrast `#0A1A4A` Deep Navy text.
+5. **Universal Web & Mobile Responsive Device First**: Always engineer for fluid responsive behavior across both mobile viewports and desktop with zero clipping and >=44x44px touch targets.
+6. **Mandatory Zero Links Rule (Never Add Links)**: Under no circumstances should AI agents add markdown links, URL hyperlinks, file scheme links (`file://`), or unnecessary anchor links in responses or generated UI components unless explicitly requested by the user. Use plain text or code font.
+
+### 3.7 Mandatory Autonomous AI Agent Compliance with Design Skills & Architecture Rules
+All autonomous AI coding assistants (including Antigravity, Claude, Copilot, Codex, and subagents) operating in this repository must strictly work with the complete suite of Material Design 3 and SNPI enterprise design skills as non-negotiable operational rules:
+1. **Scaffold Architecture Compliance (`SKILL-SCAFFOLD`)**: Structure layouts via Bars, Rails, Panes; adhere to safety regions and Jetpack Compose Rulers (Margin, Baseline, Split Anchor).
+2. **Color Roles System & Calibrations Compliance (`SKILL-COLOR-ROLES`)**: Enforce 26 standard roles across 6 groups, 3 contrast levels (Standard, Medium, High), tone 98 light surface, chroma 6 neutral palette, tone-based surface containers, and theme-independent fixed accents.
+3. **Interaction States & State Layers Compliance (`SKILL-STATES`)**: Implement 6 canonical interaction states (Enabled, Disabled, Hover, Focused, Pressed, Dragged) using content-color state layers (8%, 12%, 16%); enforce Action/Selection/Input inheritance, container exclusion, and FAB hide rule.
+4. **Grids, Spacing & Density Scaling Compliance (`SKILL-GRIDS`)**: Sequence layout composition: Grid columns -> Bars/rails -> Panes; adhere to 0-64dp spacing scale and density scale 0 to -3 with >=44x44px touch targets.
+5. **Adaptive Breakpoints & 5-Vector Transformation Compliance (`SKILL-BREAKPOINTS`)**: Classify viewports into 5 standard breakpoints (Compact, Medium, Expanded, Large, Extra-Large) and govern adaptations via the 5 vectors (Reveal, Divide, Resize, Reposition, Swap).
+6. **Canonical Layout Archetypes Compliance (`SKILL-CANONICAL`)**: Standardize screen structures across Feed, List-Detail, Supporting Pane, and Levitate layering strategy.
+7. **Usability & M3 Expressive Architecture Compliance (`SKILL-USABILITY`)**: Govern interface design via Nielsen Norman 5 usability pillars (Efficiency, Error reduction, Learnability, Memorability, Satisfaction), 6 M3 Expressive tactics, and calm layout hierarchy (anti-clutter Aura standard).
+8. **Material Design 3 A-Z Lexicon Compliance (`SKILL-GLOSSARY`)**: Maintain strict conceptual alignment across all 107 foundational architectural terms, HCT color science, and 3-tier token hierarchy.
+9. **Blueprint Menu Primary Anchor Invariant (Brand Colors & Color Ramps Tokens — NEVER CHANGE)**: In the Blueprint menu (`DesignSystemHomeView` / `/document/design`), the two primary anchor sections — **Brand Colors** (`#brand-blueprint`) and **Color Ramps & Semantic Tokens** (`#color-ramps-tokens`) — must strictly remain primary (indexes 01 and 02), top-level, and permanently immutable. AI agents must NEVER change, alter, remove, hide, or reorder these two primary sections.

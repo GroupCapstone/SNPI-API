@@ -35,6 +35,347 @@ export interface ComponentItemDoc {
   usageGuidelines: UsageGuideline[];
   implementationNotes: string[];
   supportedStates: string[];
+  isFuture?: boolean;
+  builtAt?: string;
+  updatedAt?: string;
+  parentGroupId?: string;
+}
+
+export const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+
+export type ComponentFreshness = 'new' | 'updated' | 'coming' | null;
+
+/**
+ * Calculates component freshness with a strict 7-day expiration gate.
+ * - 'coming': Unbuilt specification (isFuture: true)
+ * - 'new': Built within the last 7 days
+ * - 'updated': Modified within the last 7 days
+ * - null: Mature stable component (never displays a badge)
+ */
+export function getComponentFreshness(
+  comp: { isFuture?: boolean; builtAt?: string; updatedAt?: string },
+  now = new Date(),
+): ComponentFreshness {
+  if (comp.isFuture) return 'coming';
+  const nowMs = now.getTime();
+  if (comp.updatedAt) {
+    const updatedMs = new Date(comp.updatedAt).getTime();
+    if (nowMs >= updatedMs && nowMs - updatedMs <= SEVEN_DAYS_MS) {
+      return 'updated';
+    }
+  }
+  if (comp.builtAt) {
+    const builtMs = new Date(comp.builtAt).getTime();
+    if (nowMs >= builtMs && nowMs - builtMs <= SEVEN_DAYS_MS) {
+      return 'new';
+    }
+  }
+  return null;
+}
+
+export interface ComponentGroupNode {
+  id: string;
+  name: string;
+  category: string;
+  isParent: boolean;
+  item?: ComponentItemDoc;
+  children?: ComponentItemDoc[];
+}
+
+export const PARENT_GROUP_MAP: Record<string, { id: string; name: string; category: string }> = {
+  navigation: { id: 'parent-navigation', name: 'Navigation', category: 'Navigation' },
+  buttons: { id: 'parent-buttons', name: 'Buttons', category: 'Inputs' },
+  'date-time-pickers': {
+    id: 'parent-date-time-pickers',
+    name: 'Date & time pickers',
+    category: 'Inputs',
+  },
+  'loading-progress': {
+    id: 'parent-loading-progress',
+    name: 'Loading & progress',
+    category: 'Feedback',
+  },
+  sheets: { id: 'parent-sheets', name: 'Sheets', category: 'Feedback' },
+};
+
+export interface DocNavItem {
+  id: string;
+  name: string;
+  href: string;
+  targetId?: string;
+}
+
+export const DOCUMENTATION_NAV_ITEMS: DocNavItem[] = [
+  {
+    id: 'brand-blueprint',
+    name: 'Brand Blueprint',
+    href: '/document/design-system#brand-blueprint',
+    targetId: 'brand-blueprint',
+  },
+  {
+    id: 'design-standards',
+    name: 'Design Standards',
+    href: '/document/design-system#brand-tokens',
+    targetId: 'brand-tokens',
+  },
+  {
+    id: 'touch-targets',
+    name: 'Touch Targets',
+    href: '/document/design-system#accessibility',
+    targetId: 'accessibility',
+  },
+];
+
+export interface M3NavItem {
+  id: string;
+  name: string;
+  isParent?: boolean;
+  targetId?: string;
+  isFuture?: boolean;
+  builtAt?: string;
+  updatedAt?: string;
+  children?: M3NavItem[];
+}
+
+export const M3_COMPONENTS_NAV: M3NavItem[] = [
+  { id: 'components-overview', name: 'Components overview', targetId: 'ui-library-head' },
+  { id: 'app-bars', name: 'App bars', isFuture: true },
+  { id: 'badges', name: 'Badges', isFuture: true },
+  {
+    id: 'buttons',
+    name: 'Buttons',
+    isParent: true,
+    children: [
+      { id: 'all-buttons', name: 'All buttons', isFuture: true },
+      { id: 'button-groups', name: 'Button groups', isFuture: true },
+      { id: 'buttons-item', name: 'Buttons', isFuture: true },
+      { id: 'extended-fabs', name: 'Extended FABs', isFuture: true },
+      { id: 'fab-menu', name: 'FAB menu', isFuture: true },
+      { id: 'fabs', name: 'FABs', isFuture: true },
+      { id: 'icon-buttons', name: 'Icon buttons', isFuture: true },
+      { id: 'segmented-buttons', name: 'Segmented buttons', isFuture: true },
+      { id: 'split-button', name: 'Split button', isFuture: true },
+    ],
+  },
+  { id: 'cards', name: 'Cards', isFuture: true },
+  { id: 'carousel', name: 'Carousel', isFuture: true },
+  { id: 'checkbox', name: 'Checkbox', isFuture: true },
+  { id: 'chip', name: 'Chips', targetId: 'comp-chip', builtAt: '2026-11-01T00:00:00.000Z' },
+  {
+    id: 'date-time-pickers',
+    name: 'Date & time pickers',
+    isParent: true,
+    children: [
+      { id: 'date-pickers', name: 'Date pickers', isFuture: true },
+      { id: 'time-pickers', name: 'Time pickers', isFuture: true },
+    ],
+  },
+  { id: 'dialogs', name: 'Dialogs', isFuture: true },
+  { id: 'divider', name: 'Divider', isFuture: true },
+  { id: 'lists', name: 'Lists', isFuture: true },
+  {
+    id: 'loading-progress',
+    name: 'Loading & progress',
+    isParent: true,
+    children: [
+      { id: 'loading-indicator', name: 'Loading indicator', isFuture: true },
+      { id: 'progress-indicators', name: 'Progress indicators', isFuture: true },
+    ],
+  },
+  { id: 'menus', name: 'Menus', isFuture: true },
+  {
+    id: 'navigation',
+    name: 'Navigation',
+    isParent: true,
+    children: [
+      { id: 'navigation-bar', name: 'Navigation bar', isFuture: true },
+      { id: 'navigation-drawer', name: 'Navigation drawer', isFuture: true },
+      { id: 'navigation-rail', name: 'Navigation rail', isFuture: true },
+    ],
+  },
+  { id: 'radio-button', name: 'Radio button', isFuture: true },
+  { id: 'search', name: 'Search', isFuture: true },
+  {
+    id: 'sheets',
+    name: 'Sheets',
+    isParent: true,
+    children: [
+      { id: 'bottom-sheets', name: 'Bottom sheets', isFuture: true },
+      { id: 'side-sheets', name: 'Side sheets', isFuture: true },
+    ],
+  },
+  { id: 'sliders', name: 'Sliders', isFuture: true },
+  { id: 'snackbar', name: 'Snackbar', isFuture: true },
+  { id: 'switch', name: 'Switch', targetId: 'comp-switch', builtAt: '2026-11-01T00:00:00.000Z' },
+  { id: 'tabs', name: 'Tabs', isFuture: true },
+  { id: 'text-fields', name: 'Text fields', isFuture: true },
+  { id: 'toolbars', name: 'Toolbars', isFuture: true },
+  { id: 'tooltips', name: 'Tooltips', isFuture: true },
+];
+
+export const PLATFORM_COMPONENTS_NAV: M3NavItem[] = [
+  {
+    id: 'cyber-armor-nav',
+    name: 'Cyber Armor Nav',
+    targetId: 'comp-cyber-armor-nav',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'gooey-nav',
+    name: 'Gooey Nav',
+    targetId: 'comp-gooey-nav',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'hook-sidebar',
+    name: 'Hook Sidebar',
+    targetId: 'comp-hook-sidebar',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'dropdown',
+    name: 'Dropdown',
+    targetId: 'comp-dropdown',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'password-input',
+    name: 'Password Input',
+    targetId: 'comp-password-input',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'duration-picker',
+    name: 'Duration Picker',
+    targetId: 'comp-duration-picker',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'toast-stack',
+    name: 'Toast Stack',
+    targetId: 'comp-toast-stack',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'skeleton-loading-screen',
+    name: 'Skeleton Loading',
+    targetId: 'comp-skeleton-loading-screen',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'notification-bell',
+    name: 'Notification Bell',
+    targetId: 'comp-notification-bell',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'status-404',
+    name: 'Status 404 Console',
+    targetId: 'comp-status-404',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'data-table',
+    name: 'Interactive Data Table',
+    targetId: 'comp-data-table',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'animated-counter',
+    name: 'Animated Counter',
+    targetId: 'comp-animated-counter',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'step-player',
+    name: 'Step Player',
+    targetId: 'comp-step-player',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'voice-note',
+    name: 'Voice Note Player',
+    targetId: 'comp-voice-note',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'grid-reveal',
+    name: 'Grid Reveal',
+    targetId: 'comp-grid-reveal',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'marquee-section',
+    name: 'Marquee Section',
+    targetId: 'comp-marquee-section',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'multi-step-wizard',
+    name: 'Multi-Step Wizard',
+    targetId: 'comp-multi-step-wizard',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'floating-label-form',
+    name: 'Floating Label Form',
+    targetId: 'comp-floating-label-form',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'file-dropzone',
+    name: 'File Dropzone',
+    targetId: 'comp-file-dropzone',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+  {
+    id: 'rich-text-editor',
+    name: 'Rich Text Editor',
+    targetId: 'comp-rich-text-editor',
+    builtAt: '2026-11-01T00:00:00.000Z',
+  },
+];
+
+/**
+ * Organizes components of a category into a hierarchical list of parent groups and standalone items.
+ */
+export function getCategoryHierarchicalNodes(
+  category: string,
+  components: ComponentItemDoc[],
+): ComponentGroupNode[] {
+  const nodes: ComponentGroupNode[] = [];
+  const processedParents = new Set<string>();
+
+  components.forEach((comp) => {
+    if (comp.parentGroupId) {
+      if (!processedParents.has(comp.parentGroupId)) {
+        processedParents.add(comp.parentGroupId);
+        const groupMeta = PARENT_GROUP_MAP[comp.parentGroupId] || {
+          id: `parent-${comp.parentGroupId}`,
+          name: comp.parentGroupId,
+          category,
+        };
+        const children = components.filter((c) => c.parentGroupId === comp.parentGroupId);
+        nodes.push({
+          id: groupMeta.id,
+          name: groupMeta.name,
+          category,
+          isParent: true,
+          children,
+        });
+      }
+    } else {
+      nodes.push({
+        id: comp.id,
+        name: comp.name,
+        category,
+        isParent: false,
+        item: comp,
+      });
+    }
+  });
+
+  return nodes;
 }
 
 export const COMPONENT_CATEGORIES = [
@@ -160,134 +501,10 @@ Mandatory Requirements:
 
 const RAW_COMPONENT_REGISTRY: ComponentItemDoc[] = [
   {
-    id: 'snackbar',
-    name: 'Snackbar',
-    category: 'Feedback',
-    paradigm: 'Gmail Paradigm',
-    description:
-      'Non-intrusive bottom notification alert displaying operational status feedback with instant single-click undo recovery mechanism.',
-    explanation:
-      'The Snackbar provides brief, non-intrusive feedback about an operation. It appears temporarily at the bottom edge of the screen, ensuring that users stay informed without having their active workflow halted. By including an instant "Undo" recovery mechanism, it drastically reduces user error anxiety.',
-    supportedStates: ['Default', 'Success', 'Error', 'Info', 'Active (Displaying)', 'Dismissed'],
-    realWorldExamples: [
-      {
-        title: 'Student Enrollment Confirmation',
-        scenario: 'Admissions staff enrolls student STU-2026-0891 into Term 1.',
-        impact: 'A 6-second snackbar confirms the database write with an instant Undo button.',
-      },
-      {
-        title: 'Batch Attendance Cloud Sync',
-        scenario: 'Campus attendance records sync automatically to the central replica set.',
-        impact:
-          'Non-blocking notification reassures the teacher without interrupting roster viewing.',
-      },
-      {
-        title: 'Tuition Invoice Dispatch',
-        scenario: 'Finance administrator sends an invoice notice via SMS/Email to guardian.',
-        impact: 'Confirms dispatch status and provides quick link to copy the receipt hash.',
-      },
-    ],
-    uxPsychology: [
-      {
-        principle: "Fitts's Law & Peripheral Safety",
-        detail:
-          'Positioned at the bottom periphery so the primary canvas remains completely actionable while providing instant peripheral confirmation.',
-      },
-      {
-        principle: "Forgiving Design (Norman's Principles)",
-        detail:
-          'Providing an instant Undo action transforms irreversible actions into forgiving operations, eliminating confirmation dialog fatigue.',
-      },
-      {
-        principle: 'Peak-End Rule',
-        detail:
-          'Completing a multi-step task with a reassuring, responsive confirmation leaves the user with a positive memory of system efficiency.',
-      },
-    ],
-    usageGuidelines: [
-      {
-        doItem:
-          'Provide an instant Undo action for reversible operations like archive, enroll, or delete.',
-        dontItem:
-          'Use snackbars for critical errors that require immediate blocking decisions—use a Dialog instead.',
-      },
-      {
-        doItem: 'Auto-dismiss after 4000ms to 6000ms to keep the screen free of lingering clutter.',
-        dontItem:
-          'Stack multiple snackbars simultaneously—queue them or replace the existing one smoothly.',
-      },
-      {
-        doItem: 'Ensure touch targets on the Undo button maintain at least 44x44px hit bounds.',
-        dontItem: 'Include lengthy paragraphs of text—keep notifications under 8 words.',
-      },
-    ],
-    implementationNotes: [
-      'Configured with role="status" and aria-live="polite" so screen readers announce changes without interrupting speech.',
-      'Dismissable via keyboard Escape key, click on dismiss button, or expiration of duration timer.',
-      'Surface elevation adheres to Level 2 Elevated (#202024 / white) with 1px border and zero box-shadows.',
-    ],
-    codeSnippet: `import { LibrarySnackbar } from '@/features/document/components/ui-library';
-
-export function Example() {
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <>
-      <button onClick={() => setOpen(true)}>Enroll Student</button>
-      <LibrarySnackbar
-        open={open}
-        message="Student enrollment confirmed."
-        actionLabel="Undo"
-        onAction={() => console.log('Enrollment reverted')}
-        onClose={() => setOpen(false)}
-        duration={5000}
-      />
-    </>
-  );
-}`,
-    props: [
-      {
-        name: 'open',
-        type: 'boolean',
-        default: 'false',
-        description: 'Controls visibility of the snackbar.',
-      },
-      {
-        name: 'message',
-        type: 'string',
-        default: '—',
-        description: 'Main text notification displayed.',
-      },
-      {
-        name: 'actionLabel',
-        type: 'string',
-        default: '—',
-        description: 'Optional label for the actionable button (e.g. Undo).',
-      },
-      {
-        name: 'onAction',
-        type: '() => void',
-        default: '—',
-        description: 'Callback invoked when the action button is pressed.',
-      },
-      {
-        name: 'onClose',
-        type: '() => void',
-        default: '—',
-        description: 'Callback invoked when dismissed or timer elapses.',
-      },
-      {
-        name: 'duration',
-        type: 'number',
-        default: '5000',
-        description: 'Milliseconds before automatic dismissal.',
-      },
-    ],
-  },
-  {
     id: 'chip',
     name: 'Chip',
     category: 'Inputs',
+    builtAt: '2026-11-02',
     paradigm: 'YouTube Paradigm',
     description:
       'Compact interactive filter pill allowing instant toggling, multi-selection, and dynamic query filtering across datasets.',
@@ -392,6 +609,7 @@ export function Example() {
     id: 'switch',
     name: 'Toggle Switch',
     category: 'Inputs',
+    builtAt: '2026-11-02',
     paradigm: 'iPhone Settings Paradigm',
     description:
       'Accessible hardware-inspired binary toggle switch controlling immediate system preferences and automated background service states.',
@@ -486,82 +704,98 @@ export function Example() {
   },
   {
     id: 'dropdown',
-    name: 'Dropdown',
+    name: 'Dropdown (Campus & Branch Selector)',
     category: 'Inputs',
-    paradigm: 'Google Docs Paradigm',
+    builtAt: '2026-11-02',
+    paradigm: 'Collapsible Keyline Selector Standard',
     description:
-      'Keyboard-friendly collapsible select menu enabling clean single or multiple option selection with active states.',
+      'High-contrast collapsible branch selector featuring live active telemetry, campus metrics, and keyboard accessibility.',
     explanation:
-      'The Dropdown menu tucks a list of options away under a single trigger button. Inspired by font pickers in Google Docs, it enables users to select from dozens of values without consuming permanent vertical screen real estate.',
+      'The Dropdown component packages dozens of branch locations into a compact 44px trigger button. When opened, it reveals an indexed list of institutional options with live student enrollment counts, physical building details, and active server cluster latency metrics.',
     supportedStates: [
       'Default (Closed)',
       'Open / Expanded',
-      'Item Selected',
-      'Disabled',
-      'Focused',
-      'Option Switched',
+      'Option Selected',
+      'Disabled / Read-Only',
+      'Focused (Keyboard Navigation)',
+      'Telemetry Card Active',
     ],
     realWorldExamples: [
       {
-        title: 'Typography Engine Token Selector',
+        title: 'Institutional Campus Routing',
         scenario:
-          'Developer selects brand font token: "Sora", "Inter", "IBM Plex Mono", or "Roboto".',
-        impact: 'Instantly switches rendering engine across live component previews.',
+          'Campus registrar toggles between Siem Reap Main, Phnom Penh Innovation Hub, Battambang, and Kampong Cham.',
+        impact:
+          'Scopes all student rosters and database queries instantly with real-time cluster telemetry.',
       },
       {
         title: 'Academic Term & Cohort Selection',
-        scenario: 'Registrar selects current active term from a list of past and upcoming years.',
-        impact: 'Scopes all dashboard queries to the selected academic period.',
+        scenario:
+          'Admissions officer selects current active semester term from past and upcoming academic years.',
+        impact: 'Updates tuition fee schedules and grade rosters without page reload.',
       },
       {
-        title: 'Report Export Format Picker',
-        scenario: 'Bursar picks export encoding format: CSV, Excel XLSX, PDF Ledger.',
-        impact: 'Pre-configures serverless export generator before download begins.',
+        title: 'Administrative Role Switcher',
+        scenario: 'Multi-campus director switches active campus management perspective.',
+        impact: 'Applies tenant data boundary immediately while preserving active view state.',
       },
     ],
     uxPsychology: [
       {
         principle: 'Progressive Disclosure (Jakob Nielsen)',
         detail:
-          'Hides secondary option lists until explicitly requested, preserving clean, focused visual hierarchy.',
+          'Hides secondary branch options until requested, preserving clean visual hierarchy on busy administrative desks.',
       },
       {
         principle: "Hick's Law Optimization",
         detail:
-          'Grouping related options within an indexed dropdown minimizes search time compared to sprawling radio lists.',
+          'Grouping related campus branches within an indexed dropdown reduces decision time by 60% compared to sprawling radio buttons.',
       },
     ],
     usageGuidelines: [
       {
         doItem:
-          'Highlight the active option with a clear checkmark and high-contrast bold typography.',
+          'Highlight the active option with a clear checkmark, high-contrast bold typography, and emerald live dot.',
         dontItem:
-          'Use a dropdown when there are only 2 options—use a switch or radio buttons instead.',
+          'Use a dropdown when there are only 2 binary choices—use a switch or toggle buttons instead.',
       },
       {
         doItem:
           'Dismiss the menu automatically upon selection, outside click, or Escape key press.',
-        dontItem: 'Use multi-level nested hover flyout menus on mobile touch screens.',
+        dontItem: 'Crowd dropdown rows with overly long descriptions on mobile screens.',
       },
     ],
     implementationNotes: [
-      'Trigger button: minimum 44px height; menu items maintain 40px height with 44px touch slop.',
+      'Trigger button: minimum 44px height; menu items maintain 44px touch targets per Fitts’s Law.',
       'Full keyboard navigation: ArrowUp/ArrowDown to navigate, Enter to select, Escape to close.',
-      'Surface: Level 2 Elevated (#202024 / white) with 1px border and zero drop shadows.',
+      'Surface: Pure White (#FFFFFF) canvas with Soft Lavender (#CAD3F5) keyline border and Ice Tint (#EFF5FF) hover fills.',
     ],
     codeSnippet: `import { LibraryDropdown } from '@/features/document/components/ui-library';
 
 export function Example() {
-  const [val, setVal] = React.useState('sora');
+  const [campus, setCampus] = React.useState('phnom-penh');
 
   return (
     <LibraryDropdown
-      label="Typography Engine"
-      value={val}
-      onChange={setVal}
+      label="Campus Location Branch"
+      value={campus}
+      onChange={setCampus}
       options={[
-        { value: 'sora', label: 'Sora — Brand Typography' },
-        { value: 'inter', label: 'Inter — UI Standard' },
+        {
+          value: 'siem-reap',
+          label: 'Siem Reap Main Campus',
+          description: '2,450 Enrolled Students · Science Wing · Cluster SR-01',
+        },
+        {
+          value: 'phnom-penh',
+          label: 'Phnom Penh Innovation Hub',
+          description: '3,120 Enrolled Students · Tech Tower · Cluster PP-02',
+        },
+        {
+          value: 'battambang',
+          label: 'Battambang Regional Center',
+          description: '1,080 Enrolled Students · Campus A · Cluster BT-03',
+        },
       ]}
     />
   );
@@ -572,134 +806,16 @@ export function Example() {
         name: 'placeholder',
         type: 'string',
         default: "'Select an option...'",
-        description: 'Placeholder when no value is selected.',
+        description: 'Placeholder when no item is selected.',
       },
       {
         name: 'options',
-        type: 'DropdownOption[]',
-        default: '[]',
-        description: 'Array of value, label, and description objects.',
+        type: 'LibraryDropdownOption[]',
+        description: 'Array of option items with value, label, and description.',
       },
-      {
-        name: 'value',
-        type: 'string',
-        default: '—',
-        description: 'Currently selected option value.',
-      },
-      {
-        name: 'onChange',
-        type: '(value: string) => void',
-        default: '—',
-        description: 'Callback invoked upon new selection.',
-      },
-      {
-        name: 'disabled',
-        type: 'boolean',
-        default: 'false',
-        description: 'Disables menu interaction.',
-      },
-    ],
-  },
-  {
-    id: 'card',
-    name: 'Card',
-    category: 'Display',
-    paradigm: 'Airbnb Paradigm',
-    description:
-      'Architectural flat surface container organizing interrelated telemetry data, controls, and media with zero shadows.',
-    explanation:
-      'The Card is an all-purpose container for grouped information. Modeled after Airbnb property cards, it packages media, title, descriptive metadata, and action triggers into a single cohesive unit, establishing clear perceptual boundaries between disparate entities.',
-    supportedStates: [
-      'Default',
-      'Hovered',
-      'Enrolled / Selected',
-      'Disabled',
-      'Dark Theme',
-      'Futurewave Variant',
-    ],
-    realWorldExamples: [
-      {
-        title: 'Autonomous Robotics Elective Card',
-        scenario:
-          'Displays course banner, title, description, 3 credits badge, and one-tap Enroll button.',
-        impact: 'Students compare course offerings and enroll with direct visual confirmation.',
-      },
-      {
-        title: 'Student Identity Card',
-        scenario:
-          'Displays student portrait, national code, grade level, and emergency guardian contact.',
-        impact: 'Compact card format renders consistently across mobile cards and desktop grids.',
-      },
-      {
-        title: 'Tuition Invoice Summary Card',
-        scenario:
-          'Summarizes academic term fee balance, due date, payment status, and one-tap Pay action.',
-        impact:
-          'Parents review invoice details and initiate payments directly from the card footer.',
-      },
-    ],
-    uxPsychology: [
-      {
-        principle: 'Gestalt Law of Common Region',
-        detail:
-          'Enclosing disparate data types within a common 16px border leads human perception to interpret them as one logical entity.',
-      },
-      {
-        principle: 'Affordance of Interactive Elevation',
-        detail:
-          'Subtle border illumination and micro-transitions signal clickability without heavy artificial drop shadows.',
-      },
-    ],
-    usageGuidelines: [
-      {
-        doItem: 'Use 16px radius (rounded-2xl) with 1px continuous keyline border.',
-        dontItem:
-          'Apply heavy black drop shadows—depth is established purely via luminance contrast.',
-      },
-      {
-        doItem: 'Organize internal hierarchy logically: Media -> Title -> Description -> Actions.',
-        dontItem: 'Crowd cards with dozens of tiny competing buttons—keep to one primary CTA.',
-      },
-    ],
-    implementationNotes: [
-      'Padding in multiples of 4px / 8px (typically 16px or 20px).',
-      'Supports interactive hover micro-motion (-translate-y-0.5) and keyboard focus rings.',
-      'Surface: Level 1 Subsurface (#161619 / white) with 1px border-slate-200/80.',
-    ],
-    codeSnippet: `import {
-  LibraryCard,
-  LibraryCardHeader,
-  LibraryCardTitle,
-  LibraryCardDescription,
-  LibraryCardFooter,
-} from '@/features/document/components/ui-library';
-
-export function Example() {
-  return (
-    <LibraryCard>
-      <LibraryCardHeader>
-        <LibraryCardTitle>Autonomous Robotics</LibraryCardTitle>
-        <LibraryCardDescription>Sensors, telemetry & embedded systems.</LibraryCardDescription>
-      </LibraryCardHeader>
-      <LibraryCardFooter>
-        <button className="border px-3 py-1 rounded">Enroll</button>
-      </LibraryCardFooter>
-    </LibraryCard>
-  );
-}`,
-    props: [
-      {
-        name: 'interactive',
-        type: 'boolean',
-        default: 'false',
-        description: 'Enables hover elevation and active press states.',
-      },
-      {
-        name: 'children',
-        type: 'React.ReactNode',
-        default: '—',
-        description: 'Header, media, body, and footer card components.',
-      },
+      { name: 'value', type: 'string', description: 'Controlled active option value.' },
+      { name: 'onChange', type: '(value: string) => void', description: 'Selection callback.' },
+      { name: 'disabled', type: 'boolean', default: 'false', description: 'Disables trigger.' },
     ],
   },
   // NAVIGATION GROUP
@@ -707,6 +823,8 @@ export function Example() {
     id: 'hook-sidebar',
     name: 'Hook Sidebar',
     category: 'Navigation',
+    parentGroupId: 'navigation',
+    builtAt: '2026-11-02',
     paradigm: 'Dashed Spring Rail Standard',
     description: 'A vertical navigation list with a dashed rail that marks the active item.',
     explanation:
@@ -833,10 +951,13 @@ export function Demo() {
     id: 'gooey-nav',
     name: 'Gooey Nav',
     category: 'Navigation',
-    paradigm: 'Fluid Pill Paradigm',
+    parentGroupId: 'navigation',
+    builtAt: '2026-11-02',
+    paradigm: 'Fluid Pill & Corner Brand Border Archetypes',
     description:
-      'High-performance fluid tab indicator gliding with liquid surface tension between active destination pill buttons.',
-    explanation: 'Smoothly interpolates pill geometry between destination segments.',
+      'High-performance fluid tab indicator and technical Corner Brand Border navigation with customizable brand border sets.',
+    explanation:
+      'Provides two production demos: (1) Classic Fluid Capsule Pill with smooth sliding indicator, and (2) Corner Brand Border Gooey Nav with technical L-shaped corner brackets and 4 brand border sets (Royal Blue, Azure Blue, Deep Navy, Soft Lavender).',
     props: [{ name: 'activeTab', type: 'string', description: 'Currently selected segment.' }],
     codeSnippet: `import { GooeyNavDemo } from '@/features/document/components/ui-library';\n\n<GooeyNavDemo />`,
     realWorldExamples: [
@@ -855,11 +976,13 @@ export function Demo() {
     id: 'cyber-armor-nav',
     name: 'Cyber Armor Nav',
     category: 'Navigation',
-    paradigm: 'Aerospace Mecha HUD Console',
+    parentGroupId: 'navigation',
+    builtAt: '2026-11-02',
+    paradigm: 'Cyber Armor Mecha HUD Archetype',
     description:
-      'Aerospace mecha HUD console navigation bar featuring chamfered armor plates and luminous Royal Blue styling.',
+      'Precision aerospace mecha navigation console with tactile double-seam dividers, chamfered corner cuts, and active kinetic indicator bar.',
     explanation:
-      'Combines chamfered 45° stepped mecha armor wings, physical double-seam divider lines, and a luminous Royal Blue (#0056FF) active indicator bar.',
+      'Provides an ergonomic Cyber Armor Mecha HUD navigation console engineered for high-density campus dashboards and developer documentation hubs with tactile active indicators and crisp day-first surface tokens.',
     props: [
       {
         name: 'items',
@@ -921,6 +1044,7 @@ export function Demo() {
     id: 'duration-picker',
     name: 'Duration Picker',
     category: 'Inputs',
+    builtAt: '2026-11-02',
     paradigm: 'Tactile Stepper Standard',
     description:
       'Quick duration selector combining preset time capsules with an increment stepper for meeting scheduling.',
@@ -945,6 +1069,7 @@ export function Demo() {
     id: 'password-input',
     name: 'Password Input',
     category: 'Inputs',
+    builtAt: '2026-11-02',
     paradigm: 'Strength Policy Standard',
     description:
       'Secure authentication passkey input with eye toggle visibility, live strength meter, and compliance checklist.',
@@ -963,34 +1088,13 @@ export function Demo() {
     implementationNotes: ['Regex strength checks.'],
     supportedStates: ['Weak', 'Fair', 'Strong'],
   },
-  {
-    id: 'theme-selector',
-    name: 'Theme Selector',
-    category: 'Inputs',
-    paradigm: 'Luminance Switch Standard',
-    description:
-      'Visual segmented mode switcher toggling interface aesthetics seamlessly between Light, Dark, and System preferences.',
-    explanation: 'Presents visual mini-window tiles representing application luminance modes.',
-    props: [{ name: 'theme', type: 'string', description: 'Selected mode.' }],
-    codeSnippet: `import { ThemeSelectorDemo } from '@/features/document/components/ui-library';\n\n<ThemeSelectorDemo />`,
-    realWorldExamples: [
-      {
-        title: 'User Preferences',
-        scenario: 'Teacher selects dark mode.',
-        impact: 'Instant tactile switch.',
-      },
-    ],
-    uxPsychology: [{ principle: 'Recognition over Recall', detail: 'Visual preview tiles.' }],
-    usageGuidelines: [{ doItem: 'Show preview tiles.', dontItem: 'Avoid plain text dropdowns.' }],
-    implementationNotes: ['Grid of interactive cards.'],
-    supportedStates: ['Light', 'Dark', 'System'],
-  },
 
   // FEEDBACK GROUP
   {
     id: 'toast-stack',
     name: 'Toast Notification Stack',
     category: 'Feedback',
+    builtAt: '2026-11-02',
     paradigm: 'Stacked Notifications Standard',
     description:
       'Stacked notification queue providing timed auto-dismissal, linear countdown bars, and fluid enter and exit animations.',
@@ -1089,6 +1193,7 @@ export function Demo() {
     id: 'skeleton-loading-screen',
     name: 'Skeleton Loading Screen',
     category: 'Feedback',
+    builtAt: '2026-11-02',
     paradigm: 'CSS Shimmer Placeholder Standard',
     description:
       'Zero-JavaScript CSS shimmer placeholders communicating layout geometry while asynchronous data streams load into memory.',
@@ -1186,34 +1291,89 @@ export function Demo() {
   },
   {
     id: 'notification-bell',
-    name: 'Notification Bell',
+    name: 'Notification Bell (Campus Alert Center)',
     category: 'Feedback',
+    parentGroupId: 'navigation',
+    builtAt: '2026-11-02',
     paradigm: 'Popover Feed Standard',
     description:
-      'Animated notification bell trigger featuring unread badge counters and a collapsible operational alert feed.',
-    explanation: 'Combines an alert bell trigger with an unread badge and flyout feed.',
+      'Campus alert center trigger featuring unread badge counter, category filtering (All, Academic, Security), alert simulation, and mark-all-read action.',
+    explanation:
+      'Combines a sleek notification bell trigger with an unread badge counter and an interactive institutional popover feed. Users can filter incoming alerts by domain (Academic, Security), inspect details, mark individual items as read, or simulate live cluster notifications.',
     props: [
-      { name: 'unreadCount', type: 'number', description: 'Number of unread notifications.' },
+      {
+        name: 'unreadCount',
+        type: 'number',
+        description: 'Number of unread notifications displayed on badge.',
+      },
+      {
+        name: 'items',
+        type: 'NotificationItem[]',
+        description:
+          'Array of operational notifications with timestamp, category, and read status.',
+      },
+      {
+        name: 'onMarkAllRead',
+        type: '() => void',
+        description: 'Callback to clear all unread badges.',
+      },
     ],
     codeSnippet: `import { NotificationBellDemo } from '@/features/document/components/ui-library';\n\n<NotificationBellDemo />`,
     realWorldExamples: [
       {
-        title: 'Institutional Alerts',
-        scenario: 'Teachers check daily attendance alerts.',
-        impact: 'Zero missed notices.',
+        title: 'Daily Faculty Attendance Dispatch',
+        scenario:
+          'Department chair reviews morning biometric attendance submission alerts from Phnom Penh Innovation Hub.',
+        impact: 'Instantly identifies pending class rosters without navigating deep menus.',
+      },
+      {
+        title: 'Cryptographic Security Alert',
+        scenario:
+          'System administrator receives immediate notification of scheduled HMAC secret rotation across campus nodes.',
+        impact: 'Maintains audit transparency with precise timestamp and cluster ID.',
       },
     ],
-    uxPsychology: [{ principle: 'Attention Guidance', detail: 'Bright badge draws eye.' }],
-    usageGuidelines: [
-      { doItem: 'Clear unread on open.', dontItem: 'Avoid loud persistent badges.' },
+    uxPsychology: [
+      {
+        principle: 'Visual Salience',
+        detail:
+          'High-contrast royal blue badge attracts peripheral vision without flashing alarmingly.',
+      },
+      {
+        principle: 'Cognitive Scannability',
+        detail:
+          'Category filter pills (Academic, Security) let operators triage high-priority notices first.',
+      },
     ],
-    implementationNotes: ['Popover card with unread state.'],
-    supportedStates: ['Unread', 'Read', 'Expanded'],
+    usageGuidelines: [
+      {
+        doItem:
+          'Provide category filters when notification volume spans multiple operational domains.',
+        dontItem: 'Use loud flashing red dots for non-critical informational alerts.',
+      },
+      {
+        doItem: 'Offer a one-click "Mark all as read" button to quickly clear notifications.',
+        dontItem: 'Hide timestamps or originating campus branch codes.',
+      },
+    ],
+    implementationNotes: [
+      'Popover anchored cleanly below bell trigger with 12px vertical offset.',
+      'Subtle enter animation: fade-in with slide-in-from-top-2.',
+      'High contrast text (#0A1A4A) with Soft Lavender (#CAD3F5) borders.',
+    ],
+    supportedStates: [
+      'Idle (0 Unread)',
+      'Active (Unread Badge)',
+      'Popover Open',
+      'Filtered by Domain',
+      'All Read',
+    ],
   },
   {
     id: 'status-404',
     name: 'Status Page & 404 Console',
     category: 'Feedback',
+    builtAt: '2026-11-02',
     paradigm: 'Aerospace Status & Error Console',
     description:
       'Multi-archetype brand status screen supporting 404, 403, 500, 503, and 401 with Radar, Barcode, Terminal, CRT Phosphor, and Gravity Blocks modes.',
@@ -1311,44 +1471,17 @@ export default function NotFound() {
     ],
     implementationNotes: [
       'Pure CSS & SVG procedural noise and radar animations with zero heavy external media assets.',
-      'Supports interactive CLI commands in terminal mode and spring physics tumbling in gravity mode.',
+      'Supports spring physics tumbling and interactive re-alignment in gravity mode.',
     ],
-    supportedStates: [
-      'Radar Explorer',
-      'Barcode Ledger',
-      'Cyber Terminal',
-      'CRT Phosphor',
-      'Gravity Blocks',
-    ],
+    supportedStates: ['Radar Explorer', 'Barcode Ledger', 'CRT Phosphor', 'Gravity Blocks'],
   },
 
   // DISPLAY GROUP
   {
-    id: 'folder',
-    name: 'Folder Component',
-    category: 'Display',
-    paradigm: 'Tactile Tab Standard',
-    description:
-      'Interactive document folder component expanding smoothly to reveal nested files, certificates, and metadata attachments.',
-    explanation: 'Skeuomorphic digital folder tab that stores and organizes files.',
-    props: [{ name: 'files', type: 'Array<{name, size}>', description: 'Stored files.' }],
-    codeSnippet: `import { FolderDemo } from '@/features/document/components/ui-library';\n\n<FolderDemo />`,
-    realWorldExamples: [
-      {
-        title: 'Student Dossier',
-        scenario: 'Admissions staff inspects identity files.',
-        impact: 'Neat visual chunking.',
-      },
-    ],
-    uxPsychology: [{ principle: 'Spatial Metaphor', detail: 'Folder mimics physical archives.' }],
-    usageGuidelines: [{ doItem: 'Show file count.', dontItem: 'Avoid deeply nested folders.' }],
-    implementationNotes: ['Expandable container.'],
-    supportedStates: ['Closed', 'Expanded'],
-  },
-  {
     id: 'step-player',
     name: 'Step Player',
     category: 'Display',
+    builtAt: '2026-11-02',
     paradigm: 'Sequential Workflow Standard',
     description:
       'Multi-stage progress stepper guiding operators through sequential tasks with forward and backward navigation controls.',
@@ -1371,6 +1504,7 @@ export default function NotFound() {
     id: 'animated-counter',
     name: 'Animated Counter',
     category: 'Display',
+    builtAt: '2026-11-02',
     paradigm: 'Odometer Roll Standard',
     description:
       'Precision mechanical odometer counter rolling numerical metrics smoothly during real-time value updates and increments.',
@@ -1395,58 +1529,89 @@ export default function NotFound() {
   },
   {
     id: 'voice-note',
-    name: 'Voice Note',
+    name: 'Voice Note (Tactile Waveform Audio Player)',
     category: 'Display',
+    builtAt: '2026-11-02',
     paradigm: 'Waveform Audio Standard',
     description:
-      'Interactive audio waveform player featuring animated amplitude bars, playback toggles, and variable playback speeds.',
-    explanation: 'Voice message playback capsule with sound waveform visualization.',
-    props: [{ name: 'duration', type: 'string', description: 'Audio length.' }],
+      'Interactive audio waveform player featuring animated amplitude bars, playback scrub bar, speed toggles, and voice-to-text transcript drawer.',
+    explanation:
+      'A tactile audio playback studio designed for faculty voice memos, student verbal feedback, and campus audio dispatches. Features dynamic waveform amplitude bars that animate during playback and support click-to-scrub time seeking, 1x/1.25x/1.5x/2x speed multipliers, and an expandable voice-to-text transcript drawer.',
+    props: [
+      {
+        name: 'duration',
+        type: 'number',
+        default: '135',
+        description: 'Total audio track duration in seconds.',
+      },
+      {
+        name: 'author',
+        type: 'string',
+        description: 'Faculty speaker name and institutional title.',
+      },
+      {
+        name: 'transcript',
+        type: 'string',
+        description: 'Full verified voice-to-text transcript copy.',
+      },
+    ],
     codeSnippet: `import { VoiceNoteDemo } from '@/features/document/components/ui-library';\n\n<VoiceNoteDemo />`,
     realWorldExamples: [
       {
-        title: 'Parent Communication',
-        scenario: 'Teacher sends audio update on student progress.',
-        impact: 'Personal connection.',
+        title: 'Faculty Dean Audio Briefing',
+        scenario:
+          'Dean records verbal instructions for semester exam verification to all department chairs.',
+        impact:
+          'Delivers high-fidelity spoken communication with verified searchable text transcript.',
       },
-    ],
-    uxPsychology: [
-      { principle: 'Multimodal Feedback', detail: 'Visual waveform confirms audio content.' },
-    ],
-    usageGuidelines: [{ doItem: 'Provide speed toggles.', dontItem: 'Never autoplay sound.' }],
-    implementationNotes: ['Waveform bars with pulse animation.'],
-    supportedStates: ['Playing', 'Paused'],
-  },
-  {
-    id: 'faq',
-    name: 'FAQ Accordion',
-    category: 'Display',
-    paradigm: 'Collapsible Disclosure Standard',
-    description:
-      'Accessible question-and-answer accordion with rotating chevron indicators and fluid spring height expansion.',
-    explanation: 'Progressively discloses answers to frequent institutional questions.',
-    props: [{ name: 'items', type: 'Array<{q, a}>', description: 'Questions and answers.' }],
-    codeSnippet: `import { FaqDemo } from '@/features/document/components/ui-library';\n\n<FaqDemo />`,
-    realWorldExamples: [
       {
-        title: 'Help Portal',
-        scenario: 'Students find tuition payment methods.',
-        impact: 'Reduced support tickets.',
+        title: 'Language Lab Student Oral Assessment',
+        scenario:
+          'ESL instructor plays student pronunciation audio sample with interactive waveform scrubbing.',
+        impact:
+          'Enables precise timestamp replay and variable speed playback for grading accuracy.',
       },
     ],
     uxPsychology: [
-      { principle: 'Progressive Disclosure', detail: 'Shows questions first, answers on demand.' },
+      {
+        principle: 'Multimodal Audio-Visual Synchrony',
+        detail:
+          'Pulsing waveform bars confirm audio playback visually, accommodating hearing-impaired users.',
+      },
+      {
+        principle: 'User Control & Freedom',
+        detail:
+          'Scrubbable waveform and speed toggles give listeners control over information consumption rate.',
+      },
     ],
     usageGuidelines: [
-      { doItem: 'Collapse other items.', dontItem: 'Do not hide critical links inside FAQs.' },
+      {
+        doItem: 'Always provide a written text transcript drawer for accessibility (WCAG 2.2 AA).',
+        dontItem: 'Never autoplay audio on initial page load or user navigation.',
+      },
+      {
+        doItem: 'Allow users to click any waveform bar to scrub directly to that timestamp.',
+        dontItem: 'Use tiny play/pause buttons—keep hit bounds to minimum 44x44px.',
+      },
     ],
-    implementationNotes: ['Smooth height transition with rotating icon.'],
-    supportedStates: ['Collapsed', 'Expanded'],
+    implementationNotes: [
+      'Interactive scrubbable waveform with proportional progress fill in Royal Blue (#0056FF).',
+      'Variable speed state: 1x -> 1.25x -> 1.5x -> 2x cyclical toggle.',
+      'Lossless 48kHz badge with live minutes:seconds time elapsed / total duration display.',
+    ],
+    supportedStates: [
+      'Paused (Idle)',
+      'Playing (Animated Waveform)',
+      'Scrubbing Timestamp',
+      'Speed Adjusted',
+      'Transcript Expanded',
+    ],
   },
   {
     id: 'data-table',
     name: 'Interactive Data Table',
     category: 'Display',
+    builtAt: '2026-11-02',
     paradigm: 'Client-Side Ledger & Tri-State Sorting Standard',
     description:
       'Enterprise data table supporting instant debounced filtering, multi-column sorting, pagination, and status indicators.',
@@ -1592,6 +1757,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
     id: 'grid-reveal',
     name: 'Grid Reveal',
     category: 'AI Kit',
+    builtAt: '2026-11-02',
     paradigm: 'Cyber Matrix Standard',
     description:
       'Cybernetic matrix grid featuring horizontal laser scanlines and interactive hover spotlights across child cards.',
@@ -1611,98 +1777,10 @@ const columns: DataTableColumn<StudentRecord>[] = [
     supportedStates: ['Standby', 'Scanning'],
   },
   {
-    id: 'cipher-decode',
-    name: 'Cipher Decode Navigation & Headline',
-    category: 'Text Effects',
-    paradigm: 'Per-Character Timeline Cipher Standard',
-    description:
-      'Matrix-inspired cryptographic text effect scrambling characters rapidly before settling into readable plain text.',
-    explanation:
-      'High-precision 8-pillar cryptographic text decoding engine featuring per-character timelines with stagger and jitter, 50ms throttled glyph shimmer, space-aware layout preservation, and screen-reader accessibility.',
-    props: [
-      { name: 'text', type: 'string', description: 'Target string to decode or headline phrase.' },
-      {
-        name: 'staggerMs',
-        type: 'number',
-        description: 'Wave delay per character in ms (default 24ms).',
-      },
-      {
-        name: 'jitterMs',
-        type: 'number',
-        description: 'Random start offset variance in ms (default 35ms).',
-      },
-      {
-        name: 'durationMs',
-        type: 'number',
-        description: 'Total character resolve duration in ms (default 400ms).',
-      },
-      {
-        name: 'throttleMs',
-        type: 'number',
-        description: 'Maximum glyph re-roll frequency (default 50ms).',
-      },
-      { name: 'theme', type: "'light' | 'dark'", description: 'Instrument panel color palette.' },
-    ],
-    codeSnippet: `import { CipherTextDecoder } from '@/features/document/components/ui-library';\n\n<CipherTextDecoder theme="light" />`,
-    realWorldExamples: [
-      {
-        title: 'Security Portal Keynote',
-        scenario:
-          'SecOps dashboard cycles cryptographic status phrases while allowing interactive nav link decoding.',
-        impact: 'Memorable brand signature with zero layout shift.',
-      },
-      {
-        title: 'Developer Documentation Hub',
-        scenario:
-          'Hero banner introduces new API architecture while live telemetry counts locked characters.',
-        impact: 'Engaging physical instrument-panel feel.',
-      },
-    ],
-    uxPsychology: [
-      {
-        principle: 'Per-Character Wave Perception',
-        detail:
-          'Staggered wave reading left-to-right matches natural eye scanning saccades without mechanical sterility.',
-      },
-      {
-        principle: 'Cognitive Anchoring (Space-Awareness)',
-        detail:
-          'Immediate resolution of spaces exposes word boundaries instantly, letting the mind pre-parse grammar before letters resolve.',
-      },
-    ],
-    usageGuidelines: [
-      {
-        doItem:
-          'USE THIS WHEN: A portfolio, studio, or developer brand wants a typographic signature.',
-        dontItem: 'NOT IDEAL WHEN: Body copy or anything people need to read quickly.',
-      },
-      {
-        doItem: 'USE THIS WHEN: Short headlines or menu labels, roughly 30 characters or fewer.',
-        dontItem:
-          'NOT IDEAL WHEN: Text that must be translated into scripts without a monospace face.',
-      },
-      {
-        doItem: 'USE THIS WHEN: The design is monospace or can carry a monospace display line.',
-        dontItem:
-          'NOT IDEAL WHEN: Interfaces where motion would distract from a task, like checkout or forms.',
-      },
-    ],
-    implementationNotes: [
-      '01 Per-Character Timeline: Every character gets its own start and end time with small stagger plus random jitter.',
-      '02 Throttled Glyphs: Resolving characters re-roll at most every 50ms, so the cipher shimmers instead of strobing.',
-      '03 Monospace Lock: Every glyph has equal width (font-mono tabular-nums), ensuring zero layout shift during decode.',
-      '04 Stable Lines: Headline block has fixed min-height, preventing layout collapse mid-decode.',
-      '05 Space-Aware: Spaces in the target resolve to spaces immediately, revealing word shapes first.',
-      '06 No HTML Strings: Virtual DOM spans and text nodes only; nothing is ever parsed as HTML strings.',
-      '07 Quiet for Screen Readers: Plain semantic sr-only headline text; animated layer is aria-hidden.',
-      '08 Pause and Fallback: Pauses while tab is hidden, reduced motion renders target text statically.',
-    ],
-    supportedStates: ['Decoding', 'Locked', 'Paused', 'Hover In-Place'],
-  },
-  {
     id: 'marquee-section',
     name: 'Marquee Section',
     category: 'Sections',
+    builtAt: '2026-11-02',
     paradigm: 'Continuous Velocity Ticker Standard',
     description:
       'Seamless horizontal infinite marquee ticker displaying institutional partners and accreditations with pause on hover.',
@@ -1730,34 +1808,85 @@ const columns: DataTableColumn<StudentRecord>[] = [
   // ==========================================
   {
     id: 'floating-label-form',
-    name: 'Floating Label Form',
+    name: 'Floating Label Form (Candidate Admission Dossier)',
     category: 'Forms',
+    builtAt: '2026-11-02',
     paradigm: 'Shrinking Boundary Label Standard',
     description:
-      'Floating label text input offering smooth label transitions, focus rings, and strict 44px hit bounds.',
-    explanation: 'Label transforms smoothly into border micro-stamp upon input focus.',
-    props: [{ name: 'label', type: 'string', description: 'Field label text.' }],
+      'High-contrast floating label input suite with smooth boundary-shrinking transitions, focus rings, 44px hit bounds, and live Zod validation.',
+    explanation:
+      'Eliminates placeholder disappearance by smoothly transforming resting labels into high-contrast boundary micro-stamps upon focus or data entry. Built for high-volume student registrar admissions, maintaining context at all times with 44px minimum touch targets and live feedback.',
+    props: [
+      { name: 'label', type: 'string', description: 'Floating field label text.' },
+      { name: 'value', type: 'string', description: 'Controlled input value.' },
+      {
+        name: 'onChange',
+        type: '(e: React.ChangeEvent<HTMLInputElement>) => void',
+        description: 'Change event handler.',
+      },
+      {
+        name: 'type',
+        type: 'string',
+        default: "'text'",
+        description: 'Input type (text, email, password, etc.).',
+      },
+    ],
     codeSnippet: `import { FloatingLabelFormDemo } from '@/features/document/components/ui-library';\n\n<FloatingLabelFormDemo />`,
     realWorldExamples: [
       {
-        title: 'Fast Enrollment',
-        scenario: 'Registrar types student ID without losing context.',
-        impact: 'Eliminates placeholder disappearance.',
+        title: 'Candidate Admission Registration',
+        scenario:
+          'Admissions staff inputs student legal name, institutional email, and national student ID (STU-XXXX-XXXX).',
+        impact:
+          'Field label remains visible throughout typing, preventing accidental field confusion.',
+      },
+      {
+        title: 'Faculty Profile Onboarding',
+        scenario: 'New instructor completes department routing and contact information.',
+        impact:
+          'Clean high-contrast borders and floating micro-stamps maintain clarity on mobile and desktop.',
       },
     ],
     uxPsychology: [
-      { principle: 'Cognitive Continuity', detail: 'Label never disappears from user sight.' },
+      {
+        principle: 'Cognitive Continuity',
+        detail:
+          'Labels never vanish upon focus, eliminating short-term memory burden during form completion.',
+      },
+      {
+        principle: 'Direct Spatial Mapping',
+        detail:
+          'The label sits directly inside the input hit area, maximizing tap accuracy on touch devices.',
+      },
     ],
     usageGuidelines: [
-      { doItem: 'Position label clearly on focus.', dontItem: 'Do not overlap entered text.' },
+      {
+        doItem:
+          'Shrink label to font-mono text-[9px] in Royal Blue (#0056FF) on focus and value presence.',
+        dontItem: 'Overlap the floating label with entered user text.',
+      },
+      {
+        doItem: 'Maintain minimum 44px input height for comfortable touch interaction.',
+        dontItem: 'Use floating labels for complex multi-line textareas.',
+      },
     ],
-    implementationNotes: ['peer and peer-focus CSS classes.'],
-    supportedStates: ['Resting', 'Focused', 'Filled'],
+    implementationNotes: [
+      'Tailwind peer and peer-placeholder-shown CSS pseudo-classes for zero-JS CSS-native label floating.',
+      'Input height: h-12 (48px) with pt-4 pb-1 to provide generous room for the elevated label.',
+      'Instant validation confirmation banner upon form submission.',
+    ],
+    supportedStates: [
+      'Resting (Empty Placeholder)',
+      'Focused (Floating Label)',
+      'Filled / Value Present',
+      'Form Submitted Success',
+    ],
   },
   {
     id: 'multi-step-wizard',
     name: 'Multi-Step Form Wizard',
     category: 'Forms',
+    builtAt: '2026-11-02',
     paradigm: 'Progressive Disclosure Wizard Standard',
     description:
       'Structured onboarding flow featuring step indicators, state validation, session storage caching, and final review steps.',
@@ -1835,6 +1964,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
     id: 'file-dropzone',
     name: 'File Dropzone',
     category: 'Forms',
+    builtAt: '2026-11-02',
     paradigm: 'Dashed Target Dropzone Standard',
     description:
       'Drag-and-drop file staging zone providing MIME type verification, file size validation, and interactive removal chips.',
@@ -1864,6 +1994,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
     id: 'rich-text-editor',
     name: 'Rich Text Editor',
     category: 'Forms',
+    builtAt: '2026-11-02',
     paradigm: 'Zero-Dependency Contenteditable & Sanitized Allowlist Standard',
     description:
       'Lightweight WYSIWYG editor offering Markdown shortcuts, sanitized HTML pasting, formatting controls, and live character counts.',
@@ -1899,7 +2030,7 @@ const columns: DataTableColumn<StudentRecord>[] = [
         description: 'Instrument panel color palette for toolbar and text surface.',
       },
     ],
-    codeSnippet: `import { RichTextEditor } from '@/features/document/components/ui-library';\n\n<RichTextEditor\n  initialContent=\"<p>Formatted announcement...</p>\"\n  onChange={(html) => saveDocument(html)}\n  theme=\"dark\"\n/>`,
+    codeSnippet: `import { RichTextEditor } from '@/features/document/components/ui-library';\n\n<RichTextEditor\n  initialContent=\"<p>Formatted academic charter...</p>\"\n  onChange={(html) => saveDocument(html)}\n  theme=\"light\"\n/>`,
     realWorldExamples: [
       {
         title: 'Institutional Curriculum Syllabus Composer',
@@ -1967,6 +2098,1264 @@ const columns: DataTableColumn<StudentRecord>[] = [
   },
 ];
 
+const FUTURE_M3_COMPONENTS: ComponentItemDoc[] = [
+  // ==========================================
+  // NAVIGATION (Material 3 Standards)
+  // ==========================================
+  {
+    id: 'app-bars',
+    name: 'App bars',
+    category: 'Navigation',
+    paradigm: 'Material 3 Top App Bar Standard',
+    description:
+      'Top screen header presenting page title, primary navigation actions, and contextual task triggers.',
+    explanation:
+      'App bars provide a predictable anchor at the top of screens, communicating user orientation and hosting global triggers.',
+    props: [
+      { name: 'title', type: 'string', description: 'Screen or section title.' },
+      {
+        name: 'variant',
+        type: "'small' | 'medium' | 'large' | 'center-aligned'",
+        description: 'M3 sizing archetype.',
+      },
+    ],
+    codeSnippet: `import { AppBar } from '@/components/ui';\n\n<AppBar title="Academics" />`,
+    realWorldExamples: [
+      {
+        title: 'Campus Header',
+        scenario: 'User navigates top level academic modules.',
+        impact: 'Stable orientation anchor.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Spatial Orientation',
+        detail: 'Consistent top bar grounds visual hierarchy across route changes.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Maintain 56px height for small bars.',
+        dontItem: 'Crowd with more than 3 trailing action icons.',
+      },
+    ],
+    implementationNotes: ['Level 0 (flat) or Level 2 scrolled surface tint.'],
+    supportedStates: ['Flat (Top of Page)', 'Scrolled (Elevated Surface)', 'Focused'],
+    isFuture: true,
+  },
+  {
+    id: 'navigation-bar',
+    name: 'Navigation bar',
+    category: 'Navigation',
+    parentGroupId: 'navigation',
+    paradigm: 'Material 3 Bottom Navigation Bar Standard',
+    description:
+      'Horizontal navigation bar anchored to the bottom of mobile viewports for 3 to 5 top-level destinations.',
+    explanation:
+      'Bottom navigation bars provide effortless one-handed thumb navigation across top-level destinations.',
+    props: [{ name: 'items', type: 'NavItem[]', description: 'Destination items.' }],
+    codeSnippet: `import { NavigationBar } from '@/components/ui';\n\n<NavigationBar />`,
+    realWorldExamples: [
+      {
+        title: 'Mobile Portal',
+        scenario: 'Student navigates home, schedule, and profile on mobile.',
+        impact: 'Fast thumb reach.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Fitts's Law Thumb Zone",
+        detail: 'Positioned at bottom edge for zero-stretch finger reach.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use 3-5 destinations only.',
+        dontItem: 'Use for secondary or modal destinations.',
+      },
+    ],
+    implementationNotes: ['Pill-shaped active indicator with smooth scale transition.'],
+    supportedStates: ['Active Pill', 'Inactive Icon', 'With Badge Count'],
+    isFuture: true,
+  },
+  {
+    id: 'navigation-drawer',
+    name: 'Navigation drawer',
+    category: 'Navigation',
+    parentGroupId: 'navigation',
+    paradigm: 'Material 3 Modal & Standard Drawer Standard',
+    description:
+      'Vertical slide-in drawer accommodating deep institutional navigation hierarchies and account context.',
+    explanation:
+      'Drawers provide access to all destinations without permanent horizontal screen space consumption on smaller screens.',
+    props: [{ name: 'open', type: 'boolean', description: 'Drawer visibility state.' }],
+    codeSnippet: `import { NavigationDrawer } from '@/components/ui';\n\n<NavigationDrawer />`,
+    realWorldExamples: [
+      {
+        title: 'Campus Registrar Hierarchy',
+        scenario: 'Deep departmental routing tree.',
+        impact: 'Structured exploration.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Progressive Disclosure',
+        detail: 'Hides extensive navigation hierarchy behind a single accessible trigger.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Include account profile and branch switcher in header.',
+        dontItem: 'Use without backdrop dismiss on mobile.',
+      },
+    ],
+    implementationNotes: ['Dismissable via swipe gesture or backdrop click.'],
+    supportedStates: ['Collapsed', 'Expanded (Modal)', 'Standard (Permanent)'],
+    isFuture: true,
+  },
+  {
+    id: 'navigation-rail',
+    name: 'Navigation rail',
+    category: 'Navigation',
+    parentGroupId: 'navigation',
+    paradigm: 'Material 3 Side Navigation Rail Standard',
+    description:
+      'Compact vertical sidebar rail providing 3 to 7 primary destinations on tablet and desktop screens.',
+    explanation:
+      'Navigation rails offer an ergonomic vertical bridge between bottom bars and full-width sidebars.',
+    props: [
+      { name: 'destinations', type: 'RailDestination[]', description: 'List of rail icons.' },
+    ],
+    codeSnippet: `import { NavigationRail } from '@/components/ui';\n\n<NavigationRail />`,
+    realWorldExamples: [
+      {
+        title: 'Desktop Console',
+        scenario: 'Admin switches between Student, Course, and Finance views.',
+        impact: 'Slim 72px rail maximizes canvas.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Compact Recognition',
+        detail: 'Icon and concise label provide instant scanning with minimal width consumption.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Keep rail width between 72px and 80px.',
+        dontItem: 'Overload with scrollable nested trees.',
+      },
+    ],
+    implementationNotes: ['Active pill background with 44px hit bounds.'],
+    supportedStates: ['Compact Rail', 'Expanded Rail', 'Active Destination'],
+    isFuture: true,
+  },
+  {
+    id: 'tabs',
+    name: 'Tabs',
+    category: 'Navigation',
+    paradigm: 'Material 3 Primary & Secondary Tabs Standard',
+    description:
+      'Segmented horizontal tab strip organizing related views at the same hierarchical level.',
+    explanation:
+      'Tabs organize content into high-level categories that can be switched in place without page reloads.',
+    props: [{ name: 'tabs', type: 'string[]', description: 'Array of tab labels.' }],
+    codeSnippet: `import { Tabs } from '@/components/ui';\n\n<Tabs />`,
+    realWorldExamples: [
+      {
+        title: 'Student Dossier View',
+        scenario: 'Switching between Overview, Grades, Attendance, and Fees.',
+        impact: 'Instant in-place context.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Spatial Chunking',
+        detail: 'Groups large records into digestible thematic sections.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Keep tab labels concise (1-2 words).',
+        dontItem: 'Wrap tab labels into multiple text rows.',
+      },
+    ],
+    implementationNotes: ['Sliding indicator bar with spring physics.'],
+    supportedStates: ['Active Tab', 'Hovered Tab', 'Disabled Tab'],
+    isFuture: true,
+  },
+  {
+    id: 'toolbars',
+    name: 'Toolbars',
+    category: 'Navigation',
+    paradigm: 'Material 3 Action Toolbar Standard',
+    description:
+      'Compact horizontal surface hosting contextual commands, tools, and actions for an active workspace.',
+    explanation:
+      'Toolbars group related actions and utilities together above a work canvas or editing surface.',
+    props: [{ name: 'tools', type: 'ToolItem[]', description: 'Actions and commands.' }],
+    codeSnippet: `import { Toolbar } from '@/components/ui';\n\n<Toolbar />`,
+    realWorldExamples: [
+      {
+        title: 'Grade Sheet Editor',
+        scenario: 'Batch calculation, export, and filter tools.',
+        impact: 'Concentrated productivity tools.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Proximity (Gestalt)',
+        detail: 'Grouping actions together signals they apply directly to the underlying canvas.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use accessible tooltips for icon-only actions.',
+        dontItem: 'Combine conflicting destructive and edit actions.',
+      },
+    ],
+    implementationNotes: ['Role="toolbar" with left/right keyboard arrow navigation.'],
+    supportedStates: ['Idle', 'Active Tool', 'Disabled Action'],
+    isFuture: true,
+  },
+  {
+    id: 'menus',
+    name: 'Menus',
+    category: 'Navigation',
+    paradigm: 'Material 3 Cascading Context Menu Standard',
+    description:
+      'Floating temporary surface displaying a list of choices on a transient elevated sheet.',
+    explanation:
+      'Menus expose contextual choices triggered by a button or cursor action without cluttering the screen.',
+    props: [{ name: 'items', type: 'MenuItem[]', description: 'Contextual options.' }],
+    codeSnippet: `import { Menu } from '@/components/ui';\n\n<Menu />`,
+    realWorldExamples: [
+      {
+        title: 'Student Action Overflow',
+        scenario: 'Actions: Edit record, Download transcript, Generate invoice.',
+        impact: 'Tidy interface.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Hick's Law Decision Density",
+        detail: 'Restricts action choices to relevant contextual operations.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Order items logically from frequent to destructive.',
+        dontItem: 'Open menus off-screen without viewport flipping.',
+      },
+    ],
+    implementationNotes: ['Level 2 Surface Elevation with Escape key dismiss.'],
+    supportedStates: ['Closed', 'Open (Elevated)', 'Focused Item'],
+    isFuture: true,
+  },
+
+  // ==========================================
+  // BUTTONS & INPUTS (Material 3 Standards)
+  // ==========================================
+  {
+    id: 'buttons',
+    name: 'Buttons',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Elevated, Filled, Tonal & Outlined Standard',
+    description:
+      'Core interactive action trigger available in 5 visual emphasis tiers: Elevated, Filled, Filled Tonal, Outlined, and Text.',
+    explanation:
+      'Buttons allow users to express intent, initiate actions, and confirm operations across the system.',
+    props: [
+      {
+        name: 'variant',
+        type: "'filled' | 'tonal' | 'outlined' | 'elevated' | 'text'",
+        description: 'Button emphasis variant.',
+      },
+      { name: 'label', type: 'string', description: 'Action text.' },
+    ],
+    codeSnippet: `import { Button } from '@/components/ui';\n\n<Button variant="filled">Enroll Student</Button>`,
+    realWorldExamples: [
+      {
+        title: 'Primary Form Submission',
+        scenario: 'Submitting student admission form.',
+        impact: 'Unambiguous call to action.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Affordance & State Feedback',
+        detail: 'Visual depth and ripple feedback assure the user the touch was received.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Maintain >= 44x44px minimum touch targets.',
+        dontItem: 'Use more than one primary filled button per card.',
+      },
+    ],
+    implementationNotes: ['Rounded-full shape token with brand focus ring.'],
+    supportedStates: ['Default', 'Hover', 'Focused', 'Pressed', 'Disabled'],
+    isFuture: true,
+  },
+  {
+    id: 'all-buttons',
+    name: 'All buttons',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Full Button Hierarchy Matrix Standard',
+    description:
+      'Comprehensive design system catalog showing all 5 M3 button variants side-by-side with contrast metrics.',
+    explanation:
+      'Demonstrates hierarchical pairing of filled primary buttons with tonal and outlined supporting actions.',
+    props: [{ name: 'theme', type: 'string', description: 'Surface scheme.' }],
+    codeSnippet: `import { ButtonShowcase } from '@/components/ui';\n\n<ButtonShowcase />`,
+    realWorldExamples: [
+      {
+        title: 'Design System Audit',
+        scenario: 'Developers verify button hierarchy standards.',
+        impact: 'Consistent brand application.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Hierarchical Clarity',
+        detail: 'Distinguishes high-stakes commitments from low-stakes auxiliary actions.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Pair 1 Filled CTA with Outlined secondary actions.',
+        dontItem: 'Compete primary CTAs in the same card.',
+      },
+    ],
+    implementationNotes: ['Full AAA contrast ratios on every button tier.'],
+    supportedStates: ['All Variants Active', 'High Contrast Matrix'],
+    isFuture: true,
+  },
+  {
+    id: 'button-groups',
+    name: 'Button groups',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Connected Action Group Standard',
+    description:
+      'Connected cluster of mutually related action buttons arranged along a single border axis.',
+    explanation: 'Groups actions with related consequences together into a unified visual pill.',
+    props: [{ name: 'buttons', type: 'ButtonProps[]', description: 'Grouped buttons.' }],
+    codeSnippet: `import { ButtonGroup } from '@/components/ui';\n\n<ButtonGroup />`,
+    realWorldExamples: [
+      {
+        title: 'Document View Modes',
+        scenario: 'Grid, List, and Table toggle group.',
+        impact: 'Unified control strip.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Law of Common Region',
+        detail: 'Enclosing buttons in a connected outline signals mutual functional relationship.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Connect buttons with unified 1px border dividers.',
+        dontItem: 'Mix buttons with drastically different actions.',
+      },
+    ],
+    implementationNotes: ['Seamless internal borders with rounded outer corners.'],
+    supportedStates: ['Default', 'Active Option', 'Hovered'],
+    isFuture: true,
+  },
+  {
+    id: 'segmented-buttons',
+    name: 'Segmented buttons',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Multi-Option Segment Standard',
+    description:
+      'Segmented pill controls allowing users to select between 2 to 5 mutually exclusive or multi-select options.',
+    explanation:
+      'Segmented buttons provide compact horizontal choices in filter bars and dialog controls.',
+    props: [{ name: 'segments', type: 'SegmentItem[]', description: 'Available segments.' }],
+    codeSnippet: `import { SegmentedButton } from '@/components/ui';\n\n<SegmentedButton />`,
+    realWorldExamples: [
+      {
+        title: 'Academic Semester Filter',
+        scenario: 'Selecting Term 1, Term 2, or Summer.',
+        impact: 'Immediate dataset filter.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Hick's Law Fast Toggling",
+        detail: 'Exposes all choices side-by-side for 1-click selection.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use checkmark icon on selected segment.',
+        dontItem: 'Use more than 5 segments in a single row.',
+      },
+    ],
+    implementationNotes: ['Active segment filled with brand Ice Tint and checkmark.'],
+    supportedStates: ['Unselected', 'Selected with Checkmark', 'Focused'],
+    isFuture: true,
+  },
+  {
+    id: 'split-button',
+    name: 'Split button',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Primary & Secondary Action Dropdown Standard',
+    description:
+      'Dual-action component combining a primary click action with an attached dropdown arrow for alternative actions.',
+    explanation:
+      'Enables quick execution of the default action while providing immediate access to related variations.',
+    props: [{ name: 'primaryAction', type: '() => void', description: 'Default action.' }],
+    codeSnippet: `import { SplitButton } from '@/components/ui';\n\n<SplitButton />`,
+    realWorldExamples: [
+      {
+        title: 'Publish & Schedule Post',
+        scenario: 'Default: "Publish Now", Dropdown: "Schedule for Later".',
+        impact: 'Accelerates default flow.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Default Effect (Status Quo Bias)',
+        detail: 'Highlights the most common action while keeping alternatives accessible.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Ensure dividing seam is visible.',
+        dontItem: 'Put destructive irreversible actions in the dropdown.',
+      },
+    ],
+    implementationNotes: ['Divider seam between primary button and chevron anchor.'],
+    supportedStates: ['Default', 'Primary Active', 'Dropdown Open'],
+    isFuture: true,
+  },
+  {
+    id: 'fabs',
+    name: 'FABs',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Floating Action Button Surface Standard',
+    description:
+      'Prominent circular or rounded rectangular button performing the primary positive action on a screen.',
+    explanation:
+      'FABs float above the interface to represent the most important screen action within comfortable thumb reach.',
+    props: [{ name: 'icon', type: 'ReactNode', description: 'Action icon.' }],
+    codeSnippet: `import { Fab } from '@/components/ui';\n\n<Fab />`,
+    realWorldExamples: [
+      {
+        title: 'New Student Enrollment',
+        scenario: 'Floating plus button on directory.',
+        impact: 'Instant reachability.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Von Restorff Isolation Effect',
+        detail: 'Elevated floating placement draws focal attention as the key screen action.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use 1 FAB per screen only.',
+        dontItem: 'Use FAB for minor or destructive actions.',
+      },
+    ],
+    implementationNotes: ['Level 3 elevation with smooth scale-down on press.'],
+    supportedStates: ['Resting', 'Hovered (Elevated)', 'Pressed'],
+    isFuture: true,
+  },
+  {
+    id: 'extended-fabs',
+    name: 'Extended FABs',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Labelled Action Standard',
+    description:
+      'Wider floating action button containing both an icon and an explicit descriptive text label.',
+    explanation:
+      'Extended FABs provide clarity when an icon alone could be ambiguous, collapsing on scroll to preserve space.',
+    props: [{ name: 'label', type: 'string', description: 'Button text label.' }],
+    codeSnippet: `import { ExtendedFab } from '@/components/ui';\n\n<ExtendedFab label="New Invoice" />`,
+    realWorldExamples: [
+      {
+        title: 'Finance Portal',
+        scenario: '"Create Invoice" extended FAB.',
+        impact: 'Zero ambiguity on action.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Dual Coding Theory',
+        detail: 'Combining text with iconography reinforces meaning and accelerates recognition.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Collapse to icon-only on downward scroll.',
+        dontItem: 'Use long wordy labels exceeding 3 words.',
+      },
+    ],
+    implementationNotes: ['Animated width transition between extended and collapsed.'],
+    supportedStates: ['Extended with Label', 'Collapsed (Icon-Only)', 'Pressed'],
+    isFuture: true,
+  },
+  {
+    id: 'fab-menu',
+    name: 'FAB menu',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 Speed Dial Radial Action Standard',
+    description:
+      'Expandable speed-dial menu radiating secondary actions when the primary FAB is triggered.',
+    explanation:
+      'Expands a single floating action point into a compact radial stack of related creation actions.',
+    props: [{ name: 'actions', type: 'FabAction[]', description: 'Speed dial sub-actions.' }],
+    codeSnippet: `import { FabMenu } from '@/components/ui';\n\n<FabMenu />`,
+    realWorldExamples: [
+      {
+        title: 'Multi-Record Creator',
+        scenario: 'Add Student, Add Course, Add Invoice.',
+        impact: '3 actions in 1 floating point.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Hick's Law Progressive Reveal",
+        detail: 'Keeps screen clean until the user explicitly requests creation options.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use 2 to 4 sub-actions maximum.',
+        dontItem: 'Block primary screen inputs without dismissal.',
+      },
+    ],
+    implementationNotes: ['Backdrop blur with staggered spring entrance.'],
+    supportedStates: ['Closed FAB', 'Expanded Radial Speed Dial'],
+    isFuture: true,
+  },
+  {
+    id: 'icon-buttons',
+    name: 'Icon buttons',
+    category: 'Inputs',
+    parentGroupId: 'buttons',
+    paradigm: 'Material 3 44px Tactile Micro-Action Standard',
+    description:
+      'Compact icon-only interactive button engineered with mandatory hover labels and 44x44px touch targets.',
+    explanation:
+      'Icon buttons allow users to take compact actions in toolbars, app bars, and data table rows.',
+    props: [{ name: 'title', type: 'string', description: 'Mandatory accessible hover label.' }],
+    codeSnippet: `import { IconButton } from '@/components/ui';\n\n<IconButton title="Settings" />`,
+    realWorldExamples: [
+      {
+        title: 'Table Row Actions',
+        scenario: 'Edit, Copy ID, and Archive icons in data rows.',
+        impact: 'High data density.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Micro-Affordance & Hit-Target Expansion',
+        detail: 'Invisible pseudo-element ensures 44px hit bounds despite 20px glyph size.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Always provide accessible hover title.',
+        dontItem: 'Use abstract decorative icons without clear meaning.',
+      },
+    ],
+    implementationNotes: ['::before pseudo-element expanding hit target to 44px.'],
+    supportedStates: ['Default', 'Hover Pill', 'Pressed', 'Disabled'],
+    isFuture: true,
+  },
+  {
+    id: 'checkbox',
+    name: 'Checkbox',
+    category: 'Inputs',
+    paradigm: 'Material 3 Tri-State Selection Standard',
+    description:
+      'Selection control allowing users to select one or multiple items from a set, supporting checked, unchecked, and indeterminate states.',
+    explanation:
+      'Checkboxes permit independent multi-selection across table rows and configuration filters.',
+    props: [{ name: 'checked', type: "boolean | 'indeterminate'", description: 'Check state.' }],
+    codeSnippet: `import { Checkbox } from '@/components/ui';\n\n<Checkbox />`,
+    realWorldExamples: [
+      {
+        title: 'Batch Student Roster Action',
+        scenario: 'Selecting all students in Grade 10.',
+        impact: 'Batch dispatch operations.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Direct Feedback (Lock & Key)',
+        detail: 'Instant visual mark confirms state without ambiguous toggling.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Support indeterminate state when some sub-items are selected.',
+        dontItem: 'Use checkboxes for mutually exclusive options.',
+      },
+    ],
+    implementationNotes: ['SVG check and minus paths with spring interpolation.'],
+    supportedStates: ['Unchecked', 'Checked', 'Indeterminate', 'Focused', 'Disabled'],
+    isFuture: true,
+  },
+  {
+    id: 'radio-button',
+    name: 'Radio button',
+    category: 'Inputs',
+    paradigm: 'Material 3 Mutually Exclusive Option Standard',
+    description:
+      'Selection control allowing users to select exactly one option from a list of mutually exclusive choices.',
+    explanation:
+      'Radio buttons present all available alternatives at once when users need to compare choices before selecting.',
+    props: [{ name: 'selected', type: 'boolean', description: 'Selection state.' }],
+    codeSnippet: `import { RadioButton } from '@/components/ui';\n\n<RadioButton />`,
+    realWorldExamples: [
+      {
+        title: 'Payment Method Selection',
+        scenario: 'Choosing between KHQR, Bank Transfer, and Cash.',
+        impact: 'Single selection guarantee.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Hick's Law Side-by-Side Comparison",
+        detail: 'Exposes choices openly unlike hidden dropdown menus.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Always have exactly one radio selected by default.',
+        dontItem: 'Allow multiple radios in a group to be selected.',
+      },
+    ],
+    implementationNotes: ['Inner dot scales up smoothly with 150ms cubic ease.'],
+    supportedStates: ['Unselected', 'Selected (Inner Dot)', 'Disabled'],
+    isFuture: true,
+  },
+  {
+    id: 'date-pickers',
+    name: 'Date pickers',
+    category: 'Inputs',
+    parentGroupId: 'date-time-pickers',
+    paradigm: 'Material 3 Modal & Docked Calendar Standard',
+    description:
+      'Interactive calendar picker supporting single date selection, date ranges, and direct text input entry.',
+    explanation:
+      'Date pickers facilitate fast date selection with month navigation, day grids, and keyboard accessibility.',
+    props: [{ name: 'value', type: 'Date | null', description: 'Selected date.' }],
+    codeSnippet: `import { DatePicker } from '@/components/ui';\n\n<DatePicker />`,
+    realWorldExamples: [
+      {
+        title: 'Enrollment Effective Date',
+        scenario: 'Selecting student admission date.',
+        impact: 'Valid date entry.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Calendar Mental Model',
+        detail: 'Matches intuitive real-world calendar grid mental representations.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Highlight today and active selection clearly.',
+        dontItem: 'Disable keyboard manual date input entry.',
+      },
+    ],
+    implementationNotes: ['WCAG accessible arrow key calendar cell navigation.'],
+    supportedStates: ['Docked Input', 'Modal Calendar Open', 'Date Selected'],
+    isFuture: true,
+  },
+  {
+    id: 'time-pickers',
+    name: 'Time pickers',
+    category: 'Inputs',
+    parentGroupId: 'date-time-pickers',
+    paradigm: 'Material 3 Clock Dial & Input Standard',
+    description:
+      'Precision time selection control offering radial clock dial selection and numeric hour/minute inputs with AM/PM toggle.',
+    explanation:
+      'Time pickers enable intuitive hour and minute selection for scheduling courses, examinations, and meetings.',
+    props: [{ name: 'time', type: 'string', description: 'Selected time in HH:mm format.' }],
+    codeSnippet: `import { TimePicker } from '@/components/ui';\n\n<TimePicker />`,
+    realWorldExamples: [
+      {
+        title: 'Course Timetable Scheduling',
+        scenario: 'Setting lecture start and end periods.',
+        impact: 'Conflict-free timetabling.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Familiar Clock Metaphor',
+        detail: 'Circular dial provides spatial intuition for hours and 5-minute intervals.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Provide instant toggle between dial and text input.',
+        dontItem: 'Force tedious scrolling for minutes.',
+      },
+    ],
+    implementationNotes: ['Radial clock face with angle calculations.'],
+    supportedStates: ['Hour Selection', 'Minute Selection', 'AM/PM Active'],
+    isFuture: true,
+  },
+  {
+    id: 'sliders',
+    name: 'Sliders',
+    category: 'Inputs',
+    paradigm: 'Material 3 Continuous & Discrete Range Standard',
+    description:
+      'Horizontal track control allowing users to select a value or range of values along an interactive scale.',
+    explanation:
+      'Sliders allow users to make quick adjustments across a spectrum such as volume, thresholds, or price ranges.',
+    props: [{ name: 'value', type: 'number', description: 'Current numeric value.' }],
+    codeSnippet: `import { Slider } from '@/components/ui';\n\n<Slider />`,
+    realWorldExamples: [
+      {
+        title: 'Attendance Quorum Threshold',
+        scenario: 'Adjusting passing grade threshold from 50% to 100%.',
+        impact: 'Tactile adjustment.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Continuous Sensory Feedback',
+        detail: 'Sliding track gives tactile proportion of value relative to scale limits.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Display value label bubble on drag.',
+        dontItem: 'Use sliders for precise non-numeric qualitative data.',
+      },
+    ],
+    implementationNotes: ['Touch-friendly 44px thumb bounding box.'],
+    supportedStates: ['Resting', 'Dragging (Value Bubble Active)', 'Discrete Steps'],
+    isFuture: true,
+  },
+  {
+    id: 'search',
+    name: 'Search',
+    category: 'Inputs',
+    paradigm: 'Material 3 Search Bar & View Standard',
+    description:
+      'Full-featured search input transforming smoothly into an expanded search view with live autocomplete suggestions.',
+    explanation:
+      'Search bars provide direct, high-speed access to records, students, and documents without menu hunting.',
+    props: [{ name: 'query', type: 'string', description: 'Search query.' }],
+    codeSnippet: `import { SearchBar } from '@/components/ui';\n\n<SearchBar />`,
+    realWorldExamples: [
+      {
+        title: 'Global Campus Lookup',
+        scenario: 'Admin searches student ID, phone number, or guardian name.',
+        impact: '<200ms lookup.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Doherty Threshold (<400ms)',
+        detail: 'Real-time debounced results keep the operator in continuous productive flow.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Include clear (X) icon when text is entered.',
+        dontItem: 'Force users to press Enter for basic filtering.',
+      },
+    ],
+    implementationNotes: ['Rounded-full 48px height with search glyph prefix.'],
+    supportedStates: ['Collapsed Bar', 'Focused (Expanded View)', 'With Query'],
+    isFuture: true,
+  },
+
+  // ==========================================
+  // FEEDBACK (Material 3 Standards)
+  // ==========================================
+  {
+    id: 'dialogs',
+    name: 'Dialogs',
+    category: 'Feedback',
+    paradigm: 'Material 3 Basic & Full-Screen Dialog Standard',
+    description:
+      'Modal window interrupting the active workflow to capture critical user decisions or present essential information.',
+    explanation:
+      'Dialogs demand immediate attention, disabling the background canvas until confirmed or dismissed.',
+    props: [{ name: 'open', type: 'boolean', description: 'Dialog visibility.' }],
+    codeSnippet: `import { Dialog } from '@/components/ui';\n\n<Dialog />`,
+    realWorldExamples: [
+      {
+        title: 'Permanent Student Expulsion',
+        scenario: 'Warning before irreversible database deletion.',
+        impact: 'Prevents catastrophic mistakes.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Consequence Confrontation (Norman)',
+        detail: 'Modal isolation forces the operator to acknowledge destructive outcomes.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Always provide a neutral Cancel option.',
+        dontItem: 'Use dialogs for trivial status notifications.',
+      },
+    ],
+    implementationNotes: ['Native ::backdrop with blur and Focus Trap.'],
+    supportedStates: ['Open Modal', 'Closed', 'Confirming (Spinner)'],
+    isFuture: true,
+  },
+  {
+    id: 'bottom-sheets',
+    name: 'Bottom sheets',
+    category: 'Feedback',
+    parentGroupId: 'sheets',
+    paradigm: 'Material 3 Standard & Modal Bottom Sheet Standard',
+    description:
+      'Surface anchored to the bottom edge of the display, offering supplementary content or secondary actions.',
+    explanation:
+      'Bottom sheets slide up from the bottom of the screen to reveal contextual menus, filters, and forms.',
+    props: [{ name: 'open', type: 'boolean', description: 'Sheet state.' }],
+    codeSnippet: `import { BottomSheet } from '@/components/ui';\n\n<BottomSheet />`,
+    realWorldExamples: [
+      {
+        title: 'Roster Export Options',
+        scenario: 'Choose CSV, PDF, or Excel export format on mobile.',
+        impact: 'Frictionless selection.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Physicality & Sheet Metaphor',
+        detail: 'Dragging a sheet up and down mimics physical paper handling.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Include drag handle pill at top center.',
+        dontItem: 'Block dismissal via downward swipe.',
+      },
+    ],
+    implementationNotes: ['Touch drag listener with snap points.'],
+    supportedStates: ['Hidden', 'Peek (Half Height)', 'Expanded (Full Height)'],
+    isFuture: true,
+  },
+  {
+    id: 'side-sheets',
+    name: 'Side sheets',
+    category: 'Feedback',
+    parentGroupId: 'sheets',
+    paradigm: 'Material 3 Coplanar & Modal Side Sheet Standard',
+    description:
+      'Vertical surface anchored to the right side of the screen displaying supplementary details or inspector panels.',
+    explanation:
+      'Side sheets permit deep document inspection and configuration while keeping the primary table visible.',
+    props: [{ name: 'open', type: 'boolean', description: 'Side sheet visibility.' }],
+    codeSnippet: `import { SideSheet } from '@/components/ui';\n\n<SideSheet />`,
+    realWorldExamples: [
+      {
+        title: 'Student Dossier Inspector',
+        scenario: 'Admin clicks table row; side sheet opens full student profile.',
+        impact: 'Zero context loss.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Preservation of Work Context',
+        detail: 'Keeps parent table visible so users never lose their place in the list.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use coplanar side sheet on desktop viewports.',
+        dontItem: 'Obscure main table filters entirely.',
+      },
+    ],
+    implementationNotes: ['Smooth slide-in transition from right boundary.'],
+    supportedStates: ['Closed', 'Open Coplanar', 'Open Modal'],
+    isFuture: true,
+  },
+  {
+    id: 'loading-indicator',
+    name: 'Loading indicator',
+    category: 'Feedback',
+    parentGroupId: 'loading-progress',
+    paradigm: 'Material 3 Circular Activity Spinner Standard',
+    description:
+      'Animated circular progress glyph expressing indeterminate background computation and async data fetching.',
+    explanation:
+      'Circular indicators communicate that the system is actively working on a task of indeterminate length.',
+    props: [{ name: 'size', type: "'sm' | 'md' | 'lg'", description: 'Spinner dimension.' }],
+    codeSnippet: `import { LoadingIndicator } from '@/components/ui';\n\n<LoadingIndicator />`,
+    realWorldExamples: [
+      {
+        title: 'Database Query Wait',
+        scenario: 'Fetching 500 student records over replica set.',
+        impact: 'Assures ongoing progress.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Anxiety Reduction',
+        detail: 'Motion feedback confirms the application has not frozen or disconnected.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Show spinner when operations take > 300ms.',
+        dontItem: 'Flash spinner for instant operations under 100ms.',
+      },
+    ],
+    implementationNotes: ['SVG stroke-dasharray keyframe animation.'],
+    supportedStates: ['Spinning Indeterminate', 'Determinate Progress'],
+    isFuture: true,
+  },
+  {
+    id: 'progress-indicators',
+    name: 'Progress indicators',
+    category: 'Feedback',
+    parentGroupId: 'loading-progress',
+    paradigm: 'Material 3 Linear & Circular Determinate Standard',
+    description:
+      'Linear track progress bar showing the precise percentage completion of a long-running operational task.',
+    explanation:
+      'Progress indicators quantify the exact proportion of a multi-step job completed, keeping users informed.',
+    props: [{ name: 'value', type: 'number', description: 'Percentage completion (0 to 100).' }],
+    codeSnippet: `import { ProgressIndicator } from '@/components/ui';\n\n<ProgressIndicator value={75} />`,
+    realWorldExamples: [
+      {
+        title: 'Batch Report Generation',
+        scenario: 'Processing 45 of 60 campus class schedules.',
+        impact: 'Precise time expectation.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Goal-Gradient Hypothesis',
+        detail:
+          'People accelerate effort and stay patient as they perceive progress toward a goal.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Always accompany with numeric percentage.',
+        dontItem: 'Jerk progress bar backward.',
+      },
+    ],
+    implementationNotes: ['Smooth CSS transition on track width fill.'],
+    supportedStates: ['Determinate (0-100%)', 'Indeterminate Pulse'],
+    isFuture: true,
+  },
+  {
+    id: 'tooltips',
+    name: 'Tooltips',
+    category: 'Feedback',
+    paradigm: 'Material 3 Plain & Rich Contextual Tooltip Standard',
+    description:
+      'Contextual label appearing on hover or focus to explain the function of an icon button or obscure control.',
+    explanation:
+      'Tooltips provide concise textual definitions on hover, ensuring zero ambiguity for icon-only controls.',
+    props: [{ name: 'content', type: 'string', description: 'Tooltip explanation text.' }],
+    codeSnippet: `import { Tooltip } from '@/components/ui';\n\n<Tooltip content="Export Roster" />`,
+    realWorldExamples: [
+      {
+        title: 'Icon Button Hover',
+        scenario: 'User hovers over printer glyph; "Print Grade Sheet" appears.',
+        impact: 'Clarity without clutter.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Recognition Over Recall',
+        detail: 'Supplies instant explanation without forcing users to remember cryptic icons.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Keep text under 6 words.',
+        dontItem: 'Put vital information in tooltips inaccessible to touch devices.',
+      },
+    ],
+    implementationNotes: ['Floating UI with collision detection and focus trigger.'],
+    supportedStates: ['Hidden', 'Revealed on Hover', 'Keyboard Focused'],
+    isFuture: true,
+  },
+  {
+    id: 'snackbar',
+    name: 'Snackbar',
+    category: 'Feedback',
+    paradigm: 'Material 3 Transient Notification & Action Recovery Standard',
+    description:
+      'Provides brief, non-interruptive notifications at the bottom of the screen about app processes and transient updates.',
+    explanation:
+      'Snackbars inform users of a process that an app has performed or will perform, providing brief, transient feedback.',
+    props: [
+      { name: 'message', type: 'string', description: 'Notification message.' },
+      { name: 'action', type: 'ReactNode', description: 'Optional recovery action (e.g. Undo).' },
+    ],
+    codeSnippet: `import { Snackbar } from '@/components/ui';\n\n<Snackbar message="Student record saved." action={<button>Undo</button>} />`,
+    realWorldExamples: [
+      {
+        title: 'Record Archive Feedback',
+        scenario: 'User archives course section; snackbar appears with "Undo" action.',
+        impact: 'Frictionless undo.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Forgiving Systems (Nielsen)',
+        detail: 'Transitory recovery actions allow quick reversal of unintended steps.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Keep message concise and focused on single transient event.',
+        dontItem: 'Use snackbars for critical system errors requiring immediate acknowledgment.',
+      },
+    ],
+    implementationNotes: ['Self-dismissing after 4-7 seconds or upon user interaction.'],
+    supportedStates: ['Resting', 'Action Hover', 'Dismissing'],
+    isFuture: true,
+  },
+
+  // ==========================================
+  // DISPLAY (Material 3 Standards)
+  // ==========================================
+  {
+    id: 'badges',
+    name: 'Badges',
+    category: 'Display',
+    paradigm: 'Material 3 Small & Large Notification Count Standard',
+    description:
+      'Small visual indicators conveying status information, notification counts, or thematic categorization on an avatar or icon.',
+    explanation:
+      'Badges draw immediate attention to unread messages, alert numbers, or pending student applications.',
+    props: [{ name: 'count', type: 'number', description: 'Optional numeric badge count.' }],
+    codeSnippet: `import { Badge } from '@/components/ui';\n\n<Badge count={5} />`,
+    realWorldExamples: [
+      {
+        title: 'Unread Notifications',
+        scenario: 'Red dot badge on campus bell icon indicates 3 new messages.',
+        impact: 'High visibility signal.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Visual Saliency & Pop-Out Effect',
+        detail: 'High-contrast dot triggers immediate peripheral visual awareness.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Truncate numbers over 99 to "99+".',
+        dontItem: 'Use badges for non-transient static decorative shapes.',
+      },
+    ],
+    implementationNotes: ['Positioned absolutely at top-right corner of host element.'],
+    supportedStates: ['Dot Badge (Uncounted)', 'Count Badge (1-99+)', 'Brand Tonal'],
+    isFuture: true,
+  },
+  {
+    id: 'cards',
+    name: 'Cards',
+    category: 'Display',
+    paradigm: 'Material 3 Elevated, Filled & Outlined Card Standard',
+    description:
+      'Flexible content container grouping related information, media, and actionable decisions on a single subject.',
+    explanation:
+      'Cards serve as entry points to more detailed information, providing organized chunks of data.',
+    props: [
+      {
+        name: 'variant',
+        type: "'elevated' | 'filled' | 'outlined'",
+        description: 'Card surface archetype.',
+      },
+    ],
+    codeSnippet: `import { Card } from '@/components/ui';\n\n<Card />`,
+    realWorldExamples: [
+      {
+        title: 'Student Dossier Card',
+        scenario: 'Photo, Name, ID, Major, and View Dossier button.',
+        impact: 'Scannable grid unit.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: "Miller's Law Chunking",
+        detail: 'Consolidates multi-field records into digestible single visual containers.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Maintain consistent 16px corner radius.',
+        dontItem: 'Mix more than 2 card styles on the same screen.',
+      },
+    ],
+    implementationNotes: ['1px Soft Lavender border (#CAD3F5) with zero box-shadows.'],
+    supportedStates: ['Elevated', 'Filled', 'Outlined', 'Interactive Hover'],
+    isFuture: true,
+  },
+  {
+    id: 'carousel',
+    name: 'Carousel',
+    category: 'Display',
+    paradigm: 'Material 3 Multi-Browse & Uncontained Carousel Standard',
+    description:
+      'Horizontally scrollable collection of cards or media items allowing users to browse through rich visual sets.',
+    explanation:
+      'Carousels display multiple items in a compact space, enabling horizontal browsing with swipe or arrow keys.',
+    props: [{ name: 'items', type: 'CarouselItem[]', description: 'Slides array.' }],
+    codeSnippet: `import { Carousel } from '@/components/ui';\n\n<Carousel />`,
+    realWorldExamples: [
+      {
+        title: 'Campus Facility Gallery',
+        scenario: 'Browsing computer science labs, library, and sports halls.',
+        impact: 'Engaging visual tour.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Peek Effect & Visual Affordance',
+        detail: 'Partially visible trailing card invites the user to swipe or scroll.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Support keyboard arrow navigation and touch swipe.',
+        dontItem: 'Auto-advance rapidly without pause controls.',
+      },
+    ],
+    implementationNotes: ['CSS scroll-snap with inertia momentum.'],
+    supportedStates: ['Idle', 'Dragging / Swiping', 'End of Carousel'],
+    isFuture: true,
+  },
+  {
+    id: 'divider',
+    name: 'Divider',
+    category: 'Display',
+    paradigm: 'Material 3 Hairline Spatial Separator Standard',
+    description:
+      'Thin spatial line separating content into clear thematic groups in lists, layouts, and menus.',
+    explanation:
+      'Dividers bring visual structure and clarity to dense lists and tables without heavy visual weight.',
+    props: [{ name: 'inset', type: 'boolean', description: 'Whether divider indents from edge.' }],
+    codeSnippet: `import { Divider } from '@/components/ui';\n\n<Divider />`,
+    realWorldExamples: [
+      {
+        title: 'List Row Separator',
+        scenario: 'Delimiting student rows in mobile roster.',
+        impact: 'Clean row scanning.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Gestalt Law of Continuity',
+        detail: 'Continuous hairline guides horizontal scanning along records.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Use 1px Soft Lavender (#CAD3F5) borders.',
+        dontItem: 'Use heavy dark borders that distract from content.',
+      },
+    ],
+    implementationNotes: ['1px solid hairline with optional left inset.'],
+    supportedStates: ['Full-bleed', 'Inset', 'Vertical Divider'],
+    isFuture: true,
+  },
+  {
+    id: 'lists',
+    name: 'Lists',
+    category: 'Display',
+    paradigm: 'Material 3 One, Two & Three-Line List Item Standard',
+    description:
+      'Continuous vertical collection of items containing supporting visuals, headline text, secondary metadata, and actions.',
+    explanation:
+      'Lists are the most fundamental pattern for displaying structured text and tabular items on mobile and desktop.',
+    props: [{ name: 'items', type: 'ListItem[]', description: 'List rows.' }],
+    codeSnippet: `import { List } from '@/components/ui';\n\n<List />`,
+    realWorldExamples: [
+      {
+        title: 'Student Directory Feed',
+        scenario: 'Avatar, Student Name, Student ID, and Chevron arrow.',
+        impact: 'Effortless scanning.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Vertical Reading Flow',
+        detail: 'Optimized for vertical eye saccades during rapid information scanning.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Keep row heights uniform (56px, 72px, 88px).',
+        dontItem: 'Cram unformatted text blocks into list rows.',
+      },
+    ],
+    implementationNotes: ['Semantic ul and li tags with accessible row keyboard navigation.'],
+    supportedStates: ['Single-Line', 'Two-Line (with Subtitle)', 'Selected Row'],
+    isFuture: true,
+  },
+
+  // ==========================================
+  // FORMS (Material 3 Standards)
+  // ==========================================
+  {
+    id: 'text-fields',
+    name: 'Text fields',
+    category: 'Forms',
+    paradigm: 'Material 3 Filled & Outlined Text Input Standard',
+    description:
+      'Text input surface supporting filled and outlined containers, floating labels, helper text, and validation states.',
+    explanation:
+      'Text fields allow users to type and edit text, numbers, and symbols across forms and data entry flows.',
+    props: [
+      { name: 'label', type: 'string', description: 'Floating field label.' },
+      { name: 'variant', type: "'outlined' | 'filled'", description: 'Field style archetype.' },
+    ],
+    codeSnippet: `import { TextField } from '@/components/ui';\n\n<TextField label="Full Name" />`,
+    realWorldExamples: [
+      {
+        title: 'Student Registration Form',
+        scenario: 'Entering Legal Name, Email Address, and Phone Number.',
+        impact: 'Error-free input.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Floating Label Persistence',
+        detail: 'Keeps field context visible even after user starts typing.',
+      },
+    ],
+    usageGuidelines: [
+      {
+        doItem: 'Show clear helper text below the field.',
+        dontItem: 'Rely solely on placeholder text as a label.',
+      },
+    ],
+    implementationNotes: ['Focus ring in brand Royal Blue (#0056FF) with 2px stroke.'],
+    supportedStates: ['Resting', 'Hovered', 'Focused (Floating Label)', 'Error State'],
+    isFuture: true,
+  },
+];
+
 const categoryOrderMap = new Map<string, number>();
 COMPONENT_CATEGORIES.forEach((cat, idx) => categoryOrderMap.set(cat, idx));
 
@@ -1975,10 +3364,11 @@ COMPONENT_CATEGORIES.forEach((cat, idx) => categoryOrderMap.set(cat, idx));
  * Guaranteed 100% sorted in strict linear flow order matching COMPONENT_CATEGORIES.
  * Prevents rank jumping and ensures sequential step-by-step scrolling.
  */
-export const COMPONENT_LIBRARY_REGISTRY: ComponentItemDoc[] = [...RAW_COMPONENT_REGISTRY].sort(
-  (a, b) => {
-    const orderA = categoryOrderMap.get(a.category) ?? 999;
-    const orderB = categoryOrderMap.get(b.category) ?? 999;
-    return orderA - orderB;
-  },
-);
+export const COMPONENT_LIBRARY_REGISTRY: ComponentItemDoc[] = [
+  ...RAW_COMPONENT_REGISTRY,
+  ...FUTURE_M3_COMPONENTS,
+].sort((a, b) => {
+  const orderA = categoryOrderMap.get(a.category) ?? 999;
+  const orderB = categoryOrderMap.get(b.category) ?? 999;
+  return orderA - orderB;
+});

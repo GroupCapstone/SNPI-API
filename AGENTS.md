@@ -41,6 +41,15 @@ Before modifying code, packages, or repository structure, read:
 31. `.agents/skills/snp-sms-design-standards/universal-ai-agent-prompt-manual.md`: Authoritative Universal AI Agent Prompt & MVP Component Generation Manual (procedural prompt synthesis, [Preview | Prompt] tabs, 1-click copy action, MVP component blueprints).
 32. `.agents/skills/snp-sms-design-standards/line-tracker-navigation-manual.md`: Authoritative Precision Line Tracker Navigation & Zero-Scrollbar Manual (dotless continuous vertical rail, active indicator segment, zero-scrollbar standard).
 33. `.agents/skills/snp-sms-design-standards/cyber-armor-nav-manual.md`: Authoritative Cyber Armor Modular Navigation & Aerospace Mecha HUD Console Manual (45° chamfered armor plates, double-seam milled dividers, Royal Blue luminous glow, zero dots).
+34. `.agents/skills/snp-sms-design-standards/accessible-design-principles-manual.md`: Authoritative Material 3 & WCAG 2.1 AAA Accessible Design Architecture Manual (13 lived experience dimensions, WCAG AAA 7:1 contrast, Alt text ≤140 chars, notifications, UX writing, M3 custom color roles, multi-modal inputs, selection architecture, layout scaffold & 5 breakpoints, 6 interaction states, grids, spacing & density scaling, 5 adaptation vectors, canonical layouts, and usability & M3 expressive architecture).
+35. `.agents/skills/snp-sms-design-standards/material-a-z-glossary.md`: Authoritative Material Design 3 (M3) A-Z Lexicon & Architectural Standard (Adaptive design, HCT color science, Dynamic color, 5 color roles, Reference/System/Component tokens, 35 components, Orbiter & Spatial XR).
+36. `.agents/skills/snp-sms-design-standards/layout-scaffold-manual.md`: Authoritative Material 3 Layout Scaffold Architecture Manual (Bars, Rails, Panes, Safety Regions, Jetpack Compose Rulers, Spacing tokens).
+37. `.agents/skills/snp-sms-design-standards/color-roles-system-manual.md`: Authoritative Material 3 Color Roles System Manual (26 standard color roles, 6 groups, 3 contrast levels, tone-based surface containers, tone 98 surface, chroma 6 neutral palette, fixed accent colors).
+38. `.agents/skills/snp-sms-design-standards/interaction-states-manual.md`: Authoritative Material 3 Interaction States & State Layers Manual (6 canonical states: Enabled, Disabled, Hover, Focused, Pressed, Dragged, State layers 8%/12%/16%, Action/Selection/Input inheritance, container exclusion, FAB hide rule, disabled contrast exemption).
+39. `.agents/skills/snp-sms-design-standards/grids-spacing-density-manual.md`: Authoritative Material 3 Grids, Spacing & Density Scaling Manual (4/8/12 adaptive grid columns, 0-64dp mathematical spacing scale, density scale 0 to -3 with 4dp increments without font shrinking, >=44x44px touch targets).
+40. `.agents/skills/snp-sms-design-standards/adaptive-breakpoints-manual.md`: Authoritative Material 3 Adaptive Breakpoints & 5-Vector Transformation Manual (5 standard breakpoints: Compact <600dp, Medium 600-839dp, Expanded 840-1199dp, Large 1200-1599dp, Extra-Large >=1600dp; 5 Vectors: Reveal, Divide, Resize, Reposition, Swap; component swapping matrix).
+41. `.agents/skills/snp-sms-design-standards/canonical-layouts-manual.md`: Authoritative Material 3 Canonical Layout Archetypes Manual (Feed 1-4 cols, List-Detail 1-pane vs 2-pane co-planar with selection persistence, Supporting Pane 2/3 + 1/3 at 360dp min-width, Levitate layering strategy).
+42. `.agents/skills/snp-sms-design-standards/usability-expressive-manual.md`: Authoritative Material 3 Usability & Expressive Architecture Manual (Nielsen Norman 5 pillars: Efficiency, Error reduction, Learnability, Memorability, Satisfaction; 6 Expressive tactics: Size, Containment, Shape, Color, Motion, Typography; Aura breathing case study; V1 Cluttered vs V2 Calm; Primary goal hierarchy).
 
 ---
 
@@ -126,14 +135,20 @@ npm run changelog:sync
 
 ## 5. Mandatory Pre-Push CI, Dual-Developer Sync & Deployment Quality Gate Rule
 
+- **One-Command Automated Push & Checkpoint (`npm run push:checkpoint`)**:
+  - Whenever the user explicitly commands to push (`push`, `git push`, `publish`), always run `npm run push:checkpoint` (or the complete 10-step sequence: format, lint, typecheck, smoke, deploy:verify, git:sync, changelog:sync, commit, tag, push, and live CI status verification).
+- **Mandatory Pre-Push ESLint Quality Gate (`npm run lint`)**:
+  - `npm run lint` MUST be executed and pass with 0 errors before any commit or push. JSX text node violations, unescaped entities, and typing errors must never reach remote CI.
 - **Mandatory Dual-Developer Git Reconciliation & Merge Gate (`npm run git:sync`)**:
   - Two developers actively collaborate on this repository. Before attempting any commit push or release checkpoint, the system must **ALWAYS run `npm run git:sync`** (or `git fetch origin` followed by `git merge origin/<branch> --no-edit`).
   - If remote has incoming commits from the other developer, merge them immediately into the working tree. Never overwrite or force-push over collaborator code.
-  - If conflicts occur, resolve them cleanly, run the full verification pipeline (`npm run typecheck`, `npm run deploy:verify`), and commit the merged result before pushing.
+  - If conflicts occur, resolve them cleanly, run the full verification pipeline (`npm run typecheck`, `npm run lint`, `npm run deploy:verify`), and commit the merged result before pushing.
 - **Zero Push on Failed Deploy or CI**: Never run `git push`, push release tags, or publish checkpoints if any GitHub deployment, build, test, or CI workflow is failed or failing on `main`.
 - **Pre-Push Deployment Gate (`npm run deploy:verify`)**: Always execute `npm run deploy:verify` prior to pushing to ensure all deployment manifests exist (`vercel.json`, `apps/backend/vercel.json`, `apps/frontend/vercel.json`, Kubernetes manifests), production builds compile with zero errors, and recent GitHub Actions workflows on `main` are green.
-- **Immediate Failure Resolution**: If a workflow fails on GitHub Actions, diagnosing and fixing the failure is the immediate top priority. Pushing further feature code is blocked until all 17 GitHub checks are green.
-- **Post-Push Health Monitoring**: Every push must be monitored via `gh run list` until all active workflows reach `[PASSED]` status.
+- **Mandatory Post-Push Live CI Monitoring Until 100% Green (`npm run push:verify`)**:
+  - Every remote push MUST actively monitor GitHub Actions runs for the pushed commit SHA (`gh run list --commit <SHA>`) until all triggered workflows reach completed `[PASSED]` status.
+  - The agent must NOT end the turn or claim completion until all remote checks are green.
+  - If any workflow fails, the agent must immediately fetch the failed logs (`gh run view <ID> --log-failed`), diagnose the error, resolve it locally, and push the fix.
 
 ---
 
@@ -146,6 +161,25 @@ All AI coding assistants (including Antigravity, Claude, Copilot, Codex, and sub
 - **Non-Destructive Operations Guard**: AI agents must NEVER execute destructive shell commands (`rm -rf /`, `git reset --hard` on uncommitted user work, unseeded database drops, or dropping git stashes). Preserve existing comments, docstrings, and architectural decision records (ADRs).
 - **Contract Preservation Mandate**: AI agents must never modify existing API routes, query params, HTTP status codes, or payload schemas without explicit user direction.
 - **Real-Time Technical Documentation Sync**: AI agents must execute `npm run changelog:sync` whenever architectural changes, skills, or features are implemented to keep `CHANGELOG.md` and the live developer document portal in real-time alignment.
+- **Mandatory UI Agent Design Implementation Invariants (Every Skill & Agent)**: Whenever designing, styling, refactoring, or generating UI components, navigation menus, or documentation views across the entire platform, all AI agents must strictly enforce:
+  1. **Minimal Guide Text**: Only render title and buttons/controls; never write walls of descriptive paragraphs or redundant guide text.
+  2. **Mandatory Icon Hover Definitions**: Every interactive icon and icon button must show an accessible definition/action label on hover via `title` or tooltip.
+  3. **Pure Icon Hygiene**: Never use emojis, informal symbols, or decorative background shapes/colored blobs (`bg-blue-100 rounded-full`, `bg-[#0056FF] rounded-lg`) behind icons.
+  4. **Brand Blueprint Compliance**: Exclusively respect the 5 primary brand tokens (`#0056FF`, `#2277FF`, `#E3E7FC`, `#FFFFFF`, `#EFF5FF`) and high-contrast `#0A1A4A` Deep Navy text.
+  5. **Universal Web & Mobile Responsive Device First**: Always engineer for fluid responsive behavior across both mobile viewports and desktop with zero clipping and >=44x44px touch targets.
+  6. **Mandatory Zero Links Rule (Never Add Links)**: Under no circumstances should AI agents add markdown links, file links (`file://`, `[label](...)`), URL hyperlinks, or unnecessary navigation anchor links in responses or generated UI components unless explicitly requested by the user. Use plain text, backticks (`code`), or bold text for references.
+  7. **Notification & SMS Architecture Invariants**: All system notifications and SMS messages must strictly obey: Title <29 characters with front-loaded information and zero product name repetition; Collapsed body <40 characters; Expanded body <80 characters; Action buttons 1–2 buttons (1–2 words each); SMS Latin <160 characters, Non-Latin <134 characters; Day-specific timing (explicit weekdays, never relative "today/tomorrow"); zero dynamic variables in titles; zero unsolicited ads; zero jokes; zero emoji clutter; never interrupt active onboarding.
+  8. **UX Writing, Pronoun & Punctuation Invariants**: Enforce universal sentence-case across all titles, buttons, and navigation (zero Title Case, zero all-caps blocks); second-person ("you/your") point of view without mixing "my/your"; avoid corporate "we/I" (except legal consent "I agree"); skip terminal periods on single sentences, tooltips, and labels; use contractions ("don't", "can't"); use Oxford serial commas; En dash (–) without spaces for ranges; hyphenate adjective/noun phrases, never verbs; ban Latin abbreviations ("e.g.", "etc."); explain consequences neutrally with mandatory undo recovery instructions.
+  9. **Customizing Material & M3 Color Roles System Invariants**: Enforce 26 standard color roles organized into 6 groups: Primary, Secondary, Tertiary, Error, Surface, and Outline; support 3 contrast levels (Standard, Medium, High); apply updated colorful container on-roles (`on-primary-container`, `on-secondary-container`, `on-tertiary-container`, `on-error-container`) across 14 affected components (Badges, Buttons, Extended FAB, FAB, Icon buttons, Segmented buttons, Chips, Lists, Menus, Navigation bar, Navigation drawer, Navigation rail, Switches, Toolbars); implement tone-based surface container scale (`surface-container-lowest` through `highest`) replacing legacy elevation overlays; enforce technical calibrations: default light surface tone 98 (from 99), neutral palette chroma 6 (from 4), and darkened dark theme surfaces; support add-on fixed accent colors (`primary-fixed`, `fixed-dim`, `on-fixed`, `on-fixed-variant`) for theme-independent elements; support selective dynamic color scoping with immutable brand fallback; export via Design System Package (DSP) and W3C token formats.
+  10. **Multi-Modal Input Architecture Invariants**: Build for simultaneous mouse, trackpad, physical keyboard, stylus, and touch inputs across all device form factors; show visible mouse cursor when external pointing device is connected; separate mouse-drag text selection from touch-drag scrolling; implement semantic cursor morphology (`default`, `pointer`, `text`, `col-resize`, `row-resize`); support secondary click for context menus; suppress virtual on-screen keyboards when physical keyboard is attached; wire up `Enter` for submission, `Spacebar` for media/toggle control, and `Escape` for dismiss/focus clear without deleting typed text.
+  11. **Selection Architecture & Indicators Invariants**: Apply three canonical selection indicators (surface tint `#EFF5FF` with `#0056FF` border, checkmark icon, checkbox component); enforce single-select active pill indicators on navigation rails/drawers/tabs; implement touch selection modes (long-press, avatar tap shortcut, Contextual Action Bar with `[N Selected]`, and batch drag without reordering conflicts); enforce desktop checkbox rules (always visible in primary data tables; reveal-on-hover / reveal-on-first-select in secondary feeds).
+  12. **Layout Architecture & Adaptive Scaffold Invariants**: Structure interfaces via Material 3 Scaffold building blocks: Windows (multi-window, full-screen, split, bubbles), Grids (columns, spacing, focal points), Bars (app bar, bottom nav bar spanning 1+ panes), Rails (perimeter space, navigation rail, toolbars, FABs), Panes (1–3 panes; co-planar, floating, docked; implicit vs explicit grouping), Drag handles (resizable flexible panes, collapse/expand), Rulers (global alignment lines); adapt fluidly across 5 opinionated breakpoints (Compact <600dp, Medium 600–839dp, Expanded 840–1199dp, Large 1200–1599dp, Extra-Large ≥1600dp) and 3 primary experience types (Mobile full-screen, Desktop free-form resizable multi-window, Spatial/XR 3D space with high-contrast pane containers and orbiters); enforce 3 adaptive pane strategies (show/hide, levitate, reflow) and 3 component adaptation patterns (resizing, progressive disclosure showing/hiding, presentation changes like standard to extended FAB); guarantee complete RTL bidirectionality (Arabic, Hebrew, Farsi) with navigation mirroring and respect system safety regions.
+  13. **Interaction States & State Layers Invariants**: Implement 6 canonical interaction states (Enabled, Disabled, Hover, Focused, Pressed, Dragged) using standardized state layers; enforce component inheritance (Action, Selection, Input, and Containment components inherit states; container shells like App Bars, Badges, Navigation Drawers/Rails, and Dialogs do NOT inherit states—only their child interactive elements do); enforce FAB rule (unavailable FAB actions must completely hide rather than display as disabled); maintain layout exclusivity (strictly one hover, one focus, one pressed, and one dragged state active at any time in the layout); enforce accessible ring-like focus indicators (2px solid #0056FF with 2px offset) for keyboard navigation; support valid compound states (Hover+Focused, Selected+Hover, Selected+Pressed); strictly prohibit disabled elements from receiving hover, focus, press, or drag events.
+  14. **Grids, Spacing & Density Scaling Invariants**: Sequence layout composition by placing grid columns -> edge bars & rails -> content panes; align across global rulers (safety insets, title baseline, content anchors, and margin guides); apply implicit grouping (close proximity) and explicit grouping (keyline borders/cards); enforce the component density scale (0 default, -1, -2, -3 decreasing height/padding by 4dp increments without shrinking font size); strictly maintain minimum 48x48dp touch hit targets for interactive controls; prohibit high density in focused selection menus, dialogs, and snackbars; allow users to opt into dense views via accessible settings.
+  15. **Adaptive Breakpoints & 5-Vector Transformation Invariants**: Classify viewports strictly across 5 breakpoints (<600dp Compact, 600–839dp Medium, 840–1199dp Expanded, 1200–1599dp Large, ≥1600dp Extra-Large); govern breakpoint adaptations via the 5 vectors: Reveal (expose secondary panes/rails), Divide (1 pane <840dp, 2 panes 840–1599dp, 3 panes ≥1600dp; single-pane immersion for focused tasks), Resize (maintain 40–60 characters per line readability), Reposition (shift bottom mobile actions to leading rail edges; anchor centered labels), and Swap (substitute functionally equivalent components: Bottom Nav -> Collapsed Rail -> Expanded Rail; Bottom Sheet -> Menu; Full-screen -> Basic Dialog); strictly prohibit invalid cross-type swaps (button to chip/menu).
+  16. **Canonical Layout Archetypes Invariants**: Standardize interface structures across 3 canonical archetypes: Feed (content browsing via 1-column vertical stack on compact, 2–3 columns on medium, 4+ columns on expanded), List-Detail (parent-child data models; single-pane drill-down with Top App Bar Back button on compact/medium, 2-pane co-planar with active selection highlighting and scroll persistence on expanded), and Supporting Pane (asymmetric ~2/3 primary focus pane + 1/3 contextual supporting panel; stacked below or as bottom sheet on compact/medium, docked beside at fixed 360dp on expanded); apply the Levitate layering strategy for task-focused auxiliary workflows; never use List-Detail for non-parent-child workflows.
+  17. **Usability & M3 Expressive Architecture Invariants**: Govern interface design via Nielsen Norman Group's 5 usability pillars (Efficiency, Error reduction, Learnability, Memorability, Satisfaction); distinguish Usability (intuitive & easy for everyone) from Accessibility (perceivable, operable, understandable, robust for assistive technology); enforce strict Primary, Secondary, and Tertiary goal hierarchy per view (maximum one primary goal per screen, prominent CTA, generous empty space, supportive data/settings styled with secondary containers); leverage M3 Expressive tactics systematically (Containment/grouping, Size & scale hierarchy, Shape & shape morph across 35 standard shapes, Color contrast & dynamic color roles, Typographic scale distinction); maintain calm, balanced layouts (uniform shapes, consistent text spacing, avoiding visual clutter, preventing simultaneous competing animations); reserve hero moments for primary flow culminations (e.g., interactive breathing guidance with spring motion) and subordinate controls to bottom easy-to-reach zones.
+- **Mandatory Zero Links Rule — AI Agents Must Never Add Links (ABSOLUTE RULE)**: AI agents must NEVER add markdown links, file scheme links (`file://`), URL hyperlinks, or anchor tags in responses, reports, or code unless explicitly commanded by the user.
 
 ---
 
@@ -227,6 +261,16 @@ Use these specific skill identifiers and command strings to instruct the agent:
     | `SKILL-RAILTOC` | `.agents/skills/snp-sms-design-standards/rail-toc-flight-tracker-manual.md` | Rail TOC Flight Tracker Navigation Manual (Origami paper plane flight navigation, directional turning, solid/dashed rail states, r4 buttons) | `apply skill rail-toc` |
     | `SKILL-ROYAL` | `.agents/skills/snp-sms-design-standards/royal-blue-brand-system-manual.md` | Royal Blue Brand Colors, Futurewave Gradients, Light Day First, Zero-Dot UI Standards, and Deduplicated Components Standard | `apply skill royal` |
     | `SKILL-CYBER-NAV` | `.agents/skills/snp-sms-design-standards/cyber-armor-nav-manual.md` | Cyber Armor Modular Navigation & Aerospace Mecha HUD Console Manual (45° chamfered armor plates, double-seam milled dividers, Royal Blue glow) | `apply skill cyber-nav` |
+    | `SKILL-MINIMAL-UI` | `.agents/skills/snp-sms-design-standards/SKILL.md` (Section 7.13) | Minimal guide text (title & buttons only), icon hover definitions, pure icon hygiene (zero emojis/blobs), brand blueprint, responsive | `apply skill minimal-ui` |
+    | `SKILL-A11Y` | `.agents/skills/snp-sms-design-standards/accessible-design-principles-manual.md` | Material 3 & WCAG 2.1 AAA Accessible Design Architecture (13 dimensions, Alt text, inputs, selection, layout scaffold, 6 states, grids & density) | `apply skill a11y` |
+    | `SKILL-SCAFFOLD` | `.agents/skills/snp-sms-design-standards/layout-scaffold-manual.md` | Material 3 Layout Scaffold (Bars, Rails, Panes, Safety Regions, Compose Rulers, Spacing Tokens) | `apply skill scaffold` |
+    | `SKILL-COLOR-ROLES` | `.agents/skills/snp-sms-design-standards/color-roles-system-manual.md` | Material 3 Color Roles System (26 roles, 6 groups, 3 contrast levels, tone surfaces, fixed accents) | `apply skill color-roles` |
+    | `SKILL-STATES` | `.agents/skills/snp-sms-design-standards/interaction-states-manual.md` | Material 3 Interaction States & State Layers (Enabled, Disabled, Hover, Focused, Pressed, Dragged) | `apply skill states` |
+    | `SKILL-GRIDS` | `.agents/skills/snp-sms-design-standards/grids-spacing-density-manual.md` | Material 3 Grids, Spacing & Density Scaling (4/8/12 Columns, 0-64dp Spacing, Density 0 to -3) | `apply skill grids` |
+    | `SKILL-BREAKPOINTS` | `.agents/skills/snp-sms-design-standards/adaptive-breakpoints-manual.md` | Material 3 Adaptive Breakpoints & 5-Vector Transformation (Compact, Medium, Expanded, Large, Extra-Large) | `apply skill breakpoints` |
+    | `SKILL-CANONICAL` | `.agents/skills/snp-sms-design-standards/canonical-layouts-manual.md` | Material 3 Canonical Layout Archetypes (Feed, List-Detail, Supporting Pane, Levitate Strategy) | `apply skill canonical` |
+    | `SKILL-USABILITY` | `.agents/skills/snp-sms-design-standards/usability-expressive-manual.md` | Material 3 Usability & Expressive Architecture (Nielsen Norman 5 Pillars, 6 Tactics, Aura Case Study) | `apply skill usability` |
+    | `SKILL-GLOSSARY` | `.agents/skills/snp-sms-design-standards/material-a-z-glossary.md` | Material Design 3 (M3) A-Z Lexicon Standards (107 Architectural Terms, HCT Color Science, Tokens) | `apply skill glossary` |
 
 ---
 
@@ -245,3 +289,77 @@ Use these specific skill identifiers and command strings to instruct the agent:
   - Enterprise Platform: **SNPI-SMS** / **SNPI Management System**, never "SNP-SMS" or "SNP Management System" without the "I".
   - Documentation, Badges & Labels: Always display **SNPI** (e.g. `SNPI ENTERPRISE UI SYSTEM`, `SNPI UI Library`, `snpi-ui`, `*.snpi.edu.kh`).
   - Code & Metadata: Page titles, descriptions, and placeholder names must strictly refer to **SNPI** / **SNPI-SMS**.
+
+---
+
+## 13. Mandatory Minimal Guide Text, Icon Hover Definitions, Pure Icon Hygiene & Responsive Brand Blueprint Standard — ABSOLUTE STANDARD
+
+- **Minimal Guide & Description Text (Title & Buttons Only)**:
+  - Strictly prohibit walls of descriptive text, redundant guide paragraphs, helper instructions, or verbose labels under components and sections.
+  - Every component interface must remain minimal, clean, high-density, and direct: render only the title name, buttons, and direct interactive component controls. Never write redundant guide text.
+- **Mandatory Icon Hover Definition Standard**:
+  - Every interactive icon, icon button, and indicator across desktop and mobile must provide a clean, descriptive hover definition of that place/action via accessible `title` attribute or `LibraryTooltip`. Zero mystery icons.
+- **Pure Icon Hygiene (Zero Shapes or Color Blobs Behind Icons)**:
+  - Strictly never use emojis, informal symbols, or colored shapes/blobs (circles, squares, tinted background patches such as `rounded-full bg-blue-100`, `rounded-lg bg-[#0056FF]`) behind icons.
+  - Icons must always be pure, clean vector marks rendered in authoritative brand colors (`text-[#0056FF]`, `text-[#2277FF]`, `text-slate-700`, `text-white` on standard buttons) without decorative background badge shapes.
+- **Strict Brand Blueprint & Color Token Integrity**:
+  - All page designs, navigation hubs, menus, and component views must strictly respect the 5 primary brand tokens:
+    1. `01 #0056FF` Royal Blue — Core brand base, buttons, active highlights.
+    2. `02 #2277FF` Azure Blue — Interactive accents, hover states.
+    3. `03 #E3E7FC` Soft Lavender — Surface micro-tints, subtle borders (`#CAD3F5`), badge fills.
+    4. `04 #FFFFFF` Pure White — Document canvas base, card foundations.
+    5. `05 #EFF5FF` Ice Tint — Subsurface fills, segment tracks, hover backdrops.
+    - Typography Token: Deep Navy `#0A1A4A` (primary headings & text) / Slate-900 `#0F172A`. Never use muddy slate or dark gray containers.
+- **Universal Web & Mobile Responsive Device First**:
+  - Always engineer and verify layouts, menus, and component demos for both mobile viewports (<640px) and wide desktop screens.
+  - Zero text clipping/truncation, zero horizontal overflow, fluid flex wrapping, and minimum 44x44px touch targets.
+
+---
+
+## 14. Mandatory Autonomous AI Agent Compliance with Design Skills & Architecture Rules — ABSOLUTE STANDARD
+
+All autonomous AI coding assistants (including Antigravity, Claude, Copilot, Codex, and subagents) operating in this repository must strictly work with the complete suite of Material Design 3 and SNPI enterprise design skills as non-negotiable operational rules:
+
+1. **Scaffold Architecture Compliance (`SKILL-SCAFFOLD`)**:
+   - Every UI layout must structure interfaces via Scaffold primitives: Bars (Top App Bar variants, Bottom App Bar / Bottom Nav), Rails (Navigation Rail, Trailing Utility Rails), and Panes (1–3 panes; co-planar, docked, or floating).
+   - Must strictly respect safety regions (hardware camera cutouts, system gesture navigation insets, foldable physical hinge seams) and align across Jetpack Compose Rulers (Margin, Baseline, Split Anchor).
+
+2. **Color Roles System & Calibrations Compliance (`SKILL-COLOR-ROLES`)**:
+   - Enforce 26 standard color roles across 6 groups (Primary, Secondary, Tertiary, Error, Surface, Outline) and 3 contrast levels (Standard, Medium, High).
+   - Use updated colorful container on-roles (`on-primary-container`, `on-secondary-container`, `on-tertiary-container`, `on-error-container`) across 14 affected components.
+   - Enforce discrete tone-based surface containers (`surface-container-lowest` through `highest`) replacing legacy elevation overlays.
+   - Strictly apply technical calibrations: Tone 98 light surface, Chroma 6 neutral palette, and darkened dark surfaces. Use fixed accents (`*-fixed`, `*-fixed-dim`) for theme-independent elements.
+
+3. **Interaction States & State Layers Compliance (`SKILL-STATES`)**:
+   - Implement 6 canonical interaction states (Enabled, Disabled, Hover, Focused, Pressed, Dragged) using standardized state layers (8%, 12%, 16% opacity).
+   - Strictly enforce component inheritance: Action, Selection, and Input components inherit states; container shells (App bars, Badges, Navigation bars, Dialogs, Toolbars) do NOT inherit states.
+   - Unavailable FAB actions must hide completely rather than display as disabled. Disabled states are exempt from contrast requirements.
+   - Layout exclusivity: strictly one hover, one focus, one pressed, and one dragged state active at any given moment.
+
+4. **Grids, Spacing & Density Scaling Compliance (`SKILL-GRIDS`)**:
+   - Sequence layout composition: Grid columns (4 compact, 8 medium, 12 expanded+) -> Edge bars/rails -> Content panes.
+   - Adhere strictly to the mathematical spacing scale: 0dp, 4dp, 8dp, 12dp, 16dp, 24dp, 32dp, 40dp, 48dp, 56dp, 64dp.
+   - Enforce component density scale (0 default, -1, -2, -3 decreasing container padding/height by 4dp increments without altering font size).
+   - Maintain minimum 48x48dp (>=44x44px) touch targets across all density levels. Never apply high density to selection menus, dialogs, or snackbars.
+
+5. **Adaptive Breakpoints & 5-Vector Transformation Compliance (`SKILL-BREAKPOINTS`)**:
+   - Classify all viewports into 5 standard breakpoints: Compact (<600dp), Medium (600–839dp), Expanded (840–1199dp), Large (1200–1599dp), Extra-Large (≥1600dp).
+   - Govern breakpoint transformations strictly through the 5 vectors: Reveal (expose secondary panes/rails), Divide (1 pane <840dp, 2 panes 840–1599dp, 3 panes ≥1600dp), Resize (40–60 characters per line readability), Reposition (shift bottom actions to leading rails), and Swap (substitute functionally equivalent components).
+
+6. **Canonical Layout Archetypes Compliance (`SKILL-CANONICAL`)**:
+   - Standardize all screen structures across the 3 canonical archetypes: Feed (content browsing in 1 to 4+ columns), List-Detail (parent-child data models; single-pane drilldown on compact vs 2-pane co-planar on expanded), and Supporting Pane (~2/3 primary canvas + 1/3 supporting pane right docked at 360dp min-width).
+   - Apply the Levitate layering strategy for task-focused auxiliary workflows; never use List-Detail for non-parent-child workflows.
+
+7. **Usability & M3 Expressive Architecture Compliance (`SKILL-USABILITY`)**:
+   - Govern all interface design via Nielsen Norman Group's 5 usability pillars (Efficiency, Error reduction, Learnability, Memorability, Satisfaction).
+   - Enforce strict goal hierarchy: maximum one primary hero goal per screen, prominent CTA, generous white space, supportive secondary actions.
+   - Systematically apply 6 M3 Expressive design tactics: Containment, Size, Shape, Color, Motion (<300ms spring physics), Typography. Maintain calm layouts (anti-clutter Aura standard).
+
+8. **Material Design 3 A-Z Lexicon Compliance (`SKILL-GLOSSARY`)**:
+   - Maintain strict terminology and conceptual alignment across all 107 foundational architectural terms, HCT color science, and 3-tier token hierarchy (Reference, System, Component).
+
+9. **Blueprint Menu Primary Anchor Invariant (Brand Colors & Color Ramps Tokens — NEVER CHANGE)**:
+   - In the Blueprint menu (`DesignSystemHomeView` / `/document/design`), the two primary anchor sections:
+     1. **Brand Colors** (`#brand-blueprint` / `BrandConceptBlueprint`: 01 Royal Blue `#0056FF`, 02 Azure Blue `#2277FF`, 03 Soft Lavender `#E3E7FC`, 04 White `#FFFFFF`, 05 Ice Tint `#EFF5FF`, and the SNPI International School Logo).
+     2. **Color Ramps & Semantic Tokens** (`#color-ramps-tokens` / `ColorRampsTokens`: Brand primary, Accents, Neutral, and Status contrast-checked color ramps with AA/AAA filter modes).
+   - MUST ALWAYS remain primary, top-level (index 01 and 02 in `SIDEBAR_TREE`), and permanently immutable. Under no circumstances should AI agents or developers modify, remove, hide, reorder, or replace these two core foundation sections. They are the permanent, authoritative visual anchor of the SNPI enterprise platform.
