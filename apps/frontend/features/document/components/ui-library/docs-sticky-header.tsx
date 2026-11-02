@@ -146,9 +146,7 @@ export function DocsStickyHeader({
   const filteredPlatformComponents = React.useMemo(() => {
     const q = mobileSearch.toLowerCase().trim();
     if (!q) return PLATFORM_COMPONENTS_NAV;
-    return PLATFORM_COMPONENTS_NAV.filter((item) =>
-      item.name.toLowerCase().includes(q),
-    );
+    return PLATFORM_COMPONENTS_NAV.filter((item) => item.name.toLowerCase().includes(q));
   }, [mobileSearch]);
 
   // Auto-expand mobile parent group if search matches
@@ -339,9 +337,9 @@ export function DocsStickyHeader({
                             key={doc.id}
                             href={doc.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="group flex items-center gap-2 rounded-md px-1.5 py-1 text-xs font-semibold text-slate-700 hover:text-[#0056FF] transition-colors"
+                            className="group flex items-center gap-2 rounded-md px-1.5 py-1 text-xs font-semibold text-slate-700 transition-colors hover:text-[#0056FF]"
                           >
-                            <FileText className="size-3.5 text-slate-400 group-hover:text-[#0056FF] transition-colors shrink-0" />
+                            <FileText className="size-3.5 shrink-0 text-slate-400 transition-colors group-hover:text-[#0056FF]" />
                             <span className="truncate">{doc.name}</span>
                           </Link>
                         ))}
@@ -349,11 +347,12 @@ export function DocsStickyHeader({
                     </div>
 
                     {/* Subtle Divider */}
-                    <div className="border-t border-slate-200/80 my-2" />
+                    <div className="my-2 border-t border-slate-200/80" />
 
                     {/* MATERIAL 3 HIERARCHICAL COMPONENTS LIST (Images 2, 3, 4: Zero folder icons, clean rounded pills, collapsed parents by default) */}
                     <div className="space-y-0.5 pt-1 font-sans text-xs">
-                      {filteredM3Components.length === 0 && filteredPlatformComponents.length === 0 ? (
+                      {filteredM3Components.length === 0 &&
+                      filteredPlatformComponents.length === 0 ? (
                         <div className="py-4 text-center font-sans text-xs text-slate-400">
                           No matching components found
                         </div>
@@ -407,7 +406,7 @@ export function DocsStickyHeader({
                                                 'truncate pr-2 font-sans text-xs transition-colors',
                                                 isComing
                                                   ? 'text-slate-500'
-                                                  : 'text-slate-700 font-medium group-hover:text-slate-950',
+                                                  : 'font-medium text-slate-700 group-hover:text-slate-950',
                                               )}
                                             >
                                               {child.name}
@@ -464,7 +463,7 @@ export function DocsStickyHeader({
                                     'truncate pr-2 font-sans text-xs transition-colors',
                                     isComing
                                       ? 'text-slate-500'
-                                      : 'text-slate-800 font-medium hover:text-slate-950',
+                                      : 'font-medium text-slate-800 hover:text-slate-950',
                                   )}
                                 >
                                   {item.name}
@@ -494,9 +493,9 @@ export function DocsStickyHeader({
 
                           {/* PLATFORM COMPONENTS SECTION (Image 6: Clean bullet category header with custom built components) */}
                           {filteredPlatformComponents.length > 0 && (
-                            <div className="pt-3 space-y-0.5">
-                              <div className="px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase flex items-center gap-1.5 select-none">
-                                <span className="text-[#0056FF] text-xs leading-none">•</span>
+                            <div className="space-y-0.5 pt-3">
+                              <div className="flex items-center gap-1.5 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
+                                <span className="text-xs leading-none text-[#0056FF]">•</span>
                                 <span>PLATFORM COMPONENTS</span>
                               </div>
                               {filteredPlatformComponents.map((item) => {
@@ -523,7 +522,7 @@ export function DocsStickyHeader({
                                         'truncate pr-2 font-sans text-xs transition-colors',
                                         isComing
                                           ? 'text-slate-500'
-                                          : 'text-slate-800 font-medium hover:text-slate-950',
+                                          : 'font-medium text-slate-800 hover:text-slate-950',
                                       )}
                                     >
                                       {item.name}

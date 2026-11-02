@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "f0f4829",
+    "developer": "史力爱卫",
+    "description": "Real-time changelog sync for design standards record [PASSED]"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "2ec2e9c",
     "developer": "史力爱卫",
     "description": "Record authoritative M3 & SNPI design skills, manuals, and blueprint primary anchor standards [PASSED]"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "1b22570",
     "developer": "史力爱卫",
     "description": "Migrate official repository owner to Tan-Saphea/SNPI-SMS"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "410a1b1",
-    "developer": "史力爱卫",
-    "description": "Support both single and double underscore token secrets in telegram watcher"
   }
 ];
