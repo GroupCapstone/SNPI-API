@@ -428,7 +428,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 {/* ============================================================= */}
                 <div className="pt-2">
                   <TactileFolderShowcase
-                    initialTheme="dark"
                     cards={[
                       {
                         id: 'card-live-payload',

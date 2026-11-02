@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (02.11.2026) - `5b1d272` (Developer: **史力爱卫**)
+
+- Remove verbose text copy and leave clean whitespace across hero and component demos
+
 ### Version 0.2.15 (02.11.2026) - `4bca831` (Developer: **史力爱卫**)
 
 - Remove brand color do and dont section and hero pill clutter
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `e70bf64` (Developer: **史力爱卫**)
 
 - Sync security documentation report commit
-
-### Version 0.2.14 (01.11.2026) - `4a46a37` (Developer: **史力爱卫**)
-
-- Record security audit and remediation report history
 

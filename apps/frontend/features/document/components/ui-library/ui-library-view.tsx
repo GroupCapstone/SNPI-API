@@ -714,7 +714,6 @@ export function UiLibraryView() {
                   {/* ============================================================= */}
                   <div className="pt-2">
                     <TactileFolderShowcase
-                      initialTheme="dark"
                       cards={[
                         {
                           id: 'card-controls-switch',
