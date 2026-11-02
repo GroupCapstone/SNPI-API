@@ -527,57 +527,7 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   />
                 </div>
 
-                {/* Playful Stacked Capsule Pills Constellation (Image 4 Reference) */}
-                <div className="flex flex-wrap items-center gap-2 pt-1">
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('public-feeds')}
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FED7AA] bg-[#FFEDD5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#C2410C] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                  >
-                    <span>ZERO AUTH REQUIRED</span>
-                    <span className="font-sans text-[10px] opacity-70">✓</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('public-feeds')}
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#A7F3D0] bg-[#D1FAE5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#065F46] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                  >
-                    <span>SUB-50ms EDGE CDN</span>
-                    <Zap className="size-3 text-[#065F46]" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('public-feeds')}
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0369A1] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                  >
-                    <span>CORS UNRESTRICTED</span>
-                    <Globe className="size-3 text-[#0369A1]" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('public-feeds')}
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDE68A] bg-[#FEF3C7] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#92400E] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                  >
-                    <span>RSS 2.0 & JSON FEED</span>
-                    <Radio className="size-3 text-[#92400E]" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('available-services')}
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                  >
-                    <span>47 MONOLITH SERVICES</span>
-                    <Layers className="size-3 text-[#0056FF]" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('available-services')}
-                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                  >
-                    <span>RFC 7807 ERROR SPEC</span>
-                    <ShieldCheck className="size-3 text-[#0056FF]" />
-                  </button>
-                </div>
+
 
                 {/* Base URL Quickstart Bar & Action Hook */}
                 <div className="flex flex-col gap-2.5 pt-2 sm:flex-row sm:items-center sm:gap-3">

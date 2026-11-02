@@ -9,6 +9,13 @@ export interface ChangeLogEntry {
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
+    "date": "02.11.2026",
+    "commitHash": "05fa34b",
+    "developer": "史力爱卫",
+    "description": "Redesign homepage hero sections with radiant integration hub and tactile folder showcase"
+  },
+  {
+    "version": "0.2.15",
     "date": "01.11.2026",
     "commitHash": "d352f0c",
     "developer": "史力爱卫",
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "4ad793d",
     "developer": "史力爱卫",
     "description": "Record security patch in documentation"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "190ac14",
-    "developer": "史力爱卫",
-    "description": "Resolve CVE-2026-118764 minimatch DoS across workspaces"
   }
 ];

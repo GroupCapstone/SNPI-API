@@ -252,17 +252,8 @@ export function UiLibraryView() {
     }).filter((group) => group.components.length > 0);
   }, [filteredComponents]);
 
-  // Quickstart terminal copy state
-  const [copiedQuickstart, setCopiedQuickstart] = React.useState(false);
   // Interactive Hero Paradigm Toggle Mode (Flat 0px vs Living Motion FX)
   const [heroInteractiveMode, setHeroInteractiveMode] = React.useState<'flat' | 'spring'>('flat');
-  const handleCopyQuickstart = async () => {
-    const success = await copyTextToClipboard('npx snpi-ui@latest add @components');
-    if (success) {
-      setCopiedQuickstart(true);
-      setTimeout(() => setCopiedQuickstart(false), 2500);
-    }
-  };
 
   // Section IDs for active tracking in Left Sticky Menu (strictly linear sequential flow)
   const scrollSectionIds = React.useMemo(() => {
@@ -914,134 +905,7 @@ export function UiLibraryView() {
                     />
                   </div>
 
-                  {/* Playful Stacked Capsule Pills Constellation (Image 4 Reference) */}
-                  <div className="flex flex-wrap items-center gap-2 pt-1">
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-navigation')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FED7AA] bg-[#FFEDD5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#C2410C] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>DESIGN SYSTEMS</span>
-                      <span className="font-sans text-[10px] opacity-70">+</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-forms')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#A7F3D0] bg-[#D1FAE5] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#065F46] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>PROTOTYPING</span>
-                      <span className="font-sans text-[10px] opacity-70">↗</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-ai-kit')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDE68A] bg-[#FEF3C7] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#92400E] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>STORYTELLING</span>
-                      <span className="font-sans text-[10px] opacity-70">“</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-feedback')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#BAE6FD] bg-[#E0F2FE] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0369A1] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>IMPROVING UX</span>
-                      <span className="font-sans text-[10px] opacity-70">✓</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-display')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDBA74] bg-[#FED7AA] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#9A3412] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>MAKING IT POP</span>
-                      <span className="font-sans text-[10px] opacity-70">✦</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-inputs')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#FDE047] bg-[#FEF08A] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#854D0E] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>ACCESSIBILITY</span>
-                      <span className="font-sans text-[10px] opacity-70">⌖</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-navigation')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>0px BLUR FLAT</span>
-                      <ShieldCheck className="size-3 text-[#0056FF]" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-inputs')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>44px TOUCH TARGETS</span>
-                      <span className="font-sans text-[10px] opacity-70">◎</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-ai-kit')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#E9D5FF] bg-[#F3E8FF] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#6B21A8] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>AI AGENT PROMPT</span>
-                      <Bot className="size-3 text-[#6B21A8]" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-templates')}
-                      className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#99F6E4] bg-[#CCFBF1] px-3.5 py-1.5 font-mono text-[11px] font-bold text-[#115E59] shadow-2xs transition-all hover:scale-105 active:scale-95"
-                    >
-                      <span>THINKING SYSTEMS</span>
-                      <span className="font-sans text-[10px] opacity-70">🌐</span>
-                    </button>
-                  </div>
 
-                  {/* Interactive Terminal Quickstart Bar & Action Hook */}
-                  <div className="flex flex-col gap-2.5 pt-2 sm:flex-row sm:items-center sm:gap-3">
-                    {/* 1-Click Copy Package Command */}
-                    <div className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-white p-1 shadow-2xs sm:justify-start sm:rounded-2xl sm:p-1.5">
-                      <div className="flex items-center gap-2 px-2.5 text-slate-500 sm:px-3">
-                        <Terminal className="size-3.5 text-[#0056FF] sm:size-4" />
-                        <span className="font-mono text-[11px] font-bold text-slate-900 sm:text-xs">
-                          npx snpi-ui@latest add @components
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={handleCopyQuickstart}
-                        className={cn(
-                          'flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1 font-sans text-xs font-bold transition-all active:scale-95 sm:rounded-xl sm:px-3 sm:py-1.5',
-                          copiedQuickstart
-                            ? 'border border-emerald-500/40 bg-emerald-50 text-emerald-700'
-                            : 'bg-[#EFF5FF] text-[#0056FF] hover:bg-[#0056FF] hover:text-white',
-                        )}
-                      >
-                        {copiedQuickstart ? (
-                          <>
-                            <Check className="size-3 stroke-[2.5] text-emerald-600 sm:size-3.5" />
-                            <span>Copied!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="size-3 stroke-[2] sm:size-3.5" />
-                            <span>Copy</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Quick Jump Action Button */}
-                    <button
-                      type="button"
-                      onClick={() => scrollToSection('cat-navigation')}
-                      className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95 sm:rounded-2xl sm:px-6 sm:py-3"
-                    >
-                      <span>Explore 28 Components</span>
-                      <ArrowRight className="size-4 stroke-[2]" />
-                    </button>
-                  </div>
                 </div>
               </div>
             </section>
