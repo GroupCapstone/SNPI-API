@@ -138,10 +138,6 @@ export function BrandConceptBlueprint() {
           <h2 className="font-sans text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
             Brand Colors
           </h2>
-          <p className="mt-1 font-sans text-xs text-slate-500 sm:text-sm">
-            Royal Blue primary base, Azure Blue, Soft Lavender, and Pure White flat solid tokens
-            (Zero Gradients, Zero Black/Gray).
-          </p>
         </div>
         <GeometricHeaderStamp codeA="20" titleA="BRAND" codeB="26" titleB="BLUE" />
       </div>

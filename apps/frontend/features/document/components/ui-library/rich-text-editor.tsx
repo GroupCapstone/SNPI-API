@@ -787,21 +787,7 @@ export function RichTextEditor({
 // ============================================================================
 
 const SAMPLE_DOCUMENT = `<h1>SNPI-SMS Autonomous Academic Charter</h1>
-<p>The <strong>State Network Polytechnic Institute (SNPI)</strong> enforces strict data sovereignty, academic credential integrity, and multi-tenant isolation across all distributed campus nodes.</p>
-<blockquote>"All student evaluations, academic degrees, and institutional ledgers must be verified via constant-time cryptographic signatures prior to blockchain persistence."</blockquote>
-<h2>Core Security Invariants</h2>
-<ul>
-  <li><strong>Zero-Trust DOM Sanitizer:</strong> Direct AST traversal strips all <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code>, and unapproved attributes on paste.</li>
-  <li><strong>URL Scheme Shield:</strong> Prevents <code>javascript:</code>, <code>data:</code>, and <code>vbscript:</code> execution in hyperlinks.</li>
-  <li><strong>Native Caret Retention:</strong> Zero DOM churn preserves active cursor state across all 18 toolbar commands.</li>
-</ul>
-<h2>Cryptographic Ledger Protocol</h2>
-<pre><code>// SNPI Ledger Verification Signature
-const isSignatureValid = crypto.timingSafeEqual(
-  Buffer.from(signature, 'hex'),
-  Buffer.from(computedHash, 'hex')
-);</code></pre>
-<p>Review the official <a href="https://snpi.edu.kh">SNPI Higher Education Portal</a> specification for full REST API parameters.</p>`;
+<p>The <strong>State Network Polytechnic Institute (SNPI)</strong> enforces strict data sovereignty, academic credential integrity, and multi-tenant isolation across all distributed campus nodes.</p>`;
 
 const SAMPLE_POLICY = `<h2>Institutional Cloud Data Governance</h2>
 <p>Under the <em>SNPI Technical Security Standard</em>, all student transcript requests require dual-officer biometric or MFA authentication.</p>

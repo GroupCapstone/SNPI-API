@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
     "date": "02.11.2026",
+    "commitHash": "4bca831",
+    "developer": "史力爱卫",
+    "description": "Remove brand color do and dont section and hero pill clutter"
+  },
+  {
+    "version": "0.2.15",
+    "date": "02.11.2026",
     "commitHash": "05fa34b",
     "developer": "史力爱卫",
     "description": "Redesign homepage hero sections with radiant integration hub and tactile folder showcase"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "4a46a37",
     "developer": "史力爱卫",
     "description": "Record security audit and remediation report history"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "4ad793d",
-    "developer": "史力爱卫",
-    "description": "Record security patch in documentation"
   }
 ];
