@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import { Copy, Check, X } from '@/components/icons';
+import { Copy, Check } from '@/components/icons';
 import { GeometricHeaderStamp } from './geometric-tag-primitives';
 import { cn } from '@/lib/utils';
 
@@ -124,61 +124,6 @@ export function BrandConceptBlueprint() {
       colorPreview: '#FFFFFF',
       textColor: '#0A1A4A',
       hasBorder: true,
-    },
-  ];
-
-  // Brand Color Do's & Don'ts
-  const dos = [
-    {
-      rule: 'Use Royal Blue (#0056FF) as Primary Anchor',
-      desc: 'Anchor all primary call-to-action buttons, active navigation segments, and key interactive landmarks with Royal Blue.',
-    },
-    {
-      rule: 'Default Main Canvas to White (#FFFFFF)',
-      desc: 'Maintain pure white (#FFFFFF) as the default document canvas for maximum readability, clean printing, and accessibility.',
-    },
-    {
-      rule: 'Enforce High-Contrast Deep Navy Typography (#0A1A4A)',
-      desc: 'All body text, table cells, and labels on white or ice tint must strictly use Deep Navy (#0A1A4A) or Slate-900 (#0F172A) with WCAG AAA (>= 7:1) contrast ratio.',
-    },
-    {
-      rule: 'Enforce Pure Flat Solid Colors (Zero Gradients)',
-      desc: 'All surfaces, fills, and borders must be clean, solid colors. Never apply linear or radial gradients.',
-    },
-    {
-      rule: 'Layer Azure Blue (#2277FF) for Mathematical Depth',
-      desc: 'Combine Azure Blue with Royal Blue across 3D faceted geometry (such as paper jet wings) to achieve luminous depth without blur shadows.',
-    },
-    {
-      rule: 'Use Soft Lavender (#E3E7FC) & Ice Tint (#EFF5FF) for Cards',
-      desc: 'Apply Soft Lavender and Ice Tint to status badge pills, filter chips, and code callout boxes for clean, non-distracting visual grouping.',
-    },
-  ];
-
-  const donts = [
-    {
-      rule: 'Never Use Muddy Gray, Slate Containers, or Blur Styles',
-      desc: 'Under no circumstances should components use muddy gray (#64748B, #475569), dark slate containers, black buttons (bg-slate-900), or blur backgrounds.',
-    },
-    {
-      rule: 'Never Use Washed-Out, Pale Gray, or Hidden Text',
-      desc: 'Never render faint washed-out gray text (text-slate-300, text-slate-400, or #CAD3F5 text on white) that hides information or fails WCAG readability.',
-    },
-    {
-      rule: 'Never Use Color Gradients in Component Designs',
-      desc: 'Never apply CSS gradients (bg-gradient-to-*, linear-gradient) to UI components, banners, or document sections.',
-    },
-    {
-      rule: 'Never Use Solid Black (#000000) for Cards or Buttons',
-      desc: 'Never use solid black (#000000, bg-black, bg-slate-900) for button fills, badges, or containers. Maintain clean light-day brand colors.',
-    },
-    {
-      rule: 'Never Use Dropped Blur Shadows (Zero-Shadow Rule)',
-      desc: 'Never use fuzzy box-shadows (e.g. shadow-lg, shadow-2xl). Establish spatial depth strictly through 1px border contrast (#CAD3F5) and luminance.',
-    },
-    {
-      rule: 'Never Bake Colors into Flat Raster Pixels',
-      desc: 'Never deliver flat flattened pixel layers as design sources. Keep all UI shapes as live vector SVG paths and CSS tokens.',
     },
   ];
 
@@ -463,70 +408,7 @@ export function BrandConceptBlueprint() {
         </div>
       </div>
 
-      {/* BRAND COLOR DO'S AND DON'TS ("AD DO DONT") */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {/* DO PANEL */}
-        <div className="rounded-2xl border border-emerald-300 bg-[#ECFDF5] p-6 shadow-xs">
-          <div className="mb-4 flex items-center gap-2 border-b border-emerald-200 pb-3">
-            <div className="flex size-5 items-center justify-center rounded-[3px] bg-emerald-700 text-white">
-              <Check className="size-3.5 stroke-[2.5]" />
-            </div>
-            <div>
-              <h3 className="font-sans text-sm font-black text-emerald-950">
-                Brand Color Best Practices (DO)
-              </h3>
-              <p className="font-sans text-xs font-semibold text-emerald-800">
-                Approved conventions for colors and elevations.
-              </p>
-            </div>
-          </div>
 
-          <div className="space-y-3">
-            {dos.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-2.5">
-                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-[3px] bg-emerald-200 font-mono text-[10px] font-black text-emerald-900">
-                  {idx + 1}
-                </span>
-                <div>
-                  <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">{item.rule}</h4>
-                  <p className="font-sans text-xs leading-relaxed text-[#334155]">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* DON'T PANEL */}
-        <div className="rounded-2xl border border-rose-300 bg-[#FFF1F2] p-6 shadow-xs">
-          <div className="mb-4 flex items-center gap-2 border-b border-rose-200 pb-3">
-            <div className="flex size-5 items-center justify-center rounded-[3px] bg-rose-700 text-white">
-              <X className="size-3.5 stroke-[2.5]" />
-            </div>
-            <div>
-              <h3 className="font-sans text-sm font-black text-rose-950">
-                Prohibited Anti-Patterns (DON&apos;T)
-              </h3>
-              <p className="font-sans text-xs font-semibold text-rose-800">
-                Strict workspace and brand design restrictions.
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            {donts.map((item, idx) => (
-              <div key={idx} className="flex items-start gap-2.5">
-                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-[3px] bg-rose-200 font-mono text-[10px] font-black text-rose-900">
-                  {idx + 1}
-                </span>
-                <div>
-                  <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">{item.rule}</h4>
-                  <p className="font-sans text-xs leading-relaxed text-[#334155]">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* CODE COLOR TOKENS (CSS VARIABLES & TYPESCRIPT TOKENS) */}
       <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7">

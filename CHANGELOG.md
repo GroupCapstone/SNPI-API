@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (02.11.2026) - `05fa34b` (Developer: **史力爱卫**)
+
+- Redesign homepage hero sections with radiant integration hub and tactile folder showcase
+
 ### Version 0.2.15 (01.11.2026) - `d352f0c` (Developer: **史力爱卫**)
 
 - Record 77-point audit, 42 automated security test results, and RFC 9116 security.txt [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `4ad793d` (Developer: **史力爱卫**)
 
 - Record security patch in documentation
-
-### Version 0.2.14 (01.11.2026) - `190ac14` (Developer: **史力爱卫**)
-
-- Resolve CVE-2026-118764 minimatch DoS across workspaces
 
