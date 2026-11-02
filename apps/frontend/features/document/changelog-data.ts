@@ -8,49 +8,56 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
-    "version": "0.2.15",
+    "version": "0.2.16",
+    "date": "02.11.2026",
+    "commitHash": "3eb5506",
+    "developer": "史力爱卫",
+    "description": "Streamline design engine cards with kinetic gravity archetype [PASSED]"
+  },
+  {
+    "version": "0.2.16",
     "date": "02.11.2026",
     "commitHash": "4cf236b",
     "developer": "史力爱卫",
     "description": "Remove theme switcher dock and standardize tactile folder to clean white blue design"
   },
   {
-    "version": "0.2.15",
+    "version": "0.2.16",
     "date": "02.11.2026",
     "commitHash": "5b1d272",
     "developer": "史力爱卫",
     "description": "Remove verbose text copy and leave clean whitespace across hero and component demos"
   },
   {
-    "version": "0.2.15",
+    "version": "0.2.16",
     "date": "02.11.2026",
     "commitHash": "4bca831",
     "developer": "史力爱卫",
     "description": "Remove brand color do and dont section and hero pill clutter"
   },
   {
-    "version": "0.2.15",
+    "version": "0.2.16",
     "date": "02.11.2026",
     "commitHash": "05fa34b",
     "developer": "史力爱卫",
     "description": "Redesign homepage hero sections with radiant integration hub and tactile folder showcase"
   },
   {
-    "version": "0.2.15",
+    "version": "0.2.16",
     "date": "01.11.2026",
     "commitHash": "d352f0c",
     "developer": "史力爱卫",
     "description": "Record 77-point audit, 42 automated security test results, and RFC 9116 security.txt [PASSED]"
   },
   {
-    "version": "0.2.15",
+    "version": "0.2.16",
     "date": "01.11.2026",
     "commitHash": "aee7c0d",
     "developer": "史力爱卫",
     "description": "Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]"
   },
   {
-    "version": "0.2.15",
+    "version": "0.2.16",
     "date": "01.11.2026",
     "commitHash": "23cc63f",
     "developer": "史力爱卫",
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "af52d17",
     "developer": "史力爱卫",
     "description": "Record README security remediation section"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "e9af90d",
-    "developer": "史力爱卫",
-    "description": "Add standard security vulnerability remediation log to README"
   }
 ];
