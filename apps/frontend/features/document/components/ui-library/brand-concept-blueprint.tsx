@@ -540,7 +540,7 @@ export function BrandConceptBlueprint() {
                     2
                   </span>
                   <span className="font-mono text-[11px] text-slate-400 italic">
-                    /* Primary Brand Solids - Pure Flat Colors Only */
+                    {`/* Primary Brand Solids - Pure Flat Colors Only */`}
                   </span>
                 </div>
                 {applicationMatrix.map((item, idx) => (
@@ -562,7 +562,7 @@ export function BrandConceptBlueprint() {
                       {item.hex};
                     </span>
                     <span className="hidden font-mono text-[11px] text-slate-400 sm:inline">
-                      /* {item.role} */
+                      {`/* ${item.role} */`}
                     </span>
                   </div>
                 ))}
@@ -605,7 +605,7 @@ export function BrandConceptBlueprint() {
                         &apos;{item.hex}&apos;,
                       </span>
                       <span className="hidden font-mono text-[11px] text-slate-400 sm:inline">
-                        // {item.role}
+                        {`// ${item.role}`}
                       </span>
                     </div>
                   );
