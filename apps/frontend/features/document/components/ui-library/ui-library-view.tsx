@@ -41,7 +41,7 @@ import {
   type HookSidebarItem,
   generateAiAgentPrompt,
   RadiantIntegrationHub,
-  TactileFolderShowcase,
+  LibraryTooltip,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -553,45 +553,6 @@ export function UiLibraryView() {
 
           {/* COLUMN 2: Center Main Interactive Component Feed (1-Column Continuous Scroll Feed) */}
           <main className="min-w-0 flex-1 space-y-10">
-            {/* STICKY CATEGORY NAVIGATION RAIL (Zero Dot, Zero Title Clutter) */}
-            <div className="sticky top-[68px] z-30 -mx-4 border-y border-slate-200/90 bg-white/95 px-4 py-2 shadow-2xs backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-              {/* Mobile & PC Quick-Jump Category Menu Rail */}
-              <div className="no-scrollbar flex w-full items-center gap-1.5 overflow-x-auto py-0.5">
-                <button
-                  type="button"
-                  onClick={() => scrollToSection('ui-library-head')}
-                  className={cn(
-                    'shrink-0 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all select-none',
-                    activeSectionId === 'ui-library-head'
-                      ? 'bg-[#0056FF] text-white shadow-xs'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
-                  )}
-                >
-                  Home
-                </button>
-                {groupedCategories.map((grp) => {
-                  const isCurrent =
-                    activeSectionId === grp.categoryId ||
-                    grp.components.some((c) => activeSectionId === `comp-${c.id}`);
-                  return (
-                    <button
-                      key={grp.category}
-                      type="button"
-                      onClick={() => scrollToSection(grp.categoryId)}
-                      className={cn(
-                        'shrink-0 rounded-full px-3 py-1 font-sans text-xs font-bold transition-all select-none',
-                        isCurrent
-                          ? 'bg-[#0056FF] text-white shadow-xs'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950',
-                      )}
-                    >
-                      {grp.category}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* HERO HEAD TITLE: Ultra-Creative Interactive Engine Hero (References 3 & 4) */}
             <section id="ui-library-head" className="scroll-mt-36 space-y-4">
               <div className="relative overflow-hidden rounded-3xl border border-[#CAD3F5] bg-gradient-to-b from-white via-[#EFF5FF]/40 to-white p-5 shadow-xs sm:p-10">
@@ -643,219 +604,69 @@ export function UiLibraryView() {
                     </div>
                   </div>
 
-                  {/* ============================================================= */}
-                  {/* 1. RADIANT 6-NODE INTEGRATION HUB (IMAGE 1 REFERENCE)         */}
-                  {/* ============================================================= */}
+                  {/* KINETIC TUMBLED CARDS MODULE DECK */}
                   <RadiantIntegrationHub
                     center={{
                       title: 'SNPI DESIGN ENGINE',
                       subtitle: 'Mathematical Token Matrix',
                       icon: <Layers className="size-7 stroke-[2.2]" />,
-                      badge: '73 Primitives',
+                      badge: '73P',
                     }}
                     leftNodes={[
                       {
                         id: 'cat-navigation',
-                        label: 'Navigation & Docks',
-                        sublabel: 'Cyber Armor & Rails',
-                        tag: '01 · Nav',
-                        badge: 'Dock',
-                        icon: <Compass className="size-5" />,
+                        label: 'Navigation',
+                        tag: '01 · NAV',
+                        badge: 'CYBER ARMOR',
+                        tooltip: 'Navigation & Docks (Cyber Armor & Line Tracker)',
+                        icon: <Compass className="size-8 stroke-[2]" />,
                       },
                       {
                         id: 'cat-feedback',
-                        label: 'Feedback & Overlays',
-                        sublabel: 'Snackbar & Dialog',
-                        tag: '02 · Dialog',
-                        badge: 'Motion',
-                        icon: <Bell className="size-5" />,
+                        label: 'Feedback',
+                        tag: '02 · DIALOG',
+                        badge: 'SNACKBAR & MODAL',
+                        tooltip: 'Feedback & Overlays (Snackbars, Dialogs & Modals)',
+                        icon: <Bell className="size-8 stroke-[2]" />,
                       },
                       {
                         id: 'cat-forms',
-                        label: 'Inputs & Controls',
-                        sublabel: 'Switches & Chips',
-                        tag: '03 · Input',
-                        badge: 'Forms',
-                        icon: <Sliders className="size-5" />,
+                        label: 'Inputs',
+                        tag: '03 · INPUT',
+                        badge: 'SWITCH & CHIP',
+                        tooltip: 'Inputs & Controls (Switches, Chips & Fields)',
+                        icon: <Sliders className="size-8 stroke-[2]" />,
                       },
                     ]}
                     rightNodes={[
                       {
                         id: 'cat-display',
-                        label: 'Cards & Containers',
-                        sublabel: 'Tactile Folders & Tables',
-                        tag: '04 · Card',
-                        badge: 'Display',
-                        icon: <Folder className="size-5" />,
+                        label: 'Containers',
+                        tag: '04 · CARD',
+                        badge: 'TACTILE FOLDERS',
+                        tooltip: 'Cards & Containers (Tactile Folders & Tables)',
+                        icon: <Folder className="size-8 stroke-[2]" />,
                       },
                       {
                         id: 'cat-buttons',
-                        label: 'Buttons & Actions',
-                        sublabel: 'Geometric & FAB',
-                        tag: '05 · Action',
-                        badge: '0px',
-                        icon: <Zap className="size-5" />,
+                        label: 'Actions',
+                        tag: '05 · ACTION',
+                        badge: 'GEOMETRIC FAB',
+                        tooltip: 'Buttons & Actions (Geometric Buttons & FABs)',
+                        icon: <Zap className="size-8 stroke-[2]" />,
                       },
                       {
                         id: 'cat-ai-kit',
-                        label: 'AI Agent Prompts',
-                        sublabel: 'Procedural Prompts',
+                        label: 'AI Prompts',
                         tag: '06 · AI',
-                        badge: 'GenUI',
-                        icon: <Bot className="size-5" />,
+                        badge: 'GENUI SPEC',
+                        tooltip: 'AI Agent Prompts (Procedural Synthesis & Blueprints)',
+                        icon: <Bot className="size-8 stroke-[2]" />,
                       },
                     ]}
                     activeNodeId={activeSectionId}
-                    onSelectNode={(id) => scrollToSection(id)}
+                    onSelectNode={(id) => setActiveSectionId(id)}
                   />
-
-                  {/* ============================================================= */}
-                  {/* 2. TACTILE FOLDER SHOWCASE & SWITCHER DOCK (IMAGE 2 REFERENCE) */}
-                  {/* ============================================================= */}
-                  <div className="pt-2">
-                    <TactileFolderShowcase
-                      cards={[
-                        {
-                          id: 'card-controls-switch',
-                          title: 'Controls & Micro-Interactions',
-                          badge: 'Interactive Demo',
-                          content: (
-                            <div className="space-y-3">
-                              <div className="flex items-center justify-between rounded-xl bg-slate-50 p-2.5 border border-slate-200">
-                                <div className="space-y-0.5">
-                                  <span className="block font-sans text-xs font-bold text-slate-900">
-                                    Biometric Session
-                                  </span>
-                                  <span className="block font-mono text-[10px] text-slate-500">
-                                    WebAuthn Key Access
-                                  </span>
-                                </div>
-                                <LibrarySwitch
-                                  checked={switchBiometric}
-                                  onCheckedChange={setSwitchBiometric}
-                                  aria-label="Biometric Session"
-                                />
-                              </div>
-
-                              <div className="flex items-center justify-between rounded-xl bg-slate-50 p-2.5 border border-slate-200">
-                                <div className="space-y-0.5">
-                                  <span className="block font-sans text-xs font-bold text-slate-900">
-                                    Auto Synchronize
-                                  </span>
-                                  <span className="block font-mono text-[10px] text-slate-500">
-                                    Sub-10ms SQLite Cache
-                                  </span>
-                                </div>
-                                <LibrarySwitch
-                                  checked={switchAutoSync}
-                                  onCheckedChange={setSwitchAutoSync}
-                                  aria-label="Auto Synchronize"
-                                />
-                              </div>
-
-                              <div className="flex flex-wrap gap-1.5 pt-1">
-                                <LibraryChip
-                                  active={selectedChips.includes('flat')}
-                                  onClick={() => toggleChip('flat')}
-                                >
-                                  0px Flat
-                                </LibraryChip>
-                                <LibraryChip
-                                  active={selectedChips.includes('contrast')}
-                                  onClick={() => toggleChip('contrast')}
-                                >
-                                  AAA Contrast
-                                </LibraryChip>
-                                <LibraryChip
-                                  active={selectedChips.includes('spring')}
-                                  onClick={() => toggleChip('spring')}
-                                >
-                                  &lt;300ms Spring
-                                </LibraryChip>
-                              </div>
-                            </div>
-                          ),
-                        },
-                        {
-                          id: 'card-feedback-overlay',
-                          title: 'Feedback & Overlay Action',
-                          badge: 'Live Snackbars',
-                          content: (
-                            <div className="space-y-3">
-                              <p className="font-sans text-[11px] text-slate-600">
-                                Living feedback notifications with spring exit physics and zero DOM
-                                churn.
-                              </p>
-                              <div className="flex flex-wrap gap-2">
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setSnackbarMsg('Operation completed successfully');
-                                    setSnackbarVariant('success');
-                                    setSnackbarOpen(true);
-                                  }}
-                                  className="flex-1 cursor-pointer rounded-xl bg-emerald-600 px-3 py-2 text-center font-sans text-xs font-bold text-white transition-all hover:bg-emerald-700 active:scale-95"
-                                >
-                                  Test Success
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setSnackbarMsg('Attention: Review academic policy');
-                                    setSnackbarVariant('warning');
-                                    setSnackbarOpen(true);
-                                  }}
-                                  className="flex-1 cursor-pointer rounded-xl bg-amber-500 px-3 py-2 text-center font-sans text-xs font-bold text-white transition-all hover:bg-amber-600 active:scale-95"
-                                >
-                                  Test Warning
-                                </button>
-                              </div>
-                              <div className="rounded-lg bg-slate-100 p-2 font-mono text-[10px] text-slate-600">
-                                Active Status: {snackbarOpen ? `Open (${snackbarVariant})` : 'Idle'}
-                              </div>
-                            </div>
-                          ),
-                        },
-                        {
-                          id: 'card-cyber-armor',
-                          title: 'Cyber Armor Mecha Plate',
-                          badge: '45° Chamfers',
-                          content: (
-                            <div className="space-y-3">
-                              <p className="font-sans text-[11px] text-slate-600">
-                                Precision aerospace mecha console with milled double seams and zero
-                                scrollbars.
-                              </p>
-                              <div className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3">
-                                <div className="flex items-center gap-2">
-                                  <span className="size-2 rounded-full bg-[#0056FF]" />
-                                  <span className="font-mono text-xs font-black text-[#0A1A4A]">
-                                    ARMOR-PLATE // V2
-                                  </span>
-                                </div>
-                                <span className="rounded bg-[#0056FF] px-2 py-0.5 font-mono text-[9px] font-bold text-white">
-                                  ROYAL BLUE
-                                </span>
-                              </div>
-                              <div className="grid grid-cols-3 gap-1.5 text-center font-mono text-[9px]">
-                                <div className="rounded bg-slate-100 p-1.5 text-slate-700">
-                                  CHAMFER: 45°
-                                </div>
-                                <div className="rounded bg-slate-100 p-1.5 text-slate-700">
-                                  DEPTH: 0px
-                                </div>
-                                <div className="rounded bg-slate-100 p-1.5 text-slate-700">
-                                  SPRING: 280ms
-                                </div>
-                              </div>
-                            </div>
-                          ),
-                        },
-                      ]}
-                    />
-                  </div>
-
-
                 </div>
               </div>
             </section>
@@ -881,27 +692,14 @@ export function UiLibraryView() {
                             id={sectionId}
                             className="scroll-mt-24 rounded-3xl border border-slate-200/90 bg-white p-3.5 shadow-xs transition-all hover:border-[#0056FF]/40 sm:p-8"
                           >
-                            {/* Top Header Row with Number, Name, Category Badge, Description */}
+                            {/* Top Header Row - Title Name Only */}
                             <div className="mb-4">
-                              <div className="flex flex-wrap items-center gap-2">
-                                <span className="font-mono text-xs font-black text-[#0056FF]">
-                                  0{group.groupNumber}.0{compIdx + 1}
-                                </span>
-                                <h2 className="font-sans text-lg font-black text-slate-950 sm:text-xl">
-                                  {comp.name}
-                                </h2>
-                                <span className="rounded-[4px] border border-slate-200 px-1.5 py-0.5 font-mono text-[9px] font-bold tracking-wider text-slate-500 uppercase">
-                                  {comp.category}
-                                </span>
-                              </div>
-                              {comp.description && (
-                                <p className="mt-1 hidden font-sans text-xs text-slate-500 sm:block sm:text-sm">
-                                  {comp.description}
-                                </p>
-                              )}
+                              <h2 className="font-sans text-lg font-black text-slate-950 sm:text-xl">
+                                {comp.name}
+                              </h2>
 
                               {/* Subtle Divider Line */}
-                              <div className="mt-4 border-b border-slate-100" />
+                              <div className="mt-3 border-b border-slate-100" />
                             </div>
 
                             {/* Clean Stage Canvas (Default Full Size) & NPX Install Bar Below */}
@@ -909,14 +707,15 @@ export function UiLibraryView() {
                               <div className="space-y-3">
                                 {/* Default Full Size Stage (Overflow-Visible to prevent dropdown/popover clipping) */}
                                 <div className="relative flex min-h-[320px] w-full items-center justify-center rounded-2xl bg-[#FAFAFA] p-2.5 sm:min-h-[420px] sm:p-8">
-                                  {/* Subtle Background Grid Pattern */}
+                                  {/* Subtle Mathematical Linear Grid Pattern (Zero Radial Dots) */}
                                   <div
                                     className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-[0.35]"
                                     style={{
-                                      backgroundImage:
-                                        'radial-gradient(#0056FF 0.75px, transparent 0.75px), radial-gradient(#0056FF 0.75px, #FAFAFA 0.75px)',
-                                      backgroundSize: '24px 24px',
-                                      backgroundPosition: '0 0, 12px 12px',
+                                      backgroundImage: `
+                                        linear-gradient(to right, #CAD3F5 1px, transparent 1px),
+                                        linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)
+                                      `,
+                                      backgroundSize: '28px 28px',
                                     }}
                                   />
 
@@ -940,63 +739,63 @@ export function UiLibraryView() {
                                     </code>
                                   </div>
 
-                                  <div className="flex w-full items-center gap-2 sm:w-auto">
-                                    {/* Copy Install Command Button */}
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        handleCopyInstall(
-                                          comp.id,
-                                          `npx snpi-ui@latest add ${comp.id}`,
-                                        )
-                                      }
-                                      className={cn(
-                                        'flex flex-1 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95 sm:flex-none sm:py-1',
-                                        copiedInstallId === comp.id
-                                          ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-                                      )}
-                                      title={`Copy install command for ${comp.name}`}
+                                  <div className="flex items-center gap-1.5 self-end sm:gap-2 sm:self-auto">
+                                    {/* Copy Install Command Button - Standard Popover Tooltip */}
+                                    <LibraryTooltip
+                                      content="Copy CLI Command"
+                                      position="top"
+                                      delayMs={80}
                                     >
-                                      {copiedInstallId === comp.id ? (
-                                        <>
-                                          <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
-                                          <span>Command Copied!</span>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <Copy className="size-3.5 stroke-[2]" />
-                                          <span>Copy Command</span>
-                                        </>
-                                      )}
-                                    </button>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          handleCopyInstall(
+                                            comp.id,
+                                            `npx snpi-ui@latest add ${comp.id}`,
+                                          )
+                                        }
+                                        className={cn(
+                                          'group relative flex size-8 cursor-pointer items-center justify-center rounded-lg border transition-all duration-200 active:scale-95 sm:size-8.5',
+                                          copiedInstallId === comp.id
+                                            ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
+                                            : 'border-slate-300/80 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                                        )}
+                                        aria-label="Copy CLI Command"
+                                      >
+                                        {copiedInstallId === comp.id ? (
+                                          <Check className="size-4 stroke-[2.5] text-emerald-600" />
+                                        ) : (
+                                          <Copy className="size-4 stroke-[2] transition-transform group-hover:scale-110" />
+                                        )}
+                                      </button>
+                                    </LibraryTooltip>
 
-                                    {/* 1-Click Copy AI Agent Prompt Button */}
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
-                                      }
-                                      className={cn(
-                                        'flex flex-1 shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 font-mono text-xs font-bold transition-all active:scale-95 sm:flex-none sm:py-1',
-                                        copiedPromptId === comp.id
-                                          ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                                          : 'border-slate-200 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-                                      )}
-                                      title={`Copy AI agent prompt specification for ${comp.name}`}
+                                    {/* 1-Click Copy AI Agent Prompt Button - Standard Popover Tooltip */}
+                                    <LibraryTooltip
+                                      content="Copy AI Prompt"
+                                      position="top"
+                                      delayMs={80}
                                     >
-                                      {copiedPromptId === comp.id ? (
-                                        <>
-                                          <Check className="size-3.5 stroke-[2.2] text-emerald-600" />
-                                          <span>Prompt Copied!</span>
-                                        </>
-                                      ) : (
-                                        <>
-                                          <Sparkles className="size-3.5 stroke-[2] text-[#0056FF]" />
-                                          <span>Copy Prompt Text</span>
-                                        </>
-                                      )}
-                                    </button>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          handleCopyPrompt(comp.id, generateAiAgentPrompt(comp))
+                                        }
+                                        className={cn(
+                                          'group relative flex size-8 cursor-pointer items-center justify-center rounded-lg border transition-all duration-200 active:scale-95 sm:size-8.5',
+                                          copiedPromptId === comp.id
+                                            ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
+                                            : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white',
+                                        )}
+                                        aria-label="Copy AI Agent Prompt"
+                                      >
+                                        {copiedPromptId === comp.id ? (
+                                          <Check className="size-4 stroke-[2.5] text-emerald-600" />
+                                        ) : (
+                                          <Sparkles className="size-4 stroke-[2] transition-transform group-hover:scale-110" />
+                                        )}
+                                      </button>
+                                    </LibraryTooltip>
                                   </div>
                                 </div>
                               </div>

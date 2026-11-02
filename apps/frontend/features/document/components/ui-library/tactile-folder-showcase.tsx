@@ -50,7 +50,7 @@ export function TactileFolderShowcase({
         {/* Outer Folder Body Container */}
         <div className="relative min-h-[360px] p-4 pt-10 pb-20 sm:min-h-[400px] sm:p-6 sm:pt-12 sm:pb-24">
           {/* Top Folder Lip / Tab Arch */}
-          <div className="absolute -top-3 left-8 h-4 w-28 rounded-t-xl border-t-2 border-x-2 border-[#CAD3F5] bg-[#E3E7FC]" />
+          <div className="absolute -top-3 left-8 h-4 w-28 rounded-t-xl border-x-2 border-t-2 border-[#CAD3F5] bg-[#E3E7FC]" />
 
           {/* =============================================================== */}
           {/* 3 STACKED DOCUMENT SHEETS PEEKING OUT                           */}
@@ -84,7 +84,7 @@ export function TactileFolderShowcase({
                   key={card.id}
                   onClick={() => setActiveCardIndex(idx)}
                   className={cn(
-                    'absolute inset-x-0 top-0 mx-auto h-[280px] w-full max-w-sm sm:max-w-md cursor-pointer select-none rounded-2xl p-4 transition-all duration-300 sm:p-5',
+                    'absolute inset-x-0 top-0 mx-auto h-[280px] w-full max-w-sm cursor-pointer rounded-2xl p-4 transition-all duration-300 select-none sm:max-w-md sm:p-5',
                     isActive
                       ? 'border-2 border-[#0056FF]/30 bg-white text-[#0A1A4A] shadow-md'
                       : 'border border-slate-200 bg-slate-50 text-slate-800',
@@ -108,9 +108,7 @@ export function TactileFolderShowcase({
                   </div>
 
                   {/* Card Main Body Content */}
-                  <div className="mt-3 overflow-hidden text-xs">
-                    {card.content}
-                  </div>
+                  <div className="mt-3 overflow-hidden text-xs">{card.content}</div>
                 </div>
               );
             })}
@@ -121,13 +119,13 @@ export function TactileFolderShowcase({
           {/* =============================================================== */}
           <div
             className={cn(
-              'pointer-events-none absolute inset-x-3 bottom-3 z-30 flex items-center justify-between rounded-[24px] sm:rounded-[28px] px-5 py-3.5',
-              'border border-[#CAD3F5] bg-[#EFF5FF]/90 text-[#0A1A4A] backdrop-blur-md shadow-[0_-8px_20px_rgba(0,86,255,0.06)]',
+              'pointer-events-none absolute inset-x-3 bottom-3 z-30 flex items-center justify-between rounded-[24px] px-5 py-3.5 sm:rounded-[28px]',
+              'border border-[#CAD3F5] bg-[#EFF5FF]/90 text-[#0A1A4A] shadow-[0_-8px_20px_rgba(0,86,255,0.06)] backdrop-blur-md',
             )}
           >
             <div className="flex items-center gap-2.5">
               <span className="size-2 rounded-full bg-[#0056FF]" />
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#0A1A4A]">
+              <span className="font-mono text-xs font-bold tracking-wider text-[#0A1A4A] uppercase">
                 {activeCard.title}
               </span>
             </div>

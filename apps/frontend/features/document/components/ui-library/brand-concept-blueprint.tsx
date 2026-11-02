@@ -2,12 +2,14 @@
 
 import * as React from 'react';
 import Image from 'next/image';
-import { Copy, Check } from '@/components/icons';
+import { Copy, Check, Code } from '@/components/icons';
 import { GeometricHeaderStamp } from './geometric-tag-primitives';
+import { LibraryTooltip } from './tooltip';
 import { cn } from '@/lib/utils';
 
 export function BrandConceptBlueprint() {
   const [copiedToken, setCopiedToken] = React.useState<string | null>(null);
+  const [tokenFormat, setTokenFormat] = React.useState<'css' | 'ts'>('css');
 
   const handleCopy = async (token: string, label: string) => {
     if (typeof window === 'undefined') return;
@@ -323,144 +325,302 @@ export function BrandConceptBlueprint() {
         </div>
       </div>
 
-      {/* SYSTEM COLOR APPLICATION MATRIX ("EVERY PLACE NEED THAT COLOR") */}
-      <div className="rounded-2xl border border-[#CAD3F5] bg-white p-6 shadow-xs sm:p-7">
-        <div className="mb-6 flex flex-col gap-1 border-b border-[#CAD3F5]/60 pb-4">
-          <div className="flex items-center gap-2.5">
-            <span className="size-2.5 rounded-[2px] bg-[#0056FF]" />
-            <h3 className="font-sans text-lg font-black tracking-tight text-slate-950">
+      {/* SYSTEM COLOR APPLICATION MATRIX - COMPACT MATHEMATICAL SPECIFICATION TABLE */}
+      <div className="overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white shadow-xs">
+        {/* Table Header Strip */}
+        <div className="flex items-center justify-between border-b border-[#CAD3F5] bg-[#F8FAFC] px-5 py-3">
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-1 rounded-[1px] bg-[#0056FF]" />
+            <h3 className="font-sans text-sm font-bold text-slate-950 sm:text-base">
               System Color Application Matrix
             </h3>
+            <span className="rounded-[3px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
+              5 SOLID TOKENS
+            </span>
           </div>
-          <p className="font-sans text-xs font-medium text-slate-600">
-            Authoritative token mappings across user interface components, interactive states, and
-            surfaces.
-          </p>
+          <span className="font-mono text-[10px] font-bold text-slate-500">WCAG AAA / AA</span>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {applicationMatrix.map((item) => (
-            <div
-              key={item.name}
-              className={cn(
-                'flex flex-col justify-between rounded-xl border p-5 transition-all',
-                item.name === 'White'
-                  ? 'border-2 border-[#CAD3F5] bg-white shadow-xs hover:border-[#0056FF] md:col-span-2'
-                  : item.name === 'Soft Lavender'
-                    ? 'border border-[#CAD3F5] bg-[#E3E7FC]/40 hover:border-[#0056FF]'
-                    : item.name === 'Ice Tint'
-                      ? 'border border-[#CAD3F5] bg-[#EFF5FF]/70 hover:border-[#0056FF]'
-                      : 'border border-[#CAD3F5] bg-white shadow-xs hover:border-[#0056FF]',
-              )}
-            >
-              <div>
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    {/* Color Swatch */}
-                    <div
-                      className={cn(
-                        'flex size-7 shrink-0 items-center justify-center rounded-lg shadow-xs',
-                        item.name === 'White'
-                          ? 'border-2 border-[#CAD3F5] bg-white ring-2 ring-[#CAD3F5]/30'
-                          : 'border border-[#CAD3F5]',
-                      )}
-                      style={{ background: item.colorPreview }}
-                    />
-                    <div>
-                      <h4 className="font-sans text-sm font-black text-[#0A1A4A]">{item.name}</h4>
-                      <span className="font-mono text-[11px] font-bold text-slate-500">
-                        {item.surface}
-                      </span>
+        {/* Compact Specification Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left font-mono text-xs">
+            <thead>
+              <tr className="border-b border-slate-100 bg-[#EFF5FF]/40 text-[10px] font-bold text-slate-500 uppercase">
+                <th className="px-4 py-2.5">Token</th>
+                <th className="px-4 py-2.5">Role</th>
+                <th className="hidden px-4 py-2.5 sm:table-cell">Applied Components</th>
+                <th className="px-4 py-2.5">Contrast</th>
+                <th className="px-4 py-2.5 text-right">Copy</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 font-sans">
+              {applicationMatrix.map((item) => (
+                <tr key={item.name} className="transition-colors hover:bg-[#EFF5FF]/50">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2.5">
+                      <span
+                        className="size-4 shrink-0 rounded-[3px] border border-[#CAD3F5]"
+                        style={{ backgroundColor: item.hex }}
+                      />
+                      <div>
+                        <span className="block font-sans leading-tight font-bold text-slate-900">
+                          {item.name}
+                        </span>
+                        <span className="font-mono text-[10px] text-[#0056FF]">{item.hex}</span>
+                      </div>
                     </div>
-                  </div>
-                  <span className="rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 font-mono text-xs font-bold text-[#0056FF]">
-                    {item.hex}
-                  </span>
-                </div>
-
-                <div className="mt-3.5 space-y-2">
-                  <span
-                    className={cn(
-                      'inline-block rounded-md border px-2.5 py-0.5 font-mono text-[10px] font-bold tracking-wider uppercase',
-                      item.name === 'Royal Blue'
-                        ? 'border-[#0056FF] bg-[#0056FF] text-white'
-                        : item.name === 'Azure Blue'
-                          ? 'border-[#2277FF] bg-[#2277FF] text-white'
-                          : 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]',
-                    )}
-                  >
-                    {item.role}
-                  </span>
-                  <p className="font-sans text-xs leading-relaxed text-slate-700">{item.applied}</p>
-                </div>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between border-t border-[#CAD3F5]/60 pt-2.5 font-mono text-[10px] text-slate-500">
-                <span className="font-bold text-slate-600">SURFACE: {item.surface}</span>
-                <span className="font-bold text-[#0056FF]">{item.contrast}</span>
-              </div>
-            </div>
-          ))}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="rounded-[3px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold whitespace-nowrap text-[#0056FF]">
+                      {item.role}
+                    </span>
+                  </td>
+                  <td className="hidden px-4 py-3 font-sans text-xs text-slate-600 sm:table-cell">
+                    {item.applied}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="font-mono text-[11px] font-bold whitespace-nowrap text-[#0056FF]">
+                      {item.contrast}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <LibraryTooltip content={`Copy ${item.hex}`} position="left" delayMs={80}>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(item.hex, item.name)}
+                        className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
+                        aria-label={`Copy ${item.name} hex code`}
+                      >
+                        {copiedToken === item.name ? (
+                          <Check className="size-3.5 text-emerald-600" />
+                        ) : (
+                          <Copy className="size-3.5" />
+                        )}
+                      </button>
+                    </LibraryTooltip>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-
-
       {/* CODE COLOR TOKENS (CSS VARIABLES & TYPESCRIPT TOKENS) */}
-      <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xs sm:p-7">
+      <div className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-xs sm:p-7">
+        {/* Card Header */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h4 className="font-sans text-base font-bold text-slate-950">
-              Code Color Tokens (CSS Variables & TypeScript)
-            </h4>
-            <p className="font-sans text-xs text-slate-500">
+            <div className="flex items-center gap-2">
+              <h4 className="font-sans text-base font-bold text-slate-950 sm:text-lg">
+                Code Color Tokens
+              </h4>
+              <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF] uppercase">
+                CSS & TypeScript
+              </span>
+            </div>
+            <p className="mt-0.5 font-sans text-xs text-slate-500">
               Ready-to-use style tokens for stylesheets, theme configs, and application components.
             </p>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => handleCopy(cssTokens, 'css-tokens')}
-              className="inline-flex cursor-pointer items-center gap-1.5 rounded-[4px] bg-[#0056FF] px-3 py-1.5 font-sans text-xs font-bold text-white transition-all select-none hover:bg-blue-700"
-            >
-              {copiedToken === 'css-tokens' ? (
-                <>
-                  <Check className="size-3.5" />
-                  <span>Copied CSS!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="size-3.5" />
-                  <span>Copy CSS Variables</span>
-                </>
-              )}
-            </button>
 
-            <button
-              type="button"
-              onClick={() => handleCopy(tsTokens, 'ts-tokens')}
-              className="inline-flex cursor-pointer items-center gap-1.5 rounded-[4px] border border-slate-200 bg-slate-100 px-3 py-1.5 font-sans text-xs font-bold text-slate-800 transition-all select-none hover:bg-slate-200"
-            >
-              {copiedToken === 'ts-tokens' ? (
-                <>
-                  <Check className="size-3.5" />
-                  <span>Copied TS!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="size-3.5" />
-                  <span>Copy TS Contract</span>
-                </>
-              )}
-            </button>
+          {/* Controls: Segment Tabs & Compact Differentiated Icon Buttons */}
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Format Switcher Tabs */}
+            <div className="flex items-center rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-1">
+              <button
+                type="button"
+                onClick={() => setTokenFormat('css')}
+                className={cn(
+                  'cursor-pointer rounded-md px-2.5 py-1 font-mono text-xs font-bold transition-all',
+                  tokenFormat === 'css'
+                    ? 'bg-white text-[#0056FF] shadow-2xs'
+                    : 'text-slate-600 hover:text-[#0056FF]',
+                )}
+              >
+                CSS Variables
+              </button>
+              <button
+                type="button"
+                onClick={() => setTokenFormat('ts')}
+                className={cn(
+                  'cursor-pointer rounded-md px-2.5 py-1 font-mono text-xs font-bold transition-all',
+                  tokenFormat === 'ts'
+                    ? 'bg-white text-[#0056FF] shadow-2xs'
+                    : 'text-slate-600 hover:text-[#0056FF]',
+                )}
+              >
+                TypeScript
+              </button>
+            </div>
+
+            {/* Differentiated Icon Buttons */}
+            <div className="flex items-center gap-1.5">
+              {/* Copy CSS Variables Icon Button */}
+              <LibraryTooltip content="Copy CSS Variables" position="top" delayMs={80}>
+                <button
+                  type="button"
+                  onClick={() => handleCopy(cssTokens, 'css-tokens')}
+                  className={cn(
+                    'group relative flex size-8.5 cursor-pointer items-center justify-center rounded-lg border transition-all duration-200 active:scale-95',
+                    copiedToken === 'css-tokens'
+                      ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
+                      : 'border-slate-300/80 bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                  )}
+                  aria-label="Copy CSS Variables"
+                >
+                  {copiedToken === 'css-tokens' ? (
+                    <Check className="size-4 stroke-[2.5] text-emerald-600" />
+                  ) : (
+                    <Copy className="size-4 stroke-[2] transition-transform group-hover:scale-110" />
+                  )}
+                </button>
+              </LibraryTooltip>
+
+              {/* Copy TypeScript Contract Icon Button */}
+              <LibraryTooltip content="Copy TS Contract" position="top" delayMs={80}>
+                <button
+                  type="button"
+                  onClick={() => handleCopy(tsTokens, 'ts-tokens')}
+                  className={cn(
+                    'group relative flex size-8.5 cursor-pointer items-center justify-center rounded-lg border transition-all duration-200 active:scale-95',
+                    copiedToken === 'ts-tokens'
+                      ? 'border-emerald-500 bg-emerald-50 text-emerald-600'
+                      : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF] hover:border-[#0056FF] hover:bg-[#0056FF] hover:text-white',
+                  )}
+                  aria-label="Copy TypeScript Contract"
+                >
+                  {copiedToken === 'ts-tokens' ? (
+                    <Check className="size-4 stroke-[2.5] text-emerald-600" />
+                  ) : (
+                    <Code className="size-4 stroke-[2] transition-transform group-hover:scale-110" />
+                  )}
+                </button>
+              </LibraryTooltip>
+            </div>
           </div>
         </div>
 
-        {/* CSS Code Box */}
-        <div className="mt-4 overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] p-4 text-[#0056FF]">
-          <pre className="font-mono text-xs leading-relaxed text-[#0056FF]">
-            <code>{cssTokens}</code>
-          </pre>
+        {/* Interactive Code Box Frame */}
+        <div className="mt-4 overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#F8FAFC]">
+          {/* Frame Sub-header Bar */}
+          <div className="flex items-center justify-between border-b border-[#CAD3F5]/80 bg-[#EFF5FF]/80 px-4 py-2 font-mono text-[11px]">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-[#0056FF]">
+                {tokenFormat === 'css' ? 'tokens.css' : 'tokens.ts'}
+              </span>
+              <span className="text-slate-400">·</span>
+              <span className="text-slate-500">
+                {tokenFormat === 'css'
+                  ? '6 Solid Custom Properties'
+                  : 'Immutable TypeScript Object'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-[#0056FF]">
+                {tokenFormat === 'css' ? 'UTF-8' : 'ES6 / TS'}
+              </span>
+            </div>
+          </div>
+
+          {/* Code Content with Live Inline Swatches & Syntax Highlighting */}
+          <div className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-[#0A1A4A]">
+            {tokenFormat === 'css' ? (
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="w-5 shrink-0 text-right font-mono text-[11px] text-slate-300 select-none">
+                    1
+                  </span>
+                  <span>
+                    <strong className="text-[#0A1A4A]">:root</strong> &#123;
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="w-5 shrink-0 text-right font-mono text-[11px] text-slate-300 select-none">
+                    2
+                  </span>
+                  <span className="font-mono text-[11px] text-slate-400 italic">
+                    /* Primary Brand Solids - Pure Flat Colors Only */
+                  </span>
+                </div>
+                {applicationMatrix.map((item, idx) => (
+                  <div
+                    key={item.name}
+                    className="group flex flex-wrap items-center gap-2 rounded px-1.5 py-0.5 transition-colors hover:bg-[#EFF5FF]"
+                  >
+                    <span className="w-5 shrink-0 text-right font-mono text-[11px] text-slate-300 select-none">
+                      {idx + 3}
+                    </span>
+                    <span className="font-bold text-[#0056FF]">
+                      --brand-{item.name.toLowerCase().replace(/\s+/g, '-')}:
+                    </span>
+                    <span className="flex items-center gap-1.5 font-bold text-[#0A1A4A]">
+                      <span
+                        className="size-3 shrink-0 rounded-[2px] border border-[#CAD3F5]"
+                        style={{ backgroundColor: item.hex }}
+                      />
+                      {item.hex};
+                    </span>
+                    <span className="hidden font-mono text-[11px] text-slate-400 sm:inline">
+                      /* {item.role} */
+                    </span>
+                  </div>
+                ))}
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="w-5 shrink-0 text-right font-mono text-[11px] text-slate-300 select-none">
+                    {applicationMatrix.length + 3}
+                  </span>
+                  <span>&#125;</span>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="w-5 shrink-0 text-right font-mono text-[11px] text-slate-300 select-none">
+                    1
+                  </span>
+                  <span>
+                    <strong className="text-[#0056FF]">export const</strong>{' '}
+                    <strong className="text-[#0A1A4A]">BRAND_TOKENS</strong> = &#123;
+                  </span>
+                </div>
+                {applicationMatrix.map((item, idx) => {
+                  const key = item.name
+                    .replace(/\s+(.)/g, (_, c) => c.toUpperCase())
+                    .replace(/^[A-Z]/, (c) => c.toLowerCase());
+                  return (
+                    <div
+                      key={item.name}
+                      className="group flex flex-wrap items-center gap-2 rounded px-1.5 py-0.5 transition-colors hover:bg-[#EFF5FF]"
+                    >
+                      <span className="w-5 shrink-0 text-right font-mono text-[11px] text-slate-300 select-none">
+                        {idx + 2}
+                      </span>
+                      <span className="font-bold text-[#0A1A4A]">{key}:</span>
+                      <span className="flex items-center gap-1.5 font-bold text-[#0056FF]">
+                        <span
+                          className="size-3 shrink-0 rounded-[2px] border border-[#CAD3F5]"
+                          style={{ backgroundColor: item.hex }}
+                        />
+                        &apos;{item.hex}&apos;,
+                      </span>
+                      <span className="hidden font-mono text-[11px] text-slate-400 sm:inline">
+                        // {item.role}
+                      </span>
+                    </div>
+                  );
+                })}
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="w-5 shrink-0 text-right font-mono text-[11px] text-slate-300 select-none">
+                    {applicationMatrix.length + 2}
+                  </span>
+                  <span>
+                    &#125; <strong className="text-[#0056FF]">as const</strong>;
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

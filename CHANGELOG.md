@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (02.11.2026) - `4cf236b` (Developer: **史力爱卫**)
+
+- Remove theme switcher dock and standardize tactile folder to clean white blue design
+
 ### Version 0.2.15 (02.11.2026) - `5b1d272` (Developer: **史力爱卫**)
 
 - Remove verbose text copy and leave clean whitespace across hero and component demos
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `e9af90d` (Developer: **史力爱卫**)
 
 - Add standard security vulnerability remediation log to README
-
-### Version 0.2.14 (01.11.2026) - `e70bf64` (Developer: **史力爱卫**)
-
-- Sync security documentation report commit
 
