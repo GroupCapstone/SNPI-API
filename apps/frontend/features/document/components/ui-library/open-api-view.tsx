@@ -26,6 +26,8 @@ import {
 import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import { cn } from '@/lib/utils';
 import { PrettyCodeBlock } from './pretty-code-block';
+import { RadiantIntegrationHub } from './radiant-integration-hub';
+import { TactileFolderShowcase } from './tactile-folder-showcase';
 
 // ============================================================================
 // DATA STRUCTURES: BACKEND API & SYNDICATION SPECIFICATIONS
@@ -164,6 +166,9 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
   const [activeSection, setActiveSection] = React.useState<string>(
     initialSection || 'open-api-head',
   );
+  const [selectedHubNodeId, setSelectedHubNodeId] = React.useState<string>('feed-news-rss');
+  const activeFeedSpec =
+    PUBLIC_FEEDS_SPECS.find((f) => f.id === selectedHubNodeId) || PUBLIC_FEEDS_SPECS[0];
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
 
   // Feed specimen status tab (success, notfound, or xml)
@@ -368,138 +373,158 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </p>
                 </div>
 
-                {/* Visual Converging API Node Gateway Canvas (Image 3 Reference) */}
-                <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-2xs sm:p-6">
-                  {/* Radiating Curved SVG Vector Connectors (Desktop / Tablet) */}
-                  <svg
-                    className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
-                    viewBox="0 0 800 240"
-                    fill="none"
-                    preserveAspectRatio="none"
-                  >
-                    {/* Left Curves to Center Hub */}
-                    <path
-                      d="M 230 60 C 320 60, 340 120, 390 120"
-                      stroke="#CAD3F5"
-                      strokeWidth="2"
-                      strokeDasharray="4 4"
-                    />
-                    <path
-                      d="M 230 120 C 310 120, 340 120, 390 120"
-                      stroke="#0056FF"
-                      strokeWidth="2"
-                      strokeOpacity="0.4"
-                    />
-                    <path
-                      d="M 230 180 C 320 180, 340 120, 390 120"
-                      stroke="#CAD3F5"
-                      strokeWidth="2"
-                      strokeDasharray="4 4"
-                    />
+                {/* ============================================================= */}
+                {/* 1. RADIANT 6-NODE INTEGRATION HUB (IMAGE 1 REFERENCE)         */}
+                {/* ============================================================= */}
+                <RadiantIntegrationHub
+                  center={{
+                    title: 'SNPI EDGE GATEWAY',
+                    subtitle: 'GET /api/v1/public/*',
+                    icon: <Server className="size-7 stroke-[2.2]" />,
+                    badge: 'Edge Live',
+                  }}
+                  leftNodes={[
+                    {
+                      id: 'feed-news-rss',
+                      label: 'Campus Notices',
+                      sublabel: 'RSS 2.0 XML Feed',
+                      tag: '01 · Feed',
+                      badge: 'RSS XML',
+                      icon: <Radio className="size-5" />,
+                    },
+                    {
+                      id: 'feed-alerts-json',
+                      label: 'Emergency Alerts',
+                      sublabel: 'Operational Warnings',
+                      tag: '02 · Alerts',
+                      badge: 'JSON',
+                      icon: <Zap className="size-5" />,
+                    },
+                    {
+                      id: 'feed-calendar-json',
+                      label: 'Term Milestones',
+                      sublabel: 'Semester Calendar',
+                      tag: '03 · Cal',
+                      badge: 'JSON',
+                      icon: <Calendar className="size-5" />,
+                    },
+                  ]}
+                  rightNodes={[
+                    {
+                      id: 'service-catalog',
+                      label: 'Course Catalog',
+                      sublabel: 'Open Public Courses',
+                      tag: '04 · Study',
+                      badge: 'REST',
+                      icon: <Globe className="size-5" />,
+                    },
+                    {
+                      id: 'service-branches',
+                      label: 'Campus Directory',
+                      sublabel: 'Branch Geo & Contact',
+                      tag: '05 · Branch',
+                      badge: 'REST',
+                      icon: <Layers className="size-5" />,
+                    },
+                    {
+                      id: 'service-health',
+                      label: 'Health & RFC 9116',
+                      sublabel: 'Security & RFC Spec',
+                      tag: '06 · Sec',
+                      badge: '200 OK',
+                      icon: <ShieldCheck className="size-5" />,
+                    },
+                  ]}
+                  activeNodeId={selectedHubNodeId}
+                  onSelectNode={(id) => {
+                    setSelectedHubNodeId(id);
+                    if (id.startsWith('feed-')) {
+                      scrollToSection('public-feeds');
+                    } else {
+                      scrollToSection('available-services');
+                    }
+                  }}
+                />
 
-                    {/* Right Curves to Center Hub */}
-                    <path
-                      d="M 570 60 C 480 60, 460 120, 410 120"
-                      stroke="#CAD3F5"
-                      strokeWidth="2"
-                      strokeDasharray="4 4"
-                    />
-                    <path
-                      d="M 570 120 C 490 120, 460 120, 410 120"
-                      stroke="#0056FF"
-                      strokeWidth="2"
-                      strokeOpacity="0.4"
-                    />
-                    <path
-                      d="M 570 180 C 480 180, 460 120, 410 120"
-                      stroke="#CAD3F5"
-                      strokeWidth="2"
-                      strokeDasharray="4 4"
-                    />
-                  </svg>
-
-                  <div className="relative z-10 flex flex-col items-center justify-between gap-6 md:flex-row">
-                    {/* Left Syndication Feed Card */}
-                    <div className="w-full md:w-auto">
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection('public-feeds')}
-                        className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3.5 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95"
-                      >
-                        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                          <Radio className="size-4.5" />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                              01 · Feed
-                            </span>
-                            <span className="py-0.2 rounded border border-[#CAD3F5] bg-white px-1.5 font-mono text-[8px] font-bold text-[#0056FF]">
-                              RSS 2.0 XML
-                            </span>
-                          </div>
-                          <span className="block text-xs font-bold text-[#0A1A4A]">
-                            Campus News & Notices
-                          </span>
-                        </div>
-                      </button>
-                    </div>
-
-                    {/* Center Core Gateway Hub */}
-                    <div className="my-2 flex flex-col items-center justify-center text-center md:my-0">
-                      <div className="relative flex size-20 items-center justify-center rounded-3xl border-2 border-[#0056FF] bg-gradient-to-br from-[#0056FF] to-[#2277FF] text-white shadow-[0_0_24px_rgba(0,86,255,0.25)] sm:size-24">
-                        <Server className="size-10 stroke-[2.2] sm:size-12" />
-                        <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-emerald-400">
-                          <span className="size-2 animate-ping rounded-full bg-emerald-600" />
-                        </span>
-                      </div>
-                      <span className="mt-3 font-mono text-xs font-black tracking-widest text-[#0A1A4A] uppercase">
-                        SNPI EDGE GATEWAY
-                      </span>
-                      <span className="font-mono text-[10px] font-semibold text-[#0056FF]">
-                        GET /api/v1/public/*
-                      </span>
-                    </div>
-
-                    {/* Right Syndication Feed Cards */}
-                    <div className="flex w-full flex-col gap-2.5 md:w-auto">
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection('public-feeds')}
-                        className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95"
-                      >
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                          <Zap className="size-4" />
-                        </div>
-                        <div>
-                          <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                            02 · Alerts
-                          </span>
-                          <span className="block text-xs font-bold text-[#0A1A4A]">
-                            Emergency Advisories (JSON)
-                          </span>
-                        </div>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => scrollToSection('public-feeds')}
-                        className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95"
-                      >
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                          <Calendar className="size-4" />
-                        </div>
-                        <div>
-                          <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                            03 · Calendar
-                          </span>
-                          <span className="block text-xs font-bold text-[#0A1A4A]">
-                            Term Milestones (JSON)
-                          </span>
-                        </div>
-                      </button>
-                    </div>
+                {/* ============================================================= */}
+                {/* 2. TACTILE FOLDER SHOWCASE & SWITCHER DOCK (IMAGE 2 REFERENCE) */}
+                {/* ============================================================= */}
+                <div className="pt-2">
+                  <div className="mb-3 flex items-center justify-between px-1">
+                    <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
+                      Tactile Document Inspector &amp; Schema Viewer
+                    </span>
+                    <span className="font-mono text-[10px] text-slate-500">
+                      3 Layered Document Sheets · Interactive Color Switcher Dock
+                    </span>
                   </div>
+
+                  <TactileFolderShowcase
+                    initialTheme="dark"
+                    cards={[
+                      {
+                        id: 'card-live-payload',
+                        title: `${activeFeedSpec?.title || 'Live Feed Payload'}`,
+                        badge: `${activeFeedSpec?.format || 'JSON Spec'} · 200 OK`,
+                        content: (
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between text-[11px]">
+                              <span className="font-mono font-bold text-[#0056FF]">
+                                {activeFeedSpec?.endpoint || '/api/v1/public/feed'}
+                              </span>
+                              <span className="rounded bg-emerald-100 px-1.5 py-0.2 font-mono text-[9px] font-bold text-emerald-800">
+                                42ms CDN HIT
+                              </span>
+                            </div>
+                            <pre className="max-h-40 overflow-x-auto rounded-xl bg-slate-950 p-2.5 font-mono text-[10px] text-emerald-400">
+                              {JSON.stringify(
+                                activeFeedSpec?.sampleJson || SAMPLE_ERROR_RESPONSE,
+                                null,
+                                2,
+                              )}
+                            </pre>
+                          </div>
+                        ),
+                      },
+                      {
+                        id: 'card-contract-zod',
+                        title: 'OpenAPI 3.1 & Zod Contract',
+                        badge: 'Zero Auth Required',
+                        content: (
+                          <div className="space-y-2 font-mono text-[10px]">
+                            <div className="rounded-lg bg-slate-100 p-2 text-slate-800">
+                              <span className="font-bold text-[#0056FF]">Auth Policy: </span>
+                              <span>Zero API Keys / Unauthenticated</span>
+                            </div>
+                            <div className="rounded-lg bg-slate-100 p-2 text-slate-800">
+                              <span className="font-bold text-[#0056FF]">CORS: </span>
+                              <span>Access-Control-Allow-Origin: *</span>
+                            </div>
+                            <div className="rounded-lg bg-slate-100 p-2 text-slate-800">
+                              <span className="font-bold text-[#0056FF]">Cache-Control: </span>
+                              <span>public, s-maxage=300, stale-while-revalidate=60</span>
+                            </div>
+                          </div>
+                        ),
+                      },
+                      {
+                        id: 'card-rfc-error',
+                        title: 'RFC 7807 Error Specification',
+                        badge: 'RFC 7807 Details',
+                        content: (
+                          <div className="space-y-2">
+                            <p className="font-sans text-[11px] text-slate-600">
+                              All client &amp; upstream errors return RFC 7807 problem details with
+                              sanitized error stack suppression.
+                            </p>
+                            <pre className="max-h-40 overflow-x-auto rounded-xl bg-slate-950 p-2.5 font-mono text-[10px] text-amber-400">
+                              {JSON.stringify(SAMPLE_ERROR_RESPONSE, null, 2)}
+                            </pre>
+                          </div>
+                        ),
+                      },
+                    ]}
+                  />
                 </div>
 
                 {/* Playful Stacked Capsule Pills Constellation (Image 4 Reference) */}

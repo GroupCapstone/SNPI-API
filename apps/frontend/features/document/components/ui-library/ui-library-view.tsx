@@ -40,6 +40,8 @@ import {
   HookSidebar,
   type HookSidebarItem,
   generateAiAgentPrompt,
+  RadiantIntegrationHub,
+  TactileFolderShowcase,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -690,187 +692,226 @@ export function UiLibraryView() {
                     </p>
                   </div>
 
-                  {/* Radiant Curved Fiber-Optic Integration Canvas (Image 3 Reference) */}
-                  <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-2xs sm:p-6">
-                    {/* Radiating Curved SVG Vector Connectors (Desktop / Tablet) */}
-                    <svg
-                      className="pointer-events-none absolute inset-0 hidden h-full w-full md:block"
-                      viewBox="0 0 800 240"
-                      fill="none"
-                      preserveAspectRatio="none"
-                    >
-                      {/* Left Curves to Center Hub */}
-                      <path
-                        d="M 210 50 C 310 50, 330 120, 390 120"
-                        stroke="#CAD3F5"
-                        strokeWidth="2"
-                        strokeDasharray="4 4"
-                      />
-                      <path
-                        d="M 210 120 C 300 120, 330 120, 390 120"
-                        stroke="#0056FF"
-                        strokeWidth="2"
-                        strokeOpacity="0.4"
-                      />
-                      <path
-                        d="M 210 190 C 310 190, 330 120, 390 120"
-                        stroke="#CAD3F5"
-                        strokeWidth="2"
-                        strokeDasharray="4 4"
-                      />
+                  {/* ============================================================= */}
+                  {/* 1. RADIANT 6-NODE INTEGRATION HUB (IMAGE 1 REFERENCE)         */}
+                  {/* ============================================================= */}
+                  <RadiantIntegrationHub
+                    center={{
+                      title: 'SNPI DESIGN ENGINE',
+                      subtitle: 'Mathematical Token Matrix',
+                      icon: <Layers className="size-7 stroke-[2.2]" />,
+                      badge: '73 Primitives',
+                    }}
+                    leftNodes={[
+                      {
+                        id: 'cat-navigation',
+                        label: 'Navigation & Docks',
+                        sublabel: 'Cyber Armor & Rails',
+                        tag: '01 · Nav',
+                        badge: 'Dock',
+                        icon: <Compass className="size-5" />,
+                      },
+                      {
+                        id: 'cat-feedback',
+                        label: 'Feedback & Overlays',
+                        sublabel: 'Snackbar & Dialog',
+                        tag: '02 · Dialog',
+                        badge: 'Motion',
+                        icon: <Bell className="size-5" />,
+                      },
+                      {
+                        id: 'cat-forms',
+                        label: 'Inputs & Controls',
+                        sublabel: 'Switches & Chips',
+                        tag: '03 · Input',
+                        badge: 'Forms',
+                        icon: <Sliders className="size-5" />,
+                      },
+                    ]}
+                    rightNodes={[
+                      {
+                        id: 'cat-display',
+                        label: 'Cards & Containers',
+                        sublabel: 'Tactile Folders & Tables',
+                        tag: '04 · Card',
+                        badge: 'Display',
+                        icon: <Folder className="size-5" />,
+                      },
+                      {
+                        id: 'cat-buttons',
+                        label: 'Buttons & Actions',
+                        sublabel: 'Geometric & FAB',
+                        tag: '05 · Action',
+                        badge: '0px',
+                        icon: <Zap className="size-5" />,
+                      },
+                      {
+                        id: 'cat-ai-kit',
+                        label: 'AI Agent Prompts',
+                        sublabel: 'Procedural Prompts',
+                        tag: '06 · AI',
+                        badge: 'GenUI',
+                        icon: <Bot className="size-5" />,
+                      },
+                    ]}
+                    activeNodeId={activeSectionId}
+                    onSelectNode={(id) => scrollToSection(id)}
+                  />
 
-                      {/* Right Curves to Center Hub */}
-                      <path
-                        d="M 590 50 C 490 50, 470 120, 410 120"
-                        stroke="#CAD3F5"
-                        strokeWidth="2"
-                        strokeDasharray="4 4"
-                      />
-                      <path
-                        d="M 590 120 C 500 120, 470 120, 410 120"
-                        stroke="#0056FF"
-                        strokeWidth="2"
-                        strokeOpacity="0.4"
-                      />
-                      <path
-                        d="M 590 190 C 490 190, 470 120, 410 120"
-                        stroke="#CAD3F5"
-                        strokeWidth="2"
-                        strokeDasharray="4 4"
-                      />
-                    </svg>
-
-                    <div className="relative z-10 flex flex-col items-center justify-between gap-6 md:flex-row">
-                      {/* Left Satellite Stack */}
-                      <div className="flex w-full flex-col gap-2.5 sm:grid sm:grid-cols-3 md:flex md:w-auto md:flex-col">
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection('cat-navigation')}
-                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
-                        >
-                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                            <Compass className="size-4" />
-                          </div>
-                          <div>
-                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                              01 Stack
-                            </span>
-                            <span className="block text-xs font-bold text-[#0A1A4A]">
-                              Navigation & Docks
-                            </span>
-                          </div>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection('cat-forms')}
-                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
-                        >
-                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                            <SquarePen className="size-4" />
-                          </div>
-                          <div>
-                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                              02 Engine
-                            </span>
-                            <span className="block text-xs font-bold text-[#0A1A4A]">
-                              Rich Text Editor
-                            </span>
-                          </div>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection('cat-ai-kit')}
-                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
-                        >
-                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                            <Bot className="size-4" />
-                          </div>
-                          <div>
-                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                              03 Agent
-                            </span>
-                            <span className="block text-xs font-bold text-[#0A1A4A]">
-                              AI Prompt Generator
-                            </span>
-                          </div>
-                        </button>
-                      </div>
-
-                      {/* Center Core Engine Node */}
-                      <div className="my-2 flex flex-col items-center justify-center text-center md:my-0">
-                        <div className="relative flex size-20 items-center justify-center rounded-3xl border-2 border-[#0056FF] bg-gradient-to-br from-[#0056FF] to-[#2277FF] text-white shadow-[0_0_24px_rgba(0,86,255,0.25)] sm:size-24">
-                          <Layers className="size-10 stroke-[2.2] sm:size-12" />
-                          <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-emerald-400">
-                            <span className="size-2 animate-ping rounded-full bg-emerald-600" />
-                          </span>
-                        </div>
-                        <span className="mt-3 font-mono text-xs font-black tracking-widest text-[#0A1A4A] uppercase">
-                          SNPI CORE ENGINE
-                        </span>
-                        <span className="font-mono text-[10px] font-semibold text-[#0056FF]">
-                          Mathematical Token Matrix
-                        </span>
-                      </div>
-
-                      {/* Right Satellite Stack */}
-                      <div className="flex w-full flex-col gap-2.5 sm:grid sm:grid-cols-3 md:flex md:w-auto md:flex-col">
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection('cat-display')}
-                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
-                        >
-                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                            <Table className="size-4" />
-                          </div>
-                          <div>
-                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                              04 Data
-                            </span>
-                            <span className="block text-xs font-bold text-[#0A1A4A]">
-                              Enterprise Tables
-                            </span>
-                          </div>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection('cat-feedback')}
-                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
-                        >
-                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                            <Bell className="size-4" />
-                          </div>
-                          <div>
-                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                              05 Motion
-                            </span>
-                            <span className="block text-xs font-bold text-[#0A1A4A]">
-                              Toasts & Modals
-                            </span>
-                          </div>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={() => scrollToSection('cat-inputs')}
-                          className="group flex flex-1 cursor-pointer items-center gap-2.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-2 text-left font-sans transition-all hover:border-[#0056FF] hover:bg-white active:scale-95 md:flex-none"
-                        >
-                          <div className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-[#E3E7FC] text-[#0056FF] transition-colors group-hover:bg-[#0056FF] group-hover:text-white">
-                            <Sliders className="size-4" />
-                          </div>
-                          <div>
-                            <span className="block font-mono text-[9px] font-bold text-[#0056FF] uppercase">
-                              06 Inputs
-                            </span>
-                            <span className="block text-xs font-bold text-[#0A1A4A]">
-                              44px Ergonomics
-                            </span>
-                          </div>
-                        </button>
-                      </div>
+                  {/* ============================================================= */}
+                  {/* 2. TACTILE FOLDER SHOWCASE & SWITCHER DOCK (IMAGE 2 REFERENCE) */}
+                  {/* ============================================================= */}
+                  <div className="pt-2">
+                    <div className="mb-3 flex items-center justify-between px-1">
+                      <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
+                        Tactile Component Showcase &amp; Living Primitives Viewer
+                      </span>
+                      <span className="font-mono text-[10px] text-slate-500">
+                        3 Layered Component Sheets · Interactive Color Switcher Dock
+                      </span>
                     </div>
+
+                    <TactileFolderShowcase
+                      initialTheme="dark"
+                      cards={[
+                        {
+                          id: 'card-controls-switch',
+                          title: 'Controls & Micro-Interactions',
+                          badge: 'Interactive Demo',
+                          content: (
+                            <div className="space-y-3">
+                              <div className="flex items-center justify-between rounded-xl bg-slate-50 p-2.5 border border-slate-200">
+                                <div className="space-y-0.5">
+                                  <span className="block font-sans text-xs font-bold text-slate-900">
+                                    Biometric Session
+                                  </span>
+                                  <span className="block font-mono text-[10px] text-slate-500">
+                                    WebAuthn Key Access
+                                  </span>
+                                </div>
+                                <LibrarySwitch
+                                  checked={switchBiometric}
+                                  onCheckedChange={setSwitchBiometric}
+                                  aria-label="Biometric Session"
+                                />
+                              </div>
+
+                              <div className="flex items-center justify-between rounded-xl bg-slate-50 p-2.5 border border-slate-200">
+                                <div className="space-y-0.5">
+                                  <span className="block font-sans text-xs font-bold text-slate-900">
+                                    Auto Synchronize
+                                  </span>
+                                  <span className="block font-mono text-[10px] text-slate-500">
+                                    Sub-10ms SQLite Cache
+                                  </span>
+                                </div>
+                                <LibrarySwitch
+                                  checked={switchAutoSync}
+                                  onCheckedChange={setSwitchAutoSync}
+                                  aria-label="Auto Synchronize"
+                                />
+                              </div>
+
+                              <div className="flex flex-wrap gap-1.5 pt-1">
+                                <LibraryChip
+                                  active={selectedChips.includes('flat')}
+                                  onClick={() => toggleChip('flat')}
+                                >
+                                  0px Flat
+                                </LibraryChip>
+                                <LibraryChip
+                                  active={selectedChips.includes('contrast')}
+                                  onClick={() => toggleChip('contrast')}
+                                >
+                                  AAA Contrast
+                                </LibraryChip>
+                                <LibraryChip
+                                  active={selectedChips.includes('spring')}
+                                  onClick={() => toggleChip('spring')}
+                                >
+                                  &lt;300ms Spring
+                                </LibraryChip>
+                              </div>
+                            </div>
+                          ),
+                        },
+                        {
+                          id: 'card-feedback-overlay',
+                          title: 'Feedback & Overlay Action',
+                          badge: 'Live Snackbars',
+                          content: (
+                            <div className="space-y-3">
+                              <p className="font-sans text-[11px] text-slate-600">
+                                Living feedback notifications with spring exit physics and zero DOM
+                                churn.
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSnackbarMsg('Operation completed successfully');
+                                    setSnackbarVariant('success');
+                                    setSnackbarOpen(true);
+                                  }}
+                                  className="flex-1 cursor-pointer rounded-xl bg-emerald-600 px-3 py-2 text-center font-sans text-xs font-bold text-white transition-all hover:bg-emerald-700 active:scale-95"
+                                >
+                                  Test Success
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSnackbarMsg('Attention: Review academic policy');
+                                    setSnackbarVariant('warning');
+                                    setSnackbarOpen(true);
+                                  }}
+                                  className="flex-1 cursor-pointer rounded-xl bg-amber-500 px-3 py-2 text-center font-sans text-xs font-bold text-white transition-all hover:bg-amber-600 active:scale-95"
+                                >
+                                  Test Warning
+                                </button>
+                              </div>
+                              <div className="rounded-lg bg-slate-100 p-2 font-mono text-[10px] text-slate-600">
+                                Active Status: {snackbarOpen ? `Open (${snackbarVariant})` : 'Idle'}
+                              </div>
+                            </div>
+                          ),
+                        },
+                        {
+                          id: 'card-cyber-armor',
+                          title: 'Cyber Armor Mecha Plate',
+                          badge: '45° Chamfers',
+                          content: (
+                            <div className="space-y-3">
+                              <p className="font-sans text-[11px] text-slate-600">
+                                Precision aerospace mecha console with milled double seams and zero
+                                scrollbars.
+                              </p>
+                              <div className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3">
+                                <div className="flex items-center gap-2">
+                                  <span className="size-2 rounded-full bg-[#0056FF]" />
+                                  <span className="font-mono text-xs font-black text-[#0A1A4A]">
+                                    ARMOR-PLATE // V2
+                                  </span>
+                                </div>
+                                <span className="rounded bg-[#0056FF] px-2 py-0.5 font-mono text-[9px] font-bold text-white">
+                                  ROYAL BLUE
+                                </span>
+                              </div>
+                              <div className="grid grid-cols-3 gap-1.5 text-center font-mono text-[9px]">
+                                <div className="rounded bg-slate-100 p-1.5 text-slate-700">
+                                  CHAMFER: 45°
+                                </div>
+                                <div className="rounded bg-slate-100 p-1.5 text-slate-700">
+                                  DEPTH: 0px
+                                </div>
+                                <div className="rounded bg-slate-100 p-1.5 text-slate-700">
+                                  SPRING: 280ms
+                                </div>
+                              </div>
+                            </div>
+                          ),
+                        },
+                      ]}
+                    />
                   </div>
 
                   {/* Playful Stacked Capsule Pills Constellation (Image 4 Reference) */}
