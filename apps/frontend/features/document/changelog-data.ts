@@ -9,6 +9,13 @@ export interface ChangeLogEntry {
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "2ec2e9c",
+    "developer": "史力爱卫",
+    "description": "Record authoritative M3 & SNPI design skills, manuals, and blueprint primary anchor standards [PASSED]"
+  },
+  {
+    "version": "0.2.17",
     "date": "02.11.2026",
     "commitHash": "46b3ff9",
     "developer": "史力爱卫",
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "410a1b1",
     "developer": "史力爱卫",
     "description": "Support both single and double underscore token secrets in telegram watcher"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "d0e0dd8",
-    "developer": "史力爱卫",
-    "description": "Record README clean state"
   }
 ];
