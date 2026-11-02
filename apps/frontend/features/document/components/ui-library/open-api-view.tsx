@@ -337,25 +337,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
               />
 
               <div className="relative z-10 space-y-6 sm:space-y-8">
-                {/* Top Eyebrow Tag Strip */}
-                <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#CAD3F5]/60 pb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="size-2 animate-pulse rounded-full bg-emerald-500" />
-                    <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
-                      SNPI Open Syndication Gateway
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-                    <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/80 px-2 py-0.5 font-bold text-[#0056FF]">
-                      Zero Auth Required
-                    </span>
-                    <span>·</span>
-                    <span>Sub-50ms Edge Cache</span>
-                    <span>·</span>
-                    <span>CORS Open</span>
-                  </div>
-                </div>
-
                 {/* Playful Headline + Public Status Pill */}
                 <div className="flex flex-col gap-2">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
@@ -367,10 +348,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                       <span>Live Public Syndication</span>
                     </div>
                   </div>
-                  <p className="max-w-xl font-sans text-xs text-slate-600 sm:text-sm">
-                    Edge-cached public feeds, RSS 2.0 syndication channels, and institutional campus
-                    schedules with zero API keys required.
-                  </p>
                 </div>
 
                 {/* ============================================================= */}
@@ -450,15 +427,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                 {/* 2. TACTILE FOLDER SHOWCASE & SWITCHER DOCK (IMAGE 2 REFERENCE) */}
                 {/* ============================================================= */}
                 <div className="pt-2">
-                  <div className="mb-3 flex items-center justify-between px-1">
-                    <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
-                      Tactile Document Inspector &amp; Schema Viewer
-                    </span>
-                    <span className="font-mono text-[10px] text-slate-500">
-                      3 Layered Document Sheets · Interactive Color Switcher Dock
-                    </span>
-                  </div>
-
                   <TactileFolderShowcase
                     initialTheme="dark"
                     cards={[

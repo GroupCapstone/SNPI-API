@@ -607,28 +607,9 @@ export function UiLibraryView() {
                 />
 
                 <div className="relative z-10 space-y-6 sm:space-y-8">
-                  {/* Top Eyebrow Tag Strip */}
-                  <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#CAD3F5]/60 pb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="size-2 animate-pulse rounded-full bg-[#0056FF]" />
-                      <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
-                        SNPI Enterprise Design System
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">
-                      <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC]/80 px-2 py-0.5 font-bold text-[#0056FF]">
-                        73 Primitives
-                      </span>
-                      <span>·</span>
-                      <span>0px Blur</span>
-                      <span>·</span>
-                      <span>Pure Flat Depth</span>
-                    </div>
-                  </div>
-
                   {/* Creative Centerpiece Headline with Embedded Toggle Switch (Image 4 Reference) */}
                   <div className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                    <div>
                       <h1 className="font-sans text-4xl leading-none font-black tracking-tight text-[#0A1A4A] select-none sm:text-6xl md:text-7xl">
                         <span className="block tracking-tight">CREATIVE</span>
                         <span className="my-1 flex items-center gap-2 sm:gap-4">
@@ -659,28 +640,7 @@ export function UiLibraryView() {
                         </span>
                         <span className="block text-[#0056FF]">SYSTEM</span>
                       </h1>
-
-                      {/* Interactive Mode Description Badge (Right/Side) */}
-                      <div className="flex flex-col items-start gap-1.5 font-mono text-xs lg:items-end">
-                        <div className="inline-flex items-center gap-2 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC] px-3.5 py-2 font-bold text-[#0056FF] shadow-2xs">
-                          <Sparkles className="size-3.5 text-[#0056FF]" />
-                          <span>
-                            {heroInteractiveMode === 'flat'
-                              ? 'Flat 0px Standard Active'
-                              : 'Living Spring Physics Active'}
-                          </span>
-                        </div>
-                        <span className="text-[11px] text-slate-500">
-                          {heroInteractiveMode === 'flat'
-                            ? 'Zero blur shadows · AAA high-contrast tokens'
-                            : '<300ms timing · Interruption-resilient velocity'}
-                        </span>
-                      </div>
                     </div>
-                    <p className="max-w-xl font-sans text-xs text-slate-600 sm:text-sm">
-                      Production web components and mathematical tokens designed for high-density
-                      enterprise interfaces.
-                    </p>
                   </div>
 
                   {/* ============================================================= */}
@@ -753,15 +713,6 @@ export function UiLibraryView() {
                   {/* 2. TACTILE FOLDER SHOWCASE & SWITCHER DOCK (IMAGE 2 REFERENCE) */}
                   {/* ============================================================= */}
                   <div className="pt-2">
-                    <div className="mb-3 flex items-center justify-between px-1">
-                      <span className="font-mono text-[11px] font-bold tracking-widest text-[#0056FF] uppercase">
-                        Tactile Component Showcase &amp; Living Primitives Viewer
-                      </span>
-                      <span className="font-mono text-[10px] text-slate-500">
-                        3 Layered Component Sheets · Interactive Color Switcher Dock
-                      </span>
-                    </div>
-
                     <TactileFolderShowcase
                       initialTheme="dark"
                       cards={[
@@ -1495,20 +1446,6 @@ function renderFeedComponentDemo(
                   checked: state.switchBiometric,
                   setter: state.setSwitchBiometric,
                 },
-                {
-                  id: 'sms',
-                  title: 'SMS Parent Alerts',
-                  desc: 'Automated guardian notifications on unexcused absence',
-                  checked: state.switchSMSAlerts,
-                  setter: state.setSwitchSMSAlerts,
-                },
-                {
-                  id: 'audit',
-                  title: 'Immutable Audit Log Streaming',
-                  desc: 'Cryptographic SHA-256 tamper-evident compliance audit trail',
-                  checked: state.switchAuditLog,
-                  setter: state.setSwitchAuditLog,
-                },
               ].map((item) => (
                 <div
                   key={item.id}
@@ -1536,29 +1473,6 @@ function renderFeedComponentDemo(
                   <LibrarySwitch checked={item.checked} onCheckedChange={item.setter} />
                 </div>
               ))}
-            </div>
-
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#CAD3F5] bg-[#E3E7FC]/60 px-3 py-2 font-mono text-[11px] text-slate-700 sm:text-xs">
-              <span>
-                Active:{' '}
-                <strong className="text-[#0056FF]">
-                  {
-                    [
-                      state.switchAutoSync,
-                      state.switchBiometric,
-                      state.switchSMSAlerts,
-                      state.switchAuditLog,
-                    ].filter(Boolean).length
-                  }
-                  /4
-                </strong>
-              </span>
-              <span>
-                Latency: <strong className="text-slate-900">12ms</strong>
-              </span>
-              <span>
-                Health: <strong className="text-emerald-700">OPTIMAL</strong>
-              </span>
             </div>
           </div>
         </div>

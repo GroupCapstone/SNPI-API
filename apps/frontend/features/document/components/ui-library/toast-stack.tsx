@@ -738,36 +738,8 @@ export function ToastStackDemo() {
 
       {/* Interactive Preview Canvas with Toast Container */}
       <div className="relative min-h-[380px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-inner transition-colors">
-        <div className="max-w-md space-y-3">
-          <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
-            Interactive Stack Viewport · Hover or Tap To Expand
-          </span>
-          <h3 className="font-sans text-base font-bold text-slate-900">
-            Stacked Notification Queue
-          </h3>
-          <p className="font-sans text-xs leading-relaxed text-slate-600">
-            Toasts layer directly on top of each other in a clean stacked deck with peeking tabs.
-            Hovering or tapping anywhere on the stack expands all notifications simultaneously.
-          </p>
-
-          <div className="flex flex-wrap gap-2 pt-2 font-mono text-[11px] text-slate-500">
-            <span className="rounded-md border border-[#CAD3F5] bg-white px-2 py-0.5 font-bold text-[#0056FF]">
-              Stacked Resting Deck
-            </span>
-            <span className="rounded-md border border-[#CAD3F5] bg-white px-2 py-0.5 font-bold text-[#0056FF]">
-              Hover/Tap Full Expansion
-            </span>
-            <span className="rounded-md border border-[#CAD3F5] bg-white px-2 py-0.5 font-bold text-[#0056FF]">
-              Linear Progress Countdown
-            </span>
-            <span className="rounded-md border border-[#CAD3F5] bg-white px-2 py-0.5 font-bold text-[#0056FF]">
-              Undo Action Pill
-            </span>
-          </div>
-        </div>
-
         {/* The Toast Stack Container (Inline in demo or Fixed viewport) */}
-        <div className="mt-6 flex w-full justify-center sm:justify-end">
+        <div className="flex w-full justify-center sm:justify-end">
           <ToastContainer position={containerMode} toasts={toasts} onDismiss={dismiss} />
         </div>
       </div>

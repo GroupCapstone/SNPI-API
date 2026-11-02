@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.15 (02.11.2026) - `4bca831` (Developer: **史力爱卫**)
+
+- Remove brand color do and dont section and hero pill clutter
+
 ### Version 0.2.15 (02.11.2026) - `05fa34b` (Developer: **史力爱卫**)
 
 - Redesign homepage hero sections with radiant integration hub and tactile folder showcase
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `4a46a37` (Developer: **史力爱卫**)
 
 - Record security audit and remediation report history
-
-### Version 0.2.14 (01.11.2026) - `4ad793d` (Developer: **史力爱卫**)
-
-- Record security patch in documentation
 
