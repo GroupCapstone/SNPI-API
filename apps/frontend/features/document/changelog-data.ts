@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
     "date": "02.11.2026",
+    "commitHash": "5b1d272",
+    "developer": "史力爱卫",
+    "description": "Remove verbose text copy and leave clean whitespace across hero and component demos"
+  },
+  {
+    "version": "0.2.15",
+    "date": "02.11.2026",
     "commitHash": "4bca831",
     "developer": "史力爱卫",
     "description": "Remove brand color do and dont section and hero pill clutter"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "e70bf64",
     "developer": "史力爱卫",
     "description": "Sync security documentation report commit"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "4a46a37",
-    "developer": "史力爱卫",
-    "description": "Record security audit and remediation report history"
   }
 ];
