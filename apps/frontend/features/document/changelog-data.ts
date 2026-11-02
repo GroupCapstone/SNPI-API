@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.16",
     "date": "02.11.2026",
+    "commitHash": "a729c93",
+    "developer": "史力爱卫",
+    "description": "Bump monorepo version to v0.2.16 [PASSED]"
+  },
+  {
+    "version": "0.2.16",
+    "date": "02.11.2026",
     "commitHash": "3eb5506",
     "developer": "史力爱卫",
     "description": "Streamline design engine cards with kinetic gravity archetype [PASSED]"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "d670a24",
     "developer": "史力爱卫",
     "description": "Remove security remediation log from README per standard"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "af52d17",
-    "developer": "史力爱卫",
-    "description": "Record README security remediation section"
   }
 ];
