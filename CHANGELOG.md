@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `2ec2e9c` (Developer: **史力爱卫**)
+
+- Record authoritative M3 & SNPI design skills, manuals, and blueprint primary anchor standards [PASSED]
+
 ### Version 0.2.17 (02.11.2026) - `46b3ff9` (Developer: **史力爱卫**)
 
 - Resolve react/jsx-no-comment-textnodes in brand-concept-blueprint [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `410a1b1` (Developer: **史力爱卫**)
 
 - Support both single and double underscore token secrets in telegram watcher
-
-### Version 0.2.14 (01.11.2026) - `d0e0dd8` (Developer: **史力爱卫**)
-
-- Record README clean state
 
