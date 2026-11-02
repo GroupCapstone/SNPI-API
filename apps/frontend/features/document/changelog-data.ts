@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
     "date": "01.11.2026",
+    "commitHash": "d352f0c",
+    "developer": "史力爱卫",
+    "description": "Record 77-point audit, 42 automated security test results, and RFC 9116 security.txt [PASSED]"
+  },
+  {
+    "version": "0.2.15",
+    "date": "01.11.2026",
     "commitHash": "aee7c0d",
     "developer": "史力爱卫",
     "description": "Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "190ac14",
     "developer": "史力爱卫",
     "description": "Resolve CVE-2026-118764 minimatch DoS across workspaces"
-  },
-  {
-    "version": "0.2.14",
-    "date": "31.10.2026",
-    "commitHash": "dc26051",
-    "developer": "史力爱卫",
-    "description": "Pretty-print code blocks with syntax highlighting and bakong-inspired layout"
   }
 ];
