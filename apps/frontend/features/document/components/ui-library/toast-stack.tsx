@@ -484,8 +484,8 @@ export function ToastStackDemo() {
   const [containerMode, setContainerMode] = React.useState<'inline' | 'fixed'>('inline');
   const { toasts, dismiss, dismissAll } = useToast();
 
-  // Fire "Conversation Archived" matching the user's exact uploaded screenshot
-  const fireConversationArchived = () => {
+  // Fire "Conversation Archived" with active Undo pill
+  const fireConversationArchived = React.useCallback(() => {
     toast.info('View archived in the sidebar (≡ menu).', {
       title: 'Conversation Archived',
       duration: 5500,
@@ -499,10 +499,10 @@ export function ToastStackDemo() {
         },
       },
     });
-  };
+  }, []);
 
-  const fireSuccess = () => {
-    toast.success('Batch transaction TX-9204 committed to MongoDB replica set.', {
+  const fireSuccess = React.useCallback(() => {
+    toast.success('Batch transaction TX-9204 committed to ledger.', {
       title: 'Ledger Hash Verified',
       duration: 5000,
       action: {
@@ -510,10 +510,10 @@ export function ToastStackDemo() {
         onClick: () => {},
       },
     });
-  };
+  }, []);
 
-  const fireError = () => {
-    toast.error('Constant-time HMAC signature check failed for gateway request.', {
+  const fireError = React.useCallback(() => {
+    toast.error('Constant-time signature check failed for gateway request.', {
       title: 'Security Token Rejected',
       duration: 5500,
       action: {
@@ -521,24 +521,24 @@ export function ToastStackDemo() {
         onClick: () => fireSuccess(),
       },
     });
-  };
+  }, [fireSuccess]);
 
-  const fireWarning = () => {
+  const fireWarning = React.useCallback(() => {
     toast.warning('Admission query volume at 88% of tenant burst limit.', {
       title: 'Rate Limit Threshold',
       duration: 4500,
     });
-  };
+  }, []);
 
-  const fireInfo = () => {
-    toast.info('Synchronized 47 domain modules with institutional schema contracts.', {
-      title: 'Changelog Real-Time Sync',
+  const fireInfo = React.useCallback(() => {
+    toast.info('Synchronized 47 domain modules with schema contracts.', {
+      title: 'Changelog Sync',
       duration: 4500,
     });
-  };
+  }, []);
 
-  // Rapid Burst: Generates 5 stacked notifications immediately like Image 2
-  const fireRapidBurst = () => {
+  // Rapid Burst: Generates 5 stacked notifications immediately
+  const fireRapidBurst = React.useCallback(() => {
     toast.info('View archived in the sidebar (≡ menu).', {
       title: 'Conversation Archived',
       duration: 7000,
@@ -548,7 +548,7 @@ export function ToastStackDemo() {
       },
     });
     setTimeout(() => {
-      toast.success('Student candidate account generated with initial credentials.', {
+      toast.success('Student candidate account generated with credentials.', {
         title: 'Candidate Created (2/5)',
         duration: 7000,
         action: {
@@ -575,171 +575,171 @@ export function ToastStackDemo() {
         duration: 7000,
       });
     }, 600);
-  };
+  }, []);
+
+  // Automatically initialize with 2 active stacked toasts on mount for instant visual feedback
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      fireConversationArchived();
+      setTimeout(() => {
+        toast.success('Batch transaction TX-9204 committed to ledger.', {
+          title: 'Transaction Confirmed',
+          duration: 6500,
+          action: {
+            label: 'View Hash',
+            onClick: () => {},
+          },
+        });
+      }, 200);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [fireConversationArchived]);
 
   return (
-    <div className="w-full space-y-6">
-      {/* Placement & Status Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-xs font-bold tracking-wider text-slate-400 uppercase">
-              Placement:
-            </span>
+    <div className="w-full space-y-4">
+      {/* Sleek Action Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#CAD3F5] bg-white p-3 shadow-xs sm:px-4 sm:py-3">
+        {/* Left: Quick Triggers */}
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          {/* Rapid Burst (5 Toasts) */}
+          <button
+            type="button"
+            onClick={fireRapidBurst}
+            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#0056FF] bg-[#0056FF] px-3 py-1.5 font-mono text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95"
+          >
+            <Sparkles className="size-3.5 stroke-[2.2]" />
+            <span>Burst Stack (5)</span>
+          </button>
+
+          {/* Archive with Undo */}
+          <button
+            type="button"
+            onClick={fireConversationArchived}
+            className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 font-mono text-xs font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
+          >
+            <Undo2 className="size-3.5" />
+            <span>Archive</span>
+          </button>
+
+          {/* Success */}
+          <button
+            type="button"
+            onClick={fireSuccess}
+            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1.5 font-mono text-xs font-bold text-emerald-700 transition-all hover:bg-emerald-100 active:scale-95"
+            title="Fire Success Toast"
+          >
+            <Check className="size-3.5 stroke-[2.2]" />
+            <span className="hidden sm:inline">Success</span>
+          </button>
+
+          {/* Error */}
+          <button
+            type="button"
+            onClick={fireError}
+            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 font-mono text-xs font-bold text-rose-700 transition-all hover:bg-rose-100 active:scale-95"
+            title="Fire Error Toast"
+          >
+            <CircleAlert className="size-3.5 stroke-[2.2]" />
+            <span className="hidden sm:inline">Error</span>
+          </button>
+
+          {/* Warning */}
+          <button
+            type="button"
+            onClick={fireWarning}
+            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1.5 font-mono text-xs font-bold text-amber-700 transition-all hover:bg-amber-100 active:scale-95"
+            title="Fire Warning Toast"
+          >
+            <TriangleAlert className="size-3.5 stroke-[2.2]" />
+            <span className="hidden sm:inline">Warning</span>
+          </button>
+
+          {/* Info */}
+          <button
+            type="button"
+            onClick={fireInfo}
+            className="inline-flex cursor-pointer items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1.5 font-mono text-xs font-bold text-[#0056FF] transition-all hover:bg-blue-100 active:scale-95"
+            title="Fire Info Toast"
+          >
+            <Info className="size-3.5 stroke-[2.2]" />
+            <span className="hidden sm:inline">Info</span>
+          </button>
+        </div>
+
+        {/* Right: Mode & Clear Actions */}
+        <div className="flex items-center gap-2">
+          {/* Placement Switcher */}
+          <div className="flex items-center rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-0.5">
             <button
               type="button"
               onClick={() => setContainerMode('inline')}
               className={cn(
-                'cursor-pointer rounded-[4px] px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
+                'cursor-pointer rounded-md px-2 py-1 font-mono text-[10px] font-bold transition-all',
                 containerMode === 'inline'
-                  ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
+                  ? 'bg-white text-[#0056FF] shadow-2xs'
+                  : 'text-slate-600 hover:text-[#0056FF]',
               )}
             >
-              In-Demo Sandbox
+              Stage
             </button>
             <button
               type="button"
               onClick={() => setContainerMode('fixed')}
               className={cn(
-                'cursor-pointer rounded-[4px] px-2.5 py-0.5 font-mono text-[11px] font-bold transition-colors',
+                'cursor-pointer rounded-md px-2 py-1 font-mono text-[10px] font-bold transition-all',
                 containerMode === 'fixed'
-                  ? 'border border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]'
-                  : 'border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900',
+                  ? 'bg-white text-[#0056FF] shadow-2xs'
+                  : 'text-slate-600 hover:text-[#0056FF]',
               )}
             >
-              Screen Viewport Fixed
+              Viewport
             </button>
           </div>
-        </div>
 
-        {/* Active Queue Status Counter */}
-        <div className="flex items-center gap-2 font-mono text-xs">
-          <span className="text-slate-400">STACK:</span>
-          <span
-            className={cn(
-              'rounded-[4px] px-2 py-0.5 font-bold',
-              toasts.length > 0
-                ? 'border border-emerald-500/30 bg-emerald-50 text-emerald-700'
-                : 'border border-slate-200 bg-slate-100 text-slate-500',
+          {/* Queue Counter & Dismiss All */}
+          <div className="flex items-center gap-1.5 font-mono text-xs">
+            <span className="rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-1 text-[11px] font-bold text-[#0056FF]">
+              {toasts.length} Active
+            </span>
+            {toasts.length > 0 && (
+              <button
+                type="button"
+                onClick={dismissAll}
+                className="flex size-7 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600 active:scale-95"
+                title="Clear all toasts"
+              >
+                <RotateCcw className="size-3.5" />
+              </button>
             )}
-          >
-            {toasts.length} / 5 Active
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Interactive Toast Stage Canvas */}
+      <div className="relative min-h-[380px] w-full overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#F8FAFC] p-6 shadow-xs sm:min-h-[420px]">
+        {/* Mathematical Linear Grid (Zero Radial Dots) */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, #CAD3F5 1px, transparent 1px),
+              linear-gradient(to bottom, #CAD3F5 1px, transparent 1px)
+            `,
+            backgroundSize: '28px 28px',
+          }}
+        />
+
+        {/* Stage Status Strip */}
+        <div className="relative z-10 flex items-center justify-between font-mono text-[10px] text-slate-400">
+          <span className="flex items-center gap-1.5 font-bold text-[#0A1A4A]">
+            <Layers className="size-3 text-[#0056FF]" />
+            STACKED DECK PHYSICS · HOVER TO EXPAND
           </span>
-          {toasts.length > 0 && (
-            <button
-              type="button"
-              onClick={dismissAll}
-              className="flex cursor-pointer items-center gap-1 rounded-[4px] border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-bold text-slate-600 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
-            >
-              <RotateCcw className="size-3" />
-              <span>Dismiss All</span>
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Primary Action Button (Matches Screenshot: Conversation Archived with Undo) */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/60 p-4">
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-2">
-            <span className="font-sans text-sm font-bold text-slate-900">
-              Reference Archetype: Conversation Archived
-            </span>
-            <span className="rounded-md bg-[#0056FF] px-2 py-0.5 font-mono text-[10px] font-bold text-white uppercase">
-              Brand Light Day
-            </span>
-          </div>
-          <p className="font-sans text-xs text-slate-600">
-            Fires notifications with timed auto-dismissal, linear countdown bars, Undo action pill,
-            and stacked deck layers.
-          </p>
+          <span className="hidden font-mono text-slate-400 sm:inline">COUNTDOWN TIMERS ACTIVE</span>
         </div>
 
-        <button
-          type="button"
-          onClick={fireConversationArchived}
-          className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-sm transition-all hover:bg-[#2277FF] active:scale-[0.98]"
-        >
-          <Undo2 className="size-3.5" />
-          <span>Trigger Archived Toast</span>
-        </button>
-      </div>
-
-      {/* Interactive Trigger Control Board */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {/* Fire Success */}
-        <button
-          type="button"
-          onClick={fireSuccess}
-          className="flex cursor-pointer flex-col items-start gap-1 rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 text-left transition-all hover:border-emerald-500/50 hover:bg-emerald-500/10 active:scale-[0.98]"
-        >
-          <Check className="size-5 stroke-[2.5] text-emerald-600" />
-          <span className="mt-1 font-mono text-xs font-bold text-emerald-700">Success Toast</span>
-          <span className="font-sans text-[11px] text-slate-500">Form save & commit</span>
-        </button>
-
-        {/* Fire Error */}
-        <button
-          type="button"
-          onClick={fireError}
-          className="flex cursor-pointer flex-col items-start gap-1 rounded-xl border border-rose-500/30 bg-rose-500/5 p-4 text-left transition-all hover:border-rose-500/50 hover:bg-rose-500/10 active:scale-[0.98]"
-        >
-          <CircleAlert className="size-5 stroke-[2.5] text-rose-600" />
-          <span className="mt-1 font-mono text-xs font-bold text-rose-700">Error Toast</span>
-          <span className="font-sans text-[11px] text-slate-500">Security failure cue</span>
-        </button>
-
-        {/* Fire Warning */}
-        <button
-          type="button"
-          onClick={fireWarning}
-          className="flex cursor-pointer flex-col items-start gap-1 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 text-left transition-all hover:border-amber-500/50 hover:bg-amber-500/10 active:scale-[0.98]"
-        >
-          <TriangleAlert className="size-5 stroke-[2.5] text-amber-600" />
-          <span className="mt-1 font-mono text-xs font-bold text-amber-700">Warning Toast</span>
-          <span className="font-sans text-[11px] text-slate-500">Rate limit threshold</span>
-        </button>
-
-        {/* Fire Info */}
-        <button
-          type="button"
-          onClick={fireInfo}
-          className="flex cursor-pointer flex-col items-start gap-1 rounded-xl border border-blue-500/30 bg-blue-500/5 p-4 text-left transition-all hover:border-blue-500/50 hover:bg-blue-500/10 active:scale-[0.98]"
-        >
-          <Info className="size-5 stroke-[2.5] text-[#0056FF]" />
-          <span className="mt-1 font-mono text-xs font-bold text-[#0056FF]">Info Toast</span>
-          <span className="font-sans text-[11px] text-slate-500">Background event sync</span>
-        </button>
-      </div>
-
-      {/* Rapid Burst Action & Stack Demonstration */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200/80 bg-slate-50/60 p-4">
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-slate-900">
-            <Sparkles className="size-3.5 text-[#0056FF]" />
-            <span>01 Stacked Deck Physics Demonstration</span>
-          </div>
-          <p className="font-sans text-xs text-slate-500">
-            Fires 5 sequential notifications into the stack. In resting state they stay stacked
-            above each other; hover or tap to expand into the full vertical queue.
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={fireRapidBurst}
-          className="flex cursor-pointer items-center gap-2 rounded-xl bg-[#0056FF] px-4 py-2 font-mono text-xs font-bold text-white shadow-xs transition-colors hover:bg-blue-700 active:scale-[0.98]"
-        >
-          <Play className="size-3.5" />
-          <span>FIRE STACK (5 NOTIFICATIONS)</span>
-        </button>
-      </div>
-
-      {/* Interactive Preview Canvas with Toast Container */}
-      <div className="relative min-h-[380px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-[#F8FAFC] p-6 shadow-inner transition-colors">
-        {/* The Toast Stack Container (Inline in demo or Fixed viewport) */}
-        <div className="flex w-full justify-center sm:justify-end">
+        {/* Live Toast Stack Component in the Stage */}
+        <div className="relative z-20 mt-8 flex w-full justify-center sm:mt-12 sm:justify-end">
           <ToastContainer position={containerMode} toasts={toasts} onDismiss={dismiss} />
         </div>
       </div>

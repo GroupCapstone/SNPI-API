@@ -27,7 +27,6 @@ import { CHANGE_LOGS } from '@/features/document/changelog-data';
 import { cn } from '@/lib/utils';
 import { PrettyCodeBlock } from './pretty-code-block';
 import { RadiantIntegrationHub } from './radiant-integration-hub';
-import { TactileFolderShowcase } from './tactile-folder-showcase';
 
 // ============================================================================
 // DATA STRUCTURES: BACKEND API & SYNDICATION SPECIFICATIONS
@@ -166,9 +165,6 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
   const [activeSection, setActiveSection] = React.useState<string>(
     initialSection || 'open-api-head',
   );
-  const [selectedHubNodeId, setSelectedHubNodeId] = React.useState<string>('feed-news-rss');
-  const activeFeedSpec =
-    PUBLIC_FEEDS_SPECS.find((f) => f.id === selectedHubNodeId) || PUBLIC_FEEDS_SPECS[0];
   const [copiedId, setCopiedId] = React.useState<string | null>(null);
 
   // Feed specimen status tab (success, notfound, or xml)
@@ -350,151 +346,67 @@ export function OpenApiView({ initialSection }: { initialSection?: string } = {}
                   </div>
                 </div>
 
-                {/* ============================================================= */}
-                {/* 1. RADIANT 6-NODE INTEGRATION HUB (IMAGE 1 REFERENCE)         */}
-                {/* ============================================================= */}
+                {/* KINETIC TUMBLED CARDS SERVICE DECK */}
                 <RadiantIntegrationHub
                   center={{
                     title: 'SNPI EDGE GATEWAY',
                     subtitle: 'GET /api/v1/public/*',
                     icon: <Server className="size-7 stroke-[2.2]" />,
-                    badge: 'Edge Live',
+                    badge: 'Live',
                   }}
                   leftNodes={[
                     {
                       id: 'feed-news-rss',
                       label: 'Campus Notices',
-                      sublabel: 'RSS 2.0 XML Feed',
-                      tag: '01 · Feed',
-                      badge: 'RSS XML',
-                      icon: <Radio className="size-5" />,
+                      tag: '01 · FEED',
+                      badge: 'RSS 2.0 XML',
+                      tooltip: 'Live Announcements & Campus News RSS Feed',
+                      icon: <Radio className="size-8 stroke-[2]" />,
                     },
                     {
                       id: 'feed-alerts-json',
                       label: 'Emergency Alerts',
-                      sublabel: 'Operational Warnings',
-                      tag: '02 · Alerts',
-                      badge: 'JSON',
-                      icon: <Zap className="size-5" />,
+                      tag: '02 · ALERTS',
+                      badge: 'JSON STREAM',
+                      tooltip: 'Real-Time Emergency Alerts JSON Stream',
+                      icon: <Zap className="size-8 stroke-[2]" />,
                     },
                     {
                       id: 'feed-calendar-json',
-                      label: 'Term Milestones',
-                      sublabel: 'Semester Calendar',
-                      tag: '03 · Cal',
-                      badge: 'JSON',
-                      icon: <Calendar className="size-5" />,
+                      label: 'Milestones',
+                      tag: '03 · CAL',
+                      badge: 'ACADEMIC DATES',
+                      tooltip: 'Academic Calendar & Semester Milestones Feed',
+                      icon: <Calendar className="size-8 stroke-[2]" />,
                     },
                   ]}
                   rightNodes={[
                     {
                       id: 'service-catalog',
                       label: 'Course Catalog',
-                      sublabel: 'Open Public Courses',
-                      tag: '04 · Study',
-                      badge: 'REST',
-                      icon: <Globe className="size-5" />,
+                      tag: '04 · STUDY',
+                      badge: 'PUBLIC REST API',
+                      tooltip: 'Public Course Catalog & Syllabus REST API',
+                      icon: <Globe className="size-8 stroke-[2]" />,
                     },
                     {
                       id: 'service-branches',
                       label: 'Campus Directory',
-                      sublabel: 'Branch Geo & Contact',
-                      tag: '05 · Branch',
-                      badge: 'REST',
-                      icon: <Layers className="size-5" />,
+                      tag: '05 · BRANCH',
+                      badge: 'LOCATIONS SPEC',
+                      tooltip: 'Branch & Campus Locations Directory REST API',
+                      icon: <Layers className="size-8 stroke-[2]" />,
                     },
                     {
                       id: 'service-health',
-                      label: 'Health & RFC 9116',
-                      sublabel: 'Security & RFC Spec',
-                      tag: '06 · Sec',
-                      badge: '200 OK',
-                      icon: <ShieldCheck className="size-5" />,
+                      label: 'RFC 9116 Health',
+                      tag: '06 · SEC',
+                      badge: 'RFC 9116 PROBE',
+                      tooltip: 'RFC 9116 System Security & Health Probe',
+                      icon: <ShieldCheck className="size-8 stroke-[2]" />,
                     },
                   ]}
-                  activeNodeId={selectedHubNodeId}
-                  onSelectNode={(id) => {
-                    setSelectedHubNodeId(id);
-                    if (id.startsWith('feed-')) {
-                      scrollToSection('public-feeds');
-                    } else {
-                      scrollToSection('available-services');
-                    }
-                  }}
                 />
-
-                {/* ============================================================= */}
-                {/* 2. TACTILE FOLDER SHOWCASE & SWITCHER DOCK (IMAGE 2 REFERENCE) */}
-                {/* ============================================================= */}
-                <div className="pt-2">
-                  <TactileFolderShowcase
-                    cards={[
-                      {
-                        id: 'card-live-payload',
-                        title: `${activeFeedSpec?.title || 'Live Feed Payload'}`,
-                        badge: `${activeFeedSpec?.format || 'JSON Spec'} · 200 OK`,
-                        content: (
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between text-[11px]">
-                              <span className="font-mono font-bold text-[#0056FF]">
-                                {activeFeedSpec?.endpoint || '/api/v1/public/feed'}
-                              </span>
-                              <span className="rounded bg-emerald-100 px-1.5 py-0.2 font-mono text-[9px] font-bold text-emerald-800">
-                                42ms CDN HIT
-                              </span>
-                            </div>
-                            <pre className="max-h-40 overflow-x-auto rounded-xl bg-slate-950 p-2.5 font-mono text-[10px] text-emerald-400">
-                              {JSON.stringify(
-                                activeFeedSpec?.sampleJson || SAMPLE_ERROR_RESPONSE,
-                                null,
-                                2,
-                              )}
-                            </pre>
-                          </div>
-                        ),
-                      },
-                      {
-                        id: 'card-contract-zod',
-                        title: 'OpenAPI 3.1 & Zod Contract',
-                        badge: 'Zero Auth Required',
-                        content: (
-                          <div className="space-y-2 font-mono text-[10px]">
-                            <div className="rounded-lg bg-slate-100 p-2 text-slate-800">
-                              <span className="font-bold text-[#0056FF]">Auth Policy: </span>
-                              <span>Zero API Keys / Unauthenticated</span>
-                            </div>
-                            <div className="rounded-lg bg-slate-100 p-2 text-slate-800">
-                              <span className="font-bold text-[#0056FF]">CORS: </span>
-                              <span>Access-Control-Allow-Origin: *</span>
-                            </div>
-                            <div className="rounded-lg bg-slate-100 p-2 text-slate-800">
-                              <span className="font-bold text-[#0056FF]">Cache-Control: </span>
-                              <span>public, s-maxage=300, stale-while-revalidate=60</span>
-                            </div>
-                          </div>
-                        ),
-                      },
-                      {
-                        id: 'card-rfc-error',
-                        title: 'RFC 7807 Error Specification',
-                        badge: 'RFC 7807 Details',
-                        content: (
-                          <div className="space-y-2">
-                            <p className="font-sans text-[11px] text-slate-600">
-                              All client &amp; upstream errors return RFC 7807 problem details with
-                              sanitized error stack suppression.
-                            </p>
-                            <pre className="max-h-40 overflow-x-auto rounded-xl bg-slate-950 p-2.5 font-mono text-[10px] text-amber-400">
-                              {JSON.stringify(SAMPLE_ERROR_RESPONSE, null, 2)}
-                            </pre>
-                          </div>
-                        ),
-                      },
-                    ]}
-                  />
-                </div>
-
-
 
                 {/* Base URL Quickstart Bar & Action Hook */}
                 <div className="flex flex-col gap-2.5 pt-2 sm:flex-row sm:items-center sm:gap-3">

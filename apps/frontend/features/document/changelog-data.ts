@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.15",
     "date": "02.11.2026",
+    "commitHash": "4cf236b",
+    "developer": "史力爱卫",
+    "description": "Remove theme switcher dock and standardize tactile folder to clean white blue design"
+  },
+  {
+    "version": "0.2.15",
+    "date": "02.11.2026",
     "commitHash": "5b1d272",
     "developer": "史力爱卫",
     "description": "Remove verbose text copy and leave clean whitespace across hero and component demos"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "e9af90d",
     "developer": "史力爱卫",
     "description": "Add standard security vulnerability remediation log to README"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "e70bf64",
-    "developer": "史力爱卫",
-    "description": "Sync security documentation report commit"
   }
 ];
