@@ -18,11 +18,13 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `api-design-guidelines.md`: 193 REST endpoints, standard response envelope (`{ success, data, message, error }`), and pagination standards.
   - `database-standards.md`: MongoDB replica set `rs0` requirements, compound indexes, soft-delete invariants, and tenant boundary enforcement.
   - `architecture-assessment-framework.md`: Enterprise Architecture Assessment Framework, 7-layer REST API, Master MVP flow, AI agent protocol, and 10-domain audit checklist.
+  - `polyrepo-operating-model.md`: Enterprise polyrepo operating model, meta-repo manifest integration (`release.yaml`), cross-repo change sets (`CHG-XXXX`), and merge coordination models.
 
 - **`ci-cd/`**:
   - `github-actions-best-practices.md`: Action SHA pinning, least-privilege token permissions, dual-developer git sync gate.
   - `deployment-workflows.md`: Vercel serverless edge deployment, Docker container backend proxy, and zero-downtime rollover.
   - `container-security.md`: Non-root execution, multi-stage Alpine builds, and automated container healthchecks.
+  - `git-lfs-architecture-guide.md`: Git LFS architectural decision framework, compression evaluation heuristics, and repository bloat prevention.
 
 - **`design-standards/`**:
   - `psychological-design-rules.md`: 6-law invariant testing (Fitts, Hick, Miller, Doherty, Postel), zero emojis, and touch target rules.

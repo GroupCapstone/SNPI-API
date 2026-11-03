@@ -21,6 +21,7 @@ Invoke the GitHub MCP server tool `get_file_contents` to fetch the following fil
 3. `.github/knowledge/architecture/database-standards.md`
 4. `.github/knowledge/security/secure-coding-standards.md`
 5. `.github/knowledge/architecture/architecture-assessment-framework.md`
+6. `.github/knowledge/architecture/polyrepo-operating-model.md`
 
 These files define the organization's mandatory standards for 7-layer domain partitioning, standardized API envelopes, and replica set ACID transactions.
 

@@ -13,6 +13,7 @@ This specification defines the authoritative **Enterprise Architecture Assessmen
 
 > **Primary Skill Safe Folder**: `.agents/skills/architecture-assessment-audit/`  
 > **Unabridged Markdown Article**: `references/architecture-assessment-framework.md` (and `references/architecture-assessment-article.md`)  
+> **Git LFS Architecture & Decision Guide**: `references/git-lfs-decision-framework.md` (and `.github/knowledge/ci-cd/git-lfs-architecture-guide.md`)  
 > **Plaintext Standard Reference**: `references/architecture-assessment-standard.txt`
 
 ---
