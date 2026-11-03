@@ -10,6 +10,34 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "ff301f6",
+    "developer": "史力爱卫",
+    "description": "Add knowledge base design standards"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "2829b51",
+    "developer": "史力爱卫",
+    "description": "Add deployment-workflows knowledge document"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "8a62605",
+    "developer": "史力爱卫",
+    "description": "Add github-actions-best-practices knowledge document"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "5e3f4a0",
+    "developer": "史力爱卫",
+    "description": "Sync recent archive commit"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "bb91954",
     "developer": "史力爱卫",
     "description": "Archive architecture assessment framework & enterprise knowledge base"
@@ -153,33 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "acaeca5",
     "developer": "史力爱卫",
     "description": "Format scripts and sync changelog for release checkpoint v0.2.14"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "4217c14",
-    "developer": "史力爱卫",
-    "description": "Consolidate all alerts into one single all-in-one status message and disable local commit hook"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "0997258",
-    "developer": "史力爱卫",
-    "description": "Enforce human-readable summaries and developer attribution across changelog and telegram alerts"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "96be3fd",
-    "developer": "史力爱卫",
-    "description": "Record Certificate Verification and Real-Time SSE removal"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "56d407a",
-    "developer": "史力爱卫",
-    "description": "Redesign alerts with clean human-readable short headers"
   }
 ];

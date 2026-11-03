@@ -2,6 +2,22 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `ff301f6` (Developer: **史力爱卫**)
+
+- Add knowledge base design standards
+
+### Version 0.2.17 (03.11.2026) - `2829b51` (Developer: **史力爱卫**)
+
+- Add deployment-workflows knowledge document
+
+### Version 0.2.17 (03.11.2026) - `8a62605` (Developer: **史力爱卫**)
+
+- Add github-actions-best-practices knowledge document
+
+### Version 0.2.17 (03.11.2026) - `5e3f4a0` (Developer: **史力爱卫**)
+
+- Sync recent archive commit
+
 ### Version 0.2.17 (03.11.2026) - `bb91954` (Developer: **史力爱卫**)
 
 - Archive architecture assessment framework & enterprise knowledge base
@@ -85,20 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `acaeca5` (Developer: **史力爱卫**)
 
 - Format scripts and sync changelog for release checkpoint v0.2.14
-
-### Version 0.2.14 (01.11.2026) - `4217c14` (Developer: **史力爱卫**)
-
-- Consolidate all alerts into one single all-in-one status message and disable local commit hook
-
-### Version 0.2.14 (01.11.2026) - `0997258` (Developer: **史力爱卫**)
-
-- Enforce human-readable summaries and developer attribution across changelog and telegram alerts
-
-### Version 0.2.14 (01.11.2026) - `96be3fd` (Developer: **史力爱卫**)
-
-- Record Certificate Verification and Real-Time SSE removal
-
-### Version 0.2.14 (01.11.2026) - `56d407a` (Developer: **史力爱卫**)
-
-- Redesign alerts with clean human-readable short headers
 
