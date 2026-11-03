@@ -16,6 +16,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `application-security-checklist.md`: 43-point application security & SDLC assessment checklist across 11 architectural domains.
   - `github-repository-threat-model.md`: Repository threat modeling (T-01 to T-08), danger zone governance, ruleset enforcement, and supply chain defense.
   - `dependency-supply-chain-defense.md`: 6-layer defense-in-depth model against supply chain attacks, lifecycle script disabling, dev containers, and trusted publishing.
+  - `prioritizing-security-alerts.md`: 3-step security alert prioritization model, GitHub metadata, custom properties, and targeted security campaigns.
 
 - **`architecture/`**:
   - `modular-monolith-patterns.md`: 7-layer domain architecture (`route -> controller -> service -> repository -> model -> validation -> types`), Mongoose ACID transaction protocols.
@@ -32,6 +33,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `actions-runner-controller.md`: Actions Runner Controller (ARC) Kubernetes deployment, requests==limits QoS, zero spot instances, and DinD sidecar isolation.
   - `repository-resilience-mirroring.md`: Repository resilience mirroring, narrow refspecs, out-of-band sync locks, and break-glass deployment runbooks.
   - `actions-private-networking.md`: GitHub Actions private networking, Azure VNet injection, subnet sizing (+20% buffer), and firewall FQDN filtering.
+  - `securing-github-actions-workflows.md`: GitHub Actions workflow hardening, 40-character commit SHA pinning, script injection defense, and OIDC federated auth.
 
 - **`design-standards/`**:
   - `psychological-design-rules.md`: 6-law invariant testing (Fitts, Hick, Miller, Doherty, Postel), zero emojis, and touch target rules.

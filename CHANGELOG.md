@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `a59bce1` (Developer: **史力爱卫**)
+
+- Sync changelog for dependency supply chain defense
+
 ### Version 0.2.17 (03.11.2026) - `9f14394` (Developer: **史力爱卫**)
 
 - Implement 6-layer dependency supply chain defense standard & automated verification
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `1300ba9` (Developer: **史力爱卫**)
 
 - Archive implementing polyrepo on github enterprise reference
-
-### Version 0.2.17 (03.11.2026) - `39f5815` (Developer: **史力爱卫**)
-
-- Record git lfs architecture guide commit
 

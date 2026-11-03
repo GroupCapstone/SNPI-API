@@ -129,13 +129,24 @@ async function verifyPrivateNetworking(): Promise<void> {
 }
 
 async function verifyThreatModel(): Promise<void> {
-  console.log('\n[6/6] Auditing GitHub Repository Threat Model (T-01 to T-08)...');
+  console.log('\n[6/7] Auditing GitHub Repository Threat Model (T-01 to T-08)...');
   try {
     runCommand('npm run verify:threat-model');
     console.log('      [PASS] All 8 repository threat vectors verified and mitigated.');
   } catch (err: unknown) {
     const error = err as Error;
     throw new Error(`Threat model verification failed: ${error.message}`);
+  }
+}
+
+async function verifyWorkflowSecurity(): Promise<void> {
+  console.log('\n[7/7] Auditing GitHub Actions Workflow Hardening (SHA Pinning & Script Injection)...');
+  try {
+    runCommand('npm run verify:workflows');
+    console.log('      [PASS] All 18 workflows pinned to immutable 40-character SHAs with zero script injections.');
+  } catch (err: unknown) {
+    const error = err as Error;
+    throw new Error(`Workflow security verification failed: ${error.message}`);
   }
 }
 
@@ -151,6 +162,7 @@ async function main() {
     await verifyGitHubWorkflowStatus();
     await verifyPrivateNetworking();
     await verifyThreatModel();
+    await verifyWorkflowSecurity();
     console.log('\n======================================================');
     console.log('[PASSED] Pre-push deployment and CI quality gate verified 100%.');
     console.log('======================================================');

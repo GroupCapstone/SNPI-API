@@ -23,6 +23,7 @@ Invoke the GitHub MCP server tool `get_file_contents` to fetch the following fil
 5. `.github/knowledge/ci-cd/actions-runner-controller.md`
 6. `.github/knowledge/ci-cd/repository-resilience-mirroring.md`
 7. `.github/knowledge/ci-cd/actions-private-networking.md`
+8. `.github/knowledge/ci-cd/securing-github-actions-workflows.md`
 
 These files define the organization's mandatory standards for Action SHA pinning, dual-developer git sync, push checkpoints, and container hardening.
 

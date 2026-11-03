@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "a59bce1",
+    "developer": "史力爱卫",
+    "description": "Sync changelog for dependency supply chain defense"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "9f14394",
     "developer": "史力爱卫",
     "description": "Implement 6-layer dependency supply chain defense standard & automated verification"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "1300ba9",
     "developer": "史力爱卫",
     "description": "Archive implementing polyrepo on github enterprise reference"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "39f5815",
-    "developer": "史力爱卫",
-    "description": "Record git lfs architecture guide commit"
   }
 ];
