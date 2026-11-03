@@ -77,3 +77,17 @@ Always ensure all quality gates pass before completing code changes:
 - `npm run test`: Vitest automated test suites.
 - `npm run build`: Production builds for backend and frontend.
 - `npm run changelog:sync`: Real-time changelog synchronization.
+
+---
+
+## 7. Enterprise Custom Agents & Expanded MCP Context
+
+- **Knowledge Base Source of Truth**: All enterprise policies are partitioned under `.github/knowledge/`:
+  - `security/`: Secure coding, authentication patterns, vulnerability remediation.
+  - `architecture/`: Modular monolith patterns, API design guidelines, database standards.
+  - `ci-cd/`: GitHub actions best practices, deployment workflows, container security.
+  - `design-standards/`: Psychological design rules, culinary component taxonomy, open-source checklist macro-phases.
+- **Custom Agent Definitions**: Located in `.github/agents/` (`ci-cd-expert.md`, `security-reviewer.md`, `architecture-advisor.md`, `design-system-lead.md`).
+- **Dynamic Context Loading**: Custom agents dynamically fetch files from `.github/knowledge/` via the GitHub Model Context Protocol (MCP) server `get_file_contents` tool, bypassing the single-file 30,000-character limit.
+- **Environment Secret**: Multi-repository access is authenticated via `COPILOT_MCP_GITHUB_PERSONAL_ACCESS_TOKEN` in the `copilot` environment.
+- **Skill Specification**: Refer to `.agents/skills/enterprise-custom-agents-context/SKILL.md` for full implementation details.
