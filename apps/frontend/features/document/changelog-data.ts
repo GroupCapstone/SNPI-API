@@ -8,6 +8,13 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
+    "version": "0.2.18",
+    "date": "03.11.2026",
+    "commitHash": "eb4b9bc",
+    "developer": "史力爱卫",
+    "description": "Checkpoint & live ci deploy verification [PASSED]"
+  },
+  {
     "version": "0.2.17",
     "date": "03.11.2026",
     "commitHash": "0f1ac54",
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "0cceac0",
     "developer": "史力爱卫",
     "description": "Delete Real-Time SSE Stream section and card from Open API view"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "8d1d574",
-    "developer": "史力爱卫",
-    "description": "Expand telegram watcher triggers to all branches, PRs, releases, and CI runs"
   }
 ];
