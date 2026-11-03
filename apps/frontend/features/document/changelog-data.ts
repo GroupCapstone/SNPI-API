@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "50afe42",
+    "developer": "史力爱卫",
+    "description": "Implement architecture assessment 7-layer backend module & audit CLI"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "73bcd78",
     "developer": "史力爱卫",
     "description": "Sync changelog for primary skill consolidation"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "5b1d272",
     "developer": "史力爱卫",
     "description": "Remove verbose text copy and leave clean whitespace across hero and component demos"
-  },
-  {
-    "version": "0.2.16",
-    "date": "02.11.2026",
-    "commitHash": "4bca831",
-    "developer": "史力爱卫",
-    "description": "Remove brand color do and dont section and hero pill clutter"
   }
 ];
