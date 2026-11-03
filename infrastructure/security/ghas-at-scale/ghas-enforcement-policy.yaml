@@ -1,7 +1,7 @@
 # GitHub Advanced Security (GHAS) at Scale Policy
-version: "1.0"
-organization: "snp-sms-enterprise"
-repository: "SNP-SMS"
+version: '1.0'
+organization: 'snp-sms-enterprise'
+repository: 'SNP-SMS'
 
 branchingStrategy:
   model: GitHubFlow
@@ -10,21 +10,21 @@ branchingStrategy:
   requirePullRequest: true
 
 customProperties:
-  business_criticality: "tier-1-mission-critical"
-  compliance_scope: "soc2-ferpa"
-  public_exposure: "internal-only"
-  primary_language: "typescript"
+  business_criticality: 'tier-1-mission-critical'
+  compliance_scope: 'soc2-ferpa'
+  public_exposure: 'internal-only'
+  primary_language: 'typescript'
 
 securityConfiguration:
-  name: "enterprise-ghas-high-criticality"
+  name: 'enterprise-ghas-high-criticality'
   secretScanning:
     enabled: true
     pushProtection: true
     delegatedBypass:
       enabled: true
       authorizedRoles:
-        - "Security manager"
-        - "Admin"
+        - 'Security manager'
+        - 'Admin'
     validityChecks: true
   dependabot:
     alerts: true
@@ -32,24 +32,24 @@ securityConfiguration:
   codeScanning:
     defaultSetup: true
     languages:
-      - "javascript-typescript"
+      - 'javascript-typescript'
 
 rulesetEnforcement:
   pushProtectionBypassPrevention:
     enabled: true
     restrictedPaths:
-      - ".github/secret_scanning.yml"
-      - ".github/secret_scanning.yaml"
+      - '.github/secret_scanning.yml'
+      - '.github/secret_scanning.yaml'
   dependencyReview:
     enabled: true
-    failOnSeverity: "moderate"
+    failOnSeverity: 'moderate'
     denyLicenses:
-      - "GPL-1.0-or-later"
-      - "LGPL-2.0-or-later"
-      - "AGPL-3.0-or-later"
-    commentSummaryInPr: "on-failure"
+      - 'GPL-1.0-or-later'
+      - 'LGPL-2.0-or-later'
+      - 'AGPL-3.0-or-later'
+    commentSummaryInPr: 'on-failure'
 
 auditAndExceptions:
   exceptionProcessAuditable: true
   auditLogStreaming: true
-  targetSiem: "Microsoft Sentinel / Enterprise Webhook"
+  targetSiem: 'Microsoft Sentinel / Enterprise Webhook'

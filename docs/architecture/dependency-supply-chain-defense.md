@@ -4,7 +4,7 @@
 > **Authors**: Ken Muse & Josh Johanning  
 > **Target System**: SNP-SMS Full-Stack Monorepo  
 > **Primary Safe Folder**: `.agents/skills/dependency-supply-chain-defense/`  
-> **Verification CLI**: `npm run verify:supply-chain`  
+> **Verification CLI**: `npm run verify:supply-chain`
 
 ---
 
@@ -32,14 +32,14 @@ This specification implements the **6-Layer Defense-in-Depth Model** defined by 
 
 ## 2. File & Configuration Matrix
 
-| Layer | Configuration File | Architectural Standard |
-| :--- | :--- | :--- |
-| **Layer 1** | `.npmrc` | `ignore-scripts=true`, `save-exact=true` |
-| **Layer 2** | `.devcontainer/devcontainer.json` | Non-root `node` container, volume isolation |
-| **Layer 3** | `.gitconfig` / Ruleset | Signed commits with biometric/passphrase prompt |
-| **Layer 4** | `.github/rulesets/` | PR reviews, status checks, zero bypass |
-| **Layer 5** | Release workflows | OIDC token exchange, `npm publish --provenance` |
-| **Layer 6** | `.github/dependabot.yml` | Automated daily updates, dependency review action |
+| Layer       | Configuration File                | Architectural Standard                            |
+| :---------- | :-------------------------------- | :------------------------------------------------ |
+| **Layer 1** | `.npmrc`                          | `ignore-scripts=true`, `save-exact=true`          |
+| **Layer 2** | `.devcontainer/devcontainer.json` | Non-root `node` container, volume isolation       |
+| **Layer 3** | `.gitconfig` / Ruleset            | Signed commits with biometric/passphrase prompt   |
+| **Layer 4** | `.github/rulesets/`               | PR reviews, status checks, zero bypass            |
+| **Layer 5** | Release workflows                 | OIDC token exchange, `npm publish --provenance`   |
+| **Layer 6** | `.github/dependabot.yml`          | Automated daily updates, dependency review action |
 
 ---
 
@@ -48,4 +48,5 @@ This specification implements the **6-Layer Defense-in-Depth Model** defined by 
 ```bash
 npm run verify:supply-chain
 ```
+
 Evaluates all 6 layers and ensures zero critical supply chain misconfigurations.

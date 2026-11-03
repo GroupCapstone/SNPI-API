@@ -6,7 +6,7 @@ replicaCount: 3
 
 image:
   repository: ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
-  tag: "0.10.1"
+  tag: '0.10.1'
   pullPolicy: IfNotPresent
 
 securityContext:
@@ -20,34 +20,34 @@ securityContext:
 
 resources:
   requests:
-    cpu: "500m"
-    memory: "512Mi"
+    cpu: '500m'
+    memory: '512Mi'
   limits:
-    cpu: "500m"
-    memory: "512Mi"
+    cpu: '500m'
+    memory: '512Mi'
 
 env:
   - name: RUNNER_MAX_CONCURRENT_RECONCILES
-    value: "10"
+    value: '10'
   - name: K8S_CLIENT_RATE_LIMITER_QPS
-    value: "50"
+    value: '50'
   - name: K8S_CLIENT_RATE_LIMITER_BURST
-    value: "100"
+    value: '100'
 
 tolerations:
-  - key: "node-role.kubernetes.io/infra"
-    operator: "Exists"
-    effect: "NoSchedule"
+  - key: 'node-role.kubernetes.io/infra'
+    operator: 'Exists'
+    effect: 'NoSchedule'
 
 nodeSelector:
-  node-role.kubernetes.io/infra: "true"
+  node-role.kubernetes.io/infra: 'true'
 
 metrics:
-  controllerManagerAddr: ":8080"
-  listenerAddr: ":8080"
-  listenerMetricsAddr: ":2112"
+  controllerManagerAddr: ':8080'
+  listenerAddr: ':8080'
+  listenerMetricsAddr: ':2112'
   enableHighCardinalityMetrics: false
 
 serviceAccount:
   create: true
-  name: "arc-controller-manager"
+  name: 'arc-controller-manager'

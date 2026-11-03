@@ -34,19 +34,31 @@ function testCompression(): void {
   console.log('                GIT LFS VS NATIVE GIT COMPRESSION TESTER                       ');
   console.log('================================================================================');
   console.log(`  File Evaluated    : ${targetPath}`);
-  console.log(`  Input Size        : ${inputSize.toLocaleString()} bytes (${(inputSize / 1024).toFixed(2)} KB)`);
-  console.log(`  Compressed Size   : ${compressedSize.toLocaleString()} bytes (${(compressedSize / 1024).toFixed(2)} KB)`);
+  console.log(
+    `  Input Size        : ${inputSize.toLocaleString()} bytes (${(inputSize / 1024).toFixed(2)} KB)`,
+  );
+  console.log(
+    `  Compressed Size   : ${compressedSize.toLocaleString()} bytes (${(compressedSize / 1024).toFixed(2)} KB)`,
+  );
   console.log(`  Compression Ratio : ${ratio}%`);
   console.log('--------------------------------------------------------------------------------');
 
   if (ratio < 25.0) {
     console.log('  Recommendation    : [GIT LFS]');
-    console.log('  Reasoning         : Pre-compressed or binary file format. Low compression efficiency in Git.');
-    console.log('                      Storing in native Git will cause duplicate storage blobs across history.');
+    console.log(
+      '  Reasoning         : Pre-compressed or binary file format. Low compression efficiency in Git.',
+    );
+    console.log(
+      '                      Storing in native Git will cause duplicate storage blobs across history.',
+    );
   } else {
     console.log('  Recommendation    : [NATIVE GIT]');
-    console.log('  Reasoning         : Compressible text format. Git delta packing and zlib compression will');
-    console.log('                      store revisions efficiently. Using Git LFS would balloon bandwidth.');
+    console.log(
+      '  Reasoning         : Compressible text format. Git delta packing and zlib compression will',
+    );
+    console.log(
+      '                      store revisions efficiently. Using Git LFS would balloon bandwidth.',
+    );
   }
   console.log('================================================================================\n');
 }

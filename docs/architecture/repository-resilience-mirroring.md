@@ -6,10 +6,10 @@
 
 ## 1. Principles & Failure Domain Isolation
 
-* **Warm Narrow Mirror**: We mirror only `refs/heads/main` and release tags (`refs/tags/*`) to an independently hosted Git service located in an isolated failure domain.
-* **Out-of-Band Sync Lock**: Before every push to the mirror, sync jobs verify the lock status endpoint. If an active incident is declared (`LOCKED`), sync halts to avoid clobbering emergency work.
-* **Immutable Commit Baseline**: Hotfixes must originate from the verified production commit SHA.
-* **Post-Incident Reconciliation**: All changes deployed from the mirror must be pushed to GitHub via Pull Request to maintain an unbroken audit trail.
+- **Warm Narrow Mirror**: We mirror only `refs/heads/main` and release tags (`refs/tags/*`) to an independently hosted Git service located in an isolated failure domain.
+- **Out-of-Band Sync Lock**: Before every push to the mirror, sync jobs verify the lock status endpoint. If an active incident is declared (`LOCKED`), sync halts to avoid clobbering emergency work.
+- **Immutable Commit Baseline**: Hotfixes must originate from the verified production commit SHA.
+- **Post-Incident Reconciliation**: All changes deployed from the mirror must be pushed to GitHub via Pull Request to maintain an unbroken audit trail.
 
 ---
 

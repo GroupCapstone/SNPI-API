@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "a4349a6",
+    "developer": "史力爱卫",
+    "description": "Implement repository architecture strategy, monorepo boundaries & alternate deployment continuity"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "df99922",
     "developer": "史力爱卫",
     "description": "Sync verbatim github repository threat model reference and TA-01-TA-09 actor taxonomy"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "5f130a2",
     "developer": "史力爱卫",
     "description": "Real-time changelog sync"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "4f419e3",
-    "developer": "史力爱卫",
-    "description": "Add LFS policy verification script"
   }
 ];

@@ -28,7 +28,7 @@ const DANGEROUS_EXPRESSIONS = [
   'github.event.comment.body',
   'github.event.review.body',
   'github.event.pages.*.page_name',
-  'github.head_ref'
+  'github.head_ref',
 ];
 
 export function auditWorkflowFile(filePath: string): Violation[] {
@@ -46,7 +46,11 @@ export function auditWorkflowFile(filePath: string): Violation[] {
     const trimmed = line.trim();
 
     // Check pull_request_target trigger
-    if (trimmed.startsWith('pull_request_target:') || trimmed === 'pull_request_target' || trimmed.includes('pull_request_target')) {
+    if (
+      trimmed.startsWith('pull_request_target:') ||
+      trimmed === 'pull_request_target' ||
+      trimmed.includes('pull_request_target')
+    ) {
       isPullRequestTarget = true;
     }
 
@@ -62,7 +66,7 @@ export function auditWorkflowFile(filePath: string): Violation[] {
             line: lineNum,
             rule: 'ACTION_SHA_PINNING',
             message: `Action '${usesVal}' is unversioned. Must be pinned to full 40-character commit SHA.`,
-            severity: 'CRITICAL'
+            severity: 'CRITICAL',
           });
         } else {
           const ref = usesVal.slice(atIdx + 1);
@@ -73,7 +77,7 @@ export function auditWorkflowFile(filePath: string): Violation[] {
               line: lineNum,
               rule: 'ACTION_SHA_PINNING',
               message: `Action '${usesVal}' uses floating ref '${ref}'. Must be pinned to 40-char commit SHA.`,
-              severity: 'HIGH'
+              severity: 'HIGH',
             });
           }
         }
@@ -96,7 +100,7 @@ export function auditWorkflowFile(filePath: string): Violation[] {
             line: lineNum,
             rule: 'SCRIPT_INJECTION',
             message: `Potential script injection: '${dangerous}' evaluated directly in run step. Pass via env: variable instead.`,
-            severity: 'CRITICAL'
+            severity: 'CRITICAL',
           });
         }
       }
@@ -104,13 +108,16 @@ export function auditWorkflowFile(filePath: string): Violation[] {
 
     // Check pwn request checkout
     if (isPullRequestTarget && trimmed.includes('actions/checkout')) {
-      if (content.includes('github.event.pull_request.head.sha') || content.includes('github.head_ref')) {
+      if (
+        content.includes('github.event.pull_request.head.sha') ||
+        content.includes('github.head_ref')
+      ) {
         violations.push({
           file: filename,
           line: lineNum,
           rule: 'PWN_REQUEST_RISK',
           message: `Dangerous pull_request_target checkout of untrusted PR ref detected. Can lead to arbitrary code execution with write privileges.`,
-          severity: 'CRITICAL'
+          severity: 'CRITICAL',
         });
       }
     }
@@ -130,7 +137,9 @@ export function auditAllWorkflows(workflowsDir: string): boolean {
     return false;
   }
 
-  const files = fs.readdirSync(workflowsDir).filter(f => f.endsWith('.yml') || f.endsWith('.yaml'));
+  const files = fs
+    .readdirSync(workflowsDir)
+    .filter((f) => f.endsWith('.yml') || f.endsWith('.yaml'));
   let totalViolations = 0;
 
   for (const file of files) {
@@ -149,11 +158,15 @@ export function auditAllWorkflows(workflowsDir: string): boolean {
 
   console.log('------------------------------------------------------------');
   if (totalViolations === 0) {
-    console.log(`[PASSED] All ${files.length} workflows comply with enterprise security standards.`);
+    console.log(
+      `[PASSED] All ${files.length} workflows comply with enterprise security standards.`,
+    );
     console.log('------------------------------------------------------------');
     return true;
   } else {
-    console.error(`[FAILED] Audit failed with ${totalViolations} total violation(s). Address errors above.`);
+    console.error(
+      `[FAILED] Audit failed with ${totalViolations} total violation(s). Address errors above.`,
+    );
     console.log('------------------------------------------------------------');
     return false;
   }

@@ -4,10 +4,7 @@
   "enforcement": "active",
   "conditions": {
     "ref_name": {
-      "include": [
-        "refs/heads/main",
-        "refs/heads/release/*"
-      ],
+      "include": ["refs/heads/main", "refs/heads/release/*"],
       "exclude": []
     }
   },

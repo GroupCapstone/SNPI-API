@@ -4,7 +4,7 @@
 > **Authors**: Greg Mohler & Tom Horton  
 > **Target System**: SNP-SMS Full-Stack Monorepo  
 > **Primary Safe Folder**: `.agents/skills/prioritizing-security-alerts/`  
-> **Verification CLI**: `npm run verify:alert-prio`  
+> **Verification CLI**: `npm run verify:alert-prio`
 
 ---
 
@@ -36,4 +36,5 @@ infrastructure/security/alert-prioritization/
 ```bash
 npm run verify:alert-prio
 ```
+
 Evaluates the prioritization engine, custom property bindings, campaign configurations, and automated scoring rules.

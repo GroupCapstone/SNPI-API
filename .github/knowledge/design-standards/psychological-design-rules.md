@@ -8,6 +8,7 @@ Reviewed by: Design Systems Committee
 # Mandatory Psychological Design Rules (HCI)
 
 ## 1. The 6 Foundational Psychological Invariants
+
 Every UI component created or modified must strictly satisfy these human-computer interaction invariants:
 
 1. **Fitts's Law (Touch Target Bound)**:

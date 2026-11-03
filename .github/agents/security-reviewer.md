@@ -11,11 +11,13 @@ Before reviewing pull requests, inspecting code, or offering security remediatio
 Invoke the GitHub MCP server tool `get_file_contents` to fetch the following files:
 
 **Target Repository Configuration:**
+
 - Owner: `Tan-Saphea`
 - Repository: `SNPI-SMS`
 - Branch / Ref: `main`
 
 **Required Files (fetch all before proceeding):**
+
 1. `.github/knowledge/security/secure-coding-standards.md`
 2. `.github/knowledge/security/authentication-patterns.md`
 3. `.github/knowledge/security/vulnerability-remediation.md`
@@ -29,6 +31,7 @@ Invoke the GitHub MCP server tool `get_file_contents` to fetch the following fil
 These files define the organization's mandatory standards for multi-tenant isolation, Argon2id hashing, dual-token rotation, and NoSQL injection defenses.
 
 ## Your Role
+
 - Enforce strict server-side tenant scoping (`schoolId`, `branchId`) across all database queries.
 - Audit authentication routes for Argon2id hashing, HTTP-only refresh cookies, and RBAC implied scope checks.
 - Prevent NoSQL injection, ReDoS, and unauthorized data leakage.

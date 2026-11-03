@@ -23,6 +23,7 @@ SNP-SMS is architected as an **Enterprise TypeScript Monorepo** powered by `npm 
 ```
 
 ### Strategic Decision Criteria
+
 - **Unified Contracts**: API contracts, Zod schemas, DTOs, and RBAC permissions reside in `@snp/shared`, consumed natively by both frontend and backend without network serialization overhead.
 - **Atomic Migrations**: Full-stack feature releases (such as new domain models and UI screens) are committed atomically, preventing interface mismatch regressions.
 - **Strict Boundaries**: Sibling applications (`apps/frontend` and `apps/backend`) never import each other directly; coupling is restricted to `@snp/shared`.
@@ -48,6 +49,7 @@ SNP-SMS is architected as an **Enterprise TypeScript Monorepo** powered by `npm 
 ## 3. Alternate Deployment Continuity & Resilient Invocation
 
 For scenarios where primary CI/CD orchestration is disrupted:
+
 - **Immutable Release Artifacts**: Deploy existing pre-built, cryptographically signed release digests.
 - **Reconciliation Logging**: Audit release digest, target environment, operator identity, and health checks before replay.
 

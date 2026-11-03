@@ -26,6 +26,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `architecture-assessment-framework.md`: Enterprise Architecture Assessment Framework, 7-layer REST API, Master MVP flow, AI agent protocol, and 10-domain audit checklist.
   - `polyrepo-operating-model.md`: Enterprise polyrepo operating model, meta-repo manifest integration (`release.yaml`), cross-repo change sets (`CHG-XXXX`), and merge coordination models.
   - `repository-architecture-strategy.md`: Repository architecture strategy (Monorepo vs Polyrepo), boundary decoupling invariants, circular dependency guards, and alternate deployment continuity.
+  - `managing-large-git-repositories.md`: Scaling Git repositories, Git LFS asset routing, clone optimization (--depth=1), tree depth limits, and repository bloat guards.
 
 - **`ci-cd/`**:
   - `github-actions-best-practices.md`: Action SHA pinning, least-privilege token permissions, dual-developer git sync gate.

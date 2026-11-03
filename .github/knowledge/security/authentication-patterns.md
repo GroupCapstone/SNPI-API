@@ -8,11 +8,13 @@ Reviewed by: Security Review Board
 # Authentication & Authorization Patterns
 
 ## 1. Password Hashing with Argon2id
+
 - **Algorithm Standard**: All user passwords must be hashed using `argon2id` (memory cost: 65,536 KiB, time cost: 3 iterations, parallelism: 4 threads).
 - **Salt Generation**: Cryptographically secure 16-byte random salts per password hash.
 - **Timing Attack Resistance**: Password verification must use constant-time comparisons.
 
 ## 2. Dual-Token Architecture
+
 - **Access Token (Short-Lived)**:
   - Format: Signed JWT containing user ID, role, tenant scope (`schoolId`, `branchId`), and token version.
   - Lifetime: 15 minutes.
@@ -24,6 +26,7 @@ Reviewed by: Security Review Board
   - Token Rotation: Single-use refresh token rotation; reusing an expired/revoked refresh token revokes all user sessions immediately.
 
 ## 3. RBAC & Implied Scope Hierarchy
+
 - **Single Source of Truth**: All permission codes (`SYSTEM_PERMISSIONS`) and default roles (`DEFAULT_CORE_ROLES`) MUST be imported from `@snp/shared`.
 - **Permission Checking**:
   - Middleware: `authorize(permissionCode)`.

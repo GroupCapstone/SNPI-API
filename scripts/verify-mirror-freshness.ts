@@ -46,8 +46,7 @@ export function parseSimpleConfig(content: string): {
 }
 
 async function run(): Promise<void> {
-  const configPath =
-    process.argv[2] || path.join(__dirname, '../templates/mirror-config.yaml');
+  const configPath = process.argv[2] || path.join(__dirname, '../templates/mirror-config.yaml');
 
   console.log('------------------------------------------------------------');
   console.log('Repository Resilience Mirror Freshness Audit');
@@ -59,8 +58,7 @@ async function run(): Promise<void> {
     configContent = fs.readFileSync(configPath, 'utf8');
   }
 
-  const { repoId, primaryBranch, maxStalenessMinutes } =
-    parseSimpleConfig(configContent);
+  const { repoId, primaryBranch, maxStalenessMinutes } = parseSimpleConfig(configContent);
 
   let primarySha = 'UNKNOWN';
   try {

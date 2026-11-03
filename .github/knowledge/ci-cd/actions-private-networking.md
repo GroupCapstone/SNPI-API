@@ -7,12 +7,12 @@ This guide establishes the mandatory enterprise networking standards for running
 ## 1. Network Solution Matrix
 
 1. **Azure Private Networking (Primary Standard)**:
-   * Recommended for full private VPC/VNet connectivity without public internet exposure.
-   * Leverages VNet injection via subnet delegation to `GitHub.Network/networkSettings`.
+   - Recommended for full private VPC/VNet connectivity without public internet exposure.
+   - Leverages VNet injection via subnet delegation to `GitHub.Network/networkSettings`.
 2. **API Gateway with OIDC (Alternative)**:
-   * Used for lightweight REST/HTTP API invocation across public internet edges using cryptographically signed GitHub OIDC tokens.
+   - Used for lightweight REST/HTTP API invocation across public internet edges using cryptographically signed GitHub OIDC tokens.
 3. **Static IP Larger Runners (Legacy/Restricted)**:
-   * Used only when third-party firewall whitelisting requires static public CIDRs.
+   - Used only when third-party firewall whitelisting requires static public CIDRs.
 
 ---
 

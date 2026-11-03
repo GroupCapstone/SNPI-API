@@ -39,7 +39,7 @@ const MANDATORY_FQDNS = [
   'ghcr.io',
   '*.ghcr.io',
   '*.githubassets.com',
-  'github-cloud.s3.amazonaws.com'
+  'github-cloud.s3.amazonaws.com',
 ];
 
 function calculateSubnetCapacity(cidr: string): { total: number; usable: number } {
@@ -78,7 +78,9 @@ function parseYamlSimple(raw: string): any {
       result[currentSection][currentSubSection] = {};
     } else if (trimmed.startsWith('- ')) {
       const val = trimmed.slice(2).replace(/['"]/g, '').trim();
-      const targetObj = currentSubSection ? result[currentSection][currentSubSection] : result[currentSection];
+      const targetObj = currentSubSection
+        ? result[currentSection][currentSubSection]
+        : result[currentSection];
       if (Array.isArray(targetObj)) {
         targetObj.push(val);
       } else {
@@ -117,9 +119,9 @@ function parseYamlSimple(raw: string): any {
     const listKey = match[1];
     const items = match[2]
       .split('\n')
-      .map(s => s.trim())
-      .filter(s => s.startsWith('- '))
-      .map(s => s.slice(2).replace(/['"]/g, '').trim());
+      .map((s) => s.trim())
+      .filter((s) => s.startsWith('- '))
+      .map((s) => s.slice(2).replace(/['"]/g, '').trim());
 
     for (const sec of Object.keys(result)) {
       if (typeof result[sec] === 'object' && result[sec] !== null) {
@@ -165,25 +167,37 @@ export function auditPrivateNetworkConfig(configPath: string): boolean {
   if (config.networking?.delegationService === expectedDelegation) {
     console.log(`[PASSED] Subnet delegation matches: '${expectedDelegation}'`);
   } else {
-    console.error(`[FAILED] Invalid subnet delegation: '${config.networking?.delegationService}'. Expected: '${expectedDelegation}'`);
+    console.error(
+      `[FAILED] Invalid subnet delegation: '${config.networking?.delegationService}'. Expected: '${expectedDelegation}'`,
+    );
     passed = false;
   }
 
   // Check 2: Subnet Sizing Invariant (Usable IPs >= MaxConcurrency * 1.20)
   const maxConcurrency = config.networking?.maxConcurrency || 0;
-  const requiredCapacity = Math.ceil(maxConcurrency * 1.20);
+  const requiredCapacity = Math.ceil(maxConcurrency * 1.2);
   const subnetCidr = config.networking?.subnetCidr || '';
 
   try {
     const { total, usable } = calculateSubnetCapacity(subnetCidr);
-    console.log(`Subnet CIDR: ${subnetCidr} (Total IPs: ${total}, Usable IPs: ${usable} [after 5 Azure reserved])`);
-    console.log(`Max Concurrency: ${maxConcurrency} -> Required Capacity (+20% buffer): ${requiredCapacity}`);
+    console.log(
+      `Subnet CIDR: ${subnetCidr} (Total IPs: ${total}, Usable IPs: ${usable} [after 5 Azure reserved])`,
+    );
+    console.log(
+      `Max Concurrency: ${maxConcurrency} -> Required Capacity (+20% buffer): ${requiredCapacity}`,
+    );
 
     if (usable >= requiredCapacity) {
-      console.log(`[PASSED] Subnet capacity verified (${usable} usable >= ${requiredCapacity} required).`);
+      console.log(
+        `[PASSED] Subnet capacity verified (${usable} usable >= ${requiredCapacity} required).`,
+      );
     } else {
-      console.error(`[FAILED] Subnet capacity insufficient! Usable: ${usable}, Required (+20% buffer): ${requiredCapacity}.`);
-      console.error(`         Recommend expanding subnet CIDR to allow at least ${requiredCapacity} usable host IPs.`);
+      console.error(
+        `[FAILED] Subnet capacity insufficient! Usable: ${usable}, Required (+20% buffer): ${requiredCapacity}.`,
+      );
+      console.error(
+        `         Recommend expanding subnet CIDR to allow at least ${requiredCapacity} usable host IPs.`,
+      );
       passed = false;
     }
   } catch (err: any) {
@@ -193,12 +207,21 @@ export function auditPrivateNetworkConfig(configPath: string): boolean {
 
   // Check 3: OS Compatibility (No macOS allowed)
   const supportedOS = config.networking?.supportedOperatingSystems || [];
-  const hasMacOs = supportedOS.some(os => os.toLowerCase().includes('macos') || os.toLowerCase().includes('darwin') || os.toLowerCase().includes('osx'));
+  const hasMacOs = supportedOS.some(
+    (os) =>
+      os.toLowerCase().includes('macos') ||
+      os.toLowerCase().includes('darwin') ||
+      os.toLowerCase().includes('osx'),
+  );
   if (hasMacOs) {
-    console.error(`[FAILED] Incompatible OS detected in supported list: macOS is NOT supported for Azure Private Networking.`);
+    console.error(
+      `[FAILED] Incompatible OS detected in supported list: macOS is NOT supported for Azure Private Networking.`,
+    );
     passed = false;
   } else {
-    console.log(`[PASSED] OS compatibility verified: [${supportedOS.join(', ')}] (macOS strictly excluded).`);
+    console.log(
+      `[PASSED] OS compatibility verified: [${supportedOS.join(', ')}] (macOS strictly excluded).`,
+    );
   }
 
   // Check 4: Mandatory Egress FQDN Whitelist
@@ -211,7 +234,9 @@ export function auditPrivateNetworkConfig(configPath: string): boolean {
   }
 
   if (missingFqdns.length === 0) {
-    console.log(`[PASSED] All ${MANDATORY_FQDNS.length} mandatory GitHub Actions egress FQDNs are permitted in firewall rules.`);
+    console.log(
+      `[PASSED] All ${MANDATORY_FQDNS.length} mandatory GitHub Actions egress FQDNs are permitted in firewall rules.`,
+    );
   } else {
     console.error(`[FAILED] Missing mandatory egress FQDNs in firewall rules:`);
     for (const m of missingFqdns) {

@@ -30,8 +30,9 @@ This architecture establishes defenses against the 8 primary threat vectors (T-0
 ## 2. Ruleset Enforcement
 
 SNP-SMS protects `main` and `release/*` branches using declarative GitHub Rulesets:
-* `infrastructure/security/threat-model/repository-ruleset-threat-defense.json`
-* Pre-deployment verification gate integration (`npm run verify:threat-model`).
+
+- `infrastructure/security/threat-model/repository-ruleset-threat-defense.json`
+- Pre-deployment verification gate integration (`npm run verify:threat-model`).
 
 ---
 

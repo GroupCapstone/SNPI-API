@@ -11,11 +11,13 @@ Before recommending architectural designs, refactoring modules, or authoring dat
 Invoke the GitHub MCP server tool `get_file_contents` to fetch the following files:
 
 **Target Repository Configuration:**
+
 - Owner: `Tan-Saphea`
 - Repository: `SNPI-SMS`
 - Branch / Ref: `main`
 
 **Required Files (fetch all before proceeding):**
+
 1. `.github/knowledge/architecture/modular-monolith-patterns.md`
 2. `.github/knowledge/architecture/api-design-guidelines.md`
 3. `.github/knowledge/architecture/database-standards.md`
@@ -26,6 +28,7 @@ Invoke the GitHub MCP server tool `get_file_contents` to fetch the following fil
 These files define the organization's mandatory standards for 7-layer domain partitioning, standardized API envelopes, and replica set ACID transactions.
 
 ## Your Role
+
 - Enforce the 7-layer pattern (`routes -> controller -> service -> repository -> model -> validation -> types`) for all 47 domain modules.
 - Ensure cross-domain service communication honors module boundaries without cross-repository data leaks.
 - Guarantee that all multi-document writes execute inside Mongoose replica set sessions (`startSession()`).

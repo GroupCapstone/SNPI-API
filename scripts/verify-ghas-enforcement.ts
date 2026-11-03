@@ -24,28 +24,39 @@ export function auditGhasEnforcement(rootDir: string = process.cwd()): boolean {
   const secretScanningYml = path.join(rootDir, '.github/secret_scanning.yml');
   const secretScanningYaml = path.join(rootDir, '.github/secret_scanning.yaml');
   if (fs.existsSync(secretScanningYml) || fs.existsSync(secretScanningYaml)) {
-    console.error('[FAILED] [Pillar 4] Unauthorized secret_scanning.yml found! Bypasses secret scanning.');
+    console.error(
+      '[FAILED] [Pillar 4] Unauthorized secret_scanning.yml found! Bypasses secret scanning.',
+    );
     allPassed = false;
   } else {
-    console.log('[PASSED] [Pillar 4] Secret scanning exclusion bypass prevention verified (No secret_scanning.yml).');
+    console.log(
+      '[PASSED] [Pillar 4] Secret scanning exclusion bypass prevention verified (No secret_scanning.yml).',
+    );
   }
 
   // Check 2: Dependency Review Gate
   const depReviewPath = path.join(rootDir, '.github/workflows/dependency-review.yml');
   if (!fs.existsSync(depReviewPath)) {
-    console.error('[FAILED] [Pillar 5] Dependency review workflow (.github/workflows/dependency-review.yml) missing!');
+    console.error(
+      '[FAILED] [Pillar 5] Dependency review workflow (.github/workflows/dependency-review.yml) missing!',
+    );
     allPassed = false;
   } else {
     const depContent = fs.readFileSync(depReviewPath, 'utf8');
-    const hasFailSeverity = /fail-on-severity:\s*(moderate|low|medium|high|critical)/i.test(depContent);
+    const hasFailSeverity = /fail-on-severity:\s*(moderate|low|medium|high|critical)/i.test(
+      depContent,
+    );
     const hasDenyLicenses = /deny-licenses:/i.test(depContent);
     const hasPinnedSha = /actions\/dependency-review-action@[a-f0-9]{40}/i.test(depContent);
 
     if (hasFailSeverity && hasDenyLicenses && hasPinnedSha) {
-      console.log('[PASSED] [Pillar 5] Centralized Dependency Review verified: fail-on-severity, deny-licenses & SHA pinned.');
+      console.log(
+        '[PASSED] [Pillar 5] Centralized Dependency Review verified: fail-on-severity, deny-licenses & SHA pinned.',
+      );
     } else {
       console.error('[FAILED] [Pillar 5] Dependency review workflow incomplete:');
-      if (!hasFailSeverity) console.error('         - Missing or invalid fail-on-severity configuration');
+      if (!hasFailSeverity)
+        console.error('         - Missing or invalid fail-on-severity configuration');
       if (!hasDenyLicenses) console.error('         - Missing deny-licenses compliance policy');
       if (!hasPinnedSha) console.error('         - Action not pinned to 40-character commit SHA');
       allPassed = false;
@@ -63,9 +74,13 @@ export function auditGhasEnforcement(rootDir: string = process.cwd()): boolean {
     const hasActions = /package-ecosystem:\s*['"]?github-actions['"]?/i.test(depContent);
 
     if (hasNpm && hasActions) {
-      console.log('[PASSED] [Pillar 3] Dependabot supply chain coverage active for npm workspaces and GitHub Actions.');
+      console.log(
+        '[PASSED] [Pillar 3] Dependabot supply chain coverage active for npm workspaces and GitHub Actions.',
+      );
     } else {
-      console.error('[FAILED] [Pillar 3] Dependabot missing essential ecosystems (npm or github-actions)!');
+      console.error(
+        '[FAILED] [Pillar 3] Dependabot missing essential ecosystems (npm or github-actions)!',
+      );
       allPassed = false;
     }
   }
@@ -73,7 +88,9 @@ export function auditGhasEnforcement(rootDir: string = process.cwd()): boolean {
   // Check 4: CodeQL SAST Analysis Configuration
   const codeqlPath = path.join(rootDir, '.github/workflows/codeql.yml');
   if (!fs.existsSync(codeqlPath)) {
-    console.error('[FAILED] [Pillar 3] CodeQL SAST workflow (.github/workflows/codeql.yml) missing!');
+    console.error(
+      '[FAILED] [Pillar 3] CodeQL SAST workflow (.github/workflows/codeql.yml) missing!',
+    );
     allPassed = false;
   } else {
     const codeqlContent = fs.readFileSync(codeqlPath, 'utf8');
@@ -82,7 +99,9 @@ export function auditGhasEnforcement(rootDir: string = process.cwd()): boolean {
     const hasLang = codeqlContent.includes('javascript-typescript');
 
     if (hasInit && hasAnalyze && hasLang) {
-      console.log('[PASSED] [Pillar 3] CodeQL SAST verified: SHA pinned for javascript-typescript security-extended queries.');
+      console.log(
+        '[PASSED] [Pillar 3] CodeQL SAST verified: SHA pinned for javascript-typescript security-extended queries.',
+      );
     } else {
       console.error('[FAILED] [Pillar 3] CodeQL SAST configuration incomplete!');
       allPassed = false;
@@ -93,7 +112,9 @@ export function auditGhasEnforcement(rootDir: string = process.cwd()): boolean {
   const gitHeadPath = path.join(rootDir, '.git/HEAD');
   if (fs.existsSync(gitHeadPath)) {
     const headContent = fs.readFileSync(gitHeadPath, 'utf8');
-    console.log(`[PASSED] [Pillar 1] Consistent branching strategy verified (Production target: main).`);
+    console.log(
+      `[PASSED] [Pillar 1] Consistent branching strategy verified (Production target: main).`,
+    );
   }
 
   console.log('------------------------------------------------------------');
