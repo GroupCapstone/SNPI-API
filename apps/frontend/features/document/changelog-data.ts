@@ -10,6 +10,27 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "200af73",
+    "developer": "史力爱卫",
+    "description": "Record enterprise custom agents skill in AGENTS.md"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "a2aab74",
+    "developer": "史力爱卫",
+    "description": "Update copilot instructions with enterprise custom agents context"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "b3a0cd8",
+    "developer": "史力爱卫",
+    "description": "Record custom agents commit"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "1b7fa71",
     "developer": "史力爱卫",
     "description": "Add custom enterprise agent definitions with architecture assessment integration"
@@ -160,26 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "aee7c0d",
     "developer": "史力爱卫",
     "description": "Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]"
-  },
-  {
-    "version": "0.2.16",
-    "date": "01.11.2026",
-    "commitHash": "23cc63f",
-    "developer": "史力爱卫",
-    "description": "Enforce dual-developer remote reconciliation and force merge gate before push [PASSED]"
-  },
-  {
-    "version": "0.2.15",
-    "date": "01.11.2026",
-    "commitHash": "05c37b3",
-    "developer": "史力爱卫",
-    "description": "Audit component demos to enforce 0px blur flat standard, anti-blur and zero guide clutter [PASSED]"
-  },
-  {
-    "version": "0.2.15",
-    "date": "01.11.2026",
-    "commitHash": "6e526a3",
-    "developer": "史力爱卫",
-    "description": "Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts"
   }
 ];
