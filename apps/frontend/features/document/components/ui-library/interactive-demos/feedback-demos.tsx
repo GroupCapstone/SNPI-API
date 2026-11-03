@@ -2,13 +2,21 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Bell, Check, Alert, Info, X, Sparkles, RotateCw, Play } from '@/components/icons';
 import {
-  StatusPage404,
-  type StatusCode,
-  type StatusMode,
-  STATUS_DIRECTORY,
-} from '../status-page-404';
+  Bell,
+  BellRing,
+  BellDot,
+  Check,
+  Alert,
+  Info,
+  X,
+  Sparkles,
+  RotateCw,
+  Play,
+  ShieldCheck,
+  Trash2,
+} from '@/components/icons';
+import { StatusPage404, type StatusCode, type StatusMode } from '../status-page-404';
 
 // 1. Toast Notification Stack
 export function ToastDemo() {
@@ -89,39 +97,73 @@ export function ToastDemo() {
   );
 }
 
-// 3. Notification Bell with Interactive Notification Center
+// 3. Notification Bell with Tap-to-Drop Floating Notification Center
 export function NotificationBellDemo() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [filter, setFilter] = React.useState<'all' | 'academic' | 'security'>('all');
+  const [isOpen, setIsOpen] = React.useState(true);
+  const [filter, setFilter] = React.useState<
+    'all' | 'academic' | 'security' | 'finance' | 'system'
+  >('all');
+  const [hasNewAlert, setHasNewAlert] = React.useState(false);
+  const bellContainerRef = React.useRef<HTMLDivElement>(null);
+
   const [items, setItems] = React.useState([
     {
       id: 1,
-      title: 'New Attendance Roster submitted',
-      desc: 'Section CS-2026-A submitted morning biometric roster for review.',
+      title: 'Biometric Attendance Roster Finalized',
+      desc: 'Section CS-2026-A submitted morning biometric roster for review (48/50 present).',
       time: '10m ago',
       branch: 'PP-02',
-      category: 'academic',
+      category: 'academic' as const,
       read: false,
     },
     {
       id: 2,
       title: 'Cryptographic Signature Key Rotated',
-      desc: 'Automatic HMAC rotation completed for campus gateway cluster.',
+      desc: 'Automatic HMAC rotation completed successfully for campus gateway cluster.',
       time: '1h ago',
       branch: 'SR-01',
-      category: 'security',
+      category: 'security' as const,
       read: false,
     },
     {
       id: 3,
-      title: 'Tuition Fee invoice dispatched',
-      desc: 'Consolidated batch invoices issued for Term 1 Semester fees.',
+      title: 'Tuition Fee Invoice Dispatched',
+      desc: 'Consolidated batch invoices issued via Telegram SMS gateway for 312 students.',
       time: '3h ago',
       branch: 'BT-03',
-      category: 'academic',
+      category: 'finance' as const,
       read: false,
     },
+    {
+      id: 4,
+      title: 'Replica Database Health Probe Normal',
+      desc: 'Primary-to-secondary database replication latency is 12ms across all nodes.',
+      time: '5h ago',
+      branch: 'PP-01',
+      category: 'system' as const,
+      read: true,
+    },
   ]);
+
+  // Click outside and escape key listeners to close floating dropdown
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (bellContainerRef.current && !bellContainerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const unreadCount = items.filter((n) => !n.read).length;
 
@@ -133,142 +175,449 @@ export function NotificationBellDemo() {
     setItems((prev) => prev.map((item) => ({ ...item, read: true })));
   };
 
-  const triggerNewNotification = () => {
+  const removeItem = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const clearAllNotifications = () => {
+    setItems([]);
+  };
+
+  const resetSampleData = () => {
+    setItems([
+      {
+        id: 1,
+        title: 'Biometric Attendance Roster Finalized',
+        desc: 'Section CS-2026-A submitted morning biometric roster for review (48/50 present).',
+        time: '10m ago',
+        branch: 'PP-02',
+        category: 'academic',
+        read: false,
+      },
+      {
+        id: 2,
+        title: 'Cryptographic Signature Key Rotated',
+        desc: 'Automatic HMAC rotation completed successfully for campus gateway cluster.',
+        time: '1h ago',
+        branch: 'SR-01',
+        category: 'security',
+        read: false,
+      },
+      {
+        id: 3,
+        title: 'Tuition Fee Invoice Dispatched',
+        desc: 'Consolidated batch invoices issued via Telegram SMS gateway for 312 students.',
+        time: '3h ago',
+        branch: 'BT-03',
+        category: 'finance',
+        read: false,
+      },
+      {
+        id: 4,
+        title: 'Replica Database Health Probe Normal',
+        desc: 'Primary-to-secondary database replication latency is 12ms across all nodes.',
+        time: '5h ago',
+        branch: 'PP-01',
+        category: 'system',
+        read: true,
+      },
+    ]);
+    setFilter('all');
+    setIsOpen(true);
+  };
+
+  const triggerNewNotification = (cat: 'academic' | 'security' | 'finance') => {
+    setHasNewAlert(true);
+    setTimeout(() => setHasNewAlert(false), 2200);
+
+    const templates = {
+      academic: {
+        title: 'Final Examination Schedule Published',
+        desc: 'Academic Directorate published the Term 1 examination timetable for IT Year 3.',
+        category: 'academic' as const,
+        branch: 'PP-02',
+      },
+      security: {
+        title: 'New Session Device Authorized',
+        desc: 'Security policy granted administrator session access from verified MAC terminal.',
+        category: 'security' as const,
+        branch: 'SR-01',
+      },
+      finance: {
+        title: 'Bakong KHQR Payment Received',
+        desc: 'Cashier confirmed tuition transaction $450.00 USD via National Bank of Cambodia gateway.',
+        category: 'finance' as const,
+        branch: 'BT-03',
+      },
+    };
+
+    const chosen = templates[cat];
     const newItem = {
       id: Date.now(),
-      title: 'Campus Gateway Telemetry Synced',
-      desc: 'Real-time heartbeat packet received from Phnom Penh Innovation Hub.',
+      ...chosen,
       time: 'Just now',
-      branch: 'PP-02',
-      category: 'security' as const,
       read: false,
     };
     setItems((prev) => [newItem, ...prev]);
+    setIsOpen(true);
   };
 
   const filteredItems = items.filter((item) =>
     filter === 'all' ? true : item.category === filter,
   );
 
+  const getCategoryMeta = (cat: string) => {
+    switch (cat) {
+      case 'security':
+        return {
+          label: 'SECURITY',
+          badgeClass: 'border-violet-200 bg-violet-50 text-violet-700',
+          icon: ShieldCheck,
+          iconClass: 'text-violet-600 bg-violet-50 border border-violet-200',
+        };
+      case 'academic':
+        return {
+          label: 'ACADEMIC',
+          badgeClass: 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]',
+          icon: BellRing,
+          iconClass: 'text-[#0056FF] bg-[#EFF5FF] border border-[#CAD3F5]',
+        };
+      case 'finance':
+        return {
+          label: 'FINANCE',
+          badgeClass: 'border-emerald-200 bg-emerald-50 text-emerald-700',
+          icon: Sparkles,
+          iconClass: 'text-emerald-600 bg-emerald-50 border border-emerald-200',
+        };
+      default:
+        return {
+          label: 'SYSTEM',
+          badgeClass: 'border-amber-200 bg-amber-50 text-amber-700',
+          icon: BellDot,
+          iconClass: 'text-amber-600 bg-amber-50 border border-amber-200',
+        };
+    }
+  };
+
   return (
-    <div className="relative flex w-full max-w-xl flex-col items-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-xs sm:p-6">
-      {/* Top Controls Bar */}
-      <div className="mb-4 flex w-full items-center justify-between border-b border-slate-100 pb-3">
-        <div className="flex items-center gap-2">
-          <span className="font-sans text-xs font-bold text-[#0A1A4A]">
-            Campus Notification Center
+    <div className="relative flex w-full flex-col gap-4 py-2">
+      {/* 1. Simulation & State Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#CAD3F5] bg-white p-3 shadow-2xs sm:px-4 sm:py-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-mono text-xs font-bold text-[#0A1A4A] uppercase">
+            Simulate Alerts:
           </span>
-          <span className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-            {unreadCount} Unread
-          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => triggerNewNotification('academic')}
+              className="flex cursor-pointer items-center gap-1 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 font-mono text-[11px] font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
+            >
+              <span>+ Academic</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => triggerNewNotification('security')}
+              className="flex cursor-pointer items-center gap-1 rounded-xl border border-violet-200 bg-violet-50/70 px-2.5 py-1.5 font-mono text-[11px] font-bold text-violet-700 transition-all hover:bg-violet-100 active:scale-95"
+            >
+              <span>+ Security</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => triggerNewNotification('finance')}
+              className="flex cursor-pointer items-center gap-1 rounded-xl border border-emerald-200 bg-emerald-50/70 px-2.5 py-1.5 font-mono text-[11px] font-bold text-emerald-700 transition-all hover:bg-emerald-100 active:scale-95"
+            >
+              <span>+ Finance</span>
+            </button>
+            <button
+              type="button"
+              onClick={resetSampleData}
+              title="Reset Sample Data"
+              className="flex size-7.5 cursor-pointer items-center justify-center rounded-xl border border-[#CAD3F5] text-slate-500 hover:border-[#0056FF] hover:bg-slate-50 hover:text-[#0056FF] active:scale-95"
+            >
+              <RotateCw className="size-3.5" />
+            </button>
+          </div>
         </div>
-        <button
-          type="button"
-          onClick={triggerNewNotification}
-          title="Simulate incoming campus alert notification"
-          className="flex cursor-pointer items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#0056FF] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
-        >
-          <Sparkles className="size-3 text-[#0056FF]" />
-          <span>Simulate Alert</span>
-        </button>
+
+        {/* State Helper Indicator */}
+        <div className="flex items-center gap-2 font-mono text-xs">
+          <span className="text-slate-400">Panel State:</span>
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className={cn(
+              'cursor-pointer rounded-md px-2 py-0.5 text-[11px] font-bold transition-all',
+              isOpen
+                ? 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]'
+                : 'border border-slate-200 bg-slate-100 text-slate-600 hover:border-[#CAD3F5] hover:text-[#0056FF]',
+            )}
+          >
+            {isOpen ? 'Dropped Down · Tap to close' : 'Collapsed · Tap bell to drop'}
+          </button>
+        </div>
       </div>
 
-      {/* Bell Action Hub */}
-      <div className="relative inline-block">
-        <button
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle notifications"
-          title={isOpen ? 'Close Notification Center' : 'Open Notification Center'}
-          className={cn(
-            'relative flex size-12 cursor-pointer items-center justify-center rounded-2xl border transition-all active:scale-95',
-            isOpen
-              ? 'border-[#0056FF] bg-[#EFF5FF] text-[#0056FF] shadow-xs'
-              : 'border-[#CAD3F5] bg-white text-slate-700 hover:border-[#0056FF] hover:text-[#0056FF]',
-          )}
-        >
-          <Bell className="size-5" />
-          {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white ring-2 ring-white">
-              {unreadCount}
+      {/* 2. Interactive Navigation Stage with Floating Dropped-Down List */}
+      <div className="relative min-h-[480px] w-full rounded-2xl border-2 border-[#CAD3F5] bg-[#EFF5FF]/20 p-4 sm:min-h-[540px] sm:p-6">
+        {/* Mock Application Navbar Header */}
+        <div className="relative z-30 flex items-center justify-between rounded-2xl border border-[#CAD3F5] bg-white px-4 py-3 shadow-2xs sm:px-6">
+          {/* Left: Brand Identity */}
+          <div className="flex items-center gap-2.5">
+            <span className="flex size-8.5 items-center justify-center rounded-xl bg-[#0056FF] text-xs font-black text-white shadow-xs">
+              S
             </span>
-          )}
-        </button>
-
-        {/* Floating Notification Popover Dropdown */}
-        {isOpen && (
-          <div className="animate-in fade-in slide-in-from-top-2 absolute top-14 left-1/2 z-50 w-[calc(100vw-48px)] max-w-sm -translate-x-1/2 rounded-2xl border border-[#CAD3F5] bg-white p-3.5 text-left shadow-[0_16px_40px_rgba(0,86,255,0.12)] sm:w-96">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-              <span className="font-sans text-xs font-bold text-[#0A1A4A]">Institutional Feed</span>
-              {unreadCount > 0 && (
-                <button
-                  type="button"
-                  onClick={markAllRead}
-                  className="font-mono text-[10px] font-bold text-[#0056FF] hover:underline"
-                >
-                  Mark all as read
-                </button>
-              )}
-            </div>
-
-            {/* Category Filter Pills */}
-            <div className="mt-2.5 flex items-center gap-1">
-              {(['all', 'academic', 'security'] as const).map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setFilter(cat)}
-                  className={cn(
-                    'cursor-pointer rounded-md px-2 py-0.5 font-mono text-[10px] font-bold uppercase transition-all',
-                    filter === cat
-                      ? 'bg-[#0056FF] text-white'
-                      : 'border border-slate-200 bg-slate-50 text-slate-500 hover:text-slate-800',
-                  )}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Notification Item Cards */}
-            <div className="no-scrollbar mt-3 max-h-64 space-y-2 overflow-y-auto pr-1">
-              {filteredItems.length === 0 ? (
-                <div className="py-6 text-center font-mono text-xs text-slate-400">
-                  No notifications matching filter.
-                </div>
-              ) : (
-                filteredItems.map((n) => (
-                  <div
-                    key={n.id}
-                    onClick={() => toggleRead(n.id)}
-                    className={cn(
-                      'cursor-pointer rounded-xl border p-2.5 transition-all select-none',
-                      n.read
-                        ? 'border-slate-100 bg-slate-50/50 opacity-70'
-                        : 'border-[#CAD3F5] bg-[#EFF5FF]/40 hover:bg-[#EFF5FF]',
-                    )}
-                  >
-                    <div className="flex items-center justify-between font-mono text-[10px]">
-                      <span className="rounded border border-slate-200/80 bg-white px-1.5 py-0.5 font-bold text-[#0056FF]">
-                        {n.branch}
-                      </span>
-                      <span className="text-slate-400">{n.time}</span>
-                    </div>
-                    <p className="mt-1 font-sans text-xs font-bold text-[#0A1A4A]">{n.title}</p>
-                    <p className="mt-0.5 font-sans text-[11px] leading-snug text-slate-500">
-                      {n.desc}
-                    </p>
-                  </div>
-                ))
-              )}
+            <div className="flex flex-col">
+              <span className="font-sans text-xs font-black tracking-tight text-[#0A1A4A] sm:text-sm">
+                SNPI Campus Alert Hub
+              </span>
+              <span className="flex items-center gap-1 font-mono text-[10px] text-slate-400">
+                <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
+                Live Notification Stream
+              </span>
             </div>
           </div>
-        )}
-      </div>
 
-      <p className="pt-3 font-sans text-xs text-slate-500">
-        Click bell to reveal the floating popover feed. Tap cards to toggle read status.
-      </p>
+          {/* Right: Notification Bell Trigger & Floating Dropped-Down Popover */}
+          <div ref={bellContainerRef} className="relative">
+            {/* The Bell Trigger Icon Button */}
+            <button
+              type="button"
+              onClick={() => setIsOpen((prev) => !prev)}
+              aria-expanded={isOpen}
+              aria-haspopup="true"
+              aria-label="Toggle notifications dropdown list"
+              title={isOpen ? 'Close Notification List' : 'Tap to drop down notifications'}
+              className={cn(
+                'group relative flex size-11 cursor-pointer items-center justify-center rounded-2xl border-2 transition-all select-none active:scale-95',
+                isOpen
+                  ? 'border-[#0056FF] bg-[#EFF5FF] text-[#0056FF] shadow-xs ring-4 ring-[#0056FF]/15'
+                  : 'border-[#CAD3F5] bg-white text-slate-700 hover:border-[#0056FF] hover:bg-[#EFF5FF]/50 hover:text-[#0056FF]',
+                hasNewAlert && 'scale-105 ring-4 ring-[#0056FF]/30',
+              )}
+            >
+              <Bell
+                className={cn(
+                  'size-5 stroke-[2.2] transition-transform',
+                  hasNewAlert ? 'animate-bounce text-[#0056FF]' : 'group-hover:rotate-12',
+                )}
+              />
+              {unreadCount > 0 && (
+                <>
+                  <span className="absolute -top-1.5 -right-1.5 flex size-5.5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs ring-2 ring-white">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                  <span className="absolute -top-1.5 -right-1.5 size-5.5 animate-ping rounded-full bg-[#0056FF] opacity-40" />
+                </>
+              )}
+            </button>
+
+            {/* Tap Dropdown List Popover (Anchored Directly Under Bell) */}
+            {isOpen && (
+              <div
+                role="dialog"
+                aria-label="Campus Notifications List"
+                className="animate-in fade-in slide-in-from-top-2 zoom-in-95 absolute top-full right-0 z-50 mt-3 w-[calc(100vw-3rem)] max-w-[420px] rounded-2xl border-2 border-[#CAD3F5] bg-white p-4 shadow-[0_20px_60px_-15px_rgba(0,86,255,0.22),_0_10px_20px_-5px_rgba(0,0,0,0.06)] duration-150 select-none sm:w-[420px]"
+              >
+                {/* 1. Popover Header Row */}
+                <div className="flex items-center justify-between border-b border-[#CAD3F5]/80 pb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="font-sans text-sm font-black text-[#0A1A4A]">
+                      Notifications
+                    </span>
+                    <span className="rounded-full border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                      {unreadCount} Unread
+                    </span>
+                  </div>
+
+                  {unreadCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={markAllRead}
+                      className="flex cursor-pointer items-center gap-1 font-mono text-xs font-bold text-[#0056FF] hover:underline"
+                    >
+                      <Check className="size-3.5 stroke-[2.5]" />
+                      <span>Mark all read</span>
+                    </button>
+                  )}
+                </div>
+
+                {/* 2. Filter Category Pills */}
+                <div className="no-scrollbar flex items-center gap-1 overflow-x-auto py-2.5">
+                  {(
+                    [
+                      { id: 'all', label: 'All', count: items.length },
+                      {
+                        id: 'academic',
+                        label: 'Academic',
+                        count: items.filter((i) => i.category === 'academic').length,
+                      },
+                      {
+                        id: 'security',
+                        label: 'Security',
+                        count: items.filter((i) => i.category === 'security').length,
+                      },
+                      {
+                        id: 'finance',
+                        label: 'Finance',
+                        count: items.filter((i) => i.category === 'finance').length,
+                      },
+                      {
+                        id: 'system',
+                        label: 'System',
+                        count: items.filter((i) => i.category === 'system').length,
+                      },
+                    ] as const
+                  ).map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setFilter(tab.id)}
+                      className={cn(
+                        'flex shrink-0 cursor-pointer items-center gap-1 rounded-lg px-2.5 py-1 font-mono text-[11px] font-bold uppercase transition-all select-none',
+                        filter === tab.id
+                          ? 'bg-[#0056FF] text-white shadow-2xs'
+                          : 'border border-slate-200 bg-slate-50 text-slate-600 hover:border-[#CAD3F5] hover:text-[#0A1A4A]',
+                      )}
+                    >
+                      <span>{tab.label}</span>
+                      <span
+                        className={cn(
+                          'rounded-md px-1 text-[10px]',
+                          filter === tab.id
+                            ? 'bg-white/20 text-white'
+                            : 'bg-slate-200/70 text-slate-600',
+                        )}
+                      >
+                        {tab.count}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* 3. Scrollable Notification Items List */}
+                <div className="no-scrollbar max-h-[320px] space-y-2 overflow-y-auto pt-1 pr-1">
+                  {filteredItems.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-[#CAD3F5] py-10 text-center">
+                      <BellDot className="size-7 text-[#0056FF]/40" />
+                      <p className="mt-2 font-sans text-xs font-bold text-[#0A1A4A]">
+                        No notifications in this category
+                      </p>
+                      <p className="mt-0.5 font-sans text-[11px] text-slate-400">
+                        Try simulating a new alert above.
+                      </p>
+                    </div>
+                  ) : (
+                    filteredItems.map((n) => {
+                      const meta = getCategoryMeta(n.category);
+                      const IconComponent = meta.icon;
+
+                      return (
+                        <div
+                          key={n.id}
+                          onClick={() => toggleRead(n.id)}
+                          className={cn(
+                            'group relative flex cursor-pointer items-start gap-2.5 rounded-xl border p-3 transition-all select-none hover:shadow-2xs',
+                            n.read
+                              ? 'border-slate-200/80 bg-white opacity-80 hover:bg-slate-50'
+                              : 'border-[#CAD3F5] bg-[#EFF5FF]/40 hover:border-[#0056FF]/60 hover:bg-[#EFF5FF]/70',
+                            !n.read && 'border-l-3 border-l-[#0056FF]',
+                          )}
+                        >
+                          {/* Domain Icon Badge */}
+                          <div
+                            className={cn(
+                              'flex size-8 shrink-0 items-center justify-center rounded-xl shadow-2xs transition-transform group-hover:scale-105',
+                              meta.iconClass,
+                            )}
+                          >
+                            <IconComponent className="size-4 stroke-[2]" />
+                          </div>
+
+                          {/* Content Body */}
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center justify-between gap-1.5">
+                              <div className="flex items-center gap-1.5">
+                                <span
+                                  className={cn(
+                                    'py-0.2 rounded-md border px-1.5 font-mono text-[9px] font-bold tracking-wider uppercase',
+                                    meta.badgeClass,
+                                  )}
+                                >
+                                  {meta.label}
+                                </span>
+                                <span className="py-0.2 rounded border border-[#CAD3F5] bg-white px-1.5 font-mono text-[9px] font-bold text-slate-600">
+                                  {n.branch}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1.5 font-mono text-[10px] text-slate-400">
+                                <span>{n.time}</span>
+                                {!n.read && (
+                                  <span
+                                    className="size-1.5 rounded-full bg-[#0056FF] ring-3 ring-[#EFF5FF]"
+                                    title="Unread Notification"
+                                  />
+                                )}
+                              </div>
+                            </div>
+
+                            <h5 className="mt-1 font-sans text-xs leading-snug font-bold text-[#0A1A4A]">
+                              {n.title}
+                            </h5>
+                            <p className="mt-0.5 line-clamp-2 font-sans text-[11px] leading-relaxed text-slate-600">
+                              {n.desc}
+                            </p>
+
+                            <div className="mt-2 flex items-center justify-between font-mono text-[10px]">
+                              <span className="text-[#0056FF]/70 group-hover:text-[#0056FF]">
+                                {n.read ? 'Tap to mark unread' : 'Tap to mark read'}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={(e) => removeItem(e, n.id)}
+                                title="Dismiss notification"
+                                className="flex size-5 cursor-pointer items-center justify-center rounded-md text-slate-400 opacity-60 transition-colors hover:bg-slate-200/80 hover:text-slate-800 hover:opacity-100"
+                              >
+                                <Trash2 className="size-3" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+
+                {/* 4. Popover Footer Row */}
+                <div className="mt-3 flex items-center justify-between border-t border-[#CAD3F5]/80 pt-2.5 font-mono text-[11px]">
+                  <span className="flex items-center gap-1.5 text-[10px] text-slate-400">
+                    <span className="size-1.5 rounded-full bg-emerald-500" />
+                    WebSocket Connected
+                  </span>
+                  {items.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={clearAllNotifications}
+                      className="cursor-pointer text-[10px] font-bold text-slate-500 transition-colors hover:text-rose-600"
+                    >
+                      Clear All
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Helpful Stage Hint */}
+        <div className="mt-8 flex flex-col items-center justify-center text-center">
+          <p className="font-mono text-xs text-slate-500">
+            Interactive Popover: Tap the Notification Bell icon button above to toggle the
+            dropped-down list.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -312,8 +661,6 @@ export function StatusPage404Demo() {
     { code: 503, label: '503 Unavailable' },
     { code: 401, label: '401 Unauthorized' },
   ];
-
-  const activeMeta = STATUS_DIRECTORY[selectedCode];
 
   return (
     <div className="w-full max-w-4xl space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
@@ -370,21 +717,6 @@ export function StatusPage404Demo() {
             </button>
           );
         })}
-      </div>
-
-      {/* Telemetry Status Strip */}
-      <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-100 bg-[#F8FAFC] px-3 py-2 font-mono text-[10px] text-slate-600">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-[1px] bg-[#0056FF]" />
-            <span className="font-bold text-slate-900">CODE {selectedCode}</span>
-          </div>
-          <span className="opacity-30">|</span>
-          <span className="font-semibold text-[#0056FF] uppercase">{activeMeta.title}</span>
-          <span className="opacity-30">|</span>
-          <span>DIAGNOSIS: {activeMeta.tagline}</span>
-        </div>
-        <div className="text-[9px] text-slate-400">NEXT.JS APP/NOT-FOUND.TSX READY</div>
       </div>
 
       {/* Live Component Preview */}

@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `0f1ac54` (Developer: **史力爱卫**)
+
+- Checkpoint & live ci deploy verification [PASSED]
+
 ### Version 0.2.17 (03.11.2026) - `f0f4829` (Developer: **史力爱卫**)
 
 - Real-time changelog sync for design standards record [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `8d1d574` (Developer: **史力爱卫**)
 
 - Expand telegram watcher triggers to all branches, PRs, releases, and CI runs
-
-### Version 0.2.14 (01.11.2026) - `1b22570` (Developer: **史力爱卫**)
-
-- Migrate official repository owner to Tan-Saphea/SNPI-SMS
 

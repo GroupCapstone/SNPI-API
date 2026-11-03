@@ -17,14 +17,17 @@ import {
   Folder,
   Plus,
   ShieldKey,
+  LayoutGrid,
 } from '@/components/icons';
+import { getNavIcon, getParentGroupIcon, getParentCategoryTheme } from './component-nav-icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { HookSidebar } from './hook-sidebar';
 import { useDocsNav } from './docs-nav-context';
 import {
   COMPONENT_CATEGORIES,
   COMPONENT_LIBRARY_REGISTRY,
-  DOCUMENTATION_NAV_ITEMS,
+  COMPONENT_GROUPS_NAV,
+  type M3NavItem,
   M3_COMPONENTS_NAV,
   PLATFORM_COMPONENTS_NAV,
   getComponentFreshness,
@@ -46,8 +49,17 @@ const OPEN_API_SECTIONS = [
 ];
 
 const DESIGN_SYSTEM_SECTIONS = [
-  { id: 'brand-blueprint', label: 'Brand Blueprint & Assets' },
-  { id: 'color-ramps-tokens', label: 'Color Ramps & Tokens' },
+  { id: 'brand-blueprint', label: '01 Brand Blueprint & Assets' },
+  { id: 'color-ramps-tokens', label: '02 Color Ramps & Semantic Tokens' },
+  { id: 'accessible-design-principles', label: '03 Accessible Design Principles' },
+  { id: 'material-a-z-glossary', label: '04 Material Design 3 Lexicon' },
+  { id: 'layout-scaffold-architecture', label: '05 Layout Scaffold Architecture' },
+  { id: 'culinary-taxonomy-section', label: '06 Culinary Component Taxonomy' },
+  { id: 'psychological-rule-inspector', label: '07 Psychological Design Rules (HCI)' },
+  { id: 'design-language-manual', label: 'Design Language (Brand & Guidelines)' },
+  { id: 'core-components-section', label: 'Core Components (29 Primitives)' },
+  { id: 'maintenance-manual-section', label: 'Maintenance Strategy (5 Pillars)' },
+  { id: 'open-source-checklist-macro-phases', label: 'Open-Source Checklist (230 Checks)' },
 ];
 
 export function DocsStickyHeader({
@@ -98,6 +110,15 @@ export function DocsStickyHeader({
     }));
   };
 
+  const [collapsedGroups, setCollapsedGroups] = React.useState<Record<string, boolean>>({});
+
+  const toggleCategoryGroup = (groupId: string) => {
+    setCollapsedGroups((prev) => ({
+      ...prev,
+      [groupId]: !prev[groupId],
+    }));
+  };
+
   const toggleParentGroup = (parentId: string) => {
     setExpandedParents((prev) => ({
       ...prev,
@@ -119,30 +140,40 @@ export function DocsStickyHeader({
     }
   };
 
-  // Filtered M3 components for mobile sidebar navigation
+  // Filtered Component Groups for mobile sidebar navigation
+  const filteredComponentGroups = React.useMemo(() => {
+    const q = mobileSearch.toLowerCase().trim();
+    if (!q) return COMPONENT_GROUPS_NAV;
+    return COMPONENT_GROUPS_NAV.map((group) => {
+      const matchesGroup = group.group.toLowerCase().includes(q);
+      const matchingItems = group.items
+        .map((item) => {
+          if (matchesGroup) return item;
+          if (item.isParent && item.children) {
+            const matchesParent = item.name.toLowerCase().includes(q);
+            const matchingChildren = item.children.filter((c) => c.name.toLowerCase().includes(q));
+            if (matchesParent) return item;
+            if (matchingChildren.length > 0) {
+              return { ...item, children: matchingChildren };
+            }
+            return null;
+          }
+          if (item.name.toLowerCase().includes(q)) return item;
+          return null;
+        })
+        .filter((item): item is M3NavItem => item !== null);
+
+      return { ...group, items: matchingItems };
+    }).filter((group) => group.items.length > 0);
+  }, [mobileSearch]);
+
+  // Fallbacks for backwards compatibility
   const filteredM3Components = React.useMemo(() => {
     const q = mobileSearch.toLowerCase().trim();
     if (!q) return M3_COMPONENTS_NAV;
-    return M3_COMPONENTS_NAV.filter((item) => {
-      if (item.name.toLowerCase().includes(q)) return true;
-      if (item.children && item.children.some((c) => c.name.toLowerCase().includes(q))) {
-        return true;
-      }
-      return false;
-    }).map((item) => {
-      if (item.children) {
-        return {
-          ...item,
-          children: item.children.filter((c) =>
-            item.name.toLowerCase().includes(q) ? true : c.name.toLowerCase().includes(q),
-          ),
-        };
-      }
-      return item;
-    });
+    return M3_COMPONENTS_NAV.filter((item) => item.name.toLowerCase().includes(q));
   }, [mobileSearch]);
 
-  // Filtered Platform components for mobile sidebar navigation
   const filteredPlatformComponents = React.useMemo(() => {
     const q = mobileSearch.toLowerCase().trim();
     if (!q) return PLATFORM_COMPONENTS_NAV;
@@ -153,10 +184,15 @@ export function DocsStickyHeader({
   React.useEffect(() => {
     const q = mobileSearch.toLowerCase().trim();
     if (!q) return;
-    for (const item of M3_COMPONENTS_NAV) {
-      if (item.isParent && item.children) {
-        if (item.children.some((c) => c.name.toLowerCase().includes(q))) {
-          setExpandedParents((prev) => ({ ...prev, [item.id]: true }));
+    for (const group of COMPONENT_GROUPS_NAV) {
+      for (const item of group.items) {
+        if (item.isParent && item.children) {
+          if (
+            item.name.toLowerCase().includes(q) ||
+            item.children.some((c) => c.name.toLowerCase().includes(q))
+          ) {
+            setExpandedParents((prev) => ({ ...prev, [item.id]: true }));
+          }
         }
       }
     }
@@ -308,250 +344,174 @@ export function DocsStickyHeader({
                 </div>
               </div>
 
-              {/* Fast Search Input */}
-              <div className="relative mb-3">
-                <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-slate-400" />
+              {/* Modern Minimalist Search Bar (Clean Blueprint Standard) */}
+              <div className="group relative mb-3 flex items-center">
+                <Search className="pointer-events-none absolute left-3 size-4 text-slate-400 transition-colors group-focus-within:text-[#0056FF] group-hover:text-slate-600" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={mobileSearch}
                   onChange={(e) => setMobileSearch(e.target.value)}
-                  placeholder="Search documents"
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2 pr-3 pl-8.5 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-hidden"
+                  placeholder="Search components..."
+                  className="h-9.5 w-full rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] py-2 pr-10 pl-9 font-sans text-xs font-medium text-[#0A1A4A] shadow-2xs transition-all placeholder:font-normal placeholder:text-slate-400 hover:border-slate-300 hover:bg-white focus:border-[#0056FF] focus:bg-white focus:shadow-xs focus:ring-2 focus:ring-[#0056FF]/15 focus:outline-none focus-visible:outline-none"
+                  style={{ outline: 'none' }}
                 />
+                {mobileSearch && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileSearch('');
+                      searchInputRef.current?.focus();
+                    }}
+                    title="Clear search"
+                    className="absolute right-2.5 flex size-5 cursor-pointer items-center justify-center rounded-md text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 active:scale-95"
+                  >
+                    <X className="size-3.5 stroke-[2.5]" />
+                  </button>
+                )}
               </div>
 
               {/* Sidebar Specific Links Scrollable Viewport (Knowledge Base Style) */}
               <div className="no-scrollbar max-h-[min(65vh,480px)] overflow-y-auto pr-1">
                 {currentTab === 'library' ? (
-                  /* UI Library Specific Demos Navigation (Material 3 Hierarchical Component Tree & Documentation) */
-                  <div className="space-y-3 font-sans">
-                    {/* DOCUMENTATION SECTION (Image 1: Dotted line guide with Brand Blueprint, Design Standards, Touch Targets) */}
-                    <div className="space-y-1.5 pt-1">
-                      <div className="px-2 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
-                        DOCUMENTATION
-                      </div>
-                      <div className="ml-2.5 space-y-1 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
-                        {DOCUMENTATION_NAV_ITEMS.map((doc) => (
-                          <Link
-                            key={doc.id}
-                            href={doc.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="group flex items-center gap-2 rounded-md px-1.5 py-1 text-xs font-semibold text-slate-700 transition-colors hover:text-[#0056FF]"
-                          >
-                            <FileText className="size-3.5 shrink-0 text-slate-400 transition-colors group-hover:text-[#0056FF]" />
-                            <span className="truncate">{doc.name}</span>
-                          </Link>
-                        ))}
-                      </div>
+                  /* UI Library Specific Demos Navigation (Clean React Spectrum Navigation - Icons on Parent Only) */
+                  <div className="space-y-3 font-sans text-xs">
+                    {/* Top Hierarchy Identity */}
+                    <div className="border-b border-slate-100 pb-1.5">
+                      <span className="block font-sans text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
+                        Web
+                      </span>
+                      <span className="block font-sans text-xs font-black tracking-tight text-slate-950 select-none">
+                        SNPI Design System
+                      </span>
                     </div>
 
-                    {/* Subtle Divider */}
-                    <div className="my-2 border-t border-slate-200/80" />
-
-                    {/* MATERIAL 3 HIERARCHICAL COMPONENTS LIST (Images 2, 3, 4: Zero folder icons, clean rounded pills, collapsed parents by default) */}
-                    <div className="space-y-0.5 pt-1 font-sans text-xs">
-                      {filteredM3Components.length === 0 &&
-                      filteredPlatformComponents.length === 0 ? (
+                    {/* COMPONENT GROUPS */}
+                    <div className="space-y-2 font-sans text-xs">
+                      {filteredComponentGroups.length === 0 ? (
                         <div className="py-4 text-center font-sans text-xs text-slate-400">
                           No matching components found
                         </div>
                       ) : (
-                        <>
-                          {filteredM3Components.map((item) => {
-                            if (item.isParent && item.children) {
-                              const isExpanded = Boolean(expandedParents[item.id]);
+                        filteredComponentGroups.map((group) => {
+                          const ParentGroupIcon = getParentGroupIcon(group.groupId);
+                          const isGroupCollapsed = Boolean(collapsedGroups[group.groupId]);
 
-                              return (
-                                <div key={item.id} className="space-y-0.5">
-                                  {/* Parent Group Header (Default collapsed, tap to toggle) */}
-                                  <button
-                                    type="button"
-                                    onClick={() => toggleParentGroup(item.id)}
-                                    className="group flex w-full cursor-pointer items-center justify-between rounded-full px-3 py-1.5 text-left font-sans text-xs font-medium text-slate-800 transition-colors select-none hover:bg-slate-100 hover:text-slate-950"
-                                  >
-                                    <span className="truncate">{item.name}</span>
-                                    {isExpanded ? (
-                                      <ChevronDown className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
-                                    ) : (
-                                      <ChevronRight className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
-                                    )}
-                                  </button>
-
-                                  {/* Child Items Dropdown */}
-                                  {isExpanded && (
-                                    <div className="ml-3.5 space-y-0.5 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
-                                      {item.children.map((child) => {
-                                        const freshness = getComponentFreshness(child);
-                                        const target = child.targetId || `comp-${child.id}`;
-                                        const isComing = child.isFuture;
-
-                                        return (
-                                          <div
-                                            key={child.id}
-                                            onClick={() => {
-                                              if (!isComing && child.targetId) {
-                                                handleMobileNavigate('library', child.targetId);
-                                              }
-                                            }}
-                                            className={cn(
-                                              'group flex w-full items-center justify-between rounded-full px-2.5 py-1 text-left transition-colors select-none',
-                                              isComing
-                                                ? 'cursor-default opacity-75'
-                                                : 'cursor-pointer hover:bg-slate-100',
-                                            )}
-                                          >
-                                            <span
-                                              className={cn(
-                                                'truncate pr-2 font-sans text-xs transition-colors',
-                                                isComing
-                                                  ? 'text-slate-500'
-                                                  : 'font-medium text-slate-700 group-hover:text-slate-950',
-                                              )}
-                                            >
-                                              {child.name}
-                                            </span>
-                                            {freshness && (
-                                              <span
-                                                className={cn(
-                                                  'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
-                                                  freshness === 'new' &&
-                                                    'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
-                                                  freshness === 'updated' &&
-                                                    'border border-slate-300 bg-slate-100/80 text-slate-700',
-                                                  freshness === 'coming' &&
-                                                    'border border-slate-200 bg-slate-50/60 text-slate-400',
-                                                )}
-                                              >
-                                                {freshness === 'new'
-                                                  ? 'New'
-                                                  : freshness === 'updated'
-                                                    ? 'Updated'
-                                                    : 'Coming'}
-                                              </span>
-                                            )}
-                                          </div>
-                                        );
-                                      })}
-                                    </div>
+                          return (
+                            <div key={group.groupId} className="space-y-0.5">
+                              {/* Parent Group Header (Collapsible with Chevron) */}
+                              <button
+                                type="button"
+                                onClick={() => toggleCategoryGroup(group.groupId)}
+                                className="group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-bold text-slate-900 transition-colors select-none hover:bg-slate-100"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <ParentGroupIcon className="size-3.5 shrink-0 text-[#0056FF]" />
+                                  <span className="font-bold text-slate-900">{group.group}</span>
+                                </div>
+                                <div className="flex items-center">
+                                  {!isGroupCollapsed ? (
+                                    <ChevronDown className="size-3 text-slate-400" />
+                                  ) : (
+                                    <ChevronRight className="size-3 text-slate-400" />
                                   )}
                                 </div>
-                              );
-                            }
+                              </button>
 
-                            // Standalone Component Item
-                            const freshness = getComponentFreshness(item);
-                            const isComing = item.isFuture;
+                              {/* Group Items (Pure Clean Typography - Icons on Parent Only, Zero Coming Tags) */}
+                              {!isGroupCollapsed && (
+                                <div className="space-y-0.5 pt-0.5 pl-1">
+                                  {group.items.map((item) => {
+                                    if (item.isParent && item.children) {
+                                      const isExpanded = Boolean(expandedParents[item.id]);
 
-                            return (
-                              <div
-                                key={item.id}
-                                onClick={() => {
-                                  if (!isComing && item.targetId) {
-                                    handleMobileNavigate('library', item.targetId);
-                                  }
-                                }}
-                                className={cn(
-                                  'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
-                                  isComing
-                                    ? 'cursor-default opacity-75'
-                                    : 'cursor-pointer hover:bg-slate-100',
-                                )}
-                              >
-                                <span
-                                  className={cn(
-                                    'truncate pr-2 font-sans text-xs transition-colors',
-                                    isComing
-                                      ? 'text-slate-500'
-                                      : 'font-medium text-slate-800 hover:text-slate-950',
-                                  )}
-                                >
-                                  {item.name}
-                                </span>
-                                {freshness && (
-                                  <span
-                                    className={cn(
-                                      'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
-                                      freshness === 'new' &&
-                                        'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
-                                      freshness === 'updated' &&
-                                        'border border-slate-300 bg-slate-100/80 text-slate-700',
-                                      freshness === 'coming' &&
-                                        'border border-slate-200 bg-slate-50/60 text-slate-400',
-                                    )}
-                                  >
-                                    {freshness === 'new'
-                                      ? 'New'
-                                      : freshness === 'updated'
-                                        ? 'Updated'
-                                        : 'Coming'}
-                                  </span>
-                                )}
-                              </div>
-                            );
-                          })}
+                                      return (
+                                        <div key={item.id} className="space-y-0.5">
+                                          <button
+                                            type="button"
+                                            onClick={() => toggleParentGroup(item.id)}
+                                            className="group flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3 text-left font-sans text-xs font-medium text-slate-700 transition-colors select-none hover:bg-slate-50 hover:text-slate-950"
+                                          >
+                                            <span className="text-left leading-snug break-words whitespace-normal">
+                                              {item.name}
+                                            </span>
+                                            {isExpanded ? (
+                                              <ChevronDown className="ml-1 size-3 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                                            ) : (
+                                              <ChevronRight className="ml-1 size-3 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                                            )}
+                                          </button>
 
-                          {/* PLATFORM COMPONENTS SECTION (Image 6: Clean bullet category header with custom built components) */}
-                          {filteredPlatformComponents.length > 0 && (
-                            <div className="space-y-0.5 pt-3">
-                              <div className="flex items-center gap-1.5 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
-                                <span className="text-xs leading-none text-[#0056FF]">•</span>
-                                <span>PLATFORM COMPONENTS</span>
-                              </div>
-                              {filteredPlatformComponents.map((item) => {
-                                const freshness = getComponentFreshness(item);
-                                const isComing = item.isFuture;
+                                          {isExpanded && (
+                                            <div className="ml-2 space-y-0.5 py-0.5 pl-2">
+                                              {item.children.map((child: M3NavItem) => {
+                                                const freshness = getComponentFreshness(child);
 
-                                return (
-                                  <div
-                                    key={item.id}
-                                    onClick={() => {
-                                      if (!isComing && item.targetId) {
-                                        handleMobileNavigate('library', item.targetId);
-                                      }
-                                    }}
-                                    className={cn(
-                                      'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
-                                      isComing
-                                        ? 'cursor-default opacity-75'
-                                        : 'cursor-pointer hover:bg-slate-100',
-                                    )}
-                                  >
-                                    <span
-                                      className={cn(
-                                        'truncate pr-2 font-sans text-xs transition-colors',
-                                        isComing
-                                          ? 'text-slate-500'
-                                          : 'font-medium text-slate-800 hover:text-slate-950',
-                                      )}
-                                    >
-                                      {item.name}
-                                    </span>
-                                    {freshness && (
-                                      <span
-                                        className={cn(
-                                          'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
-                                          freshness === 'new' &&
-                                            'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
-                                          freshness === 'updated' &&
-                                            'border border-slate-300 bg-slate-100/80 text-slate-700',
-                                          freshness === 'coming' &&
-                                            'border border-slate-200 bg-slate-50/60 text-slate-400',
-                                        )}
+                                                return (
+                                                  <div
+                                                    key={child.id}
+                                                    onClick={() => {
+                                                      const target =
+                                                        child.targetId || `comp-${child.id}`;
+                                                      handleMobileNavigate('library', target);
+                                                    }}
+                                                    className="group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3.5 text-left font-normal text-slate-600 transition-colors select-none hover:bg-slate-50 hover:text-slate-950"
+                                                  >
+                                                    <span className="text-left font-sans text-xs leading-snug break-words whitespace-normal">
+                                                      {child.name}
+                                                    </span>
+                                                    {freshness === 'new' && (
+                                                      <span className="py-0.2 ml-1.5 shrink-0 rounded-full border border-emerald-300/80 bg-emerald-50 px-1.5 font-sans text-[9px] leading-none font-bold text-emerald-700 uppercase">
+                                                        New
+                                                      </span>
+                                                    )}
+                                                    {freshness === 'coming' && (
+                                                      <span className="ml-1.5 shrink-0 rounded-[3px] border border-slate-200/90 bg-slate-100/70 px-1 py-0.5 font-mono text-[8px] leading-none font-semibold tracking-wider text-slate-400 uppercase">
+                                                        Coming
+                                                      </span>
+                                                    )}
+                                                  </div>
+                                                );
+                                              })}
+                                            </div>
+                                          )}
+                                        </div>
+                                      );
+                                    }
+
+                                    // Standalone item
+                                    const freshness = getComponentFreshness(item);
+
+                                    return (
+                                      <div
+                                        key={item.id}
+                                        onClick={() => {
+                                          const target = item.targetId || `comp-${item.id}`;
+                                          handleMobileNavigate('library', target);
+                                        }}
+                                        className="group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3.5 text-left font-normal text-slate-600 transition-colors select-none hover:bg-slate-50 hover:text-slate-950"
                                       >
-                                        {freshness === 'new'
-                                          ? 'New'
-                                          : freshness === 'updated'
-                                            ? 'Updated'
-                                            : 'Coming'}
-                                      </span>
-                                    )}
-                                  </div>
-                                );
-                              })}
+                                        <span className="text-left font-sans text-xs leading-snug break-words whitespace-normal">
+                                          {item.name}
+                                        </span>
+                                        {freshness === 'new' && (
+                                          <span className="py-0.2 ml-1.5 shrink-0 rounded-full border border-emerald-300/80 bg-emerald-50 px-1.5 font-sans text-[9px] leading-none font-bold text-emerald-700 uppercase">
+                                            New
+                                          </span>
+                                        )}
+                                        {freshness === 'coming' && (
+                                          <span className="ml-1.5 shrink-0 rounded-[3px] border border-slate-200/90 bg-slate-100/70 px-1 py-0.5 font-mono text-[8px] leading-none font-semibold tracking-wider text-slate-400 uppercase">
+                                            Coming
+                                          </span>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </>
+                          );
+                        })
                       )}
                     </div>
                   </div>
@@ -568,7 +528,7 @@ export function DocsStickyHeader({
                         onClick={() => handleMobileNavigate('release', sec.id)}
                         className="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left font-sans text-xs font-medium text-slate-700 hover:bg-[#EFF5FF] hover:text-[#0056FF]"
                       >
-                        <span className="truncate">{sec.label}</span>
+                        <span className="flex-1 leading-snug break-words">{sec.label}</span>
                         <ChevronRight className="size-3 text-slate-400" />
                       </button>
                     ))}
@@ -586,7 +546,7 @@ export function DocsStickyHeader({
                         onClick={() => handleMobileNavigate('openapi', sec.id)}
                         className="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left font-sans text-xs font-medium text-slate-700 hover:bg-[#EFF5FF] hover:text-[#0056FF]"
                       >
-                        <span className="truncate">{sec.label}</span>
+                        <span className="flex-1 leading-snug break-words">{sec.label}</span>
                         <ChevronRight className="size-3 text-slate-400" />
                       </button>
                     ))}

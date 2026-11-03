@@ -137,8 +137,347 @@ export interface M3NavItem {
   children?: M3NavItem[];
 }
 
+export interface ComponentGroupNav {
+  group: string;
+  groupId: string;
+  items: M3NavItem[];
+}
+
+export const COMPONENT_GROUPS_NAV: ComponentGroupNav[] = [
+  {
+    group: 'Navigation',
+    groupId: 'group-navigation',
+    items: [
+      {
+        id: 'parent-navigation',
+        name: 'Navigation',
+        isParent: true,
+        children: [
+          {
+            id: 'cyber-armor-nav',
+            name: 'Cyber Armor Nav',
+            targetId: 'comp-cyber-armor-nav',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          {
+            id: 'gooey-nav',
+            name: 'Gooey Nav',
+            targetId: 'comp-gooey-nav',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          {
+            id: 'hook-sidebar',
+            name: 'Hook Sidebar',
+            targetId: 'comp-hook-sidebar',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          { id: 'navigation-bar', name: 'Navigation bar', isFuture: true },
+          { id: 'navigation-drawer', name: 'Navigation drawer', isFuture: true },
+          { id: 'navigation-rail', name: 'Navigation rail', isFuture: true },
+          { id: 'side-navigation', name: 'Side navigation', isFuture: true },
+        ],
+      },
+      {
+        id: 'parent-menus',
+        name: 'Menus & Dropdowns',
+        isParent: true,
+        children: [
+          {
+            id: 'dropdown',
+            name: 'Dropdown',
+            targetId: 'comp-dropdown',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          { id: 'menus', name: 'Menus', isFuture: true },
+        ],
+      },
+      { id: 'accordion', name: 'Accordion', isFuture: true },
+      { id: 'app-bars', name: 'App bars', isFuture: true },
+      { id: 'breadcrumbs', name: 'Breadcrumbs', isFuture: true },
+      { id: 'link', name: 'Link', isFuture: true },
+      { id: 'tabs', name: 'Tabs', isFuture: true },
+      { id: 'toolbars', name: 'Toolbars', isFuture: true },
+      { id: 'tree-view', name: 'Tree view', isFuture: true },
+      { id: 'search', name: 'Search', isFuture: true },
+    ],
+  },
+  {
+    group: 'Inputs',
+    groupId: 'group-inputs',
+    items: [
+      {
+        id: 'parent-buttons',
+        name: 'Buttons',
+        isParent: true,
+        children: [
+          { id: 'action-button', name: 'Action button', isFuture: true },
+          { id: 'action-group', name: 'Action group', isFuture: true },
+          { id: 'action-bar', name: 'Action bar', isFuture: true },
+          { id: 'all-buttons', name: 'All buttons', isFuture: true },
+          { id: 'button-groups', name: 'Button groups', isFuture: true },
+          { id: 'buttons-item', name: 'Buttons', isFuture: true },
+          { id: 'close-button', name: 'Close button', isFuture: true },
+          { id: 'extended-fabs', name: 'Extended FABs', isFuture: true },
+          { id: 'fab-menu', name: 'FAB menu', isFuture: true },
+          { id: 'fabs', name: 'FABs', isFuture: true },
+          { id: 'icon-buttons', name: 'Icon buttons', isFuture: true },
+          { id: 'segmented-buttons', name: 'Segmented buttons', isFuture: true },
+          { id: 'split-button', name: 'Split button', isFuture: true },
+        ],
+      },
+      {
+        id: 'parent-date-time-pickers',
+        name: 'Date & time pickers',
+        isParent: true,
+        children: [
+          {
+            id: 'duration-picker',
+            name: 'Duration Picker',
+            targetId: 'comp-duration-picker',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          { id: 'date-pickers', name: 'Date pickers', isFuture: true },
+          { id: 'time-pickers', name: 'Time pickers', isFuture: true },
+        ],
+      },
+      {
+        id: 'parent-text-fields',
+        name: 'Text fields',
+        isParent: true,
+        children: [
+          {
+            id: 'password-input',
+            name: 'Password Input',
+            targetId: 'comp-password-input',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          { id: 'text-fields', name: 'Text fields', isFuture: true },
+          { id: 'text-area', name: 'Text area', isFuture: true },
+          { id: 'number-field', name: 'Number field', isFuture: true },
+          { id: 'search-field', name: 'Search field', isFuture: true },
+        ],
+      },
+      {
+        id: 'chip',
+        name: 'Chips',
+        targetId: 'comp-chip',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      {
+        id: 'switch',
+        name: 'Switch',
+        targetId: 'comp-switch',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      { id: 'checkbox', name: 'Checkbox', isFuture: true },
+      { id: 'checkbox-group', name: 'Checkbox group', isFuture: true },
+      { id: 'combo-box', name: 'Combo box', isFuture: true },
+      { id: 'field-label', name: 'Field label', isFuture: true },
+      { id: 'picker', name: 'Picker', isFuture: true },
+      { id: 'radio-button', name: 'Radio button', isFuture: true },
+      { id: 'radio-group', name: 'Radio group', isFuture: true },
+      { id: 'rating', name: 'Rating', isFuture: true },
+      { id: 'segmented-control', name: 'Segmented control', isFuture: true },
+      { id: 'select-box', name: 'Select box', isFuture: true },
+      { id: 'sliders', name: 'Sliders', isFuture: true },
+      { id: 'color-area', name: 'Color area', isFuture: true },
+      { id: 'color-handle-loupe', name: 'Color handle and loupe', isFuture: true },
+      { id: 'color-slider', name: 'Color slider', isFuture: true },
+      { id: 'color-wheel', name: 'Color wheel', isFuture: true },
+      { id: 'swatch', name: 'Swatch', isFuture: true },
+      { id: 'swatch-group', name: 'Swatch group', isFuture: true },
+      { id: 'tag-field', name: 'Tag field', isFuture: true },
+    ],
+  },
+  {
+    group: 'Feedback',
+    groupId: 'group-feedback',
+    items: [
+      {
+        id: 'parent-loading-progress',
+        name: 'Loading & progress',
+        isParent: true,
+        children: [
+          {
+            id: 'skeleton-loading-screen',
+            name: 'Skeleton Loading',
+            targetId: 'comp-skeleton-loading-screen',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          { id: 'loading-indicator', name: 'Loading indicator', isFuture: true },
+          { id: 'progress-indicators', name: 'Progress indicators', isFuture: true },
+          { id: 'progress-bar', name: 'Progress bar', isFuture: true },
+          { id: 'progress-circle', name: 'Progress circle', isFuture: true },
+          { id: 'meter', name: 'Meter', isFuture: true },
+        ],
+      },
+      {
+        id: 'parent-sheets',
+        name: 'Sheets',
+        isParent: true,
+        children: [
+          { id: 'bottom-sheets', name: 'Bottom sheets', isFuture: true },
+          { id: 'side-sheets', name: 'Side sheets', isFuture: true },
+        ],
+      },
+      {
+        id: 'parent-snackbars-toasts',
+        name: 'Snackbars & Toasts',
+        isParent: true,
+        children: [
+          {
+            id: 'toast-stack',
+            name: 'Toast Stack',
+            targetId: 'comp-toast-stack',
+            builtAt: '2026-11-01T00:00:00.000Z',
+          },
+          { id: 'snackbar', name: 'Snackbar', isFuture: true },
+          { id: 'toast', name: 'Toast', isFuture: true },
+        ],
+      },
+      {
+        id: 'notification-bell',
+        name: 'Notification Bell',
+        targetId: 'comp-notification-bell',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      { id: 'dialogs', name: 'Dialogs', isFuture: true },
+      { id: 'alert-dialog', name: 'Alert dialog', isFuture: true },
+      { id: 'alert-banner', name: 'Alert banner', isFuture: true },
+      { id: 'standard-dialog', name: 'Standard dialog', isFuture: true },
+      { id: 'takeover-dialog', name: 'Takeover dialog', isFuture: true },
+      { id: 'in-line-alert', name: 'In-line alert', isFuture: true },
+      { id: 'contextual-help', name: 'Contextual help', isFuture: true },
+      { id: 'help-text', name: 'Help text', isFuture: true },
+      { id: 'illustrated-message', name: 'Illustrated message', isFuture: true },
+      { id: 'status-light', name: 'Status light', isFuture: true },
+      { id: 'coach-indicator', name: 'Coach indicator', isFuture: true },
+      { id: 'coach-mark', name: 'Coach mark', isFuture: true },
+      { id: 'popover', name: 'Popover', isFuture: true },
+      { id: 'tooltips', name: 'Tooltips', isFuture: true },
+      {
+        id: 'status-404',
+        name: 'Status 404 Console',
+        targetId: 'comp-status-404',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+    ],
+  },
+  {
+    group: 'Display',
+    groupId: 'group-display',
+    items: [
+      {
+        id: 'data-table',
+        name: 'Interactive Data Table',
+        targetId: 'comp-data-table',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      {
+        id: 'animated-counter',
+        name: 'Animated Counter',
+        targetId: 'comp-animated-counter',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      {
+        id: 'step-player',
+        name: 'Step Player',
+        targetId: 'comp-step-player',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      {
+        id: 'voice-note',
+        name: 'Voice Note Player',
+        targetId: 'comp-voice-note',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      { id: 'avatar', name: 'Avatar', isFuture: true },
+      { id: 'avatar-group', name: 'Avatar group', isFuture: true },
+      { id: 'badges', name: 'Badges', isFuture: true },
+      { id: 'calendar', name: 'Calendar', isFuture: true },
+      { id: 'cards', name: 'Cards', isFuture: true },
+      { id: 'carousel', name: 'Carousel', isFuture: true },
+      { id: 'divider', name: 'Divider', isFuture: true },
+      { id: 'drop-zone', name: 'Drop zone', isFuture: true },
+      { id: 'lists', name: 'Lists', isFuture: true },
+      { id: 'list-view', name: 'List view', isFuture: true },
+      { id: 'standard-panel', name: 'Standard panel', isFuture: true },
+      { id: 'steplist', name: 'Steplist', isFuture: true },
+      { id: 'table', name: 'Table', isFuture: true },
+      { id: 'tag', name: 'Tag', isFuture: true },
+      { id: 'tag-group', name: 'Tag group', isFuture: true },
+      { id: 'thumbnail', name: 'Thumbnail', isFuture: true },
+    ],
+  },
+  {
+    group: 'Forms',
+    groupId: 'group-forms',
+    items: [
+      {
+        id: 'multi-step-wizard',
+        name: 'Multi-Step Wizard',
+        targetId: 'comp-multi-step-wizard',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      {
+        id: 'floating-label-form',
+        name: 'Floating Label Form',
+        targetId: 'comp-floating-label-form',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      {
+        id: 'file-dropzone',
+        name: 'File Dropzone',
+        targetId: 'comp-file-dropzone',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+      {
+        id: 'rich-text-editor',
+        name: 'Rich Text Editor',
+        targetId: 'comp-rich-text-editor',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+    ],
+  },
+  {
+    group: 'AI Kit',
+    groupId: 'group-ai-kit',
+    items: [
+      {
+        id: 'grid-reveal',
+        name: 'Grid Reveal',
+        targetId: 'comp-grid-reveal',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+    ],
+  },
+  {
+    group: 'Text Effects',
+    groupId: 'group-text-effects',
+    items: [
+      {
+        id: 'cipher-text-decoder',
+        name: 'Cipher Text Decoder',
+        targetId: 'comp-cipher-text-decoder',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+    ],
+  },
+  {
+    group: 'Sections',
+    groupId: 'group-sections',
+    items: [
+      {
+        id: 'marquee-section',
+        name: 'Marquee Section',
+        targetId: 'comp-marquee-section',
+        builtAt: '2026-11-01T00:00:00.000Z',
+      },
+    ],
+  },
+];
+
 export const M3_COMPONENTS_NAV: M3NavItem[] = [
-  { id: 'components-overview', name: 'Components overview', targetId: 'ui-library-head' },
   { id: 'app-bars', name: 'App bars', isFuture: true },
   { id: 'badges', name: 'Badges', isFuture: true },
   {
@@ -707,17 +1046,18 @@ export function Example() {
     name: 'Dropdown (Campus & Branch Selector)',
     category: 'Inputs',
     builtAt: '2026-11-02',
-    paradigm: 'Collapsible Keyline Selector Standard',
+    paradigm: 'Standard Color Blueprint & Searchable Institutional Selector',
     description:
-      'High-contrast collapsible branch selector featuring live active telemetry, campus metrics, and keyboard accessibility.',
+      'High-contrast ergonomic branch selector featuring live active telemetry, campus badges, quick search filtering, and standard color blueprint styling.',
     explanation:
-      'The Dropdown component packages dozens of branch locations into a compact 44px trigger button. When opened, it reveals an indexed list of institutional options with live student enrollment counts, physical building details, and active server cluster latency metrics.',
+      'The Dropdown component packages dozens of branch locations into an ergonomic 54px trigger button. When opened, it reveals a searchable list of institutional options with live student enrollment counts, physical building details, campus code badges (PP-01, SR-01), and active server cluster latency metrics.',
     supportedStates: [
       'Default (Closed)',
-      'Open / Expanded',
+      'Open / Expanded with Search Filter',
       'Option Selected',
+      'Hover & Active Selection Highlight',
       'Disabled / Read-Only',
-      'Focused (Keyboard Navigation)',
+      'Focused (Keyboard Navigation ↑ ↓)',
       'Telemetry Card Active',
     ],
     realWorldExamples: [
@@ -766,9 +1106,11 @@ export function Example() {
       },
     ],
     implementationNotes: [
-      'Trigger button: minimum 44px height; menu items maintain 44px touch targets per Fitts’s Law.',
+      'Standard Color Blueprint: Royal Blue (#0056FF), Soft Lavender (#E3E7FC), Border Keyline (#CAD3F5), and Ice Tint (#EFF5FF).',
+      'Trigger button: minimum 54px ergonomic height with left domain icon and right rotating chevron.',
+      'Searchable: Built-in quick search filter with autofocus and clear button.',
       'Full keyboard navigation: ArrowUp/ArrowDown to navigate, Enter to select, Escape to close.',
-      'Surface: Pure White (#FFFFFF) canvas with Soft Lavender (#CAD3F5) keyline border and Ice Tint (#EFF5FF) hover fills.',
+      'Selected option: Distinct Ice Tint (#EFF5FF) background, Royal Blue (#0056FF) border, and checkmark pill.',
     ],
     codeSnippet: `import { LibraryDropdown } from '@/features/document/components/ui-library';
 

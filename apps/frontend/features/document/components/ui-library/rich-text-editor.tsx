@@ -750,16 +750,7 @@ export function RichTextEditor({
       )}
 
       {/* Editor Telemetry & Status Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[#CAD3F5] bg-[#EFF5FF]/80 px-4 py-2.5 font-mono text-[11px] text-slate-600">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="flex items-center gap-1.5 font-bold text-[#0056FF]">
-            <ShieldCheck className="size-3.5 text-[#0056FF]" />
-            <span>Sanitized Allowlist Active</span>
-          </span>
-          <span className="text-slate-300">·</span>
-          <span className="text-slate-500">Scheme Guard (http, https, mailto)</span>
-        </div>
-
+      <div className="flex flex-wrap items-center justify-end gap-3 border-t border-[#CAD3F5] bg-[#EFF5FF]/80 px-4 py-2.5 font-mono text-[11px] text-slate-600">
         <div className="flex flex-wrap items-center gap-3.5">
           <span className="font-semibold text-slate-600">
             Words: <strong className="font-bold text-slate-900">{metrics.words}</strong>

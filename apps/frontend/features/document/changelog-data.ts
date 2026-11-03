@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "0f1ac54",
+    "developer": "史力爱卫",
+    "description": "Checkpoint & live ci deploy verification [PASSED]"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "f0f4829",
     "developer": "史力爱卫",
     "description": "Real-time changelog sync for design standards record [PASSED]"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "8d1d574",
     "developer": "史力爱卫",
     "description": "Expand telegram watcher triggers to all branches, PRs, releases, and CI runs"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "1b22570",
-    "developer": "史力爱卫",
-    "description": "Migrate official repository owner to Tan-Saphea/SNPI-SMS"
   }
 ];
