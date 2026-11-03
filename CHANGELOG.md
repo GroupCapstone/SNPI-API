@@ -2,6 +2,15 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.18 (03.11.2026) - (Developer: **史力爱卫**)
+
+- Author authoritative Enterprise Custom Agents Expanded Context Standard in `.agents/skills/enterprise-custom-agents-context/SKILL.md` leveraging Model Context Protocol (MCP) and GitHub MCP server to bypass the 30,000-character single-file limitation [PASSED]
+- Preserve complete original architecture article verbatim in safe location: `.agents/skills/enterprise-custom-agents-context/references/enterprise-custom-agents-article.md` [PASSED]
+- Establish centralized knowledge base taxonomy in `.github/knowledge/` across `security/`, `architecture/`, `ci-cd/`, and `design-standards/` [PASSED]
+- Author specialized Enterprise Custom Agents in `.github/agents/` (`ci-cd-expert.md`, `security-reviewer.md`, `architecture-advisor.md`, `design-system-lead.md`) with MCP `get_file_contents` startup procedures [PASSED]
+- Create automated multi-repository environment secret provisioning script `configure-copilot-mcp-secrets.sh` for `COPILOT_MCP_GITHUB_PERSONAL_ACCESS_TOKEN` [PASSED]
+- Update `.github/CODEOWNERS`, `.github/copilot-instructions.md`, and `AGENTS.md` with enterprise custom agent governance [PASSED]
+
 ### Version 0.2.17 (03.11.2026) - `1b7fa71` (Developer: **史力爱卫**)
 
 - Add custom enterprise agent definitions with architecture assessment integration
