@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "0e6083f",
+    "developer": "史力爱卫",
+    "description": "Record enterprise application security design principles & maturity framework"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "6c6675d",
+    "developer": "史力爱卫",
+    "description": "Sync changelog for safe folder archiving"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "6a9f0fe",
     "developer": "史力爱卫",
     "description": "Archive Git LFS article and standard plaintext in safe folders"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "b3a0cd8",
     "developer": "史力爱卫",
     "description": "Record custom agents commit"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "1b7fa71",
-    "developer": "史力爱卫",
-    "description": "Add custom enterprise agent definitions with architecture assessment integration"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "5e1db06",
-    "developer": "史力爱卫",
-    "description": "Real-time sync for knowledge base additions"
   }
 ];

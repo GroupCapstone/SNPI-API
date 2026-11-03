@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `0e6083f` (Developer: **史力爱卫**)
+
+- Record enterprise application security design principles & maturity framework
+
+### Version 0.2.17 (03.11.2026) - `6c6675d` (Developer: **史力爱卫**)
+
+- Sync changelog for safe folder archiving
+
 ### Version 0.2.17 (03.11.2026) - `6a9f0fe` (Developer: **史力爱卫**)
 
 - Archive Git LFS article and standard plaintext in safe folders
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `b3a0cd8` (Developer: **史力爱卫**)
 
 - Record custom agents commit
-
-### Version 0.2.17 (03.11.2026) - `1b7fa71` (Developer: **史力爱卫**)
-
-- Add custom enterprise agent definitions with architecture assessment integration
-
-### Version 0.2.17 (03.11.2026) - `5e1db06` (Developer: **史力爱卫**)
-
-- Real-time sync for knowledge base additions
 
