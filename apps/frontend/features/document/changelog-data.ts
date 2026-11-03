@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "1300ba9",
+    "developer": "史力爱卫",
+    "description": "Archive implementing polyrepo on github enterprise reference"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "39f5815",
+    "developer": "史力爱卫",
+    "description": "Record git lfs architecture guide commit"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "ec6e02d",
     "developer": "史力爱卫",
     "description": "Record Git LFS architecture guide & compression evaluation tool"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "46b3ff9",
     "developer": "史力爱卫",
     "description": "Resolve react/jsx-no-comment-textnodes in brand-concept-blueprint [PASSED]"
-  },
-  {
-    "version": "0.2.16",
-    "date": "02.11.2026",
-    "commitHash": "a729c93",
-    "developer": "史力爱卫",
-    "description": "Bump monorepo version to v0.2.16 [PASSED]"
-  },
-  {
-    "version": "0.2.16",
-    "date": "02.11.2026",
-    "commitHash": "3eb5506",
-    "developer": "史力爱卫",
-    "description": "Streamline design engine cards with kinetic gravity archetype [PASSED]"
   }
 ];
