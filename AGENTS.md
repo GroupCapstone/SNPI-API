@@ -53,6 +53,7 @@ Before modifying code, packages, or repository structure, read:
 43. `.agents/skills/snp-sms-design-standards/psychological-design-rules.md`: Mandatory Psychological Design Rules for AI Agents (Fitts's Law >=44px, Hick's Law <=5 choices, Miller's Law <=5 fields/card, Doherty Threshold <=400ms, Postel's Law liberal inputs, and 6-tier culinary downward dependency).
 44. `.agents/skills/snp-sms-design-standards/culinary-component-taxonomy.md`: Authoritative 6-Tier Culinary Component Architecture (Ingredients, Recipes, Entrees, Templates, Pages, Cookbook with strict downward-only import invariant).
 45. `.agents/skills/snp-sms-design-standards/open-source-checklist-macro-phases.md`: Open-Source Design System Checklist (230 Total Checks grouped across 4 macro-phases: Design Language 5/10, Foundations 0/26, Core Components 0/166, Maintenance 0/28, with isolated categorical boundaries).
+46. `.agents/skills/architecture-assessment-audit/SKILL.md` (and `docs/architecture/architecture-assessment-framework.md`): Authoritative Enterprise Architecture Assessment Framework, 7-Layer REST API, Master MVP Flow, AI Agent Protocol & 10-Domain Systems Audit Checklist (Scalability, Resiliency, Efficiency, Simplicity, Documentation, Disaster Recovery, Modularity, Interoperability, Observability, GitHub Enterprise Deployments).
 
 ---
 
@@ -274,6 +275,7 @@ Use these specific skill identifiers and command strings to instruct the agent:
     | `SKILL-CANONICAL` | `.agents/skills/snp-sms-design-standards/canonical-layouts-manual.md` | Material 3 Canonical Layout Archetypes (Feed, List-Detail, Supporting Pane, Levitate Strategy) | `apply skill canonical` |
     | `SKILL-USABILITY` | `.agents/skills/snp-sms-design-standards/usability-expressive-manual.md` | Material 3 Usability & Expressive Architecture (Nielsen Norman 5 Pillars, 6 Tactics, Aura Case Study) | `apply skill usability` |
     | `SKILL-GLOSSARY` | `.agents/skills/snp-sms-design-standards/material-a-z-glossary.md` | Material Design 3 (M3) A-Z Lexicon Standards (107 Architectural Terms, HCT Color Science, Tokens) | `apply skill glossary` |
+    | `SKILL-AUDIT` | `.agents/skills/architecture-assessment-audit/SKILL.md` | Authoritative Enterprise Architecture Assessment Framework, REST API & 10-Domain Audit Checklist (Scalability, Resiliency, Efficiency, Simplicity, Documentation, Disaster Recovery, Modularity, Interoperability, Observability, GitHub Enterprise Deployments) | `apply skill audit` |
 
 ---
 
