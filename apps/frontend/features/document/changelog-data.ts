@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "6a9f0fe",
+    "developer": "史力爱卫",
+    "description": "Archive Git LFS article and standard plaintext in safe folders"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "cca75ce",
+    "developer": "史力爱卫",
+    "description": "Record ARC and git lfs updates in AGENTS.md and agent specs"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "858d883",
     "developer": "史力爱卫",
     "description": "Record actions runner controller architecture guide"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "5e1db06",
     "developer": "史力爱卫",
     "description": "Real-time sync for knowledge base additions"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "ff301f6",
-    "developer": "史力爱卫",
-    "description": "Add knowledge base design standards"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "2829b51",
-    "developer": "史力爱卫",
-    "description": "Add deployment-workflows knowledge document"
   }
 ];
