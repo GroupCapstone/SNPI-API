@@ -2,10 +2,7 @@ import { Types } from 'mongoose';
 
 import type { IArchitectureEvaluation } from './architecture-assessment.model';
 import { ArchitectureEvaluationModel } from './architecture-assessment.model';
-import type {
-  AssessmentCheckItem,
-  EvaluationFilters,
-} from './architecture-assessment.types';
+import type { AssessmentCheckItem, EvaluationFilters } from './architecture-assessment.types';
 
 export class ArchitectureAssessmentRepository {
   public async createEvaluation(

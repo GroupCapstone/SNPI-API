@@ -15,13 +15,7 @@ export const assessmentDomainEnum = z.enum([
 
 export const checkPriorityEnum = z.enum(['P0', 'P1', 'P2', 'P3']);
 export const checkStatusEnum = z.enum(['PASSED', 'FAILED', 'WARNING', 'NOT_APPLICABLE']);
-export const complianceTierEnum = z.enum([
-  'PLATINUM',
-  'GOLD',
-  'SILVER',
-  'BRONZE',
-  'NON_COMPLIANT',
-]);
+export const complianceTierEnum = z.enum(['PLATINUM', 'GOLD', 'SILVER', 'BRONZE', 'NON_COMPLIANT']);
 
 export const triggerEvaluationSchema = z.object({
   query: z.object({}).passthrough(),

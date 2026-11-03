@@ -8,6 +8,7 @@ Reviewed by: Architecture Review Board
 # Modular Monolith Patterns & 7-Layer Architecture
 
 ## 1. Domain Module Isolation
+
 - **Directory Structure**: Every domain module in `apps/backend/src/modules/<domain>/` strictly isolates its responsibilities across 7 layers:
   ```text
   routes.ts -> controller.ts -> service.ts -> repository.ts -> model.ts -> validation.ts -> types.ts
@@ -15,6 +16,7 @@ Reviewed by: Architecture Review Board
 - **Boundary Invariant**: A domain service may call another domain's service, but MUST NEVER directly query another domain's repository or model.
 
 ## 2. Layer Responsibilities
+
 - **Routes Layer**: Declare HTTP routes, attach authentication middleware, permission gates, and rate limiters.
 - **Controller Layer**: HTTP transport handling. Parse params, invoke services, return standardized envelopes. Zero business logic.
 - **Service Layer**: Pure business logic and domain validation. Orchestrates multi-document ACID transactions via Mongoose sessions.
@@ -24,6 +26,7 @@ Reviewed by: Architecture Review Board
 - **Types Layer**: TypeScript type definitions, domain interfaces, and DTO contracts.
 
 ## 3. ACID Transactions with Mongoose
+
 - **Session Lifecycle**: Multi-document mutations across entities must use MongoDB replica set sessions:
   ```typescript
   const session = await mongoose.startSession();

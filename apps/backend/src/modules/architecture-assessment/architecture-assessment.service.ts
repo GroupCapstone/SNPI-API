@@ -33,9 +33,7 @@ const PRIORITY_WEIGHTS = {
 };
 
 export class ArchitectureAssessmentService {
-  public constructor(
-    private readonly repository = new ArchitectureAssessmentRepository(),
-  ) {}
+  public constructor(private readonly repository = new ArchitectureAssessmentRepository()) {}
 
   public async triggerEvaluation(
     dto: TriggerEvaluationDto,
@@ -83,9 +81,7 @@ export class ArchitectureAssessmentService {
     return evaluation;
   }
 
-  public async getEvaluationById(
-    id: string,
-  ): Promise<IArchitectureEvaluation | null> {
+  public async getEvaluationById(id: string): Promise<IArchitectureEvaluation | null> {
     return this.repository.findById(id);
   }
 
@@ -114,26 +110,26 @@ export class ArchitectureAssessmentService {
       return null;
     }
 
-    const domains: DomainScoreSummary[] = (
-      Object.keys(DOMAIN_WEIGHTS) as AssessmentDomain[]
-    ).map((dom) => {
-      const items = latest.items.filter((item) => item.domain === dom);
-      const passed = items.filter((item) => item.status === 'PASSED').length;
-      const failed = items.filter((item) => item.status === 'FAILED').length;
-      const p0 = items.filter(
-        (item) => item.priority === 'P0' && item.status === 'FAILED',
-      ).length;
+    const domains: DomainScoreSummary[] = (Object.keys(DOMAIN_WEIGHTS) as AssessmentDomain[]).map(
+      (dom) => {
+        const items = latest.items.filter((item) => item.domain === dom);
+        const passed = items.filter((item) => item.status === 'PASSED').length;
+        const failed = items.filter((item) => item.status === 'FAILED').length;
+        const p0 = items.filter(
+          (item) => item.priority === 'P0' && item.status === 'FAILED',
+        ).length;
 
-      return {
-        domain: dom,
-        score: latest.domainScores[dom] ?? 0,
-        weight: DOMAIN_WEIGHTS[dom],
-        totalChecks: items.length,
-        passedChecks: passed,
-        failedChecks: failed,
-        p0Violations: p0,
-      };
-    });
+        return {
+          domain: dom,
+          score: latest.domainScores[dom] ?? 0,
+          weight: DOMAIN_WEIGHTS[dom],
+          totalChecks: items.length,
+          passedChecks: passed,
+          failedChecks: failed,
+          p0Violations: p0,
+        };
+      },
+    );
 
     return {
       targetName: latest.targetName,
@@ -143,9 +139,7 @@ export class ArchitectureAssessmentService {
     };
   }
 
-  private computeDomainScores(
-    items: AssessmentCheckItem[],
-  ): Record<AssessmentDomain, number> {
+  private computeDomainScores(items: AssessmentCheckItem[]): Record<AssessmentDomain, number> {
     const scores: Partial<Record<AssessmentDomain, number>> = {};
 
     for (const domain of Object.keys(DOMAIN_WEIGHTS) as AssessmentDomain[]) {
@@ -181,14 +175,9 @@ export class ArchitectureAssessmentService {
     return scores as Record<AssessmentDomain, number>;
   }
 
-  private computeOverallScore(
-    domainScores: Record<AssessmentDomain, number>,
-  ): number {
+  private computeOverallScore(domainScores: Record<AssessmentDomain, number>): number {
     let composite = 0;
-    for (const [dom, weight] of Object.entries(DOMAIN_WEIGHTS) as [
-      AssessmentDomain,
-      number,
-    ][]) {
+    for (const [dom, weight] of Object.entries(DOMAIN_WEIGHTS) as [AssessmentDomain, number][]) {
       const s = domainScores[dom] ?? 0;
       composite += s * weight;
     }
@@ -222,7 +211,8 @@ export class ArchitectureAssessmentService {
 
     // DOMAIN 1: SCALABILITY
     const hasLockfile = hasFile('package-lock.json');
-    const hasWorkspaces = hasFile('package.json') && readFileSafe('package.json').includes('workspaces');
+    const hasWorkspaces =
+      hasFile('package.json') && readFileSafe('package.json').includes('workspaces');
     const hasSharedPkg = hasFile('packages/shared/package.json');
     const hasDockerCompose = hasFile('docker-compose.yml');
 
@@ -236,7 +226,9 @@ export class ArchitectureAssessmentService {
       status: hasWorkspaces && hasSharedPkg ? 'PASSED' : 'FAILED',
       score: hasWorkspaces ? 100 : 0,
       weight: 1.0,
-      evidence: hasWorkspaces ? 'npm workspaces active with packages/shared, apps/backend, apps/frontend' : 'No workspaces configured',
+      evidence: hasWorkspaces
+        ? 'npm workspaces active with packages/shared, apps/backend, apps/frontend'
+        : 'No workspaces configured',
       automated: true,
       verifiedAt: timestamp,
     });
@@ -308,16 +300,21 @@ export class ArchitectureAssessmentService {
       title: 'Load Balancer / Reverse Proxy Implementation',
       description: 'Implement reverse proxy / load balancer with active health checks.',
       priority: 'P0',
-      status: hasFile('scripts/local-proxy.ts') || hasFile('apps/frontend/next.config.ts') ? 'PASSED' : 'WARNING',
+      status:
+        hasFile('scripts/local-proxy.ts') || hasFile('apps/frontend/next.config.ts')
+          ? 'PASSED'
+          : 'WARNING',
       score: 100,
       weight: 1.0,
-      evidence: 'Server-side Next.js rewrites and local-proxy.ts handling reverse proxying to backend',
+      evidence:
+        'Server-side Next.js rewrites and local-proxy.ts handling reverse proxying to backend',
       automated: true,
       verifiedAt: timestamp,
     });
 
     const gitattributesContent = readFileSafe('.gitattributes');
-    const hasLfsConfig = gitattributesContent.includes('filter=lfs') && gitattributesContent.includes('merge=lfs');
+    const hasLfsConfig =
+      gitattributesContent.includes('filter=lfs') && gitattributesContent.includes('merge=lfs');
     items.push({
       checkId: 'SCA-17',
       domain: 'SCALABILITY',
@@ -328,7 +325,9 @@ export class ArchitectureAssessmentService {
       status: hasLfsConfig ? 'PASSED' : 'WARNING',
       score: hasLfsConfig ? 100 : 50,
       weight: 1.0,
-      evidence: hasLfsConfig ? 'Git LFS tracking filters configured in .gitattributes for binary types' : 'Missing Git LFS filters in .gitattributes',
+      evidence: hasLfsConfig
+        ? 'Git LFS tracking filters configured in .gitattributes for binary types'
+        : 'Missing Git LFS filters in .gitattributes',
       automated: true,
       verifiedAt: timestamp,
     });
@@ -356,7 +355,8 @@ export class ArchitectureAssessmentService {
       title: 'Automated Backup Solutions',
       description: 'Automated backup procedures in place and tested regularly.',
       priority: 'P0',
-      status: hasFile('docker-compose.yml') && hasFile('apps/backend/Dockerfile') ? 'PASSED' : 'WARNING',
+      status:
+        hasFile('docker-compose.yml') && hasFile('apps/backend/Dockerfile') ? 'PASSED' : 'WARNING',
       score: 95,
       weight: 1.0,
       evidence: 'MongoDB replica set rs0 containerized with persistent volume bindings',
@@ -452,7 +452,10 @@ export class ArchitectureAssessmentService {
       title: 'Clear & Concise System Documentation',
       description: 'Maintain clear documentation for all systems and processes.',
       priority: 'P1',
-      status: hasFile('AGENTS.md') && hasFile('docs/architecture/boundary-rules.md') ? 'PASSED' : 'WARNING',
+      status:
+        hasFile('AGENTS.md') && hasFile('docs/architecture/boundary-rules.md')
+          ? 'PASSED'
+          : 'WARNING',
       score: 100,
       weight: 1.0,
       evidence: 'AGENTS.md, docs/architecture, and living UI manuals active',
@@ -483,7 +486,9 @@ export class ArchitectureAssessmentService {
       title: 'Disaster Recovery Plan & RPO/RTO',
       description: 'Formal disaster recovery plan and failover runbooks maintained.',
       priority: 'P0',
-      status: hasFile('.agents/skills/architecture-assessment-audit/SKILL.md') ? 'PASSED' : 'WARNING',
+      status: hasFile('.agents/skills/architecture-assessment-audit/SKILL.md')
+        ? 'PASSED'
+        : 'WARNING',
       score: 95,
       weight: 1.0,
       evidence: 'Authoritative DR standards recorded in architecture-assessment-audit skill',
@@ -548,7 +553,8 @@ export class ArchitectureAssessmentService {
       status: hasFile('apps/backend/src/shared/http/api-response.ts') ? 'PASSED' : 'FAILED',
       score: 100,
       weight: 1.0,
-      evidence: 'Standardized sendSuccess, sendPaginated, and RFC 7807 problem details across all 47 modules',
+      evidence:
+        'Standardized sendSuccess, sendPaginated, and RFC 7807 problem details across all 47 modules',
       automated: true,
       verifiedAt: timestamp,
     });
@@ -594,7 +600,8 @@ export class ArchitectureAssessmentService {
       status: hasFile('scripts/telegram-repo-watcher.ts') ? 'PASSED' : 'WARNING',
       score: 95,
       weight: 1.0,
-      evidence: 'telegram-repo-watcher.ts dispatches real-time alerts for CI runs, releases, and errors',
+      evidence:
+        'telegram-repo-watcher.ts dispatches real-time alerts for CI runs, releases, and errors',
       automated: true,
       verifiedAt: timestamp,
     });

@@ -121,7 +121,9 @@ async function verifyPrivateNetworking(): Promise<void> {
   console.log('\n[5/6] Auditing GitHub Actions Private Networking & VNet Injection...');
   try {
     runCommand('npm run verify:private-network');
-    console.log('      [PASS] Private networking configuration, subnet capacity & firewall FQDNs verified.');
+    console.log(
+      '      [PASS] Private networking configuration, subnet capacity & firewall FQDNs verified.',
+    );
   } catch (err: unknown) {
     const error = err as Error;
     throw new Error(`Private networking verification failed: ${error.message}`);
@@ -140,10 +142,14 @@ async function verifyThreatModel(): Promise<void> {
 }
 
 async function verifyWorkflowSecurity(): Promise<void> {
-  console.log('\n[7/8] Auditing GitHub Actions Workflow Hardening (SHA Pinning & Script Injection)...');
+  console.log(
+    '\n[7/8] Auditing GitHub Actions Workflow Hardening (SHA Pinning & Script Injection)...',
+  );
   try {
     runCommand('npm run verify:workflows');
-    console.log('      [PASS] All 18 workflows pinned to immutable 40-character SHAs with zero script injections.');
+    console.log(
+      '      [PASS] All 18 workflows pinned to immutable 40-character SHAs with zero script injections.',
+    );
   } catch (err: unknown) {
     const error = err as Error;
     throw new Error(`Workflow security verification failed: ${error.message}`);
@@ -154,7 +160,9 @@ async function verifyGhasEnforcement(): Promise<void> {
   console.log('\n[8/9] Auditing GitHub Advanced Security (GHAS) at Scale (Pillars 1 to 7)...');
   try {
     runCommand('npm run verify:ghas');
-    console.log('      [PASS] GHAS at scale policies, bypass prevention & dependency reviews verified.');
+    console.log(
+      '      [PASS] GHAS at scale policies, bypass prevention & dependency reviews verified.',
+    );
   } catch (err: unknown) {
     const error = err as Error;
     throw new Error(`GHAS at scale verification failed: ${error.message}`);
@@ -162,13 +170,32 @@ async function verifyGhasEnforcement(): Promise<void> {
 }
 
 async function verifyRepoArchitecture(): Promise<void> {
-  console.log('\n[9/9] Auditing Repository Architecture Strategy (Monorepo Modularity & Boundaries)...');
+  console.log(
+    '\n[9/10] Auditing Repository Architecture Strategy (Monorepo Modularity & Boundaries)...',
+  );
   try {
     runCommand('npm run verify:repo-strategy');
-    console.log('      [PASS] Monorepo workspaces, boundary decoupling & circular dependency guards verified.');
+    console.log(
+      '      [PASS] Monorepo workspaces, boundary decoupling & circular dependency guards verified.',
+    );
   } catch (err: unknown) {
     const error = err as Error;
     throw new Error(`Repository architecture verification failed: ${error.message}`);
+  }
+}
+
+async function verifyLargeRepoManagement(): Promise<void> {
+  console.log(
+    '\n[10/10] Auditing Large Git Repository Management (Git LFS, Tree Depth & Bloat Guards)...',
+  );
+  try {
+    runCommand('npm run verify:large-repo');
+    console.log(
+      '      [PASS] Git LFS filters, <=50MB blob limits, and tree depth sanity verified.',
+    );
+  } catch (err: unknown) {
+    const error = err as Error;
+    throw new Error(`Large repo management verification failed: ${error.message}`);
   }
 }
 
@@ -187,6 +214,7 @@ async function main() {
     await verifyWorkflowSecurity();
     await verifyGhasEnforcement();
     await verifyRepoArchitecture();
+    await verifyLargeRepoManagement();
     console.log('\n======================================================');
     console.log('[PASSED] Pre-push deployment and CI quality gate verified 100%.');
     console.log('======================================================');

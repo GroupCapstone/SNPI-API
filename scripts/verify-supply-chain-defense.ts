@@ -58,7 +58,9 @@ async function runSupplyChainAudit(): Promise<void> {
     status: hasNpmrc ? 'PASSED' : 'FAILED',
     score: hasNpmrc ? 100 : 0,
     weight: 3.0,
-    evidence: hasNpmrc ? '.npmrc exists at repository root for consistent team & CI defaults' : 'Missing .npmrc in project root',
+    evidence: hasNpmrc
+      ? '.npmrc exists at repository root for consistent team & CI defaults'
+      : 'Missing .npmrc in project root',
   });
 
   checks.push({
@@ -89,7 +91,8 @@ async function runSupplyChainAudit(): Promise<void> {
 
   const ciWorkflow = readFileSafe('.github/workflows/ci.yml');
   const securityWorkflow = readFileSafe('.github/workflows/security.yml');
-  const ciHasIgnoreScripts = ciWorkflow.includes('--ignore-scripts') && securityWorkflow.includes('--ignore-scripts');
+  const ciHasIgnoreScripts =
+    ciWorkflow.includes('--ignore-scripts') && securityWorkflow.includes('--ignore-scripts');
   checks.push({
     id: 'SCD-L1-04',
     layer: 'Layer 1: Lifecycle Scripts',
@@ -147,7 +150,9 @@ async function runSupplyChainAudit(): Promise<void> {
   const enforcesCommitSigning =
     agentsMd.includes('Signed Commits') ||
     gitThreatModel.includes('Signed Commits') ||
-    readFileSafe('.agents/skills/dependency-supply-chain-defense/SKILL.md').includes('Signed Commits with User Interaction');
+    readFileSafe('.agents/skills/dependency-supply-chain-defense/SKILL.md').includes(
+      'Signed Commits with User Interaction',
+    );
 
   checks.push({
     id: 'SCD-L3-01',
@@ -163,8 +168,12 @@ async function runSupplyChainAudit(): Promise<void> {
   });
 
   const requiresHumanInteraction =
-    readFileSafe('.agents/skills/dependency-supply-chain-defense/SKILL.md').includes('Mandatory User Interaction') ||
-    readFileSafe('references/dependency-supply-chain-attacks.txt').includes('human-in-the-loop interaction');
+    readFileSafe('.agents/skills/dependency-supply-chain-defense/SKILL.md').includes(
+      'Mandatory User Interaction',
+    ) ||
+    readFileSafe('references/dependency-supply-chain-attacks.txt').includes(
+      'human-in-the-loop interaction',
+    );
 
   checks.push({
     id: 'SCD-L3-02',
@@ -215,8 +224,9 @@ async function runSupplyChainAudit(): Promise<void> {
   // LAYER 5: TRUSTED PUBLISHING & VERIFICATION
   // ==========================================
   const hasProvenanceStandard =
-    readFileSafe('.github/knowledge/security/dependency-supply-chain-defense.md').includes('SLSA Level 3') ||
-    readFileSafe('docs/architecture/dependency-supply-chain-defense.md').includes('OIDC');
+    readFileSafe('.github/knowledge/security/dependency-supply-chain-defense.md').includes(
+      'SLSA Level 3',
+    ) || readFileSafe('docs/architecture/dependency-supply-chain-defense.md').includes('OIDC');
 
   checks.push({
     id: 'SCD-L5-01',
@@ -257,11 +267,15 @@ async function runSupplyChainAudit(): Promise<void> {
     status: hasDependabot ? 'PASSED' : 'FAILED',
     score: hasDependabot ? 100 : 0,
     weight: 3.0,
-    evidence: hasDependabot ? '.github/dependabot.yml schedules continuous dependency vulnerability updates' : 'Missing dependabot.yml',
+    evidence: hasDependabot
+      ? '.github/dependabot.yml schedules continuous dependency vulnerability updates'
+      : 'Missing dependabot.yml',
   });
 
   const depReviewWorkflow = readFileSafe('.github/workflows/dependency-review.yml');
-  const hasDepReview = depReviewWorkflow.includes('actions/dependency-review-action') && /(fail-on-severity:\s*(moderate|high))/i.test(depReviewWorkflow);
+  const hasDepReview =
+    depReviewWorkflow.includes('actions/dependency-review-action') &&
+    /(fail-on-severity:\s*(moderate|high))/i.test(depReviewWorkflow);
   checks.push({
     id: 'SCD-L6-02',
     layer: 'Layer 6: Continuous Monitoring',
@@ -348,8 +362,12 @@ async function runSupplyChainAudit(): Promise<void> {
   // ==========================================
   // TABULAR OUTPUT
   // ==========================================
-  console.log('| Check ID    | Priority | Layer                          | Criterion                           | Status   | Score | Evidence');
-  console.log('| :---------- | :------- | :----------------------------- | :---------------------------------- | :------- | :---- | :------------------------------------------------------------------');
+  console.log(
+    '| Check ID    | Priority | Layer                          | Criterion                           | Status   | Score | Evidence',
+  );
+  console.log(
+    '| :---------- | :------- | :----------------------------- | :---------------------------------- | :------- | :---- | :------------------------------------------------------------------',
+  );
 
   for (const c of checks) {
     const idPad = c.id.padEnd(11);
@@ -358,7 +376,9 @@ async function runSupplyChainAudit(): Promise<void> {
     const critPad = c.criterion.padEnd(35);
     const statusPad = `[${c.status}]`.padEnd(8);
     const scorePad = `${c.score}%`.padStart(5);
-    console.log(`| ${idPad} | ${prioPad} | ${layerPad} | ${critPad} | ${statusPad} | ${scorePad} | ${c.evidence}`);
+    console.log(
+      `| ${idPad} | ${prioPad} | ${layerPad} | ${critPad} | ${statusPad} | ${scorePad} | ${c.evidence}`,
+    );
   }
 
   console.log('\n================================================================================');

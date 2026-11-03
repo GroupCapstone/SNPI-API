@@ -20,25 +20,35 @@ export function auditArcValues(content: string, filePath: string): ArcAuditResul
   const passedGates: string[] = [];
 
   // Gate 1: Check containerMode anti-pattern
-  const hasActiveContainerMode = /^[\s]*containerMode:\s*$/m.test(content) &&
-    !/^[\s]*#\s*containerMode:/m.test(content);
+  const hasActiveContainerMode =
+    /^[\s]*containerMode:\s*$/m.test(content) && !/^[\s]*#\s*containerMode:/m.test(content);
   if (hasActiveContainerMode) {
-    violations.push('Gate 1 [FAILED]: Active containerMode detected. In production, containerMode must be commented out and an explicit template.spec must be declared.');
+    violations.push(
+      'Gate 1 [FAILED]: Active containerMode detected. In production, containerMode must be commented out and an explicit template.spec must be declared.',
+    );
   } else {
-    passedGates.push('Gate 1 [PASSED]: Explicit template.spec architecture enforced (containerMode disabled).');
+    passedGates.push(
+      'Gate 1 [PASSED]: Explicit template.spec architecture enforced (containerMode disabled).',
+    );
   }
 
   // Gate 2: Check for Spot Instances anti-pattern
   const allowsSpot = /"spot"/i.test(content) && !/NotIn.*spot/is.test(content);
   if (allowsSpot) {
-    violations.push('Gate 2 [FAILED]: Spot instances detected in node selection. ARC does not support preemption and spot nodes cause stuck runners.');
+    violations.push(
+      'Gate 2 [FAILED]: Spot instances detected in node selection. ARC does not support preemption and spot nodes cause stuck runners.',
+    );
   } else {
-    passedGates.push('Gate 2 [PASSED]: Dedicated On-Demand / Reserved node affinity validated (zero spot instances).');
+    passedGates.push(
+      'Gate 2 [PASSED]: Dedicated On-Demand / Reserved node affinity validated (zero spot instances).',
+    );
   }
 
   // Gate 3: Single Label on Scale Set
   if (content.includes('runnerScaleSetName:')) {
-    passedGates.push('Gate 3 [PASSED]: Single scale set name / label defined for deterministic job routing.');
+    passedGates.push(
+      'Gate 3 [PASSED]: Single scale set name / label defined for deterministic job routing.',
+    );
   } else if (!content.includes('gha-runner-scale-set-controller')) {
     violations.push('Gate 3 [FAILED]: Missing runnerScaleSetName for scale set.');
   }
@@ -55,17 +65,25 @@ export function auditArcValues(content: string, filePath: string): ArcAuditResul
   // Gate 5: DinD Privilege Separation
   if (content.includes('name: runner') && content.includes('name: dind')) {
     const runnerSectionMatch = content.match(/- name:\s*runner\b([\s\S]*?)(?:- name:|$)/);
-    const runnerPrivileged = runnerSectionMatch ? /privileged:\s*true/.test(runnerSectionMatch[1]) : false;
+    const runnerPrivileged = runnerSectionMatch
+      ? /privileged:\s*true/.test(runnerSectionMatch[1])
+      : false;
     if (runnerPrivileged) {
-      violations.push('Gate 5 [FAILED]: Runner container is marked as privileged. Only the dind sidecar must run privileged.');
+      violations.push(
+        'Gate 5 [FAILED]: Runner container is marked as privileged. Only the dind sidecar must run privileged.',
+      );
     } else {
-      passedGates.push('Gate 5 [PASSED]: Privilege separation validated (runner unprivileged, DinD sidecar isolated).');
+      passedGates.push(
+        'Gate 5 [PASSED]: Privilege separation validated (runner unprivileged, DinD sidecar isolated).',
+      );
     }
   }
 
   // Gate 6: High Cardinality Metrics Check
   if (content.includes('enableHighCardinalityMetrics: true')) {
-    violations.push('Gate 6 [FAILED]: High-cardinality metrics enabled. This causes metric store exhaustion.');
+    violations.push(
+      'Gate 6 [FAILED]: High-cardinality metrics enabled. This causes metric store exhaustion.',
+    );
   } else {
     passedGates.push('Gate 6 [PASSED]: High-cardinality metric explosion prevention validated.');
   }
@@ -75,7 +93,9 @@ export function auditArcValues(content: string, filePath: string): ArcAuditResul
     const match = content.match(/replicaCount:\s*([0-9]+)/);
     const count = match ? parseInt(match[1], 10) : 0;
     if (count < 3) {
-      violations.push(`Gate 7 [FAILED]: Controller replicaCount is ${count}. Production requires at least 3 replicas for HA.`);
+      violations.push(
+        `Gate 7 [FAILED]: Controller replicaCount is ${count}. Production requires at least 3 replicas for HA.`,
+      );
     } else {
       passedGates.push(`Gate 7 [PASSED]: Controller HA replicaCount verified (${count} replicas).`);
     }
@@ -90,7 +110,8 @@ export function auditArcValues(content: string, filePath: string): ArcAuditResul
 }
 
 async function run(): Promise<void> {
-  const targetPath = process.argv[2] || path.join(__dirname, '../templates/arc-runner-scaleset-values.yaml');
+  const targetPath =
+    process.argv[2] || path.join(__dirname, '../templates/arc-runner-scaleset-values.yaml');
 
   if (!fs.existsSync(targetPath)) {
     console.error(`[ERROR] File not found: ${targetPath}`);

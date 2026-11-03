@@ -99,7 +99,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
 
   const securityMd = readFileSafe('SECURITY.md');
   const agentsMd = readFileSafe('AGENTS.md');
-  const hasSecurityPolicy = securityMd.length > 500 && agentsMd.includes('Autonomous AI Agents Policy');
+  const hasSecurityPolicy =
+    securityMd.length > 500 && agentsMd.includes('Autonomous AI Agents Policy');
   checks.push({
     id: 'SEC-04',
     domain: 'Security',
@@ -134,7 +135,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
 
   const sharedPermissions = readFileSafe('packages/shared/src/permissions.ts');
   const authMiddleware = readFileSafe('apps/backend/src/middleware/authorize.ts');
-  const hasRbac = sharedPermissions.includes('SYSTEM_PERMISSIONS') && authMiddleware.includes('authorize');
+  const hasRbac =
+    sharedPermissions.includes('SYSTEM_PERMISSIONS') && authMiddleware.includes('authorize');
   checks.push({
     id: 'SEC-06',
     domain: 'Security',
@@ -151,8 +153,11 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   // 2. COMPLIANCE (Weight: 12%)
   // ==========================================
-  const appSecDoc = readFileSafe('.github/knowledge/security/application-security-design-principles.md');
-  const citesRegulations = appSecDoc.includes('FERPA') && appSecDoc.includes('GDPR') && appSecDoc.includes('SOC 2');
+  const appSecDoc = readFileSafe(
+    '.github/knowledge/security/application-security-design-principles.md',
+  );
+  const citesRegulations =
+    appSecDoc.includes('FERPA') && appSecDoc.includes('GDPR') && appSecDoc.includes('SOC 2');
   checks.push({
     id: 'COM-01',
     domain: 'Compliance',
@@ -214,7 +219,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing incident response plan and DRP runbooks',
   });
 
-  const hasOnboardingStandards = agentsMd.includes('Autonomous AI Agents Policy') && agentsMd.includes('Verification Pipeline');
+  const hasOnboardingStandards =
+    agentsMd.includes('Autonomous AI Agents Policy') && agentsMd.includes('Verification Pipeline');
   checks.push({
     id: 'COM-05',
     domain: 'Compliance',
@@ -391,11 +397,14 @@ async function runApplicationSecurityAudit(): Promise<void> {
     status: hasCodeowners ? 'PASSED' : 'FAILED',
     score: hasCodeowners ? 100 : 0,
     weight: 1.0,
-    evidence: hasCodeowners ? '.github/CODEOWNERS enforces granular code ownership across directories' : 'Missing CODEOWNERS',
+    evidence: hasCodeowners
+      ? '.github/CODEOWNERS enforces granular code ownership across directories'
+      : 'Missing CODEOWNERS',
   });
 
   const tokenUtil = readFileSafe('apps/backend/src/utils/token.ts');
-  const hasJwtRotation = tokenUtil.includes('generateAccessToken') && tokenUtil.includes('generateRefreshToken');
+  const hasJwtRotation =
+    tokenUtil.includes('generateAccessToken') && tokenUtil.includes('generateRefreshToken');
   checks.push({
     id: 'GHE-02',
     domain: 'GitHub Enterprise',
@@ -423,7 +432,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing repository mirror configuration',
   });
 
-  const hasPrivateNetConfig = fileExists('infrastructure/networking/actions-private-network/network-config.yaml');
+  const hasPrivateNetConfig = fileExists(
+    'infrastructure/networking/actions-private-network/network-config.yaml',
+  );
   checks.push({
     id: 'GHE-04',
     domain: 'GitHub Enterprise',
@@ -554,7 +565,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
     status: hasLabeler ? 'PASSED' : 'FAILED',
     score: hasLabeler ? 100 : 0,
     weight: 1.0,
-    evidence: hasLabeler ? '.github/labeler.yml categorizes changes across monorepo boundaries' : 'Missing labeler.yml',
+    evidence: hasLabeler
+      ? '.github/labeler.yml categorizes changes across monorepo boundaries'
+      : 'Missing labeler.yml',
   });
 
   const backendModules = fs.existsSync(path.resolve(ROOT_DIR, 'apps/backend/src/modules'))
@@ -586,10 +599,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
     status: isStandardTechStack ? 'PASSED' : 'FAILED',
     score: isStandardTechStack ? 100 : 0,
     weight: 2.0,
-    evidence:
-      isStandardTechStack
-        ? 'Standardized TypeScript 5.8+ compiler configs, Express 5, and Next.js across apps'
-        : 'Inconsistent tech stack configuration',
+    evidence: isStandardTechStack
+      ? 'Standardized TypeScript 5.8+ compiler configs, Express 5, and Next.js across apps'
+      : 'Inconsistent tech stack configuration',
   });
 
   const hasVercelManifest = fileExists('vercel.json') || fileExists('apps/frontend/vercel.json');
@@ -610,7 +622,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // 7. RESILIENCY (Weight: 9%)
   // ==========================================
   const dbConfig = readFileSafe('apps/backend/src/config/database.ts');
-  const hasReplicaSet = dbConfig.includes('replicaSet') || dbConfig.includes('rs0') || dbConfig.includes('connect(');
+  const hasReplicaSet =
+    dbConfig.includes('replicaSet') || dbConfig.includes('rs0') || dbConfig.includes('connect(');
   checks.push({
     id: 'RES-01',
     domain: 'Resiliency',
@@ -690,7 +703,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing timingSafeEqual implementation',
   });
 
-  const hasFirewallSpecs = fileExists('infrastructure/networking/actions-private-network/network-config.yaml');
+  const hasFirewallSpecs = fileExists(
+    'infrastructure/networking/actions-private-network/network-config.yaml',
+  );
   checks.push({
     id: 'INT-02',
     domain: 'Interoperability',
@@ -718,7 +733,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing deploy gate verification script',
   });
 
-  const hasArcScaleset = fileExists('apps/backend/infrastructure/k8s/arc/arc-runner-scaleset-standard.yaml');
+  const hasArcScaleset = fileExists(
+    'apps/backend/infrastructure/k8s/arc/arc-runner-scaleset-standard.yaml',
+  );
   checks.push({
     id: 'INT-04',
     domain: 'Interoperability',
@@ -765,7 +782,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
   });
 
   const designStandards = readFileSafe('.agents/skills/snp-sms-design-standards/SKILL.md');
-  const hasBrandTokens = designStandards.includes('01 #0056FF') && designStandards.includes('04 #FFFFFF');
+  const hasBrandTokens =
+    designStandards.includes('01 #0056FF') && designStandards.includes('04 #FFFFFF');
   checks.push({
     id: 'SIM-02',
     domain: 'Simplicity',
@@ -811,7 +829,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
   });
 
   const auditLogRoute = readFileSafe('apps/backend/src/modules/audit-log/audit-log.route.ts');
-  const hasAuditRbac = auditLogRoute.includes('audit.view.own_branch') && auditLogRoute.includes('requireAuth');
+  const hasAuditRbac =
+    auditLogRoute.includes('audit.view.own_branch') && auditLogRoute.includes('requireAuth');
   checks.push({
     id: 'OBS-02',
     domain: 'Observability',
@@ -886,8 +905,12 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   // OUTPUT REPORT
   // ==========================================
-  console.log('| ID     | Priority | Domain             | Criterion                         | Status   | Score | Evidence');
-  console.log('| :----- | :------- | :----------------- | :-------------------------------- | :------- | :---- | :------------------------------------------------------------------');
+  console.log(
+    '| ID     | Priority | Domain             | Criterion                         | Status   | Score | Evidence',
+  );
+  console.log(
+    '| :----- | :------- | :----------------- | :-------------------------------- | :------- | :---- | :------------------------------------------------------------------',
+  );
 
   for (const c of checks) {
     const idPad = c.id.padEnd(6);
@@ -896,7 +919,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
     const critPad = c.criterion.padEnd(33);
     const statusPad = `[${c.status}]`.padEnd(8);
     const scorePad = `${c.score}%`.padStart(5);
-    console.log(`| ${idPad} | ${prioPad} | ${domPad} | ${critPad} | ${statusPad} | ${scorePad} | ${c.evidence}`);
+    console.log(
+      `| ${idPad} | ${prioPad} | ${domPad} | ${critPad} | ${statusPad} | ${scorePad} | ${c.evidence}`,
+    );
   }
 
   console.log('\n================================================================================');

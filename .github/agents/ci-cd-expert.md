@@ -11,11 +11,13 @@ Before formulating recommendations or generating workflow files, you MUST fetch 
 Invoke the GitHub MCP server tool `get_file_contents` to fetch the following files:
 
 **Target Repository Configuration:**
+
 - Owner: `Tan-Saphea`
 - Repository: `SNPI-SMS`
 - Branch / Ref: `main`
 
 **Required Files (fetch all before proceeding):**
+
 1. `.github/knowledge/ci-cd/github-actions-best-practices.md`
 2. `.github/knowledge/ci-cd/deployment-workflows.md`
 3. `.github/knowledge/ci-cd/container-security.md`
@@ -28,6 +30,7 @@ Invoke the GitHub MCP server tool `get_file_contents` to fetch the following fil
 These files define the organization's mandatory standards for Action SHA pinning, dual-developer git sync, push checkpoints, and container hardening.
 
 ## Your Role
+
 - Author and validate GitHub Actions workflows adhering strictly to SHA pinning and least-privilege token permissions.
 - Maintain the 10-step push checkpoint pipeline (`npm run push:checkpoint`).
 - Verify hybrid Vercel serverless frontend and Alpine Docker container backend deployments.

@@ -45,7 +45,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasWorkspaces ? 'PASSED' : 'FAILED',
     score: hasWorkspaces ? 100 : 0,
     weight: 2.5,
-    evidence: hasWorkspaces ? 'npm workspaces active with packages/shared, apps/backend, apps/frontend' : 'Missing workspaces configuration',
+    evidence: hasWorkspaces
+      ? 'npm workspaces active with packages/shared, apps/backend, apps/frontend'
+      : 'Missing workspaces configuration',
   });
 
   const hasCiWorkflow = fileExists('.github/workflows/ci.yml');
@@ -57,7 +59,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasCiWorkflow ? 'PASSED' : 'FAILED',
     score: hasCiWorkflow ? 100 : 0,
     weight: 4.0,
-    evidence: hasCiWorkflow ? 'GitHub Actions CI gate (.github/workflows/ci.yml) active' : 'Missing CI workflow',
+    evidence: hasCiWorkflow
+      ? 'GitHub Actions CI gate (.github/workflows/ci.yml) active'
+      : 'Missing CI workflow',
   });
 
   const hasBoundaryRules = fileExists('docs/architecture/boundary-rules.md');
@@ -69,7 +73,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasBoundaryRules ? 'PASSED' : 'WARNING',
     score: hasBoundaryRules ? 100 : 50,
     weight: 2.5,
-    evidence: hasBoundaryRules ? 'Boundary rules documented in docs/architecture/boundary-rules.md' : 'Missing boundary rules document',
+    evidence: hasBoundaryRules
+      ? 'Boundary rules documented in docs/architecture/boundary-rules.md'
+      : 'Missing boundary rules document',
   });
 
   const hasLockfile = fileExists('package-lock.json');
@@ -84,7 +90,8 @@ async function runArchitectureAudit(): Promise<void> {
     evidence: hasLockfile ? 'Unified root package-lock.json present' : 'Missing root lockfile',
   });
 
-  const hasProxy = fileExists('scripts/local-proxy.ts') || fileExists('apps/frontend/next.config.ts');
+  const hasProxy =
+    fileExists('scripts/local-proxy.ts') || fileExists('apps/frontend/next.config.ts');
   checks.push({
     code: 'SCA-14',
     domain: 'Scalability',
@@ -93,11 +100,14 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasProxy ? 'PASSED' : 'WARNING',
     score: hasProxy ? 100 : 50,
     weight: 4.0,
-    evidence: hasProxy ? 'Next.js API rewrites and local-proxy.ts managing traffic ingress' : 'No proxy configuration',
+    evidence: hasProxy
+      ? 'Next.js API rewrites and local-proxy.ts managing traffic ingress'
+      : 'No proxy configuration',
   });
 
   const gitattributesStr = readFileSafe('.gitattributes');
-  const hasGitLfsRules = gitattributesStr.includes('filter=lfs') && gitattributesStr.includes('merge=lfs');
+  const hasGitLfsRules =
+    gitattributesStr.includes('filter=lfs') && gitattributesStr.includes('merge=lfs');
   checks.push({
     code: 'SCA-17',
     domain: 'Scalability',
@@ -106,7 +116,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasGitLfsRules ? 'PASSED' : 'WARNING',
     score: hasGitLfsRules ? 100 : 50,
     weight: 2.5,
-    evidence: hasGitLfsRules ? 'Git LFS filters configured in .gitattributes with heavy media exclusions in .gitignore' : 'Missing Git LFS filters in .gitattributes',
+    evidence: hasGitLfsRules
+      ? 'Git LFS filters configured in .gitattributes with heavy media exclusions in .gitignore'
+      : 'Missing Git LFS filters in .gitattributes',
   });
 
   // 2. RESILIENCY (Weight: 0.14)
@@ -131,7 +143,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasDockerCompose ? 'PASSED' : 'WARNING',
     score: hasDockerCompose ? 100 : 50,
     weight: 4.0,
-    evidence: hasDockerCompose ? 'MongoDB replica set (rs0) orchestrated via docker-compose.yml' : 'Missing compose cluster config',
+    evidence: hasDockerCompose
+      ? 'MongoDB replica set (rs0) orchestrated via docker-compose.yml'
+      : 'Missing compose cluster config',
   });
 
   // 3. EFFICIENCY (Weight: 0.10)
@@ -145,7 +159,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasHealthRoute ? 'PASSED' : 'WARNING',
     score: hasHealthRoute ? 100 : 50,
     weight: 2.5,
-    evidence: hasHealthRoute ? '/api/v1/health probe monitors cluster and database latency' : 'Missing health route',
+    evidence: hasHealthRoute
+      ? '/api/v1/health probe monitors cluster and database latency'
+      : 'Missing health route',
   });
 
   const hasCheckpoint = fileExists('scripts/automated-push-checkpoint.ts');
@@ -157,7 +173,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasCheckpoint ? 'PASSED' : 'WARNING',
     score: hasCheckpoint ? 100 : 50,
     weight: 2.5,
-    evidence: hasCheckpoint ? 'automated-push-checkpoint.ts automates 10-step verification' : 'Missing automated pipeline',
+    evidence: hasCheckpoint
+      ? 'automated-push-checkpoint.ts automates 10-step verification'
+      : 'Missing automated pipeline',
   });
 
   // 4. SIMPLICITY (Weight: 0.08)
@@ -182,7 +200,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasEnvZod ? 'PASSED' : 'WARNING',
     score: hasEnvZod ? 100 : 50,
     weight: 2.5,
-    evidence: hasEnvZod ? 'Strict environment variable validation in apps/backend/src/config/env.ts' : 'Missing env validation schema',
+    evidence: hasEnvZod
+      ? 'Strict environment variable validation in apps/backend/src/config/env.ts'
+      : 'Missing env validation schema',
   });
 
   // 5. DOCUMENTATION (Weight: 0.08)
@@ -197,7 +217,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasAgentsMd ? 'PASSED' : 'WARNING',
     score: hasAgentsMd ? 100 : 50,
     weight: 2.5,
-    evidence: hasAgentsMd ? 'AGENTS.md and living design standards manuals maintained' : 'Missing AGENTS.md',
+    evidence: hasAgentsMd
+      ? 'AGENTS.md and living design standards manuals maintained'
+      : 'Missing AGENTS.md',
   });
 
   checks.push({
@@ -208,7 +230,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasChangelogSync ? 'PASSED' : 'FAILED',
     score: hasChangelogSync ? 100 : 0,
     weight: 2.5,
-    evidence: hasChangelogSync ? 'scripts/sync-changelog.ts keeps CHANGELOG.md and /document in sync' : 'Missing changelog sync script',
+    evidence: hasChangelogSync
+      ? 'scripts/sync-changelog.ts keeps CHANGELOG.md and /document in sync'
+      : 'Missing changelog sync script',
   });
 
   // 6. DISASTER RECOVERY (Weight: 0.14)
@@ -222,7 +246,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasAuditSkill ? 'PASSED' : 'WARNING',
     score: hasAuditSkill ? 100 : 50,
     weight: 4.0,
-    evidence: hasAuditSkill ? 'Authoritative DRP framework in architecture-assessment-audit' : 'Missing DRP specification',
+    evidence: hasAuditSkill
+      ? 'Authoritative DRP framework in architecture-assessment-audit'
+      : 'Missing DRP specification',
   });
 
   checks.push({
@@ -258,7 +284,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasSharedIndex ? 'PASSED' : 'FAILED',
     score: hasSharedIndex ? 100 : 0,
     weight: 2.5,
-    evidence: hasSharedIndex ? '@snp/shared exports canonical permissions, roles, and DTO contracts' : 'Missing @snp/shared exports',
+    evidence: hasSharedIndex
+      ? '@snp/shared exports canonical permissions, roles, and DTO contracts'
+      : 'Missing @snp/shared exports',
   });
 
   // 8. INTEROPERABILITY (Weight: 0.08)
@@ -272,7 +300,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasApiResponse ? 'PASSED' : 'FAILED',
     score: hasApiResponse ? 100 : 0,
     weight: 2.5,
-    evidence: hasApiResponse ? 'sendSuccess, sendPaginated, and RFC 7807 problem details standardized' : 'Missing api-response helper',
+    evidence: hasApiResponse
+      ? 'sendSuccess, sendPaginated, and RFC 7807 problem details standardized'
+      : 'Missing api-response helper',
   });
 
   const appTs = readFileSafe('apps/backend/src/app.ts');
@@ -285,7 +315,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasApiV1 ? 'PASSED' : 'FAILED',
     score: hasApiV1 ? 100 : 0,
     weight: 2.5,
-    evidence: hasApiV1 ? 'All REST API endpoints scoped under /api/v1/ prefix' : 'Missing /api/v1 prefixing',
+    evidence: hasApiV1
+      ? 'All REST API endpoints scoped under /api/v1/ prefix'
+      : 'Missing /api/v1 prefixing',
   });
 
   // 9. OBSERVABILITY (Weight: 0.10)
@@ -299,7 +331,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasLogger ? 'PASSED' : 'WARNING',
     score: hasLogger ? 100 : 50,
     weight: 4.0,
-    evidence: hasLogger ? 'Structured logger active in apps/backend/src/utils/logger.ts' : 'Missing structured logger',
+    evidence: hasLogger
+      ? 'Structured logger active in apps/backend/src/utils/logger.ts'
+      : 'Missing structured logger',
   });
 
   const hasWatcher = fileExists('scripts/telegram-repo-watcher.ts');
@@ -311,7 +345,9 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasWatcher ? 'PASSED' : 'WARNING',
     score: hasWatcher ? 100 : 50,
     weight: 4.0,
-    evidence: hasWatcher ? 'telegram-repo-watcher.ts delivers real-time notifications for releases and CI' : 'Missing alert watcher',
+    evidence: hasWatcher
+      ? 'telegram-repo-watcher.ts delivers real-time notifications for releases and CI'
+      : 'Missing alert watcher',
   });
 
   // 10. GITHUB ENTERPRISE (Weight: 0.06)
@@ -325,20 +361,22 @@ async function runArchitectureAudit(): Promise<void> {
     status: hasKnowledgeBase ? 'PASSED' : 'WARNING',
     score: hasKnowledgeBase ? 100 : 50,
     weight: 4.0,
-    evidence: hasKnowledgeBase ? 'Centralized knowledge base active in .github/knowledge/' : 'Missing enterprise knowledge base',
+    evidence: hasKnowledgeBase
+      ? 'Centralized knowledge base active in .github/knowledge/'
+      : 'Missing enterprise knowledge base',
   });
 
   // Domain Weights
   const domainWeights: Record<string, number> = {
-    'Scalability': 0.12,
-    'Resiliency': 0.14,
-    'Efficiency': 0.10,
-    'Simplicity': 0.08,
-    'Documentation': 0.08,
+    Scalability: 0.12,
+    Resiliency: 0.14,
+    Efficiency: 0.1,
+    Simplicity: 0.08,
+    Documentation: 0.08,
     'Disaster Recovery': 0.14,
-    'Modularity': 0.10,
-    'Interoperability': 0.08,
-    'Observability': 0.10,
+    Modularity: 0.1,
+    Interoperability: 0.08,
+    Observability: 0.1,
     'GitHub Enterprise': 0.06,
   };
 
@@ -367,8 +405,17 @@ async function runArchitectureAudit(): Promise<void> {
       total: domChecks.length,
     };
 
-    const statusBadge = domScore >= 95 ? '[EXCELLENT]' : domScore >= 85 ? '[GOOD]' : domScore >= 70 ? '[SATISFACTORY]' : '[ATTENTION]';
-    console.log(`  * ${dom.padEnd(20)} : ${domScore.toFixed(1)}% (Weight: ${weight}) ${statusBadge}`);
+    const statusBadge =
+      domScore >= 95
+        ? '[EXCELLENT]'
+        : domScore >= 85
+          ? '[GOOD]'
+          : domScore >= 70
+            ? '[SATISFACTORY]'
+            : '[ATTENTION]';
+    console.log(
+      `  * ${dom.padEnd(20)} : ${domScore.toFixed(1)}% (Weight: ${weight}) ${statusBadge}`,
+    );
   }
 
   const finalScore = Math.round(compositeScore * 10) / 10;

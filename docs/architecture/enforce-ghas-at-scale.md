@@ -26,10 +26,10 @@ This architecture establishes a multi-tiered governance model to enforce GHAS sc
 
 ## 2. Policy Manifests & Rulesets
 
-* **GHAS Policy Configuration**: `infrastructure/security/ghas-at-scale/ghas-enforcement-policy.yaml`
-* **Security Configuration Schema**: `infrastructure/security/ghas-at-scale/security-configuration.json`
-* **Push Ruleset**: `infrastructure/security/ghas-at-scale/push-ruleset-prevent-bypass.json`
-* **Dependency Review Workflow**: `.github/workflows/dependency-review.yml`
+- **GHAS Policy Configuration**: `infrastructure/security/ghas-at-scale/ghas-enforcement-policy.yaml`
+- **Security Configuration Schema**: `infrastructure/security/ghas-at-scale/security-configuration.json`
+- **Push Ruleset**: `infrastructure/security/ghas-at-scale/push-ruleset-prevent-bypass.json`
+- **Dependency Review Workflow**: `.github/workflows/dependency-review.yml`
 
 ---
 

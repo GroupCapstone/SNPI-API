@@ -17,9 +17,7 @@ import type {
 } from './architecture-assessment.validation';
 
 export class ArchitectureAssessmentController {
-  public constructor(
-    private readonly service = new ArchitectureAssessmentService(),
-  ) {}
+  public constructor(private readonly service = new ArchitectureAssessmentService()) {}
 
   public triggerEvaluation = async (
     request: AuthenticatedRequest,
@@ -90,11 +88,7 @@ export class ArchitectureAssessmentController {
         return;
       }
 
-      sendSuccess(
-        response,
-        evaluation,
-        'Architecture evaluation retrieved successfully',
-      );
+      sendSuccess(response, evaluation, 'Architecture evaluation retrieved successfully');
     } catch (error) {
       next(error);
     }
@@ -121,11 +115,7 @@ export class ArchitectureAssessmentController {
         return;
       }
 
-      sendSuccess(
-        response,
-        evaluation,
-        'Check item attested successfully',
-      );
+      sendSuccess(response, evaluation, 'Check item attested successfully');
     } catch (error) {
       next(error);
     }
@@ -139,11 +129,7 @@ export class ArchitectureAssessmentController {
     try {
       const metrics = await this.service.getLatestRadarMetrics();
 
-      sendSuccess(
-        response,
-        metrics,
-        'Latest architecture radar metrics retrieved successfully',
-      );
+      sendSuccess(response, metrics, 'Latest architecture radar metrics retrieved successfully');
     } catch (error) {
       next(error);
     }

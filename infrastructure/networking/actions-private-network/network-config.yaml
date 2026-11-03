@@ -2,7 +2,7 @@
 enterprise:
   name: snp-sms-enterprise
   organization: snp-sms
-  businessId: "70220432"
+  businessId: '70220432'
 
 networking:
   vnetName: vnet-snp-github-runners
@@ -18,10 +18,10 @@ networking:
 firewall:
   applicationRuleFqdns:
     - github.com
-    - "*.github.com"
-    - "*.githubusercontent.com"
-    - "*.blob.core.windows.net"
+    - '*.github.com'
+    - '*.githubusercontent.com'
+    - '*.blob.core.windows.net'
     - ghcr.io
-    - "*.ghcr.io"
-    - "*.githubassets.com"
+    - '*.ghcr.io'
+    - '*.githubassets.com'
     - github-cloud.s3.amazonaws.com

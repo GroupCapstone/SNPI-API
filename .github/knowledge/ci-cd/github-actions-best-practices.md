@@ -8,6 +8,7 @@ Reviewed by: DevOps & Platform Engineering Board
 # GitHub Actions Best Practices
 
 ## 1. Action Pinning & Supply Chain Security
+
 - **Full Commit SHA Pinning**: Pin all third-party GitHub Actions to immutable full commit SHAs (40 characters) rather than mutable tags or branch names:
   ```yaml
   uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -15,6 +16,7 @@ Reviewed by: DevOps & Platform Engineering Board
 - **Dependabot Integration**: Configure Dependabot to automatically monitor action SHAs and propose pull request updates with release notes.
 
 ## 2. Least-Privilege Permissions
+
 - **Default Read-Only**: Workflows enforce top-level read-only permissions by default:
   ```yaml
   permissions:
@@ -23,6 +25,7 @@ Reviewed by: DevOps & Platform Engineering Board
 - **Job-Specific Elevation**: Elevate permissions strictly at the specific job level where write access (e.g., `packages: write`, `id-token: write`) is required.
 
 ## 3. Pre-Push Quality Gates
+
 - **10-Step Automated Pipeline**: Every deployment and release checkpoint executes `npm run push:checkpoint`:
   1. Prettier formatting verification (`npm run format:check`).
   2. ESLint quality gate across all workspaces (`npm run lint`).

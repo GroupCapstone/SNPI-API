@@ -17,7 +17,11 @@ interface FileAudit {
 
 function runGitCommand(cmd: string): string {
   try {
-    return execSync(cmd, { cwd: ROOT_DIR, encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }).trim();
+    return execSync(cmd, {
+      cwd: ROOT_DIR,
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'pipe'],
+    }).trim();
   } catch {
     return '';
   }
@@ -36,7 +40,8 @@ async function verifyGitLfsPolicy(): Promise<void> {
   }
 
   const gitattributesContent = fs.readFileSync(gitattributesPath, 'utf-8');
-  const hasLfsFilters = gitattributesContent.includes('filter=lfs') && gitattributesContent.includes('merge=lfs');
+  const hasLfsFilters =
+    gitattributesContent.includes('filter=lfs') && gitattributesContent.includes('merge=lfs');
   if (!hasLfsFilters) {
     console.warn('      [WARNING] .gitattributes does not contain Git LFS filters.');
   } else {
@@ -46,14 +51,18 @@ async function verifyGitLfsPolicy(): Promise<void> {
   // 2. Verify .gitignore heavy media exclusions
   console.log('\n[2/4] Verifying .gitignore heavy media exclusions...');
   const gitignorePath = path.resolve(ROOT_DIR, '.gitignore');
-  const gitignoreContent = fs.existsSync(gitignorePath) ? fs.readFileSync(gitignorePath, 'utf-8') : '';
+  const gitignoreContent = fs.existsSync(gitignorePath)
+    ? fs.readFileSync(gitignorePath, 'utf-8')
+    : '';
   const hasMediaExclusions =
     gitignoreContent.includes('*.mov') &&
     gitignoreContent.includes('*.mp4') &&
     gitignoreContent.includes('*.zip');
 
   if (!hasMediaExclusions) {
-    console.warn('      [WARNING] .gitignore missing heavy media exclusions (*.mov, *.mp4, *.zip).');
+    console.warn(
+      '      [WARNING] .gitignore missing heavy media exclusions (*.mov, *.mp4, *.zip).',
+    );
   } else {
     console.log('      [PASS] Heavy media exclusions active in .gitignore.');
   }
@@ -124,7 +133,8 @@ async function verifyGitLfsPolicy(): Promise<void> {
     const sizeKb = (audit.sizeBytes / 1024).toFixed(1).padStart(8);
     const ratioStr = `${audit.ratio.toFixed(1)}%`.padStart(8);
     const recStr = audit.recommendation.padEnd(10);
-    const badge = audit.status === 'COMPLIANT' ? '[PASS]' : audit.status === 'VIOLATION' ? '[FAIL]' : '[WARN]';
+    const badge =
+      audit.status === 'COMPLIANT' ? '[PASS]' : audit.status === 'VIOLATION' ? '[FAIL]' : '[WARN]';
     console.log(`${p}  ${sizeKb}  ${ratioStr}  ${recStr}  ${badge}`);
   }
   console.log('--------------------------------------------------------------------------------');
@@ -133,7 +143,9 @@ async function verifyGitLfsPolicy(): Promise<void> {
   console.log(`Policy Violations     : ${violationsCount}`);
 
   if (violationsCount > 0) {
-    console.error('\n[FAILED] Git LFS policy violations detected. Migrate heavy uncompressible blobs to LFS.');
+    console.error(
+      '\n[FAILED] Git LFS policy violations detected. Migrate heavy uncompressible blobs to LFS.',
+    );
     process.exit(1);
   } else {
     console.log('\n[PASSED] Git repository adheres to Git LFS Decision Framework standards.');

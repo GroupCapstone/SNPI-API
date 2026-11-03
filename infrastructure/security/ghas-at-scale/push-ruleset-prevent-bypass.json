@@ -12,10 +12,7 @@
     {
       "type": "file_path_restriction",
       "parameters": {
-        "restricted_file_paths": [
-          ".github/secret_scanning.yml",
-          ".github/secret_scanning.yaml"
-        ]
+        "restricted_file_paths": [".github/secret_scanning.yml", ".github/secret_scanning.yaml"]
       }
     }
   ],

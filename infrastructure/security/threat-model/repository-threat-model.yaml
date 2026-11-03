@@ -1,6 +1,6 @@
 # GitHub Repository Threat Model Defense Configuration
 # Framework Alignment: SLSA v1.0 (Source Integrity) & GitHub Well-Architected Framework
-version: "1.0"
+version: '1.0'
 repository:
   name: snp-sms-monorepo
   visibility: private
@@ -9,32 +9,32 @@ repository:
 # Threat Actors Taxonomies (TA-01 to TA-09)
 threatActors:
   - id: TA-01
-    description: "Threat actor with Internet access (automated crawlers, opportunistic scrapers)"
-    trustBoundary: "External (Outside Org Trust Boundary)"
+    description: 'Threat actor with Internet access (automated crawlers, opportunistic scrapers)'
+    trustBoundary: 'External (Outside Org Trust Boundary)'
   - id: TA-02
-    description: "Threat actor who has a personal GitHub Account"
-    trustBoundary: "External (Outside Org Trust Boundary)"
+    description: 'Threat actor who has a personal GitHub Account'
+    trustBoundary: 'External (Outside Org Trust Boundary)'
   - id: TA-03
-    description: "Threat actor who is an outside collaborator on a repository"
-    trustBoundary: "Semi-Trusted (Policy: Prohibit outside collaborators on production repos)"
+    description: 'Threat actor who is an outside collaborator on a repository'
+    trustBoundary: 'Semi-Trusted (Policy: Prohibit outside collaborators on production repos)'
   - id: TA-04
-    description: "Threat actor who has compromised employee GitHub credentials"
-    trustBoundary: "Compromised Internal Identity (Mitigation: Mandatory 2FA / WebAuthn)"
+    description: 'Threat actor who has compromised employee GitHub credentials'
+    trustBoundary: 'Compromised Internal Identity (Mitigation: Mandatory 2FA / WebAuthn)'
   - id: TA-05
-    description: "Threat actor who has gained access to employee Okta/SAML session"
-    trustBoundary: "Compromised IdP Session (Mitigation: Short session timeouts & conditional access)"
+    description: 'Threat actor who has gained access to employee Okta/SAML session'
+    trustBoundary: 'Compromised IdP Session (Mitigation: Short session timeouts & conditional access)'
   - id: TA-06
-    description: "Threat actor who has stolen GitHub token (SSH key, PAT) authenticated to Org"
-    trustBoundary: "Extended Trust Boundary (Mitigation: Fine-grained tokens <=90d expiration)"
+    description: 'Threat actor who has stolen GitHub token (SSH key, PAT) authenticated to Org'
+    trustBoundary: 'Extended Trust Boundary (Mitigation: Fine-grained tokens <=90d expiration)'
   - id: TA-07
-    description: "Threat actor who has compromised a third-party GitHub application"
-    trustBoundary: "Third-Party Integration (Mitigation: Org OAuth app approval policy)"
+    description: 'Threat actor who has compromised a third-party GitHub application'
+    trustBoundary: 'Third-Party Integration (Mitigation: Org OAuth app approval policy)'
   - id: TA-08
-    description: "Threat actor who exploited misconfigured/vulnerable GitHub Enterprise app"
-    trustBoundary: "Internal Integration (Mitigation: Principle of least privilege & app audits)"
+    description: 'Threat actor who exploited misconfigured/vulnerable GitHub Enterprise app'
+    trustBoundary: 'Internal Integration (Mitigation: Principle of least privilege & app audits)'
   - id: TA-09
-    description: "Threat actor who is an insider (mistake, disgruntled employee, contractor)"
-    trustBoundary: "Internal Actor (Mitigation: Dual-control 4-eyes reviews, immutable audit logs)"
+    description: 'Threat actor who is an insider (mistake, disgruntled employee, contractor)'
+    trustBoundary: 'Internal Actor (Mitigation: Dual-control 4-eyes reviews, immutable audit logs)'
 
 # Threat Defenses Matrix (T-01 to T-08)
 threatDefenses:
@@ -68,9 +68,9 @@ threatDefenses:
   t05_unauthorizedMerge:
     requirePullRequest: true
     requiredStatusChecks:
-      - "Pre-Deployment Verification Gate"
-      - "TypeScript Static Analysis"
-      - "ESLint Quality Gate"
+      - 'Pre-Deployment Verification Gate'
+      - 'TypeScript Static Analysis'
+      - 'ESLint Quality Gate'
 
   # T-06: Self-Approval and Self-Merge of Pull Requests
   t06_selfApprovalPrevention:
