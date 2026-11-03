@@ -2,6 +2,18 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `4f419e3` (Developer: **史力爱卫**)
+
+- Add LFS policy verification script
+
+### Version 0.2.17 (03.11.2026) - `bef4d00` (Developer: **史力爱卫**)
+
+- Configure gitattributes for LFS filter definitions
+
+### Version 0.2.17 (03.11.2026) - `c48cde4` (Developer: **史力爱卫**)
+
+- Sync polyrepo architecture archive entry
+
 ### Version 0.2.17 (03.11.2026) - `1300ba9` (Developer: **史力爱卫**)
 
 - Archive implementing polyrepo on github enterprise reference
@@ -89,16 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `0f1ac54` (Developer: **史力爱卫**)
 
 - Checkpoint & live ci deploy verification [PASSED]
-
-### Version 0.2.17 (03.11.2026) - `f0f4829` (Developer: **史力爱卫**)
-
-- Real-time changelog sync for design standards record [PASSED]
-
-### Version 0.2.17 (03.11.2026) - `2ec2e9c` (Developer: **史力爱卫**)
-
-- Record authoritative M3 & SNPI design skills, manuals, and blueprint primary anchor standards [PASSED]
-
-### Version 0.2.17 (02.11.2026) - `46b3ff9` (Developer: **史力爱卫**)
-
-- Resolve react/jsx-no-comment-textnodes in brand-concept-blueprint [PASSED]
 

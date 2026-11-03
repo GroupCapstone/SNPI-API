@@ -10,6 +10,27 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "4f419e3",
+    "developer": "史力爱卫",
+    "description": "Add LFS policy verification script"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "bef4d00",
+    "developer": "史力爱卫",
+    "description": "Configure gitattributes for LFS filter definitions"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "c48cde4",
+    "developer": "史力爱卫",
+    "description": "Sync polyrepo architecture archive entry"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "1300ba9",
     "developer": "史力爱卫",
     "description": "Archive implementing polyrepo on github enterprise reference"
@@ -160,26 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "0f1ac54",
     "developer": "史力爱卫",
     "description": "Checkpoint & live ci deploy verification [PASSED]"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "f0f4829",
-    "developer": "史力爱卫",
-    "description": "Real-time changelog sync for design standards record [PASSED]"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "2ec2e9c",
-    "developer": "史力爱卫",
-    "description": "Record authoritative M3 & SNPI design skills, manuals, and blueprint primary anchor standards [PASSED]"
-  },
-  {
-    "version": "0.2.17",
-    "date": "02.11.2026",
-    "commitHash": "46b3ff9",
-    "developer": "史力爱卫",
-    "description": "Resolve react/jsx-no-comment-textnodes in brand-concept-blueprint [PASSED]"
   }
 ];
