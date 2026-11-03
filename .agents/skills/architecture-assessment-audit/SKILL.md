@@ -12,9 +12,9 @@ description: >-
 This specification defines the authoritative **Enterprise Architecture Assessment Framework**, automated audit pipeline, 7-layer REST API architecture, AI Agent operational protocol, and comprehensive multi-domain checklist for modern software systems, modular monoliths, and distributed cloud deployments.
 
 > **Primary Skill Safe Folder**: `.agents/skills/architecture-assessment-audit/`  
-> **Unabridged Markdown Article**: `references/architecture-assessment-framework.md` (and `references/architecture-assessment-article.md`)  
-> **Git LFS Architecture & Decision Guide**: `references/git-lfs-decision-framework.md` (and `.github/knowledge/ci-cd/git-lfs-architecture-guide.md`)  
-> **Plaintext Standard Reference**: `references/architecture-assessment-standard.txt`
+> **Unabridged Architecture Articles**: `references/architecture-assessment-framework.md` & `references/architecture-assessment-article.md` (`.txt`: `references/architecture-assessment-standard.txt`)  
+> **Git LFS Architecture & Decision Guide**: `references/git-lfs-decision-framework.md` & `references/git-lfs-architecture-article.md` (`.txt`: `references/git-lfs-standard.txt`)  
+> **Enterprise Knowledge Base Safe Location**: `.github/knowledge/ci-cd/git-lfs-architecture-guide.md` & `docs/architecture/`
 
 ---
 
