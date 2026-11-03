@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "f9ac822",
+    "developer": "史力爱卫",
+    "description": "Consolidate architecture assessment article into primary skill safe folder"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "265ff3e",
+    "developer": "史力爱卫",
+    "description": "Real-time changelog sync"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "200af73",
     "developer": "史力爱卫",
     "description": "Record enterprise custom agents skill in AGENTS.md"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "05fa34b",
     "developer": "史力爱卫",
     "description": "Redesign homepage hero sections with radiant integration hub and tactile folder showcase"
-  },
-  {
-    "version": "0.2.16",
-    "date": "01.11.2026",
-    "commitHash": "d352f0c",
-    "developer": "史力爱卫",
-    "description": "Record 77-point audit, 42 automated security test results, and RFC 9116 security.txt [PASSED]"
-  },
-  {
-    "version": "0.2.16",
-    "date": "01.11.2026",
-    "commitHash": "aee7c0d",
-    "developer": "史力爱卫",
-    "description": "Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]"
   }
 ];

@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `f9ac822` (Developer: **史力爱卫**)
+
+- Consolidate architecture assessment article into primary skill safe folder
+
+### Version 0.2.17 (03.11.2026) - `265ff3e` (Developer: **史力爱卫**)
+
+- Real-time changelog sync
+
 ### Version 0.2.17 (03.11.2026) - `200af73` (Developer: **史力爱卫**)
 
 - Record enterprise custom agents skill in AGENTS.md
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.16 (02.11.2026) - `05fa34b` (Developer: **史力爱卫**)
 
 - Redesign homepage hero sections with radiant integration hub and tactile folder showcase
-
-### Version 0.2.16 (01.11.2026) - `d352f0c` (Developer: **史力爱卫**)
-
-- Record 77-point audit, 42 automated security test results, and RFC 9116 security.txt [PASSED]
-
-### Version 0.2.16 (01.11.2026) - `aee7c0d` (Developer: **史力爱卫**)
-
-- Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]
 
