@@ -1,0 +1,47 @@
+# SNP-SMS Enterprise Knowledge Base
+
+This directory serves as the centralized source of truth for all enterprise coding standards, architectural rules, security policies, and UI guidelines for the SNP-SMS platform.
+
+These knowledge files are dynamically fetched at runtime by GitHub Enterprise Custom Agents via the Model Context Protocol (MCP) and GitHub's built-in MCP server, bypassing the single-file 30,000-character limitation.
+
+---
+
+## Directory Taxonomy
+
+- **`security/`**:
+  - `secure-coding-standards.md`: OWASP Top 10 defenses, tenant isolation, input validation, and cryptographic hygiene.
+  - `authentication-patterns.md`: Argon2id password hashing, JWT dual-token rotation, HTTP-only cookie security, and RBAC implied scopes.
+  - `vulnerability-remediation.md`: Mongoose NoSQL injection prevention, regex DoS guards, and audit log tamper resistance.
+
+- **`architecture/`**:
+  - `modular-monolith-patterns.md`: 7-layer domain architecture (`route -> controller -> service -> repository -> model -> validation -> types`), Mongoose ACID transaction protocols.
+  - `api-design-guidelines.md`: 193 REST endpoints, standard response envelope (`{ success, data, message, error }`), and pagination standards.
+  - `database-standards.md`: MongoDB replica set `rs0` requirements, compound indexes, soft-delete invariants, and tenant boundary enforcement.
+  - `architecture-assessment-framework.md`: Enterprise Architecture Assessment Framework, 7-layer REST API, Master MVP flow, AI agent protocol, and 10-domain audit checklist.
+
+- **`ci-cd/`**:
+  - `github-actions-best-practices.md`: Action SHA pinning, least-privilege token permissions, dual-developer git sync gate.
+  - `deployment-workflows.md`: Vercel serverless edge deployment, Docker container backend proxy, and zero-downtime rollover.
+  - `container-security.md`: Non-root execution, multi-stage Alpine builds, and automated container healthchecks.
+
+- **`design-standards/`**:
+  - `psychological-design-rules.md`: 6-law invariant testing (Fitts, Hick, Miller, Doherty, Postel), zero emojis, and touch target rules.
+  - `culinary-component-taxonomy.md`: 6-tier component hierarchy (Ingredients, Recipes, Entrees, Templates, Pages, Cookbook) with strict downward import rules.
+  - `open-source-checklist-macro-phases.md`: 230 total verification checkpoints across Design Language (10), Foundations (26), Core Components (166), and Maintenance (28).
+
+---
+
+## File Naming & Content Guidelines
+
+1. **File Naming**: All filenames must strictly use kebab-case: `[topic-name].md`.
+2. **Size Budget**: Keep individual knowledge documents focused and under **10,000 characters** to ensure fast MCP fetch times during agent initialization.
+3. **Metadata Header**: Every file must start with a metadata block:
+   ```markdown
+   ---
+   Last updated: YYYY-MM-DD
+   Domain: [security | architecture | ci-cd | design-standards]
+   Version: X.Y
+   Reviewed by: Architecture & Security Review Board
+   ---
+   ```
+4. **Zero Emojis**: Strictly prohibited. Use clean textual badges: `[PASSED]`, `[FAILED]`, `[WARNING]`, `[COMPLETED]`.
