@@ -13,8 +13,9 @@ This specification defines the authoritative **Enterprise Architecture Assessmen
 
 > **Primary Skill Safe Folder**: `.agents/skills/architecture-assessment-audit/`  
 > **Unabridged Architecture Articles**: `references/architecture-assessment-framework.md` & `references/architecture-assessment-article.md` (`.txt`: `references/architecture-assessment-standard.txt`)  
+> **Application Security Design Principles**: `references/application-security-design-principles.md` (`.txt`: `references/application-security-standard.txt`)  
 > **Git LFS Architecture & Decision Guide**: `references/git-lfs-decision-framework.md` & `references/git-lfs-architecture-article.md` (`.txt`: `references/git-lfs-standard.txt`)  
-> **Enterprise Knowledge Base Safe Location**: `.github/knowledge/ci-cd/git-lfs-architecture-guide.md` & `docs/architecture/`
+> **Enterprise Knowledge Base Safe Location**: `.github/knowledge/security/application-security-design-principles.md` & `docs/architecture/`
 
 ---
 

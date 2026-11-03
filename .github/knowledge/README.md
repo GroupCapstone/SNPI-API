@@ -12,6 +12,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `secure-coding-standards.md`: OWASP Top 10 defenses, tenant isolation, input validation, and cryptographic hygiene.
   - `authentication-patterns.md`: Argon2id password hashing, JWT dual-token rotation, HTTP-only cookie security, and RBAC implied scopes.
   - `vulnerability-remediation.md`: Mongoose NoSQL injection prevention, regex DoS guards, and audit log tamper resistance.
+  - `application-security-design-principles.md`: 5 core application security principles (Security, Compliance, Proactivity, Awareness, Simplicity) across Start, Mature, and Advance maturity tiers.
 
 - **`architecture/`**:
   - `modular-monolith-patterns.md`: 7-layer domain architecture (`route -> controller -> service -> repository -> model -> validation -> types`), Mongoose ACID transaction protocols.
@@ -26,6 +27,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `container-security.md`: Non-root execution, multi-stage Alpine builds, and automated container healthchecks.
   - `git-lfs-architecture-guide.md`: Git LFS architectural decision framework, compression evaluation heuristics, and repository bloat prevention.
   - `actions-runner-controller.md`: Actions Runner Controller (ARC) Kubernetes deployment, requests==limits QoS, zero spot instances, and DinD sidecar isolation.
+  - `repository-resilience-mirroring.md`: Repository resilience mirroring, narrow refspecs, out-of-band sync locks, and break-glass deployment runbooks.
 
 - **`design-standards/`**:
   - `psychological-design-rules.md`: 6-law invariant testing (Fitts, Hick, Miller, Doherty, Postel), zero emojis, and touch target rules.
