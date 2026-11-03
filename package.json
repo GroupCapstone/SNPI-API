@@ -25,6 +25,7 @@
     "test:api": "tsx scripts/test-all-apis.ts",
     "test:compression": "tsx scripts/test-git-compression.ts",
     "lfs:verify": "tsx scripts/verify-lfs-policy.ts",
+    "verify:arc": "tsx scripts/verify-arc-config.ts apps/backend/infrastructure/k8s/arc/arc-runner-scaleset-standard.yaml",
     "audit:architecture": "tsx scripts/audit-architecture.ts",
     "deploy:verify": "tsx scripts/verify-deploy-gate.ts",
     "git:sync": "tsx scripts/dual-dev-git-sync.ts",
