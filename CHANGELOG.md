@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `c4c0c89` (Developer: **史力爱卫**)
+
+- Apply git lfs policy governance, .gitattributes filters & verification runner
+
 ### Version 0.2.17 (03.11.2026) - `5f130a2` (Developer: **史力爱卫**)
 
 - Real-time changelog sync
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `618204b` (Developer: **史力爱卫**)
 
 - Add enterprise architecture assessment framework, REST API & 10-domain audit skill
-
-### Version 0.2.18 (03.11.2026) - `eb4b9bc` (Developer: **史力爱卫**)
-
-- Checkpoint & live ci deploy verification [PASSED]
 

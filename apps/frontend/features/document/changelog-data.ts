@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "c4c0c89",
+    "developer": "史力爱卫",
+    "description": "Apply git lfs policy governance, .gitattributes filters & verification runner"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "5f130a2",
     "developer": "史力爱卫",
     "description": "Real-time changelog sync"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "618204b",
     "developer": "史力爱卫",
     "description": "Add enterprise architecture assessment framework, REST API & 10-domain audit skill"
-  },
-  {
-    "version": "0.2.18",
-    "date": "03.11.2026",
-    "commitHash": "eb4b9bc",
-    "developer": "史力爱卫",
-    "description": "Checkpoint & live ci deploy verification [PASSED]"
   }
 ];
