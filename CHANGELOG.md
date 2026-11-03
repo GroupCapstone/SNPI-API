@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `4225b26` (Developer: **史力爱卫**)
+
+- Real-time changelog sync for primary appsec skill
+
 ### Version 0.2.17 (03.11.2026) - `febce6b` (Developer: **史力爱卫**)
 
 - Establish primary Application Security Design Principles skill & agent bindings
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `f9ac822` (Developer: **史力爱卫**)
 
 - Consolidate architecture assessment article into primary skill safe folder
-
-### Version 0.2.17 (03.11.2026) - `265ff3e` (Developer: **史力爱卫**)
-
-- Real-time changelog sync
 

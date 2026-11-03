@@ -1,0 +1,157 @@
+================================================================================
+APPLICATION SECURITY & SDLC ASSESSMENT CHECKLIST (STANDARD SPECIFICATION)
+================================================================================
+Document Version : 1.0.0
+Authoritative Scope: Application Security, Compliance, Proactivity, Awareness, GHE
+Safe Folder      : .agents/skills/application-security-design-principles/references/
+Status           : Approved Master Verification Standard
+================================================================================
+
+1. SECURITY
+--------------------------------------------------------------------------------
+[SEC-01] [P0] Dependency Scanning:
+  - Automated scanning of dependencies for known vulnerabilities on every commit/PR.
+  - Regularly update dependency scanning tools (Dependabot, npm audit).
+  - Review and address identified vulnerabilities promptly.
+[SEC-02] [P0] Code Scanning (SAST):
+  - Implement code scanning tools to identify potential security issues.
+  - Integrate code scanning into the CI/CD pipeline.
+  - Regularly review and update scanning rules and configurations.
+[SEC-03] [P0] Secrets Management:
+  - Assess practices for managing secrets and sensitive information.
+  - Use secret management tools to store and manage secrets (never in source code).
+  - Regularly rotate secrets and credentials.
+[SEC-04] [P1] Security Policies:
+  - Review presence and enforcement of security policies and guidelines (SECURITY.md).
+  - Ensure policies are accessible to all team members.
+  - Regularly update policies to reflect new threats and best practices.
+[SEC-05] [P0] Secure Coding Guidelines:
+  - Establish and enforce secure coding guidelines across all development teams.
+  - Provide training on secure coding practices.
+  - Conduct code reviews to ensure adherence to guidelines (Zod, parameterized queries).
+[SEC-06] [P0] Access Controls & RBAC:
+  - Implement strict access controls and regularly review permissions.
+  - Use role-based access control (RBAC) to limit access to systems.
+  - Regularly audit access logs for suspicious activity.
+
+2. COMPLIANCE
+--------------------------------------------------------------------------------
+[COM-01] [P0] Regulatory Compliance:
+  - List regulations and standards the organization must comply with (GDPR, FERPA).
+  - Ensure compliance with relevant regulations and conduct regular compliance audits.
+  - Maintain documentation of compliance efforts.
+[COM-02] [P0] Audit Logging:
+  - Implement comprehensive audit logging for all critical actions and access.
+  - Ensure logs are tamper-proof and securely stored with strict RBAC.
+  - Regularly review audit logs for anomalies.
+[COM-03] [P0] Data Protection & Encryption:
+  - Verify data protection practices across systems.
+  - Use strong encryption algorithms (TLS 1.3, AES-256) and key management.
+  - Regularly test encryption mechanisms for effectiveness.
+[COM-04] [P0] Incident Response Plan:
+  - Develop and regularly update an incident response plan.
+  - Conduct regular incident response drills.
+  - Ensure all team members are aware of their roles in the plan.
+[COM-05] [P1] Compliance Training:
+  - Provide regular compliance training for all team members.
+  - Include training on new regulations and standards.
+  - Track and document training completion.
+
+3. PROACTIVITY
+--------------------------------------------------------------------------------
+[PRO-01] [P1] Threat Modeling:
+  - Conduct regular threat modeling exercises across cross-functional teams.
+  - Update threat models to reflect new threats and architectural changes.
+[PRO-02] [P0] Penetration Testing:
+  - Perform regular penetration testing with internal and external testers.
+  - Address findings from penetration tests promptly; track remediation.
+[PRO-03] [P1] Security Updates & Patching:
+  - Ensure timely application of security patches and updates.
+  - Automate patch management where possible.
+  - Maintain an inventory of all software and hardware to track updates.
+[PRO-04] [P0] Vulnerability Management:
+  - Implement a robust vulnerability management program.
+  - Regularly scan for vulnerabilities in applications and infrastructure.
+  - Prioritize and remediate identified vulnerabilities based on risk.
+[PRO-05] [P0] Security Monitoring:
+  - Deploy continuous security monitoring tools to detect threats in real-time.
+  - Set up alerts for suspicious activities; review monitoring configurations.
+
+4. AWARENESS
+--------------------------------------------------------------------------------
+[AWA-01] [P1] Security Training:
+  - Provide ongoing security training and awareness programs for all employees.
+  - Include training on the latest security threats and best practices.
+  - Track and document training completion.
+[AWA-02] [P2] Phishing Simulations:
+  - Conduct regular phishing simulations and analyze results for feedback.
+[AWA-03] [P1] Security Champions:
+  - Establish a security champions program to promote security within teams.
+  - Provide additional training and reward contributions.
+[AWA-04] [P1] Communication Channels:
+  - Create clear, anonymous communication channels for reporting security concerns.
+[AWA-05] [P1] Security Culture:
+  - Foster a culture of security awareness and responsibility across the team.
+
+5. GITHUB ENTERPRISE DEPLOYMENTS
+--------------------------------------------------------------------------------
+[GHE-01] [P0] GitHub Enterprise Configuration:
+  - Configure GitHub Enterprise according to best practices.
+  - Name responsible individuals and document configuration approvals.
+[GHE-02] [P0] SSO Integration:
+  - Implement and enforce Single Sign-On (SSO) with regular reviews.
+[GHE-03] [P0] Backup and Recovery for GHES:
+  - Establish and test backup and recovery procedures using ghe-backup.
+  - Test restores into a staging environment regularly.
+[GHE-04] [P0] Network Security:
+  - Implement VPNs, firewalls, and network monitoring for GitHub Enterprise.
+[GHE-05] [P0] User Provisioning (SCIM):
+  - Automate user provisioning/de-provisioning; enforce mandatory 2FA.
+[GHE-06] [P1] Custom Security Policies:
+  - Enforce custom rulesets for branch protection, signing, and reviews.
+[GHE-07] [P0] API Security:
+  - Secure GitHub Enterprise APIs with fine-grained tokens and monitor usage.
+[GHE-08] [P0] Monitoring and Alerts:
+  - Set up monitoring and alerting for unusual activities in GitHub Enterprise.
+[GHE-09] [P1] Data Residency:
+  - Ensure data residency compliance when replicating repositories.
+[GHE-10] [P1] Third-Party Integrations:
+  - Regularly review and assess permissions of third-party GitHub integrations.
+
+6. SCALABILITY
+--------------------------------------------------------------------------------
+[SCA-01] [P1] Repository Structure: Assess organization, naming conventions, descriptions.
+[SCA-02] [P2] Custom Properties: Target repositories dynamically with rulesets.
+[SCA-03] [P1] Code Modularity: Reusable, loosely coupled modules with clear dependencies.
+[SCA-04] [P1] Tech Stack Consistency: Standardized stack with strong ecosystem support.
+[SCA-05] [P1] Resource Management: Ephemeral recreation, >= 30% headroom, load balancing.
+
+7. RESILIENCY
+--------------------------------------------------------------------------------
+[RES-01] [P0] Fault Tolerance: Regularly test disaster recovery procedures in staging.
+[RES-02] [P0] Data Replication: Cross-region replication monitored and verified.
+
+8. MODULARITY
+--------------------------------------------------------------------------------
+[MOD-01] [P1] Service Separation: Modular services independently developed and deployed.
+[MOD-02] [P1] Codebase Modularity: Documented dependencies and modular design patterns.
+[MOD-03] [P1] Microservices Architecture: Applied contextually with service discovery.
+
+9. INTEROPERABILITY
+--------------------------------------------------------------------------------
+[INT-01] [P1] Custom Integrations: Secure, documented, and free of vulnerabilities.
+[INT-02] [P0] Network Configuration: Firewalls, security groups, and traffic analysis.
+[INT-03] [P1] Maintenance & Updates: Regularly applied updates with scheduled windows.
+[INT-04] [P1] Scalability Planning: Hardware capacity planning for future growth.
+[INT-05] [P0] Backup Solutions: Robust on-premises backups tested and verified.
+
+10. SIMPLICITY
+--------------------------------------------------------------------------------
+[SIM-01] [P1] Code Simplicity: Codebases simple, following best practices and reviews.
+[SIM-02] [P1] System Design: Straightforward architecture avoiding overengineering.
+[SIM-03] [P1] Documentation: Clear, accessible documentation with examples and use cases.
+
+11. OBSERVABILITY
+--------------------------------------------------------------------------------
+[OBS-01] [P0] Logging: Comprehensive, secure, tamper-proof logging with retention policies.
+================================================================================
