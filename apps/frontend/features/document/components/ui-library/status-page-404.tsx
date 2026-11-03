@@ -34,8 +34,7 @@ export const STATUS_DIRECTORY: Record<StatusCode, StatusMeta> = {
     code: 404,
     title: 'Page Coordinates Not Found',
     tagline: 'Resource not located in SNPI-SMS routing directory',
-    description:
-      'The requested route coordinates or document resource could not be located on this cluster branch.',
+    description: '',
     remediation: 'Verify the route URL or navigate back to the developer document portal.',
     badge: 'HTTP 404 · NOT FOUND',
   },
@@ -280,16 +279,9 @@ export function StatusPage404({
               <h2 className="font-sans text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
                 {resolvedTitle}
               </h2>
-              <p className="font-sans text-xs text-slate-600 sm:text-sm">{resolvedDesc}</p>
-            </div>
-
-            {/* Radar Coordinates Footer */}
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-3 font-mono text-[10px] text-slate-400">
-              <span>SCAN TARGET: 13.36°N, 103.85°E</span>
-              <span className="opacity-30">|</span>
-              <span>BEARING: 042° RADIAL</span>
-              <span className="opacity-30">|</span>
-              <span className="font-bold text-[#0056FF]">STATUS: UNREACHABLE</span>
+              {resolvedDesc ? (
+                <p className="font-sans text-xs text-slate-600 sm:text-sm">{resolvedDesc}</p>
+              ) : null}
             </div>
           </div>
         )}
@@ -341,11 +333,6 @@ export function StatusPage404({
                 <span>{resolvedHomeLabel}</span>
               </Link>
             )}
-
-            {/* Cryptographic Nonce Ledger Hash */}
-            <div className="mt-8 font-mono text-[10px] text-slate-400">
-              LEDGER_TX: 0x404_F8B92 · SHA-256 CONSTANT TIME VERIFIED
-            </div>
           </div>
         )}
 
@@ -375,9 +362,11 @@ export function StatusPage404({
                 Sorry, we can&apos;t find that page
               </h2>
 
-              <p className="mx-auto max-w-md font-sans text-xs text-slate-600 sm:text-sm">
-                {meta.description}
-              </p>
+              {meta.description ? (
+                <p className="mx-auto max-w-md font-sans text-xs text-slate-600 sm:text-sm">
+                  {meta.description}
+                </p>
+              ) : null}
 
               {resolvedHomeLabel && (
                 <div className="pt-5">
@@ -389,11 +378,6 @@ export function StatusPage404({
                   </Link>
                 </div>
               )}
-            </div>
-
-            {/* Decibel / Carrier Frequency Telemetry */}
-            <div className="relative z-10 mt-10 font-mono text-[10px] text-slate-400">
-              CARRIER: 104.2 MHz · SIGNAL NOISE RATIO: -38.4 dB · LOSS DETECTED
             </div>
           </div>
         )}

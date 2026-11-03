@@ -18,7 +18,12 @@ This skill is the single authoritative design standard and architectural specifi
 
 All design standards, specifications, and component guides must strictly reside within this single skill folder:
 - **Root Skill**: `.agents/skills/snp-sms-design-standards/SKILL.md`
+- **Mandatory Psychological Design Rules for AI Agents**: `.agents/skills/snp-sms-design-standards/psychological-design-rules.md` (Mandatory AI agent skill rules: Fitts's Law >=44px, Hick's Law <=5 options, Miller's Law <=5 fields/card, Doherty Threshold <=400ms, Postel's Law liberal inputs, Culinary downward imports)
 - **10 Core UI Components Guide**: `.agents/skills/snp-sms-design-standards/10-ui-components.md`
+- **Culinary Component Taxonomy Architecture**: `.agents/skills/snp-sms-design-standards/culinary-component-taxonomy.md` (6-tier architectural hierarchy: Ingredients, Recipes, Entrees, Templates, Pages, Cookbook with strict downward dependency rules and token mapping)
+- **Open-Source Design System Checklist (230 Total Checks)**: `.agents/skills/snp-sms-design-standards/open-source-checklist-macro-phases.md` (4 isolated macro-phases: Design Language 5/10, Foundations 0/26, Core Components 0/166, Maintenance 0/28, without cross-phase merging)
+- **Core Components Design System Manual**: `.agents/skills/snp-sms-design-standards/core-components-design-system-manual.md` (29 core primitives, 166 verification checkpoints across Structure, Feedback, Media, Action, Navigation, and Form categories)
+- **Design System Maintenance Strategy Manual**: `.agents/skills/snp-sms-design-standards/design-system-maintenance-manual.md` (5 maintenance pillars, 28 operational checkpoints covering Documentation, Local Libraries, Team Processes, Community Support, and Contribution)
 - **Living Interface Animation Manual**: `.agents/skills/snp-sms-design-standards/living-interface-animation-manual.md` (The 12 Principles of Animation, <300ms timing rule, and Motion standards)
 - **Modern CSS Pseudo-Elements Manual**: `.agents/skills/snp-sms-design-standards/modern-css-pseudo-elements-manual.md` (::before/::after hit targets, View Transitions API, native dialog ::backdrop)
 - **Easing Curves vs. Springs Guide**: `.agents/skills/snp-sms-design-standards/eases-vs-springs-guide.md` (User Reacting vs System Speaking, Interaction Roles, Bézier vs Spring Physics, <300ms timing rule)
@@ -502,3 +507,157 @@ In the Blueprint menu (`DesignSystemHomeView` / `/document/design`), the two pri
    - Interactive filters: Category pills (`ALL`, `BRAND`, `ACCENT`, `NEUTRAL`, `STATUS`), Format switchers (`HEX`, `CSS`), and Contrast validators (`AA`, `AAA`)
 
 **IMMUTABILITY INVARIANT**: These two sections must **ALWAYS remain primary, top-level (indexes 01 and 02 in `SIDEBAR_TREE`), and permanently intact**. Under no circumstances should AI agents or developers modify, remove, hide, reorder, or replace these two core foundation sections. They represent the permanent, sticky visual foundation of the SNPI enterprise design system.
+
+---
+
+### 7.24 The 6-Tier Culinary Component Architecture & Downward Import Invariant
+Every component and view in the SNP-SMS platform strictly adheres to the 6-tier culinary hierarchy:
+1. **Tier 01: Ingredients** (Tokens & Atoms): Color hexes, typography scales, spacing units, elevation/z-index, motion curves, raw SVGs.
+2. **Tier 02: Recipes** (Atomic UI Primitives): Button, Text field, Checkbox, Radio, Switch, Badge, Avatar, Link, Divider, Tooltip.
+3. **Tier 03: Entrees** (Compound Organisms): Data Table, Modal Dialog, Navigation Bar/Rail, Accordion, Toast Stack, Carousel, Search Filter Bar.
+4. **Tier 04: Templates** (Layout Scaffolds): Viewport wireframes without dynamic data (Dashboard Scaffold, Settings Master-Detail, Split Panes).
+5. **Tier 05: Pages** (Concrete Production Views): Live screens with real backend models & RBAC (Campus Analytics, Student Lifecycle, Billing, Attendance).
+6. **Tier 06: Cookbook** (Master Design System): Complete governance rulebook, brand blueprint, component manuals, contribution RFCs, maintenance SLAs.
+
+**Strict Downward Dependency Rule**:
+- `Cookbook` -> Imports Guidelines, Foundations, Components & Maintenance
+- `Pages` -> Imports Templates, Entrees, Recipes, Ingredients
+- `Templates` -> Imports Entrees, Recipes, Ingredients (NEVER Pages)
+- `Entrees` -> Imports Recipes, Ingredients (NEVER Templates or Pages)
+- `Recipes` -> Imports Ingredients (NEVER Entrees, Templates, or Pages)
+- `Ingredients` -> Pure Values (Imports NOTHING)
+
+---
+
+### 7.25 Mandatory Psychological Design Rules for AI Agents
+When generating or editing user interface components, AI agents MUST enforce:
+1. **Fitts's Law**: All touch targets >= 44x44px. Compact icon buttons (<=24px) MUST use `::before` pseudo-element hit-area expansion. Maintain 100ms coyote time on boundary exit.
+2. **Hick's Law**: Surface <= 5 primary visible choices per tier. Enforce progressive disclosure for advanced settings.
+3. **Miller's Law**: Group dense form inputs into visual cards of <= 5 fields per section. Segment identifiers into 3-4 character clusters.
+4. **Doherty Threshold**: Maintain <= 400ms feedback cycles. Trigger immediate active press scale(0.96) on pointerdown. Render skeleton loading shimmers for async operations > 400ms.
+5. **Postel's Law**: Generously parse human data entry (dates, phone numbers, search keywords) and normalize to strict ISO models before API dispatch.
+
+---
+
+### 7.26 Adobe React Spectrum Left Sidebar Navigation Standard
+Refer to `ui-library-view.tsx` and `docs-sticky-header.tsx` for implementation:
+- **Clean Child Item Typography (Zero Icons)**:
+  - Icons are strictly reserved for parent category triggers only (`Navigation`, `Inputs`, `Feedback`, etc.).
+  - All child component menu items render with pure clean typography without icon clutter.
+- **Zero "Coming" Badge Clutter**:
+  - Never display noisy `[ COMING ]` pill badges on unbuilt or draft components. Only newly completed components built within 7 days display a discrete green `New` pill.
+- **Active State Indicator Bar (`| Accordion` / `| List view`)**:
+  - Active item renders with a crisp vertical indicator bar on the left edge (`before:absolute before:left-0 before:top-1.5 before:bottom-1.5 before:w-[3px] before:rounded-full before:bg-slate-950`) and bold dark text (`font-bold text-slate-950 bg-slate-100/70`).
+- **Collapsible Category Triggers with Count Badges**:
+  - Each group header renders the parent group icon, title, item count badge (e.g. `[ 61 ]` or `[ 12 ]`), and chevron toggle (`ChevronDown` / `ChevronRight`).
+
+---
+
+### 7.27 Clean Minimalist Search Bar Standard
+Refer to `ui-library-view.tsx` and `docs-sticky-header.tsx`:
+- **Inline Search Icon**: Clean vector `Search` icon positioned at `left-3 size-4 text-slate-400 group-focus-within:text-[#0056FF]`. Never use bulky solid-color square icon buttons.
+- **Standard Dimensions & Colors**: `h-9.5` (38px height), rounded-xl (`rounded-xl`), `#F8FAFC` base background, `#CAD3F5` border, and `#0A1A4A` text.
+- **Zero Focus-Visible Outline Artifacts**:
+  - Input elements MUST apply `focus:outline-none focus-visible:outline-none` and `style={{ outline: 'none' }}` to completely eliminate browser `:focus-visible` rectangular outline offsets.
+  - Active focus state is communicated cleanly via `focus:border-[#0056FF] focus:bg-white focus:ring-2 focus:ring-[#0056FF]/15`.
+- **Keyboard Shortcuts & Clear Action**: Frosted `⌘K` micro-badge and one-click clear `X` button.
+
+---
+
+### 7.28 Notification Bell & Anchored Floating Popover Standard
+Refer to `feedback-demos.tsx` (`NotificationBellDemo`):
+- **Floating Tap-to-Drop Anchored Architecture**:
+  - The notification list is anchored directly under the bell trigger icon button (`absolute right-0 top-full mt-3 z-50 w-[calc(100vw-3rem)] sm:w-[420px]`).
+  - Never render notifications as an inline page-pushing static card block.
+- **Dismissal Hygiene**:
+  - Outside-click detection (`handleClickOutside` with `mousedown` event listener) dismisses the popover automatically.
+  - `Escape` key listener closes the panel immediately.
+- **Domain Categories & Actions**:
+  - Category filters: `All`, `Academic`, `Security`, `Finance`, `System`.
+  - Mark all read, individual toggle unread, delete notification, and simulated real-time alert dispatching.
+
+---
+
+### 7.29 Enterprise Logo Marquee Section Standard
+Refer to `logo-marquee.tsx` (`LogoMarquee` / `LogoMarqueeDemo`):
+- **10 Real Enterprise Logos**:
+  - Authentic SVGs for Apple, Google, Microsoft, Amazon, Meta, NVIDIA, OpenAI, Cloudflare, GitHub, and Vercel.
+  - Strict monochrome black & white aesthetic (`#000000` / `#FFFFFF`) with zero colored logo clutter.
+- **Hardware-Accelerated 60fps Drift**:
+  - CSS keyframes ticker loop using `transform: translate3d(...)` with zero React re-render overhead.
+  - Left/right linear edge gradient fade masks (`from-white to-transparent`).
+  - Interactive speed controls (`Slow: 45s`, `Normal: 28s`, `Fast: 16s`), direction reverse (`Left` / `Right`), hover pause, and dual counter-track mode.
+
+---
+
+### 7.30 Sleek Minimalist Table of Contents (Rail TOC Standard)
+Refer to `rail-toc.tsx` (`RailToc`):
+- **Zero Clutter Track**:
+  - Replaces clunky circular SVG nodes, de Casteljau Bézier connecting curves, and paper plane icons with a straight, ultra-crisp vertical track line.
+- **Active Section Indication**:
+  - Active heading displays a sleek vertical accent pill (`w-[2.5px] rounded-full bg-[#0056FF]`) on the track with bold high-contrast text (`font-bold text-[#0056FF] bg-[#EFF5FF]/80`).
+- **Smooth Scroll & Navigation**:
+  - One-click smooth scrolling to section ID with container offset calculation.
+
+---
+
+### 7.31 Signature Parent Colors & Pseudo-Random Component Demo Stage Canvas Standard
+Refer to `component-nav-icons.tsx` and `ui-library-view.tsx` for implementation:
+- **Kinetic Card Palette Derivation**:
+  - Derived directly from the 6-card kinetic deck archetypes:
+    1. Soft Ice Tint (`#EFF5FF` / `#CAD3F5`)
+    2. Solid Brand Royal Blue (`#0056FF`)
+    3. Signal / Sunny Yellow (`#FEFCE8` / `#FACC15`)
+    4. Interactive Azure Blue (`#F0F7FF` / `#2277FF`)
+    5. Mint Emerald Green (`#F0FDF4` / `#10B981`)
+    6. Pearl Slate Mesh (`#F8FAFC` / `#475569`)
+    7. Warm Honey Amber (`#FFFBEB` / `#F59E0B`)
+    8. Rose Quartz (`#FFF1F2` / `#F43F5E`)
+- **Parent Category Signature Binding (`getParentCategoryTheme`)**:
+  - Applied to parent category triggers in the sidebar (icon + label), main feed category divider headers, and **all component card backgrounds within each parent group**.
+  - Navigation: Azure Blue (`#2277FF`), card: `bg-[#EFF6FF] border-[#BAE6FD]`
+  - Feedback: Royal Blue (`#0056FF`), card: `bg-[#EFF5FF] border-[#CAD3F5]`
+  - Inputs: Sunny Yellow (`#EAB308` / `#FACC15`), card: `bg-[#FEFCE8] border-[#FEF08A]`
+  - Containers / Display: Soft Lavender (`#8B5CF6`), card: `bg-[#F5F3FF] border-[#DDD6FE]`
+  - Actions: Mint Emerald (`#10B981`), card: `bg-[#F0FDF4] border-[#BBF7D0]`
+  - AI Prompts / AI Kit: Pearl Slate (`#475569`), card: `bg-[#F8FAFC] border-[#CBD5E1]`
+  - Forms: Warm Honey Amber (`#F59E0B`), card: `bg-[#FFFBEB] border-[#FDE68A]`
+  - Sections: Deep Azure (`#0284C7`), card: `bg-[#F0F9FF] border-[#BAE6FD]`
+  - Text Effects: Rose Quartz (`#F43F5E`), card: `bg-[#FFF1F2] border-[#FECDD3]`
+- **Unified Single-Layer 4px Radius Card Architecture**:
+  - The entire component block is encapsulated into a single unified card (`rounded-[4px] border` with `borderRadius: '4px'`, `parentTheme.cardBg`, and `parentTheme.cardBorder`).
+  - **Color Grouping by Parent Category**: All component cards within a parent group strictly inherit that parent's signature card background and border tokens (`parentTheme.cardBg` and `parentTheme.cardBorder`).
+  - **Zero Nested Card Layers**: The component demo renders directly on the stage surface without nesting inner card wrappers.
+  - **Component Title Encapsulation**: The title of the component and status badges reside inside the top of the unified card.
+  - **Bottom-Left Install Command Pill**: The `npx snpi-ui@latest add <id>` command is positioned at the bottom-left of the card block with a matching `rounded-[4px]` border radius.
+  - **Zero Color Label Name Chips**: No color names or palette pills (`• SOFT LAVENDER`, `• SIGNAL YELLOW`) are rendered on the card.
+  - **Zero Count Badges**: No count badges (`{n} components`) on category header dividers, components, or sidebar menus.
+  - **MANDATORY INVARIANT: Object Design Isolation**: Never modify, tint, or override the internal object design of the component being previewed (buttons, notification bell, inputs, tables, dialogs retain their authentic design tokens).
+  - **WCAG AAA Compliance**: High-lightness tints (L* >= 94-98%) guarantee >= 7:1 contrast for all dark foreground text and crisp boundary separation for light elements.
+
+---
+
+## 8. Authoritative 5-Stage Design & Implementation Flow
+
+Every new feature, UI component, or design system addition must progress through this strict 5-stage pipeline:
+
+```
+[STAGE 1: TAXONOMY] -> [STAGE 2: PSYCHOLOGY] -> [STAGE 3: TOKENS] -> [STAGE 4: CODE] -> [STAGE 5: QUALITY GATE]
+```
+
+1. **Stage 1: Architectural Taxonomy Classification**:
+   - Classify the target element into its exact Culinary Tier (Ingredient, Recipe, Entree, Template, or Page).
+   - Verify that all dependencies follow one-way downward imports.
+2. **Stage 2: Cognitive Psychology Invariant Verification**:
+   - Verify touch target size (Fitts >= 44px), choice density (Hick <= 5), section chunking (Miller <= 5), latency feedback (Doherty <= 400ms), and input tolerance (Postel).
+3. **Stage 3: Token Binding & Theme Rules**:
+   - Exclusively bind colors to the 5 primary brand tokens: `#0056FF` Royal Blue, `#2277FF` Azure Blue, `#CAD3F5` Soft Lavender border, `#FFFFFF` White canvas, `#EFF5FF` Ice Tint card fill, and `#0A1A4A` Deep Navy text.
+   - Enforce WCAG AAA >= 7:1 contrast. Zero muddy grays, zero black terminal console boxes in documentation.
+4. **Stage 4: Implementation & Zero-Truncation Layout**:
+   - Render labels using responsive `break-words leading-tight`/`leading-snug`. Never truncate group headers, tree navigation items, or section jump menus.
+   - Integrate keyboard navigation (Tab, Esc, Enter, Arrows) and accessible ARIA attributes.
+5. **Stage 5: Verification Quality Gate**:
+   - Run `npm run build --workspace=apps/frontend` to verify 0 TypeScript/compilation errors.
+   - Run `npm test --workspace=apps/frontend` to ensure 218/218 unit tests pass.
+   - Record updates in real-time in `CHANGELOG.md` per `snp-sms-changelog-workflow`.
+

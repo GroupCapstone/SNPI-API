@@ -363,223 +363,163 @@ export function AccessibleDesignPrinciples({
     }
   };
 
+  const ACCESSIBLE_DOMAINS = [
+    {
+      id: 'layout',
+      label: 'Layout & Structure',
+      description: 'Viewport structure, responsive reflow, and adaptive grid mechanics',
+      icon: AppWindow,
+      tabs: [
+        { id: 'layout' as const, label: 'Layout Scaffold' },
+        { id: 'canonical' as const, label: 'Canonical Layouts' },
+        { id: 'breakpoints' as const, label: 'Breakpoints & Vectors' },
+        { id: 'density' as const, label: 'Grids & Density' },
+        { id: 'resizing' as const, label: 'Resizing & Reflow' },
+      ],
+    },
+    {
+      id: 'accessibility',
+      label: 'Accessibility & Nav',
+      description: 'Landmarks, keyboard traversal, touch targets, and contrast ratios',
+      icon: Accessibility,
+      tabs: [
+        { id: 'hierarchy' as const, label: 'Hierarchy & Landmarks' },
+        { id: 'keyboard' as const, label: 'Keyboard & Focus' },
+        { id: 'targets' as const, label: 'Target Sizes & Spacing' },
+        { id: 'contrast' as const, label: 'Contrast & Clusters' },
+      ],
+    },
+    {
+      id: 'interactions',
+      label: 'Interactions & Inputs',
+      description: 'Micro-interaction states, multi-modal entry, and selection modes',
+      icon: HandPointer,
+      tabs: [
+        { id: 'states' as const, label: 'Interaction States' },
+        { id: 'inputs' as const, label: 'Multi-Modal Inputs' },
+        { id: 'selection' as const, label: 'Selection Modes' },
+      ],
+    },
+    {
+      id: 'content',
+      label: 'Content & Clarity',
+      description: 'UX syntax, concise messaging, alt text formulas, and plain writing',
+      icon: PenLine,
+      tabs: [
+        { id: 'ux-writing' as const, label: 'UX Writing & Syntax' },
+        { id: 'alt-text' as const, label: 'Alt Text & Global Writing' },
+        { id: 'notifications' as const, label: 'Notifications & SMS' },
+        { id: 'usability' as const, label: 'Usability & Expressive' },
+        { id: 'inclusive' as const, label: 'Co-Design & Dimensions' },
+      ],
+    },
+  ];
+
+  const activeDomain =
+    ACCESSIBLE_DOMAINS.find((domain) => domain.tabs.some((t) => t.id === activeTab)) ||
+    ACCESSIBLE_DOMAINS[0];
+
+  const handleDomainSelect = (domainId: string) => {
+    const targetDomain = ACCESSIBLE_DOMAINS.find((d) => d.id === domainId);
+    if (targetDomain) {
+      const hasCurrent = targetDomain.tabs.some((t) => t.id === activeTab);
+      if (!hasCurrent) {
+        setActiveTab(targetDomain.tabs[0].id);
+      }
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* ------------------------------------------------------------- */}
-      {/* 7 FOUNDATION TABS (ZERO FLUFF, ULTRA-COMPACT)                  */}
+      {/* 2-TIER PSYCHOLOGICAL DOMAIN NAVIGATION (HICK'S & MILLER'S LAW) */}
       {/* ------------------------------------------------------------- */}
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#CAD3F5] bg-[#F8FAFC] p-3 text-xs">
-        <div className="inline-flex flex-wrap items-center gap-1 rounded-xl border border-[#CAD3F5] bg-white p-1">
-          <button
-            type="button"
-            onClick={() => setActiveTab('alt-text')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'alt-text'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Alt Text &amp; Global Writing
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('ux-writing')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'ux-writing'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            UX Writing &amp; Syntax
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('notifications')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'notifications'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Notifications &amp; SMS
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('inputs')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'inputs'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Multi-Modal Inputs
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('selection')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'selection'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Selection Modes
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('layout')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'layout'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Layout Scaffold
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('states')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'states'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Interaction States
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('density')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'density'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Grids &amp; Density
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('breakpoints')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'breakpoints'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Breakpoints &amp; Vectors
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('usability')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'usability'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Usability &amp; Expressive
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('canonical')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'canonical'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Canonical Layouts
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('inclusive')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'inclusive'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Co-Design &amp; Dimensions
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('resizing')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'resizing'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Resizing &amp; Reflow
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('keyboard')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'keyboard'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Keyboard &amp; Focus
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('contrast')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'contrast'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Contrast &amp; Clusters
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('hierarchy')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'hierarchy'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Hierarchy &amp; Landmarks
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('targets')}
-            className={cn(
-              'rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
-              activeTab === 'targets'
-                ? 'bg-[#0056FF] text-white shadow-none'
-                : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
-            )}
-          >
-            Target Sizes &amp; Spacing
-          </button>
+      <div className="space-y-3 rounded-2xl border border-[#CAD3F5] bg-[#F8FAFC] p-4 text-xs">
+        {/* Tier 1: 4 Core Psychological Domains */}
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          {ACCESSIBLE_DOMAINS.map((domain) => {
+            const isDomainActive = activeDomain.id === domain.id;
+            const DomainIcon = domain.icon;
+            return (
+              <button
+                key={domain.id}
+                type="button"
+                onClick={() => handleDomainSelect(domain.id)}
+                className={cn(
+                  'group flex cursor-pointer flex-col items-start gap-1.5 rounded-xl border p-3 text-left transition-all',
+                  isDomainActive
+                    ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
+                    : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:border-[#0056FF]/40 hover:bg-[#EFF5FF]',
+                )}
+              >
+                <div className="flex w-full items-center justify-between">
+                  <div
+                    className={cn(
+                      'flex size-7 items-center justify-center rounded-lg transition-colors',
+                      isDomainActive
+                        ? 'bg-white/20 text-white'
+                        : 'bg-[#EFF5FF] text-[#0056FF] group-hover:bg-[#0056FF] group-hover:text-white',
+                    )}
+                  >
+                    <DomainIcon className="size-4" />
+                  </div>
+                  <span
+                    className={cn(
+                      'rounded-md px-1.5 py-0.5 font-mono text-[10px] font-bold',
+                      isDomainActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500',
+                    )}
+                  >
+                    {domain.tabs.length} Topics
+                  </span>
+                </div>
+                <div className="mt-0.5">
+                  <div className="font-sans text-xs leading-tight font-bold">{domain.label}</div>
+                  <div
+                    className={cn(
+                      'line-clamp-1 font-mono text-[10px]',
+                      isDomainActive ? 'text-white/80' : 'text-slate-500',
+                    )}
+                  >
+                    {domain.description}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Spec Badge */}
-        <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-white px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
-          <Accessibility className="size-3.5" />
-          <span>&le; 140 Chars &middot; Global Plain Writing</span>
+        {/* Tier 2: Focused Subtopic Filter Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#CAD3F5] bg-white p-2">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="mr-1 hidden font-mono text-[10px] font-bold text-slate-400 uppercase sm:inline-block">
+              {activeDomain.label}:
+            </span>
+            {activeDomain.tabs.map((tab) => {
+              const isTabActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={cn(
+                    'cursor-pointer rounded-lg px-3 py-1.5 font-sans text-xs font-bold transition-all',
+                    isTabActive
+                      ? 'bg-[#0056FF] text-white shadow-none'
+                      : 'bg-transparent text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+                  )}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="hidden items-center gap-1.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1 font-mono text-[10px] font-bold text-[#0056FF] sm:flex">
+            <span>
+              Topic {activeDomain.tabs.findIndex((t) => t.id === activeTab) + 1} of{' '}
+              {activeDomain.tabs.length}
+            </span>
+          </div>
         </div>
       </div>
 

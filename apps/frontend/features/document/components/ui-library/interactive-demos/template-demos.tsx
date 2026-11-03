@@ -298,34 +298,8 @@ export function SpotlightCardDemo() {
 // 4. SECTIONS
 // ==========================================
 
-// 4.1 Marquee Section
-export function MarqueeSectionDemo() {
-  const partners = [
-    'Siem Reap Campus',
-    'Phnom Penh Main',
-    'Battambang Wing',
-    'Kampot Academy',
-    'Kandal Science',
-  ];
-
-  return (
-    <div className="w-full max-w-lg space-y-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-xs">
-      <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-        Active Institutional Campuses
-      </span>
-      <div className="flex scrollbar-none items-center gap-3 overflow-x-auto py-2">
-        {partners.concat(partners).map((name, i) => (
-          <span
-            key={i}
-            className="shrink-0 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 font-sans text-xs font-bold text-slate-700"
-          >
-            {name}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
+// 4.1 Marquee Section (Apple + 9 Real Industry Leaders in Monochrome B&W)
+export { LogoMarqueeDemo as MarqueeSectionDemo } from '../logo-marquee';
 
 // ==========================================
 // 5. FORMS

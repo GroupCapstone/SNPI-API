@@ -217,7 +217,7 @@ export function HookSidebar({
           const rowContent = (
             <span className="flex min-w-0 items-center gap-2">
               {icon}
-              <span className="truncate">{text}</span>
+              <span className="flex-1 leading-tight break-words">{text}</span>
             </span>
           );
 

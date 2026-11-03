@@ -8,11 +8,11 @@ import {
   LibraryDropdown,
   COMPONENT_LIBRARY_REGISTRY,
   COMPONENT_CATEGORIES,
-  DOCUMENTATION_NAV_ITEMS,
+  COMPONENT_GROUPS_NAV,
+  type ComponentGroupNav,
   M3_COMPONENTS_NAV,
   PLATFORM_COMPONENTS_NAV,
   type M3NavItem,
-  type DocNavItem,
   GeometricButton,
   GeometricInput,
   GeometricHeaderStamp,
@@ -46,12 +46,14 @@ import {
   type ComponentFreshness,
   getComponentFreshness,
   getCategoryHierarchicalNodes,
+  getNavIcon,
+  getParentGroupIcon,
+  getParentCategoryTheme,
 } from '@/features/document/components/ui-library';
 import {
   Home,
   Search,
   Folder,
-  Plus,
   MapPin,
   Check,
   Copy,
@@ -60,7 +62,6 @@ import {
   EyeOff,
   User,
   Monitor,
-  FileText,
   LayoutGrid,
   ChevronDown,
   ChevronRight,
@@ -78,6 +79,8 @@ import {
   Table,
   Bell,
   Sliders,
+  Building2,
+  GraduationCap,
 } from '@/components/icons';
 import { useDocsNav } from './docs-nav-context';
 import { cn } from '@/lib/utils';
@@ -137,6 +140,29 @@ export function UiLibraryView() {
 
   // Search query to filter components
   const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcut: Cmd/Ctrl + K or / to focus search
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+      } else if (
+        e.key === '/' &&
+        document.activeElement?.tagName !== 'INPUT' &&
+        document.activeElement?.tagName !== 'TEXTAREA'
+      ) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      } else if (e.key === 'Escape' && document.activeElement === searchInputRef.current) {
+        searchInputRef.current?.blur();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Per-component tab view state: 'preview' | 'prompt'
   const [componentTabs] = React.useState<Record<string, 'preview' | 'prompt'>>({});
@@ -225,6 +251,16 @@ export function UiLibraryView() {
   // Menu Category Filter: 'all' | 'ready' | 'coming'
   const [menuFilter, setMenuFilter] = React.useState<'all' | 'ready' | 'coming'>('all');
 
+  // Category group collapse state: default expanded (all open initially)
+  const [collapsedGroups, setCollapsedGroups] = React.useState<Record<string, boolean>>({});
+
+  const toggleCategoryGroup = (groupId: string) => {
+    setCollapsedGroups((prev) => ({
+      ...prev,
+      [groupId]: !prev[groupId],
+    }));
+  };
+
   // Parent group expansion state: default collapsed (no child dropdown open initially)
   const [expandedParents, setExpandedParents] = React.useState<Record<string, boolean>>({});
 
@@ -278,30 +314,51 @@ export function UiLibraryView() {
     }).filter((group) => group.components.length > 0);
   }, []);
 
-  // Filter M3 components with real-time search query
+  // Filter Component Groups with real-time search query
+  const filteredComponentGroups = React.useMemo(() => {
+    if (!searchQuery.trim()) return COMPONENT_GROUPS_NAV;
+    const q = searchQuery.toLowerCase().trim();
+
+    return COMPONENT_GROUPS_NAV.map((group) => {
+      const matchesGroup = group.group.toLowerCase().includes(q);
+      const matchingItems = group.items
+        .map((item) => {
+          if (matchesGroup) return item;
+          if (item.isParent && item.children) {
+            const matchesParent = item.name.toLowerCase().includes(q);
+            const matchingChildren = item.children.filter((c) => c.name.toLowerCase().includes(q));
+            if (matchesParent) {
+              return item;
+            }
+            if (matchingChildren.length > 0) {
+              return {
+                ...item,
+                children: matchingChildren,
+              };
+            }
+            return null;
+          }
+          if (item.name.toLowerCase().includes(q)) {
+            return item;
+          }
+          return null;
+        })
+        .filter((item): item is M3NavItem => item !== null);
+
+      return {
+        ...group,
+        items: matchingItems,
+      };
+    }).filter((group) => group.items.length > 0);
+  }, [searchQuery]);
+
+  // Backward compatibility filter fallbacks if needed
   const filteredM3Components = React.useMemo(() => {
     if (!searchQuery.trim()) return M3_COMPONENTS_NAV;
     const q = searchQuery.toLowerCase().trim();
-    return M3_COMPONENTS_NAV.filter((item) => {
-      if (item.name.toLowerCase().includes(q)) return true;
-      if (item.children && item.children.some((c) => c.name.toLowerCase().includes(q))) {
-        return true;
-      }
-      return false;
-    }).map((item) => {
-      if (item.children) {
-        return {
-          ...item,
-          children: item.children.filter((c) =>
-            item.name.toLowerCase().includes(q) ? true : c.name.toLowerCase().includes(q),
-          ),
-        };
-      }
-      return item;
-    });
+    return M3_COMPONENTS_NAV.filter((item) => item.name.toLowerCase().includes(q));
   }, [searchQuery]);
 
-  // Filter Platform components with real-time search query
   const filteredPlatformComponents = React.useMemo(() => {
     if (!searchQuery.trim()) return PLATFORM_COMPONENTS_NAV;
     const q = searchQuery.toLowerCase().trim();
@@ -312,16 +369,18 @@ export function UiLibraryView() {
   React.useEffect(() => {
     if (!activeSectionId) return;
 
-    for (const item of M3_COMPONENTS_NAV) {
-      if (item.isParent && item.children) {
-        const isChildActive = item.children.some(
-          (c) => c.targetId === activeSectionId || `comp-${c.id}` === activeSectionId,
-        );
-        if (isChildActive) {
-          setExpandedParents((prev) => {
-            if (prev[item.id]) return prev;
-            return { ...prev, [item.id]: true };
-          });
+    for (const group of COMPONENT_GROUPS_NAV) {
+      for (const item of group.items) {
+        if (item.isParent && item.children) {
+          const isChildActive = item.children.some(
+            (c) => c.targetId === activeSectionId || `comp-${c.id}` === activeSectionId,
+          );
+          if (isChildActive) {
+            setExpandedParents((prev) => {
+              if (prev[item.id]) return prev;
+              return { ...prev, [item.id]: true };
+            });
+          }
         }
       }
     }
@@ -331,10 +390,15 @@ export function UiLibraryView() {
   React.useEffect(() => {
     if (!searchQuery.trim()) return;
     const q = searchQuery.toLowerCase().trim();
-    for (const item of M3_COMPONENTS_NAV) {
-      if (item.isParent && item.children) {
-        if (item.children.some((c) => c.name.toLowerCase().includes(q))) {
-          setExpandedParents((prev) => ({ ...prev, [item.id]: true }));
+    for (const group of COMPONENT_GROUPS_NAV) {
+      for (const item of group.items) {
+        if (item.isParent && item.children) {
+          if (
+            item.name.toLowerCase().includes(q) ||
+            item.children.some((c) => c.name.toLowerCase().includes(q))
+          ) {
+            setExpandedParents((prev) => ({ ...prev, [item.id]: true }));
+          }
         }
       }
     }
@@ -488,277 +552,191 @@ export function UiLibraryView() {
               ref={sidebarContainerRef}
               className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-4 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
-              {/* Knowledge Base Header (Images 3 & 4) */}
-              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                <span className="font-sans text-sm font-bold text-slate-900">Knowledge base</span>
-                <button
-                  type="button"
-                  title="Total Components"
-                  className="flex size-6 items-center justify-center rounded-md border border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900"
-                >
-                  <Plus className="size-3.5 stroke-[2]" />
-                </button>
-              </div>
-
-              {/* Clean Search Documents Input (Images 3 & 4) */}
-              <div className="relative">
-                <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-slate-400" />
+              {/* Modern Minimalist Search Bar (Clean Blueprint Standard) */}
+              <div className="group relative flex items-center">
+                <Search className="pointer-events-none absolute left-3 size-4 text-[#0056FF]" />
                 <input
+                  ref={searchInputRef}
                   type="text"
-                  placeholder="Search components"
+                  placeholder="Search components..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-slate-50/70 py-2 pr-3 pl-8.5 font-sans text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#0056FF] focus:bg-white focus:outline-hidden"
+                  className="h-9.5 w-full rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] py-2 pr-12 pl-9 font-sans text-xs font-medium text-[#0A1A4A] shadow-2xs transition-all placeholder:font-normal placeholder:text-slate-400 hover:border-slate-300 hover:bg-white focus:border-[#0056FF] focus:bg-white focus:shadow-xs focus:ring-2 focus:ring-[#0056FF]/15 focus:outline-none focus-visible:outline-none"
+                  style={{ outline: 'none' }}
                 />
+                {searchQuery ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery('');
+                      searchInputRef.current?.focus();
+                    }}
+                    title="Clear search"
+                    className="absolute right-2.5 flex size-5 cursor-pointer items-center justify-center rounded-md text-[#0056FF] transition-colors hover:bg-blue-50 active:scale-95"
+                  >
+                    <X className="size-3.5 stroke-[2.5]" />
+                  </button>
+                ) : (
+                  <kbd className="pointer-events-none absolute right-2.5 inline-flex items-center gap-0.5 rounded-md border border-[#CAD3F5] bg-white px-1.5 py-0.5 font-mono text-[10px] font-semibold text-slate-400 shadow-2xs transition-colors select-none group-focus-within:border-[#0056FF]/40 group-focus-within:text-[#0056FF]">
+                    <span className="font-sans text-[11px]">⌘</span>K
+                  </kbd>
+                )}
               </div>
 
-              {/* DOCUMENTATION SECTION (Image 1: Dotted line guide with Brand Blueprint, Design Standards, Touch Targets) */}
-              <div className="space-y-1.5 pt-1">
-                <div className="px-2 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
-                  DOCUMENTATION
-                </div>
-                <div className="ml-2.5 space-y-1 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
-                  {DOCUMENTATION_NAV_ITEMS.map((doc) => (
-                    <Link
-                      key={doc.id}
-                      href={doc.href}
-                      className="group flex items-center gap-2 rounded-md px-1.5 py-1 text-xs font-semibold text-slate-700 transition-colors hover:text-[#0056FF]"
-                    >
-                      <FileText className="size-3.5 shrink-0 text-slate-400 transition-colors group-hover:text-[#0056FF]" />
-                      <span className="truncate">{doc.name}</span>
-                    </Link>
-                  ))}
-                </div>
+              {/* Top Hierarchy Identity (Adobe React Spectrum Specification) */}
+              <div className="border-b border-slate-100 pb-2">
+                <span className="block font-sans text-[11px] font-bold tracking-wider text-slate-400 uppercase select-none">
+                  Web
+                </span>
+                <span className="block font-sans text-sm font-black tracking-tight text-slate-950 select-none">
+                  SNPI System
+                </span>
               </div>
 
-              {/* Subtle Divider */}
-              <div className="my-2 border-t border-slate-200/80" />
-
-              {/* MATERIAL 3 HIERARCHICAL COMPONENTS LIST (Images 2, 3, 4: Zero folder icons, clean rounded pills, collapsed parents by default) */}
-              <div className="space-y-0.5 pt-1 font-sans text-xs">
-                {filteredM3Components.length === 0 && filteredPlatformComponents.length === 0 ? (
+              {/* COMPONENT GROUPS (Clean React Spectrum Navigation - Icons on Parent Only, Zero Noise) */}
+              <div className="space-y-3 font-sans text-xs">
+                {filteredComponentGroups.length === 0 ? (
                   <div className="px-3 py-4 text-center font-sans text-xs text-slate-400">
                     No matching components found
                   </div>
                 ) : (
-                  <>
-                    {filteredM3Components.map((item) => {
-                      if (item.isParent && item.children) {
-                        const isExpanded = Boolean(expandedParents[item.id]);
-                        const isParentActive = item.children.some(
-                          (c) =>
-                            activeSectionId === c.targetId || activeSectionId === `comp-${c.id}`,
-                        );
-
-                        return (
-                          <div key={item.id} className="space-y-0.5">
-                            {/* Parent Group Header (Default: collapsed, tap to toggle) */}
-                            <button
-                              type="button"
-                              onClick={() => toggleParentGroup(item.id)}
-                              className={cn(
-                                'group flex w-full cursor-pointer items-center justify-between rounded-full px-3 py-1.5 text-left font-sans text-xs transition-colors select-none',
-                                isParentActive
-                                  ? 'bg-[#EFF5FF] font-bold text-[#0056FF]'
-                                  : 'font-medium text-slate-800 hover:bg-slate-100 hover:text-slate-950',
-                              )}
-                            >
-                              <span className="truncate">{item.name}</span>
-                              {isExpanded ? (
-                                <ChevronDown className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
-                              ) : (
-                                <ChevronRight className="size-3.5 shrink-0 text-slate-400 group-hover:text-slate-700" />
-                              )}
-                            </button>
-
-                            {/* Child Items Dropdown (Revealed on Tap or Auto-Extracted on Scroll) */}
-                            {isExpanded && (
-                              <div className="ml-3.5 space-y-0.5 border-l border-dotted border-slate-300 py-0.5 pl-2.5">
-                                {item.children.map((child) => {
-                                  const freshness = getComponentFreshness(child);
-                                  const target = child.targetId || `comp-${child.id}`;
-                                  const isChildActive = activeSectionId === target;
-                                  const isComing = child.isFuture;
-
-                                  return (
-                                    <div
-                                      key={child.id}
-                                      onClick={() => {
-                                        if (!isComing && child.targetId) {
-                                          scrollToSection(child.targetId);
-                                        }
-                                      }}
-                                      className={cn(
-                                        'group flex w-full items-center justify-between rounded-full px-2.5 py-1 text-left transition-colors select-none',
-                                        isComing
-                                          ? 'cursor-default opacity-75'
-                                          : 'cursor-pointer hover:bg-slate-100',
-                                        isChildActive && 'bg-[#EFF5FF] font-bold text-[#0056FF]',
-                                      )}
-                                    >
-                                      <span
-                                        className={cn(
-                                          'truncate pr-2 font-sans text-xs transition-colors',
-                                          isComing
-                                            ? 'text-slate-500'
-                                            : isChildActive
-                                              ? 'font-bold text-[#0056FF]'
-                                              : 'font-medium text-slate-700 group-hover:text-slate-950',
-                                        )}
-                                      >
-                                        {child.name}
-                                      </span>
-                                      {freshness && (
-                                        <span
-                                          className={cn(
-                                            'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
-                                            freshness === 'new' &&
-                                              'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
-                                            freshness === 'updated' &&
-                                              'border border-slate-300 bg-slate-100/80 text-slate-700',
-                                            freshness === 'coming' &&
-                                              'border border-slate-200 bg-slate-50/60 text-slate-400',
-                                          )}
-                                        >
-                                          {freshness === 'new'
-                                            ? 'New'
-                                            : freshness === 'updated'
-                                              ? 'Updated'
-                                              : 'Coming'}
-                                        </span>
-                                      )}
-                                    </div>
-                                  );
-                                })}
-                              </div>
+                  filteredComponentGroups.map((group) => {
+                    const ParentGroupIcon = getParentGroupIcon(group.groupId);
+                    const isGroupCollapsed = Boolean(collapsedGroups[group.groupId]);
+                    return (
+                      <div key={group.groupId} className="space-y-1">
+                        {/* Parent Group Header (Collapsible Trigger with Blue Parent Icon) */}
+                        <button
+                          type="button"
+                          onClick={() => toggleCategoryGroup(group.groupId)}
+                          className="group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-bold text-slate-900 transition-colors select-none hover:bg-slate-100"
+                        >
+                          <div className="flex items-center gap-2">
+                            <ParentGroupIcon className="size-3.5 shrink-0 text-[#0056FF]" />
+                            <span className="font-bold text-slate-900">{group.group}</span>
+                          </div>
+                          <div className="flex items-center">
+                            {!isGroupCollapsed ? (
+                              <ChevronDown className="size-3 text-[#0056FF] transition-colors" />
+                            ) : (
+                              <ChevronRight className="size-3 text-[#0056FF] transition-colors" />
                             )}
                           </div>
-                        );
-                      }
+                        </button>
 
-                      // Standalone Component Item (e.g. Components overview, App bars, Badges, Cards, Chips, etc.)
-                      const freshness = getComponentFreshness(item);
-                      const target = item.targetId || `comp-${item.id}`;
-                      const isActive = activeSectionId === target;
-                      const isComing = item.isFuture;
+                        {/* Group Items (Pure Clean Typography - Icons on Parent Only, Zero Coming Tags) */}
+                        {!isGroupCollapsed && (
+                          <div className="space-y-0.5 pt-0.5 pl-1">
+                            {group.items.map((item) => {
+                              if (item.isParent && item.children) {
+                                const isExpanded = Boolean(expandedParents[item.id]);
+                                const isParentActive = item.children.some(
+                                  (c) =>
+                                    activeSectionId === c.targetId ||
+                                    activeSectionId === `comp-${c.id}`,
+                                );
 
-                      return (
-                        <div
-                          key={item.id}
-                          onClick={() => {
-                            if (!isComing && item.targetId) {
-                              scrollToSection(item.targetId);
-                            }
-                          }}
-                          className={cn(
-                            'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
-                            isComing
-                              ? 'cursor-default opacity-75'
-                              : 'cursor-pointer hover:bg-slate-100',
-                            isActive && 'bg-[#EFF5FF] font-bold text-[#0056FF]',
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              'truncate pr-2 font-sans text-xs transition-colors',
-                              isComing
-                                ? 'text-slate-500'
-                                : isActive
-                                  ? 'font-bold text-[#0056FF]'
-                                  : 'font-medium text-slate-800 hover:text-slate-950',
-                            )}
-                          >
-                            {item.name}
-                          </span>
-                          {freshness && (
-                            <span
-                              className={cn(
-                                'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
-                                freshness === 'new' &&
-                                  'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
-                                freshness === 'updated' &&
-                                  'border border-slate-300 bg-slate-100/80 text-slate-700',
-                                freshness === 'coming' &&
-                                  'border border-slate-200 bg-slate-50/60 text-slate-400',
-                              )}
-                            >
-                              {freshness === 'new'
-                                ? 'New'
-                                : freshness === 'updated'
-                                  ? 'Updated'
-                                  : 'Coming'}
-                            </span>
-                          )}
-                        </div>
-                      );
-                    })}
+                                return (
+                                  <div key={item.id} className="space-y-0.5">
+                                    {/* Parent Sub-Group Trigger */}
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleParentGroup(item.id)}
+                                      className={cn(
+                                        'group flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3 text-left font-sans text-xs transition-colors select-none',
+                                        isParentActive
+                                          ? 'bg-slate-100/70 font-bold text-slate-950'
+                                          : 'font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-950',
+                                      )}
+                                    >
+                                      <span className="text-left leading-snug break-words whitespace-normal">
+                                        {item.name}
+                                      </span>
+                                      {isExpanded ? (
+                                        <ChevronDown className="ml-1 size-3 shrink-0 text-[#0056FF]" />
+                                      ) : (
+                                        <ChevronRight className="ml-1 size-3 shrink-0 text-[#0056FF]" />
+                                      )}
+                                    </button>
 
-                    {/* PLATFORM COMPONENTS SECTION (Image 6: Clean bullet category header with custom built components) */}
-                    {filteredPlatformComponents.length > 0 && (
-                      <div className="space-y-0.5 pt-3">
-                        <div className="flex items-center gap-1.5 px-3 py-1 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
-                          <span className="text-xs leading-none text-[#0056FF]">•</span>
-                          <span>PLATFORM COMPONENTS</span>
-                        </div>
-                        {filteredPlatformComponents.map((item) => {
-                          const freshness = getComponentFreshness(item);
-                          const target = item.targetId || `comp-${item.id}`;
-                          const isActive = activeSectionId === target;
-                          const isComing = item.isFuture;
+                                    {/* Sub-Group Child Items (Clean Indented Text, Zero Icons) */}
+                                    {isExpanded && (
+                                      <div className="ml-2 space-y-0.5 py-0.5 pl-2">
+                                        {item.children.map((child: M3NavItem) => {
+                                          const freshness = getComponentFreshness(child);
+                                          const target = child.targetId || `comp-${child.id}`;
+                                          const isChildActive = activeSectionId === target;
 
-                          return (
-                            <div
-                              key={item.id}
-                              onClick={() => {
-                                if (!isComing && item.targetId) {
-                                  scrollToSection(item.targetId);
-                                }
-                              }}
-                              className={cn(
-                                'group flex w-full items-center justify-between rounded-full px-3 py-1.5 text-left transition-colors select-none',
-                                isComing
-                                  ? 'cursor-default opacity-75'
-                                  : 'cursor-pointer hover:bg-slate-100',
-                                isActive && 'bg-[#EFF5FF] font-bold text-[#0056FF]',
-                              )}
-                            >
-                              <span
-                                className={cn(
-                                  'truncate pr-2 font-sans text-xs transition-colors',
-                                  isComing
-                                    ? 'text-slate-500'
-                                    : isActive
-                                      ? 'font-bold text-[#0056FF]'
-                                      : 'font-medium text-slate-800 hover:text-slate-950',
-                                )}
-                              >
-                                {item.name}
-                              </span>
-                              {freshness && (
-                                <span
+                                          return (
+                                            <div
+                                              key={child.id}
+                                              onClick={() => scrollToSection(target)}
+                                              className={cn(
+                                                'group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3.5 text-left transition-colors select-none',
+                                                isChildActive
+                                                  ? 'bg-slate-100/80 font-bold text-slate-950 before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-slate-950'
+                                                  : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
+                                              )}
+                                            >
+                                              <span className="text-left font-sans text-xs leading-snug break-words whitespace-normal">
+                                                {child.name}
+                                              </span>
+                                              {freshness === 'new' && (
+                                                <span className="py-0.2 ml-1.5 shrink-0 rounded-full border border-emerald-300/80 bg-emerald-50 px-1.5 font-sans text-[9px] leading-none font-bold text-emerald-700 uppercase">
+                                                  New
+                                                </span>
+                                              )}
+                                              {freshness === 'coming' && (
+                                                <span className="ml-1.5 shrink-0 rounded-[3px] border border-slate-200/90 bg-slate-100/70 px-1 py-0.5 font-mono text-[8px] leading-none font-semibold tracking-wider text-slate-400 uppercase">
+                                                  Coming
+                                                </span>
+                                              )}
+                                            </div>
+                                          );
+                                        })}
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              }
+
+                              // Direct Standalone Component Item (Exact React Spectrum | Active Bar)
+                              const freshness = getComponentFreshness(item);
+                              const target = item.targetId || `comp-${item.id}`;
+                              const isActive = activeSectionId === target;
+
+                              return (
+                                <div
+                                  key={item.id}
+                                  onClick={() => scrollToSection(target)}
                                   className={cn(
-                                    'shrink-0 rounded-full px-2 py-0.5 font-sans text-[10px] leading-none font-medium',
-                                    freshness === 'new' &&
-                                      'border border-emerald-300/80 bg-emerald-50/70 text-emerald-700',
-                                    freshness === 'updated' &&
-                                      'border border-slate-300 bg-slate-100/80 text-slate-700',
-                                    freshness === 'coming' &&
-                                      'border border-slate-200 bg-slate-50/60 text-slate-400',
+                                    'group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3.5 text-left transition-colors select-none',
+                                    isActive
+                                      ? 'bg-slate-100/80 font-bold text-slate-950 before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-slate-950'
+                                      : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                                   )}
                                 >
-                                  {freshness === 'new'
-                                    ? 'New'
-                                    : freshness === 'updated'
-                                      ? 'Updated'
-                                      : 'Coming'}
-                                </span>
-                              )}
-                            </div>
-                          );
-                        })}
+                                  <span className="text-left font-sans text-xs leading-snug break-words whitespace-normal">
+                                    {item.name}
+                                  </span>
+                                  {freshness === 'new' && (
+                                    <span className="py-0.2 ml-1.5 shrink-0 rounded-full border border-emerald-300/80 bg-emerald-50 px-1.5 font-sans text-[9px] leading-none font-bold text-emerald-700 uppercase">
+                                      New
+                                    </span>
+                                  )}
+                                  {freshness === 'coming' && (
+                                    <span className="ml-1.5 shrink-0 rounded-[3px] border border-slate-200/90 bg-slate-100/70 px-1 py-0.5 font-mono text-[8px] leading-none font-semibold tracking-wider text-slate-400 uppercase">
+                                      Coming
+                                    </span>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </>
+                    );
+                  })
                 )}
               </div>
             </div>
@@ -873,80 +851,108 @@ export function UiLibraryView() {
               </div>
             </section>
 
-            {/* COMPONENT DEMOS ARRANGED BY CATEGORY (BUILT ONLY) */}
-            <div className="space-y-12">
+            {/* COMPONENT DEMOS FEED (Clean Open Feed with Signature Parent Colors & Pseudo-Random Stage Canvas) */}
+            <div className="w-full space-y-16">
               {feedCategories.map((group) => {
+                const parentTheme = getParentCategoryTheme(group.category);
+
                 return (
                   <div
                     key={group.category}
                     id={group.categoryId}
-                    className="scroll-mt-36 space-y-8"
+                    className="scroll-mt-36 space-y-12"
                   >
-                    {/* Demos Inside This Category */}
-                    <div className="space-y-8">
+                    {/* Category Header Divider with Signature Parent Accent */}
+                    <div
+                      className={cn(
+                        'flex items-center gap-2.5 border-b pt-4 pb-3',
+                        parentTheme.borderColor,
+                      )}
+                    >
+                      <h3
+                        className="font-sans text-xs font-black tracking-widest uppercase"
+                        style={{ color: parentTheme.accent }}
+                      >
+                        {group.category}
+                      </h3>
+                    </div>
+
+                    {/* Demos Inside This Category (Single-Layer 4px Radius Card Feed Grouped by Parent Category Theme) */}
+                    <div className="space-y-8 sm:space-y-10">
                       {group.components.map((comp) => {
                         const sectionId = `comp-${comp.id}`;
                         const freshness = getComponentFreshness(comp);
+                        const isActive = activeSectionId === sectionId;
 
                         return (
                           <section
                             key={comp.id}
                             id={sectionId}
-                            className="scroll-mt-24 rounded-3xl border border-[#CAD3F5] bg-white p-4 shadow-xs transition-all hover:border-[#0056FF]/50 hover:shadow-sm sm:p-7"
+                            className={cn(
+                              'group relative flex w-full scroll-mt-28 flex-col rounded-[4px] border p-6 shadow-2xs transition-all sm:p-8',
+                              parentTheme.cardBg,
+                              parentTheme.cardBorder,
+                            )}
+                            style={{ borderRadius: '4px' }}
                           >
-                            {/* Top Header Row - Title Name & Specific Install Command Only */}
-                            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                              <div className="flex flex-col gap-0.5">
+                            {/* Top Title inside the Card */}
+                            <div className="mb-6 flex items-center justify-between gap-3">
+                              <div className="flex items-center gap-3">
+                                <h2
+                                  className={cn(
+                                    'font-sans text-xl font-black transition-colors sm:text-2xl',
+                                    isActive ? 'text-[#0056FF]' : 'text-[#0A1A4A]',
+                                  )}
+                                >
+                                  {comp.name}
+                                </h2>
                                 {freshness && (
                                   <span
                                     className={cn(
-                                      'font-mono text-[9px] leading-none font-bold tracking-wider uppercase',
-                                      freshness === 'new' && 'text-[#0056FF]',
-                                      freshness === 'updated' && 'text-amber-600',
+                                      'rounded-[4px] px-2 py-0.5 font-mono text-[9px] font-bold tracking-wider uppercase',
+                                      freshness === 'new' &&
+                                        'border border-emerald-300/80 bg-emerald-50 text-emerald-700',
+                                      freshness === 'updated' &&
+                                        'border border-amber-300/80 bg-amber-50 text-amber-700',
                                     )}
+                                    style={{ borderRadius: '4px' }}
                                   >
                                     {freshness === 'new' ? 'NEW' : 'UPDATED'}
                                   </span>
                                 )}
-                                <h2 className="font-sans text-lg font-black text-[#0A1A4A] sm:text-xl">
-                                  {comp.name}
-                                </h2>
-                              </div>
-
-                              {/* Specific Install Command Pill */}
-                              <div className="flex items-center gap-2">
-                                <div className="flex items-center gap-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-3 py-1.5 transition-all hover:border-[#0056FF]/40">
-                                  <Terminal className="size-3.5 shrink-0 text-[#0056FF]" />
-                                  <code className="font-mono text-xs font-bold text-[#0056FF]">
-                                    npx snpi-ui@latest add {comp.id}
-                                  </code>
-                                  <button
-                                    type="button"
-                                    title="Copy install command"
-                                    onClick={() =>
-                                      handleCopyInstall(
-                                        comp.id,
-                                        `npx snpi-ui@latest add ${comp.id}`,
-                                      )
-                                    }
-                                    className="ml-1 cursor-pointer text-[#0A1A4A]/60 transition-colors hover:text-[#0056FF]"
-                                    aria-label={`Copy install command for ${comp.name}`}
-                                  >
-                                    {copiedInstallId === comp.id ? (
-                                      <Check className="size-3.5 stroke-[2.5] text-emerald-600" />
-                                    ) : (
-                                      <Copy className="size-3.5 stroke-[2]" />
-                                    )}
-                                  </button>
-                                </div>
                               </div>
                             </div>
 
-                            {/* Clean Stage Canvas - Zero Background Grid */}
-                            <div className="relative flex min-h-[320px] w-full items-center justify-center rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/20 p-3 sm:min-h-[420px] sm:p-8">
-                              {/* Full Size Component Render */}
-                              <div className="no-scrollbar relative z-10 flex w-full max-w-full items-center justify-center overflow-x-auto px-1 py-2 sm:py-6">
-                                {renderFeedComponentDemo(comp.id, stateBundle, comp)}
+                            {/* Component Demo Stage (Single-Layer Direct Surface) */}
+                            <div className="relative z-10 flex min-h-[220px] w-full items-center justify-center overflow-x-auto py-2 sm:min-h-[280px]">
+                              {renderFeedComponentDemo(comp.id, stateBundle, comp)}
+                            </div>
+
+                            {/* Bottom-Left Install Command UI Button */}
+                            <div className="mt-6 flex items-center justify-start border-t border-black/[0.06] pt-4">
+                              <div
+                                className="flex items-center gap-2 rounded-[4px] border border-black/10 bg-white/90 px-3 py-1.5 shadow-2xs backdrop-blur-xs transition-all hover:border-[#0056FF]/40"
+                                style={{ borderRadius: '4px' }}
+                              >
+                                <Terminal className="size-3.5 shrink-0 text-[#0056FF]" />
+                                <code className="font-mono text-xs font-bold text-[#0056FF]">
+                                  npx snpi-ui@latest add {comp.id}
+                                </code>
+                                <button
+                                  type="button"
+                                  title="Copy install command"
+                                  onClick={() =>
+                                    handleCopyInstall(comp.id, `npx snpi-ui@latest add ${comp.id}`)
+                                  }
+                                  className="ml-1 cursor-pointer text-[#0A1A4A]/60 transition-colors hover:text-[#0056FF]"
+                                  aria-label={`Copy install command for ${comp.name}`}
+                                >
+                                  {copiedInstallId === comp.id ? (
+                                    <Check className="size-3.5 stroke-[2.5] text-emerald-600" />
+                                  ) : (
+                                    <Copy className="size-3.5 stroke-[2]" />
+                                  )}
+                                </button>
                               </div>
                             </div>
                           </section>
@@ -1059,85 +1065,130 @@ function renderFeedComponentDemo(
   switch (id) {
     case 'chip':
       return (
-        <div className="flex w-full flex-col items-center">
-          <div className="w-full max-w-xl rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs sm:p-6">
-            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-              {[
-                'All Disciplines',
-                'Software Engineering',
-                'Cybersecurity',
-                'Computer Science',
-                'Information Systems',
-                'Data Science',
-                'Artificial Intelligence',
-              ].map((label) => {
-                const isActive = state.selectedChips.includes(label);
-                return (
-                  <LibraryChip
-                    key={label}
-                    active={isActive}
-                    onClick={() => {
-                      if (label === 'All Disciplines') {
-                        state.setSelectedChips(['All Disciplines']);
-                      } else {
-                        const next = state.selectedChips.filter((c) => c !== 'All Disciplines');
-                        if (next.includes(label)) {
-                          const filtered = next.filter((c) => c !== label);
-                          state.setSelectedChips(
-                            filtered.length === 0 ? ['All Disciplines'] : filtered,
-                          );
-                        } else {
-                          state.setSelectedChips([...next, label]);
-                        }
-                      }
-                    }}
-                  >
-                    {label}
-                  </LibraryChip>
-                );
-              })}
-            </div>
-          </div>
+        <div className="flex w-full flex-wrap items-center justify-center gap-2 py-4">
+          {[
+            'All Disciplines',
+            'Software Engineering',
+            'Cybersecurity',
+            'Computer Science',
+            'Information Systems',
+            'Data Science',
+            'Artificial Intelligence',
+          ].map((label) => {
+            const isActive = state.selectedChips.includes(label);
+            return (
+              <LibraryChip
+                key={label}
+                active={isActive}
+                onClick={() => {
+                  if (label === 'All Disciplines') {
+                    state.setSelectedChips(['All Disciplines']);
+                  } else {
+                    const next = state.selectedChips.filter((c) => c !== 'All Disciplines');
+                    if (next.includes(label)) {
+                      const filtered = next.filter((c) => c !== label);
+                      state.setSelectedChips(
+                        filtered.length === 0 ? ['All Disciplines'] : filtered,
+                      );
+                    } else {
+                      state.setSelectedChips([...next, label]);
+                    }
+                  }
+                }}
+              >
+                {label}
+              </LibraryChip>
+            );
+          })}
         </div>
       );
 
     case 'switch':
       return (
-        <div className="flex w-full flex-col items-center">
-          {/* Interactive Switches Panel */}
-          <div className="w-full max-w-xl rounded-2xl border border-[#CAD3F5] bg-white p-4 shadow-xs sm:p-6">
-            <div className="space-y-3 font-sans">
-              {[
-                {
-                  id: 'sync',
-                  title: 'Auto Sync Telemetry',
-                  checked: state.switchAutoSync,
-                  setter: state.setSwitchAutoSync,
-                },
-                {
-                  id: 'biometric',
-                  title: 'Biometric Terminal Active',
-                  checked: state.switchBiometric,
-                  setter: state.setSwitchBiometric,
-                },
-              ].map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF]/40 p-3.5 transition-all hover:bg-white"
-                >
-                  <span className="text-xs font-bold text-[#0A1A4A]">{item.title}</span>
-                  <LibrarySwitch checked={item.checked} onCheckedChange={item.setter} />
-                </div>
-              ))}
+        <div className="w-full max-w-xl space-y-3 py-4 font-sans">
+          {[
+            {
+              id: 'sync',
+              title: 'Auto Sync Telemetry',
+              checked: state.switchAutoSync,
+              setter: state.setSwitchAutoSync,
+            },
+            {
+              id: 'biometric',
+              title: 'Biometric Terminal Active',
+              checked: state.switchBiometric,
+              setter: state.setSwitchBiometric,
+            },
+          ].map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-white p-3.5 shadow-2xs transition-all hover:border-[#0056FF]"
+            >
+              <span className="text-xs font-bold text-[#0A1A4A]">{item.title}</span>
+              <LibrarySwitch checked={item.checked} onCheckedChange={item.setter} />
             </div>
-          </div>
+          ))}
         </div>
       );
 
-    case 'dropdown':
+    case 'dropdown': {
+      const activeCampusMeta = {
+        'phnom-penh': {
+          label: 'Phnom Penh Innovation Hub',
+          badge: 'PP-01',
+          desc: '3,120 Enrolled Students · Tech Tower · Cyber Security Lab',
+          enrolled: '3,120',
+          labs: '22 Labs',
+          latency: '4 ms',
+          region: 'Capital Hub · Tower A',
+          icon: Building2,
+        },
+        'siem-reap': {
+          label: 'Siem Reap Main Campus',
+          badge: 'SR-01',
+          desc: '2,450 Enrolled Students · Science Wing · High Performance Cluster',
+          enrolled: '2,450',
+          labs: '18 Labs',
+          latency: '6 ms',
+          region: 'Heritage Center · Science Wing',
+          icon: GraduationCap,
+        },
+        battambang: {
+          label: 'Battambang Regional Center',
+          badge: 'BB-01',
+          desc: '1,080 Enrolled Students · Campus A · Agro-Tech Innovation',
+          enrolled: '1,080',
+          labs: '12 Labs',
+          latency: '8 ms',
+          region: 'Northwest Hub · Agro-Tech',
+          icon: Compass,
+        },
+        'kampong-cham': {
+          label: 'Kampong Cham Learning Center',
+          badge: 'KC-01',
+          desc: '890 Enrolled Students · Campus B · Digital Media Center',
+          enrolled: '890',
+          labs: '8 Labs',
+          latency: '11 ms',
+          region: 'Mekong Central · Media Lab',
+          icon: Globe,
+        },
+      }[state.dropdownCampus] || {
+        label: 'Phnom Penh Innovation Hub',
+        badge: 'PP-01',
+        desc: '3,120 Enrolled Students · Tech Tower · Cyber Security Lab',
+        enrolled: '3,120',
+        labs: '22 Labs',
+        latency: '4 ms',
+        region: 'Capital Hub · Tower A',
+        icon: Building2,
+      };
+
+      const CampusIcon = activeCampusMeta.icon;
+
       return (
         <div className="flex w-full flex-col items-center">
-          <div className="w-full max-w-xl rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
+          <div className="w-full max-w-xl space-y-4 rounded-2xl border-2 border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
             <LibraryDropdown
               label="Campus Location Branch"
               value={state.dropdownCampus}
@@ -1146,93 +1197,97 @@ function renderFeedComponentDemo(
                 {
                   value: 'phnom-penh',
                   label: 'Phnom Penh Innovation Hub',
+                  badge: 'PP-01',
                   description: '3,120 Enrolled Students · Tech Tower · Cyber Security Lab',
+                  icon: Building2,
                 },
                 {
                   value: 'siem-reap',
                   label: 'Siem Reap Main Campus',
+                  badge: 'SR-01',
                   description: '2,450 Enrolled Students · Science Wing · High Performance Cluster',
+                  icon: GraduationCap,
                 },
                 {
                   value: 'battambang',
                   label: 'Battambang Regional Center',
+                  badge: 'BB-01',
                   description: '1,080 Enrolled Students · Campus A · Agro-Tech Innovation',
+                  icon: Compass,
                 },
                 {
                   value: 'kampong-cham',
                   label: 'Kampong Cham Learning Center',
+                  badge: 'KC-01',
                   description: '890 Enrolled Students · Campus B · Digital Media Center',
+                  icon: Globe,
                 },
               ]}
             />
 
-            {/* Real-time Campus Content & Telemetry Card */}
-            <div className="mt-5 rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/60 p-4.5 sm:p-5">
+            {/* Real-time Campus Content & Telemetry Card (Standard Color Blueprint) */}
+            <div className="rounded-2xl border-2 border-[#CAD3F5] bg-[#EFF5FF]/70 p-5 shadow-2xs">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                  SELECTED CAMPUS
-                </span>
-                <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
-                  ACTIVE BRANCH
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
+                    SELECTED CAMPUS
+                  </span>
+                  <span className="py-0.2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 font-mono text-[9px] font-bold text-[#0056FF]">
+                    {activeCampusMeta.badge}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+                  <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
+                  <span>ACTIVE BRANCH</span>
+                </div>
               </div>
 
-              <div className="mt-2 font-sans text-base font-black text-[#0A1A4A] sm:text-lg">
-                {state.dropdownCampus === 'phnom-penh'
-                  ? 'Phnom Penh Innovation Hub'
-                  : state.dropdownCampus === 'siem-reap'
-                    ? 'Siem Reap Main Campus'
-                    : state.dropdownCampus === 'battambang'
-                      ? 'Battambang Regional Center'
-                      : 'Kampong Cham Learning Center'}
+              <div className="mt-3 flex items-start gap-3">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-[#CAD3F5] bg-white text-[#0056FF] shadow-2xs">
+                  <CampusIcon className="size-5 stroke-[2]" />
+                </div>
+                <div>
+                  <h4 className="font-sans text-base font-black text-[#0A1A4A] sm:text-lg">
+                    {activeCampusMeta.label}
+                  </h4>
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                    {activeCampusMeta.desc}
+                  </p>
+                </div>
               </div>
-
-              <p className="mt-1 font-sans text-xs leading-relaxed text-slate-600">
-                {state.dropdownCampus === 'phnom-penh'
-                  ? '3,120 Enrolled Students · Tech Tower · Cyber Security Lab'
-                  : state.dropdownCampus === 'siem-reap'
-                    ? '2,450 Enrolled Students · Science Wing · High Performance Cluster'
-                    : state.dropdownCampus === 'battambang'
-                      ? '1,080 Enrolled Students · Campus A · Agro-Tech Innovation'
-                      : '890 Enrolled Students · Campus B · Digital Media Center'}
-              </p>
 
               {/* Institutional Metrics Grid */}
-              <div className="mt-4 grid grid-cols-3 gap-2 border-t border-[#CAD3F5]/60 pt-3 font-mono">
-                <div className="rounded-lg border border-slate-200/60 bg-white/80 p-2 text-center">
-                  <span className="block text-[9px] text-slate-400 uppercase">Enrolled</span>
-                  <span className="text-xs font-black text-[#0056FF]">
-                    {state.dropdownCampus === 'siem-reap'
-                      ? '2,450'
-                      : state.dropdownCampus === 'phnom-penh'
-                        ? '3,120'
-                        : state.dropdownCampus === 'battambang'
-                          ? '1,080'
-                          : '890'}
+              <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[#CAD3F5]/80 pt-3.5 font-mono sm:grid-cols-4">
+                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+                  <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
+                    Enrolled
+                  </span>
+                  <span className="mt-0.5 block font-sans text-sm font-black text-[#0056FF]">
+                    {activeCampusMeta.enrolled}
                   </span>
                 </div>
-                <div className="rounded-lg border border-slate-200/60 bg-white/80 p-2 text-center">
-                  <span className="block text-[9px] text-slate-400 uppercase">Active Labs</span>
-                  <span className="text-xs font-black text-slate-800">
-                    {state.dropdownCampus === 'siem-reap'
-                      ? '14 Labs'
-                      : state.dropdownCampus === 'phnom-penh'
-                        ? '22 Labs'
-                        : state.dropdownCampus === 'battambang'
-                          ? '8 Labs'
-                          : '6 Labs'}
+                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+                  <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
+                    Active Labs
+                  </span>
+                  <span className="mt-0.5 block font-sans text-sm font-black text-[#0A1A4A]">
+                    {activeCampusMeta.labs}
                   </span>
                 </div>
-                <div className="rounded-lg border border-slate-200/60 bg-white/80 p-2 text-center">
-                  <span className="block text-[9px] text-slate-400 uppercase">Latency</span>
-                  <span className="text-xs font-black text-emerald-600">
-                    {state.dropdownCampus === 'siem-reap'
-                      ? '8 ms'
-                      : state.dropdownCampus === 'phnom-penh'
-                        ? '4 ms'
-                        : state.dropdownCampus === 'battambang'
-                          ? '12 ms'
-                          : '15 ms'}
+                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+                  <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
+                    Latency
+                  </span>
+                  <span className="mt-0.5 block font-sans text-sm font-black text-emerald-600">
+                    {activeCampusMeta.latency}
+                  </span>
+                </div>
+                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+                  <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
+                    Region
+                  </span>
+                  <span className="mt-0.5 block font-mono text-xs font-bold text-[#0056FF]">
+                    {activeCampusMeta.badge}
                   </span>
                 </div>
               </div>
@@ -1240,6 +1295,7 @@ function renderFeedComponentDemo(
           </div>
         </div>
       );
+    }
 
     // ==========================================
     // NAVIGATION GROUP (Interactive Demos)
@@ -1294,6 +1350,8 @@ function renderFeedComponentDemo(
     // SECTIONS (Component Templates)
     // ==========================================
     case 'marquee-section':
+    case 'logo-marquee':
+    case 'marquee':
       return <MarqueeSectionDemo />;
 
     // ==========================================

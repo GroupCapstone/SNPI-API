@@ -50,6 +50,9 @@ Before modifying code, packages, or repository structure, read:
 40. `.agents/skills/snp-sms-design-standards/adaptive-breakpoints-manual.md`: Authoritative Material 3 Adaptive Breakpoints & 5-Vector Transformation Manual (5 standard breakpoints: Compact <600dp, Medium 600-839dp, Expanded 840-1199dp, Large 1200-1599dp, Extra-Large >=1600dp; 5 Vectors: Reveal, Divide, Resize, Reposition, Swap; component swapping matrix).
 41. `.agents/skills/snp-sms-design-standards/canonical-layouts-manual.md`: Authoritative Material 3 Canonical Layout Archetypes Manual (Feed 1-4 cols, List-Detail 1-pane vs 2-pane co-planar with selection persistence, Supporting Pane 2/3 + 1/3 at 360dp min-width, Levitate layering strategy).
 42. `.agents/skills/snp-sms-design-standards/usability-expressive-manual.md`: Authoritative Material 3 Usability & Expressive Architecture Manual (Nielsen Norman 5 pillars: Efficiency, Error reduction, Learnability, Memorability, Satisfaction; 6 Expressive tactics: Size, Containment, Shape, Color, Motion, Typography; Aura breathing case study; V1 Cluttered vs V2 Calm; Primary goal hierarchy).
+43. `.agents/skills/snp-sms-design-standards/psychological-design-rules.md`: Mandatory Psychological Design Rules for AI Agents (Fitts's Law >=44px, Hick's Law <=5 choices, Miller's Law <=5 fields/card, Doherty Threshold <=400ms, Postel's Law liberal inputs, and 6-tier culinary downward dependency).
+44. `.agents/skills/snp-sms-design-standards/culinary-component-taxonomy.md`: Authoritative 6-Tier Culinary Component Architecture (Ingredients, Recipes, Entrees, Templates, Pages, Cookbook with strict downward-only import invariant).
+45. `.agents/skills/snp-sms-design-standards/open-source-checklist-macro-phases.md`: Open-Source Design System Checklist (230 Total Checks grouped across 4 macro-phases: Design Language 5/10, Foundations 0/26, Core Components 0/166, Maintenance 0/28, with isolated categorical boundaries).
 
 ---
 

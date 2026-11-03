@@ -444,6 +444,216 @@ export function ColorRampsTokens() {
   >('roles');
   const [themePreview, setThemePreview] = React.useState<'light' | 'dark'>('light');
 
+  // Calibrated roles based on seed, theme mode, and contrast level
+  const activeRoles = React.useMemo(() => {
+    const scheme = M3_DYNAMIC_SCHEMES[selectedSeed];
+    const isDark = themePreview === 'dark';
+
+    if (isDark) {
+      const darkPrimary =
+        selectedSeed === 'brand'
+          ? {
+              fill: '#93C5FD',
+              on: '#002A8C',
+              container: '#0038B3',
+              onContainer: '#EFF5FF',
+              hex: '#93C5FD',
+              containerHex: '#0038B3',
+            }
+          : selectedSeed === 'teal'
+            ? {
+                fill: '#6EE7B7',
+                on: '#004B32',
+                container: '#00875A',
+                onContainer: '#E6F9F0',
+                hex: '#6EE7B7',
+                containerHex: '#00875A',
+              }
+            : selectedSeed === 'amber'
+              ? {
+                  fill: '#FCD34D',
+                  on: '#78350F',
+                  container: '#B45309',
+                  onContainer: '#FFFBEB',
+                  hex: '#FCD34D',
+                  containerHex: '#B45309',
+                }
+              : {
+                  fill: '#A5B4FC',
+                  on: '#312E81',
+                  container: '#4338CA',
+                  onContainer: '#EEF2FF',
+                  hex: '#A5B4FC',
+                  containerHex: '#4338CA',
+                };
+
+      const darkSecondary =
+        selectedSeed === 'brand'
+          ? {
+              fill: '#7DD3FC',
+              on: '#075985',
+              container: '#0369A1',
+              onContainer: '#E0F2FE',
+              hex: '#7DD3FC',
+              containerHex: '#0369A1',
+            }
+          : selectedSeed === 'teal'
+            ? {
+                fill: '#67E8F9',
+                on: '#155E75',
+                container: '#0E7490',
+                onContainer: '#E0F2FE',
+                hex: '#67E8F9',
+                containerHex: '#0E7490',
+              }
+            : selectedSeed === 'amber'
+              ? {
+                  fill: '#FDE68A',
+                  on: '#78350F',
+                  container: '#92400E',
+                  onContainer: '#FEF3C7',
+                  hex: '#FDE68A',
+                  containerHex: '#92400E',
+                }
+              : {
+                  fill: '#C7D2FE',
+                  on: '#3730A3',
+                  container: '#4F46E5',
+                  onContainer: '#E0E7FF',
+                  hex: '#C7D2FE',
+                  containerHex: '#4F46E5',
+                };
+
+      return {
+        primary: darkPrimary,
+        secondary: darkSecondary,
+        tertiary: {
+          fill: '#FCD34D',
+          on: '#78350F',
+          container: '#92400E',
+          onContainer: '#FEF3C7',
+          hex: '#FCD34D',
+          containerHex: '#92400E',
+        },
+        error: {
+          fill: '#F87171',
+          on: '#450A0A',
+          container: '#991B1B',
+          onContainer: '#FEE2E2',
+          hex: '#F87171',
+          containerHex: '#991B1B',
+        },
+        surface: [
+          { role: 'surface', hex: '#0F172A', color: '#F8FAFC', border: '#334155' },
+          { role: 'surface-container-low', hex: '#1E293B', color: '#F8FAFC', border: '#334155' },
+          { role: 'surface-container', hex: '#24334D', color: '#93C5FD', border: '#334155' },
+          { role: 'surface-container-high', hex: '#334155', color: '#F8FAFC', border: '#475569' },
+          {
+            role: 'surface-container-highest',
+            hex: '#475569',
+            color: '#F8FAFC',
+            border: '#64748B',
+          },
+          { role: 'inverse-surface', hex: '#F8FAFC', color: '#0A1A4A', border: '#E2E8F0' },
+        ],
+        outline: {
+          base: '#94A3B8',
+          variant: '#475569',
+        },
+      };
+    }
+
+    return {
+      primary: {
+        fill: scheme.primary.fill,
+        on: scheme.primary.on,
+        container: scheme.primary.container,
+        onContainer: scheme.primary.onContainer,
+        hex: scheme.primary.fill,
+        containerHex: scheme.primary.container,
+      },
+      secondary: {
+        fill: scheme.secondary.fill,
+        on: scheme.secondary.on,
+        container: scheme.secondary.container,
+        onContainer: scheme.secondary.onContainer,
+        hex: scheme.secondary.fill,
+        containerHex: scheme.secondary.container,
+      },
+      tertiary: {
+        fill: scheme.tertiary.fill,
+        on: scheme.tertiary.on,
+        container: scheme.tertiary.container,
+        onContainer: scheme.tertiary.onContainer,
+        hex: scheme.tertiary.fill,
+        containerHex: scheme.tertiary.container,
+      },
+      error: {
+        fill: '#DC2626',
+        on: '#FFFFFF',
+        container: '#FEE2E2',
+        onContainer: '#991B1B',
+        hex: '#DC2626',
+        containerHex: '#FEE2E2',
+      },
+      surface: [
+        { role: 'surface', hex: '#FFFFFF', color: '#0A1A4A', border: '#CAD3F5' },
+        { role: 'surface-container-low', hex: '#F8FAFC', color: '#0A1A4A', border: '#E2E8F0' },
+        { role: 'surface-container', hex: '#EFF5FF', color: '#0056FF', border: '#CAD3F5' },
+        { role: 'surface-container-high', hex: '#E2E8F0', color: '#0F172A', border: '#CBD5E1' },
+        { role: 'surface-container-highest', hex: '#CBD5E1', color: '#0F172A', border: '#94A3B8' },
+        { role: 'inverse-surface', hex: '#0A1A4A', color: '#FFFFFF', border: '#0A1A4A' },
+      ],
+      outline: {
+        base: '#64748B',
+        variant: '#CAD3F5',
+      },
+    };
+  }, [selectedSeed, themePreview]);
+
+  const renderRoleSwatch = (opts: {
+    role: string;
+    fill: string;
+    color: string;
+    border?: string;
+    badge?: string;
+  }) => {
+    const isCopied = copiedHex === opts.role;
+    return (
+      <button
+        key={opts.role}
+        type="button"
+        onClick={() => handleCopy(opts.fill, opts.role)}
+        title={`Copy ${opts.role} (${opts.fill})`}
+        className="group relative flex w-full items-center justify-between rounded-xl border p-2.5 text-left transition-all hover:scale-[1.01] active:scale-[0.99]"
+        style={{
+          backgroundColor: opts.fill,
+          color: opts.color,
+          borderColor: opts.border || 'transparent',
+        }}
+      >
+        <div className="min-w-0 flex-1">
+          <div className="truncate font-mono text-xs font-bold">{opts.role}</div>
+          <div className="font-mono text-[10px] opacity-75">{opts.fill}</div>
+        </div>
+        <div className="flex shrink-0 items-center gap-1.5">
+          {opts.badge && (
+            <span className="rounded border border-current/20 px-1.5 py-0.5 font-mono text-[9px] font-bold opacity-80">
+              {opts.badge}
+            </span>
+          )}
+          <span className="text-current opacity-70 transition-opacity group-hover:opacity-100">
+            {isCopied ? (
+              <Check className="size-3.5 text-emerald-600" />
+            ) : (
+              <Copy className="size-3.5" />
+            )}
+          </span>
+        </div>
+      </button>
+    );
+  };
+
   const handleCopy = async (text: string, label: string) => {
     if (typeof window === 'undefined') return;
     try {
@@ -911,20 +1121,19 @@ export function ColorRampsTokens() {
       {/* ------------------------------------------------------------- */}
       {/* MATERIAL 3 COLOR ROLES SYSTEM & 26 SEMANTIC ROLES ARCHITECTURE */}
       {/* ------------------------------------------------------------- */}
-      <div className="space-y-5 rounded-2xl border border-[#CAD3F5] bg-white p-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-          <div className="space-y-0.5">
-            <span className="font-sans text-xs font-bold tracking-wide text-[#0A1A4A] uppercase">
-              Material 3 Color Roles System &middot; 26 Standard Roles &amp; Calibrations
+      <div className="space-y-5 rounded-2xl border border-[#CAD3F5] bg-white p-4 sm:p-6">
+        <div className="flex flex-col gap-3 border-b border-slate-100 pb-3.5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-sans text-xs font-bold tracking-wide text-[#0A1A4A] uppercase sm:text-sm">
+              Material 3 Color Roles System
             </span>
-            <div className="font-mono text-[10px] text-slate-500">
-              6 Role Groups &middot; 3 Contrast Levels &middot; Tone Surfaces (98 Light / 6 Dark)
-              &middot; 14 Affected Components &middot; Fixed Accents
-            </div>
+            <span className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] sm:text-[11px]">
+              26 Standard Roles
+            </span>
           </div>
 
           {/* Seed Switcher */}
-          <div className="inline-flex flex-wrap items-center gap-1 rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] p-1">
+          <div className="inline-flex max-w-full scrollbar-none items-center gap-1 overflow-x-auto rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] p-1">
             {(
               [
                 { id: 'brand', label: 'Brand Base', hex: '#0056FF' },
@@ -937,8 +1146,9 @@ export function ColorRampsTokens() {
                 key={s.id}
                 type="button"
                 onClick={() => setSelectedSeed(s.id)}
+                title={`Select ${s.label} (${s.hex})`}
                 className={cn(
-                  'inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 font-mono text-xs font-bold uppercase transition-all',
+                  'inline-flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs font-bold uppercase transition-all',
                   selectedSeed === s.id
                     ? 'bg-[#0056FF] text-white shadow-none'
                     : 'text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
@@ -955,18 +1165,21 @@ export function ColorRampsTokens() {
         </div>
 
         {/* Global Controls: Contrast Levels, Theme Mode & Sub-views */}
-        <div className="grid grid-cols-1 gap-3 rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] p-3 text-xs md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] p-3 text-xs sm:grid-cols-2 lg:grid-cols-3">
           {/* Contrast Levels Switcher */}
           <div className="space-y-1">
-            <span className="font-sans font-bold text-[#0A1A4A]">3 Contrast Levels</span>
+            <span className="font-sans text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+              Contrast
+            </span>
             <div className="grid grid-cols-3 gap-1">
               {(['standard', 'medium', 'high'] as const).map((lvl) => (
                 <button
                   key={lvl}
                   type="button"
                   onClick={() => setContrastLevel(lvl)}
+                  title={`Switch to ${lvl} contrast level`}
                   className={cn(
-                    'rounded-lg border px-2 py-1 font-mono text-[10px] font-bold uppercase transition-all',
+                    'rounded-lg border px-2 py-1.5 text-center font-mono text-[10px] font-bold uppercase transition-all',
                     contrastLevel === lvl
                       ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-none'
                       : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF]',
@@ -980,38 +1193,34 @@ export function ColorRampsTokens() {
 
           {/* Theme Preview Switcher */}
           <div className="space-y-1">
-            <span className="font-sans font-bold text-[#0A1A4A]">Theme &amp; Tone Calibration</span>
+            <span className="font-sans text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+              Theme
+            </span>
             <div className="grid grid-cols-2 gap-1">
-              <button
-                type="button"
-                onClick={() => setThemePreview('light')}
-                className={cn(
-                  'rounded-lg border px-2 py-1 text-center font-mono text-[10px] font-bold transition-all',
-                  themePreview === 'light'
-                    ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-none'
-                    : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF]',
-                )}
-              >
-                Light (Tone 98 / Chroma 6)
-              </button>
-              <button
-                type="button"
-                onClick={() => setThemePreview('dark')}
-                className={cn(
-                  'rounded-lg border px-2 py-1 text-center font-mono text-[10px] font-bold transition-all',
-                  themePreview === 'dark'
-                    ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-none'
-                    : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF]',
-                )}
-              >
-                Dark (Darkened Surfaces)
-              </button>
+              {(['light', 'dark'] as const).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setThemePreview(mode)}
+                  title={`Preview ${mode} theme mode`}
+                  className={cn(
+                    'rounded-lg border px-2 py-1.5 text-center font-mono text-[10px] font-bold uppercase transition-all',
+                    themePreview === mode
+                      ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-none'
+                      : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF]',
+                  )}
+                >
+                  {mode}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Sub-view Switcher */}
-          <div className="space-y-1">
-            <span className="font-sans font-bold text-[#0A1A4A]">System Explorer</span>
+          <div className="space-y-1 sm:col-span-2 lg:col-span-1">
+            <span className="font-sans text-[11px] font-bold tracking-wider text-slate-500 uppercase">
+              Explorer
+            </span>
             <div className="grid grid-cols-4 gap-1">
               {[
                 { id: 'roles' as const, label: '26 Roles' },
@@ -1023,8 +1232,9 @@ export function ColorRampsTokens() {
                   key={tab.id}
                   type="button"
                   onClick={() => setColorSystemTab(tab.id)}
+                  title={`Explore ${tab.label}`}
                   className={cn(
-                    'rounded-lg border px-1 py-1 text-center font-mono text-[10px] font-bold transition-all',
+                    'rounded-lg border px-1 py-1.5 text-center font-mono text-[10px] font-bold transition-all',
                     colorSystemTab === tab.id
                       ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-none'
                       : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF]',
@@ -1040,311 +1250,337 @@ export function ColorRampsTokens() {
         {/* VIEW 1: THE 26 STANDARD COLOR ROLES IN 6 GROUPS */}
         {colorSystemTab === 'roles' && (
           <div className="space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
               <span className="font-sans text-xs font-bold text-[#0A1A4A] uppercase">
-                The 26 Standard Color Roles in Six Groups ({selectedSeed.toUpperCase()} SCHEME)
+                The 26 Standard Color Roles in Six Groups ({selectedSeed.toUpperCase()})
               </span>
-              <span className="font-mono text-[10px] text-[#0056FF]">
-                Contrast Level: {contrastLevel.toUpperCase()}
+              <span className="font-mono text-[10px] font-bold text-[#0056FF]">
+                Contrast: {contrastLevel.toUpperCase()}
               </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
               {/* 1. PRIMARY GROUP */}
-              <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3 text-left">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1">
+              <div className="flex flex-col justify-between space-y-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3.5 text-left">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="font-sans text-xs font-bold text-[#0056FF] uppercase">
-                    1. Primary Group
+                    1. Primary
                   </span>
-                  <span className="font-mono text-[9px] text-slate-400">Prominent Actions</span>
+                  <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
+                    2 Roles
+                  </span>
                 </div>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div
-                    className="rounded-lg p-2 font-bold"
-                    style={{
-                      backgroundColor: M3_DYNAMIC_SCHEMES[selectedSeed].primary.fill,
-                      color: M3_DYNAMIC_SCHEMES[selectedSeed].primary.on,
-                    }}
-                  >
-                    <div>primary</div>
-                    <div className="text-[9px] opacity-80">on-primary (&ge;4.5:1)</div>
-                  </div>
-                  <div
-                    className="rounded-lg border border-slate-200 p-2 font-bold"
-                    style={{
-                      backgroundColor: M3_DYNAMIC_SCHEMES[selectedSeed].primary.container,
-                      color: M3_DYNAMIC_SCHEMES[selectedSeed].primary.onContainer,
-                    }}
-                  >
-                    <div>primary-container</div>
-                    <div className="text-[9px] opacity-80">
-                      on-primary-container (colorful text/icons)
-                    </div>
-                  </div>
+                <div className="space-y-1.5">
+                  {renderRoleSwatch({
+                    role: 'primary',
+                    fill: activeRoles.primary.fill,
+                    color: activeRoles.primary.on,
+                    badge: contrastLevel === 'high' ? '7.4:1' : '4.7:1',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'primary-container',
+                    fill: activeRoles.primary.container,
+                    color: activeRoles.primary.onContainer,
+                    border: '#CAD3F5',
+                    badge: contrastLevel === 'high' ? '9.8:1' : '7.4:1',
+                  })}
                 </div>
               </div>
 
               {/* 2. SECONDARY GROUP */}
-              <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3 text-left">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1">
+              <div className="flex flex-col justify-between space-y-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3.5 text-left">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="font-sans text-xs font-bold text-[#2277FF] uppercase">
-                    2. Secondary Group
+                    2. Secondary
                   </span>
-                  <span className="font-mono text-[9px] text-slate-400">Tonal Balance</span>
+                  <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#2277FF]">
+                    2 Roles
+                  </span>
                 </div>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div
-                    className="rounded-lg p-2 font-bold"
-                    style={{
-                      backgroundColor: M3_DYNAMIC_SCHEMES[selectedSeed].secondary.fill,
-                      color: M3_DYNAMIC_SCHEMES[selectedSeed].secondary.on,
-                    }}
-                  >
-                    <div>secondary</div>
-                    <div className="text-[9px] opacity-80">on-secondary (&ge;4.5:1)</div>
-                  </div>
-                  <div
-                    className="rounded-lg border border-slate-200 p-2 font-bold"
-                    style={{
-                      backgroundColor: M3_DYNAMIC_SCHEMES[selectedSeed].secondary.container,
-                      color: M3_DYNAMIC_SCHEMES[selectedSeed].secondary.onContainer,
-                    }}
-                  >
-                    <div>secondary-container</div>
-                    <div className="text-[9px] opacity-80">
-                      on-secondary-container (colorful text/icons)
-                    </div>
-                  </div>
+                <div className="space-y-1.5">
+                  {renderRoleSwatch({
+                    role: 'secondary',
+                    fill: activeRoles.secondary.fill,
+                    color: activeRoles.secondary.on,
+                    badge: contrastLevel === 'high' ? '6.5:1' : '4.5:1',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'secondary-container',
+                    fill: activeRoles.secondary.container,
+                    color: activeRoles.secondary.onContainer,
+                    border: '#CAD3F5',
+                    badge: contrastLevel === 'high' ? '8.8:1' : '6.5:1',
+                  })}
                 </div>
               </div>
 
               {/* 3. TERTIARY GROUP */}
-              <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3 text-left">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1">
+              <div className="flex flex-col justify-between space-y-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3.5 text-left">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="font-sans text-xs font-bold text-amber-600 uppercase">
-                    3. Tertiary Group
+                    3. Tertiary
                   </span>
-                  <span className="font-mono text-[9px] text-slate-400">Contrasting Accents</span>
+                  <span className="rounded bg-amber-50 px-1.5 py-0.5 font-mono text-[9px] font-bold text-amber-700">
+                    2 Roles
+                  </span>
                 </div>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div
-                    className="rounded-lg p-2 font-bold"
-                    style={{
-                      backgroundColor: M3_DYNAMIC_SCHEMES[selectedSeed].tertiary.fill,
-                      color: M3_DYNAMIC_SCHEMES[selectedSeed].tertiary.on,
-                    }}
-                  >
-                    <div>tertiary</div>
-                    <div className="text-[9px] opacity-80">on-tertiary (&ge;4.5:1)</div>
-                  </div>
-                  <div
-                    className="rounded-lg border border-slate-200 p-2 font-bold"
-                    style={{
-                      backgroundColor: M3_DYNAMIC_SCHEMES[selectedSeed].tertiary.container,
-                      color: M3_DYNAMIC_SCHEMES[selectedSeed].tertiary.onContainer,
-                    }}
-                  >
-                    <div>tertiary-container</div>
-                    <div className="text-[9px] opacity-80">
-                      on-tertiary-container (colorful text/icons)
-                    </div>
-                  </div>
+                <div className="space-y-1.5">
+                  {renderRoleSwatch({
+                    role: 'tertiary',
+                    fill: activeRoles.tertiary.fill,
+                    color: activeRoles.tertiary.on,
+                    badge: contrastLevel === 'high' ? '7.2:1' : '4.8:1',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'tertiary-container',
+                    fill: activeRoles.tertiary.container,
+                    color: activeRoles.tertiary.onContainer,
+                    border: '#FDE68A',
+                    badge: contrastLevel === 'high' ? '9.4:1' : '7.2:1',
+                  })}
                 </div>
               </div>
 
               {/* 4. ERROR GROUP */}
-              <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3 text-left">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1">
+              <div className="flex flex-col justify-between space-y-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3.5 text-left">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="font-sans text-xs font-bold text-red-600 uppercase">
-                    4. Error Group
+                    4. Error
                   </span>
-                  <span className="font-mono text-[9px] text-slate-400">
-                    Static Critical Alerts
+                  <span className="rounded bg-red-50 px-1.5 py-0.5 font-mono text-[9px] font-bold text-red-700">
+                    2 Roles
                   </span>
                 </div>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div className="rounded-lg bg-[#DC2626] p-2 font-bold text-white">
-                    <div>error</div>
-                    <div className="text-[9px] opacity-80">on-error (&ge;4.5:1)</div>
-                  </div>
-                  <div className="rounded-lg border border-red-200 bg-[#FEE2E2] p-2 font-bold text-[#991B1B]">
-                    <div>error-container</div>
-                    <div className="text-[9px] opacity-80">
-                      on-error-container (colorful text/icons)
-                    </div>
-                  </div>
+                <div className="space-y-1.5">
+                  {renderRoleSwatch({
+                    role: 'error',
+                    fill: activeRoles.error.fill,
+                    color: activeRoles.error.on,
+                    badge: contrastLevel === 'high' ? '7.1:1' : '5.9:1',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'error-container',
+                    fill: activeRoles.error.container,
+                    color: activeRoles.error.onContainer,
+                    border: '#FECACA',
+                    badge: contrastLevel === 'high' ? '8.3:1' : '7.1:1',
+                  })}
                 </div>
               </div>
 
-              {/* 5. SURFACE GROUP (11 ROLES) */}
-              <div className="col-span-1 space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3 text-left md:col-span-2">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1">
+              {/* 5. SURFACE GROUP */}
+              <div className="flex flex-col justify-between space-y-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3.5 text-left">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="font-sans text-xs font-bold text-[#0A1A4A] uppercase">
-                    5. Surface Group (11 Roles)
+                    5. Surface
                   </span>
-                  <span className="font-mono text-[9px] text-slate-400">Tone-Based Containers</span>
+                  <span className="rounded bg-[#EFF5FF] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
+                    6 Roles
+                  </span>
                 </div>
-                <div className="grid grid-cols-2 gap-1.5 font-mono text-[10px] sm:grid-cols-3">
-                  <div className="rounded-lg border border-[#CAD3F5] bg-white p-2 text-[#0A1A4A]">
-                    <div className="font-bold">surface</div>
-                    <div className="text-[9px] text-slate-500">Tone 98 (Light) / 6 (Dark)</div>
-                  </div>
-                  <div className="rounded-lg border border-slate-200 bg-[#F8FAFC] p-2 text-[#0A1A4A]">
-                    <div className="font-bold">surface-container-low</div>
-                    <div className="text-[9px] text-slate-500">Card Base Foundation</div>
-                  </div>
-                  <div className="rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-2 text-[#0056FF]">
-                    <div className="font-bold">surface-container</div>
-                    <div className="text-[9px] text-slate-500">Default Container</div>
-                  </div>
-                  <div className="rounded-lg bg-[#E2E8F0] p-2 text-slate-800">
-                    <div className="font-bold">surface-container-high</div>
-                    <div className="text-[9px] text-slate-500">Raised Popovers/Menus</div>
-                  </div>
-                  <div className="rounded-lg bg-[#CBD5E1] p-2 text-slate-900">
-                    <div className="font-bold">surface-container-highest</div>
-                    <div className="text-[9px] text-slate-600">Floating Dialogs/Toolbars</div>
-                  </div>
-                  <div className="rounded-lg bg-slate-900 p-2 text-white">
-                    <div className="font-bold">inverse-surface</div>
-                    <div className="text-[9px] text-slate-300">Inverse Snackbars</div>
-                  </div>
+                <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+                  {activeRoles.surface.map((s) => (
+                    <button
+                      key={s.role}
+                      type="button"
+                      onClick={() => handleCopy(s.hex, s.role)}
+                      title={`Copy ${s.role} (${s.hex})`}
+                      className="group relative flex w-full items-center justify-between rounded-lg border p-1.5 text-left transition-all hover:scale-[1.01] active:scale-[0.99]"
+                      style={{
+                        backgroundColor: s.hex,
+                        color: s.color,
+                        borderColor: s.border,
+                      }}
+                    >
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-mono text-[11px] font-bold">{s.role}</div>
+                        <div className="font-mono text-[9px] opacity-75">{s.hex}</div>
+                      </div>
+                      <span className="shrink-0 text-current opacity-70 transition-opacity group-hover:opacity-100">
+                        {copiedHex === s.role ? (
+                          <Check className="size-3 text-emerald-600" />
+                        ) : (
+                          <Copy className="size-3" />
+                        )}
+                      </span>
+                    </button>
+                  ))}
                 </div>
               </div>
 
               {/* 6. OUTLINE GROUP */}
-              <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3 text-left">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1">
+              <div className="flex flex-col justify-between space-y-2.5 rounded-xl border border-[#CAD3F5] bg-white p-3.5 text-left">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                   <span className="font-sans text-xs font-bold text-slate-700 uppercase">
-                    6. Outline Group
+                    6. Outline
                   </span>
-                  <span className="font-mono text-[9px] text-slate-400">
-                    Boundaries &amp; Dividers
+                  <span className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] font-bold text-slate-700">
+                    2 Roles
                   </span>
                 </div>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div className="rounded-lg border-2 border-slate-500 bg-white p-2 font-bold text-slate-800">
-                    <div>outline</div>
-                    <div className="text-[9px] text-slate-500">3.0:1 Boundary for text inputs</div>
-                  </div>
-                  <div className="rounded-lg border border-dashed border-[#CAD3F5] bg-white p-2 font-bold text-slate-600">
-                    <div>outline-variant</div>
-                    <div className="text-[9px] text-slate-500">
-                      Decorative dividers &amp; card edges
-                    </div>
-                  </div>
+                <div className="space-y-1.5">
+                  {renderRoleSwatch({
+                    role: 'outline',
+                    fill: themePreview === 'dark' ? '#1E293B' : '#FFFFFF',
+                    color: themePreview === 'dark' ? '#F8FAFC' : '#0F172A',
+                    border: activeRoles.outline.base,
+                    badge: '3.0:1',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'outline-variant',
+                    fill: themePreview === 'dark' ? '#0F172A' : '#F8FAFC',
+                    color: themePreview === 'dark' ? '#94A3B8' : '#475569',
+                    border: activeRoles.outline.variant,
+                    badge: 'Divider',
+                  })}
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* VIEW 2: TONE SURFACES VS ELEVATION HIERARCHY */}
+        {/* VIEW 2: TONE SURFACES HIERARCHY */}
         {colorSystemTab === 'surfaces' && (
-          <div className="space-y-3 text-left">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-              <div>
-                <span className="font-sans text-xs font-bold text-[#0A1A4A] uppercase">
-                  Tone-Based Surface System (Replacing Legacy Elevation Overlays)
-                </span>
-                <p className="mt-0.5 font-sans text-xs text-slate-500">
-                  Surfaces no longer use white semi-transparent elevation overlays; they are
-                  distinct tone steps.
-                </p>
-              </div>
-              <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-600">
-                ACTIVE CALIBRATION: TONE 98 / CHROMA 6
+          <div className="space-y-4 text-left">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
+              <span className="font-sans text-xs font-bold text-[#0A1A4A] uppercase">
+                Tone-Based Surface System
+              </span>
+              <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+                TONE 98 / CHROMA 6
               </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-5">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
               {[
                 {
                   name: 'Lowest',
                   role: 'surface-container-lowest',
                   toneL: 'Tone 100',
                   toneD: 'Tone 4',
-                  desc: 'Recessed into canvas',
+                  hex: '#FFFFFF',
                 },
                 {
                   name: 'Low',
                   role: 'surface-container-low',
                   toneL: 'Tone 96',
                   toneD: 'Tone 10',
-                  desc: 'Card background',
+                  hex: '#F8FAFC',
                 },
                 {
                   name: 'Default',
                   role: 'surface-container',
                   toneL: 'Tone 94',
                   toneD: 'Tone 12',
-                  desc: 'Navigation & sheet',
+                  hex: '#EFF5FF',
                 },
                 {
                   name: 'High',
                   role: 'surface-container-high',
                   toneL: 'Tone 92',
                   toneD: 'Tone 17',
-                  desc: 'Raised menus',
+                  hex: '#E2E8F0',
                 },
                 {
                   name: 'Highest',
                   role: 'surface-container-highest',
                   toneL: 'Tone 90',
                   toneD: 'Tone 22',
-                  desc: 'Floating toolbars',
+                  hex: '#CBD5E1',
                 },
               ].map((s) => (
-                <div
+                <button
                   key={s.role}
-                  className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF]/40 p-3"
+                  type="button"
+                  onClick={() => handleCopy(s.hex, s.role)}
+                  title={`Copy ${s.role} (${s.hex})`}
+                  className="group flex flex-col justify-between rounded-xl border border-[#CAD3F5] bg-white p-3 text-left transition-all hover:border-[#0056FF] active:scale-[0.99]"
                 >
-                  <div className="font-sans text-xs font-bold text-[#0056FF]">{s.name}</div>
-                  <div className="font-mono text-[10px] font-bold text-[#0A1A4A]">{s.role}</div>
-                  <div className="font-mono text-[9px] text-slate-500">
-                    {s.toneL} / {s.toneD}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-sans text-xs font-bold text-[#0056FF]">{s.name}</span>
+                      <span className="text-slate-400 group-hover:text-[#0056FF]">
+                        {copiedHex === s.role ? (
+                          <Check className="size-3 text-emerald-600" />
+                        ) : (
+                          <Copy className="size-3" />
+                        )}
+                      </span>
+                    </div>
+                    <div className="truncate font-mono text-[11px] font-bold text-[#0A1A4A]">
+                      {s.role}
+                    </div>
+                    <div className="font-mono text-[10px] text-slate-500">
+                      {s.toneL} / {s.toneD}
+                    </div>
                   </div>
-                  <div className="font-sans text-[10px] text-slate-600">{s.desc}</div>
-                </div>
+                  <div
+                    className="mt-2 h-4 w-full rounded border border-black/5"
+                    style={{ backgroundColor: s.hex }}
+                  />
+                </button>
               ))}
             </div>
 
             {/* Surface Dim & Surface Bright Extenders */}
-            <div className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
-              <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-slate-100 p-3">
-                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                  surface-dim
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => handleCopy('#F1F5F9', 'surface-dim')}
+                title="Copy surface-dim (#F1F5F9)"
+                className="group flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-slate-100 p-3 text-left transition-all hover:border-[#0056FF]"
+              >
+                <div>
+                  <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+                    surface-dim
+                  </span>
+                  <div className="font-mono text-[10px] text-slate-500">Recessed sidebar tone</div>
+                </div>
+                <span className="text-slate-500 group-hover:text-[#0056FF]">
+                  {copiedHex === 'surface-dim' ? (
+                    <Check className="size-3.5 text-emerald-600" />
+                  ) : (
+                    <Copy className="size-3.5" />
+                  )}
                 </span>
-                <p className="text-xs text-slate-700">
-                  Dimmest surface in both light and dark themes. Used for recessed peripheral
-                  navigation rails.
-                </p>
-              </div>
-              <div className="space-y-1 rounded-xl border border-[#CAD3F5] bg-white p-3">
-                <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
-                  surface-bright
+              </button>
+              <button
+                type="button"
+                onClick={() => handleCopy('#FFFFFF', 'surface-bright')}
+                title="Copy surface-bright (#FFFFFF)"
+                className="group flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-white p-3 text-left transition-all hover:border-[#0056FF]"
+              >
+                <div>
+                  <span className="font-mono text-xs font-bold text-[#0056FF] uppercase">
+                    surface-bright
+                  </span>
+                  <div className="font-mono text-[10px] text-slate-500">Active canvas tone</div>
+                </div>
+                <span className="text-slate-500 group-hover:text-[#0056FF]">
+                  {copiedHex === 'surface-bright' ? (
+                    <Check className="size-3.5 text-emerald-600" />
+                  ) : (
+                    <Copy className="size-3.5" />
+                  )}
                 </span>
-                <p className="text-xs text-slate-700">
-                  Brightest surface in both light and dark themes. Used for active document canvas.
-                </p>
-              </div>
+              </button>
             </div>
           </div>
         )}
 
         {/* VIEW 3: 14 AFFECTED COMPONENTS */}
         {colorSystemTab === 'components' && (
-          <div className="space-y-3 text-left">
-            <div className="border-b border-slate-100 pb-2">
+          <div className="space-y-4 text-left">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <span className="font-sans text-xs font-bold text-[#0A1A4A] uppercase">
-                The 14 Affected Components in Material 3 Color Roles System
+                14 Affected Components
               </span>
-              <p className="mt-0.5 font-sans text-xs text-slate-500">
-                Updated color roles applied to text, icons, and containers in Light Theme.
-              </p>
+              <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                M3 Tokens
+              </span>
             </div>
 
-            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
               {[
                 { name: 'Badges', role: 'error / tertiary', on: 'on-error' },
                 { name: 'Buttons (Filled)', role: 'primary', on: 'on-primary' },
@@ -1362,7 +1598,7 @@ export function ColorRampsTokens() {
                   on: 'on-secondary-container',
                 },
                 { name: 'Chips', role: 'surface-container-low', on: 'on-secondary-container' },
-                { name: 'Lists', role: 'surface', on: 'on-surface / outline-variant' },
+                { name: 'Lists', role: 'surface', on: 'on-surface' },
                 { name: 'Menus', role: 'surface-container-high', on: 'on-surface' },
                 { name: 'Navigation Bar', role: 'surface-container', on: 'on-secondary-container' },
                 {
@@ -1372,18 +1608,22 @@ export function ColorRampsTokens() {
                 },
                 { name: 'Navigation Rail', role: 'surface', on: 'on-secondary-container' },
                 {
-                  name: 'Switches & Toolbars',
+                  name: 'Switches',
                   role: 'surface-container-highest',
-                  on: 'primary / on-primary',
+                  on: 'on-primary',
                 },
               ].map((c) => (
                 <div
                   key={c.name}
-                  className="space-y-1 rounded-xl border border-[#CAD3F5] bg-white p-2.5"
+                  className="space-y-1.5 rounded-xl border border-[#CAD3F5] bg-white p-2.5 transition-all hover:border-[#0056FF]"
                 >
-                  <div className="font-sans text-xs font-bold text-[#0A1A4A]">{c.name}</div>
-                  <div className="font-mono text-[10px] text-[#0056FF]">{c.role}</div>
-                  <div className="font-mono text-[9px] text-slate-500">Text/Icon: {c.on}</div>
+                  <div className="truncate font-sans text-xs font-bold text-[#0A1A4A]">
+                    {c.name}
+                  </div>
+                  <div className="truncate font-mono text-[10px] font-bold text-[#0056FF]">
+                    {c.role}
+                  </div>
+                  <div className="truncate font-mono text-[9px] text-slate-500">{c.on}</div>
                 </div>
               ))}
             </div>
@@ -1392,78 +1632,95 @@ export function ColorRampsTokens() {
 
         {/* VIEW 4: FIXED ACCENT SUITE */}
         {colorSystemTab === 'fixed' && (
-          <div className="space-y-3 text-left">
-            <div className="border-b border-slate-100 pb-2">
+          <div className="space-y-4 text-left">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2">
               <span className="font-sans text-xs font-bold text-[#0A1A4A] uppercase">
-                Fixed Accent Color Roles (Theme-Independent Constants)
+                Fixed Accent Suites
               </span>
-              <p className="mt-0.5 font-sans text-xs text-slate-500">
-                Fixed colors maintain the same tone in both light and dark themes (unlike regular
-                container colors).
-              </p>
+              <span className="rounded bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+                Theme-Independent
+              </span>
             </div>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               {/* PRIMARY FIXED */}
               <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3">
                 <span className="font-sans text-xs font-bold text-[#0056FF] uppercase">
-                  Primary Fixed Suite
+                  Primary Fixed
                 </span>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div className="rounded-lg bg-[#DBEAFE] p-2 font-bold text-[#1E3A8A]">
-                    primary-fixed
-                  </div>
-                  <div className="rounded-lg bg-[#BFDBFE] p-2 font-bold text-[#1E3A8A]">
-                    primary-fixed-dim
-                  </div>
-                  <div className="rounded-lg border bg-white p-1.5 text-[#1E3A8A]">
-                    on-primary-fixed
-                  </div>
-                  <div className="rounded-lg border bg-white p-1.5 text-slate-600">
-                    on-primary-fixed-variant
-                  </div>
+                <div className="space-y-1.5 font-mono text-[10px]">
+                  {renderRoleSwatch({ role: 'primary-fixed', fill: '#DBEAFE', color: '#1E3A8A' })}
+                  {renderRoleSwatch({
+                    role: 'primary-fixed-dim',
+                    fill: '#BFDBFE',
+                    color: '#1E3A8A',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'on-primary-fixed',
+                    fill: '#FFFFFF',
+                    color: '#1E3A8A',
+                    border: '#CAD3F5',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'on-primary-fixed-variant',
+                    fill: '#FFFFFF',
+                    color: '#475569',
+                    border: '#CAD3F5',
+                  })}
                 </div>
               </div>
 
               {/* SECONDARY FIXED */}
               <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3">
                 <span className="font-sans text-xs font-bold text-[#2277FF] uppercase">
-                  Secondary Fixed Suite
+                  Secondary Fixed
                 </span>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div className="rounded-lg bg-[#E0E7FF] p-2 font-bold text-[#312E81]">
-                    secondary-fixed
-                  </div>
-                  <div className="rounded-lg bg-[#C7D2FE] p-2 font-bold text-[#312E81]">
-                    secondary-fixed-dim
-                  </div>
-                  <div className="rounded-lg border bg-white p-1.5 text-[#312E81]">
-                    on-secondary-fixed
-                  </div>
-                  <div className="rounded-lg border bg-white p-1.5 text-slate-600">
-                    on-secondary-fixed-variant
-                  </div>
+                <div className="space-y-1.5 font-mono text-[10px]">
+                  {renderRoleSwatch({ role: 'secondary-fixed', fill: '#E0E7FF', color: '#312E81' })}
+                  {renderRoleSwatch({
+                    role: 'secondary-fixed-dim',
+                    fill: '#C7D2FE',
+                    color: '#312E81',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'on-secondary-fixed',
+                    fill: '#FFFFFF',
+                    color: '#312E81',
+                    border: '#CAD3F5',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'on-secondary-fixed-variant',
+                    fill: '#FFFFFF',
+                    color: '#475569',
+                    border: '#CAD3F5',
+                  })}
                 </div>
               </div>
 
               {/* TERTIARY FIXED */}
               <div className="space-y-2 rounded-xl border border-[#CAD3F5] bg-white p-3">
                 <span className="font-sans text-xs font-bold text-amber-600 uppercase">
-                  Tertiary Fixed Suite
+                  Tertiary Fixed
                 </span>
-                <div className="space-y-1 font-mono text-[10px]">
-                  <div className="rounded-lg bg-[#FEF3C7] p-2 font-bold text-[#78350F]">
-                    tertiary-fixed
-                  </div>
-                  <div className="rounded-lg bg-[#FDE68A] p-2 font-bold text-[#78350F]">
-                    tertiary-fixed-dim
-                  </div>
-                  <div className="rounded-lg border bg-white p-1.5 text-[#78350F]">
-                    on-tertiary-fixed
-                  </div>
-                  <div className="rounded-lg border bg-white p-1.5 text-slate-600">
-                    on-tertiary-fixed-variant
-                  </div>
+                <div className="space-y-1.5 font-mono text-[10px]">
+                  {renderRoleSwatch({ role: 'tertiary-fixed', fill: '#FEF3C7', color: '#78350F' })}
+                  {renderRoleSwatch({
+                    role: 'tertiary-fixed-dim',
+                    fill: '#FDE68A',
+                    color: '#78350F',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'on-tertiary-fixed',
+                    fill: '#FFFFFF',
+                    color: '#78350F',
+                    border: '#FDE68A',
+                  })}
+                  {renderRoleSwatch({
+                    role: 'on-tertiary-fixed-variant',
+                    fill: '#FFFFFF',
+                    color: '#78350F',
+                    border: '#FDE68A',
+                  })}
                 </div>
               </div>
             </div>

@@ -264,18 +264,18 @@ function ToastCard({
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 30, scale: 0.92 }}
+      initial={{ opacity: 0, y: 24, scale: 0.94 }}
       animate={{
         opacity: isExpanded ? 1 : stackOpacity,
         y: isExpanded ? 0 : stackOffset,
         scale: isExpanded ? 1 : stackScale,
         zIndex: stackZIndex,
       }}
-      exit={{ opacity: 0, y: -20, scale: 0.9, transition: { duration: 0.18 } }}
+      exit={{ opacity: 0, y: -16, scale: 0.92, transition: { duration: 0.18, ease: 'easeOut' } }}
       transition={{
         type: 'spring',
-        stiffness: 420,
-        damping: 32,
+        stiffness: 360,
+        damping: 28,
         mass: 0.8,
       }}
       style={{
@@ -305,10 +305,10 @@ function ToastCard({
               <IconComponent size={18} className={cn('stroke-[2.4]', config.iconColor)} />
             </div>
 
-            {/* Message Body */}
+            {/* Message Body (No text truncation - 100% visible) */}
             <div className="min-w-0 flex-1 space-y-1">
               <div className="flex items-center gap-2">
-                <h4 className="truncate font-sans text-sm font-bold tracking-tight text-slate-900">
+                <h4 className="font-sans text-sm leading-snug font-bold tracking-tight text-[#0A1A4A]">
                   {item.title || (item.type === 'info' ? 'Notification' : config.label)}
                 </h4>
                 <span
@@ -425,25 +425,25 @@ export function ToastContainer({
       aria-label="Notification Stack"
       className={cn(positionClasses, 'transition-all duration-300', className)}
     >
-      {/* Interactive Floating Expansion Indicator Badge */}
+      {/* Top Stack Expansion Indicator Pill */}
       {reversedToasts.length > 1 && (
-        <div className="pointer-events-auto mb-2 flex items-center justify-between px-1">
-          <button
-            type="button"
-            onClick={() => setIsTapped((prev) => !prev)}
-            className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-white/95 px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF] shadow-xs backdrop-blur-md transition-all hover:bg-[#EFF5FF]"
-          >
-            <Layers className="size-3.5" />
-            <span>
-              {isExpanded
-                ? `Expanded (${reversedToasts.length}) · Tap to collapse`
-                : `${reversedToasts.length} Notifications · Tap/Hover to expand`}
-            </span>
-          </button>
-
-          <span className="font-mono text-[10px] text-slate-400">
-            {isExpanded ? 'Full Queue' : 'Stacked Deck'}
+        <div className="pointer-events-auto mb-2 flex items-center justify-between px-2 font-mono text-[11px]">
+          <span className="flex items-center gap-1.5 font-bold text-[#0056FF]">
+            <Layers className="size-3.5 text-[#0056FF]" />
+            {reversedToasts.length} Stacked · {isExpanded ? 'Expanded' : 'Hover to expand'}
           </span>
+          {isExpanded && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsTapped(false);
+              }}
+              className="cursor-pointer font-sans text-[11px] font-bold text-slate-500 hover:text-[#0056FF]"
+            >
+              Collapse
+            </button>
+          )}
         </div>
       )}
 
@@ -716,10 +716,10 @@ export function ToastStackDemo() {
       {/* Hero Interactive Toast Stage Canvas */}
       <div className="relative min-h-[380px] w-full overflow-hidden rounded-2xl border border-[#CAD3F5] bg-[#EFF5FF]/20 p-6 shadow-xs sm:min-h-[420px]">
         {/* Stage Status Strip */}
-        <div className="relative z-10 flex items-center justify-between font-mono text-[10px] text-slate-400">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-1 font-mono text-[10px] text-slate-400">
           <span className="flex items-center gap-1.5 font-bold text-[#0A1A4A]">
-            <Layers className="size-3 text-[#0056FF]" />
-            STACKED DECK PHYSICS · HOVER TO EXPAND
+            <Layers className="size-3 shrink-0 text-[#0056FF]" />
+            <span>STACKED DECK · HOVER TO EXPAND</span>
           </span>
           <span className="hidden font-mono text-slate-400 sm:inline">COUNTDOWN TIMERS ACTIVE</span>
         </div>

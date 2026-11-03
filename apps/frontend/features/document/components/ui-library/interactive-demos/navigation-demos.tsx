@@ -463,14 +463,14 @@ export function GooeyNavDemo() {
     <div className="flex w-full flex-col gap-8 py-2">
       {/* DEMO 1: Classic Fluid Capsule Pill (Confirmed Design) */}
       <div className="flex flex-col gap-3">
-        <div className="border-b border-[#CAD3F5] pb-2">
+        <div className="border-b border-[#CAD3F5]/80 pb-2">
           <h3 className="font-mono text-xs font-bold tracking-wide text-[#0A1A4A] uppercase">
             01. Fluid Capsule Pill (Classic Gooey Nav)
           </h3>
         </div>
 
-        <div className="flex w-full flex-col items-center justify-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-xs">
-          <div className="relative inline-flex rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1">
+        <div className="flex w-full flex-col items-center justify-center py-6 text-center">
+          <div className="no-scrollbar relative inline-flex max-w-full overflow-x-auto rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1 shadow-2xs">
             {tabs.map((tab) => {
               const isActive = selected === tab.id;
               return (
@@ -480,7 +480,7 @@ export function GooeyNavDemo() {
                   title={`Select ${tab.label} timeline view`}
                   onClick={() => setSelected(tab.id)}
                   className={cn(
-                    'relative z-10 cursor-pointer rounded-full px-4 py-1.5 font-sans text-xs font-bold transition-all duration-200 select-none',
+                    'relative z-10 shrink-0 cursor-pointer rounded-full px-3 py-1.5 font-sans text-xs font-bold transition-all duration-200 select-none sm:px-4',
                     isActive
                       ? 'bg-[#0056FF] text-white shadow-xs'
                       : 'text-[#0A1A4A] hover:text-[#0056FF]',
@@ -496,15 +496,15 @@ export function GooeyNavDemo() {
 
       {/* DEMO 2: Corner Brand Border Gooey Nav (New Demo below it) */}
       <div className="flex flex-col gap-3">
-        <div className="border-b border-[#CAD3F5] pb-2">
+        <div className="border-b border-[#CAD3F5]/80 pb-2">
           <h3 className="font-mono text-xs font-bold tracking-wide text-[#0A1A4A] uppercase">
             02. Corner Brand Border Gooey Nav
           </h3>
         </div>
 
-        <div className="flex w-full flex-col items-center justify-center rounded-2xl border border-[#CAD3F5] bg-white p-5 text-center shadow-xs">
+        <div className="flex w-full flex-col items-center justify-center py-6 text-center">
           {/* Technical Corner Brand Border Container */}
-          <div className="relative p-3">
+          <div className="relative max-w-full overflow-x-auto p-3">
             {/* 4 Technical Corner L-Brackets */}
             <span className="pointer-events-none absolute top-0 left-0 size-3 border-t-2 border-l-2 border-[#0056FF]" />
             <span className="pointer-events-none absolute top-0 right-0 size-3 border-t-2 border-r-2 border-[#0056FF]" />
@@ -512,7 +512,7 @@ export function GooeyNavDemo() {
             <span className="pointer-events-none absolute right-0 bottom-0 size-3 border-r-2 border-b-2 border-[#0056FF]" />
 
             {/* Navigation Track with Corner Accents */}
-            <div className="relative inline-flex items-center gap-1 rounded border border-[#CAD3F5] bg-[#EFF5FF] p-1">
+            <div className="no-scrollbar relative inline-flex max-w-full items-center gap-1 overflow-x-auto rounded border border-[#CAD3F5] bg-[#EFF5FF] p-1 shadow-2xs">
               {tabs.map((tab) => {
                 const isActive = cornerSelected === tab.id;
                 return (
@@ -522,7 +522,7 @@ export function GooeyNavDemo() {
                     title={`Select ${tab.label}`}
                     onClick={() => setCornerSelected(tab.id)}
                     className={cn(
-                      'relative cursor-pointer rounded px-4 py-1.5 font-mono text-xs font-bold transition-all duration-200 select-none',
+                      'relative shrink-0 cursor-pointer rounded px-3 py-1.5 font-mono text-xs font-bold transition-all duration-200 select-none sm:px-4',
                       isActive
                         ? 'bg-[#0056FF] text-white shadow-2xs'
                         : 'text-[#0A1A4A] hover:bg-white hover:text-[#0056FF]',

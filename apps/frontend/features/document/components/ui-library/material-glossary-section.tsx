@@ -905,6 +905,26 @@ export function MaterialGlossarySection() {
     });
   }, [searchQuery, selectedCategory, selectedLetter]);
 
+  const categoryCounts = React.useMemo(() => {
+    const counts: Record<string, number> = { All: MATERIAL_GLOSSARY_TERMS.length };
+    CATEGORIES.forEach((cat) => {
+      if (cat !== 'All') {
+        counts[cat] = MATERIAL_GLOSSARY_TERMS.filter((t) => t.category === cat).length;
+      }
+    });
+    return counts;
+  }, []);
+
+  const availableLetters = React.useMemo(() => {
+    const lettersSet = new Set<string>();
+    MATERIAL_GLOSSARY_TERMS.forEach((term) => {
+      if (selectedCategory === 'All' || term.category === selectedCategory) {
+        lettersSet.add(term.letter);
+      }
+    });
+    return lettersSet;
+  }, [selectedCategory]);
+
   const handleCopyDefinition = (item: GlossaryTerm) => {
     const textToCopy = `${item.term}: ${item.definition}${
       item.codeOrToken ? ` (Code/Token: ${item.codeOrToken})` : ''
@@ -948,7 +968,7 @@ export function MaterialGlossarySection() {
         </div>
       </div>
 
-      {/* Category Pills */}
+      {/* Category Pills with Counts */}
       <div className="flex flex-wrap items-center gap-1.5">
         <span className="mr-1 flex items-center gap-1 font-mono text-[11px] font-bold text-slate-500 uppercase">
           <Filter className="size-3" />
@@ -956,45 +976,71 @@ export function MaterialGlossarySection() {
         </span>
         {CATEGORIES.map((cat) => {
           const isActive = selectedCategory === cat;
+          const count = categoryCounts[cat] ?? 0;
           return (
             <button
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
               className={cn(
-                'cursor-pointer rounded-lg px-2.5 py-1 font-sans text-xs font-semibold transition-all',
+                'flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-sans text-xs font-semibold transition-all',
                 isActive
                   ? 'bg-[#0056FF] text-white shadow-2xs'
                   : 'border border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF]',
               )}
             >
-              {cat}
+              <span>{cat}</span>
+              <span
+                className={cn(
+                  'py-0.2 rounded px-1 font-mono text-[10px]',
+                  isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500',
+                )}
+              >
+                {count}
+              </span>
             </button>
           );
         })}
       </div>
 
-      {/* Alphabet Quick Jump Bar */}
-      <div className="flex flex-wrap items-center gap-1 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF]/50 p-2">
-        <span className="mr-1 font-mono text-[10px] font-bold text-slate-500 uppercase">Jump:</span>
-        {LETTERS.map((letter) => {
-          const isActive = selectedLetter === letter;
-          return (
-            <button
-              key={letter}
-              type="button"
-              onClick={() => setSelectedLetter(letter)}
-              className={cn(
-                'size-6 cursor-pointer rounded font-mono text-xs font-bold transition-all',
-                isActive
-                  ? 'bg-[#0056FF] text-white'
-                  : 'text-[#0A1A4A] hover:bg-white hover:text-[#0056FF]',
-              )}
-            >
-              {letter}
-            </button>
-          );
-        })}
+      {/* Touch-Friendly Alphabet Horizontal Ribbon */}
+      <div className="flex items-center gap-1.5 rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] p-2 text-xs">
+        <span className="mr-1 hidden font-mono text-[10px] font-bold text-slate-500 uppercase sm:inline-block">
+          Jump:
+        </span>
+        <div className="flex flex-1 items-center gap-1 overflow-x-auto py-0.5">
+          {LETTERS.map((letter) => {
+            const isActive = selectedLetter === letter;
+            const hasTerms = letter === 'ALL' || availableLetters.has(letter);
+            return (
+              <button
+                key={letter}
+                type="button"
+                disabled={!hasTerms}
+                onClick={() => setSelectedLetter(letter)}
+                className={cn(
+                  'flex h-7 min-w-[28px] cursor-pointer items-center justify-center rounded-md px-1.5 font-mono text-xs font-bold transition-all',
+                  isActive
+                    ? 'bg-[#0056FF] text-white shadow-xs'
+                    : hasTerms
+                      ? 'border border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]'
+                      : 'cursor-not-allowed border border-slate-200 bg-slate-100 text-slate-300',
+                )}
+              >
+                {letter}
+              </button>
+            );
+          })}
+        </div>
+        {selectedLetter !== 'ALL' && (
+          <button
+            type="button"
+            onClick={() => setSelectedLetter('ALL')}
+            className="cursor-pointer rounded-md border border-[#CAD3F5] bg-white px-2 py-1 font-mono text-[10px] font-bold text-[#0056FF] hover:bg-[#EFF5FF]"
+          >
+            Reset
+          </button>
+        )}
       </div>
 
       {/* Terms Card Grid */}
