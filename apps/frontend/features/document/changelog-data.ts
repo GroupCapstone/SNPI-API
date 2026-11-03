@@ -8,6 +8,13 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "618204b",
+    "developer": "史力爱卫",
+    "description": "Add enterprise architecture assessment framework, REST API & 10-domain audit skill"
+  },
+  {
     "version": "0.2.18",
     "date": "03.11.2026",
     "commitHash": "eb4b9bc",
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "237630a",
     "developer": "史力爱卫",
     "description": "Record Real-Time SSE Stream section removal"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "0cceac0",
-    "developer": "史力爱卫",
-    "description": "Delete Real-Time SSE Stream section and card from Open API view"
   }
 ];
