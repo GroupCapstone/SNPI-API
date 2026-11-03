@@ -2,6 +2,18 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `3559b00` (Developer: **史力爱卫**)
+
+- Add verify:arc script command
+
+### Version 0.2.17 (03.11.2026) - `cf69ccd` (Developer: **史力爱卫**)
+
+- Refine DinD privilege separation regex check in ARC verification script
+
+### Version 0.2.17 (03.11.2026) - `bcb0b73` (Developer: **史力爱卫**)
+
+- Sync changelog for git lfs policy application
+
 ### Version 0.2.17 (03.11.2026) - `c4c0c89` (Developer: **史力爱卫**)
 
 - Apply git lfs policy governance, .gitattributes filters & verification runner
@@ -89,16 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `5e3f4a0` (Developer: **史力爱卫**)
 
 - Sync recent archive commit
-
-### Version 0.2.17 (03.11.2026) - `bb91954` (Developer: **史力爱卫**)
-
-- Archive architecture assessment framework & enterprise knowledge base
-
-### Version 0.2.17 (03.11.2026) - `3463fd2` (Developer: **史力爱卫**)
-
-- Record architecture assessment skill commit
-
-### Version 0.2.17 (03.11.2026) - `618204b` (Developer: **史力爱卫**)
-
-- Add enterprise architecture assessment framework, REST API & 10-domain audit skill
 

@@ -10,6 +10,27 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "3559b00",
+    "developer": "史力爱卫",
+    "description": "Add verify:arc script command"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "cf69ccd",
+    "developer": "史力爱卫",
+    "description": "Refine DinD privilege separation regex check in ARC verification script"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "bcb0b73",
+    "developer": "史力爱卫",
+    "description": "Sync changelog for git lfs policy application"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "c4c0c89",
     "developer": "史力爱卫",
     "description": "Apply git lfs policy governance, .gitattributes filters & verification runner"
@@ -160,26 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "5e3f4a0",
     "developer": "史力爱卫",
     "description": "Sync recent archive commit"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "bb91954",
-    "developer": "史力爱卫",
-    "description": "Archive architecture assessment framework & enterprise knowledge base"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "3463fd2",
-    "developer": "史力爱卫",
-    "description": "Record architecture assessment skill commit"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "618204b",
-    "developer": "史力爱卫",
-    "description": "Add enterprise architecture assessment framework, REST API & 10-domain audit skill"
   }
 ];
