@@ -15,6 +15,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `application-security-design-principles.md`: 5 core application security principles (Security, Compliance, Proactivity, Awareness, Simplicity) across Start, Mature, and Advance maturity tiers.
   - `application-security-checklist.md`: 43-point application security & SDLC assessment checklist across 11 architectural domains.
   - `github-repository-threat-model.md`: Repository threat modeling (T-01 to T-08), danger zone governance, ruleset enforcement, and supply chain defense.
+  - `dependency-supply-chain-defense.md`: 6-layer defense-in-depth model against supply chain attacks, lifecycle script disabling, dev containers, and trusted publishing.
 
 - **`architecture/`**:
   - `modular-monolith-patterns.md`: 7-layer domain architecture (`route -> controller -> service -> repository -> model -> validation -> types`), Mongoose ACID transaction protocols.

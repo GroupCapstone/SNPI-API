@@ -32,6 +32,8 @@ async function verifyDeploymentManifests(): Promise<void> {
     'infrastructure/networking/actions-private-network/setup-network-settings.sh',
     'infrastructure/security/threat-model/repository-threat-model.yaml',
     'infrastructure/security/threat-model/repository-ruleset-threat-defense.json',
+    '.npmrc',
+    '.devcontainer/devcontainer.json',
   ];
 
   for (const file of requiredFiles) {
