@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `9f14394` (Developer: **史力爱卫**)
+
+- Implement 6-layer dependency supply chain defense standard & automated verification
+
 ### Version 0.2.17 (03.11.2026) - `485f0b0` (Developer: **史力爱卫**)
 
 - Add unified verify:all-standards command for all enterprise standards
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `39f5815` (Developer: **史力爱卫**)
 
 - Record git lfs architecture guide commit
-
-### Version 0.2.17 (03.11.2026) - `ec6e02d` (Developer: **史力爱卫**)
-
-- Record Git LFS architecture guide & compression evaluation tool
 

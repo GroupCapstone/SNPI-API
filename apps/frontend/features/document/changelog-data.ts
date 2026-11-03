@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "9f14394",
+    "developer": "史力爱卫",
+    "description": "Implement 6-layer dependency supply chain defense standard & automated verification"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "485f0b0",
     "developer": "史力爱卫",
     "description": "Add unified verify:all-standards command for all enterprise standards"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "39f5815",
     "developer": "史力爱卫",
     "description": "Record git lfs architecture guide commit"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "ec6e02d",
-    "developer": "史力爱卫",
-    "description": "Record Git LFS architecture guide & compression evaluation tool"
   }
 ];
