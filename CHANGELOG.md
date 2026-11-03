@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `bb91954` (Developer: **史力爱卫**)
+
+- Archive architecture assessment framework & enterprise knowledge base
+
 ### Version 0.2.17 (03.11.2026) - `3463fd2` (Developer: **史力爱卫**)
 
 - Record architecture assessment skill commit
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.14 (01.11.2026) - `56d407a` (Developer: **史力爱卫**)
 
 - Redesign alerts with clean human-readable short headers
-
-### Version 0.2.14 (01.11.2026) - `d5e63ca` (Developer: **史力爱卫**)
-
-- Format telegram repo watcher
 
