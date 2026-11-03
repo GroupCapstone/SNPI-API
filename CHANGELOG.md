@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `6a9f0fe` (Developer: **史力爱卫**)
+
+- Archive Git LFS article and standard plaintext in safe folders
+
+### Version 0.2.17 (03.11.2026) - `cca75ce` (Developer: **史力爱卫**)
+
+- Record ARC and git lfs updates in AGENTS.md and agent specs
+
 ### Version 0.2.17 (03.11.2026) - `858d883` (Developer: **史力爱卫**)
 
 - Record actions runner controller architecture guide
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `5e1db06` (Developer: **史力爱卫**)
 
 - Real-time sync for knowledge base additions
-
-### Version 0.2.17 (03.11.2026) - `ff301f6` (Developer: **史力爱卫**)
-
-- Add knowledge base design standards
-
-### Version 0.2.17 (03.11.2026) - `2829b51` (Developer: **史力爱卫**)
-
-- Add deployment-workflows knowledge document
 
