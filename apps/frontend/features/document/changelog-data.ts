@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "febce6b",
+    "developer": "史力爱卫",
+    "description": "Establish primary Application Security Design Principles skill & agent bindings"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "c9e1343",
+    "developer": "史力爱卫",
+    "description": "Sync resilience mirroring changelog entry"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "e4f59ac",
     "developer": "史力爱卫",
     "description": "Record application security principles commit"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "265ff3e",
     "developer": "史力爱卫",
     "description": "Real-time changelog sync"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "200af73",
-    "developer": "史力爱卫",
-    "description": "Record enterprise custom agents skill in AGENTS.md"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "a2aab74",
-    "developer": "史力爱卫",
-    "description": "Update copilot instructions with enterprise custom agents context"
   }
 ];
