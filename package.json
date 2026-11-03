@@ -23,6 +23,7 @@
     "seed:complete": "npm run seed:complete --workspace=apps/backend",
     "seed:protect": "npm run seed:protect --workspace=apps/backend",
     "test:api": "tsx scripts/test-all-apis.ts",
+    "audit:architecture": "tsx scripts/audit-architecture.ts",
     "deploy:verify": "tsx scripts/verify-deploy-gate.ts",
     "git:sync": "tsx scripts/dual-dev-git-sync.ts",
     "changelog:sync": "tsx scripts/sync-changelog.ts",
