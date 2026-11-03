@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "485f0b0",
+    "developer": "史力爱卫",
+    "description": "Add unified verify:all-standards command for all enterprise standards"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "eb81feb",
     "developer": "史力爱卫",
     "description": "Implement github repository threat model (T-01 to T-08), danger zone governance & ruleset defenses"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "ec6e02d",
     "developer": "史力爱卫",
     "description": "Record Git LFS architecture guide & compression evaluation tool"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "d8b82ca",
-    "developer": "史力爱卫",
-    "description": "Real-time changelog sync for architecture assessment implementation"
   }
 ];
