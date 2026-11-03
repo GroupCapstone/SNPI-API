@@ -14,6 +14,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `vulnerability-remediation.md`: Mongoose NoSQL injection prevention, regex DoS guards, and audit log tamper resistance.
   - `application-security-design-principles.md`: 5 core application security principles (Security, Compliance, Proactivity, Awareness, Simplicity) across Start, Mature, and Advance maturity tiers.
   - `application-security-checklist.md`: 43-point application security & SDLC assessment checklist across 11 architectural domains.
+  - `github-repository-threat-model.md`: Repository threat modeling (T-01 to T-08), danger zone governance, ruleset enforcement, and supply chain defense.
 
 - **`architecture/`**:
   - `modular-monolith-patterns.md`: 7-layer domain architecture (`route -> controller -> service -> repository -> model -> validation -> types`), Mongoose ACID transaction protocols.
