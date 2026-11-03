@@ -1101,43 +1101,38 @@ export function OpenSourceChecklistSection() {
       {/* ============================================================= */}
       <div className="relative space-y-6 overflow-hidden rounded-3xl border border-[#CAD3F5] bg-gradient-to-br from-[#EFF5FF] via-white to-[#F8FAFC] p-6 sm:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-lg border border-[#0056FF]/30 bg-[#0056FF]/10 px-3 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
+          <div className="max-w-2xl space-y-2.5">
+            <div className="inline-flex items-center gap-1.5 rounded-lg border border-[#0056FF]/20 bg-[#0056FF]/10 px-2.5 py-1 font-mono text-[11px] font-bold text-[#0056FF]">
               <Sparkles className="size-3.5" />
               <span>OPEN-SOURCE DESIGN SYSTEM CHECKLIST</span>
             </div>
 
-            <h2 className="font-sans text-2xl font-black tracking-tight text-[#0A1A4A] sm:text-3xl">
-              Open-Source Checklist Macro-Phases (230 Total Checks)
+            <h2 className="font-sans text-2xl font-black tracking-tight text-[#0A1A4A] sm:text-3xl md:text-4xl">
+              Build better design systems
             </h2>
 
             <p className="font-sans text-xs leading-relaxed text-slate-600 sm:text-sm">
-              Dedicated architectural verification tracker uniting all 4 foundational categories
-              into one uncompromised master group. Tracking completion progress across Design
-              Language, Foundations, Core Components, and Maintenance.
+              An open-source checklist to help you plan, build, and grow your design system.
+              Complete checklist tracking across 4 foundational phases.
             </p>
           </div>
 
-          {/* Global Progress Metric Box */}
-          <div className="shrink-0 rounded-2xl border border-emerald-200 bg-white p-4 text-right shadow-2xs">
-            <span className="block font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              Overall Progress
-            </span>
-            <div className="flex items-baseline justify-end gap-1.5 font-mono">
-              <span className="text-3xl font-black text-emerald-600">{completedChecks}</span>
-              <span className="text-sm font-bold text-slate-400">/ {totalChecks}</span>
-            </div>
-            <div className="mt-1 flex items-center justify-end gap-1.5">
-              <span className="rounded bg-emerald-50 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
-                {completionPercentage}% complete
-              </span>
-            </div>
+          {/* Top Right Action Button: Get started > */}
+          <div className="flex shrink-0 items-center pt-2 sm:pt-0">
+            <button
+              type="button"
+              onClick={() => scrollToTarget('ck-dl-1')}
+              className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#0056FF] px-5 py-2.5 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95 sm:text-sm"
+            >
+              <span>Get started</span>
+              <span className="font-mono text-sm leading-none">&gt;</span>
+            </button>
           </div>
         </div>
 
         {/* 4 Macro-Phases Category Cards Grid */}
         <div className="grid grid-cols-1 gap-3 font-mono text-xs sm:grid-cols-2 lg:grid-cols-4">
-          {/* Phase 1: Design Language 5/10 */}
+          {/* Phase 1: Design language 5/10 */}
           <button
             type="button"
             onClick={() => setActiveCategoryFilter('design-language')}
@@ -1149,7 +1144,7 @@ export function OpenSourceChecklistSection() {
             )}
           >
             <div className="mb-2 flex items-center justify-between">
-              <span className="font-sans font-bold text-[#0A1A4A]">1. Design language</span>
+              <span className="font-sans font-bold text-[#0A1A4A]">Design language</span>
               <span className="rounded-md border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[11px] font-bold text-emerald-700">
                 5/10
               </span>
@@ -1174,7 +1169,7 @@ export function OpenSourceChecklistSection() {
             )}
           >
             <div className="mb-2 flex items-center justify-between">
-              <span className="font-sans font-bold text-[#0A1A4A]">2. Foundations</span>
+              <span className="font-sans font-bold text-[#0A1A4A]">Foundations</span>
               <span className="rounded-md border border-blue-200 bg-[#EFF5FF] px-2 py-0.5 text-[11px] font-bold text-[#0056FF]">
                 0/26
               </span>
@@ -1199,7 +1194,7 @@ export function OpenSourceChecklistSection() {
             )}
           >
             <div className="mb-2 flex items-center justify-between">
-              <span className="font-sans font-bold text-[#0A1A4A]">3. Core components</span>
+              <span className="font-sans font-bold text-[#0A1A4A]">Core components</span>
               <span className="rounded-md border border-blue-200 bg-[#EFF5FF] px-2 py-0.5 text-[11px] font-bold text-[#0056FF]">
                 0/166
               </span>
@@ -1222,7 +1217,7 @@ export function OpenSourceChecklistSection() {
             )}
           >
             <div className="mb-2 flex items-center justify-between">
-              <span className="font-sans font-bold text-[#0A1A4A]">4. Maintenance</span>
+              <span className="font-sans font-bold text-[#0A1A4A]">Maintenance</span>
               <span className="rounded-md border border-blue-200 bg-[#EFF5FF] px-2 py-0.5 text-[11px] font-bold text-[#0056FF]">
                 0/28
               </span>

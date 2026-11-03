@@ -16,6 +16,7 @@ import { academicPeriodRouter } from './modules/academic-period/academic-period.
 import { academicRuleRouter } from './modules/academic-rule/academic-rule.route';
 import { academicYearRouter } from './modules/academic-year/academic-year.route';
 import { announcementRouter } from './modules/announcement/announcement.route';
+import { architectureAssessmentRouter } from './modules/architecture-assessment/architecture-assessment.route';
 import { assessmentRouter } from './modules/assessment/assessment.route';
 import { attendanceRouter } from './modules/attendance/attendance.route';
 import { attendanceLeaveRouter } from './modules/attendance-leave/attendance-leave.route';
@@ -178,6 +179,7 @@ export const createApp = (): express.Express => {
   app.use('/api/v1/attendance-leaves', attendanceLeaveRouter);
   app.use('/api/v1/student-transfers', studentTransferRouter);
   app.use('/api/v1/assessments', assessmentRouter);
+  app.use('/api/v1/architecture-assessment', architectureAssessmentRouter);
   app.use('/api/v1/scores', scoreRouter);
   app.use('/api/v1/term-results', termResultRouter);
   app.use('/api/v1/tuition-fees', tuitionRouter);

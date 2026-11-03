@@ -382,7 +382,7 @@ export function DocsStickyHeader({
                         Web
                       </span>
                       <span className="block font-sans text-xs font-black tracking-tight text-slate-950 select-none">
-                        SNPI Design System
+                        SNPI System
                       </span>
                     </div>
 
@@ -411,9 +411,9 @@ export function DocsStickyHeader({
                                 </div>
                                 <div className="flex items-center">
                                   {!isGroupCollapsed ? (
-                                    <ChevronDown className="size-3 text-slate-400" />
+                                    <ChevronDown className="size-3 text-[#0056FF]" />
                                   ) : (
-                                    <ChevronRight className="size-3 text-slate-400" />
+                                    <ChevronRight className="size-3 text-[#0056FF]" />
                                   )}
                                 </div>
                               </button>
@@ -436,9 +436,9 @@ export function DocsStickyHeader({
                                               {item.name}
                                             </span>
                                             {isExpanded ? (
-                                              <ChevronDown className="ml-1 size-3 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                                              <ChevronDown className="ml-1 size-3 shrink-0 text-[#0056FF]" />
                                             ) : (
-                                              <ChevronRight className="ml-1 size-3 shrink-0 text-slate-400 group-hover:text-slate-700" />
+                                              <ChevronRight className="ml-1 size-3 shrink-0 text-[#0056FF]" />
                                             )}
                                           </button>
 

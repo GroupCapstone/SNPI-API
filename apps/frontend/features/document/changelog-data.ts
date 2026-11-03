@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "73bcd78",
+    "developer": "史力爱卫",
+    "description": "Sync changelog for primary skill consolidation"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "f9ac822",
     "developer": "史力爱卫",
     "description": "Consolidate architecture assessment article into primary skill safe folder"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "4bca831",
     "developer": "史力爱卫",
     "description": "Remove brand color do and dont section and hero pill clutter"
-  },
-  {
-    "version": "0.2.16",
-    "date": "02.11.2026",
-    "commitHash": "05fa34b",
-    "developer": "史力爱卫",
-    "description": "Redesign homepage hero sections with radiant integration hub and tactile folder showcase"
   }
 ];
