@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "e4f59ac",
+    "developer": "史力爱卫",
+    "description": "Record application security principles commit"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "0e6083f",
     "developer": "史力爱卫",
     "description": "Record enterprise application security design principles & maturity framework"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "a2aab74",
     "developer": "史力爱卫",
     "description": "Update copilot instructions with enterprise custom agents context"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "b3a0cd8",
-    "developer": "史力爱卫",
-    "description": "Record custom agents commit"
   }
 ];

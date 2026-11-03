@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `e4f59ac` (Developer: **史力爱卫**)
+
+- Record application security principles commit
+
 ### Version 0.2.17 (03.11.2026) - `0e6083f` (Developer: **史力爱卫**)
 
 - Record enterprise application security design principles & maturity framework
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `a2aab74` (Developer: **史力爱卫**)
 
 - Update copilot instructions with enterprise custom agents context
-
-### Version 0.2.17 (03.11.2026) - `b3a0cd8` (Developer: **史力爱卫**)
-
-- Record custom agents commit
 
