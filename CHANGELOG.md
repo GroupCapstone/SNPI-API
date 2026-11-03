@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `febce6b` (Developer: **史力爱卫**)
+
+- Establish primary Application Security Design Principles skill & agent bindings
+
+### Version 0.2.17 (03.11.2026) - `c9e1343` (Developer: **史力爱卫**)
+
+- Sync resilience mirroring changelog entry
+
 ### Version 0.2.17 (03.11.2026) - `e4f59ac` (Developer: **史力爱卫**)
 
 - Record application security principles commit
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `265ff3e` (Developer: **史力爱卫**)
 
 - Real-time changelog sync
-
-### Version 0.2.17 (03.11.2026) - `200af73` (Developer: **史力爱卫**)
-
-- Record enterprise custom agents skill in AGENTS.md
-
-### Version 0.2.17 (03.11.2026) - `a2aab74` (Developer: **史力爱卫**)
-
-- Update copilot instructions with enterprise custom agents context
 
