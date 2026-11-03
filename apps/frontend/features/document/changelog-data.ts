@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "1b7fa71",
+    "developer": "史力爱卫",
+    "description": "Add custom enterprise agent definitions with architecture assessment integration"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "5e1db06",
+    "developer": "史力爱卫",
+    "description": "Real-time sync for knowledge base additions"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "ff301f6",
     "developer": "史力爱卫",
     "description": "Add knowledge base design standards"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "6e526a3",
     "developer": "史力爱卫",
     "description": "Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "aa64a62",
-    "developer": "史力爱卫",
-    "description": "Bump monorepo version to v0.2.14"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "acaeca5",
-    "developer": "史力爱卫",
-    "description": "Format scripts and sync changelog for release checkpoint v0.2.14"
   }
 ];

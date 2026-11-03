@@ -28,3 +28,11 @@
 /.github/workflows/ @Tan-Saphea
 /.github/scripts/ @Tan-Saphea
 /scripts/ @Tan-Saphea
+
+# Enterprise Custom Agents & Expanded Context Knowledge Base
+/.github/agents/ @Tan-Saphea
+/.github/knowledge/ @Tan-Saphea
+/.github/knowledge/security/ @Tan-Saphea
+/.github/knowledge/architecture/ @Tan-Saphea
+/.github/knowledge/ci-cd/ @Tan-Saphea
+/.github/knowledge/design-standards/ @Tan-Saphea

@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `1b7fa71` (Developer: **史力爱卫**)
+
+- Add custom enterprise agent definitions with architecture assessment integration
+
+### Version 0.2.17 (03.11.2026) - `5e1db06` (Developer: **史力爱卫**)
+
+- Real-time sync for knowledge base additions
+
 ### Version 0.2.17 (03.11.2026) - `ff301f6` (Developer: **史力爱卫**)
 
 - Add knowledge base design standards
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.15 (01.11.2026) - `6e526a3` (Developer: **史力爱卫**)
 
 - Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts
-
-### Version 0.2.14 (01.11.2026) - `aa64a62` (Developer: **史力爱卫**)
-
-- Bump monorepo version to v0.2.14
-
-### Version 0.2.14 (01.11.2026) - `acaeca5` (Developer: **史力爱卫**)
-
-- Format scripts and sync changelog for release checkpoint v0.2.14
 
