@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "ec6e02d",
+    "developer": "史力爱卫",
+    "description": "Record Git LFS architecture guide & compression evaluation tool"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "d8b82ca",
+    "developer": "史力爱卫",
+    "description": "Real-time changelog sync for architecture assessment implementation"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "50afe42",
     "developer": "史力爱卫",
     "description": "Implement architecture assessment 7-layer backend module & audit CLI"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "3eb5506",
     "developer": "史力爱卫",
     "description": "Streamline design engine cards with kinetic gravity archetype [PASSED]"
-  },
-  {
-    "version": "0.2.16",
-    "date": "02.11.2026",
-    "commitHash": "4cf236b",
-    "developer": "史力爱卫",
-    "description": "Remove theme switcher dock and standardize tactile folder to clean white blue design"
-  },
-  {
-    "version": "0.2.16",
-    "date": "02.11.2026",
-    "commitHash": "5b1d272",
-    "developer": "史力爱卫",
-    "description": "Remove verbose text copy and leave clean whitespace across hero and component demos"
   }
 ];
