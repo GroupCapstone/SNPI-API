@@ -1,0 +1,60 @@
+# GitHub Repository Threat Model Defense Configuration
+version: "1.0"
+repository:
+  name: snp-sms-monorepo
+  visibility: private
+  defaultBranch: main
+
+threatDefenses:
+  # T-01: Secret Exposure in Repositories
+  t01_secretScanning:
+    secretScanningEnabled: true
+    pushProtectionEnabled: true
+    preCommitScanner: true
+    abstractCredentialPolicy: true
+
+  # T-02: Unauthorized Access to Private Repositories
+  t02_unauthorizedAccess:
+    enforcePrivateVisibility: true
+    enterpriseManagedUsers: true
+    ipAllowListEnforced: false
+    adminOnlyInvitations: true
+
+  # T-03: Abuse or Manipulation of "Danger Zone" Settings
+  t03_dangerZoneTamper:
+    restrictRepoDeletionToAdmins: true
+    restrictRepoTransfer: true
+    restrictVisibilityChange: true
+
+  # T-04: Modification or Deletion of Branch History
+  t04_branchHistoryProtection:
+    blockForcePushes: true
+    blockBranchDeletion: true
+    enforceLinearHistory: true
+
+  # T-05: Unauthorized Submission of Changes
+  t05_unauthorizedMerge:
+    requirePullRequest: true
+    requiredStatusChecks:
+      - "Pre-Deployment Verification Gate"
+      - "TypeScript Static Analysis"
+      - "ESLint Quality Gate"
+
+  # T-06: Self-Approval and Self-Merge of Pull Requests
+  t06_selfApprovalPrevention:
+    minimumApprovals: 1
+    prohibitAuthorApproval: true
+    dismissStaleReviewsOnPush: true
+    requireCodeOwnerReviews: true
+
+  # T-07: Account Compromise & Identity Spoofing
+  t07_accountAndCommitIntegrity:
+    requireTwoFactorAuth: true
+    enforceSignedCommits: true
+    maxPatDurationDays: 90
+
+  # T-08: Workflow & Action Misconfiguration
+  t08_workflowSecurity:
+    enforceActionShaPinning: true
+    defaultWorkflowPermissions: contents:read
+    disallowInsecureScriptInjection: true

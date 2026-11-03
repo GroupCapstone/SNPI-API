@@ -20,7 +20,7 @@ function runCommand(command: string): string {
 }
 
 async function verifyDeploymentManifests(): Promise<void> {
-  console.log('[1/5] Verifying deployment manifests and configurations...');
+  console.log('[1/6] Verifying deployment manifests, networking & security configurations...');
   const requiredFiles = [
     'vercel.json',
     'apps/backend/vercel.json',
@@ -30,6 +30,8 @@ async function verifyDeploymentManifests(): Promise<void> {
     'infrastructure/networking/actions-private-network/azure-vnet-runner-nsg.bicep',
     'infrastructure/networking/actions-private-network/azure-firewall-rules.tf',
     'infrastructure/networking/actions-private-network/setup-network-settings.sh',
+    'infrastructure/security/threat-model/repository-threat-model.yaml',
+    'infrastructure/security/threat-model/repository-ruleset-threat-defense.json',
   ];
 
   for (const file of requiredFiles) {
@@ -114,13 +116,24 @@ async function verifyGitHubWorkflowStatus(): Promise<void> {
 }
 
 async function verifyPrivateNetworking(): Promise<void> {
-  console.log('\n[5/5] Auditing GitHub Actions Private Networking & VNet Injection...');
+  console.log('\n[5/6] Auditing GitHub Actions Private Networking & VNet Injection...');
   try {
     runCommand('npm run verify:private-network');
     console.log('      [PASS] Private networking configuration, subnet capacity & firewall FQDNs verified.');
   } catch (err: unknown) {
     const error = err as Error;
     throw new Error(`Private networking verification failed: ${error.message}`);
+  }
+}
+
+async function verifyThreatModel(): Promise<void> {
+  console.log('\n[6/6] Auditing GitHub Repository Threat Model (T-01 to T-08)...');
+  try {
+    runCommand('npm run verify:threat-model');
+    console.log('      [PASS] All 8 repository threat vectors verified and mitigated.');
+  } catch (err: unknown) {
+    const error = err as Error;
+    throw new Error(`Threat model verification failed: ${error.message}`);
   }
 }
 
@@ -135,6 +148,7 @@ async function main() {
     await verifyProductionBuilds();
     await verifyGitHubWorkflowStatus();
     await verifyPrivateNetworking();
+    await verifyThreatModel();
     console.log('\n======================================================');
     console.log('[PASSED] Pre-push deployment and CI quality gate verified 100%.');
     console.log('======================================================');

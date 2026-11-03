@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `63a9dcf` (Developer: **史力爱卫**)
+
+- Wire private networking into pre-push quality gates, deploy workflows & internal endpoints
+
 ### Version 0.2.17 (03.11.2026) - `f4f0003` (Developer: **史力爱卫**)
 
 - Implement actions private networking, azure vnet injection & firewall fqdn standards
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `50afe42` (Developer: **史力爱卫**)
 
 - Implement architecture assessment 7-layer backend module & audit CLI
-
-### Version 0.2.17 (03.11.2026) - `73bcd78` (Developer: **史力爱卫**)
-
-- Sync changelog for primary skill consolidation
 

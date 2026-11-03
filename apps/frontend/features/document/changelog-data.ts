@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "63a9dcf",
+    "developer": "史力爱卫",
+    "description": "Wire private networking into pre-push quality gates, deploy workflows & internal endpoints"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "f4f0003",
     "developer": "史力爱卫",
     "description": "Implement actions private networking, azure vnet injection & firewall fqdn standards"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "50afe42",
     "developer": "史力爱卫",
     "description": "Implement architecture assessment 7-layer backend module & audit CLI"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "73bcd78",
-    "developer": "史力爱卫",
-    "description": "Sync changelog for primary skill consolidation"
   }
 ];
