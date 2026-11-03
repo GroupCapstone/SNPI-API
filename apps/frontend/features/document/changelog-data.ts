@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "265b462",
+    "developer": "史力爱卫",
+    "description": "Implement enforce ghas at scale, push ruleset bypass prevention & dependency review gates"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "b07d908",
     "developer": "史力爱卫",
     "description": "Implement securing github actions workflows, 40-char sha pinning & script injection defense"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "bef4d00",
     "developer": "史力爱卫",
     "description": "Configure gitattributes for LFS filter definitions"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "c48cde4",
-    "developer": "史力爱卫",
-    "description": "Sync polyrepo architecture archive entry"
   }
 ];
