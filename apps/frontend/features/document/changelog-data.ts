@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "bb91954",
+    "developer": "史力爱卫",
+    "description": "Archive architecture assessment framework & enterprise knowledge base"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "3463fd2",
     "developer": "史力爱卫",
     "description": "Record architecture assessment skill commit"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "56d407a",
     "developer": "史力爱卫",
     "description": "Redesign alerts with clean human-readable short headers"
-  },
-  {
-    "version": "0.2.14",
-    "date": "01.11.2026",
-    "commitHash": "d5e63ca",
-    "developer": "史力爱卫",
-    "description": "Format telegram repo watcher"
   }
 ];
