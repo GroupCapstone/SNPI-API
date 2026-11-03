@@ -13,6 +13,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `authentication-patterns.md`: Argon2id password hashing, JWT dual-token rotation, HTTP-only cookie security, and RBAC implied scopes.
   - `vulnerability-remediation.md`: Mongoose NoSQL injection prevention, regex DoS guards, and audit log tamper resistance.
   - `application-security-design-principles.md`: 5 core application security principles (Security, Compliance, Proactivity, Awareness, Simplicity) across Start, Mature, and Advance maturity tiers.
+  - `application-security-checklist.md`: 43-point application security & SDLC assessment checklist across 11 architectural domains.
 
 - **`architecture/`**:
   - `modular-monolith-patterns.md`: 7-layer domain architecture (`route -> controller -> service -> repository -> model -> validation -> types`), Mongoose ACID transaction protocols.

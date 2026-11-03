@@ -12,8 +12,8 @@ description: >-
 > **Status**: Primary Architectural Standard  
 > **Authoritative Scope**: Application Security, DevSecOps, Compliance Governance & System Architecture  
 > **Primary Safe Folder**: `.agents/skills/application-security-design-principles/`  
-> **Unabridged References**: `references/application-security-design-principles.md` & `references/application-security-standard.txt`  
-> **Enterprise Knowledge Base**: `.github/knowledge/security/application-security-design-principles.md`
+> **Unabridged References**: `references/application-security-design-principles.md`, `references/application-security-checklist.md`, `references/application-security-checklist.txt`, & `references/application-security-standard.txt`  
+> **Enterprise Knowledge Base**: `.github/knowledge/security/application-security-design-principles.md` & `.github/knowledge/security/application-security-checklist.md`
 
 ---
 
@@ -145,5 +145,6 @@ Every automated CI gate and architectural review must evaluate compliance agains
 
 1. **Server-Side Tenant Scoping**: Every database transaction must resolve tenant identity from verified server session tokens (`req.user.schoolId`), never from client input.
 2. **Zero Plaintext Secrets**: Secrets, tokens, and keys must never be committed to source control or logged in telemetry.
-3. **Automated Quality Gates**: CI pipelines must enforce linting, typechecking, vulnerability scanning, and architecture audit gates (`npm run audit:architecture`).
+3. **Automated Quality Gates**: CI pipelines must enforce linting, typechecking, vulnerability scanning, and architecture/appsec audit gates (`npm run audit:architecture`, `npm run audit:appsec`).
 4. **Zero Emojis & Clean Signal**: All security documentation, logs, error responses, and telemetry must use strict textual badges (`[PASSED]`, `[FAILED]`, `[WARNING]`, `[P0]`, `[P1]`).
+5. **Continuous Verification CLI**: Run `npm run audit:appsec` to verify all 43 Application Security checklist criteria across all 11 domains.

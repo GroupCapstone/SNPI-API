@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "f4f0003",
+    "developer": "史力爱卫",
+    "description": "Implement actions private networking, azure vnet injection & firewall fqdn standards"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "4225b26",
     "developer": "史力爱卫",
     "description": "Real-time changelog sync for primary appsec skill"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "73bcd78",
     "developer": "史力爱卫",
     "description": "Sync changelog for primary skill consolidation"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "f9ac822",
-    "developer": "史力爱卫",
-    "description": "Consolidate architecture assessment article into primary skill safe folder"
   }
 ];

@@ -20,12 +20,16 @@ function runCommand(command: string): string {
 }
 
 async function verifyDeploymentManifests(): Promise<void> {
-  console.log('[1/3] Verifying deployment manifests and configurations...');
+  console.log('[1/5] Verifying deployment manifests and configurations...');
   const requiredFiles = [
     'vercel.json',
     'apps/backend/vercel.json',
     'apps/frontend/vercel.json',
     'apps/backend/infrastructure/k8s/backend-deployment.yaml',
+    'infrastructure/networking/actions-private-network/network-config.yaml',
+    'infrastructure/networking/actions-private-network/azure-vnet-runner-nsg.bicep',
+    'infrastructure/networking/actions-private-network/azure-firewall-rules.tf',
+    'infrastructure/networking/actions-private-network/setup-network-settings.sh',
   ];
 
   for (const file of requiredFiles) {
@@ -109,6 +113,17 @@ async function verifyGitHubWorkflowStatus(): Promise<void> {
   }
 }
 
+async function verifyPrivateNetworking(): Promise<void> {
+  console.log('\n[5/5] Auditing GitHub Actions Private Networking & VNet Injection...');
+  try {
+    runCommand('npm run verify:private-network');
+    console.log('      [PASS] Private networking configuration, subnet capacity & firewall FQDNs verified.');
+  } catch (err: unknown) {
+    const error = err as Error;
+    throw new Error(`Private networking verification failed: ${error.message}`);
+  }
+}
+
 async function main() {
   console.log('======================================================');
   console.log('SNP-SMS Pre-Push Deployment & CI Quality Gate');
@@ -119,6 +134,7 @@ async function main() {
     await verifyLintQuality();
     await verifyProductionBuilds();
     await verifyGitHubWorkflowStatus();
+    await verifyPrivateNetworking();
     console.log('\n======================================================');
     console.log('[PASSED] Pre-push deployment and CI quality gate verified 100%.');
     console.log('======================================================');

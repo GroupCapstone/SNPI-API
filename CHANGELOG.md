@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `f4f0003` (Developer: **史力爱卫**)
+
+- Implement actions private networking, azure vnet injection & firewall fqdn standards
+
 ### Version 0.2.17 (03.11.2026) - `4225b26` (Developer: **史力爱卫**)
 
 - Real-time changelog sync for primary appsec skill
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `73bcd78` (Developer: **史力爱卫**)
 
 - Sync changelog for primary skill consolidation
-
-### Version 0.2.17 (03.11.2026) - `f9ac822` (Developer: **史力爱卫**)
-
-- Consolidate architecture assessment article into primary skill safe folder
 
