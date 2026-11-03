@@ -316,6 +316,23 @@ export class ArchitectureAssessmentService {
       verifiedAt: timestamp,
     });
 
+    const gitattributesContent = readFileSafe('.gitattributes');
+    const hasLfsConfig = gitattributesContent.includes('filter=lfs') && gitattributesContent.includes('merge=lfs');
+    items.push({
+      checkId: 'SCA-17',
+      domain: 'SCALABILITY',
+      category: 'Resource Management',
+      title: 'Git LFS & Large Binary Asset Governance',
+      description: 'Govern large binary assets via Git LFS filters and compression thresholds.',
+      priority: 'P1',
+      status: hasLfsConfig ? 'PASSED' : 'WARNING',
+      score: hasLfsConfig ? 100 : 50,
+      weight: 1.0,
+      evidence: hasLfsConfig ? 'Git LFS tracking filters configured in .gitattributes for binary types' : 'Missing Git LFS filters in .gitattributes',
+      automated: true,
+      verifiedAt: timestamp,
+    });
+
     // DOMAIN 2: RESILIENCY
     items.push({
       checkId: 'RES-01',

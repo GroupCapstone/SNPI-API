@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `5f130a2` (Developer: **史力爱卫**)
+
+- Real-time changelog sync
+
 ### Version 0.2.17 (03.11.2026) - `4f419e3` (Developer: **史力爱卫**)
 
 - Add LFS policy verification script
@@ -95,10 +99,6 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 - Add enterprise architecture assessment framework, REST API & 10-domain audit skill
 
 ### Version 0.2.18 (03.11.2026) - `eb4b9bc` (Developer: **史力爱卫**)
-
-- Checkpoint & live ci deploy verification [PASSED]
-
-### Version 0.2.17 (03.11.2026) - `0f1ac54` (Developer: **史力爱卫**)
 
 - Checkpoint & live ci deploy verification [PASSED]
 

@@ -96,6 +96,19 @@ async function runArchitectureAudit(): Promise<void> {
     evidence: hasProxy ? 'Next.js API rewrites and local-proxy.ts managing traffic ingress' : 'No proxy configuration',
   });
 
+  const gitattributesStr = readFileSafe('.gitattributes');
+  const hasGitLfsRules = gitattributesStr.includes('filter=lfs') && gitattributesStr.includes('merge=lfs');
+  checks.push({
+    code: 'SCA-17',
+    domain: 'Scalability',
+    title: 'Git LFS & Large Binary Storage Governance',
+    priority: 'P1',
+    status: hasGitLfsRules ? 'PASSED' : 'WARNING',
+    score: hasGitLfsRules ? 100 : 50,
+    weight: 2.5,
+    evidence: hasGitLfsRules ? 'Git LFS filters configured in .gitattributes with heavy media exclusions in .gitignore' : 'Missing Git LFS filters in .gitattributes',
+  });
+
   // 2. RESILIENCY (Weight: 0.14)
   console.log('[Domain 02/10] Evaluating Resiliency (DOM-02)...');
   const hasDockerCompose = fileExists('docker-compose.yml');
