@@ -54,7 +54,8 @@ export function auditArcValues(content: string, filePath: string): ArcAuditResul
 
   // Gate 5: DinD Privilege Separation
   if (content.includes('name: runner') && content.includes('name: dind')) {
-    const runnerPrivileged = /name:\s*runner[\s\S]*?privileged:\s*true/m.test(content);
+    const runnerSectionMatch = content.match(/- name:\s*runner\b([\s\S]*?)(?:- name:|$)/);
+    const runnerPrivileged = runnerSectionMatch ? /privileged:\s*true/.test(runnerSectionMatch[1]) : false;
     if (runnerPrivileged) {
       violations.push('Gate 5 [FAILED]: Runner container is marked as privileged. Only the dind sidecar must run privileged.');
     } else {
