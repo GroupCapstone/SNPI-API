@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `b07d908` (Developer: **史力爱卫**)
+
+- Implement securing github actions workflows, 40-char sha pinning & script injection defense
+
 ### Version 0.2.17 (03.11.2026) - `a59bce1` (Developer: **史力爱卫**)
 
 - Sync changelog for dependency supply chain defense
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `c48cde4` (Developer: **史力爱卫**)
 
 - Sync polyrepo architecture archive entry
-
-### Version 0.2.17 (03.11.2026) - `1300ba9` (Developer: **史力爱卫**)
-
-- Archive implementing polyrepo on github enterprise reference
 

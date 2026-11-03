@@ -17,6 +17,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `github-repository-threat-model.md`: Repository threat modeling (T-01 to T-08), danger zone governance, ruleset enforcement, and supply chain defense.
   - `dependency-supply-chain-defense.md`: 6-layer defense-in-depth model against supply chain attacks, lifecycle script disabling, dev containers, and trusted publishing.
   - `prioritizing-security-alerts.md`: 3-step security alert prioritization model, GitHub metadata, custom properties, and targeted security campaigns.
+  - `enforce-ghas-at-scale.md`: Enforcing GitHub Advanced Security at scale, security configurations, push ruleset bypass prevention, and dependency review gates.
 
 - **`architecture/`**:
   - `modular-monolith-patterns.md`: 7-layer domain architecture (`route -> controller -> service -> repository -> model -> validation -> types`), Mongoose ACID transaction protocols.
