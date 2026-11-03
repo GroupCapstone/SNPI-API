@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "5f130a2",
+    "developer": "史力爱卫",
+    "description": "Real-time changelog sync"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "4f419e3",
     "developer": "史力爱卫",
     "description": "Add LFS policy verification script"
@@ -172,13 +179,6 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "version": "0.2.18",
     "date": "03.11.2026",
     "commitHash": "eb4b9bc",
-    "developer": "史力爱卫",
-    "description": "Checkpoint & live ci deploy verification [PASSED]"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "0f1ac54",
     "developer": "史力爱卫",
     "description": "Checkpoint & live ci deploy verification [PASSED]"
   }
