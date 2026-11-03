@@ -151,13 +151,24 @@ async function verifyWorkflowSecurity(): Promise<void> {
 }
 
 async function verifyGhasEnforcement(): Promise<void> {
-  console.log('\n[8/8] Auditing GitHub Advanced Security (GHAS) at Scale (Pillars 1 to 7)...');
+  console.log('\n[8/9] Auditing GitHub Advanced Security (GHAS) at Scale (Pillars 1 to 7)...');
   try {
     runCommand('npm run verify:ghas');
     console.log('      [PASS] GHAS at scale policies, bypass prevention & dependency reviews verified.');
   } catch (err: unknown) {
     const error = err as Error;
     throw new Error(`GHAS at scale verification failed: ${error.message}`);
+  }
+}
+
+async function verifyRepoArchitecture(): Promise<void> {
+  console.log('\n[9/9] Auditing Repository Architecture Strategy (Monorepo Modularity & Boundaries)...');
+  try {
+    runCommand('npm run verify:repo-strategy');
+    console.log('      [PASS] Monorepo workspaces, boundary decoupling & circular dependency guards verified.');
+  } catch (err: unknown) {
+    const error = err as Error;
+    throw new Error(`Repository architecture verification failed: ${error.message}`);
   }
 }
 
@@ -175,6 +186,7 @@ async function main() {
     await verifyThreatModel();
     await verifyWorkflowSecurity();
     await verifyGhasEnforcement();
+    await verifyRepoArchitecture();
     console.log('\n======================================================');
     console.log('[PASSED] Pre-push deployment and CI quality gate verified 100%.');
     console.log('======================================================');
