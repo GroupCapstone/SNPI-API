@@ -28,6 +28,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `git-lfs-architecture-guide.md`: Git LFS architectural decision framework, compression evaluation heuristics, and repository bloat prevention.
   - `actions-runner-controller.md`: Actions Runner Controller (ARC) Kubernetes deployment, requests==limits QoS, zero spot instances, and DinD sidecar isolation.
   - `repository-resilience-mirroring.md`: Repository resilience mirroring, narrow refspecs, out-of-band sync locks, and break-glass deployment runbooks.
+  - `actions-private-networking.md`: GitHub Actions private networking, Azure VNet injection, subnet sizing (+20% buffer), and firewall FQDN filtering.
 
 - **`design-standards/`**:
   - `psychological-design-rules.md`: 6-law invariant testing (Fitts, Hick, Miller, Doherty, Postel), zero emojis, and touch target rules.

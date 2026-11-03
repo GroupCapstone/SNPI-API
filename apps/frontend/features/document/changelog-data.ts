@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "4225b26",
+    "developer": "史力爱卫",
+    "description": "Real-time changelog sync for primary appsec skill"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "febce6b",
     "developer": "史力爱卫",
     "description": "Establish primary Application Security Design Principles skill & agent bindings"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "f9ac822",
     "developer": "史力爱卫",
     "description": "Consolidate architecture assessment article into primary skill safe folder"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "265ff3e",
-    "developer": "史力爱卫",
-    "description": "Real-time changelog sync"
   }
 ];
