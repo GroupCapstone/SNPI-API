@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "eb81feb",
+    "developer": "史力爱卫",
+    "description": "Implement github repository threat model (T-01 to T-08), danger zone governance & ruleset defenses"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "63a9dcf",
     "developer": "史力爱卫",
     "description": "Wire private networking into pre-push quality gates, deploy workflows & internal endpoints"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "d8b82ca",
     "developer": "史力爱卫",
     "description": "Real-time changelog sync for architecture assessment implementation"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "50afe42",
-    "developer": "史力爱卫",
-    "description": "Implement architecture assessment 7-layer backend module & audit CLI"
   }
 ];
