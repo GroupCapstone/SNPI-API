@@ -5,6 +5,9 @@ description: "Architect, provision, and maintain GitHub Enterprise Custom Agents
 
 # Enterprise Custom Agents: Expanded Context via Model Context Protocol (MCP)
 
+> [!NOTE]
+> **Authoritative Reference Article**: The complete, unabridged source article is safely archived in [`references/enterprise-custom-agents-article.md`](references/enterprise-custom-agents-article.md).
+
 This skill provides an authoritative, enterprise-grade architecture for overcoming the **30,000 character limit** of GitHub Enterprise Custom Agents by dynamically loading modular knowledge files through GitHub's built-in Model Context Protocol (MCP) server.
 
 ---
