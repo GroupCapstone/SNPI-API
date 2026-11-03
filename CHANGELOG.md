@@ -2,14 +2,17 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.18 (03.11.2026) - (Developer: **史力爱卫**)
+### Version 0.2.17 (03.11.2026) - `200af73` (Developer: **史力爱卫**)
 
-- Author authoritative Enterprise Custom Agents Expanded Context Standard in `.agents/skills/enterprise-custom-agents-context/SKILL.md` leveraging Model Context Protocol (MCP) and GitHub MCP server to bypass the 30,000-character single-file limitation [PASSED]
-- Preserve complete original architecture article verbatim in safe location: `.agents/skills/enterprise-custom-agents-context/references/enterprise-custom-agents-article.md` [PASSED]
-- Establish centralized knowledge base taxonomy in `.github/knowledge/` across `security/`, `architecture/`, `ci-cd/`, and `design-standards/` [PASSED]
-- Author specialized Enterprise Custom Agents in `.github/agents/` (`ci-cd-expert.md`, `security-reviewer.md`, `architecture-advisor.md`, `design-system-lead.md`) with MCP `get_file_contents` startup procedures [PASSED]
-- Create automated multi-repository environment secret provisioning script `configure-copilot-mcp-secrets.sh` for `COPILOT_MCP_GITHUB_PERSONAL_ACCESS_TOKEN` [PASSED]
-- Update `.github/CODEOWNERS`, `.github/copilot-instructions.md`, and `AGENTS.md` with enterprise custom agent governance [PASSED]
+- Record enterprise custom agents skill in AGENTS.md
+
+### Version 0.2.17 (03.11.2026) - `a2aab74` (Developer: **史力爱卫**)
+
+- Update copilot instructions with enterprise custom agents context
+
+### Version 0.2.17 (03.11.2026) - `b3a0cd8` (Developer: **史力爱卫**)
+
+- Record custom agents commit
 
 ### Version 0.2.17 (03.11.2026) - `1b7fa71` (Developer: **史力爱卫**)
 
@@ -98,16 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.16 (01.11.2026) - `aee7c0d` (Developer: **史力爱卫**)
 
 - Elevate creative interactive hero with embedded toggle switch, curved fiber connectors, and authentic 3-column footer [PASSED]
-
-### Version 0.2.16 (01.11.2026) - `23cc63f` (Developer: **史力爱卫**)
-
-- Enforce dual-developer remote reconciliation and force merge gate before push [PASSED]
-
-### Version 0.2.15 (01.11.2026) - `05c37b3` (Developer: **史力爱卫**)
-
-- Audit component demos to enforce 0px blur flat standard, anti-blur and zero guide clutter [PASSED]
-
-### Version 0.2.15 (01.11.2026) - `6e526a3` (Developer: **史力爱卫**)
-
-- Resolve eslint minimatch conflict, sanitize secrets, and format telegram alerts
 
