@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "858d883",
+    "developer": "史力爱卫",
+    "description": "Record actions runner controller architecture guide"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "838f934",
+    "developer": "史力爱卫",
+    "description": "Sync changelog"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "3559b00",
     "developer": "史力爱卫",
     "description": "Add verify:arc script command"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "2829b51",
     "developer": "史力爱卫",
     "description": "Add deployment-workflows knowledge document"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "8a62605",
-    "developer": "史力爱卫",
-    "description": "Add github-actions-best-practices knowledge document"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "5e3f4a0",
-    "developer": "史力爱卫",
-    "description": "Sync recent archive commit"
   }
 ];

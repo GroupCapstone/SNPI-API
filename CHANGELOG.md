@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `858d883` (Developer: **史力爱卫**)
+
+- Record actions runner controller architecture guide
+
+### Version 0.2.17 (03.11.2026) - `838f934` (Developer: **史力爱卫**)
+
+- Sync changelog
+
 ### Version 0.2.17 (03.11.2026) - `3559b00` (Developer: **史力爱卫**)
 
 - Add verify:arc script command
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `2829b51` (Developer: **史力爱卫**)
 
 - Add deployment-workflows knowledge document
-
-### Version 0.2.17 (03.11.2026) - `8a62605` (Developer: **史力爱卫**)
-
-- Add github-actions-best-practices knowledge document
-
-### Version 0.2.17 (03.11.2026) - `5e3f4a0` (Developer: **史力爱卫**)
-
-- Sync recent archive commit
 
