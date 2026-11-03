@@ -58,6 +58,7 @@ Before modifying code, packages, or repository structure, read:
 48. `.agents/skills/polyrepo-github-architecture/SKILL.md` (and `.agents/skills/polyrepo-github-architecture/references/polyrepo-github-article.md`): Authoritative Enterprise Polyrepo GitHub Architecture, Meta-Repo Manifest Integration (`release.yaml`), Cross-Repo Change Sets (`CHG-XXXX`), 4 Branching & Merge Coordination Models, Reusable Workflow Governance, Decoupled Releases, GHAS Security Campaigns, and Orchestration Automation.
 49. `.agents/skills/actions-runner-controller/SKILL.md` (and `.agents/skills/actions-runner-controller/references/actions-runner-controller-article.md`): Authoritative Actions Runner Controller (ARC) Kubernetes Deployment Standard, Requests==Limits QoS, Zero Spot Instances, Single Label Routing, and DinD Sidecar Isolation.
 50. `.agents/skills/repository-resilience-mirroring/SKILL.md` (and `.agents/skills/repository-resilience-mirroring/references/repository-mirroring-article.md`): Authoritative Repository Resilience Mirroring Standard, Narrow Refspec Policy (+refs/heads/main, +refs/tags/*), Out-of-Band Sync Locks, Break-Glass Deployment Runbooks, and Incident Reconciliation.
+51. `.agents/skills/application-security-design-principles/SKILL.md` (and `.github/knowledge/security/application-security-design-principles.md` & `docs/architecture/application-security-design-principles.md`): Authoritative Primary Application Security Design Principles & Progressive Maturity Model (Security, Compliance, Proactivity, Awareness, Simplicity across Start, Mature, and Advance Tiers).
 
 ---
 
@@ -280,6 +281,7 @@ Use these specific skill identifiers and command strings to instruct the agent:
     | `SKILL-USABILITY` | `.agents/skills/snp-sms-design-standards/usability-expressive-manual.md` | Material 3 Usability & Expressive Architecture (Nielsen Norman 5 Pillars, 6 Tactics, Aura Case Study) | `apply skill usability` |
     | `SKILL-GLOSSARY` | `.agents/skills/snp-sms-design-standards/material-a-z-glossary.md` | Material Design 3 (M3) A-Z Lexicon Standards (107 Architectural Terms, HCT Color Science, Tokens) | `apply skill glossary` |
     | `SKILL-AUDIT` | `.agents/skills/architecture-assessment-audit/SKILL.md` (and `.agents/skills/snp-sms-design-standards/architecture-assessment-framework.md`) | Authoritative Enterprise Architecture Assessment Framework, REST API & 10-Domain Audit Checklist (Scalability, Resiliency, Efficiency, Simplicity, Documentation, Disaster Recovery, Modularity, Interoperability, Observability, GitHub Enterprise Deployments) | `apply skill audit` |
+    | `SKILL-APPSEC` | `.agents/skills/application-security-design-principles/SKILL.md` (and `.github/knowledge/security/application-security-design-principles.md`) | Authoritative Primary Application Security Design Principles & Progressive Maturity Model (Security, Compliance, Proactivity, Awareness, Simplicity across Start, Mature, Advance Tiers) | `apply skill appsec` |
 
 ---
 

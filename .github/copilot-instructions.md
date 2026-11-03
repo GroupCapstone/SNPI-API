@@ -83,7 +83,7 @@ Always ensure all quality gates pass before completing code changes:
 ## 7. Enterprise Custom Agents & Expanded MCP Context
 
 - **Knowledge Base Source of Truth**: All enterprise policies are partitioned under `.github/knowledge/`:
-  - `security/`: Secure coding, authentication patterns, vulnerability remediation.
+  - `security/`: Secure coding, authentication patterns, vulnerability remediation, application security design principles.
   - `architecture/`: Modular monolith patterns, API design guidelines, database standards.
   - `ci-cd/`: GitHub actions best practices, deployment workflows, container security.
   - `design-standards/`: Psychological design rules, culinary component taxonomy, open-source checklist macro-phases.
