@@ -261,7 +261,7 @@ async function runSupplyChainAudit(): Promise<void> {
   });
 
   const depReviewWorkflow = readFileSafe('.github/workflows/dependency-review.yml');
-  const hasDepReview = depReviewWorkflow.includes('actions/dependency-review-action') && depReviewWorkflow.includes('fail-on-severity: high');
+  const hasDepReview = depReviewWorkflow.includes('actions/dependency-review-action') && /(fail-on-severity:\s*(moderate|high))/i.test(depReviewWorkflow);
   checks.push({
     id: 'SCD-L6-02',
     layer: 'Layer 6: Continuous Monitoring',

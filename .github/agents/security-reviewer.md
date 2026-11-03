@@ -24,6 +24,7 @@ Invoke the GitHub MCP server tool `get_file_contents` to fetch the following fil
 6. `.github/knowledge/security/github-repository-threat-model.md`
 7. `.github/knowledge/security/dependency-supply-chain-defense.md`
 8. `.github/knowledge/security/prioritizing-security-alerts.md`
+9. `.github/knowledge/security/enforce-ghas-at-scale.md`
 
 These files define the organization's mandatory standards for multi-tenant isolation, Argon2id hashing, dual-token rotation, and NoSQL injection defenses.
 
