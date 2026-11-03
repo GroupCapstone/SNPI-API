@@ -25,6 +25,7 @@ These knowledge files are dynamically fetched at runtime by GitHub Enterprise Cu
   - `database-standards.md`: MongoDB replica set `rs0` requirements, compound indexes, soft-delete invariants, and tenant boundary enforcement.
   - `architecture-assessment-framework.md`: Enterprise Architecture Assessment Framework, 7-layer REST API, Master MVP flow, AI agent protocol, and 10-domain audit checklist.
   - `polyrepo-operating-model.md`: Enterprise polyrepo operating model, meta-repo manifest integration (`release.yaml`), cross-repo change sets (`CHG-XXXX`), and merge coordination models.
+  - `repository-architecture-strategy.md`: Repository architecture strategy (Monorepo vs Polyrepo), boundary decoupling invariants, circular dependency guards, and alternate deployment continuity.
 
 - **`ci-cd/`**:
   - `github-actions-best-practices.md`: Action SHA pinning, least-privilege token permissions, dual-developer git sync gate.

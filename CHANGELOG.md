@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `df99922` (Developer: **史力爱卫**)
+
+- Sync verbatim github repository threat model reference and TA-01-TA-09 actor taxonomy
+
 ### Version 0.2.17 (03.11.2026) - `265b462` (Developer: **史力爱卫**)
 
 - Implement enforce ghas at scale, push ruleset bypass prevention & dependency review gates
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `4f419e3` (Developer: **史力爱卫**)
 
 - Add LFS policy verification script
-
-### Version 0.2.17 (03.11.2026) - `bef4d00` (Developer: **史力爱卫**)
-
-- Configure gitattributes for LFS filter definitions
 

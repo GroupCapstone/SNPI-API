@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "03.11.2026",
+    "commitHash": "df99922",
+    "developer": "史力爱卫",
+    "description": "Sync verbatim github repository threat model reference and TA-01-TA-09 actor taxonomy"
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
     "commitHash": "265b462",
     "developer": "史力爱卫",
     "description": "Implement enforce ghas at scale, push ruleset bypass prevention & dependency review gates"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "4f419e3",
     "developer": "史力爱卫",
     "description": "Add LFS policy verification script"
-  },
-  {
-    "version": "0.2.17",
-    "date": "03.11.2026",
-    "commitHash": "bef4d00",
-    "developer": "史力爱卫",
-    "description": "Configure gitattributes for LFS filter definitions"
   }
 ];
