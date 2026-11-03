@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (03.11.2026) - `eb81feb` (Developer: **史力爱卫**)
+
+- Implement github repository threat model (T-01 to T-08), danger zone governance & ruleset defenses
+
 ### Version 0.2.17 (03.11.2026) - `63a9dcf` (Developer: **史力爱卫**)
 
 - Wire private networking into pre-push quality gates, deploy workflows & internal endpoints
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (03.11.2026) - `d8b82ca` (Developer: **史力爱卫**)
 
 - Real-time changelog sync for architecture assessment implementation
-
-### Version 0.2.17 (03.11.2026) - `50afe42` (Developer: **史力爱卫**)
-
-- Implement architecture assessment 7-layer backend module & audit CLI
 
