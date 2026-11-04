@@ -96,5 +96,41 @@ git push origin main
 
 | Scope | Project Folder | Primary GitHub Remote (Org) | Commit Prefix | Permissions | Verification Gates |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Backend API** | `SNPI-API/` | `GroupCapstone/SNPI-API` | `(api)` / `(api/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run typecheck` + `npm run build` |
-| **Frontend Web** | `SNPI-Web/` | `GroupCapstone/SNPI-Web` | `(web)` / `(web/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run typecheck` + `npm run build` |
+| **Backend API** | `SNPI-API/` | `GroupCapstone/SNPI-API` | `(api)` / `(api/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run format:check` + `npm run lint` + `npm run typecheck` + `npm run build` |
+| **Frontend Web** | `SNPI-Web/` | `GroupCapstone/SNPI-Web` | `(web)` / `(web/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run format:check` + `npm run lint` + `npm run typecheck` + `npm run build` |
+
+---
+
+## 6. Mandatory Post-Push GitHub Actions & Vercel Verification Gate (100% Green)
+
+Every remote push MUST be actively tracked and verified until all remote CI/CD workflows and production deployments achieve `100% [GREEN / PASSED]` status before completion can be reported:
+
+1. **Pre-Push Quality Gate Enforcement**:
+   - `npm run format:check` (Prettier code style compliance).
+   - `npm run lint` (ESLint 0 errors).
+   - `npm run typecheck` (TypeScript 0 errors).
+   - `npm run build` (Production compilation 0 errors).
+   - `npm run git:sync` (Dual-developer reconciliation).
+
+2. **Synchronized Deployment & Push**:
+   - Push to GitHub origin (`git push origin main`).
+   - Deploy directly to Vercel production (`npx vercel --prod`).
+
+3. **Active Remote CI Monitoring (`npm run push:verify`)**:
+   - Actively query GitHub Actions runs for the pushed commit SHA:
+     ```bash
+     gh run list -R GroupCapstone/SNPI-API --commit <HEAD_SHA>
+     ```
+   - All triggered workflows (Code Quality & Lint, Monorepo CI, Automated Test Suites, Test Coverage, CodeQL Analysis, Deployment Verification, Docker Container Build, Blockchain & Ledger Integrity, Secret Scanning, License Compliance, etc.) must reach completed `[success / PASSED]`.
+   - Never end the task or report completion if any workflow is failing or failed.
+
+4. **Automated Failure Diagnosis & Self-Healing**:
+   - If any workflow fails, immediately inspect the failure logs:
+     ```bash
+     gh run view <RUN_ID> -R GroupCapstone/SNPI-API --log-failed
+     ```
+   - Diagnose the root cause, apply the fix locally, re-run format/lint/typecheck, commit with differentiated prefix, push, and resume monitoring until 100% green.
+
+5. **Live Production Smoke Verification**:
+   - Probe live production domain (`https://api.kesararamwithdigital.tech/api/v1/health`) to confirm that the deployed build is active and serving traffic.
+
