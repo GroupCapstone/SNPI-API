@@ -2,6 +2,18 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 1.0.0 (05.11.2026) - `0b64763` (Developer: **史力爱卫**)
+
+- Resolve minimatch advisory with override and harden dependabot ci gate
+
+### Version 1.0.0 (05.11.2026) - `77e3319` (Developer: **史力爱卫**)
+
+- Configure dependabot to ignore breaking major bumps and unpinned actions
+
+### Version 1.0.0 (05.11.2026) - `710aed9` (Developer: **史力爱卫**)
+
+- Record mandatory post-push 100% green verification in release pipeline and skill
+
 ### Version 1.0.0 (05.11.2026) - `e3cc294` (Developer: **史力爱卫**)
 
 - Format codebase and registries with prettier
@@ -89,16 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 1.0.0 (04.11.2026) - `edcd07e` (Developer: **史力爱卫**)
 
 - Sync complete skills, workflows, scripts, and architecture docs from monorepo
-
-### Version 1.0.0 (04.11.2026) - `9af7dbf` (Developer: **史力爱卫**)
-
-- Extract SNPI-API as dedicated standalone Express 5 & MongoDB REST API
-
-### Version 0.2.23 (04.11.2026) - `71fe2a2` (Developer: **史力爱卫**)
-
-- Checkpoint & live ci deploy verification [PASSED]
-
-### Version 0.2.23 (04.11.2026) - `d87b1a7` (Developer: **史力爱卫**)
-
-- Apply fluid liquid tilted placement and multi-color card palette to bento hero grid
 
