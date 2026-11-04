@@ -27,8 +27,24 @@ const isAllowedOrigin = (origin: string): boolean => {
 export const corsOptions: CorsOptions = {
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID', 'X-Branch-ID'],
-  exposedHeaders: ['RateLimit', 'RateLimit-Policy', 'X-Request-ID'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Request-ID',
+    'X-Branch-ID',
+    'Idempotency-Key',
+    'Accept',
+    'X-Requested-With',
+  ],
+  exposedHeaders: [
+    'RateLimit',
+    'RateLimit-Policy',
+    'X-Request-ID',
+    'X-Error-Code',
+    'Location',
+    'Retry-After',
+    'ETag',
+  ],
   origin: (origin, callback) => {
     if (!origin || isAllowedOrigin(origin)) {
       callback(null, true);

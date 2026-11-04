@@ -133,8 +133,21 @@ export const errorHandler: ErrorRequestHandler = (error, request, response, _nex
     logger.warn(logContext, 'API request rejected');
   }
 
-  // Response header for programmatic error classification
+  // Response header for programmatic error classification & correlation
   response.setHeader('X-Error-Code', normalizedError.code);
+  if (request.id && !response.getHeader('X-Request-ID')) {
+    response.setHeader('X-Request-ID', String(request.id));
+  }
+
+  // RFC 6750: 401 Unauthorized MUST include WWW-Authenticate header
+  if (normalizedError.statusCode === 401 && !response.getHeader('WWW-Authenticate')) {
+    response.setHeader('WWW-Authenticate', 'Bearer realm="api.snp.edu.kh", error="invalid_token"');
+  }
+
+  // RFC 6585: 429 Too Many Requests SHOULD include Retry-After header
+  if (normalizedError.statusCode === 429 && !response.getHeader('Retry-After')) {
+    response.setHeader('Retry-After', '60');
+  }
 
   // Check if caller explicitly requested RFC 7807 / RFC 9457 Problem Details
   const isRfcProblemDetails =
@@ -153,6 +166,7 @@ export const errorHandler: ErrorRequestHandler = (error, request, response, _nex
       instance: string;
       code: string;
       success: false;
+      timestamp: string;
       invalidParams?: typeof normalizedError.errors;
       errors?: typeof normalizedError.errors;
       stack?: string;
@@ -164,6 +178,7 @@ export const errorHandler: ErrorRequestHandler = (error, request, response, _nex
       instance: (request.originalUrl || '').split('?')[0] || '/',
       code: normalizedError.code,
       success: false,
+      timestamp: new Date().toISOString(),
     };
 
     if (normalizedError.errors) {

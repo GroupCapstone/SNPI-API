@@ -82,6 +82,7 @@ export const createApp = (): express.Express => {
   app.use(corsMiddleware);
   app.use('/api/v1', (_request, response, next) => {
     response.setHeader('Cache-Control', 'no-store');
+    response.setHeader('Vary', 'Accept, Origin');
     next();
   });
   app.use('/api/v1', createHttpsOnlyMiddleware(env.NODE_ENV === 'production'));

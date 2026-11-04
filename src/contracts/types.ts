@@ -30,6 +30,8 @@ export interface PaginationMeta {
   limit: number;
   total: number;
   totalPages: number;
+  hasMore?: boolean;
+  nextCursor?: string | null;
 }
 
 export interface ApiSuccessResponse<T> {
@@ -43,6 +45,7 @@ export interface ApiPaginatedResponse<T> {
   message: string;
   data: T[];
   pagination: PaginationMeta;
+  meta?: PaginationMeta;
 }
 
 export interface ApiErrorResponse {
