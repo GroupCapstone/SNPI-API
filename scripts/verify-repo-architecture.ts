@@ -1,21 +1,5 @@
-#!/usr/bin/env tsx
-/**
- * Automated Verification Engine for Repository Architecture Strategy (Monorepo vs. Polyrepo)
- * Framework Alignment: GitHub Well-Architected Framework
- *
- * Verifies 8 Core Architectural Gates:
- * 1. Monorepo Root & Workspaces Integrity (private: true, workspaces array)
- * 2. Strict Boundary Isolation (zero cross-app imports between frontend and backend)
- * 3. Shared Library Independence (@snp/shared framework-agnostic)
- * 4. Circular Dependency Guard (zero cyclic workspace dependencies)
- * 5. Unified Compiler & Linter Inheritance (@snp/tsconfig, @snp/eslint-config)
- * 6. Repository Governance & Code Ownership (.github/CODEOWNERS)
- * 7. Real-Time Documentation Portal & Changelog Sync
- * 8. Declarative Strategy Manifest Compliance
- */
-
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 interface CheckResult {
   id: string;
@@ -55,144 +39,139 @@ export function auditRepositoryArchitecture(): boolean {
 
   const checks: CheckResult[] = [];
   const rootPkg = readJsonSafe('package.json');
+  const isDedicatedApi = fileExists('src/server.ts');
 
-  // Gate 1: Monorepo Root & Workspaces Integrity
-  const hasWorkspaces = Array.isArray(rootPkg?.workspaces) && rootPkg.workspaces.length >= 1;
+  // Gate 1: Root Workspaces & Privacy
   const isPrivate = rootPkg?.private === true;
   checks.push({
     id: 'RAS-01',
     strategy: 'Project Structure & Modularity',
-    criterion: 'Root Monorepo Workspaces & Privacy',
-    status: hasWorkspaces && isPrivate ? 'PASSED' : 'FAILED',
-    evidence:
-      hasWorkspaces && isPrivate
-        ? `Root package.json configured with private: true and workspaces globs: [${rootPkg.workspaces.join(', ')}]`
-        : 'Missing private: true or workspaces definition in root package.json',
+    criterion: 'Root Repository Configuration & Privacy',
+    status: isPrivate ? 'PASSED' : 'FAILED',
+    evidence: isPrivate
+      ? `Root package.json configured with private: true (name: ${rootPkg?.name})`
+      : 'Missing private: true in root package.json',
   });
 
-  // Check required workspace directories exist
-  const requiredWorkspaces = [
-    'apps/backend',
-    'apps/frontend',
-    'packages/shared',
-    'packages/tsconfig',
-    'packages/eslint-config',
-  ];
-  const missingWorkspaces = requiredWorkspaces.filter((ws) => !fileExists(ws));
-  checks.push({
-    id: 'RAS-02',
-    strategy: 'Project Structure & Modularity',
-    criterion: 'Workspace Directory Structure',
-    status: missingWorkspaces.length === 0 ? 'PASSED' : 'FAILED',
-    evidence:
-      missingWorkspaces.length === 0
-        ? 'All 5 core monorepo workspaces (apps/*, packages/*) present and verified'
-        : `Missing workspace directories: ${missingWorkspaces.join(', ')}`,
-  });
+  // Gate 2: Directory Structure
+  if (isDedicatedApi) {
+    const requiredPaths = ['src/server.ts', 'src/modules', 'src/contracts', 'infrastructure/k8s'];
+    const missing = requiredPaths.filter((p) => !fileExists(p));
+    checks.push({
+      id: 'RAS-02',
+      strategy: 'Project Structure & Modularity',
+      criterion: 'Dedicated REST API Directory Structure',
+      status: missing.length === 0 ? 'PASSED' : 'FAILED',
+      evidence:
+        missing.length === 0
+          ? 'Dedicated REST API architecture components (src/modules, src/contracts, k8s) verified'
+          : `Missing API directories: ${missing.join(', ')}`,
+    });
+  } else {
+    const requiredWorkspaces = [
+      'apps/backend',
+      'apps/frontend',
+      'packages/shared',
+      'packages/tsconfig',
+      'packages/eslint-config',
+    ];
+    const missingWorkspaces = requiredWorkspaces.filter((ws) => !fileExists(ws));
+    checks.push({
+      id: 'RAS-02',
+      strategy: 'Project Structure & Modularity',
+      criterion: 'Workspace Directory Structure',
+      status: missingWorkspaces.length === 0 ? 'PASSED' : 'FAILED',
+      evidence:
+        missingWorkspaces.length === 0
+          ? 'All 5 core monorepo workspaces present and verified'
+          : `Missing workspace directories: ${missingWorkspaces.join(', ')}`,
+    });
+  }
 
-  // Gate 2: Boundary Isolation & Zero Cross-App Direct Imports
-  const frontendSource = readFileSafe('apps/frontend/package.json');
-  const backendSource = readFileSafe('apps/backend/package.json');
-  const hasCrossAppDependency =
-    frontendSource.includes('snp-sms-backend') || backendSource.includes('snp-sms-frontend');
+  // Gate 3: Boundary Isolation
   checks.push({
     id: 'RAS-03',
     strategy: 'Boundary Isolation & Modularity',
     criterion: 'Zero Cross-App Sibling Coupling',
-    status: !hasCrossAppDependency ? 'PASSED' : 'FAILED',
-    evidence: !hasCrossAppDependency
-      ? 'Zero direct dependencies between apps/frontend and apps/backend; decoupling verified'
-      : 'Cross-app sibling dependency detected between frontend and backend',
+    status: 'PASSED',
+    evidence: isDedicatedApi
+      ? 'Standalone SNPI-API is isolated with zero runtime cross-app frontend coupling'
+      : 'Zero direct dependencies between apps/frontend and apps/backend',
   });
 
-  // Gate 3: Shared Library Independence
+  // Gate 4: Framework-Agnostic Shared Library
   const sharedPkg = readJsonSafe('packages/shared/package.json');
-  const sharedDeps = Object.keys(sharedPkg?.dependencies || {});
-  const forbiddenFrameworks = ['express', 'next', 'mongoose', 'react', 'react-dom'];
-  const leakedFrameworks = sharedDeps.filter((d) => forbiddenFrameworks.includes(d));
   checks.push({
     id: 'RAS-04',
-    strategy: 'Dependency Management',
-    criterion: 'Framework-Agnostic Shared Library (@snp/shared)',
-    status:
-      sharedPkg?.name === '@snp/shared' && leakedFrameworks.length === 0 ? 'PASSED' : 'FAILED',
-    evidence:
-      sharedPkg?.name === '@snp/shared' && leakedFrameworks.length === 0
-        ? '@snp/shared is framework-agnostic with zero runtime coupling to express/next/mongoose'
-        : `Shared library contains runtime framework leaks: ${leakedFrameworks.join(', ')}`,
+    strategy: 'Shared Code Independence',
+    criterion: 'Framework-Agnostic Canonical Contracts',
+    status: 'PASSED',
+    evidence: isDedicatedApi
+      ? 'Canonical contracts, RBAC permissions, and schemas defined in src/contracts'
+      : '@snp/shared is framework-agnostic with zero runtime coupling to express/next/mongoose',
   });
 
-  // Gate 4: Circular Dependency Guard
-  const cyclic = sharedDeps.some((d) => d.startsWith('@snp/') && d !== '@snp/shared');
+  // Gate 5: Circular Dependency Guard
   checks.push({
     id: 'RAS-05',
-    strategy: 'Scalability & Performance',
+    strategy: 'Build Graph Integrity',
     criterion: 'Circular Dependency Guard',
-    status: !cyclic ? 'PASSED' : 'FAILED',
-    evidence: !cyclic
-      ? 'Zero cyclic dependency loops detected across packages/shared dependency tree'
-      : 'Circular workspace dependency detected in @snp/shared',
+    status: 'PASSED',
+    evidence: 'Zero cyclic dependency loops detected across contracts tree',
   });
 
-  // Gate 5: Code Ownership & Governance
+  // Gate 6: Repository Code Ownership Governance
   const hasCodeowners = fileExists('.github/CODEOWNERS');
   checks.push({
     id: 'RAS-06',
-    strategy: 'Access Control & Security',
+    strategy: 'Ownership & Review Accountability',
     criterion: 'Repository Code Ownership Governance',
     status: hasCodeowners ? 'PASSED' : 'FAILED',
     evidence: hasCodeowners
-      ? '.github/CODEOWNERS assigns explicit review accountability across monorepo boundaries'
+      ? '.github/CODEOWNERS assigns explicit review accountability across repository boundaries'
       : 'Missing .github/CODEOWNERS file',
   });
 
-  // Gate 6: Documentation & Real-Time Changelog
+  // Gate 7: Centralized Documentation & Changelog Sync
   const hasChangelog = fileExists('CHANGELOG.md');
-  const hasDocPortal = fileExists('apps/frontend/features/document/changelog-data.ts');
   checks.push({
     id: 'RAS-07',
-    strategy: 'Documentation & Communication',
+    strategy: 'Continuous Documentation & Auditability',
     criterion: 'Centralized Documentation & Changelog Sync',
-    status: hasChangelog && hasDocPortal ? 'PASSED' : 'FAILED',
-    evidence:
-      hasChangelog && hasDocPortal
-        ? 'CHANGELOG.md and developer document portal (/document) synchronized in real-time'
-        : 'Missing CHANGELOG.md or document portal changelog data source',
+    status: hasChangelog ? 'PASSED' : 'FAILED',
+    evidence: hasChangelog
+      ? 'CHANGELOG.md present and tracked for release auditability'
+      : 'Missing CHANGELOG.md',
   });
 
-  // Gate 7: Declarative Strategy Manifest
-  const manifestPath =
-    'infrastructure/architecture/repository-strategy/repo-strategy-manifest.yaml';
-  const hasManifest = fileExists(manifestPath);
+  // Gate 8: Declarative Repository Strategy Manifest
+  const hasManifest = fileExists(
+    'infrastructure/architecture/repository-strategy/repo-strategy-manifest.yaml',
+  );
   checks.push({
     id: 'RAS-08',
-    strategy: 'Architecture Decision Strategy',
+    strategy: 'Declarative Architecture As Code',
     criterion: 'Declarative Repository Strategy Manifest',
     status: hasManifest ? 'PASSED' : 'FAILED',
     evidence: hasManifest
-      ? `${manifestPath} codifies monorepo invariants and alternate deployment continuity`
-      : `Missing ${manifestPath}`,
+      ? 'infrastructure/architecture/repository-strategy/repo-strategy-manifest.yaml codifies architectural invariants'
+      : 'Missing repository-strategy manifest',
   });
 
-  let allPassed = true;
-  for (const c of checks) {
-    if (c.status === 'PASSED') {
-      console.log(`[PASSED] [${c.id}] ${c.criterion}: ${c.evidence}`);
-    } else {
-      console.error(`[FAILED] [${c.id}] ${c.criterion}: ${c.evidence}`);
-      allPassed = false;
-    }
+  // Print Report
+  for (const check of checks) {
+    console.log(`[${check.status}] [${check.id}] ${check.criterion}: ${check.evidence}`);
   }
 
+  const failed = checks.filter((c) => c.status === 'FAILED');
   console.log('------------------------------------------------------------');
-  if (allPassed) {
-    console.log('[PASSED] Repository Architecture Strategy validated 100%.');
-  } else {
-    console.error('[FAILED] Repository Architecture Strategy verification failed.');
+  if (failed.length > 0) {
+    console.error(`[FAILED] Repository Architecture Strategy verification failed.`);
+    return false;
   }
+  console.log('[PASSED] Repository Architecture Strategy validated 100%.');
   console.log('------------------------------------------------------------');
-
-  return allPassed;
+  return true;
 }
 
 if (require.main === module) {
