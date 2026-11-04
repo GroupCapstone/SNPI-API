@@ -1,6 +1,0 @@
-Contact: mailto:security@snpi.edu.kh
-Expires: 2027-11-01T00:00:00.000Z
-Preferred-Languages: en, km
-Policy: https://github.com/Tan-Saphea/SNPI-SMS/blob/main/SECURITY.md
-Acknowledgments: https://github.com/Tan-Saphea/SNPI-SMS/blob/main/SECURITY.md
-Canonical: https://snpi.edu.kh/.well-known/security.txt

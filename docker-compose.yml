@@ -1,4 +1,4 @@
-name: snp-sms
+name: snp-sms-backend
 services:
   mongodb:
     image: mongo:7.0
@@ -20,6 +20,25 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-
+  backend:
+    build:
+      context: .
+      target: development
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      MONGODB_URI: 'mongodb://mongodb:27017/${MONGO_DATABASE:-snp_sms}?replicaSet=rs0&directConnection=true'
+    ports:
+      - '${BACKEND_PORT:-4000}:4000'
+    volumes:
+      - .:/app
+      - backend_node_modules:/app/node_modules
+    depends_on:
+      mongodb:
+        condition: service_healthy
 volumes:
   mongodb_data:
+  backend_node_modules:

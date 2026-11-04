@@ -1,134 +1,54 @@
-# SNP-SMS Full-Stack Monorepo Agent Rules
+# SNP-SMS Backend Agent Rules
 
-These rules apply to every AI coding agent and human contributor working in the SNP-SMS repository. They are project rules, not instructions for one vendor, model, IDE, or agent framework.
+These rules apply to every AI coding agent and human contributor working in this repository. They are project rules, not instructions for one vendor, model, IDE, or agent framework.
 
----
+## Required reading
 
-## 1. Task-Scoped Context and Skill Routing
+Before changing code or project structure, read:
 
-- Follow these repository rules and the nearest nested `AGENTS.md` for the files being changed.
-- Before code, package, configuration, or repository-structure changes, read `.agents/skills/snp-sms-monorepo-architecture/SKILL.md` and `.agents/skills/snp-sms-code-security-quality-policy/SKILL.md`.
-- Read `.agents/skills/snp-sms-changelog-workflow/SKILL.md` when changing skills, architecture, or features. Read `.agents/skills/snp-sms-push-checkpoint-workflow/SKILL.md` only when the user explicitly requests a push, publish, or checkpoint.
-- For UI or design work, read `.agents/skills/snp-sms-design-standards/SKILL.md` and only the applicable design manuals.
-- Inspect `packages/shared/src/index.ts`, backend modules, frontend routes, and workspace configuration only when the task touches their contracts or behavior; do not load complete directories by default.
-- Resolve the most specific skill through `.agents/skills/INDEX.md`. Read that source and only its task-relevant references. Keep every existing skill and reference available; do not preload unrelated resources.
-- When asked which skill to apply, give the exact `apply skill <alias>` command from the index. Never guess an alias. For work that uses a skill, identify the exact skill in the task update or final report.
+1. `.agents/skills/VERSION.md` for the current milestone and scope.
+2. `.agents/skills/SKILL.md` for the shared SNP-SMS engineering standard.
+3. Any task-specific skill under `.agents/skills/` that applies.
+4. The relevant API documentation, route, module, tests, and deployment configuration.
+5. `SECURITY.md` and `CONTRIBUTING.md` when the change touches access, CI, release, or contribution policy.
 
----
+The shared skill is the source of truth for all agents. Do not replace it with personal memory, model-specific prompts, or unrecorded chat instructions.
 
-## 2. Core Architecture & Monorepo Boundaries
+## Workspace boundary
 
-- **Monorepo Topology**: npm workspaces with unified root dependencies and lockfile.
-  - `apps/backend`: Express 5, TypeScript, MongoDB Replica Set (`rs0`), 7-layer modular monolith API.
-  - `apps/frontend`: Next.js (App Router), React 19, Tailwind CSS, Radix UI.
-  - `packages/shared` (`@snp/shared`): Canonical auth contracts, RBAC permissions, implied scopes, DTOs, and validation schemas.
-  - `packages/tsconfig` (`@snp/tsconfig`): Shared TypeScript compiler configurations.
-  - `packages/eslint-config` (`@snp/eslint-config`): Shared linting configurations.
-- **Serverless / Container Hybrid Deployment**:
-  - Frontend deploys serverless (e.g. Vercel / Edge CDN). Proxies `/api/v1/*` server-side via `next.config.ts` rewrites to `BACKEND_INTERNAL_URL` (zero CORS issues).
-  - Backend runs as a long-running container (e.g. Docker / VPS / ECS) maintaining persistent MongoDB connection pools and ACID transaction sessions.
-- **Preservation of Contracts**:
-  - Never alter existing REST API paths, query params, HTTP status codes, or payload formats unless explicitly commanded by the user.
-  - Maintain all 193 REST API endpoints across the 47 domain modules.
+This workspace is the Express 5, TypeScript, and MongoDB modular monolith backend within the SNP-SMS monorepo. It communicates with the frontend via the REST API at `/api/v1/*` (proxied server-side by Next.js in `apps/frontend`) and shares types, permissions, and DTO validation schemas through `@snp/shared` in `packages/shared/`. Preserve the HTTP API and `@snp/shared` as the integration boundaries.
 
----
+## Required architecture and safety
 
-## 3. Strict Development Standards
+- Keep domain code in `src/modules/<domain>/` using the established model, types, validation, repository, service, controller, and route layers.
+- Preserve existing paths, methods, payloads, response shapes, status codes, auth behavior, and compatibility aliases unless the user explicitly asks for an API change.
+- Validate all request input and enforce authentication, RBAC, branch access, tenant relationships, and audit rules server-side. Never trust browser-supplied IDs or permissions.
+- Preserve school/branch/department/position relationships and parent-child soft-delete protections.
+- Never hardcode credentials or expose them in output, docs, fixtures, logs, tests, Docker arguments, or committed environment files.
+- Use `.github/maintainers.json` numeric GitHub account IDs as the only maintainer identity allowlist; do not substitute mutable usernames or modify the allowlist without explicit owner direction.
+- Do not remove a file just because it has no import. Check CLI entry points, dynamic loading, package scripts, CI, deployment manifests, tests, docs, and operator workflows first.
+- Keep changes minimal and in the backend scope. Do not add future milestone features without explicit direction.
 
-- **Zero Emojis**: Under no circumstances should emojis be used in code, comments, docstrings, commit messages, PR descriptions, or agent responses. Use clean textual badges: `[PASSED]`, `[FAILED]`, `[WARNING]`, `[COMPLETED]`.
-- **7-Layer Backend Pattern**: Every domain module in `apps/backend/src/modules/<domain>/` must adhere to:
-  `route -> controller -> service -> repository -> model -> validation -> types`
-- **Single Source of Truth**: All permission codes (`SYSTEM_PERMISSIONS`), role definitions (`DEFAULT_CORE_ROLES`), and implied scope checks must be imported from `@snp/shared`. Do not duplicate permission strings or role enums.
-- **Multi-Tenant & Data Scoping**: Every query and write must strictly enforce `schoolId`, `branchId`, and user RBAC permissions server-side. Never trust client-supplied scopes.
-- **Cryptographic Security**: All signature checks, webhook verifications, and token hash comparisons must execute via constant-time `crypto.timingSafeEqual`. Plaintext credentials and placeholder secrets are strictly forbidden.
-- **Input Sanitization & Injection Defense**: Every HTTP endpoint must validate inputs using strict Zod schemas. Mongoose queries must run with `strictQuery: true`, rejecting raw unescaped regex and operator injections.
-- **Zero Display of Concrete Credentials or Identifiers in Docs & UI (MANDATORY)**: Never display, embed, or expose concrete user credentials, identity IDs, real or mock staff/admin email accounts (e.g. `admin@snp.edu.kh`, `info@snp.edu.kh`), concrete passwords (`YourPassword123`), secret tokens, or authentication IDs in documentation, sample payloads, API references, or UI code. Always use sanitized abstract placeholder tokens (`<SERVICE_ACCOUNT_IDENTIFIER>`, `<SECURE_AUTHENTICATION_CREDENTIAL>`, `<AUTHORIZED_USER_EMAIL>`, `<CONTACT_EMAIL_PLACEHOLDER>`, `<JWT_ACCESS_TOKEN_SAMPLE>`, `<USER_UUID>`, `<BRANCH_ID>`).
-- **Mandatory Display-Only Public API & Syndication Standard — Zero Access Mode & Zero Credential Exposure (CRITICAL RULE)**:
-  - **Never Design "Access Mode" or Access-Granting Columns**: Under no circumstances should tables or UI views include an "ACCESS MODE" column, "[Lock] Read-Only" badges, or UI components that suggest user access rights, permissions, or access gates.
-  - **Strictly Display-Only Presentation**: All public catalogs, syndication feeds, and embed previews must strictly be visual, display-only guides showing clean data fields only (`Code`, `Title`, `Schedule`, `Capacity`, `Status`).
-  - **Zero Credential Headers or Inspection Code**: Never display, instruct, or include credential headers (`X-Subscription-Key`, auth tokens, secret keys) or credential flags (`withCredentials: true`) in client-side code snippets or documentation. Endpoints must be presented purely as standard public display feeds without user credential inspection.
-- **Mandatory Prohibition of Dark Navy / Black Terminal Box Aesthetics in Documentation (CRITICAL RULE)**:
-  - **Never Design Dark Terminal Containers**: Under no circumstances should logs, telemetry monitors, event stream cards, or inspection boxes be designed with solid dark navy (`#0A1A4A`), black, or dark terminal background styles.
-  - **Light-Day-First Modern UI**: All telemetry monitors, packet streams, and documentation cards must strictly use **Pure White (`#FFFFFF`)** or **Ice Tint (`#EFF5FF`)** backgrounds with Soft Lavender borders (`#CAD3F5`), Deep Navy (`#0A1A4A`) high-contrast text, and Royal Blue (`#0056FF`) accent pills.
-  - **Zero Dark Hacker Inversion**: Never invert page sections into high-contrast dark terminal boxes or hacker consoles in documentation views.
-- **Mandatory Brand Color Tokens & Anti-Muddy Gray / Anti-Blur / High-Contrast Typography Rule (CRITICAL RULE)**:
-  - **Zero Muddy Gray, Slate Containers, or Blur Styles**: Under no circumstances should components, cards, tables, or callouts be styled with muddy gray (`#64748B`, `#475569`), dark slate blocks, or blur backgrounds. Never use solid black or dark slate (`bg-slate-900`, `bg-black`) for buttons or badges in UI library components.
-  - **Zero Washed-Out, Pale Gray, or Hidden Text**: Never design components where text fades, washes out, or lacks sufficient contrast. All body text, data table rows, headers, and values on light surfaces (`#FFFFFF`, `#EFF5FF`, `#E3E7FC`) must maintain high contrast (WCAG AAA >= 7:1) using **Deep Navy (`#0A1A4A`)** or **Slate-900 (`#0F172A`)**. Text color must NEVER match or blend into the background.
-  - **Exclusively Use the 5 Primary Brand Tokens**:
-    1. `01 #0056FF` Royal Blue — Primary brand base, active pills, core CTAs, active highlights.
-    2. `02 #2277FF` Azure Blue — Interactive accents, illuminated hover states, secondary highlights.
-    3. `03 #E3E7FC` Soft Lavender — Surface micro-tints, subtle borders (`#CAD3F5`), badge fills.
-    4. `04 #FFFFFF` White — Document canvas base, card foundations, clean backgrounds.
-    5. `05 #EFF5FF` Ice Tint — Subsurface card fills, segment track fills, hover backdrops.
-    - Typography Token: Deep Navy `#0A1A4A` (primary headings & text) / Slate-900 `#0F172A` / `#334155` (secondary descriptive copy). Never use light gray on light surfaces.
-  - **Zero Accidental Dark Mode Inversion**: Never allow media-query dark styles or `dark:*` Tailwind classes to invert UI components into dark slate/muddy gray boxes or render washed-out white/light gray text on white tables.
-- **Mandatory Prohibition of Pulsing Beacons, Status Dots, Ping Rings, and Live Presence Dots (ABSOLUTE RULE)**:
-  - **Zero Pulsing Beacons & Status Beacons**: Under no circumstances should icons, buttons, cards, headers, navigation bars, or components feature pulsing beacons, blinking live dots, status beacons, radar pings, or heartbeat indicators (`animate-ping`, `animate-pulse` on green/colored corner dots).
-  - **Zero Live Status Dots & Presence Rings**: Never design or place colored corner dots (green, blue, red, or any color), live online presence dots, or expanding ripple rings on icons, avatars, badges, or brand marks.
-  - **Clean Static Typography & Structured Pills Only**: State must strictly be communicated via clean, high-contrast textual badges or static pills adhering to the 5 brand tokens (e.g. `LIVE`, `NEW`, `ACTIVE`, `READY`), never via distracting pulsing animations or corner beacon dots.
-- **Mandatory Local-Only Commits & Zero Push Without Explicit Command — ABSOLUTE RULE**:
-  - In every conversation, session, and task, AI agents and contributors are **strictly permitted to make local git commits only**.
-  - **NEVER execute `git push`**, push release tags, publish release checkpoints, or perform remote publishing actions under any circumstances unless the user gives an explicit, direct command (e.g., `git push`, `push now`, `push to github`).
-  - Do not auto-push "for convenience", at the conclusion of a turn, or after running builds, tests, or changelog syncs.
-  - Remote publishing is exclusively gated behind explicit user command.
+## One workflow for every agent
 
----
+1. Read the required sources above and state the applicable milestone.
+2. Map the request path from `src/app.ts` through route, middleware, controller, service, repository, model, and tests as applicable.
+3. Inspect references and existing patterns; identify API and data invariants before editing.
+4. Make the smallest change that meets the request, reusing existing code and keeping frontend work in its separate repository.
+5. Add/update tests for changed endpoint behavior and update docs when architecture, operation, or contracts change.
+6. Run `npm run format:check && npm run lint && npm run typecheck && npm test && npm run build` when implementation work is complete. Report commands that could not be run and why; never claim a pass without output.
+7. Review the final diff for secrets, unintended API/business changes, unreferenced leftovers, and scope creep.
+8. End with an `IMPLEMENTATION SUMMARY` covering changed files, reuse, assumptions, and verification results.
 
-## 4. Task-Scoped Verification
+## Local install and package updates
 
-Run the fastest checks that cover the changed behavior, and always run checks explicitly requested by the user.
+- Required runtime: Node.js `>=22.13.0` and npm.
+- Install the locked dependency tree with `npm ci`; do not commit `node_modules`.
+- Local DB-backed development needs the MongoDB replica set in `docker-compose.yml` and private `.env` values based on `.env.example`.
+- Review `npm outdated`, package engine/peer requirements, and release notes before updates. Change manifest and lockfile together, avoid forced major upgrades, and run the verification pipeline after updates.
 
-- TypeScript changes: run `npm run typecheck`, `npm run lint`, and the relevant workspace tests.
-- API, database, or deployment changes: add the applicable `npm run test:api`, `npm run smoke`, and `npm run deploy:verify` gates.
-- Documentation, skill-routing, or agent-configuration changes: validate referenced paths and routing entries, then review the diff. Do not run database, live API, or deployment checks when those systems were not changed.
-- Synchronize the changelog when required by `.agents/skills/snp-sms-changelog-workflow/SKILL.md`.
-- For a push request, follow the complete push workflow in section 5.
+See `docs/architecture/product-folder-structure.md` for the full backend layout, request flow, dependency guidance, and safe removal criteria.
 
-Never run an unrelated full suite solely because it is listed here; report which checks ran and their actual exit codes.
+## GitHub access policy
 
----
-
-## 5. Mandatory Pre-Push CI, Dual-Developer Sync & Deployment Quality Gate Rule
-
-- **One-Command Automated Push & Checkpoint (`npm run push:checkpoint`)**:
-  - Whenever the user explicitly commands to push (`push`, `git push`, `publish`), always run `npm run push:checkpoint` (or the complete 10-step sequence: format, lint, typecheck, smoke, deploy:verify, git:sync, changelog:sync, commit, tag, push, and live CI status verification).
-- **Mandatory Pre-Push ESLint Quality Gate (`npm run lint`)**:
-  - `npm run lint` MUST be executed and pass with 0 errors before any commit or push. JSX text node violations, unescaped entities, and typing errors must never reach remote CI.
-- **Mandatory Dual-Developer Git Reconciliation & Merge Gate (`npm run git:sync`)**:
-  - Two developers actively collaborate on this repository. Before attempting any commit push or release checkpoint, the system must **ALWAYS run `npm run git:sync`** (or `git fetch origin` followed by `git merge origin/<branch> --no-edit`).
-  - If remote has incoming commits from the other developer, merge them immediately into the working tree. Never overwrite or force-push over collaborator code.
-  - If conflicts occur, resolve them cleanly, run the full verification pipeline (`npm run typecheck`, `npm run lint`, `npm run deploy:verify`), and commit the merged result before pushing.
-- **Zero Push on Failed Deploy or CI**: Never run `git push`, push release tags, or publish checkpoints if any GitHub deployment, build, test, or CI workflow is failed or failing on `main`.
-- **Pre-Push Deployment Gate (`npm run deploy:verify`)**: Always execute `npm run deploy:verify` prior to pushing to ensure all deployment manifests exist (`vercel.json`, `apps/backend/vercel.json`, `apps/frontend/vercel.json`, Kubernetes manifests), production builds compile with zero errors, and recent GitHub Actions workflows on `main` are green.
-- **Mandatory Post-Push Live CI Monitoring Until 100% Green (`npm run push:verify`)**:
-  - Every remote push MUST actively monitor GitHub Actions runs for the pushed commit SHA (`gh run list --commit <SHA>`) until all triggered workflows reach completed `[PASSED]` status.
-  - The agent must NOT end the turn or claim completion until all remote checks are green.
-  - If any workflow fails, the agent must immediately fetch the failed logs (`gh run view <ID> --log-failed`), diagnose the error, resolve it locally, and push the fix.
-
----
-
-## 6. Autonomous AI Agents Policy
-
-- Follow section 4's task-scoped verification and report actual exit codes. Preserve API contracts, avoid destructive operations, and use authentic contracts and configuration from `@snp/shared` and `apps/backend/src/config/`.
-- Synchronize changelog changes as required by `.agents/skills/snp-sms-changelog-workflow/SKILL.md`.
-- For UI, design-system, notification, or UX-writing changes, resolve the exact skill in `.agents/skills/INDEX.md` and read only its authoritative source and relevant manuals. Apply the complete relevant standards, including responsive behavior, accessibility, notification limits, writing rules, and the immutable brand anchors.
-- Follow the code-security skill's global zero-link and zero-emoji rules. Do not load the complete design suite for unrelated tasks.
-
----
-
-## 7. Repository Ownership & Future Transfer Protocol
-
-- **Official Repository Ownership**: The official GitHub repository owner is `@Tan-Saphea` (`https://github.com/Tan-Saphea/SNPI-SMS.git`).
-- **Portable & Decoupled Configuration**:
-  - Never hardcode personal GitHub usernames or user paths into CI/CD workflows, automation secrets, or package metadata.
-  - Maintainer verification relies on immutable numeric GitHub account IDs in `.github/maintainers.json`, which must be updated upon ownership migration.
-  - Remote repository URLs in git remotes, documentation (`README.md`, `CONTRIBUTING.md`), and container registries must remain easily re-targetable via `git remote set-url origin <new-url>`.
-
----
-
-## 8. UI, Design, and Documentation Work
-
-- The full UI standards live in `.agents/skills/snp-sms-design-standards/SKILL.md` and its focused manuals. Use `.agents/skills/INDEX.md` to select only the manuals relevant to the requested change.
-- Keep the developer library first for new UI designs. Do not apply experimental designs to production frontend routes unless the user explicitly asks.
-- Preserve the repository's mandatory design rules, including approved brand tokens, accessible contrast and touch targets, zero emojis, no blue indicator dots, SNPI naming, and the immutable Brand Colors and Color Ramps menu anchors. The design skill is authoritative for their full definitions.
-- Do not load or apply unrelated design manuals to backend, CI, or other non-UI tasks.
+The maintainer identity gate reads `.github/maintainers.json` and checks the pull request author's numeric GitHub account ID. GitHub repository collaborator permissions and protected-branch settings are separate controls and must be configured in the repository settings. Follow `docs/github-repository-setup.md`; do not claim these remote settings are enabled unless verified.

@@ -1,74 +1,73 @@
-# SNP-SMS Monorepo
+# SNPI-API: Headless REST API Engine
 
-Multi-Branch School Management System (SNP-SMS) powered by npm workspaces, an Express 5 modular monolith backend, a Next.js 16 App Router frontend, and a hybrid container/serverless deployment model.
-
----
-
-## 1. Overview & Metrics
-
-SNP-SMS provides unified school operations across admissions, academic progression, scheduling, attendance, tuition billing, grading, and human resources with server-side multi-branch isolation.
-
-| Metric         | Specification                                                              |
-| :------------- | :------------------------------------------------------------------------- |
-| Topology       | Monorepo via npm workspaces (apps/backend, apps/frontend, packages/shared) |
-| Architecture   | 7-layer modular monolith (47 domains, 193 REST endpoints)                  |
-| Access Control | 356 granular permissions and 13 core roles in @snp/shared                  |
-| Isolation      | Server-side branch isolation via X-Branch-Id header                        |
-| Runtimes       | Node.js >=22.13.0, Express 5, Next.js 16 (React 19), MongoDB 7.0+ (rs0)    |
-| Deployment     | Hybrid: Serverless frontend edge caching and persistent backend container  |
+> Official enterprise backend REST API for the **SNPI School Management System (SMS)**, powered by Express 5, TypeScript, and MongoDB Replica Set (`rs0`).
 
 ---
 
-## 2. Quickstart
+## 1. Architectural Highlights
+
+* **Framework**: Express 5 (native `async/await` error handling).
+* **Language**: TypeScript 5 (Node16 / ESM module resolution).
+* **Database**: MongoDB Replica Set (`rs0`) with Mongoose ODM & ACID transaction sessions.
+* **Validation**: Zod runtime schema whitelisting.
+* **Security & Auth**: Dual-stack authentication supporting **Bearer JWT** (RFC 8725 compliant with refresh rotation) and **X-API-Key** service accounts, hardened with Helmet and rate-limiting.
+* **Architecture Pattern**: 7-Layer Modular Monolith:
+  `route -> controller -> service -> repository -> model -> validation -> types`
+* **Domain Organization**: 47 domain modules categorized into **5 Bounded Contexts**:
+  1. `identity`: Authentication, user accounts, core roles, RBAC permissions, campus branches.
+  2. `academic`: Academic years, terms, programs, departments, classes, subjects, schedules.
+  3. `student`: Student profiles, admissions, enrollments, daily attendance, transfers.
+  4. `assessment`: Examinations, continuous scoring, term results, report cards.
+  5. `finance`: Tuition fee structures, invoices, payment operations, financial reports.
+
+---
+
+## 2. Quick Start
 
 ### Prerequisites
+* Node.js >= 20.0.0
+* MongoDB >= 6.0 (Replica Set `rs0` enabled)
 
-Node.js >= 22.13.0, npm >= 10.8.0, Docker Desktop.
-
-### Setup & Run
-
+### Installation & Run
 ```bash
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Configure environment files
-cp apps/backend/.env.example apps/backend/.env
-cp apps/frontend/.env.example apps/frontend/.env.local
+# 2. Configure environment
+cp .env.example .env
 
-# Start MongoDB replica set (rs0) & seed
-docker compose up -d mongodb
-npm run seed --workspace=apps/backend
-
-# Start development servers
+# 3. Start development server with live reload (Port 5000)
 npm run dev
+
+# 4. Run typecheck & build
+npm run typecheck
+npm run build
+
+# 5. Start production server
+npm start
 ```
 
-### Endpoints
+---
 
-- API: http://localhost:5001/api/v1
-- Frontend: http://localhost:3000
-- Documentation: http://localhost:3000/document
+## 3. Environment Variables (`.env.example`)
+
+```env
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/snpi_sms?replicaSet=rs0
+JWT_SECRET=your-256-bit-cryptographically-secure-secret-key-min-32-chars
+JWT_REFRESH_SECRET=your-256-bit-cryptographically-secure-refresh-key
+CORS_ORIGIN=http://localhost:3000,https://portal.snpi.edu.kh
+```
 
 ---
 
-## 3. Verification Commands
+## 4. Verification & Testing
 
-| Command                | Scope                                             |
-| :--------------------- | :------------------------------------------------ |
-| npm run format:check   | Verifies Prettier compliance across all files     |
-| npm run typecheck      | Typechecks shared packages, backend, and frontend |
-| npm run smoke          | Validates package resolution and service health   |
-| npm run test:api       | Tests live HTTP responses across 47 domains       |
-| npm run test           | Runs full Vitest suite (backend and frontend)     |
-| npm run build          | Validates production builds for all applications  |
-| npm run deploy:verify  | Executes pre-push deployment quality gate         |
-| npm run changelog:sync | Synchronizes changelog to documentation portal    |
+```bash
+# Typecheck verification
+npm run typecheck
 
----
-
-## 4. Governance
-
-- Security: Governed by SECURITY.md
-- Contributing: Governed by CONTRIBUTING.md
-- Code of Conduct: Governed by CODE_OF_CONDUCT.md
-- License: MIT License in LICENSE
+# Unit & integration tests
+npm test
+```
