@@ -53,3 +53,4 @@ export * from './culinary-taxonomy-section';
 export * from './logo-marquee';
 export * from './psychological-rule-inspector';
 export * from './open-source-checklist-section';
+export * from './bento-hero-grid';
