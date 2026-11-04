@@ -87,6 +87,24 @@ These rules apply to every AI coding agent and human contributor working in the 
   - **Zero Outside Domains & Zero Additional Subdomains**: Under no circumstances should any outside domains or extra subdomains be added or configured (strictly NO `dev.`, `staging.`, `test.`, `preview.`, `admin.kesararamwithdigital.tech`).
   - **Slug-Based Path Routing Only**: All future pages, test routes, preview tools, documentation views, and endpoints must be accessed via URL slugs/paths under this single subdomain (e.g. `/`, `/docs`, `/api/v1/*`, `/<slug>`).
   - **Temporary Free Test Bed Status**: This subdomain is strictly temporary for testing purposes and will be replaced by the owner with the permanent domain in the future.
+- **Mandatory Frontend Impact Alert & Implementation Prompt Standard — ABSOLUTE RULE**:
+  - **Breaking Change & Frontend Effect Detection**: Any backend update that affects or alters contracts consumed by the frontend (`SNPI-Web`) is strictly classified as a **Frontend-Impacting Change**. This includes:
+    1. **Endpoint Contracts**: Added, removed, deprecated, or renamed REST paths, query parameters, route slugs, or HTTP methods.
+    2. **Request / Response Schemas**: Changed payload DTOs, modified field names, new required body fields, changed nullability, or altered data structures.
+    3. **Authentication & Session Flows**: Changes to login identifier expectations (e.g., `identifier` vs `email`/`username`), JWT claims, token header standards, cookie names, or password constraints.
+    4. **Status Codes & Error Payloads**: Changed HTTP status codes, modified RFC 7807 error structures, new domain validation codes, or error response formats.
+    5. **Database & Entity Models**: Schema migrations that affect fields surfaced in API responses or frontend table views.
+    6. **Environment & Networking**: Changed backend production domain (`https://api.kesararamwithdigital.tech`), altered port, or CORS origin changes.
+  - **Mandatory `[FRONTEND IMPACT ALERT]`**: Whenever any of the above conditions occur, the AI agent or developer MUST explicitly emit a prominent alert badge:
+    `[FRONTEND IMPACT ALERT]`
+    accompanied by a concise breakdown of what was changed and why it affects the frontend client.
+  - **Mandatory Copy-Paste Implementation Prompt for Frontend Team**: The agent MUST provide a ready-to-use, turnkey copy-paste prompt formatted specifically for the `SNPI-Web` development team or AI agent in a designated block:
+    `### Frontend Implementation Prompt (Copy & Paste to SNPI-Web Team / Agent)`
+    The prompt must contain:
+    - Target file paths in `SNPI-Web` to modify (e.g., API client services, hooks, forms, auth state).
+    - Exact TypeScript request/response interfaces reflecting the new backend contract.
+    - Updated request payload examples (e.g. `{"identifier": "...", "password": "..."}`).
+    - Step-by-step verification instructions (e.g., test login, verify form submissions, handle new error codes).
 
 ---
 
