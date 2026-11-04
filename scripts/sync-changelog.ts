@@ -101,7 +101,9 @@ export const CHANGE_LOGS: ChangeLogEntry[] = ${JSON.stringify(items, null, 2)};
 
   if (fs.existsSync(path.dirname(CHANGELOG_DATA_FILE))) {
     fs.writeFileSync(CHANGELOG_DATA_FILE, tsContent, 'utf-8');
-    console.log(`[Changelog] Successfully updated ${CHANGELOG_DATA_FILE} (${items.length} entries).`);
+    console.log(
+      `[Changelog] Successfully updated ${CHANGELOG_DATA_FILE} (${items.length} entries).`,
+    );
   }
 
   // 5. Write root CHANGELOG.md with clear developer attribution and readable summaries
