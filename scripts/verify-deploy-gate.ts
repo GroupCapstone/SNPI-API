@@ -23,9 +23,7 @@ async function verifyDeploymentManifests(): Promise<void> {
   console.log('[1/6] Verifying deployment manifests, networking & security configurations...');
   const requiredFiles = [
     'vercel.json',
-    'apps/backend/vercel.json',
-    'apps/frontend/vercel.json',
-    'apps/backend/infrastructure/k8s/backend-deployment.yaml',
+    'infrastructure/k8s/backend-deployment.yaml',
     'infrastructure/networking/actions-private-network/network-config.yaml',
     'infrastructure/networking/actions-private-network/azure-vnet-runner-nsg.bicep',
     'infrastructure/networking/actions-private-network/azure-firewall-rules.tf',
