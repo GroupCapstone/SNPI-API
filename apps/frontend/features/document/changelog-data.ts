@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "9a73765",
+    "developer": "史力爱卫",
+    "description": "Synchronize real-time changelog and prettier formatting"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "f79c40c",
     "developer": "史力爱卫",
     "description": "Remove card background tints, enforce clean white surface with 4px border radius"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "6a9f0fe",
     "developer": "史力爱卫",
     "description": "Archive Git LFS article and standard plaintext in safe folders"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "cca75ce",
-    "developer": "史力爱卫",
-    "description": "Record ARC and git lfs updates in AGENTS.md and agent specs"
   }
 ];

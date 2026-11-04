@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `9a73765` (Developer: **史力爱卫**)
+
+- Synchronize real-time changelog and prettier formatting
+
 ### Version 0.2.17 (04.11.2026) - `f79c40c` (Developer: **史力爱卫**)
 
 - Remove card background tints, enforce clean white surface with 4px border radius
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.19 (03.11.2026) - `6a9f0fe` (Developer: **史力爱卫**)
 
 - Archive Git LFS article and standard plaintext in safe folders
-
-### Version 0.2.19 (03.11.2026) - `cca75ce` (Developer: **史力爱卫**)
-
-- Record ARC and git lfs updates in AGENTS.md and agent specs
 
