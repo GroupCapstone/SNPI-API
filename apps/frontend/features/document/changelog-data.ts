@@ -10,6 +10,27 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "99d07bf",
+    "developer": "史力爱卫",
+    "description": "Enrich all 100 API Stylebook topic files with deep architectural rules, concrete HTTP syntax, and guideline quotes"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "a6de417",
+    "developer": "史力爱卫",
+    "description": "Redesign homepage hero into bento grid with organic mascots and brand tokens"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "aa4edd4",
+    "developer": "史力爱卫",
+    "description": "Record API Stylebook 17-category library synchronization commit 6c30d96"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "6c30d96",
     "developer": "史力爱卫",
     "description": "Record complete 17-category API Stylebook design topics library with original quotes and verbatim citations"
@@ -160,26 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "e0a23f5",
     "developer": "史力爱卫",
     "description": "Implement appsec design principles, large repo optimization & resilient cicd continuity"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "a4349a6",
-    "developer": "史力爱卫",
-    "description": "Implement repository architecture strategy, monorepo boundaries & alternate deployment continuity"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "df99922",
-    "developer": "史力爱卫",
-    "description": "Sync verbatim github repository threat model reference and TA-01-TA-09 actor taxonomy"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "265b462",
-    "developer": "史力爱卫",
-    "description": "Implement enforce ghas at scale, push ruleset bypass prevention & dependency review gates"
   }
 ];
