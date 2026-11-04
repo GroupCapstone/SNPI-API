@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "35af91d",
+    "developer": "史力爱卫",
+    "description": "Record complete 16 enterprise API design guidelines directory and archetypes"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "7664c38",
+    "developer": "史力爱卫",
+    "description": "Record API Stylebook deep enrichment sync commit 99d07bf"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "99d07bf",
     "developer": "史力爱卫",
     "description": "Enrich all 100 API Stylebook topic files with deep architectural rules, concrete HTTP syntax, and guideline quotes"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "7e103eb",
     "developer": "史力爱卫",
     "description": "Update stale action SHA pins & build shared before smoke"
-  },
-  {
-    "version": "0.2.20",
-    "date": "03.11.2026",
-    "commitHash": "fce1f03",
-    "developer": "史力爱卫",
-    "description": "Correct docker build-push-action sha pinning & verify all workflows"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "e0a23f5",
-    "developer": "史力爱卫",
-    "description": "Implement appsec design principles, large repo optimization & resilient cicd continuity"
   }
 ];
