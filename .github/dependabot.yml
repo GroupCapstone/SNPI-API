@@ -4,20 +4,31 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 5
     groups:
       dependencies:
         patterns:
           - '*'
+    ignore:
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@eslint/js'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
-    open-pull-requests-limit: 5
+    # Security alerts remain active in GitHub Security Overview, but automated PRs
+    # are limited to 0 to prevent violating immutable full-commit SHA pinning policy.
+    open-pull-requests-limit: 0
 
   - package-ecosystem: 'docker'
-    directory: '/apps/backend'
+    directory: '/'
     schedule:
       interval: 'weekly'
     open-pull-requests-limit: 5
