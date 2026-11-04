@@ -70,8 +70,10 @@ Every domain module in `apps/backend/src/modules/<domain>/` must adhere strictly
 All AI coding assistants (including Antigravity, Claude, Copilot, Codex, and subagents) operating in this repository must strictly comply with the following operational rules:
 
 ### 3.1 Verification-First Mandate
-- AI agents must never claim a task, bug fix, or feature is complete without executing live verification commands (`npm run typecheck`, `npm run test`, `npm run smoke`, `npm run deploy:verify`).
-- Verification outputs must be presented in compact, structured Markdown tables with actual exit codes.
+- Never claim a behavior change is complete without running checks that cover the changed behavior. For TypeScript changes, run `npm run typecheck`, `npm run lint`, and relevant workspace tests.
+- Run `npm run test:api`, `npm run smoke`, and `npm run deploy:verify` when the change affects API, database, integration, or deployment behavior, or when the user explicitly requests those gates.
+- For documentation, skill routing, or agent configuration, validate the references and routes and review the diff; do not start unrelated live services.
+- Report each verification command and its actual exit code.
 
 ### 3.2 Zero Hallucination of Credentials & Infrastructure
 - AI agents must never invent fictional API keys, imaginary environment variables, mock endpoints, or unregistered packages.
@@ -97,14 +99,5 @@ Whenever designing, styling, refactoring, or generating UI components, navigatio
 5. **Universal Web & Mobile Responsive Device First**: Always engineer for fluid responsive behavior across both mobile viewports and desktop with zero clipping and >=44x44px touch targets.
 6. **Mandatory Zero Links Rule (Never Add Links)**: Under no circumstances should AI agents add markdown links, URL hyperlinks, file scheme links (`file://`), or unnecessary anchor links in responses or generated UI components unless explicitly requested by the user. Use plain text or code font.
 
-### 3.7 Mandatory Autonomous AI Agent Compliance with Design Skills & Architecture Rules
-All autonomous AI coding assistants (including Antigravity, Claude, Copilot, Codex, and subagents) operating in this repository must strictly work with the complete suite of Material Design 3 and SNPI enterprise design skills as non-negotiable operational rules:
-1. **Scaffold Architecture Compliance (`SKILL-SCAFFOLD`)**: Structure layouts via Bars, Rails, Panes; adhere to safety regions and Jetpack Compose Rulers (Margin, Baseline, Split Anchor).
-2. **Color Roles System & Calibrations Compliance (`SKILL-COLOR-ROLES`)**: Enforce 26 standard roles across 6 groups, 3 contrast levels (Standard, Medium, High), tone 98 light surface, chroma 6 neutral palette, tone-based surface containers, and theme-independent fixed accents.
-3. **Interaction States & State Layers Compliance (`SKILL-STATES`)**: Implement 6 canonical interaction states (Enabled, Disabled, Hover, Focused, Pressed, Dragged) using content-color state layers (8%, 12%, 16%); enforce Action/Selection/Input inheritance, container exclusion, and FAB hide rule.
-4. **Grids, Spacing & Density Scaling Compliance (`SKILL-GRIDS`)**: Sequence layout composition: Grid columns -> Bars/rails -> Panes; adhere to 0-64dp spacing scale and density scale 0 to -3 with >=44x44px touch targets.
-5. **Adaptive Breakpoints & 5-Vector Transformation Compliance (`SKILL-BREAKPOINTS`)**: Classify viewports into 5 standard breakpoints (Compact, Medium, Expanded, Large, Extra-Large) and govern adaptations via the 5 vectors (Reveal, Divide, Resize, Reposition, Swap).
-6. **Canonical Layout Archetypes Compliance (`SKILL-CANONICAL`)**: Standardize screen structures across Feed, List-Detail, Supporting Pane, and Levitate layering strategy.
-7. **Usability & M3 Expressive Architecture Compliance (`SKILL-USABILITY`)**: Govern interface design via Nielsen Norman 5 usability pillars (Efficiency, Error reduction, Learnability, Memorability, Satisfaction), 6 M3 Expressive tactics, and calm layout hierarchy (anti-clutter Aura standard).
-8. **Material Design 3 A-Z Lexicon Compliance (`SKILL-GLOSSARY`)**: Maintain strict conceptual alignment across all 107 foundational architectural terms, HCT color science, and 3-tier token hierarchy.
-9. **Blueprint Menu Primary Anchor Invariant (Brand Colors & Color Ramps Tokens — NEVER CHANGE)**: In the Blueprint menu (`DesignSystemHomeView` / `/document/design`), the two primary anchor sections — **Brand Colors** (`#brand-blueprint`) and **Color Ramps & Semantic Tokens** (`#color-ramps-tokens`) — must strictly remain primary (indexes 01 and 02), top-level, and permanently immutable. AI agents must NEVER change, alter, remove, hide, or reorder these two primary sections.
+### 3.7 Task-Scoped Design Skill Loading
+When a task changes UI, design, or documentation views, use `.agents/skills/INDEX.md` to select the exact design skill and read its authoritative source plus only relevant references. Apply all relevant design requirements, including the permanent Brand Colors and Color Ramps anchors. Do not load the complete design suite for non-UI work.

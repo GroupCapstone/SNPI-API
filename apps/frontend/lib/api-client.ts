@@ -27,6 +27,55 @@ export interface RefreshResponsePayload<T = unknown> {
 let inMemoryAccessToken: string | null = null;
 let sessionVersion = 0;
 
+// Perf: cache the resolved API base URL — avoids repeated URL construction on every request.
+let _cachedApiBaseUrl: string | null = null;
+const resolvedApiBaseUrl = (): string => {
+  if (_cachedApiBaseUrl === null) _cachedApiBaseUrl = getApiBaseUrl();
+  return _cachedApiBaseUrl;
+};
+
+// Perf: cache the active branch ID in memory so we avoid a synchronous localStorage read on
+// every single request. The cache is invalidated whenever the caller writes a new value.
+let _cachedBranchId: string | null | undefined = undefined; // undefined = not yet read
+
+/** Call this whenever the active branch changes so the cache stays current. */
+export const setActiveBranchId = (branchId: string | null): void => {
+  _cachedBranchId = branchId === 'all' ? null : branchId;
+  if (typeof window !== 'undefined') {
+    try {
+      if (branchId && branchId !== 'all') {
+        localStorage.setItem('snp_active_branch_id', branchId);
+      } else {
+        localStorage.removeItem('snp_active_branch_id');
+      }
+    } catch {
+      // Ignore localStorage errors
+    }
+  }
+};
+
+const getActiveBranchId = (): string | null => {
+  if (_cachedBranchId !== undefined) return _cachedBranchId;
+  if (typeof window === 'undefined') {
+    _cachedBranchId = null;
+    return null;
+  }
+  try {
+    const stored = localStorage.getItem('snp_active_branch_id');
+    _cachedBranchId = stored && stored !== 'all' ? stored : null;
+  } catch {
+    _cachedBranchId = null;
+  }
+  return _cachedBranchId;
+};
+
+// Perf: pre-build the read-only base headers object once; each request shallow-merges on top.
+const BASE_READ_HEADERS: Record<string, string> = { Accept: 'application/json' };
+const BASE_WRITE_HEADERS: Record<string, string> = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
+
 let refreshPromise: Promise<RefreshResponsePayload<{
   accessToken: string;
   user: unknown;
@@ -106,9 +155,12 @@ const silentRefreshToken = async (): Promise<string | null> => {
 
 const baseRequest = async <T>(path: string, init?: RequestInit, isRetry = false): Promise<T> => {
   const requestSessionVersion = sessionVersion;
+  const method = (init?.method ?? 'GET').toUpperCase();
+  // Perf: skip Content-Type on GET/HEAD/DELETE — they carry no body. Avoids unnecessary header
+  // negotiation overhead on the read-heavy hot path.
+  const isBodyless = method === 'GET' || method === 'HEAD' || method === 'DELETE';
   const headers: Record<string, string> = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+    ...(isBodyless ? BASE_READ_HEADERS : BASE_WRITE_HEADERS),
     ...(init?.headers as Record<string, string>),
   };
 
@@ -116,18 +168,13 @@ const baseRequest = async <T>(path: string, init?: RequestInit, isRetry = false)
     headers.Authorization = `Bearer ${inMemoryAccessToken}`;
   }
 
-  if (typeof window !== 'undefined' && !headers['X-Branch-Id']) {
-    try {
-      const activeBranch = localStorage.getItem('snp_active_branch_id');
-      if (activeBranch && activeBranch !== 'all') {
-        headers['X-Branch-Id'] = activeBranch;
-      }
-    } catch {
-      // Ignore localStorage errors
-    }
+  // Perf: use the in-memory cached branch ID instead of calling localStorage on every request.
+  if (!headers['X-Branch-Id']) {
+    const branchId = getActiveBranchId();
+    if (branchId) headers['X-Branch-Id'] = branchId;
   }
 
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
+  const response = await fetch(`${resolvedApiBaseUrl()}${path}`, {
     ...init,
     credentials: 'include',
     headers,
@@ -214,4 +261,5 @@ export const apiClient = Object.assign(baseRequest, {
   setAccessToken,
   getAccessToken,
   setUnauthorizedHandler,
+  setActiveBranchId,
 });

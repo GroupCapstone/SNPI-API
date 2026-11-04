@@ -8,6 +8,26 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
+    version: 'Unreleased',
+    date: '04.11.2026',
+    developer: 'Codex',
+    description: 'Optimize agent skill routing and task-scoped context loading while retaining all resources',
+  },
+  {
+    "version": "0.2.17",
+    "date": "03.11.2026",
+    "commitHash": "7e103eb",
+    "developer": "史力爱卫",
+    "description": "Update stale action SHA pins & build shared before smoke"
+  },
+  {
+    "version": "0.2.20",
+    "date": "03.11.2026",
+    "commitHash": "fce1f03",
+    "developer": "史力爱卫",
+    "description": "Correct docker build-push-action sha pinning & verify all workflows"
+  },
+  {
     "version": "0.2.19",
     "date": "03.11.2026",
     "commitHash": "e0a23f5",
@@ -167,19 +187,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "cf69ccd",
     "developer": "史力爱卫",
     "description": "Refine DinD privilege separation regex check in ARC verification script"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "bcb0b73",
-    "developer": "史力爱卫",
-    "description": "Sync changelog for git lfs policy application"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "c4c0c89",
-    "developer": "史力爱卫",
-    "description": "Apply git lfs policy governance, .gitattributes filters & verification runner"
   }
 ];

@@ -66,28 +66,25 @@ route -> controller -> service -> repository -> model -> validation -> types
 
 ---
 
-## 6. Verification Pipeline
+## 6. Task-Scoped Verification
 
-Always ensure all quality gates pass before completing code changes:
-
-- `npm run format:check`: Code style formatting with Prettier.
-- `npm run typecheck`: TypeScript static analysis across all workspaces.
-- `npm run smoke`: Workspace resolution, MongoDB `rs0` replica set, and API smoke tests.
-- `npm run test:api`: Live HTTP endpoint verification across all 47 domain modules.
-- `npm run test`: Vitest automated test suites.
-- `npm run build`: Production builds for backend and frontend.
-- `npm run changelog:sync`: Real-time changelog synchronization.
+- Run `npm run typecheck`, `npm run lint`, and relevant workspace tests for TypeScript changes.
+- Run `npm run test:api`, `npm run smoke`, and `npm run deploy:verify` when API, database, integration, or deployment behavior changes, or when the user explicitly requests those gates.
+- For documentation, skill routing, and agent configuration, validate referenced paths and routing entries, then review the diff. Do not start unrelated services or run live API and deployment checks.
+- Follow the changelog skill when changes require changelog synchronization. Follow the push skill's complete pipeline only after an explicit push, publish, or checkpoint request.
+- Report the checks run with their actual exit codes.
 
 ---
 
-## 7. Enterprise Custom Agents & Expanded MCP Context
+## 7. Skills and Enterprise Agent Context
 
-- **Knowledge Base Source of Truth**: All enterprise policies are partitioned under `.github/knowledge/`:
+- **Knowledge Base**: Enterprise policies are partitioned under `.github/knowledge/`:
   - `security/`: Secure coding, authentication patterns, vulnerability remediation, application security design principles.
   - `architecture/`: Modular monolith patterns, API design guidelines, database standards.
   - `ci-cd/`: GitHub actions best practices, deployment workflows, container security.
   - `design-standards/`: Psychological design rules, culinary component taxonomy, open-source checklist macro-phases.
+- **Skill Routing**: Resolve the most specific skill from `.agents/skills/INDEX.md`, read its mapped source, and load only the references relevant to the request. If the user asks which skill to apply, provide the exact `apply skill <alias>` command from the index.
 - **Custom Agent Definitions**: Located in `.github/agents/` (`ci-cd-expert.md`, `security-reviewer.md`, `architecture-advisor.md`, `design-system-lead.md`).
-- **Dynamic Context Loading**: Custom agents dynamically fetch files from `.github/knowledge/` via the GitHub Model Context Protocol (MCP) server `get_file_contents` tool, bypassing the single-file 30,000-character limit.
+- **On-Demand Context Loading**: Fetch only task-relevant files from `.github/knowledge/` via GitHub MCP `get_file_contents` when the remote copy is needed. Do not fetch the full knowledge base at startup.
 - **Environment Secret**: Multi-repository access is authenticated via `COPILOT_MCP_GITHUB_PERSONAL_ACCESS_TOKEN` in the `copilot` environment.
-- **Skill Specification**: Refer to `.agents/skills/enterprise-custom-agents-context/SKILL.md` for full implementation details.
+- **Agent Workflow Specification**: Refer to `.agents/skills/enterprise-custom-agents-context/SKILL.md` for on-demand context-loading details.

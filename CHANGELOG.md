@@ -2,6 +2,18 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version Unreleased (04.11.2026) (Developer: **Codex**)
+
+- Optimize agent skill routing and task-scoped context loading while retaining all resources
+
+### Version 0.2.17 (03.11.2026) - `7e103eb` (Developer: **史力爱卫**)
+
+- Update stale action SHA pins & build shared before smoke
+
+### Version 0.2.20 (03.11.2026) - `fce1f03` (Developer: **史力爱卫**)
+
+- Correct docker build-push-action sha pinning & verify all workflows
+
 ### Version 0.2.19 (03.11.2026) - `e0a23f5` (Developer: **史力爱卫**)
 
 - Implement appsec design principles, large repo optimization & resilient cicd continuity
@@ -93,12 +105,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.19 (03.11.2026) - `cf69ccd` (Developer: **史力爱卫**)
 
 - Refine DinD privilege separation regex check in ARC verification script
-
-### Version 0.2.19 (03.11.2026) - `bcb0b73` (Developer: **史力爱卫**)
-
-- Sync changelog for git lfs policy application
-
-### Version 0.2.19 (03.11.2026) - `c4c0c89` (Developer: **史力爱卫**)
-
-- Apply git lfs policy governance, .gitattributes filters & verification runner
 
