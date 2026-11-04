@@ -28,8 +28,10 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Install Dependencies & Build Shared
+        run: |
+          npm ci
+          npm run build:shared
 
       - name: Spin Up MongoDB Replica Set (rs0)
         run: |
@@ -44,12 +46,25 @@ jobs:
       - name: Start Backend API Daemon
         run: |
           cd apps/backend
-          npm run dev &
-          until curl -s http://127.0.0.1:4000/api/v1/health > /dev/null; do
-            echo "Waiting for backend API on port 4000..."
+          npx tsx src/server.ts > /tmp/backend.log 2>&1 &
+          SERVER_PID=$!
+          echo "Backend Daemon started with PID: $SERVER_PID"
+          for i in $(seq 1 45); do
+            if curl -s http://127.0.0.1:4000/api/v1/health > /dev/null 2>&1; then
+              echo "Backend API is online and responding."
+              exit 0
+            fi
+            if ! kill -0 $SERVER_PID 2>/dev/null; then
+              echo "[ERROR] Backend API process died prematurely. Process output:"
+              cat /tmp/backend.log
+              exit 1
+            fi
+            echo "Waiting for backend API on port 4000 ($i/45)..."
             sleep 1
           done
-          echo "Backend API is online and responding."
+          echo "[ERROR] Timeout waiting for backend API to start. Process output:"
+          cat /tmp/backend.log
+          exit 1
         env:
           NODE_ENV: development
           PORT: 4000
