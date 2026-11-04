@@ -82,6 +82,11 @@ These rules apply to every AI coding agent and human contributor working in the 
   - All commits in `SNPI-API` must strictly use the `(api)` or `(api/<scope>)` prefix (e.g., `feat(api): ...`, `fix(api/auth): ...`, `docs(api): ...`).
   - Never share generic or identical commit messages with `SNPI-Web`.
   - Maintain an independent commit history, tag tracking (`api-vX.Y.Z`), and separate changelog.
+- **Mandatory Single Testing Subdomain & Slug-Only Route Standard — Zero Extra Subdomains (ABSOLUTE RULE)**:
+  - **Single Designated Testing Subdomain**: Exclusively use `api.kesararamwithdigital.tech` as the sole temporary free testing endpoint.
+  - **Zero Outside Domains & Zero Additional Subdomains**: Under no circumstances should any outside domains or extra subdomains be added or configured (strictly NO `dev.`, `staging.`, `test.`, `preview.`, `admin.kesararamwithdigital.tech`).
+  - **Slug-Based Path Routing Only**: All future pages, test routes, preview tools, documentation views, and endpoints must be accessed via URL slugs/paths under this single subdomain (e.g. `/`, `/docs`, `/api/v1/*`, `/<slug>`).
+  - **Temporary Free Test Bed Status**: This subdomain is strictly temporary for testing purposes and will be replaced by the owner with the permanent domain in the future.
 
 ---
 
