@@ -3,7 +3,8 @@
 > **Status**: `[STANDBY_KNOWLEDGE]` - Recorded for reference; do not apply to project code until explicitly commanded.
 > **Organization**: **Google**
 > **Canonical Guideline URL**: [https://cloud.google.com/apis/design/](https://cloud.google.com/apis/design/)
-> **Parent Directory**: [Design Guidelines Index](./README.md)
+> **Parent Directory**: [Design Guidelines Index](./README.md)  
+> **API Stylebook Editorial Review**: [`google-api-design-guide-analysis.md`](../insights/google-api-design-guide-analysis.md) (Arnaud Lauret's in-depth critique)  
 > **Topics Covered**: 39 topics across 10 categories
 
 ---
