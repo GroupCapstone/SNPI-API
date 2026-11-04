@@ -10,6 +10,27 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "3a40132",
+    "developer": "史力爱卫",
+    "description": "Redesign simple easy navigation sidebar with zero icon circles and zero count numbers"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "9251491",
+    "developer": "史力爱卫",
+    "description": "Forbid pulsing beacons and remove live presence dots across all UI components"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "856f683",
+    "developer": "史力爱卫",
+    "description": "Record Full-Stack Security Masterclass covering OWASP API Top 10, RFC 8725, ASVS 4.0, NIST SP 800-63B, and MongoDB Hardening"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "9926aac",
     "developer": "史力爱卫",
     "description": "Redesign creative sidebar with liquid glass cards, tree guides, and status capsule"
@@ -160,26 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "4c5628c",
     "developer": "史力爱卫",
     "description": "Align feed sequence in lockstep with sidebar parent range and child lists"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "d007ade",
-    "developer": "史力爱卫",
-    "description": "Add liquid glass parent icon circles, auto-dropdown accordion on scroll, and auto-centering in sidebar"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "e9710dd",
-    "developer": "史力爱卫",
-    "description": "Redesign floating label form and multi-step wizard with fluid water progress and brand dropdowns"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "fc42d97",
-    "developer": "史力爱卫",
-    "description": "Redesign VoiceNote with real Web Audio synthesis and live reactive AnalyserNode waveform"
   }
 ];

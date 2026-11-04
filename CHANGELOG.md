@@ -2,6 +2,18 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `3a40132` (Developer: **史力爱卫**)
+
+- Redesign simple easy navigation sidebar with zero icon circles and zero count numbers
+
+### Version 0.2.17 (04.11.2026) - `9251491` (Developer: **史力爱卫**)
+
+- Forbid pulsing beacons and remove live presence dots across all UI components
+
+### Version 0.2.17 (04.11.2026) - `856f683` (Developer: **史力爱卫**)
+
+- Record Full-Stack Security Masterclass covering OWASP API Top 10, RFC 8725, ASVS 4.0, NIST SP 800-63B, and MongoDB Hardening
+
 ### Version 0.2.17 (04.11.2026) - `9926aac` (Developer: **史力爱卫**)
 
 - Redesign creative sidebar with liquid glass cards, tree guides, and status capsule
@@ -89,16 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (04.11.2026) - `4c5628c` (Developer: **史力爱卫**)
 
 - Align feed sequence in lockstep with sidebar parent range and child lists
-
-### Version 0.2.17 (04.11.2026) - `d007ade` (Developer: **史力爱卫**)
-
-- Add liquid glass parent icon circles, auto-dropdown accordion on scroll, and auto-centering in sidebar
-
-### Version 0.2.17 (04.11.2026) - `e9710dd` (Developer: **史力爱卫**)
-
-- Redesign floating label form and multi-step wizard with fluid water progress and brand dropdowns
-
-### Version 0.2.17 (04.11.2026) - `fc42d97` (Developer: **史力爱卫**)
-
-- Redesign VoiceNote with real Web Audio synthesis and live reactive AnalyserNode waveform
 
