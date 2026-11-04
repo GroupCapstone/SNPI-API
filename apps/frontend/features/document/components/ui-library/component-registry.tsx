@@ -452,18 +452,6 @@ export const COMPONENT_GROUPS_NAV: ComponentGroupNav[] = [
     ],
   },
   {
-    group: 'Text Effects',
-    groupId: 'group-text-effects',
-    items: [
-      {
-        id: 'cipher-text-decoder',
-        name: 'Cipher Text Decoder',
-        targetId: 'comp-cipher-text-decoder',
-        builtAt: '2026-11-01T00:00:00.000Z',
-      },
-    ],
-  },
-  {
     group: 'Sections',
     groupId: 'group-sections',
     items: [
@@ -724,7 +712,6 @@ export const COMPONENT_CATEGORIES = [
   'Display',
   'Forms',
   'AI Kit',
-  'Text Effects',
   'Sections',
 ] as const;
 
@@ -2100,39 +2087,6 @@ const columns: DataTableColumn<StudentRecord>[] = [
     usageGuidelines: [{ doItem: 'Show execution speed.', dontItem: 'Avoid flashing colors.' }],
     implementationNotes: ['Laser beam line with animated pulse.'],
     supportedStates: ['Standby', 'Scanning'],
-  },
-  {
-    id: 'cipher-text-decoder',
-    name: 'Cipher Text Decoder',
-    category: 'Text Effects',
-    builtAt: '2026-11-02',
-    paradigm: 'Cryptographic Character Scramble Standard',
-    description:
-      'Per-character randomized glyph decode animation with progressive lock-in, hover trigger, and reduced motion safety.',
-    explanation:
-      'Decodes sensitive telemetry and security credentials with animated cryptographic character scrambles.',
-    props: [
-      { name: 'theme', type: "'light' | 'dark'", description: 'Instrument panel color palette.' },
-    ],
-    codeSnippet: `import { CipherTextDecoderDemo } from '@/features/document/components/ui-library';\n\n<CipherTextDecoderDemo />`,
-    realWorldExamples: [
-      {
-        title: 'Security Telemetry Header',
-        scenario: 'Displays cryptographic key rotation in-place.',
-        impact: 'High-tech feedback.',
-      },
-    ],
-    uxPsychology: [
-      {
-        principle: 'Feedback Transparency',
-        detail: 'Cryptographic scramble conveys active verification.',
-      },
-    ],
-    usageGuidelines: [
-      { doItem: 'Honor prefers-reduced-motion.', dontItem: 'Do not obscure critical data.' },
-    ],
-    implementationNotes: ['Per-character scramble with requestAnimationFrame lock-in.'],
-    supportedStates: ['Scrambling', 'Locked'],
   },
   {
     id: 'marquee-section',
