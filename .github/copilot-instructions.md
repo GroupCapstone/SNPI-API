@@ -88,3 +88,12 @@ route -> controller -> service -> repository -> model -> validation -> types
 - **On-Demand Context Loading**: Fetch only task-relevant files from `.github/knowledge/` via GitHub MCP `get_file_contents` when the remote copy is needed. Do not fetch the full knowledge base at startup.
 - **Environment Secret**: Multi-repository access is authenticated via `COPILOT_MCP_GITHUB_PERSONAL_ACCESS_TOKEN` in the `copilot` environment.
 - **Agent Workflow Specification**: Refer to `.agents/skills/enterprise-custom-agents-context/SKILL.md` for on-demand context-loading details.
+
+---
+
+## 8. Mandatory Frontend Impact Alert & Implementation Prompt Standard
+
+Whenever any backend modification affects or alters contracts consumed by `SNPI-Web` (API routes, DTO request/response schemas, authentication parameters like `identifier` vs `email`/`username`, HTTP status codes, error payloads, or environment domains):
+
+1. **Emit Alert**: Prominently display `[FRONTEND IMPACT ALERT]` with a concise breakdown of changed contracts and potential client breaking points.
+2. **Turnkey Frontend Prompt**: Deliver an exact copy-paste implementation prompt under `### Frontend Implementation Prompt (Copy & Paste to SNPI-Web Team / Agent)` detailing target frontend files, TypeScript contracts, payload samples, and verification instructions.
