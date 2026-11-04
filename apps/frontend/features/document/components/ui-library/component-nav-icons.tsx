@@ -122,8 +122,6 @@ export function getParentGroupIcon(groupId: string): IconComponent {
       return Table;
     case 'group-forms':
       return FileText;
-    case 'group-ai-kit':
-      return Bot;
     case 'group-sections':
       return LayoutGrid;
     default:
