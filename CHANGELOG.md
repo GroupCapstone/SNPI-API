@@ -2,27 +2,35 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.17 (04.11.2026) - `9a73765` (Developer: **史力爱卫**)
+### Version 0.2.17 (04.11.2026) - `2585f81` (Developer: **史力爱卫**)
+
+- Add build:shared and liveness timeout check to e2e daemon
+
+### Version 0.2.21 (04.11.2026) - `2a539c2` (Developer: **史力爱卫**)
+
+- Checkpoint & live ci deploy verification [PASSED]
+
+### Version 0.2.21 (04.11.2026) - `9a73765` (Developer: **史力爱卫**)
 
 - Synchronize real-time changelog and prettier formatting
 
-### Version 0.2.17 (04.11.2026) - `f79c40c` (Developer: **史力爱卫**)
+### Version 0.2.21 (04.11.2026) - `f79c40c` (Developer: **史力爱卫**)
 
 - Remove card background tints, enforce clean white surface with 4px border radius
 
-### Version 0.2.17 (04.11.2026) - `29c1be3` (Developer: **史力爱卫**)
+### Version 0.2.21 (04.11.2026) - `29c1be3` (Developer: **史力爱卫**)
 
 - Perf(api): optimize resource reading speed and query serialization across feature modules
 
-### Version 0.2.17 (04.11.2026) - `00a8b53` (Developer: **史力爱卫**)
+### Version 0.2.21 (04.11.2026) - `00a8b53` (Developer: **史力爱卫**)
 
 - Perf(api-client): optimize header allocation, active branch caching, and query string compilation
 
-### Version 0.2.17 (04.11.2026) - `2e8b66a` (Developer: **史力爱卫**)
+### Version 0.2.21 (04.11.2026) - `2e8b66a` (Developer: **史力爱卫**)
 
 - Add agent skill routing index, governance policies, and query parameters utility
 
-### Version 0.2.17 (03.11.2026) - `7e103eb` (Developer: **史力爱卫**)
+### Version 0.2.21 (03.11.2026) - `7e103eb` (Developer: **史力爱卫**)
 
 - Update stale action SHA pins & build shared before smoke
 
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.19 (03.11.2026) - `0e6083f` (Developer: **史力爱卫**)
 
 - Record enterprise application security design principles & maturity framework
-
-### Version 0.2.19 (03.11.2026) - `6c6675d` (Developer: **史力爱卫**)
-
-- Sync changelog for safe folder archiving
-
-### Version 0.2.19 (03.11.2026) - `6a9f0fe` (Developer: **史力爱卫**)
-
-- Archive Git LFS article and standard plaintext in safe folders
 
