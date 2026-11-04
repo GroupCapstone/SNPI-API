@@ -19,6 +19,8 @@
     "git:sync": "tsx scripts/dual-dev-git-sync.ts",
     "changelog:sync": "tsx scripts/sync-changelog.ts",
     "push:checkpoint": "tsx scripts/automated-push-checkpoint.ts",
+    "push:green": "tsx scripts/check-deploy-push-green.ts",
+    "check:deploy:push": "tsx scripts/check-deploy-push-green.ts",
     "push:verify": "tsx scripts/verify-ci-status.ts",
     "seed": "tsx src/scripts/seed.ts",
     "seed:complete": "tsx src/scripts/seed-complete-test-data.ts",

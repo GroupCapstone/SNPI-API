@@ -23,4 +23,5 @@ coverage/
 *.db
 
 .vercel
+.next
 .env*
