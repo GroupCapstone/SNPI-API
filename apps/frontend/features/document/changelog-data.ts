@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "6c30d96",
+    "developer": "史力爱卫",
+    "description": "Record complete 17-category API Stylebook design topics library with original quotes and verbatim citations"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "fd64b8d",
+    "developer": "史力爱卫",
+    "description": "Record API Stylebook skill implementation commit fb020b5"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "fb020b5",
     "developer": "史力爱卫",
     "description": "Implement API Stylebook REST API design topics & cross-guideline standards"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "265b462",
     "developer": "史力爱卫",
     "description": "Implement enforce ghas at scale, push ruleset bypass prevention & dependency review gates"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "b07d908",
-    "developer": "史力爱卫",
-    "description": "Implement securing github actions workflows, 40-char sha pinning & script injection defense"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "a59bce1",
-    "developer": "史力爱卫",
-    "description": "Sync changelog for dependency supply chain defense"
   }
 ];
