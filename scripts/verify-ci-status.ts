@@ -17,35 +17,47 @@ function run(cmd: string): string {
   }
 }
 
+export function getRemoteRepo(remote = 'origin'): string | undefined {
+  try {
+    const url = execSync(`git remote get-url ${remote}`, { encoding: 'utf-8' }).trim();
+    const match = url.match(/github\.com[:/]([^/]+\/[^/.]+)(?:\.git)?$/);
+    return match ? match[1] : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export async function waitForCIStatus(options?: {
   commitSha?: string;
+  repo?: string;
   timeoutMinutes?: number;
   pollIntervalMs?: number;
   minWorkflows?: number;
 }): Promise<boolean> {
   const commitSha = options?.commitSha || run('git rev-parse HEAD');
+  const repo = options?.repo || getRemoteRepo('origin') || getRemoteRepo('groupcapstone');
   const timeoutMs = (options?.timeoutMinutes || 15) * 60 * 1000;
   const pollIntervalMs = options?.pollIntervalMs || 10000;
   const minWorkflows = options?.minWorkflows || 1;
+  const repoFlag = repo ? `-R ${repo}` : '';
 
   console.log('======================================================');
-  console.log('SNP-SMS GitHub Actions CI/CD Live Verification Gate');
+  console.log('SNPI-API GitHub Actions CI/CD Live Verification Gate');
   console.log('======================================================');
+  console.log(`Repository       : ${repo || '(default)'}`);
   console.log(`Target Commit SHA: ${commitSha}`);
   console.log(`Poll Interval    : ${pollIntervalMs / 1000}s`);
   console.log(`Timeout          : ${(timeoutMs / 60000).toFixed(0)} minutes`);
   console.log('======================================================\n');
 
   const startTime = Date.now();
-  let attempts = 0;
 
   while (Date.now() - startTime < timeoutMs) {
-    attempts++;
     let runs: WorkflowRun[] = [];
 
     try {
       const output = run(
-        `gh run list --commit ${commitSha} --json databaseId,name,status,conclusion,url`,
+        `gh run list ${repoFlag} --commit ${commitSha} --json databaseId,name,status,conclusion,url`.trim(),
       );
       runs = JSON.parse(output) as WorkflowRun[];
     } catch (e: unknown) {
@@ -94,7 +106,7 @@ export async function waitForCIStatus(options?: {
         console.error(`  URL: ${f.url}`);
         try {
           console.error(`  Fetching failing step logs for run ${f.databaseId}...`);
-          const logOutput = run(`gh run view ${f.databaseId} --log-failed`);
+          const logOutput = run(`gh run view ${f.databaseId} ${repoFlag} --log-failed`.trim());
           const trimmedLogs = logOutput.split('\n').slice(-30).join('\n');
           console.error(
             `\n--- Log snippet (last 30 lines) ---\n${trimmedLogs}\n-----------------------------------\n`,
