@@ -1046,11 +1046,11 @@ export function Example() {
     name: 'Dropdown (Campus & Branch Selector)',
     category: 'Inputs',
     builtAt: '2026-11-02',
-    paradigm: 'Standard Color Blueprint & Searchable Institutional Selector',
+    paradigm: 'Standard Brand Tokens & Searchable Institutional Selector',
     description:
-      'High-contrast ergonomic branch selector featuring live active telemetry, campus badges, quick search filtering, and standard color blueprint styling.',
+      'High-contrast ergonomic campus selector featuring institutional codes, campus badges, quick search filtering, and clean brand token styling.',
     explanation:
-      'The Dropdown component packages dozens of branch locations into an ergonomic 54px trigger button. When opened, it reveals a searchable list of institutional options with live student enrollment counts, physical building details, campus code badges (PP-01, SR-01), and active server cluster latency metrics.',
+      'The Dropdown component packages multiple campus locations into an ergonomic 48px trigger button. When opened, it reveals a searchable list of institutional options with student enrollment counts, physical building details, campus code badges (PP-01, SR-01), and keyboard navigation.',
     supportedStates: [
       'Default (Closed)',
       'Open / Expanded with Search Filter',
@@ -1058,7 +1058,7 @@ export function Example() {
       'Hover & Active Selection Highlight',
       'Disabled / Read-Only',
       'Focused (Keyboard Navigation ↑ ↓)',
-      'Telemetry Card Active',
+      'Institutional Record Overview',
     ],
     realWorldExamples: [
       {
@@ -1066,7 +1066,7 @@ export function Example() {
         scenario:
           'Campus registrar toggles between Siem Reap Main, Phnom Penh Innovation Hub, Battambang, and Kampong Cham.',
         impact:
-          'Scopes all student rosters and database queries instantly with real-time cluster telemetry.',
+          'Scopes all student rosters and database queries instantly with verified institutional data boundaries.',
       },
       {
         title: 'Academic Term & Cohort Selection',
