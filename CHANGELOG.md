@@ -2,9 +2,21 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version Unreleased (04.11.2026) (Developer: **Codex**)
+### Version 0.2.17 (04.11.2026) - `f79c40c` (Developer: **史力爱卫**)
 
-- Optimize agent skill routing and task-scoped context loading while retaining all resources
+- Remove card background tints, enforce clean white surface with 4px border radius
+
+### Version 0.2.17 (04.11.2026) - `29c1be3` (Developer: **史力爱卫**)
+
+- Perf(api): optimize resource reading speed and query serialization across feature modules
+
+### Version 0.2.17 (04.11.2026) - `00a8b53` (Developer: **史力爱卫**)
+
+- Perf(api-client): optimize header allocation, active branch caching, and query string compilation
+
+### Version 0.2.17 (04.11.2026) - `2e8b66a` (Developer: **史力爱卫**)
+
+- Add agent skill routing index, governance policies, and query parameters utility
 
 ### Version 0.2.17 (03.11.2026) - `7e103eb` (Developer: **史力爱卫**)
 
@@ -89,20 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.19 (03.11.2026) - `cca75ce` (Developer: **史力爱卫**)
 
 - Record ARC and git lfs updates in AGENTS.md and agent specs
-
-### Version 0.2.19 (03.11.2026) - `858d883` (Developer: **史力爱卫**)
-
-- Record actions runner controller architecture guide
-
-### Version 0.2.19 (03.11.2026) - `838f934` (Developer: **史力爱卫**)
-
-- Sync changelog
-
-### Version 0.2.19 (03.11.2026) - `3559b00` (Developer: **史力爱卫**)
-
-- Add verify:arc script command
-
-### Version 0.2.19 (03.11.2026) - `cf69ccd` (Developer: **史力爱卫**)
-
-- Refine DinD privilege separation regex check in ARC verification script
 

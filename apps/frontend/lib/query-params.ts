@@ -46,10 +46,7 @@ export const buildQueryString = (
     if (!Object.prototype.hasOwnProperty.call(filters, key)) continue;
     const val = (filters as Record<string, FilterValue>)[key];
     if (val === undefined || val === null || val === '' || val === false) continue;
-    if (
-      skipAllSentinel &&
-      (val === 'all' || val === 'all_branches' || val === 'all-branches')
-    ) {
+    if (skipAllSentinel && (val === 'all' || val === 'all_branches' || val === 'all-branches')) {
       continue;
     }
     res += (res ? '&' : '?') + encodeParamValue(key) + '=' + encodeParamValue(val);

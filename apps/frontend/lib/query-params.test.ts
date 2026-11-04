@@ -58,49 +58,53 @@ describe('buildQueryString', () => {
     expect(buildQueryString(filters)).toBe(`?${manual.toString()}`);
   });
 
-  it('is at least 20% faster than 10,000 manual URLSearchParams builds', { timeout: 10_000 }, () => {
-    const filters = {
-      page: 1,
-      limit: 20,
-      search: 'test',
-      branchId: 'branch-1',
-      schoolId: 'school-1',
-      status: 'active',
-      gender: 'male',
-      sortBy: 'name',
-      sortOrder: 'asc',
-    };
+  it(
+    'is at least 20% faster than 10,000 manual URLSearchParams builds',
+    { timeout: 10_000 },
+    () => {
+      const filters = {
+        page: 1,
+        limit: 20,
+        search: 'test',
+        branchId: 'branch-1',
+        schoolId: 'school-1',
+        status: 'active',
+        gender: 'male',
+        sortBy: 'name',
+        sortOrder: 'asc',
+      };
 
-    const RUNS = 10_000;
+      const RUNS = 10_000;
 
-    // Manual baseline
-    const manualStart = performance.now();
-    for (let i = 0; i < RUNS; i++) {
-      const p = new URLSearchParams();
-      if (filters.page) p.append('page', String(filters.page));
-      if (filters.limit) p.append('limit', String(filters.limit));
-      if (filters.search) p.append('search', filters.search);
-      if (filters.branchId && filters.branchId !== 'all') p.append('branchId', filters.branchId);
-      if (filters.schoolId) p.append('schoolId', filters.schoolId);
-      if (filters.status) p.append('status', filters.status);
-      if (filters.gender) p.append('gender', filters.gender);
-      if (filters.sortBy) p.append('sortBy', filters.sortBy);
-      if (filters.sortOrder) p.append('sortOrder', filters.sortOrder);
-      p.toString();
-    }
-    const manualMs = performance.now() - manualStart;
+      // Manual baseline
+      const manualStart = performance.now();
+      for (let i = 0; i < RUNS; i++) {
+        const p = new URLSearchParams();
+        if (filters.page) p.append('page', String(filters.page));
+        if (filters.limit) p.append('limit', String(filters.limit));
+        if (filters.search) p.append('search', filters.search);
+        if (filters.branchId && filters.branchId !== 'all') p.append('branchId', filters.branchId);
+        if (filters.schoolId) p.append('schoolId', filters.schoolId);
+        if (filters.status) p.append('status', filters.status);
+        if (filters.gender) p.append('gender', filters.gender);
+        if (filters.sortBy) p.append('sortBy', filters.sortBy);
+        if (filters.sortOrder) p.append('sortOrder', filters.sortOrder);
+        p.toString();
+      }
+      const manualMs = performance.now() - manualStart;
 
-    // buildQueryString
-    const utilStart = performance.now();
-    for (let i = 0; i < RUNS; i++) buildQueryString(filters);
-    const utilMs = performance.now() - utilStart;
+      // buildQueryString
+      const utilStart = performance.now();
+      for (let i = 0; i < RUNS; i++) buildQueryString(filters);
+      const utilMs = performance.now() - utilStart;
 
-    console.log(
-      `[perf] buildQueryString: manual=${manualMs.toFixed(2)}ms util=${utilMs.toFixed(2)}ms`,
-    );
+      console.log(
+        `[perf] buildQueryString: manual=${manualMs.toFixed(2)}ms util=${utilMs.toFixed(2)}ms`,
+      );
 
-    // The utility should not be more than 2x slower (the loop is tighter but equivalent).
-    // On a cold run they will be very close — we just assert neither explodes.
-    expect(utilMs).toBeLessThan(manualMs * 2);
-  });
+      // The utility should not be more than 2x slower (the loop is tighter but equivalent).
+      // On a cold run they will be very close — we just assert neither explodes.
+      expect(utilMs).toBeLessThan(manualMs * 2);
+    },
+  );
 });

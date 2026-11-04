@@ -17,8 +17,7 @@ export function LibraryCard({
     <div
       className={cn(
         'w-full rounded-[4px] border border-[#CAD3F5] bg-white p-5 text-[#0A1A4A] shadow-none transition-all duration-200',
-        interactive &&
-          'cursor-pointer hover:border-[#0056FF]/40 hover:bg-white',
+        interactive && 'cursor-pointer hover:border-[#0056FF]/40 hover:bg-white',
         className,
       )}
       style={{ borderRadius: '4px' }}

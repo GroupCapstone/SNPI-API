@@ -5,7 +5,9 @@ import type { DepartmentFormData } from '../schemas';
 import type { Department, DepartmentFilters } from '../types';
 
 export const getDepartments = async (filters: DepartmentFilters = {}) => {
-  return apiClient.get<ApiPaginatedResponse<Department>>(`/departments${buildQueryString(filters)}`);
+  return apiClient.get<ApiPaginatedResponse<Department>>(
+    `/departments${buildQueryString(filters)}`,
+  );
 };
 
 export const getDepartmentById = async (id: string) => {
