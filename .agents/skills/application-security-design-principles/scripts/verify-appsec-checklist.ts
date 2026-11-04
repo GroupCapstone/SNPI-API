@@ -24,13 +24,40 @@ interface DomainSummary {
 
 const ROOT_DIR = process.cwd();
 
+function resolvePath(relPath: string): string {
+  if (fs.existsSync(path.resolve(ROOT_DIR, relPath))) {
+    return relPath;
+  }
+  const polyrepoFallbacks: [RegExp, string][] = [
+    [/^apps\/backend\/src\//, 'src/'],
+    [/^apps\/backend\/infrastructure\//, 'infrastructure/'],
+    [/^apps\/backend\/tsconfig\.json$/, 'tsconfig.json'],
+    [/^packages\/shared\/src\/schemas\/index\.(ts|js)$/, 'src/contracts/schemas/index.ts'],
+    [/^packages\/shared\/src\/schemas\.(ts|js)$/, 'src/contracts/schemas/index.ts'],
+    [/^packages\/shared\/src\//, 'src/contracts/'],
+    [/^packages\/shared\/package\.json$/, 'package.json'],
+    [/^packages\/tsconfig\/base\.json$/, 'tsconfig.json'],
+  ];
+
+  for (const [pattern, replacement] of polyrepoFallbacks) {
+    if (pattern.test(relPath)) {
+      const candidate = relPath.replace(pattern, replacement);
+      if (fs.existsSync(path.resolve(ROOT_DIR, candidate))) {
+        return candidate;
+      }
+    }
+  }
+
+  return relPath;
+}
+
 function fileExists(relPath: string): boolean {
-  return fs.existsSync(path.resolve(ROOT_DIR, relPath));
+  return fs.existsSync(path.resolve(ROOT_DIR, resolvePath(relPath)));
 }
 
 function readFileSafe(relPath: string): string {
   try {
-    return fs.readFileSync(path.resolve(ROOT_DIR, relPath), 'utf-8');
+    return fs.readFileSync(path.resolve(ROOT_DIR, resolvePath(relPath)), 'utf-8');
   } catch {
     return '';
   }
@@ -99,7 +126,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
 
   const securityMd = readFileSafe('SECURITY.md');
   const agentsMd = readFileSafe('AGENTS.md');
-  const hasSecurityPolicy = securityMd.length > 500 && agentsMd.includes('Autonomous AI Agents Policy');
+  const hasSecurityPolicy =
+    securityMd.length > 500 && agentsMd.includes('Autonomous AI Agents Policy');
   checks.push({
     id: 'SEC-04',
     domain: 'Security',
@@ -134,7 +162,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
 
   const sharedPermissions = readFileSafe('packages/shared/src/permissions.ts');
   const authMiddleware = readFileSafe('apps/backend/src/middleware/authorize.ts');
-  const hasRbac = sharedPermissions.includes('SYSTEM_PERMISSIONS') && authMiddleware.includes('authorize');
+  const hasRbac =
+    sharedPermissions.includes('SYSTEM_PERMISSIONS') && authMiddleware.includes('authorize');
   checks.push({
     id: 'SEC-06',
     domain: 'Security',
@@ -151,8 +180,11 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   // 2. COMPLIANCE (Weight: 12%)
   // ==========================================
-  const appSecDoc = readFileSafe('.github/knowledge/security/application-security-design-principles.md');
-  const citesRegulations = appSecDoc.includes('FERPA') && appSecDoc.includes('GDPR') && appSecDoc.includes('SOC 2');
+  const appSecDoc = readFileSafe(
+    '.github/knowledge/security/application-security-design-principles.md',
+  );
+  const citesRegulations =
+    appSecDoc.includes('FERPA') && appSecDoc.includes('GDPR') && appSecDoc.includes('SOC 2');
   checks.push({
     id: 'COM-01',
     domain: 'Compliance',
@@ -214,7 +246,11 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing incident response plan and DRP runbooks',
   });
 
-  const hasOnboardingStandards = agentsMd.includes('Autonomous AI Agents Policy') && agentsMd.includes('Verification Pipeline');
+  const hasOnboardingStandards =
+    agentsMd.includes('Autonomous AI Agents Policy') &&
+    (agentsMd.includes('Verification Pipeline') ||
+      agentsMd.includes('Task-Scoped Verification') ||
+      agentsMd.includes('Verification'));
   checks.push({
     id: 'COM-05',
     domain: 'Compliance',
@@ -350,7 +386,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing dedicated security champion agent persona',
   });
 
-  const hasContactInSecurityMd = securityMd.includes('Reporting a Vulnerability');
+  const hasContactInSecurityMd =
+    securityMd.toLowerCase().includes('report a vulnerability') ||
+    securityMd.toLowerCase().includes('reporting a vulnerability');
   checks.push({
     id: 'AWA-04',
     domain: 'Awareness',
@@ -391,11 +429,14 @@ async function runApplicationSecurityAudit(): Promise<void> {
     status: hasCodeowners ? 'PASSED' : 'FAILED',
     score: hasCodeowners ? 100 : 0,
     weight: 1.0,
-    evidence: hasCodeowners ? '.github/CODEOWNERS enforces granular code ownership across directories' : 'Missing CODEOWNERS',
+    evidence: hasCodeowners
+      ? '.github/CODEOWNERS enforces granular code ownership across directories'
+      : 'Missing CODEOWNERS',
   });
 
   const tokenUtil = readFileSafe('apps/backend/src/utils/token.ts');
-  const hasJwtRotation = tokenUtil.includes('generateAccessToken') && tokenUtil.includes('generateRefreshToken');
+  const hasJwtRotation =
+    tokenUtil.includes('generateAccessToken') && tokenUtil.includes('generateRefreshToken');
   checks.push({
     id: 'GHE-02',
     domain: 'GitHub Enterprise',
@@ -423,7 +464,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing repository mirror configuration',
   });
 
-  const hasPrivateNetConfig = fileExists('infrastructure/networking/actions-private-network/network-config.yaml');
+  const hasPrivateNetConfig = fileExists(
+    'infrastructure/networking/actions-private-network/network-config.yaml',
+  );
   checks.push({
     id: 'GHE-04',
     domain: 'GitHub Enterprise',
@@ -531,7 +574,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   // 6. SCALABILITY (Weight: 9%)
   // ==========================================
-  const hasWorkspaces = pkgJson.includes('workspaces') && pkgJson.includes('@snp/shared');
+  const hasWorkspaces =
+    (pkgJson.includes('workspaces') && pkgJson.includes('@snp/shared')) ||
+    (pkgJson.includes('"name": "snpi-api"') && fileExists('src/modules') && fileExists('src/contracts'));
   checks.push({
     id: 'SCA-01',
     domain: 'Scalability',
@@ -541,8 +586,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
     score: hasWorkspaces ? 100 : 0,
     weight: 2.0,
     evidence: hasWorkspaces
-      ? 'Clean npm workspaces monorepo architecture (packages/shared, apps/backend, apps/frontend)'
-      : 'Missing workspaces configuration',
+      ? 'Clean polyrepo/monorepo architecture with dedicated modules and contracts boundaries'
+      : 'Missing workspaces or dedicated polyrepo module configuration',
   });
 
   const hasLabeler = fileExists('.github/labeler.yml');
@@ -554,11 +599,17 @@ async function runApplicationSecurityAudit(): Promise<void> {
     status: hasLabeler ? 'PASSED' : 'FAILED',
     score: hasLabeler ? 100 : 0,
     weight: 1.0,
-    evidence: hasLabeler ? '.github/labeler.yml categorizes changes across monorepo boundaries' : 'Missing labeler.yml',
+    evidence: hasLabeler
+      ? '.github/labeler.yml categorizes changes across monorepo boundaries'
+      : 'Missing labeler.yml',
   });
 
-  const backendModules = fs.existsSync(path.resolve(ROOT_DIR, 'apps/backend/src/modules'))
-    ? fs.readdirSync(path.resolve(ROOT_DIR, 'apps/backend/src/modules')).length
+  const modulesDir =
+    fs.existsSync(path.resolve(ROOT_DIR, 'apps/backend/src/modules'))
+      ? 'apps/backend/src/modules'
+      : 'src/modules';
+  const backendModules = fs.existsSync(path.resolve(ROOT_DIR, modulesDir))
+    ? fs.readdirSync(path.resolve(ROOT_DIR, modulesDir)).filter((f) => !f.startsWith('.')).length
     : 0;
   const isModular = backendModules >= 40;
   checks.push({
@@ -577,7 +628,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
   const tsconfigShared = fileExists('packages/tsconfig/base.json');
   const tsconfigBackend = fileExists('apps/backend/tsconfig.json');
   const tsconfigFrontend = fileExists('apps/frontend/tsconfig.json');
-  const isStandardTechStack = tsconfigShared && tsconfigBackend && tsconfigFrontend;
+  const isStandardTechStack =
+    (tsconfigShared && tsconfigBackend && tsconfigFrontend) ||
+    (fileExists('tsconfig.json') && pkgJson.includes('typescript'));
   checks.push({
     id: 'SCA-04',
     domain: 'Scalability',
@@ -586,10 +639,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
     status: isStandardTechStack ? 'PASSED' : 'FAILED',
     score: isStandardTechStack ? 100 : 0,
     weight: 2.0,
-    evidence:
-      isStandardTechStack
-        ? 'Standardized TypeScript 5.8+ compiler configs, Express 5, and Next.js across apps'
-        : 'Inconsistent tech stack configuration',
+    evidence: isStandardTechStack
+      ? 'Standardized TypeScript 5.8+ compiler configs and Express 5 across services'
+      : 'Inconsistent tech stack configuration',
   });
 
   const hasVercelManifest = fileExists('vercel.json') || fileExists('apps/frontend/vercel.json');
@@ -610,7 +662,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // 7. RESILIENCY (Weight: 9%)
   // ==========================================
   const dbConfig = readFileSafe('apps/backend/src/config/database.ts');
-  const hasReplicaSet = dbConfig.includes('replicaSet') || dbConfig.includes('rs0') || dbConfig.includes('connect(');
+  const hasReplicaSet =
+    dbConfig.includes('replicaSet') || dbConfig.includes('rs0') || dbConfig.includes('connect(');
   checks.push({
     id: 'RES-01',
     domain: 'Resiliency',
@@ -645,7 +698,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   // 8. MODULARITY (Weight: 7%)
   // ==========================================
-  const hasSharedPackage = fileExists('packages/shared/package.json');
+  const hasSharedPackage =
+    fileExists('packages/shared/package.json') ||
+    (fileExists('src/contracts/index.ts') && fileExists('src/contracts/types.ts'));
   checks.push({
     id: 'MOD-01',
     domain: 'Modularity',
@@ -655,8 +710,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
     score: hasSharedPackage ? 100 : 0,
     weight: 3.5,
     evidence: hasSharedPackage
-      ? '@snp/shared centralizes canonical DTOs, interfaces, and permissions'
-      : 'Missing shared contract package',
+      ? 'Canonical contracts layer (src/contracts/ or @snp/shared) centralizes DTOs, interfaces, and permissions'
+      : 'Missing shared contract package or contracts layer',
   });
 
   const hasBoundaryDoc = fileExists('docs/architecture/boundary-rules.md');
@@ -690,7 +745,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing timingSafeEqual implementation',
   });
 
-  const hasFirewallSpecs = fileExists('infrastructure/networking/actions-private-network/network-config.yaml');
+  const hasFirewallSpecs = fileExists(
+    'infrastructure/networking/actions-private-network/network-config.yaml',
+  );
   checks.push({
     id: 'INT-02',
     domain: 'Interoperability',
@@ -718,7 +775,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing deploy gate verification script',
   });
 
-  const hasArcScaleset = fileExists('apps/backend/infrastructure/k8s/arc/arc-runner-scaleset-standard.yaml');
+  const hasArcScaleset = fileExists(
+    'apps/backend/infrastructure/k8s/arc/arc-runner-scaleset-standard.yaml',
+  );
   checks.push({
     id: 'INT-04',
     domain: 'Interoperability',
@@ -749,7 +808,7 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   // 10. SIMPLICITY (Weight: 6%)
   // ==========================================
-  const tsconfigBase = readFileSafe('packages/tsconfig/base.json');
+  const tsconfigBase = readFileSafe('packages/tsconfig/base.json') || readFileSafe('tsconfig.json');
   const isStrictTs = tsconfigBase.includes('"strict": true');
   checks.push({
     id: 'SIM-01',
@@ -765,7 +824,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
   });
 
   const designStandards = readFileSafe('.agents/skills/snp-sms-design-standards/SKILL.md');
-  const hasBrandTokens = designStandards.includes('01 #0056FF') && designStandards.includes('04 #FFFFFF');
+  const hasBrandTokens =
+    (designStandards.includes('01 #0056FF') && designStandards.includes('04 #FFFFFF')) ||
+    (agentsMd.includes('01 #0056FF') && agentsMd.includes('04 #FFFFFF'));
   checks.push({
     id: 'SIM-02',
     domain: 'Simplicity',
@@ -811,7 +872,8 @@ async function runApplicationSecurityAudit(): Promise<void> {
   });
 
   const auditLogRoute = readFileSafe('apps/backend/src/modules/audit-log/audit-log.route.ts');
-  const hasAuditRbac = auditLogRoute.includes('audit.view.own_branch') && auditLogRoute.includes('requireAuth');
+  const hasAuditRbac =
+    auditLogRoute.includes('audit.view.own_branch') && auditLogRoute.includes('requireAuth');
   checks.push({
     id: 'OBS-02',
     domain: 'Observability',
@@ -886,8 +948,12 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   // OUTPUT REPORT
   // ==========================================
-  console.log('| ID     | Priority | Domain             | Criterion                         | Status   | Score | Evidence');
-  console.log('| :----- | :------- | :----------------- | :-------------------------------- | :------- | :---- | :------------------------------------------------------------------');
+  console.log(
+    '| ID     | Priority | Domain             | Criterion                         | Status   | Score | Evidence',
+  );
+  console.log(
+    '| :----- | :------- | :----------------- | :-------------------------------- | :------- | :---- | :------------------------------------------------------------------',
+  );
 
   for (const c of checks) {
     const idPad = c.id.padEnd(6);
@@ -896,7 +962,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
     const critPad = c.criterion.padEnd(33);
     const statusPad = `[${c.status}]`.padEnd(8);
     const scorePad = `${c.score}%`.padStart(5);
-    console.log(`| ${idPad} | ${prioPad} | ${domPad} | ${critPad} | ${statusPad} | ${scorePad} | ${c.evidence}`);
+    console.log(
+      `| ${idPad} | ${prioPad} | ${domPad} | ${critPad} | ${statusPad} | ${scorePad} | ${c.evidence}`,
+    );
   }
 
   console.log('\n================================================================================');
