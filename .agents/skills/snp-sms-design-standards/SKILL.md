@@ -300,9 +300,10 @@ Refer to `cyber-armor-nav-manual.md` for the aerospace mecha HUD console specifi
 - **Strictly Light-Day-First Modern UI**: All telemetry monitors, packet streams, and documentation cards must strictly use **Pure White (`#FFFFFF`)** or **Ice Tint (`#EFF5FF`)** backgrounds with Soft Lavender borders (`#CAD3F5`), Deep Navy (`#0A1A4A`) high-contrast text, and Royal Blue (`#0056FF`) accent pills.
 - **Zero Dark Hacker Inversion**: Never invert page sections into high-contrast dark terminal boxes or hacker consoles in documentation views.
 
-### 7.11 Mandatory Zero Blue Dot & Clean Navigation Standard (Zero Dots & Zero Shifting Breadcrumbs)
-- **Strict Prohibition of Blue Indicator Dots**: Under no circumstances should animated pinging or static blue dots (`animate-ping bg-[#0056FF]`, live indicator status dots, pulsing waypoint rings) be used in navigation bars, breadcrumbs, titles, sub-headers, or status pills. Never use this blue dot style anywhere in the application or documentation.
-- **Clean Sticky Sub-Navigation Rails**: Sticky sub-navigation bars must strictly render clean, direct category jump pills (`Home`, `Navigation`, `Inputs`, `Feedback`, `Display`, `AI Kit`, `Forms`) without dynamic location breadcrumbs, shifting title texts, or pulsing dots taking up horizontal space.
+### 7.11 Mandatory Zero Pulsing Beacon, Zero Status Dot & Clean Navigation Standard (Absolute Prohibition of All Beacons, Pings, and Presence Dots)
+- **Strict Prohibition of Pulsing Beacons, Status Dots, Ping Rings & Heartbeats**: Under no circumstances should animated pinging or static dots of any color (green, blue, emerald, red, gold) — including Pulsing Beacons, Status Beacons, Radar Pings (`animate-ping`), Live Status Dots, Online Indicators, or Heartbeat Indicators — be used on icons, avatar corners, buttons, navigation bars, breadcrumbs, titles, sub-headers, or status cards. Never design or use this pattern anywhere in the application or documentation.
+- **Clean Static Typography & Structured Badges Only**: State and health must strictly be communicated via clean, high-contrast textual badges or static pills adhering to the 5 brand tokens (`LIVE`, `NEW`, `ACTIVE`, `READY`), never via distracting pulsing animations or corner beacon dots.
+- **Clean Sticky Sub-Navigation Rails**: Sticky sub-navigation bars must strictly render clean, direct category jump pills (`Home`, `Navigation`, `Inputs`, `Feedback`, `Display`, `Forms`, `Sections`) without dynamic location breadcrumbs, shifting title texts, or pulsing dots taking up horizontal space.
 
 ### 7.12 Mandatory Full Brand Name SNPI Rule (Always SNPI, Never Bare SNP)
 - **Full Brand Identity**: The institutional identity of this platform is **SNPI** (SNPI International School / SNPI-SMS).

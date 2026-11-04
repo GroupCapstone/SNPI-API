@@ -344,7 +344,7 @@ export const AcademicStructureTree: React.FC<AcademicStructureTreeProps> = ({
                 )}
               >
                 {period.status === 'active' && (
-                  <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
+                  <span className="size-1.5 rounded-full bg-[#0056FF]" />
                 )}
                 <span>{period.name}</span>
                 <span className="font-mono text-slate-400">({period.code})</span>

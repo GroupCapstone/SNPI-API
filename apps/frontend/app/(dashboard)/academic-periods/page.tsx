@@ -237,7 +237,7 @@ export default function AcademicPeriodsPage() {
               </div>
               <div className="mt-2">
                 <div className="flex items-center gap-1.5">
-                  <span className="size-2 animate-pulse rounded-full bg-emerald-500" />
+                  <span className="size-2 rounded-full bg-[#0056FF]" />
                   <span className="truncate text-sm font-bold text-slate-900">
                     {activePeriod ? activePeriod.name : isKhmer ? 'គ្មានវគ្គសកម្ម' : 'None Active'}
                   </span>

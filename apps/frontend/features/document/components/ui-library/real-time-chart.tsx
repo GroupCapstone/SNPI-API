@@ -519,7 +519,7 @@ export function RealTimeChart({
         </div>
 
         <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-          <Radio className="size-3 animate-pulse text-emerald-500" />
+          <Radio className="size-3 text-[#0056FF]" />
           <span>Canvas 60fps &middot; Zero Libs</span>
         </div>
       </div>

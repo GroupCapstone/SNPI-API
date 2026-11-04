@@ -209,12 +209,16 @@ export function RadiantIntegrationHub({
                 isElevated ? style.shadow : 'shadow-xs',
               )}
             >
-              {/* Top: Minimal Category Tag & Pulse Dot */}
+              {/* Top: Minimal Category Tag */}
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[10px] font-bold tracking-wider uppercase opacity-85">
                   0{idx + 1}
                 </span>
-                {isActive && <span className="flex size-2 animate-pulse rounded-full bg-current" />}
+                {isActive && (
+                  <span className="py-0.2 rounded-md border border-[#CAD3F5] bg-white px-1.5 font-mono text-[9px] font-bold text-[#0056FF]">
+                    ACTIVE
+                  </span>
+                )}
               </div>
 
               {/* Center: Clean Bold Title (ZERO ICONS) */}
@@ -259,7 +263,9 @@ export function RadiantIntegrationHub({
                   0{idx + 1}
                 </span>
                 {isActive && (
-                  <span className="flex size-1.5 animate-pulse rounded-full bg-current" />
+                  <span className="py-0.2 rounded-md border border-[#CAD3F5] bg-white px-1.5 font-mono text-[8px] font-bold text-[#0056FF]">
+                    ACTIVE
+                  </span>
                 )}
               </div>
 
