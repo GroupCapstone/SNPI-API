@@ -74,9 +74,12 @@ export async function waitForCIStatus(options?: {
       continue;
     }
 
-    // Filter unique latest runs per workflow name
+    // Filter unique latest runs per workflow name (excluding internal Dependabot updater attempts)
     const latestRunsByName = new Map<string, WorkflowRun>();
     for (const r of runs) {
+      if (r.name.includes('in /. - Update') || r.name.includes('in /. for ')) {
+        continue;
+      }
       if (!latestRunsByName.has(r.name)) {
         latestRunsByName.set(r.name, r);
       }
