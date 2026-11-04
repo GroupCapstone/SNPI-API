@@ -14,17 +14,17 @@ This skill defines the authoritative, mandatory protocol that every agent and co
 
 ## 1. Organization Topology & Equal Ownership
 
-Both repositories are hosted under the shared GitHub Organization **`ytivargitna`**, where both `shiliaiwei` and `Tan-Saphea` hold equal **Organization Admin** rights:
+Both repositories are hosted under the shared GitHub Organization **`GroupCapstone`**, where both `shiliaiwei` and `Tan-Saphea` hold equal **Organization Admin** rights:
 
 * **Backend (`SNPI-API`)**:
   * Dedicated Headless REST API (Express 5, TypeScript, MongoDB Replica Set `rs0`, 7-layer modular monolith).
-  * Primary Remote (`origin`): `https://github.com/ytivargitna/SNPI-API.git` (tracked on `main -> origin/main`).
-  * Secondary Remotes: `personal` (`shiliaiwei/SNPI-API.git`), `upstream` (`Tan-Saphea/SNPI-SMS.git`).
+  * Primary Remote (`origin`): `https://github.com/GroupCapstone/SNPI-API.git` (tracked on `main -> origin/main`).
+  * Secondary Remotes: `personal` (`shiliaiwei/SNPI-API.git`), `ytivargitna` (`ytivargitna/SNPI-API.git`), `upstream` (`Tan-Saphea/SNPI-SMS.git`).
   * Organization Permissions: Equal Admin (`shiliaiwei` & `Tan-Saphea`).
 
 * **Frontend Web Portal (`SNPI-Web`)**:
   * Next.js 16 Web Portal & Integrated Nextra Docs (React 19, Tailwind CSS 4, Radix UI).
-  * Primary Remote (`origin`): `https://github.com/ytivargitna/SNPI-Web.git` (tracked on `main -> origin/main`).
+  * Primary Remote (`origin`): `https://github.com/GroupCapstone/SNPI-Web.git` (tracked on `main -> origin/main`).
   * Secondary Remote: `personal` (`shiliaiwei/SNPI-Web.git`).
   * Organization Permissions: Equal Admin (`shiliaiwei` & `Tan-Saphea`).
 
@@ -80,7 +80,7 @@ npm run build
 
 ## 4. Remote Push Execution Protocol
 
-Once quality gates pass, execute remote synchronization to the `ytivargitna` organization:
+Once quality gates pass, execute remote synchronization to the `GroupCapstone` organization:
 
 ```bash
 # Set large buffer to prevent RPC push failures
@@ -96,5 +96,5 @@ git push origin main
 
 | Scope | Project Folder | Primary GitHub Remote (Org) | Commit Prefix | Permissions | Verification Gates |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Backend API** | `SNPI-API/` | `ytivargitna/SNPI-API` | `(api)` / `(api/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run typecheck` + `npm run build` |
-| **Frontend Web** | `SNPI-Web/` | `ytivargitna/SNPI-Web` | `(web)` / `(web/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run typecheck` + `npm run build` |
+| **Backend API** | `SNPI-API/` | `GroupCapstone/SNPI-API` | `(api)` / `(api/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run typecheck` + `npm run build` |
+| **Frontend Web** | `SNPI-Web/` | `GroupCapstone/SNPI-Web` | `(web)` / `(web/<scope>)` | Org Admin (`shiliaiwei` / `Tan-Saphea`) | `npm run typecheck` + `npm run build` |

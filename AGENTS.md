@@ -134,11 +134,15 @@ Never run an unrelated full suite solely because it is listed here; report which
 
 ## 7. Organization Repositories, Push Policy & Permissions
 
-- **Organization Remotes (`ytivargitna`)**:
-  - `SNPI-API`: `origin` -> `https://github.com/ytivargitna/SNPI-API.git` (tracked on `main -> origin/main`).
-  - Secondary Remotes: `personal` (`shiliaiwei/SNPI-API.git`), `upstream` (`Tan-Saphea/SNPI-SMS.git`).
+- **Organization Remotes (`GroupCapstone`)**:
+  - `SNPI-API`: `origin` -> `https://github.com/GroupCapstone/SNPI-API.git` (tracked on `main -> origin/main`).
+  - Secondary Remotes: `personal` (`shiliaiwei/SNPI-API.git`), `ytivargitna` (`ytivargitna/SNPI-API.git`), `upstream` (`Tan-Saphea/SNPI-SMS.git`).
 - **Equal Organization Admin Permissions**:
-  - Both repositories (`SNPI-API` and `SNPI-Web`) are hosted under the `ytivargitna` organization, granting equal Admin rights to `shiliaiwei` and `Tan-Saphea`.
+  - Both repositories (`SNPI-API` and `SNPI-Web`) are hosted under the `GroupCapstone` organization, granting equal Admin rights to `shiliaiwei` and `Tan-Saphea`.
+- **Mandatory Synchronized Release Rule — Vercel Must Always Update When GitHub Updates (ABSOLUTE RULE)**:
+  - Whenever code is updated or pushed to GitHub (`GroupCapstone/SNPI-API`), Vercel production (`https://api.kesararamwithdigital.tech`) must also be deployed via Vercel CLI (`npm run deploy:prod` / `npx vercel --prod`).
+  - Zero code drift is permitted: live production code running on `api.kesararamwithdigital.tech` must always match the latest code pushed to GitHub.
+  - Standard synchronized release command: `npm run release:all` (verifies pre-flight quality gates, syncs git, pushes to GitHub `origin/main`, and deploys directly to Vercel production via Vercel CLI in lockstep).
 - **Push Quality Gate**:
   - Before pushing, always run `npm run typecheck` and `npm run build` in `SNPI-API/`.
 
