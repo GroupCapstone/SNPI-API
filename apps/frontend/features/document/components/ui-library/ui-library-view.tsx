@@ -679,26 +679,26 @@ export function UiLibraryView() {
                             isGroupActive ? 'bg-[#EFF5FF]/60 text-[#0056FF]' : 'text-slate-900',
                           )}
                         >
-                          <div className="flex items-center gap-2.5">
-                            {/* Liquid Glass Circular Icon Container */}
+                          <div className="flex items-center gap-3">
+                            {/* Blue Liquid Glass Circular Icon Container (Enlarged) */}
                             <div
                               className={cn(
-                                'relative flex size-7 shrink-0 items-center justify-center rounded-full transition-all duration-200',
-                                'border border-white/90 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1px_1.5px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.08)] backdrop-blur-md',
+                                'relative flex size-9 shrink-0 items-center justify-center rounded-full transition-all duration-200',
+                                'border border-[#CAD3F5] shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1px_1.5px_rgba(0,86,255,0.06),0_1.5px_4px_rgba(0,86,255,0.10)] backdrop-blur-md',
                                 glassTheme.bg,
                                 glassTheme.text,
                                 isGroupActive || !isGroupCollapsed
                                   ? cn('ring-2 ring-offset-1', glassTheme.ring, 'shadow-sm')
-                                  : 'opacity-90 group-hover:scale-105 group-hover:opacity-100',
+                                  : 'opacity-95 group-hover:scale-105 group-hover:opacity-100',
                               )}
                             >
                               {/* 360-degree Specular Reflection Sheen */}
-                              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-white/70" />
-                              <ParentGroupIcon className="relative z-10 size-3.5 stroke-[2.2]" />
+                              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/40 to-white/80" />
+                              <ParentGroupIcon className="relative z-10 size-5 stroke-[2.4] text-[#0056FF]" />
                             </div>
                             <span
                               className={cn(
-                                'font-bold transition-colors',
+                                'text-[13px] font-bold transition-colors',
                                 isGroupActive ? 'text-[#0056FF]' : 'text-slate-900',
                               )}
                             >
