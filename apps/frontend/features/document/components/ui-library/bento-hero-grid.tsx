@@ -379,9 +379,6 @@ export function BentoHeroGrid({
                     title={`${node.name} · ${node.latency}`}
                   >
                     <div className="relative flex items-center justify-center">
-                      {isSelected && (
-                        <span className="absolute -inset-1.5 animate-ping rounded-full bg-[#0056FF]/35" />
-                      )}
                       <div
                         className={cn(
                           'flex size-5 items-center justify-center rounded-full border text-[8px] font-black shadow-xs',

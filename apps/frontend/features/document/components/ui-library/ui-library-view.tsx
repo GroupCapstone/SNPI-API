@@ -642,11 +642,6 @@ export function UiLibraryView() {
                     {/* Tactile Brand Icon Mark */}
                     <div className="relative flex size-9 shrink-0 items-center justify-center rounded-xl border border-[#CAD3F5] bg-gradient-to-br from-[#0056FF] to-[#2277FF] text-white shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_2px_6px_rgba(0,86,255,0.25)]">
                       <Layers className="size-4.5 stroke-[2.4]" />
-                      {/* Live System Beacon */}
-                      <span className="absolute -top-1 -right-1 flex size-2.5">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                        <span className="relative inline-flex size-2.5 rounded-full border border-white bg-emerald-500 shadow-xs" />
-                      </span>
                     </div>
 
                     <div>

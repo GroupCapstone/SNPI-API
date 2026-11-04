@@ -2,6 +2,30 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `9926aac` (Developer: **史力爱卫**)
+
+- Redesign creative sidebar with liquid glass cards, tree guides, and status capsule
+
+### Version 0.2.17 (04.11.2026) - `55754f9` (Developer: **史力爱卫**)
+
+- Remove hero clutter text, add interactive ask kid mascot, and remove ai kit category
+
+### Version 0.2.17 (04.11.2026) - `711c3f9` (Developer: **史力爱卫**)
+
+- Restore visual style archetypes for status-page component
+
+### Version 0.2.17 (04.11.2026) - `f257d7c` (Developer: **史力爱卫**)
+
+- Redesign hero with pure brand tokens and remove text-effects category
+
+### Version 0.2.17 (04.11.2026) - `e04db67` (Developer: **史力爱卫**)
+
+- Unify parent group icons to royal blue with larger dimensions
+
+### Version 0.2.17 (04.11.2026) - `f8285ad` (Developer: **史力爱卫**)
+
+- Record API Stylebook manifesto deep-dive sync commit d7c691e
+
 ### Version 0.2.17 (04.11.2026) - `d7c691e` (Developer: **史力爱卫**)
 
 - Enrich API Stylebook manifesto with 3 cardinal pillars, AP Stylebook lineage, and square-wheel defenses
@@ -77,28 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (04.11.2026) - `fc42d97` (Developer: **史力爱卫**)
 
 - Redesign VoiceNote with real Web Audio synthesis and live reactive AnalyserNode waveform
-
-### Version 0.2.17 (04.11.2026) - `f065b4a` (Developer: **史力爱卫**)
-
-- Add animated connection loading lines and step-to-step transitions to StepPlayer
-
-### Version 0.2.17 (04.11.2026) - `d58e20a` (Developer: **史力爱卫**)
-
-- Format feedback-demos with prettier
-
-### Version 0.2.17 (04.11.2026) - `8465821` (Developer: **史力爱卫**)
-
-- Redesign status page with clean status code and title only, remove descriptions and style archetypes
-
-### Version 0.2.17 (04.11.2026) - `3939f12` (Developer: **史力爱卫**)
-
-- Redesign dropdown selector with clean brand tokens, white card surfaces, and zero indicator dots
-
-### Version 0.2.22 (04.11.2026) - `9702289` (Developer: **史力爱卫**)
-
-- Checkpoint & live ci deploy verification [PASSED]
-
-### Version 0.2.22 (04.11.2026) - `2585f81` (Developer: **史力爱卫**)
-
-- Add build:shared and liveness timeout check to e2e daemon
 

@@ -138,7 +138,7 @@ export function InlineAiStatusDemo() {
 
       <div className="flex justify-center py-2">
         <div className="inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 shadow-xs transition-all">
-          <span className={cn('size-2 animate-ping rounded-full', current.color)} />
+          <span className={cn('size-2 rounded-full', current.color)} />
           <span className="font-sans text-xs font-semibold text-slate-800">{current.text}</span>
         </div>
       </div>
