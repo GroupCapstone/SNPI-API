@@ -2,6 +2,46 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 1.0.0 (05.11.2026) - `5b3f11d` (Developer: **史力爱卫**)
+
+- Implement api stylebook 17 design categories and appsec verification suite
+
+### Version 1.0.0 (05.11.2026) - `a7b6597` (Developer: **史力爱卫**)
+
+- Security(api): restrict docs explorer and openapi schema to local development only
+
+### Version 1.0.0 (05.11.2026) - `a25beee` (Developer: **史力爱卫**)
+
+- Security(api): restrict docs explorer and openapi spec to local development only
+
+### Version 1.0.0 (05.11.2026) - `e4087ef` (Developer: **史力爱卫**)
+
+- Correct organization to GroupCapstone and enforce synchronized GitHub-Vercel updates
+
+### Version 1.0.0 (05.11.2026) - `bb28998` (Developer: **史力爱卫**)
+
+- Format scripts/sync-changelog.ts to pass Prettier and ESLint gate
+
+### Version 1.0.0 (05.11.2026) - `443e8ac` (Developer: **史力爱卫**)
+
+- Add push:capstone command for GroupCapstone remote
+
+### Version 1.0.0 (05.11.2026) - `1dcd77f` (Developer: **史力爱卫**)
+
+- Add test:api:prod command and dynamic API_BASE_URL support
+
+### Version 1.0.0 (05.11.2026) - `f7bbdf4` (Developer: **史力爱卫**)
+
+- Enforce single testing subdomain and slug-only routing standard
+
+### Version 1.0.0 (05.11.2026) - `db9d767` (Developer: **史力爱卫**)
+
+- Add dedicated push:github and deploy:prod script aliases
+
+### Version 1.0.0 (05.11.2026) - `d73557d` (Developer: **史力爱卫**)
+
+- Implement interactive api explorer, standalone vercel deployment, and zero-bridge release pipeline
+
 ### Version 1.0.0 (04.11.2026) - `1921f8a` (Developer: **史力爱卫**)
 
 - Automated checkpoint and quality gate pass
@@ -61,44 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.23 (04.11.2026) - `05bfb65` (Developer: **史力爱卫**)
 
 - Record SWR Stale-While-Revalidate client caching and backend ETag integration architecture
-
-### Version 0.2.23 (04.11.2026) - `dc7de38` (Developer: **史力爱卫**)
-
-- Scaffold standalone Nextra official developer documentation portal
-
-### Version 0.2.23 (04.11.2026) - `3a40132` (Developer: **史力爱卫**)
-
-- Redesign simple easy navigation sidebar with zero icon circles and zero count numbers
-
-### Version 0.2.23 (04.11.2026) - `9251491` (Developer: **史力爱卫**)
-
-- Forbid pulsing beacons and remove live presence dots across all UI components
-
-### Version 0.2.23 (04.11.2026) - `856f683` (Developer: **史力爱卫**)
-
-- Record Full-Stack Security Masterclass covering OWASP API Top 10, RFC 8725, ASVS 4.0, NIST SP 800-63B, and MongoDB Hardening
-
-### Version 0.2.23 (04.11.2026) - `9926aac` (Developer: **史力爱卫**)
-
-- Redesign creative sidebar with liquid glass cards, tree guides, and status capsule
-
-### Version 0.2.23 (04.11.2026) - `55754f9` (Developer: **史力爱卫**)
-
-- Remove hero clutter text, add interactive ask kid mascot, and remove ai kit category
-
-### Version 0.2.23 (04.11.2026) - `711c3f9` (Developer: **史力爱卫**)
-
-- Restore visual style archetypes for status-page component
-
-### Version 0.2.23 (04.11.2026) - `f257d7c` (Developer: **史力爱卫**)
-
-- Redesign hero with pure brand tokens and remove text-effects category
-
-### Version 0.2.23 (04.11.2026) - `e04db67` (Developer: **史力爱卫**)
-
-- Unify parent group icons to royal blue with larger dimensions
-
-### Version 0.2.23 (04.11.2026) - `f8285ad` (Developer: **史力爱卫**)
-
-- Record API Stylebook manifesto deep-dive sync commit d7c691e
 
