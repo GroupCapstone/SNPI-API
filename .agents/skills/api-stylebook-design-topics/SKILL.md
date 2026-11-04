@@ -14,6 +14,7 @@ description: >-
 > **Status**: Primary Architectural Standard  
 > **Authoritative Scope**: REST API Design, HTTP Semantics, Resource Modeling, Error Handling, Contract Engineering  
 > **Primary Safe Folder**: `.agents/skills/api-stylebook-design-topics/`  
+> **Modular Knowledge Library**: [`library/README.md`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/library/README.md) (17 categories, 100 topic files with original text & quotes)  
 > **Unabridged Topics Catalog**: `references/api-stylebook-design-topics.md`  
 > **Cross-Guideline Matrix**: `references/guidelines-matrix.md`  
 > **Machine-Readable Taxonomy**: `references/api-stylebook-topics.yaml`  
@@ -262,6 +263,7 @@ Before authoring, modifying, or reviewing any API endpoint, verify:
 
 ## 6. Authoritative Reference Cross-Links
 
+* Modular Knowledge Library (100 Topic Files): [`library/README.md`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/library/README.md)
 * Unabridged 100 Topics Catalog: [`references/api-stylebook-design-topics.md`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/references/api-stylebook-design-topics.md)
 * Cross-Guideline Reference Matrix: [`references/guidelines-matrix.md`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/references/guidelines-matrix.md)
 * Machine-Readable Topics YAML: [`references/api-stylebook-topics.yaml`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/references/api-stylebook-topics.yaml)
