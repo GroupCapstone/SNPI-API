@@ -664,7 +664,11 @@ export function StatusPage404Demo() {
 
       {/* Live Component Preview */}
       <div className="overflow-hidden rounded-[4px] border border-[#CAD3F5] bg-white">
-        <StatusPage404 statusCode={selectedCode} homeLabel="Return to Dashboard" showControls={false} />
+        <StatusPage404
+          statusCode={selectedCode}
+          homeLabel="Return to Dashboard"
+          showControls={false}
+        />
       </div>
     </div>
   );
