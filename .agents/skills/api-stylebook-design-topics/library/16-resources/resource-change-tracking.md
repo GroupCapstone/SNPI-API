@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Track change** within the domain of **Resources**.
+Tracking mutations and concurrency. Resources expose createdAt, updatedAt, version (or etag), and audit user references.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-change-tracking` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-change-tracking` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-change-tracking` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-change-tracking` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-change-tracking` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+{"createdAt": "2026-11-04T10:00:00.000Z", "updatedAt": "2026-11-04T10:30:00.000Z", "version": 2}
+```
 
 ---
 
@@ -45,8 +50,8 @@ The following 2 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-change-tracking` formally | Changing `resource-change-tracking` behavior without migration paths |
+| **Architectural Execution** | Include ISO 8601 timestamps (createdAt, updatedAt) and optimistic concurrency version numbers. | Allowing blind writes without optimistic concurrency control in multi-user workflows. |
+| **Contract Stability** | Version and document `resource-change-tracking` formally in `@snp/shared` | Breaking `resource-change-tracking` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

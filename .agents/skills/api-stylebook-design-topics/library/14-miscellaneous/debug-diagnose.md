@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Debug and diagnose** within the domain of **Miscellaneous**.
+Governs standards for Debug and diagnose within the domain of Miscellaneous. Synthesizes guidance from analyzed guidelines to establish predictable, secure, and developer-friendly REST behavior adhering to How to provide informations to debug and diagnose.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `debug-diagnose` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `debug-diagnose` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `debug-diagnose` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `debug-diagnose` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `debug-diagnose` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Standard implementation conforming to Miscellaneous specifications for Debug and diagnose.
+```
 
 ---
 
@@ -39,8 +44,8 @@ The following 1 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `debug-diagnose` formally | Changing `debug-diagnose` behavior without migration paths |
+| **Architectural Execution** | Follow standard RFC and enterprise guideline conventions for Debug and diagnose; enforce consistency. | Using ad-hoc, proprietary, or non-standard approaches for Debug and diagnose. |
+| **Contract Stability** | Version and document `debug-diagnose` formally in `@snp/shared` | Breaking `debug-diagnose` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

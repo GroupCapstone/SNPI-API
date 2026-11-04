@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Data privacy** within the domain of **Security**.
+Protecting sensitive customer and financial data in API payloads and logs. Masking PII, redacting passwords/secrets from logs, tokenizing credit cards.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `security-data` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `security-data` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `security-data` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `security-data` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `security-data` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+{"cardNumber": "••••••••••••4242", "taxId": "••••••982"}
+```
 
 ---
 
@@ -49,8 +54,8 @@ The following 3 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `security-data` formally | Changing `security-data` behavior without migration paths |
+| **Architectural Execution** | Redact credentials and PII in application telemetry; hash tokens using SHA-256. | Logging plaintext passwords, credit card numbers, or authorization tokens in console logs. |
+| **Contract Stability** | Version and document `security-data` formally in `@snp/shared` | Breaking `security-data` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

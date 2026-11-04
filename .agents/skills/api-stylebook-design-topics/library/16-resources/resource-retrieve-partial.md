@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Retrieve resource partially** within the domain of **Resources**.
+Sparse fieldsets. Allows client to request specific fields to conserve mobile bandwidth via ?fields=id,name.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-retrieve-partial` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-retrieve-partial` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-retrieve-partial` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-retrieve-partial` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-retrieve-partial` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/students?fields=studentId,firstName,lastName,avatarUrl
+```
 
 ---
 
@@ -92,8 +97,8 @@ The following 9 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-retrieve-partial` formally | Changing `resource-retrieve-partial` behavior without migration paths |
+| **Architectural Execution** | Support fields parameter for projection (?fields=studentId,firstName,lastName). | Ignoring fields parameter and sending 100+ unrequested attributes. |
+| **Contract Stability** | Version and document `resource-retrieve-partial` formally in `@snp/shared` | Breaking `resource-retrieve-partial` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

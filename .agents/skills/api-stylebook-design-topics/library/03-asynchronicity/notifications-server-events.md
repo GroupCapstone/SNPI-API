@@ -13,14 +13,21 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Notifying API consumers** within the domain of **Asynchronicity**.
+Informs API consumers of external state changes without wasteful polling. Red Hat, Microsoft, and Zalando define standards for signed Webhooks (HMAC SHA-256), Server-Sent Events (SSE) for unidirectional streaming, and event replay tokens.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `notifications-server-events` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `notifications-server-events` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `notifications-server-events` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `notifications-server-events` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `notifications-server-events` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+POST /webhook-endpoint
+X-Signature-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+X-Event-Id: evt-12345
+```
 
 ---
 
@@ -50,8 +57,8 @@ The following 3 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `notifications-server-events` formally | Changing `notifications-server-events` behavior without migration paths |
+| **Architectural Execution** | Use cryptographically signed webhooks with idempotency keys and retry backoff policies. | Requiring clients to poll aggressive 1-second loops for rare asynchronous state transitions. |
+| **Contract Stability** | Version and document `notifications-server-events` formally in `@snp/shared` | Breaking `notifications-server-events` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

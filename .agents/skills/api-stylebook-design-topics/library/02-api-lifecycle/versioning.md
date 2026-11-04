@@ -13,14 +13,21 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Updates and Versioning** within the domain of **API Lifecycle**.
+Governs contract evolution and lifecycle changes. Microsoft, Google, PayPal, and Zalando mandate backward-compatible additive changes whenever possible. Major breaking changes require explicit URI path major version increments (/v1, /v2). Deprecated endpoints must provide Sunset and Deprecation HTTP headers with at least 6-12 months migration grace.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `versioning` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `versioning` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `versioning` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `versioning` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `versioning` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Deprecation: @1735689600
+Sunset: Wed, 31 Dec 2026 23:59:59 GMT
+Link: </api/v2/students>; rel="successor-version"
+```
 
 ---
 
@@ -120,8 +127,8 @@ The following 13 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `versioning` formally | Changing `versioning` behavior without migration paths |
+| **Architectural Execution** | Use URI path major versioning (/v1); keep changes additive; provide Deprecation and Sunset headers. | Silent breaking changes; removing properties without deprecation notice; query-parameter versioning. |
+| **Contract Stability** | Version and document `versioning` formally in `@snp/shared` | Breaking `versioning` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

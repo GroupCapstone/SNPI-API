@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Resource** within the domain of **Resources**.
+Fundamental unit of REST architecture. Resources represent addressable entities or concepts within a bounded context, each possessing a canonical URI.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+/api/v1/students/:id
+```
 
 ---
 
@@ -99,8 +104,8 @@ The following 10 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource` formally | Changing `resource` behavior without migration paths |
+| **Architectural Execution** | Model clear resource boundaries mapped to business aggregate roots. | Exposing raw database tables or non-entity internal memory states as public resources. |
+| **Contract Stability** | Version and document `resource` formally in `@snp/shared` | Breaking `resource` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

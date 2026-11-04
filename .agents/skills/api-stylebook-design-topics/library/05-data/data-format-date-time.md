@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Date and Time** within the domain of **Data**.
+Temporal data standard. Zalando, Microsoft, and PayPal strictly enforce ISO 8601 / RFC 3339 UTC string format (YYYY-MM-DDTHH:mm:ss.sssZ). Calendar dates use YYYY-MM-DD. Time durations use ISO 8601 duration strings (P1Y2M).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `data-format-date-time` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `data-format-date-time` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `data-format-date-time` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `data-format-date-time` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `data-format-date-time` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+{"enrolledAt": "2026-11-04T10:45:00.000Z", "birthDate": "2010-05-15"}
+```
 
 ---
 
@@ -81,8 +86,8 @@ The following 7 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `data-format-date-time` formally | Changing `data-format-date-time` behavior without migration paths |
+| **Architectural Execution** | Serialize all timestamps in UTC ISO 8601 with Z suffix; calendar dates as YYYY-MM-DD. | Ambiguous local timestamps without timezone offsets; epoch milliseconds without documentation. |
+| **Contract Stability** | Version and document `data-format-date-time` formally in `@snp/shared` | Breaking `data-format-date-time` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

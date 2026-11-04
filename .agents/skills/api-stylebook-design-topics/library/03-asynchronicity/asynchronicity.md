@@ -13,14 +13,21 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Asynchronicity** within the domain of **Asynchronicity**.
+Patterns for processing operations exceeding interactive request latency (>500ms). Google, Microsoft, and Cloud Foundry standardize returning HTTP 202 Accepted with a Location header pointing to a job status resource. The status resource exposes execution state (PENDING, RUNNING, SUCCEEDED, FAILED) and retry recommendations via Retry-After.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `asynchronicity` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `asynchronicity` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `asynchronicity` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `asynchronicity` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `asynchronicity` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+HTTP/1.1 202 Accepted
+Location: /api/v1/jobs/job-94821
+Retry-After: 5
+```
 
 ---
 
@@ -86,8 +93,8 @@ The following 7 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `asynchronicity` formally | Changing `asynchronicity` behavior without migration paths |
+| **Architectural Execution** | Return 202 Accepted with Location monitor URI and Retry-After header for long-running workflows. | Holding synchronous HTTP connections open for multi-second or multi-minute background tasks. |
+| **Contract Stability** | Version and document `asynchronicity` formally in `@snp/shared` | Breaking `asynchronicity` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

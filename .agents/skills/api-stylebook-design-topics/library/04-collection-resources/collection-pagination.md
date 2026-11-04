@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Pagination** within the domain of **Collection Resources**.
+Prevents memory exhaustion and unmanageable payloads. Zalando, Google, and Microsoft mandate pagination for all collections. Best practice prioritizes cursor-based pagination (page_token / after) for immutable real-time feeds, and limit/page offset pagination for administrative reporting tables. Maximum limit must be enforced (e.g. 100).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `collection-pagination` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `collection-pagination` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `collection-pagination` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `collection-pagination` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `collection-pagination` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/students?limit=20&after=cursor-xyz -> { "items": [...], "nextCursor": "cursor-next" }
+```
 
 ---
 
@@ -112,8 +117,8 @@ The following 14 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `collection-pagination` formally | Changing `collection-pagination` behavior without migration paths |
+| **Architectural Execution** | Enforce pagination with default limit (20) and max limit (100); return nextCursor or totalPages metadata. | Unbounded collection queries returning thousands of database records in a single payload. |
+| **Contract Stability** | Version and document `collection-pagination` formally in `@snp/shared` | Breaking `collection-pagination` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

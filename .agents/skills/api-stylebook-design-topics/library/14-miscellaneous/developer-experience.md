@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Developer experience** within the domain of **Miscellaneous**.
+Governs standards for Developer experience within the domain of Miscellaneous. Synthesizes guidance from analyzed guidelines to establish predictable, secure, and developer-friendly REST behavior adhering to How to take care of developer experience (DX).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `developer-experience` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `developer-experience` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `developer-experience` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `developer-experience` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `developer-experience` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Standard implementation conforming to Miscellaneous specifications for Developer experience.
+```
 
 ---
 
@@ -63,8 +68,8 @@ The following 5 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `developer-experience` formally | Changing `developer-experience` behavior without migration paths |
+| **Architectural Execution** | Follow standard RFC and enterprise guideline conventions for Developer experience; enforce consistency. | Using ad-hoc, proprietary, or non-standard approaches for Developer experience. |
+| **Contract Stability** | Version and document `developer-experience` formally in `@snp/shared` | Breaking `developer-experience` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

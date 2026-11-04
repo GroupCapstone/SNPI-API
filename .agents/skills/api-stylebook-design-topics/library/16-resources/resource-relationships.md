@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Relationships** within the domain of **Resources**.
+Modeling associations between entities. Use sub-resource collections for direct ownership (max 2 levels).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-relationships` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-relationships` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-relationships` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-relationships` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-relationships` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/schools/SCH-1/branches/BR-1/classrooms
+```
 
 ---
 
@@ -78,8 +83,8 @@ The following 8 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-relationships` formally | Changing `resource-relationships` behavior without migration paths |
+| **Architectural Execution** | GET /schools/:schoolId/branches/:branchId/classrooms; use query filters for deeper relationships. | Deeply nesting URIs beyond 2 levels (/schools/:id/branches/:id/buildings/:id/floors/:id/rooms/:id). |
+| **Contract Stability** | Version and document `resource-relationships` formally in `@snp/shared` | Breaking `resource-relationships` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

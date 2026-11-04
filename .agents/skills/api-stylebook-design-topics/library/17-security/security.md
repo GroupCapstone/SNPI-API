@@ -13,14 +13,20 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Security** within the domain of **Security**.
+Enterprise REST API security baseline. HTTPS mandatory (TLS 1.3 preferred), OAuth 2.0 Bearer JWT tokens, least-privilege RBAC scopes, rate limiting (429), and constant-time secret comparison.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `security` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `security` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `security` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `security` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `security` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Authorization: Bearer <jwt-token>
+X-Tenant-School: SCH-001
+```
 
 ---
 
@@ -107,8 +113,8 @@ The following 10 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `security` formally | Changing `security` behavior without migration paths |
+| **Architectural Execution** | Enforce HTTPS; authenticate via Authorization: Bearer <token>; validate scopes and tenant context. | Passing tokens in URL query parameters; trusting client-supplied tenant IDs. |
+| **Contract Stability** | Version and document `security` formally in `@snp/shared` | Breaking `security` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

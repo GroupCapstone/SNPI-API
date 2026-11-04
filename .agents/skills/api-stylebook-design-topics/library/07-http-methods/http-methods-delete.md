@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **DELETE** within the domain of **HTTP Methods**.
+Idempotent resource removal. Successful deletion returns 204 No Content (empty body) or 200 OK with the archived entity representation. Subsequent DELETE calls to the same ID must return 204 or 404 without errors.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods-delete` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods-delete` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods-delete` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods-delete` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods-delete` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+DELETE /api/v1/students/STU-001 -> HTTP/1.1 204 No Content
+```
 
 ---
 
@@ -107,8 +112,8 @@ The following 13 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods-delete` formally | Changing `http-methods-delete` behavior without migration paths |
+| **Architectural Execution** | Return 204 No Content on successful deletion; support soft delete flags internally. | Returning 500 error if client deletes an already-deleted resource. |
+| **Contract Stability** | Version and document `http-methods-delete` formally in `@snp/shared` | Breaking `http-methods-delete` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

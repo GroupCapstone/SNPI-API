@@ -13,14 +13,20 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Create resource** within the domain of **Resources**.
+Creating resources via POST to collection. Server generates unique ID, returns 201 Created and Location header.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-creation` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-creation` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-creation` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-creation` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-creation` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+POST /api/v1/students -> 201 Created
+Location: /api/v1/students/STU-2026-904
+```
 
 ---
 
@@ -97,8 +103,8 @@ The following 12 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-creation` formally | Changing `resource-creation` behavior without migration paths |
+| **Architectural Execution** | POST /collection -> 201 Created + Location: /collection/:id. | Returning 200 OK without location; requiring client to fabricate system UUIDs. |
+| **Contract Stability** | Version and document `resource-creation` formally in `@snp/shared` | Breaking `resource-creation` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

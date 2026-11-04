@@ -14,14 +14,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **PUT** within the domain of **HTTP Methods**.
+Idempotent complete resource replacement. The request body represents the entire target entity; any omitted optional fields are cleared or reset to defaults. Can be used for idempotent upserts when client defines the ID.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods-put` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods-put` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods-put` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods-put` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods-put` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+PUT /api/v1/students/STU-001 -> HTTP/1.1 200 OK
+```
 
 ---
 
@@ -107,8 +112,8 @@ The following 12 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods-put` formally | Changing `http-methods-put` behavior without migration paths |
+| **Architectural Execution** | Require complete entity payload; overwrite entire resource representation; return 200 OK or 204 No Content. | Using PUT for partial updates (omitted fields must not be preserved; use PATCH instead). |
+| **Contract Stability** | Version and document `http-methods-put` formally in `@snp/shared` | Breaking `http-methods-put` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

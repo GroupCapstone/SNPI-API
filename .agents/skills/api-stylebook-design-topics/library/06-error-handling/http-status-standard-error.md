@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Error format** within the domain of **Error handling**.
+Standardized mapping of error conditions to canonical HTTP status codes. 400 for malformed syntax, 401 for unauthenticated calls, 403 for unauthorized RBAC/tenant access, 404 for missing resources, 409 for state conflicts, 422 for schema validation errors, and 500 for internal server failures.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-status-standard-error` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-status-standard-error` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-status-standard-error` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-status-standard-error` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-status-standard-error` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+400 (Bad Syntax) | 401 (No Token) | 403 (No Permission) | 404 (Not Found) | 422 (Validation Failed)
+```
 
 ---
 
@@ -86,8 +91,8 @@ The following 10 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-status-standard-error` formally | Changing `http-status-standard-error` behavior without migration paths |
+| **Architectural Execution** | Strictly align domain errors with the semantic HTTP status code hierarchy. | Using 500 Internal Error for user validation mistakes; using 404 when a user lacks access (use 403). |
+| **Contract Stability** | Version and document `http-status-standard-error` formally in `@snp/shared` | Breaking `http-status-standard-error` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

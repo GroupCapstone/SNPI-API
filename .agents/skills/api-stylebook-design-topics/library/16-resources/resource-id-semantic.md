@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **ID with semantic** within the domain of **Resources**.
+Human-readable semantic keys (e.g. branch codes BR-001, academic terms 2026-T1, course codes CS-101).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-id-semantic` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-id-semantic` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-id-semantic` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-id-semantic` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-id-semantic` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+/api/v1/branches/BR-MAIN or /api/v1/courses/MATH-101
+```
 
 ---
 
@@ -49,8 +54,8 @@ The following 3 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-id-semantic` formally | Changing `resource-id-semantic` behavior without migration paths |
+| **Architectural Execution** | Support semantic keys when uniquely distinguishing entities in human workflows. | Using mutable attributes (like student name) as semantic IDs. |
+| **Contract Stability** | Version and document `resource-id-semantic` formally in `@snp/shared` | Breaking `resource-id-semantic` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

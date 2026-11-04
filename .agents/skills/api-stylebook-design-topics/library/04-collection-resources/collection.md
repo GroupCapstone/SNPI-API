@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Collection** within the domain of **Collection Resources**.
+Defines resource collections as homogeneous sets of subordinate entities. Standardized across Cisco, Deliveroo, Google, and Zalando: collections are identified by plural lowercase nouns representing entities, returning an array representation wrapped in metadata.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `collection` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `collection` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `collection` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `collection` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `collection` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/students -> { "items": [ ... ], "totalCount": 450 }
+```
 
 ---
 
@@ -100,8 +105,8 @@ The following 11 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `collection` formally | Changing `collection` behavior without migration paths |
+| **Architectural Execution** | Name collection endpoints with plural nouns (/students, /fee-invoices); return consistent collection envelopes. | Singular nouns for collections (/student) or combining multiple disparate entity types in one list. |
+| **Contract Stability** | Version and document `collection` formally in `@snp/shared` | Breaking `collection` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

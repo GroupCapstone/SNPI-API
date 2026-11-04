@@ -14,14 +14,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **400 Bad Request** within the domain of **HTTP Status User Error**.
+Defines standard semantics, headers, and payload expectations for HTTP status code 400.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-status-400` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-status-400` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-status-400` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-status-400` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-status-400` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+HTTP/1.1 400
+```
 
 ---
 
@@ -80,8 +85,8 @@ The following 7 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-status-400` formally | Changing `http-status-400` behavior without migration paths |
+| **Architectural Execution** | Return status code 400 strictly when conditions specified by RFC 9110 and guidelines are met. | Misusing 400 for unrelated semantic conditions or masking errors with 200 OK. |
+| **Contract Stability** | Version and document `http-status-400` formally in `@snp/shared` | Breaking `http-status-400` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Retrieve resource** within the domain of **Resources**.
+Fetching a single entity by ID via GET. Returns 200 OK with entity JSON or 404 Not Found.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-retrieve` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-retrieve` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-retrieve` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-retrieve` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-retrieve` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/classes/CLS-101 -> 200 OK
+```
 
 ---
 
@@ -93,8 +98,8 @@ The following 11 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-retrieve` formally | Changing `resource-retrieve` behavior without migration paths |
+| **Architectural Execution** | GET /collection/:id -> 200 OK with resource representation. | Returning 200 OK with null entity when ID does not exist (must return 404). |
+| **Contract Stability** | Version and document `resource-retrieve` formally in `@snp/shared` | Breaking `resource-retrieve` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Rate limiting** within the domain of **Miscellaneous**.
+Governs standards for Rate limiting within the domain of Miscellaneous. Synthesizes guidance from analyzed guidelines to establish predictable, secure, and developer-friendly REST behavior adhering to How to provide information about how many calls a consumer can do.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `rate-limiting` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `rate-limiting` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `rate-limiting` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `rate-limiting` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `rate-limiting` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Standard implementation conforming to Miscellaneous specifications for Rate limiting.
+```
 
 ---
 
@@ -55,8 +60,8 @@ The following 4 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `rate-limiting` formally | Changing `rate-limiting` behavior without migration paths |
+| **Architectural Execution** | Follow standard RFC and enterprise guideline conventions for Rate limiting; enforce consistency. | Using ad-hoc, proprietary, or non-standard approaches for Rate limiting. |
+| **Contract Stability** | Version and document `rate-limiting` formally in `@snp/shared` | Breaking `rate-limiting` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

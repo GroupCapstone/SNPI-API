@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Create resource with a specific ID** within the domain of **Resources**.
+Idempotent resource creation when client supplies the identifier. Modeled via PUT /collection/:id.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-creation-with-id` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-creation-with-id` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-creation-with-id` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-creation-with-id` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-creation-with-id` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+PUT /api/v1/branches/BR-NORTH -> 201 Created (if new) / 200 OK (if replaced)
+```
 
 ---
 
@@ -60,8 +65,8 @@ The following 5 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-creation-with-id` formally | Changing `resource-creation-with-id` behavior without migration paths |
+| **Architectural Execution** | Use PUT /collection/:id when client is authorized to dictate identity; return 201 Created if newly made. | Silently overwriting existing data without precondition check. |
+| **Contract Stability** | Version and document `resource-creation-with-id` formally in `@snp/shared` | Breaking `resource-creation-with-id` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

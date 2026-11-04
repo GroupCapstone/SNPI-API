@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Forbidden methods alternatives** within the domain of **HTTP Methods**.
+Patterns for business actions that do not map naturally to CRUD verbs (e.g. approve, submit, cancel, activate). Modeled as sub-resource action verbs with POST.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods-alternative` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods-alternative` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods-alternative` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods-alternative` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods-alternative` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+POST /api/v1/fee-invoices/INV-2026-001/cancel
+```
 
 ---
 
@@ -44,8 +49,8 @@ The following 2 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods-alternative` formally | Changing `http-methods-alternative` behavior without migration paths |
+| **Architectural Execution** | Model actions as POST /resources/:id/<action-verb> (e.g. POST /invoices/INV-1/cancel). | Creating RPC methods in root path (/cancelInvoice); using GET for actions. |
+| **Contract Stability** | Version and document `http-methods-alternative` formally in `@snp/shared` | Breaking `http-methods-alternative` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

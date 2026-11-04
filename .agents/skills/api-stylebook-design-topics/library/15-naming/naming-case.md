@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Case** within the domain of **Naming**.
+Industry consensus on casing: URIs use lowercase kebab-case (hyphen-separated). JSON request and response keys use camelCase. Query parameters use camelCase. Constants and enum values use UPPER_SNAKE_CASE. HTTP headers use kebab-case (Title-Case/kebab).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `naming-case` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `naming-case` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `naming-case` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `naming-case` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `naming-case` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+URI: /fee-invoices | JSON: {"invoiceNumber": "INV-1", "status": "PENDING_PAYMENT"}
+```
 
 ---
 
@@ -75,8 +80,8 @@ The following 7 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `naming-case` formally | Changing `naming-case` behavior without migration paths |
+| **Architectural Execution** | URIs: kebab-case | JSON properties: camelCase | Enums: UPPER_SNAKE_CASE. | Mixing snake_case and camelCase in JSON bodies; using camelCase or underscores in URI paths. |
+| **Contract Stability** | Version and document `naming-case` formally in `@snp/shared` | Breaking `naming-case` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---
