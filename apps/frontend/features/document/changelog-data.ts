@@ -10,40 +10,54 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "2585f81",
+    "developer": "史力爱卫",
+    "description": "Add build:shared and liveness timeout check to e2e daemon"
+  },
+  {
+    "version": "0.2.21",
+    "date": "04.11.2026",
+    "commitHash": "2a539c2",
+    "developer": "史力爱卫",
+    "description": "Checkpoint & live ci deploy verification [PASSED]"
+  },
+  {
+    "version": "0.2.21",
+    "date": "04.11.2026",
     "commitHash": "9a73765",
     "developer": "史力爱卫",
     "description": "Synchronize real-time changelog and prettier formatting"
   },
   {
-    "version": "0.2.17",
+    "version": "0.2.21",
     "date": "04.11.2026",
     "commitHash": "f79c40c",
     "developer": "史力爱卫",
     "description": "Remove card background tints, enforce clean white surface with 4px border radius"
   },
   {
-    "version": "0.2.17",
+    "version": "0.2.21",
     "date": "04.11.2026",
     "commitHash": "29c1be3",
     "developer": "史力爱卫",
     "description": "Perf(api): optimize resource reading speed and query serialization across feature modules"
   },
   {
-    "version": "0.2.17",
+    "version": "0.2.21",
     "date": "04.11.2026",
     "commitHash": "00a8b53",
     "developer": "史力爱卫",
     "description": "Perf(api-client): optimize header allocation, active branch caching, and query string compilation"
   },
   {
-    "version": "0.2.17",
+    "version": "0.2.21",
     "date": "04.11.2026",
     "commitHash": "2e8b66a",
     "developer": "史力爱卫",
     "description": "Add agent skill routing index, governance policies, and query parameters utility"
   },
   {
-    "version": "0.2.17",
+    "version": "0.2.21",
     "date": "03.11.2026",
     "commitHash": "7e103eb",
     "developer": "史力爱卫",
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "0e6083f",
     "developer": "史力爱卫",
     "description": "Record enterprise application security design principles & maturity framework"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "6c6675d",
-    "developer": "史力爱卫",
-    "description": "Sync changelog for safe folder archiving"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "6a9f0fe",
-    "developer": "史力爱卫",
-    "description": "Archive Git LFS article and standard plaintext in safe folders"
   }
 ];
