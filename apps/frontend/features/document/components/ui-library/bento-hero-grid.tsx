@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Sliders, Sparkles, Layers, Activity, Radio, Copy, RefreshCw } from '@/components/icons';
+import { Sliders, Sparkles, Layers, Activity, Copy } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 export interface BentoHeroGridProps {
@@ -61,35 +61,53 @@ const CAMPUS_NODES: CampusNode[] = [
   },
 ];
 
-const BULLETIN_NOTES = [
+interface KidQuestion {
+  label: string;
+  reply: string;
+  mood: MascotMood;
+}
+
+const KID_QUESTIONS: KidQuestion[] = [
   {
-    tag: 'Release v2.8',
-    title: 'Hybrid Serverless & Modular Monolith Live',
-    detail: 'Next.js 15 App Router Edge proxying to 47 domain modules in Express 5.',
+    label: 'Who are you?',
+    reply: "I'm Snappy, your SNPI campus mascot!",
+    mood: 'joyful',
   },
   {
-    tag: 'Architecture',
-    title: 'Strict 7-Layer Modular Monolith Active',
-    detail: 'Enforcing route -> controller -> service -> repository -> model -> validation.',
+    label: 'Favorite color?',
+    reply: 'Royal Blue #0056FF & Soft Lavender!',
+    mood: 'focus',
   },
   {
-    tag: 'Design System',
-    title: 'Pure Brand Color Tokens Enforced',
-    detail: 'Exclusively Royal Blue, Azure Blue, Soft Lavender, White, and Ice Tint.',
+    label: 'Tell a joke!',
+    reply: 'Why do robots like coding? Because it has zero bugs!',
+    mood: 'joyful',
   },
+  {
+    label: 'Secret power?',
+    reply: 'I can do a backflip and compile code instantly!',
+    mood: 'curious',
+  },
+];
+
+const POKE_REPLIES = [
+  'Hehe, that tickles!',
+  'Boing! High five!',
+  'Ready to build cool apps!',
+  'Beep boop, let us code!',
 ];
 
 /**
  * BentoHeroGrid
  *
- * Authoritative editorial bento grid homepage hero:
- * - Card 1 (Top Left): 3 vector mascots (Gum, Hexagon, Flower) in pure brand tokens with tactile bounce.
- * - Card 2 (Top Middle): Tactile Academic Semester Tracker in Royal & Azure Blue with interactive Term toggle.
- * - Card 3 (Middle Left): Interactive Distributed Campus Telemetry Radar with selectable nodes and live latency.
- * - Card 4 (Center): Solid Royal Blue card with organic flower mask cutout framing a kinetic gyroscopic harmonic core.
- * - Card 5 (Bottom Left): Interactive Design Token Laboratory & Live Component Sandbox with radius/elevation controls.
- * - Card 6 (Bottom Middle): Azure Blue bulletin card with interactive engineering changelog switcher.
- * - Card 7 (Right Column): Interactive Mascot Personality Lab with mood controls, poke physics, and reactive tracking eyes.
+ * Clean, editorial, highly interactive bento grid hero:
+ * - Card 1 (Top Left): 3 vector brand mascots in pure brand tokens.
+ * - Card 2 (Top Middle): Tactile Academic Semester Tracker in Royal & Azure Blue.
+ * - Card 3 (Middle Left): Clean Vector Radar with interactive campus nodes and latency.
+ * - Card 4 (Center): Kinetic Gyroscopic Harmonic Core inside organic flower mask cutout.
+ * - Card 5 (Bottom Left): Design Token Laboratory with live radius & elevation controls.
+ * - Card 6 (Bottom Middle): Clean Azure Blue Bulletin with architectural summary.
+ * - Card 7 (Right Column): Interactive Kid-Friendly Mascot Lab with "Ask Kid" questions, poke physics, and reactive eyes.
  *
  * Enforces strict zero-emoji policy and SNPI primary brand tokens:
  * #0056FF (Royal Blue), #2277FF (Azure Blue), #E3E7FC (Soft Lavender), #FFFFFF (White), #EFF5FF (Ice Tint), #0A1A4A (Deep Navy).
@@ -102,32 +120,24 @@ export function BentoHeroGrid({
 }: BentoHeroGridProps) {
   const shouldReduceMotion = useReducedMotion();
 
-  // Card 1: Mascot bounce trigger states
-  const [activeMascotIndex, setActiveMascotIndex] = React.useState<number | null>(null);
-
   // Card 2: Academic Calendar toggle state
   const [calendarView, setCalendarView] = React.useState<'day' | 'week'>('day');
 
   // Card 3: Interactive Radar Node Selection
   const [activeNodeKey, setActiveNodeKey] = React.useState<CampusNodeKey>('pp');
-  const [pingCount, setPingCount] = React.useState(0);
   const activeNode = CAMPUS_NODES.find((n) => n.key === activeNodeKey) || CAMPUS_NODES[0];
-
-  // Card 4: Gyroscope hover speedup state
-  const [gyroSpeedUp, setGyroSpeedUp] = React.useState(false);
 
   // Card 5: Token Sandbox Controls
   const [selectedRadius, setSelectedRadius] = React.useState<RadiusOption>('16px');
   const [selectedElevation, setSelectedElevation] = React.useState<ElevationOption>('raised');
-  const [copiedSnippet, setCopiedSnippet] = React.useState<string | null>(null);
+  const [copiedSnippet, setCopiedSnippet] = React.useState<boolean>(false);
 
-  // Card 6: Bulletin note carousel index
-  const [bulletinIndex, setBulletinIndex] = React.useState(0);
-
-  // Card 7: Mascot Personality & Eye Tracking
+  // Card 7: Kid Conversation & Mascot Interaction
   const [activeMood, setActiveMood] = React.useState<MascotMood>('curious');
   const [mascotPoked, setMascotPoked] = React.useState(false);
-  const [showSpeechBubble, setShowSpeechBubble] = React.useState(false);
+  const [speechText, setSpeechText] = React.useState<string>('Tap a question or poke me!');
+  const [showSpeechBubble, setShowSpeechBubble] = React.useState(true);
+  const [pokeIndex, setPokeIndex] = React.useState(0);
   const rightCardRef = React.useRef<HTMLDivElement>(null);
   const [eyeOffset, setEyeOffset] = React.useState({ x: 0, y: 0 });
 
@@ -146,11 +156,22 @@ export function BentoHeroGrid({
     setEyeOffset({ x: 0, y: 0 });
   };
 
-  const handlePokeMascot = () => {
-    setMascotPoked(true);
+  const handleAskKidQuestion = (q: KidQuestion) => {
+    setSpeechText(q.reply);
+    setActiveMood(q.mood);
     setShowSpeechBubble(true);
-    setTimeout(() => setMascotPoked(false), 600);
-    setTimeout(() => setShowSpeechBubble(false), 2400);
+    setMascotPoked(true);
+    setTimeout(() => setMascotPoked(false), 500);
+  };
+
+  const handlePokeMascot = () => {
+    const nextReply = POKE_REPLIES[pokeIndex % POKE_REPLIES.length];
+    setPokeIndex((i) => i + 1);
+    setSpeechText(nextReply);
+    setActiveMood(pokeIndex % 2 === 0 ? 'joyful' : 'curious');
+    setShowSpeechBubble(true);
+    setMascotPoked(true);
+    setTimeout(() => setMascotPoked(false), 500);
   };
 
   const handleCopyToken = () => {
@@ -162,8 +183,8 @@ export function BentoHeroGrid({
           : 'bg-[#EFF5FF] text-[#0056FF]'
     }`;
     navigator.clipboard?.writeText(snippet);
-    setCopiedSnippet(snippet);
-    setTimeout(() => setCopiedSnippet(null), 1800);
+    setCopiedSnippet(true);
+    setTimeout(() => setCopiedSnippet(false), 1600);
   };
 
   return (
@@ -179,8 +200,8 @@ export function BentoHeroGrid({
         {/* LEFT COLUMN: Mascots (Card 1) + Radar Telemetry (Card 3) + Token Lab (Card 5) */}
         {/* ========================================================================= */}
         <div className="flex flex-col gap-3.5 sm:gap-4 lg:col-span-4 lg:gap-4.5">
-          {/* CARD 1: Mascots Trio (Gum, Hexagon, Flower shapes in strict brand tokens) */}
-          <div className="group relative flex h-36 flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-3 shadow-xs transition-shadow hover:shadow-sm sm:h-40 sm:p-4">
+          {/* CARD 1: Mascots Trio (Clean Visual - Zero Text Clutter at Bottom) */}
+          <div className="relative flex h-36 flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-3.5 shadow-xs sm:h-40 sm:p-4">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
                 SNPI Brand Companions
@@ -190,12 +211,10 @@ export function BentoHeroGrid({
               </span>
             </div>
 
-            <div className="flex items-center justify-around">
+            <div className="my-auto flex items-center justify-around py-1">
               {/* Mascot 1: Royal Blue Gum Shape (Sleepy Expression) */}
               <motion.div
-                whileHover={shouldReduceMotion ? undefined : { scale: 1.15, rotate: -4 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}
-                onClick={() => setActiveMascotIndex(activeMascotIndex === 0 ? null : 0)}
                 className="relative flex size-18 cursor-pointer items-center justify-center sm:size-20"
                 title="SNPI Kinetic Mascot 01 · Royal Blue"
               >
@@ -225,9 +244,7 @@ export function BentoHeroGrid({
 
               {/* Mascot 2: Soft Lavender Hexagon Shape (Inquisitive Expression) */}
               <motion.div
-                whileHover={shouldReduceMotion ? undefined : { scale: 1.15, rotate: 3 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}
-                onClick={() => setActiveMascotIndex(activeMascotIndex === 1 ? null : 1)}
                 className="relative flex size-18 cursor-pointer items-center justify-center sm:size-20"
                 title="SNPI Kinetic Mascot 02 · Soft Lavender"
               >
@@ -238,13 +255,10 @@ export function BentoHeroGrid({
                     stroke="#CAD3F5"
                     strokeWidth="4"
                   />
-                  {/* Eye 1 */}
                   <circle cx="108" cy="140" r="11" fill="#0A1A4A" />
                   <circle cx="112" cy="136" r="4" fill="#FFFFFF" />
-                  {/* Eye 2 */}
                   <circle cx="168" cy="140" r="11" fill="#0A1A4A" />
                   <circle cx="172" cy="136" r="4" fill="#FFFFFF" />
-                  {/* Smile */}
                   <path
                     d="M128 174 Q138 184 148 174"
                     stroke="#0A1A4A"
@@ -257,9 +271,7 @@ export function BentoHeroGrid({
 
               {/* Mascot 3: Azure Blue Flower Shape (Joyful Wink) */}
               <motion.div
-                whileHover={shouldReduceMotion ? undefined : { scale: 1.15, rotate: 6 }}
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}
-                onClick={() => setActiveMascotIndex(activeMascotIndex === 2 ? null : 2)}
                 className="relative flex size-18 cursor-pointer items-center justify-center sm:size-20"
                 title="SNPI Kinetic Mascot 03 · Azure Blue"
               >
@@ -270,7 +282,6 @@ export function BentoHeroGrid({
                     d="M75.9469 280.078C91.5033 280.078 105.96 275.398 117.97 267.376C130.585 258.951 151.308 258.951 163.924 267.376C175.934 275.398 190.39 280.078 205.947 280.078C247.615 280.078 281.394 246.499 281.394 205.078C281.394 189.768 276.779 175.529 268.856 163.661C260.282 150.817 260.282 129.339 268.856 116.496C276.779 104.628 281.394 90.3887 281.394 75.0781C281.394 33.6568 247.615 0.078125 205.947 0.078125C190.39 0.078125 175.934 4.75843 163.924 12.7798C151.308 21.2056 130.585 21.2056 117.97 12.7798C105.96 4.75843 91.5033 0.078125 75.9469 0.078125C34.2787 0.078125 0.5 33.6568 0.5 75.0781C0.5 90.3887 5.11505 104.628 13.0377 116.496C21.6119 129.339 21.6119 150.817 13.0377 163.661C5.11505 175.529 0.5 189.768 0.5 205.078C0.5 246.499 34.2787 280.078 75.9469 280.078Z"
                     fill="#2277FF"
                   />
-                  {/* Joyful > < Eyes in Crisp White */}
                   <path
                     d="M96 134 L114 144 L96 154"
                     stroke="#FFFFFF"
@@ -287,7 +298,6 @@ export function BentoHeroGrid({
                     strokeLinejoin="round"
                     fill="none"
                   />
-                  {/* Smile */}
                   <path
                     d="M130 178 Q141 192 152 178"
                     stroke="#FFFFFF"
@@ -298,47 +308,12 @@ export function BentoHeroGrid({
                 </svg>
               </motion.div>
             </div>
-
-            <div className="flex items-center justify-between text-[10px] font-bold text-[#0A1A4A]">
-              <span>
-                {activeMascotIndex === 0
-                  ? 'Active: Royal Gum (#0056FF)'
-                  : activeMascotIndex === 1
-                    ? 'Active: Soft Lavender Hex (#E3E7FC)'
-                    : activeMascotIndex === 2
-                      ? 'Active: Azure Bloom (#2277FF)'
-                      : 'Click mascot to test spring physics'}
-              </span>
-              <span className="font-mono text-[#0056FF]">3 Archetypes</span>
-            </div>
           </div>
 
-          {/* CARD 3: Distributed Campus Telemetry Radar (ZERO IMAGES - 100% Vector & Interactive) */}
-          <div className="group relative flex h-52 flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-4 shadow-xs transition-shadow hover:shadow-sm sm:h-56">
-            {/* Top Bar: Title & Ping Button */}
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <Radio className="size-4 animate-pulse text-[#0056FF]" />
-                <span className="font-sans text-xs font-bold text-[#0A1A4A]">
-                  Distributed Radar Grid
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setPingCount((c) => c + 1);
-                  onExploreCampus?.();
-                }}
-                className="flex items-center gap-1 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 text-[10px] font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
-              >
-                <Activity className="size-3" />
-                <span>Ping ({pingCount})</span>
-              </button>
-            </div>
-
+          {/* CARD 3: Distributed Campus Telemetry Radar (Clean Visual - Zero Top Text Clutter) */}
+          <div className="relative flex h-52 flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-3.5 shadow-xs sm:h-56">
             {/* Center: Vector Radar Coordinate Grid with Sweep Beam */}
-            <div className="relative mx-auto my-auto flex size-36 items-center justify-center sm:size-40">
-              {/* Radar Coordinate Rings */}
+            <div className="relative mx-auto my-auto flex size-38 items-center justify-center sm:size-42">
               <svg viewBox="0 0 160 160" className="size-full">
                 <circle
                   cx="80"
@@ -392,11 +367,14 @@ export function BentoHeroGrid({
                   <button
                     key={node.key}
                     type="button"
-                    onClick={() => setActiveNodeKey(node.key)}
+                    onClick={() => {
+                      setActiveNodeKey(node.key);
+                      onExploreCampus?.();
+                    }}
                     style={{ left: `${node.x}%`, top: `${node.y}%` }}
                     className={cn(
                       'absolute -translate-x-1/2 -translate-y-1/2 transition-transform',
-                      isSelected ? 'z-20 scale-125' : 'z-10 hover:scale-110',
+                      isSelected ? 'z-20 scale-120' : 'z-10',
                     )}
                     title={`${node.name} · ${node.latency}`}
                   >
@@ -437,8 +415,8 @@ export function BentoHeroGrid({
             </div>
           </div>
 
-          {/* CARD 5: Design Token Laboratory (ZERO OUTSIDE COLORS - Strict Brand Tokens) */}
-          <div className="flex flex-col justify-between rounded-[20px] border border-[#CAD3F5]/80 bg-white p-4 shadow-xs transition-shadow hover:shadow-sm sm:p-5">
+          {/* CARD 5: Design Token Laboratory (Zero Footer Text Clutter) */}
+          <div className="flex flex-col justify-between rounded-[20px] border border-[#CAD3F5]/80 bg-white p-4 shadow-xs sm:p-5">
             {/* Header: Title & Version Pill */}
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-1.5">
@@ -465,7 +443,7 @@ export function BentoHeroGrid({
                       'rounded-md px-1.5 py-1 text-center font-mono text-[10px] font-bold transition-all',
                       selectedRadius === rad
                         ? 'border border-[#0056FF] bg-[#0056FF] text-white'
-                        : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
+                        : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A]',
                     )}
                   >
                     {rad === '9999px' ? 'Pill' : rad}
@@ -487,7 +465,7 @@ export function BentoHeroGrid({
                       'rounded-md px-1.5 py-1 text-center text-[10px] font-bold capitalize transition-all',
                       selectedElevation === elv
                         ? 'border border-[#0056FF] bg-[#0056FF] text-white'
-                        : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
+                        : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A]',
                     )}
                   >
                     {elv}
@@ -497,7 +475,7 @@ export function BentoHeroGrid({
             </div>
 
             {/* Live Component Preview Sandbox Capsule */}
-            <div className="relative mb-2 flex items-center justify-center overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-center">
+            <div className="relative flex items-center justify-center overflow-hidden rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] p-3 text-center">
               <button
                 type="button"
                 onClick={handleCopyToken}
@@ -514,25 +492,17 @@ export function BentoHeroGrid({
                 className={cn(
                   'flex items-center gap-2 px-4 py-2 font-sans text-xs font-bold transition-all active:scale-95',
                   selectedElevation === 'raised' &&
-                    'border border-transparent bg-[#0056FF] text-white shadow-sm hover:bg-[#2277FF]',
+                    'border border-transparent bg-[#0056FF] text-white shadow-sm',
                   selectedElevation === 'bordered' &&
-                    'border border-[#CAD3F5] bg-white text-[#0A1A4A] hover:border-[#0056FF]',
+                    'border border-[#CAD3F5] bg-white text-[#0A1A4A]',
                   selectedElevation === 'flat' &&
-                    'border border-transparent bg-[#E3E7FC] text-[#0056FF] hover:bg-blue-100',
+                    'border border-transparent bg-[#E3E7FC] text-[#0056FF]',
                 )}
               >
                 <Layers className="size-3.5" />
-                <span>Interactive SNPI Token</span>
+                <span>{copiedSnippet ? 'Copied Token Class!' : 'Interactive SNPI Token'}</span>
                 <Copy className="size-3 opacity-70" />
               </button>
-            </div>
-
-            {/* Footer Copy Pill */}
-            <div className="flex items-center justify-between text-[10px] font-bold text-[#0A1A4A]">
-              <span className="truncate">
-                {copiedSnippet ? 'Copied to clipboard!' : 'Click token to copy classes'}
-              </span>
-              <span className="font-mono text-[#0056FF]">#0056FF</span>
             </div>
           </div>
         </div>
@@ -541,18 +511,11 @@ export function BentoHeroGrid({
         {/* CENTER COLUMN: Calendar (Card 2) + Kinetic Harmonic Core (Card 4) + Bulletin (Card 6) */}
         {/* ========================================================================= */}
         <div className="flex flex-col gap-3.5 sm:gap-4 lg:col-span-4 lg:gap-4.5">
-          {/* CARD 2: Tactile Semester Calendar (STRICT BRAND BLUE GRADIENT - Zero Green) */}
+          {/* CARD 2: Tactile Semester Calendar (Zero TERM 02 Badge - Pure Blue Gradient) */}
           <div
             onClick={() => setCalendarView(calendarView === 'day' ? 'week' : 'day')}
-            className="group relative flex h-36 cursor-pointer items-center justify-center overflow-hidden rounded-[20px] bg-gradient-to-br from-[#0056FF] to-[#2277FF] p-4 text-white shadow-xs transition-transform duration-300 hover:scale-[1.01] sm:h-40"
-            title="Click to toggle Semester View"
+            className="relative flex h-36 cursor-pointer items-center justify-center overflow-hidden rounded-[20px] bg-gradient-to-br from-[#0056FF] to-[#2277FF] p-4 text-white shadow-xs sm:h-40"
           >
-            {/* Top-Right Notification Badge in Soft Lavender */}
-            <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full border border-white/40 bg-[#E3E7FC] px-2.5 py-0.5 font-sans text-[10px] font-black text-[#0A1A4A] shadow-xs">
-              <span className="size-1.5 rounded-full bg-[#0056FF]" />
-              TERM 02
-            </div>
-
             {/* Tactile Calendar Icon Body */}
             <div className="flex flex-col items-center">
               <svg
@@ -562,7 +525,6 @@ export function BentoHeroGrid({
                 fill="none"
                 className="drop-shadow-xs"
               >
-                {/* Calendar Body Box */}
                 <rect
                   x="8"
                   y="12"
@@ -573,13 +535,9 @@ export function BentoHeroGrid({
                   strokeWidth="3.5"
                   fill="none"
                 />
-                {/* Top Binder Line */}
                 <line x1="8" y1="23" x2="52" y2="23" stroke="white" strokeWidth="3" />
-                {/* Top Left Hook */}
                 <circle cx="18" cy="8" r="3" fill="white" />
-                {/* Top Right Hook */}
                 <circle cx="42" cy="8" r="3" fill="white" />
-                {/* Day / Week Number */}
                 <text
                   x="30"
                   y="43"
@@ -600,17 +558,13 @@ export function BentoHeroGrid({
             </div>
           </div>
 
-          {/* CARD 4: Kinetic Harmonic Brand Core (ZERO PHOTOS - Mathematical SVG Gyroscope) */}
-          <div
-            onMouseEnter={() => setGyroSpeedUp(true)}
-            onMouseLeave={() => setGyroSpeedUp(false)}
-            className="group relative flex h-64 items-center justify-center overflow-hidden rounded-[20px] bg-[#0056FF] p-4 shadow-xs transition-shadow hover:shadow-sm sm:h-72"
-          >
+          {/* CARD 4: Kinetic Harmonic Brand Core (Zero Hover Triggers / No Acceleration Badge) */}
+          <div className="relative flex h-64 items-center justify-center overflow-hidden rounded-[20px] bg-[#0056FF] p-4 shadow-xs sm:h-72">
             {/* Background Radial Glow */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.22)_0%,transparent_75%)]" />
 
             {/* Signature Organic Flower Mask SVG Framing the Harmonic Gyroscope Core */}
-            <div className="relative size-52 transition-transform duration-500 ease-out group-hover:scale-105 sm:size-58">
+            <div className="relative size-52 sm:size-58">
               <svg
                 viewBox="0 0 282 281"
                 className="size-full overflow-visible drop-shadow-[0_12px_24px_rgba(0,0,0,0.25)]"
@@ -625,12 +579,10 @@ export function BentoHeroGrid({
                   </clipPath>
                 </defs>
 
-                {/* Subsurface Fill inside Flower Mask */}
                 <rect width="282" height="281" fill="#0A1A4A" clipPath="url(#snpi-flower-mask)" />
 
-                {/* Gyroscopic Harmonic Rings (Pure Vector Math) */}
+                {/* Gyroscopic Harmonic Rings */}
                 <g clipPath="url(#snpi-flower-mask)">
-                  {/* Outer Concentric Coordinate Ring */}
                   <circle
                     cx="141"
                     cy="140"
@@ -641,7 +593,6 @@ export function BentoHeroGrid({
                     fill="none"
                     opacity="0.8"
                   />
-                  {/* Middle Ring */}
                   <circle
                     cx="141"
                     cy="140"
@@ -651,7 +602,6 @@ export function BentoHeroGrid({
                     fill="none"
                     opacity="0.9"
                   />
-                  {/* Inner Ring */}
                   <circle
                     cx="141"
                     cy="140"
@@ -661,7 +611,6 @@ export function BentoHeroGrid({
                     strokeDasharray="6 3"
                     fill="none"
                   />
-                  {/* Radial Axes */}
                   <line
                     x1="41"
                     y1="140"
@@ -680,13 +629,11 @@ export function BentoHeroGrid({
                     strokeWidth="1"
                     opacity="0.4"
                   />
-                  {/* Harmonic Satellite Nodes */}
                   <circle cx="141" cy="72" r="5" fill="#FFFFFF" />
                   <circle cx="209" cy="140" r="5" fill="#E3E7FC" />
                   <circle cx="141" cy="208" r="5" fill="#2277FF" />
                   <circle cx="73" cy="140" r="5" fill="#FFFFFF" />
 
-                  {/* Central Emblem Core */}
                   <circle
                     cx="141"
                     cy="140"
@@ -708,7 +655,6 @@ export function BentoHeroGrid({
                   </text>
                 </g>
 
-                {/* White Contour Outline Stroke */}
                 <path
                   d="M75.9469 280.078C91.5033 280.078 105.96 275.398 117.97 267.376C130.585 258.951 151.308 258.951 163.924 267.376C175.934 275.398 190.39 280.078 205.947 280.078C247.615 280.078 281.394 246.499 281.394 205.078C281.394 189.768 276.779 175.529 268.856 163.661C260.282 150.817 260.282 129.339 268.856 116.496C276.779 104.628 281.394 90.3887 281.394 75.0781C281.394 33.6568 247.615 0.078125 205.947 0.078125C190.39 0.078125 175.934 4.75843 163.924 12.7798C151.308 21.2056 130.585 21.2056 117.97 12.7798C105.96 4.75843 91.5033 0.078125 75.9469 0.078125C34.2787 0.078125 0.5 33.6568 0.5 75.0781C0.5 90.3887 5.11505 104.628 13.0377 116.496C21.6119 129.339 21.6119 150.817 13.0377 163.661C5.11505 175.529 0.5 189.768 0.5 205.078C0.5 246.499 34.2787 280.078 75.9469 280.078Z"
                   fill="none"
@@ -716,51 +662,33 @@ export function BentoHeroGrid({
                   strokeWidth="8"
                 />
               </svg>
-
-              {/* Hover Badge */}
-              <div className="absolute right-0 bottom-1 left-0 flex justify-center">
-                <span className="rounded-full border border-white/40 bg-white/20 px-2.5 py-0.5 font-mono text-[9px] font-bold text-white backdrop-blur-md">
-                  {gyroSpeedUp ? 'Harmonic Core: Accelerated' : 'Hover to Accelerate'}
-                </span>
-              </div>
             </div>
           </div>
 
-          {/* CARD 6: Azure Blue Bulletin / Architecture Changelog */}
+          {/* CARD 6: Azure Blue Bulletin (Clean Architectural Statement - Zero Cycling Clutter) */}
           <div
-            onClick={() => {
-              setBulletinIndex((i) => (i + 1) % BULLETIN_NOTES.length);
-              onBulletinClick?.();
-            }}
-            className="group relative flex h-44 cursor-pointer flex-col justify-between overflow-hidden rounded-[20px] bg-gradient-to-br from-[#2277FF] to-[#0056FF] p-5 text-white shadow-xs transition-shadow hover:shadow-sm sm:h-48"
-            title="Click to cycle notes"
+            onClick={onBulletinClick}
+            className="relative flex h-44 cursor-pointer flex-col justify-between overflow-hidden rounded-[20px] bg-gradient-to-br from-[#2277FF] to-[#0056FF] p-5 text-white shadow-xs sm:h-48"
           >
             <div>
               <div className="flex items-center justify-between">
                 <h3 className="font-sans text-2xl font-black tracking-tight text-white">
                   Bulletin
                 </h3>
-                <span className="rounded-full border border-white/30 bg-white/15 px-2 py-0.5 font-mono text-[9px] font-bold text-white">
-                  {BULLETIN_NOTES[bulletinIndex].tag}
+                <span className="rounded-full border border-white/30 bg-white/15 px-2.5 py-0.5 font-mono text-[9px] font-bold text-white">
+                  Release v2.8
                 </span>
               </div>
-              <p className="mt-1.5 font-sans text-xs font-bold text-white">
-                {BULLETIN_NOTES[bulletinIndex].title}
+              <p className="mt-2 font-sans text-xs font-bold text-white">
+                SNPI Autonomous Campus Engine
               </p>
               <p className="mt-1 max-w-[220px] text-[11px] leading-relaxed text-blue-100/90 sm:max-w-[240px]">
-                {BULLETIN_NOTES[bulletinIndex].detail}
+                Next.js 15 App Router Edge proxying directly to Express 5 backend services.
               </p>
-            </div>
-
-            <div className="flex items-center justify-between text-[10px] font-bold text-blue-100">
-              <span className="flex items-center gap-1">
-                <RefreshCw className="size-3" /> Note {bulletinIndex + 1} of {BULLETIN_NOTES.length}
-              </span>
-              <span>Tap to advance</span>
             </div>
 
             {/* Bottom-Right Line-Art Speech Bubble with Pencil Icon */}
-            <div className="pointer-events-none absolute -right-2 -bottom-2 p-3 text-white/40 transition-transform duration-300 group-hover:scale-110">
+            <div className="pointer-events-none absolute -right-2 -bottom-2 p-3 text-white/40">
               <svg
                 width="64"
                 height="64"
@@ -779,18 +707,17 @@ export function BentoHeroGrid({
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT COLUMN: Interactive Mascot Personality Lab (ZERO TEXT CLUTTER)     */}
+        {/* RIGHT COLUMN: Interactive Kid-Friendly Mascot Lab ("Ask Kid" Conversation) */}
         {/* ========================================================================= */}
         <div
           ref={rightCardRef}
           onMouseMove={handleRightCardMouseMove}
           onMouseLeave={handleRightCardMouseLeave}
-          className="group relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-5 shadow-xs transition-shadow hover:shadow-sm sm:p-6 lg:col-span-4"
+          className="relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-5 shadow-xs sm:p-6 lg:col-span-4"
         >
-          {/* Top Section: Brand Radar Disc in Pure Royal Blue & Soft Lavender */}
+          {/* Top Section: Brand Radar Disc */}
           <div className="flex items-center justify-between">
             <div className="relative flex size-14 items-center justify-center rounded-full bg-[#0056FF] shadow-xs sm:size-16">
-              {/* Concentric Disc Radar Graphic from disc.svg */}
               <svg
                 viewBox="0 0 484 484"
                 className="pointer-events-none absolute inset-0 size-full opacity-40"
@@ -811,88 +738,78 @@ export function BentoHeroGrid({
               <Sparkles className="relative z-10 size-6 text-white" />
             </div>
 
-            <div className="flex flex-col items-end">
-              <span className="font-mono text-[9px] font-bold tracking-wider text-[#0056FF] uppercase">
-                Kinetic Persona Engine
-              </span>
-              <div className="mt-0.5 flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-0.5 text-[10px] font-bold text-[#0A1A4A]">
-                <span className="size-1.5 rounded-full bg-[#0056FF]" />
-                99.9% Interactive
-              </div>
-            </div>
-          </div>
-
-          {/* Middle Section: Emotion Selector & Mascot Poke Controller */}
-          <div className="my-5 text-center">
-            <h2 className="font-sans text-2xl font-black tracking-tight text-[#0A1A4A] sm:text-3xl">
-              Kinetic Mascot Lab
-            </h2>
-            <p className="mt-1 text-xs font-medium text-slate-500">
-              Interactive brand companion reacting to live cursor dynamics.
-            </p>
-
-            {/* Interactive Mood Selector Matrix */}
-            <div className="mt-3.5 grid grid-cols-4 gap-1.5">
+            {/* Mood Selector Tabs */}
+            <div className="flex items-center gap-1 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1">
               {(['curious', 'focus', 'joyful', 'sleepy'] as MascotMood[]).map((mood) => (
                 <button
                   key={mood}
                   type="button"
                   onClick={() => setActiveMood(mood)}
                   className={cn(
-                    'rounded-xl px-2 py-1.5 text-center text-[11px] font-bold capitalize transition-all',
-                    activeMood === mood
-                      ? 'border border-[#0056FF] bg-[#0056FF] text-white shadow-xs'
-                      : 'border border-[#CAD3F5] bg-[#EFF5FF] text-[#0A1A4A] hover:bg-[#E3E7FC]',
+                    'rounded-full px-2 py-0.5 text-[10px] font-bold capitalize transition-all select-none',
+                    activeMood === mood ? 'bg-[#0056FF] text-white shadow-xs' : 'text-[#0A1A4A]',
                   )}
                 >
                   {mood}
                 </button>
               ))}
             </div>
+          </div>
 
-            {/* Tactile Poke Mascot Button */}
-            <div className="mt-3">
-              <button
-                type="button"
-                onClick={handlePokeMascot}
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] px-3.5 py-1 text-xs font-bold text-[#0056FF] transition-all hover:bg-[#E3E7FC] active:scale-95"
-              >
-                <Sparkles className="size-3" />
-                <span>Poke Mascot</span>
-              </button>
+          {/* Middle Section: "Ask Kid" Interactive Question Lab */}
+          <div className="my-3 text-center">
+            <h2 className="font-sans text-xl font-black tracking-tight text-[#0A1A4A] sm:text-2xl">
+              Kinetic Mascot Lab
+            </h2>
+            <p className="mt-0.5 text-[11px] font-medium text-slate-500">
+              Ask the mascot or tap to poke!
+            </p>
+
+            {/* "Ask Kid" Interactive Questions Grid */}
+            <div className="mt-2.5 grid grid-cols-2 gap-1.5">
+              {KID_QUESTIONS.map((q) => (
+                <button
+                  key={q.label}
+                  type="button"
+                  onClick={() => handleAskKidQuestion(q)}
+                  className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 text-left text-[11px] font-bold text-[#0056FF] active:scale-95"
+                >
+                  {q.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Bottom Section: Giant Peeking Mascot Dome with Dynamic Reactive Eyes */}
-          <div className="relative mt-auto w-full pt-2">
-            {/* Speech Bubble on Poke */}
+          {/* Bottom Section: Giant Peeking Mascot Dome with Expressive Reactive Eyes */}
+          <div className="relative mt-auto w-full pt-1">
+            {/* Dynamic Kid Speech Bubble */}
             {showSpeechBubble && (
               <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                key={speechText}
+                initial={{ opacity: 0, y: 8, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -5 }}
-                className="absolute -top-7 left-1/2 z-20 -translate-x-1/2 rounded-full border border-[#CAD3F5] bg-white px-3 py-1 text-[11px] font-black text-[#0056FF] shadow-sm"
+                className="absolute -top-10 left-1/2 z-20 w-[92%] -translate-x-1/2 rounded-2xl border border-[#CAD3F5] bg-white px-3 py-1.5 text-center text-xs font-bold text-[#0056FF] shadow-sm"
               >
-                SNPI says hello!
+                {speechText}
               </motion.div>
             )}
 
-            {/* Mascot Arch Dome in Brand Royal Blue */}
+            {/* Mascot Arch Dome in Brand Royal Blue (Tap to Poke / Bounce) */}
             <motion.div
               animate={
                 mascotPoked
-                  ? { y: [-14, 0], rotate: [0, -3, 3, 0] }
+                  ? { y: [-16, 0], rotate: [0, -3, 3, 0] }
                   : activeMood === 'sleepy'
                     ? { y: [0, 4, 0] }
                     : undefined
               }
               transition={{
-                duration: activeMood === 'sleepy' ? 3 : 0.4,
+                duration: activeMood === 'sleepy' ? 3 : 0.35,
                 repeat: activeMood === 'sleepy' ? Infinity : 0,
               }}
               onClick={handlePokeMascot}
               className="relative mx-auto flex h-36 w-full max-w-[280px] cursor-pointer items-center justify-center gap-3 rounded-t-[120px] bg-[#0056FF] pt-4 shadow-inner sm:h-44"
-              title="Click to interact with mascot"
+              title="Tap mascot to poke!"
             >
               {/* EYE 1 (Left) */}
               <div className="relative flex h-24 w-20 items-center justify-center rounded-full bg-white shadow-md sm:h-28 sm:w-24">
@@ -903,7 +820,6 @@ export function BentoHeroGrid({
                       transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
                     }}
                   >
-                    {/* Light Reflection Notch */}
                     <div
                       className="absolute top-1.5 right-2 size-4 bg-white sm:top-2 sm:right-2.5 sm:size-5"
                       style={{ clipPath: 'polygon(100% 0, 0 45%, 100% 90%)' }}
@@ -951,7 +867,6 @@ export function BentoHeroGrid({
                       transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
                     }}
                   >
-                    {/* Light Reflection Notch */}
                     <div
                       className="absolute top-1.5 right-2 size-4 bg-white sm:top-2 sm:right-2.5 sm:size-5"
                       style={{ clipPath: 'polygon(100% 0, 0 45%, 100% 90%)' }}

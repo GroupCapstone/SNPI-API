@@ -26,7 +26,6 @@ import {
   StepPlayerDemo,
   AnimatedCounterDemo,
   VoiceNoteDemo,
-  GridRevealDemo,
   MarqueeSectionDemo,
   FloatingLabelFormDemo,
   MultiStepWizardDemo,
@@ -1357,12 +1356,6 @@ function renderFeedComponentDemo(
       return <FileDropzoneDemo />;
     case 'rich-text-editor':
       return <RichTextEditorDemo />;
-
-    // ==========================================
-    // AI KIT GROUP (Interactive Demos)
-    // ==========================================
-    case 'grid-reveal':
-      return <GridRevealDemo />;
 
     // ==========================================
     // SECTIONS GROUP (Component Templates)

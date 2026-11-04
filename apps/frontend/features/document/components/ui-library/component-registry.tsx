@@ -440,18 +440,6 @@ export const COMPONENT_GROUPS_NAV: ComponentGroupNav[] = [
     ],
   },
   {
-    group: 'AI Kit',
-    groupId: 'group-ai-kit',
-    items: [
-      {
-        id: 'grid-reveal',
-        name: 'Grid Reveal',
-        targetId: 'comp-grid-reveal',
-        builtAt: '2026-11-01T00:00:00.000Z',
-      },
-    ],
-  },
-  {
     group: 'Sections',
     groupId: 'group-sections',
     items: [
@@ -626,12 +614,6 @@ export const PLATFORM_COMPONENTS_NAV: M3NavItem[] = [
     builtAt: '2026-11-01T00:00:00.000Z',
   },
   {
-    id: 'grid-reveal',
-    name: 'Grid Reveal',
-    targetId: 'comp-grid-reveal',
-    builtAt: '2026-11-01T00:00:00.000Z',
-  },
-  {
     id: 'marquee-section',
     name: 'Marquee Section',
     targetId: 'comp-marquee-section',
@@ -711,7 +693,6 @@ export const COMPONENT_CATEGORIES = [
   'Feedback',
   'Display',
   'Forms',
-  'AI Kit',
   'Sections',
 ] as const;
 
@@ -2064,30 +2045,6 @@ const columns: DataTableColumn<StudentRecord>[] = [
     ],
   },
 
-  // AI KIT GROUP
-  {
-    id: 'grid-reveal',
-    name: 'Grid Reveal',
-    category: 'AI Kit',
-    builtAt: '2026-11-02',
-    paradigm: 'Cyber Matrix Standard',
-    description:
-      'Cybernetic matrix grid featuring horizontal laser scanlines and interactive hover spotlights across child cards.',
-    explanation: 'Reveals autonomous agent telemetry across distributed services.',
-    props: [{ name: 'cards', type: 'Array<{title, speed}>', description: 'Grid nodes.' }],
-    codeSnippet: `import { GridRevealDemo } from '@/features/document/components/ui-library';\n\n<GridRevealDemo />`,
-    realWorldExamples: [
-      {
-        title: 'Autonomous Agent Monitor',
-        scenario: 'Admin monitors background reconciliation agents.',
-        impact: 'Real-time confidence.',
-      },
-    ],
-    uxPsychology: [{ principle: 'Status Transparency', detail: 'Shows system actively working.' }],
-    usageGuidelines: [{ doItem: 'Show execution speed.', dontItem: 'Avoid flashing colors.' }],
-    implementationNotes: ['Laser beam line with animated pulse.'],
-    supportedStates: ['Standby', 'Scanning'],
-  },
   {
     id: 'marquee-section',
     name: 'Marquee Section',
