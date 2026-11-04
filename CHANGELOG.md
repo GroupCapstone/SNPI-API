@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `35af91d` (Developer: **史力爱卫**)
+
+- Record complete 16 enterprise API design guidelines directory and archetypes
+
+### Version 0.2.17 (04.11.2026) - `7664c38` (Developer: **史力爱卫**)
+
+- Record API Stylebook deep enrichment sync commit 99d07bf
+
 ### Version 0.2.17 (04.11.2026) - `99d07bf` (Developer: **史力爱卫**)
 
 - Enrich all 100 API Stylebook topic files with deep architectural rules, concrete HTTP syntax, and guideline quotes
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.21 (03.11.2026) - `7e103eb` (Developer: **史力爱卫**)
 
 - Update stale action SHA pins & build shared before smoke
-
-### Version 0.2.20 (03.11.2026) - `fce1f03` (Developer: **史力爱卫**)
-
-- Correct docker build-push-action sha pinning & verify all workflows
-
-### Version 0.2.19 (03.11.2026) - `e0a23f5` (Developer: **史力爱卫**)
-
-- Implement appsec design principles, large repo optimization & resilient cicd continuity
 

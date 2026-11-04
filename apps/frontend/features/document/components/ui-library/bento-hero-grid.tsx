@@ -103,7 +103,7 @@ export function BentoHeroGrid({
               title="SNPI Kinetic Mascot · Coral Gum"
             >
               <svg viewBox="0 0 249 247" className="size-full drop-shadow-xs">
-                {/* Gum.svg Path */}
+                {/* gum.svg Path */}
                 <path
                   d="M245.7,56.1l0-9.9c0-22.7-18.4-41-41-41l-160.2,0c-22.7,0-41,18.4-41,41l0,9.9c0,11,4.3,21,11.4,28.4 c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4l0,9.9c0,11,4.3,21,11.4,28.4c1.5,1.5,1.5,4,0,5.5c-7.1,7.4-11.4,17.4-11.4,28.4 l0,10.1c0,22.7,18.4,41,41,41l160.2,0c22.7,0,41-18.4,41-41l0-10.1c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5 c7.1-7.4,11.4-17.4,11.4-28.4l0-9.9c0-11-4.3-21-11.4-28.4c-1.5-1.5-1.5-4,0-5.5C241.3,77.1,245.7,67.1,245.7,56.1z"
                   fill="#F97316"
@@ -137,7 +137,7 @@ export function BentoHeroGrid({
               title="SNPI Kinetic Mascot · Azure Hexagon"
             >
               <svg viewBox="0 0 277 301" className="size-full drop-shadow-xs">
-                {/* Hexagon.svg Path */}
+                {/* hexagon.svg Path */}
                 <path
                   d="M108.103 8.24078C126.954 -2.64276 150.179 -2.64276 169.03 8.24078L246.169 52.7773C265.02 63.6609 276.633 83.7745 276.633 105.542V194.615C276.633 216.382 265.02 236.495 246.169 247.379L169.03 291.915C150.179 302.799 126.954 302.799 108.103 291.915L30.9635 247.379C12.1126 236.495 0.5 216.382 0.5 194.615V105.542C0.5 83.7745 12.1126 63.6609 30.9635 52.7773L108.103 8.24078Z"
                   fill="#7DD3FC"
@@ -168,7 +168,7 @@ export function BentoHeroGrid({
               title="SNPI Kinetic Mascot · Amber Blossom"
             >
               <svg viewBox="0 0 282 281" className="size-full drop-shadow-xs">
-                {/* Flower.svg Path */}
+                {/* flower.svg Path */}
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -364,7 +364,7 @@ export function BentoHeroGrid({
                 className="size-full overflow-visible drop-shadow-[0_12px_24px_rgba(0,0,0,0.25)]"
               >
                 <defs>
-                  {/* Organic ClipPath using Flower.svg Path */}
+                  {/* Organic ClipPath using flower.svg Path */}
                   <clipPath id="snpi-flower-mask">
                     <path
                       fillRule="evenodd"
