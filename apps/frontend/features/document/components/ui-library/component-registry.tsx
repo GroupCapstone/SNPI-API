@@ -2133,14 +2133,14 @@ const columns: DataTableColumn<StudentRecord>[] = [
   // ==========================================
   {
     id: 'floating-label-form',
-    name: 'Floating Label Form (Candidate Admission Dossier)',
+    name: 'Standard Form Inputs (Candidate Admission Dossier)',
     category: 'Forms',
     builtAt: '2026-11-02',
-    paradigm: 'Shrinking Boundary Label Standard',
+    paradigm: 'Standard Form Inputs & High-Contrast Placeholders',
     description:
-      'High-contrast floating label input suite with smooth boundary-shrinking transitions, focus rings, 44px hit bounds, and live Zod validation.',
+      'High-contrast standard input suite with clear labels, contextual placeholders, focus rings, 44px hit bounds, and live registration validation.',
     explanation:
-      'Eliminates placeholder disappearance by smoothly transforming resting labels into high-contrast boundary micro-stamps upon focus or data entry. Built for high-volume student registrar admissions, maintaining context at all times with 44px minimum touch targets and live feedback.',
+      'Standard enterprise form input layout with distinct labels and placeholders. Built for high-volume student registrar admissions with 44px minimum touch targets and live feedback.',
     props: [
       { name: 'label', type: 'string', description: 'Floating field label text.' },
       { name: 'value', type: 'string', description: 'Controlled input value.' },
@@ -2212,11 +2212,11 @@ const columns: DataTableColumn<StudentRecord>[] = [
     name: 'Multi-Step Form Wizard',
     category: 'Forms',
     builtAt: '2026-11-02',
-    paradigm: 'Progressive Disclosure Wizard Standard',
+    paradigm: 'Fluid Water Progress & Brand Dropdown Stepper',
     description:
-      'Structured onboarding flow featuring step indicators, state validation, session storage caching, and final review steps.',
+      'Structured onboarding flow featuring fluid water loading progress, dynamic percentage color coding, step-by-step connecting lines, brand dropdown selectors, and strict validation gating.',
     explanation:
-      'A four-step wizard with inline validation, animated progress, and session persistence (refresh the page and input is restored). Click any completed step to jump back.',
+      'A four-step wizard with animated connecting lines, fluid water loading bar, dynamic percentage tracking, custom brand dropdown selectors, inline validation that prevents bypassing required fields, and session persistence.',
     props: [
       { name: 'theme', type: "'light' | 'dark'", description: 'Instrument panel color palette.' },
       {
