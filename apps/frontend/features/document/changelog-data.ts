@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "fb020b5",
+    "developer": "史力爱卫",
+    "description": "Implement API Stylebook REST API design topics & cross-guideline standards"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "4c5628c",
     "developer": "史力爱卫",
     "description": "Align feed sequence in lockstep with sidebar parent range and child lists"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "a59bce1",
     "developer": "史力爱卫",
     "description": "Sync changelog for dependency supply chain defense"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "9f14394",
-    "developer": "史力爱卫",
-    "description": "Implement 6-layer dependency supply chain defense standard & automated verification"
   }
 ];
