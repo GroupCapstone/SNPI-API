@@ -7,7 +7,6 @@ export * from './chip';
 export * from './fab';
 export * from './card';
 export * from './data-table';
-export * from './cipher-text-decoder';
 export * from './multi-step-wizard';
 export * from './searchable-dropdown';
 export * from './command-palette';

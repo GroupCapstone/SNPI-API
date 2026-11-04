@@ -27,7 +27,6 @@ import {
   AnimatedCounterDemo,
   VoiceNoteDemo,
   GridRevealDemo,
-  CipherTextDecoderDemo,
   MarqueeSectionDemo,
   FloatingLabelFormDemo,
   MultiStepWizardDemo,
@@ -1364,12 +1363,6 @@ function renderFeedComponentDemo(
     // ==========================================
     case 'grid-reveal':
       return <GridRevealDemo />;
-
-    // ==========================================
-    // TEXT EFFECTS GROUP (Interactive Demos)
-    // ==========================================
-    case 'cipher-text-decoder':
-      return <CipherTextDecoderDemo />;
 
     // ==========================================
     // SECTIONS GROUP (Component Templates)

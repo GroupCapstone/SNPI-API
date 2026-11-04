@@ -124,8 +124,6 @@ export function getParentGroupIcon(groupId: string): IconComponent {
       return FileText;
     case 'group-ai-kit':
       return Bot;
-    case 'group-text-effects':
-      return Terminal;
     case 'group-sections':
       return LayoutGrid;
     default:
@@ -281,20 +279,6 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#0284C7]',
       borderColor: 'border-[#0284C7]/40',
       glowColor: 'rgba(2, 132, 199, 0.08)',
-      cardBg: 'bg-white',
-      cardBorder: 'border-[#CAD3F5]',
-    };
-  }
-  if (key.includes('text') || key.includes('effect')) {
-    // Text Effects - Rose Quartz
-    return {
-      accent: '#F43F5E',
-      badgeBg: 'bg-[#FFF1F2]',
-      badgeBorder: 'border-[#FECDD3]',
-      badgeText: 'text-[#BE123C]',
-      iconColor: 'text-[#F43F5E]',
-      borderColor: 'border-[#F43F5E]/40',
-      glowColor: 'rgba(244, 63, 94, 0.08)',
       cardBg: 'bg-white',
       cardBorder: 'border-[#CAD3F5]',
     };
