@@ -10,6 +10,27 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "d87b1a7",
+    "developer": "史力爱卫",
+    "description": "Apply fluid liquid tilted placement and multi-color card palette to bento hero grid"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "5a3d08b",
+    "developer": "史力爱卫",
+    "description": "Redesign snappy mascot companion with interactive play actions, antenna twang, and brand colors"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "05bfb65",
+    "developer": "史力爱卫",
+    "description": "Record SWR Stale-While-Revalidate client caching and backend ETag integration architecture"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "dc7de38",
     "developer": "史力爱卫",
     "description": "Scaffold standalone Nextra official developer documentation portal"
@@ -160,26 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "aa4edd4",
     "developer": "史力爱卫",
     "description": "Record API Stylebook 17-category library synchronization commit 6c30d96"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "6c30d96",
-    "developer": "史力爱卫",
-    "description": "Record complete 17-category API Stylebook design topics library with original quotes and verbatim citations"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "fd64b8d",
-    "developer": "史力爱卫",
-    "description": "Record API Stylebook skill implementation commit fb020b5"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "fb020b5",
-    "developer": "史力爱卫",
-    "description": "Implement API Stylebook REST API design topics & cross-guideline standards"
   }
 ];

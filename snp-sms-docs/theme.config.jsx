@@ -13,7 +13,8 @@ export default {
   footer: {
     text: (
       <span>
-        {new Date().getFullYear()} © SNPI School Management System. Official Developer Documentation.
+        {new Date().getFullYear()} © SNPI School Management System. Official Developer
+        Documentation.
       </span>
     ),
   },

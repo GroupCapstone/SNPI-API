@@ -1,4 +1,4 @@
-import { Callout, Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components';
 
 # Getting Started: Overview & Setup
 
@@ -10,14 +10,15 @@ This guide walks you through connecting your frontend application or integration
 
 All API requests must be dispatched over HTTPS to the designated environment base URL:
 
-| Environment | Base URL | Description |
-| :--- | :--- | :--- |
-| **Local Development** | `http://localhost:5000/api/v1` | Local development server running on developer machine. |
-| **Staging** | `https://api-staging.snpi.edu.kh/v1` | Isolated testing environment with sanitized seed data. |
-| **Production** | `https://api.snpi.edu.kh/v1` | Live production cluster with MongoDB replica set. |
+| Environment           | Base URL                             | Description                                            |
+| :-------------------- | :----------------------------------- | :----------------------------------------------------- |
+| **Local Development** | `http://localhost:5000/api/v1`       | Local development server running on developer machine. |
+| **Staging**           | `https://api-staging.snpi.edu.kh/v1` | Isolated testing environment with sanitized seed data. |
+| **Production**        | `https://api.snpi.edu.kh/v1`         | Live production cluster with MongoDB replica set.      |
 
 <Callout type="warning">
-  Plaintext HTTP requests to production endpoints are automatically rejected with a `301 Moved Permanently` redirect to HTTPS.
+  Plaintext HTTP requests to production endpoints are automatically rejected with a `301 Moved
+  Permanently` redirect to HTTPS.
 </Callout>
 
 ---
@@ -49,6 +50,7 @@ Verify that the API server is operational by hitting the public health check end
     response = requests.get('http://localhost:5000/health')
     print(response.json())
     ```
+
   </Tabs.Tab>
 </Tabs>
 

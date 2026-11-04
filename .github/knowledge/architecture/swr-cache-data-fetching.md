@@ -14,11 +14,11 @@ This standard defines client-side data fetching and cache reconciliation for the
 
 ## 2. Document Index & Knowledge References
 
-| Module | Core Subject | Target Capability | Authoritative File |
-| :--- | :--- | :--- | :--- |
-| **01** | **RFC 5861 Caching** | HTTP headers, stale-while-revalidate, ETag 304 | [01-rfc-5861-stale-while-revalidate.md](../../../.agents/skills/swr-cache-data-fetching/01-rfc-5861-stale-while-revalidate.md) |
-| **02** | **12 Core Capabilities** | Deduplication, focus/reconnect, optimistic mutation | [02-swr-12-core-capabilities.md](../../../.agents/skills/swr-cache-data-fetching/02-swr-12-core-capabilities.md) |
-| **03** | **Backend API Integration**| Express 5 middleware, conditional GET, mutation returns | [03-backend-api-integration.md](../../../.agents/skills/swr-cache-data-fetching/03-backend-api-integration.md) |
+| Module | Core Subject                | Target Capability                                       | Authoritative File                                                                                                             |
+| :----- | :-------------------------- | :------------------------------------------------------ | :----------------------------------------------------------------------------------------------------------------------------- |
+| **01** | **RFC 5861 Caching**        | HTTP headers, stale-while-revalidate, ETag 304          | [01-rfc-5861-stale-while-revalidate.md](../../../.agents/skills/swr-cache-data-fetching/01-rfc-5861-stale-while-revalidate.md) |
+| **02** | **12 Core Capabilities**    | Deduplication, focus/reconnect, optimistic mutation     | [02-swr-12-core-capabilities.md](../../../.agents/skills/swr-cache-data-fetching/02-swr-12-core-capabilities.md)               |
+| **03** | **Backend API Integration** | Express 5 middleware, conditional GET, mutation returns | [03-backend-api-integration.md](../../../.agents/skills/swr-cache-data-fetching/03-backend-api-integration.md)                 |
 
 ---
 

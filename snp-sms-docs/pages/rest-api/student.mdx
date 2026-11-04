@@ -1,4 +1,4 @@
-import { Callout, Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components';
 
 # Student Lifecycle API
 
@@ -12,13 +12,13 @@ Retrieve a paginated collection of students scoped to your authorized branch.
 
 ### Query Parameters
 
-| Parameter | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `page` | `integer` | `1` | Page number for offset pagination. |
-| `limit` | `integer` | `20` | Number of items per page (Max: `100`). |
-| `status` | `string` | - | Filter by `active`, `suspended`, `graduated`, or `transferred`. |
-| `branchId` | `string` | - | Filter by branch (Only permitted for `all_branches` scope). |
-| `search` | `string` | - | Search by student name, code, or phone number. |
+| Parameter  | Type      | Default | Description                                                     |
+| :--------- | :-------- | :------ | :-------------------------------------------------------------- |
+| `page`     | `integer` | `1`     | Page number for offset pagination.                              |
+| `limit`    | `integer` | `20`    | Number of items per page (Max: `100`).                          |
+| `status`   | `string`  | -       | Filter by `active`, `suspended`, `graduated`, or `transferred`. |
+| `branchId` | `string`  | -       | Filter by branch (Only permitted for `all_branches` scope).     |
+| `search`   | `string`  | -       | Search by student name, code, or phone number.                  |
 
 ### Example Request
 

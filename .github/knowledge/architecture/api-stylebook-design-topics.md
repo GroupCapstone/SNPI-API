@@ -22,12 +22,14 @@ This enterprise knowledge base document establishes the authoritative REST API d
 ## 2. Core REST API Design Invariants
 
 ### 2.1. URI Grammar & Resource Hierarchy
+
 - Base URL format: `/api/v1/<resource-collection>`.
 - Collections use plural nouns in lowercase `kebab-case` (`/api/v1/fee-invoices`, `/api/v1/student-attendances`).
 - Sub-resource nesting capped at maximum 2 levels (`/schools/:schoolId/branches/:branchId`).
 - Custom non-CRUD operations modeled as sub-resource action verbs (`POST /api/v1/fee-invoices/:id/cancel`).
 
 ### 2.2. HTTP Method Semantics
+
 - `GET`: Safe, idempotent read operations (`200 OK`).
 - `POST`: Non-idempotent resource creation (`201 Created` with `Location` header) or action execution.
 - `PUT`: Idempotent full resource replacement (`200 OK` or `204 No Content`).
@@ -35,6 +37,7 @@ This enterprise knowledge base document establishes the authoritative REST API d
 - `DELETE`: Idempotent resource removal (`200 OK` or `204 No Content`).
 
 ### 2.3. Standardized Status Codes & RFC 7807 Error Envelopes
+
 - Never mask errors behind `200 OK`.
 - Standard success: `200 OK`, `201 Created`, `202 Accepted` (async), `204 No Content`.
 - Standard client errors: `400 Bad Request`, `401 Unauthorized`, `403 Forbidden` (RBAC/tenant scope), `404 Not Found`, `409 Conflict`, `422 Unprocessable Entity` (validation failure), `429 Too Many Requests`.
@@ -42,12 +45,14 @@ This enterprise knowledge base document establishes the authoritative REST API d
 - Error bodies must adhere to `application/problem+json` format with `type`, `title`, `status`, `detail`, `code`, and `invalidParams`.
 
 ### 2.4. Data Representation & Formatting
+
 - JSON keys strictly in `camelCase`.
 - Temporal values in UTC ISO 8601 strings (`YYYY-MM-DDTHH:mm:ss.sssZ`).
 - Currency and financial amounts must use integer subunits (cents) or fixed precision strings, never floating-point numbers.
 - Collections enforce cursor-based pagination (`limit`, `after`) or page-based pagination (`page`, `limit`).
 
 ### 2.5. Multi-Tenant Scoping Invariant
+
 - Every backend read and write operation must strictly enforce tenant boundaries (`schoolId`, `branchId`) from authenticated session credentials.
 - Client-supplied tenant IDs must never be trusted without server-side permission validation.
 - Sensitive comparisons, tokens, and hashes must use constant-time `crypto.timingSafeEqual`.
