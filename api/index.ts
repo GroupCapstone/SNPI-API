@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type express from 'express';
-import { createApp } from '../apps/backend/src/app';
-import { connectToDatabase } from '../apps/backend/src/config/database';
+import { createApp } from '../src/app';
+import { connectToDatabase } from '../src/config/database';
 
 let cachedApp: express.Express | null = null;
 
