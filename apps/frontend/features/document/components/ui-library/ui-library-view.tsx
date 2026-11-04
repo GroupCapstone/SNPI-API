@@ -40,7 +40,7 @@ import {
   HookSidebar,
   type HookSidebarItem,
   generateAiAgentPrompt,
-  RadiantIntegrationHub,
+  BentoHeroGrid,
   LibraryTooltip,
   BlankFutureComponent,
   type ComponentItemDoc,
@@ -78,9 +78,6 @@ import {
   Globe,
   Radio,
   SquarePen,
-  Table,
-  Bell,
-  Sliders,
   Building2,
   GraduationCap,
 } from '@/components/icons';
@@ -443,9 +440,6 @@ export function UiLibraryView() {
       }
     }
   }, [searchQuery]);
-
-  // Interactive Hero Paradigm Toggle Mode (Flat 0px vs Living Motion FX)
-  const [heroInteractiveMode, setHeroInteractiveMode] = React.useState<'flat' | 'spring'>('spring');
 
   // Section IDs for active tracking in Left Sticky Menu (strictly linear sequential flow)
   const scrollSectionIds = React.useMemo(() => {
@@ -844,111 +838,32 @@ export function UiLibraryView() {
 
           {/* COLUMN 2: Center Main Interactive Component Feed (1-Column Continuous Scroll Feed) */}
           <main className="min-w-0 flex-1 space-y-10">
-            {/* HERO HEAD TITLE: Ultra-Creative Interactive Engine Hero (References 3 & 4) */}
+            {/* HERO HEAD TITLE: Bento Grid Homepage Hero Engine (Matching Reference Specification) */}
             <section id="ui-library-head" className="scroll-mt-36 space-y-4">
-              <div className="relative overflow-visible bg-transparent py-2 sm:py-4">
-                <div className="relative z-10 space-y-6 sm:space-y-8">
-                  {/* Creative Centerpiece Headline with Embedded Toggle Switch (Image 4 Reference) */}
-                  <div className="flex flex-col gap-3">
-                    <div>
-                      <h1 className="font-sans text-3xl leading-none font-black tracking-tight text-[#0A1A4A] select-none sm:text-5xl md:text-6xl">
-                        <span className="block tracking-tight">CREATIVE</span>
-                        <span className="my-1 flex items-center gap-2 sm:gap-3">
-                          <span>PR</span>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setHeroInteractiveMode((prev) =>
-                                prev === 'flat' ? 'spring' : 'flat',
-                              )
-                            }
-                            className="group relative inline-flex h-8 w-18 cursor-pointer items-center rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1 shadow-inner transition-all active:scale-95 sm:h-11 sm:w-22 md:h-12 md:w-24"
-                            title="Toggle Interactive Design Paradigm (Flat vs Spring FX)"
-                            aria-label="Toggle Interactive Design Paradigm"
-                          >
-                            <span
-                              className={cn(
-                                'inline-flex size-6 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs transition-all duration-300 sm:size-8 sm:text-xs md:size-9',
-                                heroInteractiveMode === 'flat'
-                                  ? 'translate-x-0 bg-slate-500'
-                                  : 'translate-x-9 bg-[#0056FF] sm:translate-x-11 md:translate-x-12',
-                              )}
-                            >
-                              FX
-                            </span>
-                          </button>
-                          <span>DUCT</span>
-                        </span>
-                        <span className="block text-[#0056FF]">SYSTEM</span>
-                      </h1>
-                    </div>
-                  </div>
-
-                  {/* KINETIC TUMBLED CARDS MODULE DECK */}
-                  <RadiantIntegrationHub
-                    center={{
-                      title: 'SNPI DESIGN ENGINE',
-                      subtitle: 'Mathematical Token Matrix',
-                      icon: <Layers className="size-7 stroke-[2.2]" />,
-                      badge: '73P',
-                    }}
-                    leftNodes={[
-                      {
-                        id: 'cat-navigation',
-                        label: 'Navigation',
-                        tag: '01 · NAV',
-                        badge: 'CYBER ARMOR',
-                        tooltip: 'Navigation & Docks (Cyber Armor & Line Tracker)',
-                        icon: <Compass className="size-8 stroke-[2]" />,
-                      },
-                      {
-                        id: 'cat-feedback',
-                        label: 'Feedback',
-                        tag: '02 · DIALOG',
-                        badge: 'SNACKBAR & MODAL',
-                        tooltip: 'Feedback & Overlays (Snackbars, Dialogs & Modals)',
-                        icon: <Bell className="size-8 stroke-[2]" />,
-                      },
-                      {
-                        id: 'cat-forms',
-                        label: 'Inputs',
-                        tag: '03 · INPUT',
-                        badge: 'SWITCH & CHIP',
-                        tooltip: 'Inputs & Controls (Switches, Chips & Fields)',
-                        icon: <Sliders className="size-8 stroke-[2]" />,
-                      },
-                    ]}
-                    rightNodes={[
-                      {
-                        id: 'cat-display',
-                        label: 'Containers',
-                        tag: '04 · CARD',
-                        badge: 'TACTILE FOLDERS',
-                        tooltip: 'Cards & Containers (Tactile Folders & Tables)',
-                        icon: <Folder className="size-8 stroke-[2]" />,
-                      },
-                      {
-                        id: 'cat-buttons',
-                        label: 'Actions',
-                        tag: '05 · ACTION',
-                        badge: 'GEOMETRIC FAB',
-                        tooltip: 'Buttons & Actions (Geometric Buttons & FABs)',
-                        icon: <Zap className="size-8 stroke-[2]" />,
-                      },
-                      {
-                        id: 'cat-ai-kit',
-                        label: 'AI Prompts',
-                        tag: '06 · AI',
-                        badge: 'GENUI SPEC',
-                        tooltip: 'AI Agent Prompts (Procedural Synthesis & Blueprints)',
-                        icon: <Bot className="size-8 stroke-[2]" />,
-                      },
-                    ]}
-                    activeNodeId={activeSectionId}
-                    onSelectNode={(id) => setActiveSectionId(id)}
-                  />
-                </div>
-              </div>
+              <BentoHeroGrid
+                onExploreCampus={() => {
+                  const target =
+                    document.getElementById('comp-campus-branch-selector') ||
+                    document.getElementById('cat-navigation');
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                onSelectProgram={(query) => {
+                  setSearchQuery(query);
+                  if (searchInputRef.current) {
+                    searchInputRef.current.focus();
+                  }
+                }}
+                onBulletinClick={() => {
+                  const target =
+                    document.getElementById('interactive-feed') ||
+                    document.getElementById('cat-navigation');
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+              />
             </section>
 
             {/* COMPONENT DEMOS FEED (Clean Open Feed with Signature Parent Colors & Pseudo-Random Stage Canvas) */}
