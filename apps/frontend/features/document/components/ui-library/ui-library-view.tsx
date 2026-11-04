@@ -1105,51 +1105,51 @@ function renderFeedComponentDemo(
         'phnom-penh': {
           label: 'Phnom Penh Innovation Hub',
           badge: 'PP-01',
-          desc: '3,120 Enrolled Students · Tech Tower · Cyber Security Lab',
-          enrolled: '3,120',
-          labs: '22 Labs',
-          latency: '4 ms',
-          region: 'Capital Hub · Tower A',
+          desc: 'Capital Campus · Tech Tower & Software Engineering Labs',
+          students: '3,120',
+          faculty: '142 Staff',
+          programs: '18 Majors',
+          province: 'Phnom Penh',
           icon: Building2,
         },
         'siem-reap': {
           label: 'Siem Reap Main Campus',
           badge: 'SR-01',
-          desc: '2,450 Enrolled Students · Science Wing · High Performance Cluster',
-          enrolled: '2,450',
-          labs: '18 Labs',
-          latency: '6 ms',
-          region: 'Heritage Center · Science Wing',
+          desc: 'Main Campus · Science Wing & Advanced Research Cluster',
+          students: '2,450',
+          faculty: '118 Staff',
+          programs: '14 Majors',
+          province: 'Siem Reap',
           icon: GraduationCap,
         },
         battambang: {
           label: 'Battambang Regional Center',
           badge: 'BB-01',
-          desc: '1,080 Enrolled Students · Campus A · Agro-Tech Innovation',
-          enrolled: '1,080',
-          labs: '12 Labs',
-          latency: '8 ms',
-          region: 'Northwest Hub · Agro-Tech',
+          desc: 'Regional Center · Agro-Tech & Environmental Studies',
+          students: '1,080',
+          faculty: '64 Staff',
+          programs: '8 Majors',
+          province: 'Battambang',
           icon: Compass,
         },
         'kampong-cham': {
           label: 'Kampong Cham Learning Center',
           badge: 'KC-01',
-          desc: '890 Enrolled Students · Campus B · Digital Media Center',
-          enrolled: '890',
-          labs: '8 Labs',
-          latency: '11 ms',
-          region: 'Mekong Central · Media Lab',
+          desc: 'Learning Center · Digital Media & Applied Computing',
+          students: '890',
+          faculty: '48 Staff',
+          programs: '6 Majors',
+          province: 'Kampong Cham',
           icon: Globe,
         },
       }[state.dropdownCampus] || {
         label: 'Phnom Penh Innovation Hub',
         badge: 'PP-01',
-        desc: '3,120 Enrolled Students · Tech Tower · Cyber Security Lab',
-        enrolled: '3,120',
-        labs: '22 Labs',
-        latency: '4 ms',
-        region: 'Capital Hub · Tower A',
+        desc: 'Capital Campus · Tech Tower & Software Engineering Labs',
+        students: '3,120',
+        faculty: '142 Staff',
+        programs: '18 Majors',
+        province: 'Phnom Penh',
         icon: Building2,
       };
 
@@ -1157,7 +1157,7 @@ function renderFeedComponentDemo(
 
       return (
         <div className="flex w-full flex-col items-center">
-          <div className="w-full max-w-xl space-y-4 rounded-2xl border-2 border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
+          <div className="w-full max-w-xl space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-5 shadow-2xs sm:p-6">
             <LibraryDropdown
               label="Campus Location Branch"
               value={state.dropdownCampus}
@@ -1194,69 +1194,65 @@ function renderFeedComponentDemo(
               ]}
             />
 
-            {/* Real-time Campus Content & Telemetry Card (Standard Color Blueprint) */}
-            <div className="rounded-2xl border-2 border-[#CAD3F5] bg-[#EFF5FF]/70 p-5 shadow-2xs">
+            {/* Selected Campus Overview Card (Pure White Clean Surface, Zero Dots, Brand Colors) */}
+            <div className="rounded-[4px] border border-[#CAD3F5] bg-white p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
-                    SELECTED CAMPUS
+                    Selected Campus
                   </span>
-                  <span className="py-0.2 rounded border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 font-mono text-[9px] font-bold text-[#0056FF]">
+                  <span className="rounded-[2px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0056FF]">
                     {activeCampusMeta.badge}
                   </span>
-                </div>
-                <div className="flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
-                  <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
-                  <span>ACTIVE BRANCH</span>
                 </div>
               </div>
 
               <div className="mt-3 flex items-start gap-3">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-[#CAD3F5] bg-white text-[#0056FF] shadow-2xs">
-                  <CampusIcon className="size-5 stroke-[2]" />
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]">
+                  <CampusIcon className="size-4.5 stroke-[2]" />
                 </div>
                 <div>
-                  <h4 className="font-sans text-base font-black text-[#0A1A4A] sm:text-lg">
+                  <h4 className="font-sans text-sm font-bold text-[#0A1A4A] sm:text-base">
                     {activeCampusMeta.label}
                   </h4>
-                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-slate-600">
+                  <p className="mt-0.5 font-sans text-xs leading-relaxed text-[#334155]">
                     {activeCampusMeta.desc}
                   </p>
                 </div>
               </div>
 
-              {/* Institutional Metrics Grid */}
-              <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[#CAD3F5]/80 pt-3.5 font-mono sm:grid-cols-4">
-                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+              {/* Institutional Metrics Grid (Clean, Zero Dots) */}
+              <div className="mt-3.5 grid grid-cols-2 gap-2 border-t border-[#CAD3F5]/60 pt-3 font-mono sm:grid-cols-4">
+                <div className="rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF]/40 p-2 text-center">
                   <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
-                    Enrolled
+                    Students
                   </span>
-                  <span className="mt-0.5 block font-sans text-sm font-black text-[#0056FF]">
-                    {activeCampusMeta.enrolled}
+                  <span className="mt-0.5 block font-sans text-sm font-bold text-[#0056FF]">
+                    {activeCampusMeta.students}
                   </span>
                 </div>
-                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+                <div className="rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF]/40 p-2 text-center">
                   <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
-                    Active Labs
+                    Faculty
                   </span>
-                  <span className="mt-0.5 block font-sans text-sm font-black text-[#0A1A4A]">
-                    {activeCampusMeta.labs}
+                  <span className="mt-0.5 block font-sans text-sm font-bold text-[#0A1A4A]">
+                    {activeCampusMeta.faculty}
                   </span>
                 </div>
-                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+                <div className="rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF]/40 p-2 text-center">
                   <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
-                    Latency
+                    Programs
                   </span>
-                  <span className="mt-0.5 block font-sans text-sm font-black text-emerald-600">
-                    {activeCampusMeta.latency}
+                  <span className="mt-0.5 block font-sans text-sm font-bold text-[#0A1A4A]">
+                    {activeCampusMeta.programs}
                   </span>
                 </div>
-                <div className="rounded-xl border border-[#CAD3F5]/80 bg-white p-2.5 text-center shadow-2xs">
+                <div className="rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF]/40 p-2 text-center">
                   <span className="block text-[9px] font-bold tracking-wider text-slate-400 uppercase">
-                    Region
+                    Province
                   </span>
-                  <span className="mt-0.5 block font-mono text-xs font-bold text-[#0056FF]">
-                    {activeCampusMeta.badge}
+                  <span className="mt-0.5 block font-sans text-xs font-bold text-[#0056FF]">
+                    {activeCampusMeta.province}
                   </span>
                 </div>
               </div>

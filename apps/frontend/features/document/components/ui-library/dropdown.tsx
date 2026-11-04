@@ -151,15 +151,12 @@ export function LibraryDropdown({
     >
       {/* Optional Top Label */}
       {label && (
-        <div className="mb-2 flex items-center justify-between">
-          <label className="font-sans text-xs font-bold text-[#0A1A4A]">{label}</label>
-          <span className="font-mono text-[10px] font-semibold text-[#0056FF]">
-            Standard Blueprint
-          </span>
+        <div className="mb-1.5 flex items-center justify-between">
+          <label className="font-sans text-xs font-semibold text-[#0A1A4A]">{label}</label>
         </div>
       )}
 
-      {/* Modern High-End Trigger Button */}
+      {/* Modern Clean Trigger Button */}
       <button
         type="button"
         disabled={disabled}
@@ -167,10 +164,10 @@ export function LibraryDropdown({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         className={cn(
-          'group relative flex min-h-[54px] w-full cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 px-3.5 py-2.5 transition-all select-none focus-visible:outline-none',
+          'group relative flex min-h-[48px] w-full cursor-pointer items-center justify-between gap-3 rounded-[4px] border px-3 py-2 transition-all select-none focus-visible:outline-none',
           isOpen
-            ? 'border-[#0056FF] bg-white shadow-[0_8px_24px_rgba(0,86,255,0.12)] ring-3 ring-[#0056FF]/15'
-            : 'border-[#CAD3F5] bg-white hover:border-[#0056FF] hover:bg-[#EFF5FF]/25 hover:shadow-2xs',
+            ? 'border-[#0056FF] bg-white ring-1 ring-[#0056FF]/20'
+            : 'border-[#CAD3F5] bg-white hover:border-[#0056FF] hover:bg-[#EFF5FF]/25',
           disabled && 'cursor-not-allowed bg-slate-100 opacity-50',
         )}
       >
@@ -178,13 +175,13 @@ export function LibraryDropdown({
         <div className="flex min-w-0 flex-1 items-center gap-3">
           <div
             className={cn(
-              'flex size-9 shrink-0 items-center justify-center rounded-xl border transition-transform duration-200 group-hover:scale-105',
+              'flex size-8 shrink-0 items-center justify-center rounded-[4px] border transition-colors',
               selectedOption
-                ? 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF] shadow-2xs'
+                ? 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]'
                 : 'border-slate-200 bg-slate-50 text-slate-400',
             )}
           >
-            <TriggerIcon className="size-4.5 stroke-[2]" />
+            <TriggerIcon className="size-4 stroke-[2]" />
           </div>
 
           {/* Center: Campus Details */}
@@ -198,38 +195,29 @@ export function LibraryDropdown({
               {selectedOption ? selectedOption.label : placeholder}
             </span>
             {selectedOption?.description && (
-              <span className="truncate font-sans text-[11px] text-slate-500">
+              <span className="truncate font-sans text-[11px] text-[#334155]">
                 {selectedOption.description}
               </span>
             )}
           </div>
         </div>
 
-        {/* Right: Badges & Chevron */}
+        {/* Right: Badges & Chevron (Clean, Zero Dots) */}
         <div className="flex shrink-0 items-center gap-2">
           {selectedOption?.badge && (
-            <span className="rounded-md border border-[#CAD3F5] bg-[#E3E7FC] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+            <span className="rounded-[2px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
               {selectedOption.badge}
-            </span>
-          )}
-
-          {/* Active Status Ping */}
-          {selectedOption && (
-            <span className="flex size-2 items-center justify-center">
-              <span className="size-2 rounded-full bg-emerald-500 ring-2 ring-emerald-100" />
             </span>
           )}
 
           {/* Rotating Chevron */}
           <div
             className={cn(
-              'flex size-6 items-center justify-center rounded-lg transition-all duration-200',
-              isOpen
-                ? 'rotate-180 bg-[#EFF5FF] text-[#0056FF]'
-                : 'text-slate-400 group-hover:text-[#0056FF]',
+              'flex size-5 items-center justify-center transition-transform duration-200',
+              isOpen ? 'rotate-180 text-[#0056FF]' : 'text-slate-400 group-hover:text-[#0056FF]',
             )}
           >
-            <ChevronDown className="size-4 stroke-[2.5]" />
+            <ChevronDown className="size-4 stroke-[2]" />
           </div>
         </div>
       </button>
@@ -239,26 +227,26 @@ export function LibraryDropdown({
         <div
           role="listbox"
           tabIndex={-1}
-          className="animate-in fade-in zoom-in-95 absolute right-0 left-0 z-50 mt-2 overflow-hidden rounded-2xl border-2 border-[#CAD3F5] bg-white shadow-[0_20px_50px_rgba(0,86,255,0.16)] transition-all"
+          className="animate-in fade-in zoom-in-95 absolute right-0 left-0 z-50 mt-1.5 overflow-hidden rounded-[4px] border border-[#CAD3F5] bg-white shadow-md transition-all"
         >
           {/* Top Quick Search Filter */}
           {searchable && (
-            <div className="border-b border-slate-100 bg-[#F8FAFC] p-2.5">
+            <div className="border-b border-[#CAD3F5]/60 bg-[#EFF5FF]/30 p-2">
               <div className="relative flex items-center">
-                <Search className="absolute left-3 size-4 text-slate-400" />
+                <Search className="absolute left-2.5 size-3.5 text-slate-400" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={searchPlaceholder}
-                  className="h-9 w-full rounded-xl border border-slate-200 bg-white pr-8 pl-9 font-sans text-xs font-medium text-slate-800 placeholder-slate-400 transition-all focus:border-[#0056FF] focus:bg-white focus:ring-2 focus:ring-[#0056FF]/20 focus:outline-none"
+                  className="h-8 w-full rounded-[4px] border border-[#CAD3F5] bg-white pr-7 pl-8 font-sans text-xs font-medium text-[#0A1A4A] placeholder-slate-400 transition-colors focus:border-[#0056FF] focus:outline-none"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-2.5 flex size-5 cursor-pointer items-center justify-center rounded-full text-slate-400 hover:bg-slate-200 hover:text-slate-700"
+                    className="absolute right-2 flex size-4 cursor-pointer items-center justify-center rounded-[2px] text-slate-400 hover:bg-slate-200 hover:text-slate-700"
                   >
                     <X className="size-3" />
                   </button>
@@ -268,15 +256,15 @@ export function LibraryDropdown({
           )}
 
           {/* Directory Count Header */}
-          <div className="flex items-center justify-between border-b border-slate-100 px-3 py-1.5 font-mono text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+          <div className="flex items-center justify-between border-b border-[#CAD3F5]/60 bg-white px-3 py-1.5 font-mono text-[10px] font-bold tracking-wider text-slate-500 uppercase">
             <span>Institutional Branch Directory</span>
             <span>{filteredOptions.length} Campuses</span>
           </div>
 
           {/* Options Listbox */}
-          <div ref={listboxRef} className="no-scrollbar max-h-72 space-y-1.5 overflow-y-auto p-2">
+          <div ref={listboxRef} className="no-scrollbar max-h-64 space-y-1 overflow-y-auto p-1.5">
             {filteredOptions.length === 0 ? (
-              <div className="py-8 text-center">
+              <div className="py-6 text-center">
                 <p className="font-sans text-xs font-bold text-slate-600">No campuses found</p>
                 <p className="mt-0.5 font-sans text-[11px] text-slate-400">
                   Try adjusting your search terms
@@ -301,11 +289,11 @@ export function LibraryDropdown({
                     }}
                     onMouseEnter={() => setActiveIndex(idx)}
                     className={cn(
-                      'group relative flex w-full cursor-pointer items-start justify-between gap-3 rounded-xl border p-3 text-left transition-all select-none',
+                      'group relative flex w-full cursor-pointer items-start justify-between gap-3 rounded-[4px] border p-2.5 text-left transition-colors select-none',
                       isSelected
-                        ? 'border-[#0056FF] bg-[#EFF5FF] shadow-xs'
+                        ? 'border-[#0056FF] bg-[#EFF5FF]'
                         : isKeyboardActive
-                          ? 'border-[#CAD3F5] bg-[#EFF5FF]/40 text-[#0056FF]'
+                          ? 'border-[#CAD3F5] bg-[#EFF5FF]/50 text-[#0056FF]'
                           : 'border-transparent bg-white hover:border-[#CAD3F5] hover:bg-[#EFF5FF]/30',
                       option.disabled && 'cursor-not-allowed opacity-40',
                     )}
@@ -313,13 +301,13 @@ export function LibraryDropdown({
                     {/* Left Icon Badge */}
                     <div
                       className={cn(
-                        'flex size-9 shrink-0 items-center justify-center rounded-xl border transition-colors',
+                        'flex size-8 shrink-0 items-center justify-center rounded-[4px] border transition-colors',
                         isSelected
-                          ? 'border-[#0056FF] bg-[#0056FF] text-white shadow-2xs'
+                          ? 'border-[#0056FF] bg-[#0056FF] text-white'
                           : 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]',
                       )}
                     >
-                      <OptionIcon className="size-4.5 stroke-[2]" />
+                      <OptionIcon className="size-4 stroke-[2]" />
                     </div>
 
                     {/* Middle Campus Metadata */}
@@ -336,7 +324,7 @@ export function LibraryDropdown({
                         {option.badge && (
                           <span
                             className={cn(
-                              'py-0.2 rounded border px-1.5 font-mono text-[9px] font-bold',
+                              'rounded-[2px] border px-1.5 py-0.5 font-mono text-[9px] font-bold',
                               isSelected
                                 ? 'border-[#0056FF] bg-[#0056FF] text-white'
                                 : 'border-[#CAD3F5] bg-[#E3E7FC] text-[#0056FF]',
@@ -348,21 +336,19 @@ export function LibraryDropdown({
                       </div>
 
                       {option.description && (
-                        <span className="mt-1 font-sans text-xs leading-relaxed text-slate-500">
+                        <span className="mt-0.5 font-sans text-[11px] leading-relaxed text-[#334155]">
                           {option.description}
                         </span>
                       )}
                     </div>
 
-                    {/* Right: Selected Checkmark Indicator */}
+                    {/* Right: Selected Checkmark Indicator (Clean, Zero Dots) */}
                     <div className="flex shrink-0 items-center self-center">
                       {isSelected ? (
-                        <span className="flex size-6 items-center justify-center rounded-lg bg-[#0056FF] text-white shadow-2xs">
-                          <Check className="size-3.5 stroke-[3]" />
+                        <span className="flex size-5 items-center justify-center rounded-[2px] bg-[#0056FF] text-white">
+                          <Check className="size-3 stroke-[3]" />
                         </span>
-                      ) : (
-                        <span className="size-2 rounded-full bg-slate-200 group-hover:bg-[#0056FF]/40" />
-                      )}
+                      ) : null}
                     </div>
                   </button>
                 );
@@ -370,13 +356,10 @@ export function LibraryDropdown({
             )}
           </div>
 
-          {/* Bottom Footer Info Bar */}
-          <div className="flex items-center justify-between border-t border-slate-100 bg-[#F8FAFC] px-3.5 py-2 font-mono text-[10px] text-slate-500">
-            <span>Use ↑ ↓ keys to navigate · Enter to select</span>
-            <div className="flex items-center gap-1 font-bold text-[#0056FF]">
-              <span className="size-1.5 rounded-full bg-emerald-500" />
-              <span>Replica Active</span>
-            </div>
+          {/* Bottom Footer Info Bar (Clean, Zero Dots) */}
+          <div className="flex items-center justify-between border-t border-[#CAD3F5]/60 bg-[#EFF5FF]/40 px-3 py-1.5 font-mono text-[10px] text-slate-500">
+            <span>Use ↑ ↓ keys to navigate</span>
+            <span className="font-semibold text-[#0056FF]">Press Enter to select</span>
           </div>
         </div>
       )}
