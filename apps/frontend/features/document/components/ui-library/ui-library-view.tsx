@@ -27,6 +27,7 @@ import {
   AnimatedCounterDemo,
   VoiceNoteDemo,
   GridRevealDemo,
+  CipherTextDecoderDemo,
   MarqueeSectionDemo,
   FloatingLabelFormDemo,
   MultiStepWizardDemo,
@@ -1432,30 +1433,36 @@ function renderFeedComponentDemo(
       return <DataTableDemo />;
 
     // ==========================================
+    // FORMS GROUP (Component Templates)
+    // ==========================================
+    case 'multi-step-wizard':
+      return <MultiStepWizardDemo />;
+    case 'floating-label-form':
+      return <FloatingLabelFormDemo />;
+    case 'file-dropzone':
+      return <FileDropzoneDemo />;
+    case 'rich-text-editor':
+      return <RichTextEditorDemo />;
+
+    // ==========================================
     // AI KIT GROUP (Interactive Demos)
     // ==========================================
     case 'grid-reveal':
       return <GridRevealDemo />;
 
     // ==========================================
-    // SECTIONS (Component Templates)
+    // TEXT EFFECTS GROUP (Interactive Demos)
+    // ==========================================
+    case 'cipher-text-decoder':
+      return <CipherTextDecoderDemo />;
+
+    // ==========================================
+    // SECTIONS GROUP (Component Templates)
     // ==========================================
     case 'marquee-section':
     case 'logo-marquee':
     case 'marquee':
       return <MarqueeSectionDemo />;
-
-    // ==========================================
-    // FORMS (Component Templates)
-    // ==========================================
-    case 'floating-label-form':
-      return <FloatingLabelFormDemo />;
-    case 'multi-step-wizard':
-      return <MultiStepWizardDemo />;
-    case 'file-dropzone':
-      return <FileDropzoneDemo />;
-    case 'rich-text-editor':
-      return <RichTextEditorDemo />;
 
     default:
       return comp ? (

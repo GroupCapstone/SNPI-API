@@ -722,10 +722,10 @@ export const COMPONENT_CATEGORIES = [
   'Inputs',
   'Feedback',
   'Display',
+  'Forms',
   'AI Kit',
   'Text Effects',
   'Sections',
-  'Forms',
 ] as const;
 
 export type ComponentCategory = (typeof COMPONENT_CATEGORIES)[number];
@@ -1044,7 +1044,7 @@ export function Example() {
   {
     id: 'dropdown',
     name: 'Dropdown (Campus & Branch Selector)',
-    category: 'Inputs',
+    category: 'Navigation',
     builtAt: '2026-11-02',
     paradigm: 'Standard Brand Tokens & Searchable Institutional Selector',
     description:
@@ -2100,6 +2100,39 @@ const columns: DataTableColumn<StudentRecord>[] = [
     usageGuidelines: [{ doItem: 'Show execution speed.', dontItem: 'Avoid flashing colors.' }],
     implementationNotes: ['Laser beam line with animated pulse.'],
     supportedStates: ['Standby', 'Scanning'],
+  },
+  {
+    id: 'cipher-text-decoder',
+    name: 'Cipher Text Decoder',
+    category: 'Text Effects',
+    builtAt: '2026-11-02',
+    paradigm: 'Cryptographic Character Scramble Standard',
+    description:
+      'Per-character randomized glyph decode animation with progressive lock-in, hover trigger, and reduced motion safety.',
+    explanation:
+      'Decodes sensitive telemetry and security credentials with animated cryptographic character scrambles.',
+    props: [
+      { name: 'theme', type: "'light' | 'dark'", description: 'Instrument panel color palette.' },
+    ],
+    codeSnippet: `import { CipherTextDecoderDemo } from '@/features/document/components/ui-library';\n\n<CipherTextDecoderDemo />`,
+    realWorldExamples: [
+      {
+        title: 'Security Telemetry Header',
+        scenario: 'Displays cryptographic key rotation in-place.',
+        impact: 'High-tech feedback.',
+      },
+    ],
+    uxPsychology: [
+      {
+        principle: 'Feedback Transparency',
+        detail: 'Cryptographic scramble conveys active verification.',
+      },
+    ],
+    usageGuidelines: [
+      { doItem: 'Honor prefers-reduced-motion.', dontItem: 'Do not obscure critical data.' },
+    ],
+    implementationNotes: ['Per-character scramble with requestAnimationFrame lock-in.'],
+    supportedStates: ['Scrambling', 'Locked'],
   },
   {
     id: 'marquee-section',
@@ -3684,16 +3717,35 @@ const FUTURE_M3_COMPONENTS: ComponentItemDoc[] = [
 const categoryOrderMap = new Map<string, number>();
 COMPONENT_CATEGORIES.forEach((cat, idx) => categoryOrderMap.set(cat, idx));
 
+const navItemOrderMap = new Map<string, number>();
+let navSequence = 0;
+COMPONENT_GROUPS_NAV.forEach((group) => {
+  group.items.forEach((item) => {
+    if (item.isParent && item.children) {
+      item.children.forEach((child) => {
+        navItemOrderMap.set(child.id, navSequence++);
+      });
+    } else {
+      navItemOrderMap.set(item.id, navSequence++);
+    }
+  });
+});
+
 /**
  * Master UI Component Library Registry
- * Guaranteed 100% sorted in strict linear flow order matching COMPONENT_CATEGORIES.
- * Prevents rank jumping and ensures sequential step-by-step scrolling.
+ * Guaranteed 100% sorted in strict linear flow order matching COMPONENT_GROUPS_NAV and COMPONENT_CATEGORIES.
+ * Step-by-step layout prevents rank jumping between parent and child lists.
  */
 export const COMPONENT_LIBRARY_REGISTRY: ComponentItemDoc[] = [
   ...RAW_COMPONENT_REGISTRY,
   ...FUTURE_M3_COMPONENTS,
 ].sort((a, b) => {
-  const orderA = categoryOrderMap.get(a.category) ?? 999;
-  const orderB = categoryOrderMap.get(b.category) ?? 999;
-  return orderA - orderB;
+  const catOrderA = categoryOrderMap.get(a.category) ?? 999;
+  const catOrderB = categoryOrderMap.get(b.category) ?? 999;
+  if (catOrderA !== catOrderB) {
+    return catOrderA - catOrderB;
+  }
+  const itemOrderA = navItemOrderMap.get(a.id) ?? 999;
+  const itemOrderB = navItemOrderMap.get(b.id) ?? 999;
+  return itemOrderA - itemOrderB;
 });
