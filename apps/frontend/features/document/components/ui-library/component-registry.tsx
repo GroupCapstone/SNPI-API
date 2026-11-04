@@ -1869,25 +1869,15 @@ export default function NotFound() {
     builtAt: '2026-11-02',
     paradigm: 'Waveform Audio Standard',
     description:
-      'Interactive audio waveform player featuring animated amplitude bars, playback scrub bar, speed toggles, and voice-to-text transcript drawer.',
+      'Clean audio waveform player featuring real Web Audio procedural speech synthesis, live AnalyserNode frequency waveforms, and click-to-seek scrubbing.',
     explanation:
-      'A tactile audio playback studio designed for faculty voice memos, student verbal feedback, and campus audio dispatches. Features dynamic waveform amplitude bars that animate during playback and support click-to-scrub time seeking, 1x/1.25x/1.5x/2x speed multipliers, and an expandable voice-to-text transcript drawer.',
+      'A focused voice memo player featuring real procedural audio synthesis via Web Audio API, dynamic waveform bars driven by a live AnalyserNode, variable speed controls, and interactive scrubbing.',
     props: [
       {
         name: 'duration',
         type: 'number',
-        default: '135',
+        default: '12',
         description: 'Total audio track duration in seconds.',
-      },
-      {
-        name: 'author',
-        type: 'string',
-        description: 'Faculty speaker name and institutional title.',
-      },
-      {
-        name: 'transcript',
-        type: 'string',
-        description: 'Full verified voice-to-text transcript copy.',
       },
     ],
     codeSnippet: `import { VoiceNoteDemo } from '@/features/document/components/ui-library';\n\n<VoiceNoteDemo />`,
