@@ -2,7 +2,43 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 0.2.17 (04.11.2026) - `2585f81` (Developer: **史力爱卫**)
+### Version 0.2.17 (04.11.2026) - `4c5628c` (Developer: **史力爱卫**)
+
+- Align feed sequence in lockstep with sidebar parent range and child lists
+
+### Version 0.2.17 (04.11.2026) - `d007ade` (Developer: **史力爱卫**)
+
+- Add liquid glass parent icon circles, auto-dropdown accordion on scroll, and auto-centering in sidebar
+
+### Version 0.2.17 (04.11.2026) - `e9710dd` (Developer: **史力爱卫**)
+
+- Redesign floating label form and multi-step wizard with fluid water progress and brand dropdowns
+
+### Version 0.2.17 (04.11.2026) - `fc42d97` (Developer: **史力爱卫**)
+
+- Redesign VoiceNote with real Web Audio synthesis and live reactive AnalyserNode waveform
+
+### Version 0.2.17 (04.11.2026) - `f065b4a` (Developer: **史力爱卫**)
+
+- Add animated connection loading lines and step-to-step transitions to StepPlayer
+
+### Version 0.2.17 (04.11.2026) - `d58e20a` (Developer: **史力爱卫**)
+
+- Format feedback-demos with prettier
+
+### Version 0.2.17 (04.11.2026) - `8465821` (Developer: **史力爱卫**)
+
+- Redesign status page with clean status code and title only, remove descriptions and style archetypes
+
+### Version 0.2.17 (04.11.2026) - `3939f12` (Developer: **史力爱卫**)
+
+- Redesign dropdown selector with clean brand tokens, white card surfaces, and zero indicator dots
+
+### Version 0.2.22 (04.11.2026) - `9702289` (Developer: **史力爱卫**)
+
+- Checkpoint & live ci deploy verification [PASSED]
+
+### Version 0.2.22 (04.11.2026) - `2585f81` (Developer: **史力爱卫**)
 
 - Add build:shared and liveness timeout check to e2e daemon
 
@@ -65,40 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.19 (03.11.2026) - `9f14394` (Developer: **史力爱卫**)
 
 - Implement 6-layer dependency supply chain defense standard & automated verification
-
-### Version 0.2.19 (03.11.2026) - `485f0b0` (Developer: **史力爱卫**)
-
-- Add unified verify:all-standards command for all enterprise standards
-
-### Version 0.2.19 (03.11.2026) - `eb81feb` (Developer: **史力爱卫**)
-
-- Implement github repository threat model (T-01 to T-08), danger zone governance & ruleset defenses
-
-### Version 0.2.19 (03.11.2026) - `63a9dcf` (Developer: **史力爱卫**)
-
-- Wire private networking into pre-push quality gates, deploy workflows & internal endpoints
-
-### Version 0.2.19 (03.11.2026) - `f4f0003` (Developer: **史力爱卫**)
-
-- Implement actions private networking, azure vnet injection & firewall fqdn standards
-
-### Version 0.2.19 (03.11.2026) - `4225b26` (Developer: **史力爱卫**)
-
-- Real-time changelog sync for primary appsec skill
-
-### Version 0.2.19 (03.11.2026) - `febce6b` (Developer: **史力爱卫**)
-
-- Establish primary Application Security Design Principles skill & agent bindings
-
-### Version 0.2.19 (03.11.2026) - `c9e1343` (Developer: **史力爱卫**)
-
-- Sync resilience mirroring changelog entry
-
-### Version 0.2.19 (03.11.2026) - `e4f59ac` (Developer: **史力爱卫**)
-
-- Record application security principles commit
-
-### Version 0.2.19 (03.11.2026) - `0e6083f` (Developer: **史力爱卫**)
-
-- Record enterprise application security design principles & maturity framework
 
