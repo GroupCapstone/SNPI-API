@@ -22,6 +22,7 @@
     "deploy:preview": "npx vercel",
     "team:push": "npm run git:sync && git push origin main",
     "push:github": "npm run git:sync && git push origin main",
+    "push:capstone": "git push groupcapstone main",
     "release:all": "tsx scripts/release-pipeline.ts",
     "git:sync": "tsx scripts/dual-dev-git-sync.ts",
     "changelog:sync": "tsx scripts/sync-changelog.ts",
