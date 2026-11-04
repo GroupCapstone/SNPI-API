@@ -1814,20 +1814,25 @@ export default function NotFound() {
     builtAt: '2026-11-02',
     paradigm: 'Sequential Workflow Standard',
     description:
-      'Multi-stage progress stepper guiding operators through sequential tasks with forward and backward navigation controls.',
-    explanation: 'Guides users through sequential institutional onboarding processes.',
+      'Multi-stage progress stepper featuring animated connection line loading, spring step transitions, and sequential workflow controls.',
+    explanation:
+      'Guides users through sequential institutional onboarding processes with animated connection lines, spring step-to-step transitions, and interactive controls.',
     props: [{ name: 'currentStep', type: 'number', description: 'Active step.' }],
     codeSnippet: `import { StepPlayerDemo } from '@/features/document/components/ui-library';\n\n<StepPlayerDemo />`,
     realWorldExamples: [
       {
-        title: 'Student Enrollment',
-        scenario: 'Registrar steps through admission stages.',
-        impact: 'Zero skipped steps.',
+        title: 'Student Enrollment Workflow',
+        scenario: 'Registrar steps through verified admission stages.',
+        impact: 'Zero skipped steps with real-time visual progress feedback.',
       },
     ],
     uxPsychology: [{ principle: 'Chunking', detail: 'Breaks long forms into bite-sized steps.' }],
     usageGuidelines: [{ doItem: 'Show clear numbers.', dontItem: 'Do not hide progress.' }],
-    implementationNotes: ['Step pills with next/prev buttons.'],
+    implementationNotes: [
+      'Animated connecting line tracks with active loading beam.',
+      'Spring pop checkmark transitions.',
+      'Step-to-step AnimatePresence phase card.',
+    ],
     supportedStates: ['Active', 'Completed', 'Upcoming'],
   },
   {
