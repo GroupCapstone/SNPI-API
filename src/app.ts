@@ -115,7 +115,7 @@ export const createApp = (): express.Express => {
       response.status(200).json({
         success: true,
         message: 'SNP-SMS API Service',
-        status: 'operational',
+        status: 'online',
       });
       return;
     }
