@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `5025c17` (Developer: **史力爱卫**)
+
+- Enrich Google API Design Guide deep-dive with ROD methodology, 16 status codes, and AIP standards
+
+### Version 0.2.17 (04.11.2026) - `6d13f2d` (Developer: **史力爱卫**)
+
+- Record API Stylebook insights synchronization commit 8c04e4d
+
 ### Version 0.2.17 (04.11.2026) - `8c04e4d` (Developer: **史力爱卫**)
 
 - Record API Stylebook blog insights, Deliveroo in-depth critique, and AP Stylebook lineage
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.21 (04.11.2026) - `9a73765` (Developer: **史力爱卫**)
 
 - Synchronize real-time changelog and prettier formatting
-
-### Version 0.2.21 (04.11.2026) - `f79c40c` (Developer: **史力爱卫**)
-
-- Remove card background tints, enforce clean white surface with 4px border radius
-
-### Version 0.2.21 (04.11.2026) - `29c1be3` (Developer: **史力爱卫**)
-
-- Perf(api): optimize resource reading speed and query serialization across feature modules
 
