@@ -1,4 +1,5 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 import type {
   AdminResetPasswordDto,
@@ -19,25 +20,7 @@ export interface UserPayload {
 }
 
 export const getUsers = async (filters: UserFilters = {}) => {
-  const params = new URLSearchParams();
-  if (filters.search) params.append('search', filters.search);
-  if (filters.schoolId) params.append('schoolId', filters.schoolId);
-  if (
-    filters.branchId &&
-    filters.branchId !== 'all' &&
-    filters.branchId !== 'all_branches' &&
-    filters.branchId !== 'all-branches'
-  ) {
-    params.append('branchId', filters.branchId);
-  }
-  if (filters.role) params.append('role', filters.role);
-  if (filters.status) params.append('status', filters.status);
-  if (filters.page) params.append('page', String(filters.page));
-  if (filters.limit) params.append('limit', String(filters.limit));
-
-  const queryString = params.toString();
-  const url = `/users${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiPaginatedResponse<User>>(url);
+  return apiClient.get<ApiPaginatedResponse<User>>(`/users${buildQueryString(filters)}`);
 };
 
 export const getUserById = async (id: string) => {

@@ -1,40 +1,17 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 import type { ClassFormData } from '../schemas';
 import type { ClassAvailabilitySummary, ClassFilters, ClassItem } from '../types';
 
 export const getClasses = async (filters: ClassFilters = {}) => {
-  const params = new URLSearchParams();
-  if (filters.search) params.append('search', filters.search);
-  if (filters.branchId) params.append('branchId', filters.branchId);
-  if (filters.academicYearId) params.append('academicYearId', filters.academicYearId);
-  if (filters.programId) params.append('programId', filters.programId);
-  if (filters.levelId) params.append('levelId', filters.levelId);
-  if (filters.curriculumId) params.append('curriculumId', filters.curriculumId);
-  if (filters.shift) params.append('shift', filters.shift);
-  if (filters.daysPattern) params.append('daysPattern', filters.daysPattern);
-  if (filters.status) params.append('status', filters.status);
-  if (filters.availability) params.append('availability', filters.availability);
-  if (filters.page) params.append('page', String(filters.page));
-  if (filters.limit) params.append('limit', String(filters.limit));
-
-  const queryString = params.toString();
-  const url = `/classes${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiPaginatedResponse<ClassItem>>(url);
+  return apiClient.get<ApiPaginatedResponse<ClassItem>>(`/classes${buildQueryString(filters)}`);
 };
 
 export const getClassSummary = async (filters: Partial<ClassFilters> = {}) => {
-  const params = new URLSearchParams();
-  if (filters.branchId) params.append('branchId', filters.branchId);
-  if (filters.academicYearId) params.append('academicYearId', filters.academicYearId);
-  if (filters.programId) params.append('programId', filters.programId);
-  if (filters.levelId) params.append('levelId', filters.levelId);
-  if (filters.shift) params.append('shift', filters.shift);
-  if (filters.status) params.append('status', filters.status);
-
-  const queryString = params.toString();
-  const url = `/classes/summary${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiSuccessResponse<ClassAvailabilitySummary>>(url);
+  return apiClient.get<ApiSuccessResponse<ClassAvailabilitySummary>>(
+    `/classes/summary${buildQueryString(filters)}`,
+  );
 };
 
 export const getClassById = async (id: string) => {

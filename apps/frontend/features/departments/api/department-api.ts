@@ -1,20 +1,11 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 import type { DepartmentFormData } from '../schemas';
 import type { Department, DepartmentFilters } from '../types';
 
 export const getDepartments = async (filters: DepartmentFilters = {}) => {
-  const params = new URLSearchParams();
-  if (filters.search) params.append('search', filters.search);
-  if (filters.schoolId) params.append('schoolId', filters.schoolId);
-  if (filters.branchId) params.append('branchId', filters.branchId);
-  if (filters.status) params.append('status', filters.status);
-  if (filters.page) params.append('page', String(filters.page));
-  if (filters.limit) params.append('limit', String(filters.limit));
-
-  const queryString = params.toString();
-  const url = `/departments${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiPaginatedResponse<Department>>(url);
+  return apiClient.get<ApiPaginatedResponse<Department>>(`/departments${buildQueryString(filters)}`);
 };
 
 export const getDepartmentById = async (id: string) => {

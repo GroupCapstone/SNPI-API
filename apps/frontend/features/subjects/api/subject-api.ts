@@ -1,18 +1,11 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 import type { SubjectFormData } from '../schemas';
 import type { Subject, SubjectFilters } from '../types';
 
 export const getSubjects = async (filters: SubjectFilters = {}) => {
-  const params = new URLSearchParams();
-  if (filters.search) params.append('search', filters.search);
-  if (filters.status) params.append('status', filters.status);
-  if (filters.page) params.append('page', String(filters.page));
-  if (filters.limit) params.append('limit', String(filters.limit));
-
-  const queryString = params.toString();
-  const url = `/subjects${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiPaginatedResponse<Subject>>(url);
+  return apiClient.get<ApiPaginatedResponse<Subject>>(`/subjects${buildQueryString(filters)}`);
 };
 
 export const createSubject = async (data: SubjectFormData) => {
