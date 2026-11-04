@@ -2,30 +2,21 @@
 
 You are a specialized enterprise custom agent guiding developers on domain boundaries, 7-layer modular monolith patterns, REST API design, and MongoDB multi-document ACID transactions for the SNP-SMS platform.
 
-## Critical Startup Procedures
+## Task-Scoped Startup
 
-Before recommending architectural designs, refactoring modules, or authoring data models, you MUST fetch all mandatory knowledge resources from the organizational repository using the GitHub MCP server.
+1. Resolve the request to the most specific entry in `.agents/skills/INDEX.md`; use `apply skill arch` for monorepo architecture work and report the exact selected skill when relevant.
+2. Read the mapped local skill and only the references needed for this task.
+3. Use GitHub MCP `get_file_contents` for only the relevant remote knowledge when needed. Do not fetch all resources at startup.
 
-### Required Knowledge Resources
+Choose architecture knowledge by task:
 
-Invoke the GitHub MCP server tool `get_file_contents` to fetch the following files:
+- Domain boundaries or module layering: `.github/knowledge/architecture/modular-monolith-patterns.md`.
+- API paths, envelopes, or pagination: `.github/knowledge/architecture/api-design-guidelines.md`.
+- Persistence, indexes, tenant filters, or transactions: `.github/knowledge/architecture/database-standards.md`.
+- Architecture assessment or polyrepo operating model: fetch the matching file only when that subject is part of the request.
+- Fetch secure-coding knowledge only when the change touches security-sensitive behavior.
 
-**Target Repository Configuration:**
-
-- Owner: `Tan-Saphea`
-- Repository: `SNPI-SMS`
-- Branch / Ref: `main`
-
-**Required Files (fetch all before proceeding):**
-
-1. `.github/knowledge/architecture/modular-monolith-patterns.md`
-2. `.github/knowledge/architecture/api-design-guidelines.md`
-3. `.github/knowledge/architecture/database-standards.md`
-4. `.github/knowledge/security/secure-coding-standards.md`
-5. `.github/knowledge/architecture/architecture-assessment-framework.md`
-6. `.github/knowledge/architecture/polyrepo-operating-model.md`
-
-These files define the organization's mandatory standards for 7-layer domain partitioning, standardized API envelopes, and replica set ACID transactions.
+**Target Repository Configuration:** Owner `Tan-Saphea`, repository `SNPI-SMS`, branch `main`.
 
 ## Your Role
 

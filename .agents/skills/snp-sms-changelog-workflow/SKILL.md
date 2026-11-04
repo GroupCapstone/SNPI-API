@@ -37,8 +37,8 @@ npm run changelog:sync
 
 ## 3. Workflow Steps for Every Commit & Skill Update
 
-1. **Implement & Test**: Write code, update models/endpoints, or refine agent skills.
-2. **Run Verification**: Ensure `npm run typecheck` and `npm run test:api` pass.
+1. **Implement & Verify**: Write code, update models/endpoints, or refine agent skills.
+2. **Run Task-Scoped Verification**: Run checks that cover the changed behavior. TypeScript changes require `npm run typecheck`, `npm run lint`, and relevant workspace tests. API, database, integration, or deployment changes require their applicable live checks (`npm run test:api`, `npm run smoke`, or `npm run deploy:verify`). Documentation and agent-configuration changes require route/reference validation and diff review; do not run unrelated live API or database checks.
 3. **Sync Changelog**:
    ```bash
    npm run changelog:sync

@@ -1,4 +1,5 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 
 import type {
@@ -17,19 +18,7 @@ import type {
 export const getStudentsApi = async (
   filters?: StudentQueryFilters,
 ): Promise<ApiPaginatedResponse<Student>> => {
-  const params = new URLSearchParams();
-  if (filters?.page) params.append('page', String(filters.page));
-  if (filters?.limit) params.append('limit', String(filters.limit));
-  if (filters?.search) params.append('search', filters.search);
-  if (filters?.branchId && filters.branchId !== 'all') params.append('branchId', filters.branchId);
-  if (filters?.schoolId) params.append('schoolId', filters.schoolId);
-  if (filters?.status) params.append('status', filters.status);
-  if (filters?.gender) params.append('gender', filters.gender);
-  if (filters?.sortBy) params.append('sortBy', filters.sortBy);
-  if (filters?.sortOrder) params.append('sortOrder', filters.sortOrder);
-
-  const query = params.toString();
-  return apiClient.get<ApiPaginatedResponse<Student>>(`/students${query ? `?${query}` : ''}`);
+  return apiClient.get<ApiPaginatedResponse<Student>>(`/students${buildQueryString(filters)}`);
 };
 
 export const getStudentByIdApi = async (id: string): Promise<ApiSuccessResponse<Student>> => {
