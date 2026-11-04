@@ -10,6 +10,27 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "8c04e4d",
+    "developer": "史力爱卫",
+    "description": "Record API Stylebook blog insights, Deliveroo in-depth critique, and AP Stylebook lineage"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "499d7b4",
+    "developer": "史力爱卫",
+    "description": "Standardize public fonts and images naming, connectivity, and catalog"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "eed781f",
+    "developer": "史力爱卫",
+    "description": "Record API Stylebook 16-guideline directory sync commit 35af91d"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "35af91d",
     "developer": "史力爱卫",
     "description": "Record complete 16 enterprise API design guidelines directory and archetypes"
@@ -160,26 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "29c1be3",
     "developer": "史力爱卫",
     "description": "Perf(api): optimize resource reading speed and query serialization across feature modules"
-  },
-  {
-    "version": "0.2.21",
-    "date": "04.11.2026",
-    "commitHash": "00a8b53",
-    "developer": "史力爱卫",
-    "description": "Perf(api-client): optimize header allocation, active branch caching, and query string compilation"
-  },
-  {
-    "version": "0.2.21",
-    "date": "04.11.2026",
-    "commitHash": "2e8b66a",
-    "developer": "史力爱卫",
-    "description": "Add agent skill routing index, governance policies, and query parameters utility"
-  },
-  {
-    "version": "0.2.21",
-    "date": "03.11.2026",
-    "commitHash": "7e103eb",
-    "developer": "史力爱卫",
-    "description": "Update stale action SHA pins & build shared before smoke"
   }
 ];
