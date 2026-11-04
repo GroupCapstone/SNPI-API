@@ -139,16 +139,67 @@ export interface LiquidGlassCircleTheme {
 
 /**
  * Returns tactile Liquid Glass color circle tokens for sidebar parent group icons.
- * Strictly unified to Brand Royal Blue (#0056FF) and Ice Tint (#EFF5FF) per brand guidelines.
+ * Strictly unified to Brand Royal Blue (#0056FF), Azure Blue (#2277FF), Soft Lavender (#E3E7FC), and Ice Tint (#EFF5FF).
  */
-export function getLiquidGlassCircle(_groupId?: string): LiquidGlassCircleTheme {
-  return {
-    bg: 'bg-gradient-to-br from-[#EFF5FF] to-[#DBEAFE]',
-    text: 'text-[#0056FF]',
-    border: 'border-[#CAD3F5]',
-    ring: 'ring-[#0056FF]/35',
-    glow: 'rgba(0, 86, 255, 0.12)',
-  };
+export function getLiquidGlassCircle(groupId?: string): LiquidGlassCircleTheme {
+  switch (groupId) {
+    case 'group-navigation':
+      return {
+        bg: 'bg-gradient-to-br from-[#EFF5FF] to-[#DBEAFE]',
+        text: 'text-[#0056FF]',
+        border: 'border-[#CAD3F5]',
+        ring: 'ring-[#0056FF]/35',
+        glow: 'rgba(0, 86, 255, 0.16)',
+      };
+    case 'group-inputs':
+      return {
+        bg: 'bg-gradient-to-br from-white via-[#EFF5FF] to-[#E3E7FC]',
+        text: 'text-[#2277FF]',
+        border: 'border-[#CAD3F5]',
+        ring: 'ring-[#2277FF]/35',
+        glow: 'rgba(34, 119, 255, 0.16)',
+      };
+    case 'group-feedback':
+      return {
+        bg: 'bg-gradient-to-br from-[#E3E7FC]/80 via-[#EFF5FF] to-white',
+        text: 'text-[#0056FF]',
+        border: 'border-[#CAD3F5]',
+        ring: 'ring-[#0056FF]/35',
+        glow: 'rgba(0, 86, 255, 0.16)',
+      };
+    case 'group-display':
+      return {
+        bg: 'bg-gradient-to-br from-[#EFF5FF] via-white to-[#DBEAFE]',
+        text: 'text-[#0056FF]',
+        border: 'border-[#CAD3F5]',
+        ring: 'ring-[#0056FF]/35',
+        glow: 'rgba(0, 86, 255, 0.16)',
+      };
+    case 'group-forms':
+      return {
+        bg: 'bg-gradient-to-br from-white via-[#DBEAFE] to-[#EFF5FF]',
+        text: 'text-[#0056FF]',
+        border: 'border-[#CAD3F5]',
+        ring: 'ring-[#0056FF]/35',
+        glow: 'rgba(0, 86, 255, 0.16)',
+      };
+    case 'group-sections':
+      return {
+        bg: 'bg-gradient-to-br from-[#EFF5FF] to-[#E3E7FC]',
+        text: 'text-[#2277FF]',
+        border: 'border-[#CAD3F5]',
+        ring: 'ring-[#2277FF]/35',
+        glow: 'rgba(34, 119, 255, 0.16)',
+      };
+    default:
+      return {
+        bg: 'bg-gradient-to-br from-[#EFF5FF] to-[#DBEAFE]',
+        text: 'text-[#0056FF]',
+        border: 'border-[#CAD3F5]',
+        ring: 'ring-[#0056FF]/35',
+        glow: 'rgba(0, 86, 255, 0.14)',
+      };
+  }
 }
 
 export interface ParentCategoryTheme {
