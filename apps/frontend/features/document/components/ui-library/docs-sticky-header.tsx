@@ -19,7 +19,12 @@ import {
   ShieldKey,
   LayoutGrid,
 } from '@/components/icons';
-import { getNavIcon, getParentGroupIcon, getParentCategoryTheme } from './component-nav-icons';
+import {
+  getNavIcon,
+  getParentGroupIcon,
+  getParentCategoryTheme,
+  getLiquidGlassCircle,
+} from './component-nav-icons';
 import { HangingTabsNav, type HangingTabItem } from './hanging-tabs-nav';
 import { HookSidebar } from './hook-sidebar';
 import { useDocsNav } from './docs-nav-context';
@@ -396,6 +401,7 @@ export function DocsStickyHeader({
                         filteredComponentGroups.map((group) => {
                           const ParentGroupIcon = getParentGroupIcon(group.groupId);
                           const isGroupCollapsed = Boolean(collapsedGroups[group.groupId]);
+                          const glassTheme = getLiquidGlassCircle(group.groupId);
 
                           return (
                             <div key={group.groupId} className="space-y-0.5">
@@ -405,15 +411,29 @@ export function DocsStickyHeader({
                                 onClick={() => toggleCategoryGroup(group.groupId)}
                                 className="group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-bold text-slate-900 transition-colors select-none hover:bg-slate-100"
                               >
-                                <div className="flex items-center gap-2">
-                                  <ParentGroupIcon className="size-3.5 shrink-0 text-[#0056FF]" />
+                                <div className="flex items-center gap-2.5">
+                                  {/* Liquid Glass Color Circle */}
+                                  <div
+                                    className={cn(
+                                      'relative flex size-7 shrink-0 items-center justify-center rounded-full transition-all duration-200',
+                                      'border border-white/90 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1px_1.5px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.08)] backdrop-blur-md',
+                                      glassTheme.bg,
+                                      glassTheme.text,
+                                      !isGroupCollapsed
+                                        ? cn('ring-2 ring-offset-1', glassTheme.ring, 'shadow-sm')
+                                        : 'opacity-90 group-hover:scale-105 group-hover:opacity-100',
+                                    )}
+                                  >
+                                    <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-white/70" />
+                                    <ParentGroupIcon className="relative z-10 size-3.5 stroke-[2.2]" />
+                                  </div>
                                   <span className="font-bold text-slate-900">{group.group}</span>
                                 </div>
                                 <div className="flex items-center">
                                   {!isGroupCollapsed ? (
                                     <ChevronDown className="size-3 text-[#0056FF]" />
                                   ) : (
-                                    <ChevronRight className="size-3 text-[#0056FF]" />
+                                    <ChevronRight className="size-3 text-slate-400 group-hover:text-[#0056FF]" />
                                   )}
                                 </div>
                               </button>
