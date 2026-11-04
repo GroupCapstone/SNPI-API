@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/lib/utils';
 import {
   Folder,
@@ -410,66 +411,242 @@ export function GravityLettersDemo() {
   );
 }
 
-// 5. Step Player Component
+// 5. Step Player Component with Animated Line Loading Connection & Step-to-Step Transitions
 export function StepPlayerDemo() {
   const [currentStep, setCurrentStep] = React.useState(2);
-  const steps = ['Data Intake', 'Verify Roles', 'Commit Ledger', 'Dispatch Notice'];
+  const [isAutoPlaying, setIsAutoPlaying] = React.useState(false);
+
+  const steps = [
+    {
+      title: 'Data Intake',
+      desc: 'Ingesting and validating payload schema structure',
+    },
+    {
+      title: 'Verify Roles',
+      desc: 'Evaluating multi-tenant RBAC permissions and scopes',
+    },
+    {
+      title: 'Commit Ledger',
+      desc: 'Writing immutable transaction to replica set cluster',
+    },
+    {
+      title: 'Dispatch Notice',
+      desc: 'Broadcasting real-time event notice to institutional nodes',
+    },
+  ];
+
+  // Auto-play timer for demonstrating automated step-to-step connection loading
+  React.useEffect(() => {
+    if (!isAutoPlaying) return;
+    const timer = setInterval(() => {
+      setCurrentStep((prev) => (prev < steps.length ? prev + 1 : 1));
+    }, 2200);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, steps.length]);
 
   return (
-    <div className="w-full max-w-md space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-none">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-2.5 font-mono text-xs">
-        <span className="text-slate-500">PROGRESS:</span>
-        <span className="font-bold text-[#0056FF]">
-          Step {currentStep} of {steps.length}
-        </span>
-      </div>
-
-      <div className="flex items-center justify-between gap-1 py-2">
-        {steps.map((st, idx) => {
-          const stepNum = idx + 1;
-          const isDone = stepNum < currentStep;
-          const isCurrent = stepNum === currentStep;
-
-          return (
-            <div key={idx} className="flex flex-1 flex-col items-center gap-1.5 text-center">
-              <div
-                className={cn(
-                  'flex size-7 items-center justify-center rounded-full font-mono text-xs font-bold transition-all',
-                  isDone && 'bg-emerald-500 text-white',
-                  isCurrent && 'border-2 border-[#0056FF] bg-[#0056FF] text-white',
-                  !isDone && !isCurrent && 'bg-slate-100 text-slate-400',
-                )}
-              >
-                {isDone ? <Check className="size-3.5" /> : stepNum}
-              </div>
-              <span
-                className={cn(
-                  'font-sans text-[10px] font-semibold',
-                  isCurrent ? 'text-slate-900' : 'text-slate-400',
-                )}
-              >
-                {st}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="flex justify-between gap-2 pt-2">
+    <div className="w-full max-w-lg space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-5 shadow-2xs sm:p-6">
+      {/* Header with Progress Tracker and Auto-play Toggle */}
+      <div className="flex items-center justify-between border-b border-[#CAD3F5]/60 pb-3 font-mono text-xs">
+        <div className="flex items-center gap-2">
+          <span className="font-bold tracking-wider text-slate-500 uppercase">PROGRESS:</span>
+          <span className="rounded-[2px] border border-[#CAD3F5] bg-[#E3E7FC] px-1.5 py-0.5 font-bold text-[#0056FF]">
+            Step {currentStep} of {steps.length}
+          </span>
+        </div>
         <button
           type="button"
+          onClick={() => setIsAutoPlaying((prev) => !prev)}
+          className={cn(
+            'flex cursor-pointer items-center gap-1.5 rounded-[2px] border px-2 py-0.5 font-sans text-[11px] font-semibold transition-colors',
+            isAutoPlaying
+              ? 'border-[#0056FF] bg-[#0056FF] text-white'
+              : 'border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF] hover:bg-[#E3E7FC]',
+          )}
+        >
+          {isAutoPlaying ? <Pause className="size-3" /> : <Play className="size-3" />}
+          <span>{isAutoPlaying ? 'Pause' : 'Auto Play'}</span>
+        </button>
+      </div>
+
+      {/* Stepper Track: Nodes + Animated Connection Lines */}
+      <div className="py-2">
+        <div className="flex items-center justify-between">
+          {steps.map((_, idx) => {
+            const stepNum = idx + 1;
+            const isDone = stepNum < currentStep;
+            const isCurrent = stepNum === currentStep;
+
+            return (
+              <React.Fragment key={idx}>
+                {/* Step Node Circle with Spring Pop Animation */}
+                <motion.button
+                  type="button"
+                  onClick={() => setCurrentStep(stepNum)}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={cn(
+                    'relative z-10 flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full font-mono text-xs font-bold transition-all select-none',
+                    isDone && 'bg-[#0056FF] text-white shadow-2xs',
+                    isCurrent &&
+                      'border-2 border-[#0056FF] bg-[#0056FF] text-white shadow-xs ring-4 ring-[#0056FF]/20',
+                    !isDone &&
+                      !isCurrent &&
+                      'border border-[#CAD3F5] bg-[#EFF5FF] text-slate-400 hover:border-[#0056FF] hover:text-[#0056FF]',
+                  )}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    {isDone ? (
+                      <motion.span
+                        key="check"
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0, opacity: 0 }}
+                        transition={{ type: 'spring', stiffness: 450, damping: 22 }}
+                      >
+                        <Check className="size-3.5 stroke-[2.5]" />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="num"
+                        initial={{ scale: 0.8 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+                      >
+                        {stepNum}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
+
+                {/* Animated Line Loading Connection between Steps */}
+                {idx < steps.length - 1 && (
+                  <div className="relative mx-1.5 h-[3px] flex-1 overflow-hidden rounded-full bg-[#E3E7FC]">
+                    {/* Background Filled Line */}
+                    <motion.div
+                      className="h-full bg-[#0056FF]"
+                      initial={false}
+                      animate={{
+                        width: stepNum < currentStep ? '100%' : '0%',
+                      }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                    {/* Animated Connection Loading Beam */}
+                    {stepNum === currentStep - 1 && (
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-[#2277FF] to-transparent opacity-90"
+                        animate={{ x: ['-100%', '100%'] }}
+                        transition={{ repeat: Infinity, duration: 1.2, ease: 'linear' }}
+                      />
+                    )}
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        {/* Step Titles Grid Aligned Directly Under Nodes */}
+        <div className="mt-2.5 grid grid-cols-4 gap-2 text-center">
+          {steps.map((st, idx) => {
+            const stepNum = idx + 1;
+            const isDone = stepNum < currentStep;
+            const isCurrent = stepNum === currentStep;
+
+            return (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setCurrentStep(stepNum)}
+                className="cursor-pointer text-center select-none"
+              >
+                <span
+                  className={cn(
+                    'block truncate font-sans text-[11px] transition-colors',
+                    isCurrent && 'font-bold text-[#0A1A4A]',
+                    isDone && 'font-medium text-[#0056FF]',
+                    !isDone && !isCurrent && 'font-normal text-slate-400',
+                  )}
+                >
+                  {st.title}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Active Phase Card with Step-to-Step Slide & Fade Animation */}
+      <div className="rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF]/40 p-3.5">
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[10px] font-bold text-[#0056FF] uppercase">
+            Active Workflow Phase
+          </span>
+          <span className="rounded-[2px] border border-[#CAD3F5] bg-white px-1.5 py-0.5 font-mono text-[9px] font-bold text-[#0A1A4A]">
+            Phase 0{currentStep} / 0{steps.length}
+          </span>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.18 }}
+            className="mt-1.5"
+          >
+            <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">
+              {steps[currentStep - 1].title}
+            </h4>
+            <p className="mt-0.5 font-sans text-[11px] text-[#334155]">
+              {steps[currentStep - 1].desc}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Action Buttons: Previous, Reset, Next Step */}
+      <div className="flex items-center justify-between gap-2 pt-1">
+        <button
+          type="button"
+          disabled={currentStep === 1}
           onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
-          className="rounded-xl border border-slate-200 px-3 py-1 font-sans text-xs font-semibold text-slate-700 hover:bg-slate-50"
+          className={cn(
+            'cursor-pointer rounded-[4px] border px-3 py-1.5 font-sans text-xs font-semibold transition-colors select-none',
+            currentStep === 1
+              ? 'cursor-not-allowed border-slate-200 bg-slate-50 text-slate-300'
+              : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
+          )}
         >
           Previous
         </button>
-        <button
-          type="button"
-          onClick={() => setCurrentStep(Math.min(steps.length, currentStep + 1))}
-          className="rounded-xl bg-[#0056FF] px-4 py-1 font-sans text-xs font-bold text-white hover:bg-blue-700"
-        >
-          Next Step
-        </button>
+
+        <div className="flex items-center gap-2">
+          {currentStep === steps.length && (
+            <button
+              type="button"
+              onClick={() => setCurrentStep(1)}
+              className="flex cursor-pointer items-center gap-1 rounded-[4px] border border-[#CAD3F5] bg-white px-3 py-1.5 font-sans text-xs font-semibold text-[#0056FF] transition-colors hover:bg-[#EFF5FF]"
+            >
+              <RotateCcw className="size-3" />
+              <span>Reset</span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            disabled={currentStep === steps.length}
+            onClick={() => setCurrentStep(Math.min(steps.length, currentStep + 1))}
+            className={cn(
+              'cursor-pointer rounded-[4px] px-4 py-1.5 font-sans text-xs font-bold text-white transition-colors select-none',
+              currentStep === steps.length
+                ? 'cursor-not-allowed bg-slate-300'
+                : 'bg-[#0056FF] hover:bg-[#2277FF] active:bg-[#0047D4]',
+            )}
+          >
+            {currentStep === steps.length ? 'Completed' : 'Next Step'}
+          </button>
+        </div>
       </div>
     </div>
   );
