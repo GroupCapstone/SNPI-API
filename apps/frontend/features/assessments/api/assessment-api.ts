@@ -1,24 +1,13 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 import type { AssessmentFormData } from '../schemas';
 import type { Assessment, AssessmentFilters } from '../types';
 
 export const getAssessments = async (filters: AssessmentFilters = {}) => {
-  const params = new URLSearchParams();
-  if (filters.search) params.append('search', filters.search);
-  if (filters.schoolId) params.append('schoolId', filters.schoolId);
-  if (filters.branchId) params.append('branchId', filters.branchId);
-  if (filters.academicYearId) params.append('academicYearId', filters.academicYearId);
-  if (filters.classId) params.append('classId', filters.classId);
-  if (filters.subjectId) params.append('subjectId', filters.subjectId);
-  if (filters.type) params.append('type', filters.type);
-  if (filters.status) params.append('status', filters.status);
-  if (filters.page) params.append('page', String(filters.page));
-  if (filters.limit) params.append('limit', String(filters.limit));
-
-  const queryString = params.toString();
-  const url = `/assessments${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiPaginatedResponse<Assessment>>(url);
+  return apiClient.get<ApiPaginatedResponse<Assessment>>(
+    `/assessments${buildQueryString(filters)}`,
+  );
 };
 
 export const getAssessmentById = async (id: string) => {
