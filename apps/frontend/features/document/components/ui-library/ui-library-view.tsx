@@ -271,33 +271,6 @@ export function UiLibraryView() {
     }));
   };
 
-  // Filter components in real-time with search query
-  const filteredComponents = React.useMemo(() => {
-    if (!searchQuery.trim()) return COMPONENT_LIBRARY_REGISTRY;
-    const q = searchQuery.toLowerCase().trim();
-    return COMPONENT_LIBRARY_REGISTRY.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        c.description.toLowerCase().includes(q) ||
-        c.id.toLowerCase().includes(q) ||
-        c.category.toLowerCase().includes(q),
-    );
-  }, [searchQuery]);
-
-  // Group filtered components strictly by flow group (category) matching the menu
-  const groupedCategories = React.useMemo(() => {
-    return COMPONENT_CATEGORIES.map((category, index) => {
-      const comps = filteredComponents.filter((c) => c.category === category);
-      const categorySlug = category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-      return {
-        category,
-        categoryId: `cat-${categorySlug}`,
-        groupNumber: index + 1,
-        components: comps,
-      };
-    }).filter((group) => group.components.length > 0);
-  }, [filteredComponents]);
-
   // Live Feed: strictly built components only (never render unbuilt future component stages until requested)
   const feedCategories = React.useMemo(() => {
     return COMPONENT_CATEGORIES.map((category, index) => {
@@ -888,11 +861,7 @@ export function UiLibraryView() {
                           <section
                             key={comp.id}
                             id={sectionId}
-                            className={cn(
-                              'group relative flex w-full scroll-mt-28 flex-col rounded-[4px] border p-6 shadow-2xs transition-all sm:p-8',
-                              parentTheme.cardBg,
-                              parentTheme.cardBorder,
-                            )}
+                            className="group relative flex w-full scroll-mt-28 flex-col rounded-[4px] border border-[#CAD3F5] bg-white p-6 shadow-2xs transition-all sm:p-8"
                             style={{ borderRadius: '4px' }}
                           >
                             {/* Top Title inside the Card */}

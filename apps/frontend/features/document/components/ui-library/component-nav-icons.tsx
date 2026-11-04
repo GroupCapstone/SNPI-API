@@ -161,8 +161,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#2277FF]',
       borderColor: 'border-[#2277FF]/40',
       glowColor: 'rgba(34, 119, 255, 0.08)',
-      cardBg: 'bg-[#EFF6FF]',
-      cardBorder: 'border-[#BAE6FD]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   if (key.includes('feedback')) {
@@ -175,7 +175,7 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#0056FF]',
       borderColor: 'border-[#0056FF]/40',
       glowColor: 'rgba(0, 86, 255, 0.08)',
-      cardBg: 'bg-[#EFF5FF]',
+      cardBg: 'bg-white',
       cardBorder: 'border-[#CAD3F5]',
     };
   }
@@ -189,8 +189,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#CA8A04]',
       borderColor: 'border-[#EAB308]/40',
       glowColor: 'rgba(250, 204, 21, 0.12)',
-      cardBg: 'bg-[#FEFCE8]',
-      cardBorder: 'border-[#FEF08A]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   if (key.includes('display') || key.includes('container')) {
@@ -203,8 +203,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#8B5CF6]',
       borderColor: 'border-[#8B5CF6]/40',
       glowColor: 'rgba(139, 92, 246, 0.08)',
-      cardBg: 'bg-[#F5F3FF]',
-      cardBorder: 'border-[#DDD6FE]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   if (key.includes('action') || key.includes('button')) {
@@ -217,8 +217,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#10B981]',
       borderColor: 'border-[#10B981]/40',
       glowColor: 'rgba(16, 185, 129, 0.10)',
-      cardBg: 'bg-[#F0FDF4]',
-      cardBorder: 'border-[#BBF7D0]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   if (key.includes('ai') || key.includes('prompt')) {
@@ -231,8 +231,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#475569]',
       borderColor: 'border-[#475569]/40',
       glowColor: 'rgba(100, 116, 139, 0.06)',
-      cardBg: 'bg-[#F8FAFC]',
-      cardBorder: 'border-[#CBD5E1]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   if (key.includes('form')) {
@@ -245,8 +245,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#F59E0B]',
       borderColor: 'border-[#F59E0B]/40',
       glowColor: 'rgba(245, 158, 11, 0.09)',
-      cardBg: 'bg-[#FFFBEB]',
-      cardBorder: 'border-[#FDE68A]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   if (key.includes('section')) {
@@ -259,8 +259,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#0284C7]',
       borderColor: 'border-[#0284C7]/40',
       glowColor: 'rgba(2, 132, 199, 0.08)',
-      cardBg: 'bg-[#F0F9FF]',
-      cardBorder: 'border-[#BAE6FD]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   if (key.includes('text') || key.includes('effect')) {
@@ -273,8 +273,8 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
       iconColor: 'text-[#F43F5E]',
       borderColor: 'border-[#F43F5E]/40',
       glowColor: 'rgba(244, 63, 94, 0.08)',
-      cardBg: 'bg-[#FFF1F2]',
-      cardBorder: 'border-[#FECDD3]',
+      cardBg: 'bg-white',
+      cardBorder: 'border-[#CAD3F5]',
     };
   }
   return {
@@ -285,7 +285,7 @@ export function getParentCategoryTheme(groupIdOrCategory: string): ParentCategor
     iconColor: 'text-[#0056FF]',
     borderColor: 'border-[#0056FF]/40',
     glowColor: 'rgba(0, 86, 255, 0.08)',
-    cardBg: 'bg-[#EFF5FF]',
+    cardBg: 'bg-white',
     cardBorder: 'border-[#CAD3F5]',
   };
 }

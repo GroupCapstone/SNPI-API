@@ -16,11 +16,12 @@ export function LibraryCard({
   return (
     <div
       className={cn(
-        'w-full border-slate-200/80 bg-white/90 p-5 text-slate-900 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.8),_0_2px_8px_rgba(0,0,0,0.03)] backdrop-blur-md transition-all duration-200 max-sm:rounded-none max-sm:border-x-0 max-sm:border-y sm:rounded-2xl sm:border',
+        'w-full rounded-[4px] border border-[#CAD3F5] bg-white p-5 text-[#0A1A4A] shadow-none transition-all duration-200',
         interactive &&
-          'cursor-pointer hover:-translate-y-1 hover:border-[#0056FF]/40 hover:bg-white hover:shadow-[0_12px_28px_rgba(0,86,255,0.08)]',
+          'cursor-pointer hover:border-[#0056FF]/40 hover:bg-white',
         className,
       )}
+      style={{ borderRadius: '4px' }}
       {...props}
     >
       {children}
@@ -70,7 +71,11 @@ export function LibraryCardMedia({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn('mb-4 overflow-hidden rounded-xl', className)} {...props}>
+    <div
+      className={cn('mb-4 overflow-hidden rounded-[4px]', className)}
+      style={{ borderRadius: '4px' }}
+      {...props}
+    >
       {children}
     </div>
   );
