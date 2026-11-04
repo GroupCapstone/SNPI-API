@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **HTTP methods** within the domain of **HTTP Methods**.
+RFC 9110 HTTP method semantics. Methods are strictly classified into Safe (read-only, zero side effects: GET, HEAD, OPTIONS) and Idempotent (repeated identical executions yield identical state: GET, HEAD, PUT, DELETE, OPTIONS). POST is non-idempotent.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET: Safe & Idempotent | PUT: Idempotent | DELETE: Idempotent | POST: Non-idempotent
+```
 
 ---
 
@@ -108,8 +113,8 @@ The following 13 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods` formally | Changing `http-methods` behavior without migration paths |
+| **Architectural Execution** | Enforce strict safe and idempotent method semantics across all endpoints. | Tunneling all writes through GET or all actions through POST (RPC style). |
+| **Contract Stability** | Version and document `http-methods` formally in `@snp/shared` | Breaking `http-methods` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Update resource** within the domain of **Resources**.
+General resource updating standards. Contrast PUT (complete replacement) with PATCH (partial update).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-update` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-update` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-update` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-update` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-update` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+PATCH /api/v1/students/STU-1 (Partial) vs PUT /api/v1/students/STU-1 (Full)
+```
 
 ---
 
@@ -107,8 +112,8 @@ The following 13 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-update` formally | Changing `resource-update` behavior without migration paths |
+| **Architectural Execution** | Choose PUT for complete overwrite, PATCH for partial updates. | Using POST for resource updates when target URI exists. |
+| **Contract Stability** | Version and document `resource-update` formally in `@snp/shared` | Breaking `resource-update` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

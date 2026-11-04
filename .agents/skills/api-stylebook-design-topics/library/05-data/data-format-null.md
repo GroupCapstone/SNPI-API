@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Null data** within the domain of **Data**.
+Handling missing, absent, and empty values. Guidelines recommend: omit optional fields if unpopulated, or use explicit null only when a consumer intentionally clears a value. Never serialize empty strings ("") for missing numbers or dates. Empty collections must be empty arrays ([]), not null.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `data-format-null` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `data-format-null` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `data-format-null` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `data-format-null` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `data-format-null` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+{"middleName": null, "enrolledClasses": []}
+```
 
 ---
 
@@ -47,8 +52,8 @@ The following 2 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `data-format-null` formally | Changing `data-format-null` behavior without migration paths |
+| **Architectural Execution** | Use explicit null to represent deliberate value erasure; return empty arrays [] for empty sets. | Sending empty strings "" or sentinel values (-1, 9999-99-99) for missing or null data. |
+| **Contract Stability** | Version and document `data-format-null` formally in `@snp/shared` | Breaking `data-format-null` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -14,14 +14,20 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **POST** within the domain of **HTTP Methods**.
+Non-idempotent subordinate resource creation or action execution. Successful resource creation must return 201 Created with a Location header pointing to the new resource. Custom non-CRUD actions return 200 OK or 202 Accepted.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods-post` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods-post` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods-post` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods-post` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods-post` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+POST /api/v1/students -> HTTP/1.1 201 Created
+Location: /api/v1/students/STU-9921
+```
 
 ---
 
@@ -115,8 +121,8 @@ The following 13 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods-post` formally | Changing `http-methods-post` behavior without migration paths |
+| **Architectural Execution** | Return 201 Created with Location header on resource creation; support Idempotency-Key for financial actions. | Returning 200 OK without Location on entity creation; using POST for pure data queries without search body. |
+| **Contract Stability** | Version and document `http-methods-post` formally in `@snp/shared` | Breaking `http-methods-post` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -13,14 +13,21 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Errors** within the domain of **Error handling**.
+RFC 7807 Problem Details for HTTP APIs (application/problem+json). Zalando, Google, and Microsoft require standard machine-readable error bodies containing type, title, status, detail, instance, code, and invalidParams for validation failures. Sensitive stack traces must never reach production responses.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `errors` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `errors` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `errors` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `errors` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `errors` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+HTTP/1.1 422 Unprocessable Entity
+Content-Type: application/problem+json
+{"type": "https://api.snp.edu.kh/errors/invalid-input", "title": "Validation Error", "status": 422, "code": "INVALID_STUDENT_AGE", "detail": "Student must be at least 5 years old."}
+```
 
 ---
 
@@ -66,8 +73,8 @@ The following 5 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `errors` formally | Changing `errors` behavior without migration paths |
+| **Architectural Execution** | Return RFC 7807 problem details; include deterministic error code and field-level validation errors. | Returning 200 OK with success: false; leaking database errors or backend stack traces. |
+| **Contract Stability** | Version and document `errors` formally in `@snp/shared` | Breaking `errors` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

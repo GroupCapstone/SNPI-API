@@ -13,14 +13,21 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **API counts** within the domain of **API Design**.
+Governs API boundary sizing and resource surface count. Zalando explicitly benchmarks that a typical well-designed API contains between 4 and 8 resources to ensure cohesive domain boundaries. Deliveroo and Adidas enforce fine-grained, minimal API surfaces to avoid monolithic endpoints and bloated cognitive load.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `api-counts` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `api-counts` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `api-counts` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `api-counts` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `api-counts` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/students
+GET /api/v1/classes
+GET /api/v1/enrollments
+```
 
 ---
 
@@ -50,8 +57,8 @@ The following 3 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `api-counts` formally | Changing `api-counts` behavior without migration paths |
+| **Architectural Execution** | Limit top-level resources per service to 4-8 cohesive entities; keep surface minimal and domain-focused. | Monolithic kitchen-sink APIs exposing 30+ disparate entities or premature micro-endpoint proliferation. |
+| **Contract Stability** | Version and document `api-counts` formally in `@snp/shared` | Breaking `api-counts` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

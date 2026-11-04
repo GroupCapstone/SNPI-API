@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Delete resource** within the domain of **Resources**.
+Resource removal via DELETE. Return 204 No Content. Support soft deletion under the hood with status: DELETED.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-deletion` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-deletion` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-deletion` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-deletion` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-deletion` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+DELETE /api/v1/students/STU-101 -> 204 No Content
+```
 
 ---
 
@@ -96,8 +101,8 @@ The following 12 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-deletion` formally | Changing `resource-deletion` behavior without migration paths |
+| **Architectural Execution** | DELETE /collection/:id -> 204 No Content. | Hard-deleting relational financial or student records without audit compliance. |
+| **Contract Stability** | Version and document `resource-deletion` formally in `@snp/shared` | Breaking `resource-deletion` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Filtering** within the domain of **Collection Resources**.
+Enables consumers to restrict collection results. Industry standards encompass: attribute equality query params (?status=ACTIVE), Google filter expressions (filter="age > 18"), Microsoft OData ($filter=status eq 'ACTIVE'), Zalando conventional q parameter for text search, and PayPal complex search via POST when queries exceed URI limits.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `collection-filtering` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `collection-filtering` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `collection-filtering` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `collection-filtering` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `collection-filtering` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/students?status=ACTIVE&grade=10&q=somaly
+```
 
 ---
 
@@ -89,8 +94,8 @@ The following 9 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `collection-filtering` formally | Changing `collection-filtering` behavior without migration paths |
+| **Architectural Execution** | Use query parameters for exact matching (?status=ACTIVE); use q for free-text search; support POST /search for large queries. | Embedding filter clauses directly in URI path segments (/students/active) or unbounded unindexed queries. |
+| **Contract Stability** | Version and document `collection-filtering` formally in `@snp/shared` | Breaking `collection-filtering` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

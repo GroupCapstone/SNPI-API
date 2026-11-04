@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Internationalization** within the domain of **Data**.
+Localization and international text. Governed by BCP 47 language tags in Accept-Language, UTF-8 unicode encoding, and ISO standards for localized formatting.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `data-internationalization` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `data-internationalization` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `data-internationalization` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `data-internationalization` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `data-internationalization` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Accept-Language: km-KH, km;q=0.9, en-US;q=0.8
+```
 
 ---
 
@@ -46,8 +51,8 @@ The following 2 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `data-internationalization` formally | Changing `data-internationalization` behavior without migration paths |
+| **Architectural Execution** | Accept BCP 47 language headers (Accept-Language: km-KH, en-US); store text in normalized UTF-8. | Assuming ASCII encoding; hardcoding English-only validation regex on human names. |
+| **Contract Stability** | Version and document `data-internationalization` formally in `@snp/shared` | Breaking `data-internationalization` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

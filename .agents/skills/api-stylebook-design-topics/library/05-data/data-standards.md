@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Standards data** within the domain of **Data**.
+Adoption of established global data standards: ISO 3166-1 alpha-2 for countries (KH, US), ISO 4217 for currencies (USD, KHR), IANA timezone database (Asia/Phnom_Penh), and E.164 for international phone numbers.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `data-standards` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `data-standards` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `data-standards` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `data-standards` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `data-standards` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+{"country": "KH", "currency": "USD", "phone": "+85512345678"}
+```
 
 ---
 
@@ -59,8 +64,8 @@ The following 4 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `data-standards` formally | Changing `data-standards` behavior without migration paths |
+| **Architectural Execution** | Enforce ISO country codes, ISO currency codes, and E.164 phone formats across all schemas. | Inventing proprietary currency symbols, custom country abbreviations, or unformatted phone numbers. |
+| **Contract Stability** | Version and document `data-standards` formally in `@snp/shared` | Breaking `data-standards` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

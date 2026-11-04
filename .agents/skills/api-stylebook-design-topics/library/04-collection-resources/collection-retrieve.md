@@ -13,14 +13,20 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Retrieve a collection** within the domain of **Collection Resources**.
+Rules for fetching collection sets via HTTP GET. Deliveroo, Cisco, and Google require safe, idempotent retrieval with default sorting, pagination envelopes, and HTTP 200 OK responses.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `collection-retrieve` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `collection-retrieve` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `collection-retrieve` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `collection-retrieve` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `collection-retrieve` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/teachers -> HTTP/1.1 200 OK
+{ "items": [], "total": 0 }
+```
 
 ---
 
@@ -72,8 +78,8 @@ The following 7 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `collection-retrieve` formally | Changing `collection-retrieve` behavior without migration paths |
+| **Architectural Execution** | Always use HTTP GET; return 200 OK with items array and pagination metadata. | Modifying server state during a collection GET request or returning 404 for an empty collection (return []). |
+| **Contract Stability** | Version and document `collection-retrieve` formally in `@snp/shared` | Breaking `collection-retrieve` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

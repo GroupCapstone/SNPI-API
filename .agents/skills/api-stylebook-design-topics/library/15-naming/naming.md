@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Naming** within the domain of **Naming**.
+Universal naming standard across all API endpoints. Use clear, intuitive, domain-aligned nouns. Resource collections must be pluralized.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `naming` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `naming` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `naming` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `naming` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `naming` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+/api/v1/academic-years (Valid) vs /getAcademicYear (Invalid)
+```
 
 ---
 
@@ -105,8 +110,8 @@ The following 11 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `naming` formally | Changing `naming` behavior without migration paths |
+| **Architectural Execution** | Use plural business nouns (/courses, /students, /teachers); maintain ubiquitous domain language. | Using verbs in URIs (/getAllStudents, /deleteUser); mixing abbreviations with full words. |
+| **Contract Stability** | Version and document `naming` formally in `@snp/shared` | Breaking `naming` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

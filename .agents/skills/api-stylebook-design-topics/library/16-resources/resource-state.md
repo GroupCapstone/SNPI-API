@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Resource's state** within the domain of **Resources**.
+Managing entity lifecycle states and transitions. State machines must validate valid next states and reject illegal transitions with 409 Conflict.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-state` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-state` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-state` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-state` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-state` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+PATCH /api/v1/invoices/INV-1 {"status": "PAID"} -> 409 if currently CANCELLED
+```
 
 ---
 
@@ -50,8 +55,8 @@ The following 3 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-state` formally | Changing `resource-state` behavior without migration paths |
+| **Architectural Execution** | Expose current status string; validate permitted transitions via state machine. | Allowing arbitrary direct status updates that skip business verification (e.g. from DRAFT to GRADUATED). |
+| **Contract Stability** | Version and document `resource-state` formally in `@snp/shared` | Breaking `resource-state` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

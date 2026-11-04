@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Replace resource** within the domain of **Resources**.
+Complete state overwrite via PUT. The client sends the full representation; omitted properties are cleared.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-replacement` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-replacement` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-replacement` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-replacement` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-replacement` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+PUT /api/v1/branches/BR-1 with full BranchDTO
+```
 
 ---
 
@@ -61,8 +66,8 @@ The following 5 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-replacement` formally | Changing `resource-replacement` behavior without migration paths |
+| **Architectural Execution** | Validate complete entity structure on PUT; clear omitted fields according to schema. | Treating PUT like PATCH (preserving omitted properties). |
+| **Contract Stability** | Version and document `resource-replacement` formally in `@snp/shared` | Breaking `resource-replacement` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

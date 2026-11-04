@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Dereference Relationships** within the domain of **Resources**.
+Expanding or embedding related entities in a single request to avoid N+1 query waterfalls. Controlled via ?expand=rel1,rel2.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-retrieve-dereference` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-retrieve-dereference` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-retrieve-dereference` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-retrieve-dereference` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-retrieve-dereference` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/classes/CLS-101?expand=teacher,academicYear
+```
 
 ---
 
@@ -77,8 +82,8 @@ The following 6 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-retrieve-dereference` formally | Changing `resource-retrieve-dereference` behavior without migration paths |
+| **Architectural Execution** | Support expand or embed query parameter with whitelisted relations (?expand=branch,teacher). | Always embedding all related tables by default, creating massive payload bloat. |
+| **Contract Stability** | Version and document `resource-retrieve-dereference` formally in `@snp/shared` | Breaking `resource-retrieve-dereference` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

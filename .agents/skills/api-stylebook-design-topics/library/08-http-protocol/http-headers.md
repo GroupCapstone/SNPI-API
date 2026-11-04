@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **HTTP Headers** within the domain of **HTTP Protocol**.
+Governs standards for HTTP Headers within the domain of HTTP Protocol. Synthesizes guidance from analyzed guidelines to establish predictable, secure, and developer-friendly REST behavior adhering to How to use standard or custom HTTP headers.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-headers` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-headers` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-headers` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-headers` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-headers` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Standard implementation conforming to HTTP Protocol specifications for HTTP Headers.
+```
 
 ---
 
@@ -127,8 +132,8 @@ The following 11 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-headers` formally | Changing `http-headers` behavior without migration paths |
+| **Architectural Execution** | Follow standard RFC and enterprise guideline conventions for HTTP Headers; enforce consistency. | Using ad-hoc, proprietary, or non-standard approaches for HTTP Headers. |
+| **Contract Stability** | Version and document `http-headers` formally in `@snp/shared` | Breaking `http-headers` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

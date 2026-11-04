@@ -14,14 +14,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **GET** within the domain of **HTTP Methods**.
+Safe, idempotent resource retrieval. Must never modify server state. Must not accept a request body. Responses should leverage HTTP caching headers (ETag, Cache-Control).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods-get` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods-get` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods-get` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods-get` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods-get` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/students/STU-001 -> HTTP/1.1 200 OK
+```
 
 ---
 
@@ -107,8 +112,8 @@ The following 12 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods-get` formally | Changing `http-methods-get` behavior without migration paths |
+| **Architectural Execution** | Use GET strictly for data retrieval; return 200 OK or 404 Not Found. | Triggering state changes, email dispatches, or database writes inside GET handlers. |
+| **Contract Stability** | Version and document `http-methods-get` formally in `@snp/shared` | Breaking `http-methods-get` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

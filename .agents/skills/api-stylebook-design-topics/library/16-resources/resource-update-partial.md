@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Update resource partially** within the domain of **Resources**.
+RFC 7396 JSON Merge Patch standard for partial updates.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-update-partial` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-update-partial` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-update-partial` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-update-partial` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-update-partial` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+PATCH /api/v1/students/STU-1 {"phone": "+85512999888"}
+```
 
 ---
 
@@ -83,8 +88,8 @@ The following 9 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-update-partial` formally | Changing `resource-update-partial` behavior without migration paths |
+| **Architectural Execution** | Apply only supplied keys to target entity; setting key to null removes value. | Requiring clients to send unchanged fields in partial update payloads. |
+| **Contract Stability** | Version and document `resource-update-partial` formally in `@snp/shared` | Breaking `resource-update-partial` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

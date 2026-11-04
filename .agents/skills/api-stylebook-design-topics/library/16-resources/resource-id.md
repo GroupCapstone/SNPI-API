@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Resource ID** within the domain of **Resources**.
+Identity standards. Identifiers must be URL-safe, opaque strings. Standardize on UUID v4, ULID, or standardized business codes.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-id` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-id` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-id` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-id` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-id` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+/api/v1/students/550e8400-e29b-41d4-a716-446655440000
+```
 
 ---
 
@@ -71,8 +76,8 @@ The following 7 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-id` formally | Changing `resource-id` behavior without migration paths |
+| **Architectural Execution** | Treat IDs as opaque URL-safe strings; use URL encoding if identifiers contain special characters. | Exposing guessable auto-increment integer IDs in public APIs. |
+| **Contract Stability** | Version and document `resource-id` formally in `@snp/shared` | Breaking `resource-id` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Data format** within the domain of **Data**.
+Universal serialization format. All analyzed guidelines (Heroku, Zalando, Google, Microsoft) mandate JSON (application/json) with UTF-8 encoding as the default representation.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `data-format` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `data-format` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `data-format` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `data-format` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `data-format` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+Content-Type: application/json; charset=utf-8
+```
 
 ---
 
@@ -106,8 +111,8 @@ The following 11 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `data-format` formally | Changing `data-format` behavior without migration paths |
+| **Architectural Execution** | Enforce application/json; charset=utf-8; validate payloads against strict schema contracts. | Returning XML, unescaped raw strings, or non-standard binary encodings on standard REST endpoints. |
+| **Contract Stability** | Version and document `data-format` formally in `@snp/shared` | Breaking `data-format` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

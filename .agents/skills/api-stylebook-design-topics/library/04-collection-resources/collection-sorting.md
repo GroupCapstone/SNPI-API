@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Sorting a collection** within the domain of **Collection Resources**.
+Standardizes ordering of collection entities. Industry guidelines converge on sort parameter. Zalando and Deliveroo use prefix notation (+name for ascending, -name for descending) or comma-separated fields with direction (?sort=lastName,asc,createdAt,desc).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `collection-sorting` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `collection-sorting` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `collection-sorting` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `collection-sorting` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `collection-sorting` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+GET /api/v1/students?sort=-enrollmentDate,lastName
+```
 
 ---
 
@@ -61,8 +66,8 @@ The following 5 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `collection-sorting` formally | Changing `collection-sorting` behavior without migration paths |
+| **Architectural Execution** | Support sort parameter with +/- or asc/desc prefix; enforce deterministic secondary sorting by ID. | Non-deterministic sorting that shifts item positions across pagination boundaries. |
+| **Contract Stability** | Version and document `collection-sorting` formally in `@snp/shared` | Breaking `collection-sorting` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

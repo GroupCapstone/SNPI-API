@@ -14,14 +14,20 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **OPTIONS** within the domain of **HTTP Methods**.
+Communication options and CORS preflight. Server returns the Allow header specifying valid HTTP verbs and CORS Access-Control-* headers.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods-options` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods-options` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods-options` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods-options` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods-options` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+OPTIONS /api/v1/students -> HTTP/1.1 204 No Content
+Allow: GET, POST, OPTIONS
+```
 
 ---
 
@@ -56,8 +62,8 @@ The following 4 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods-options` formally | Changing `http-methods-options` behavior without migration paths |
+| **Architectural Execution** | Return 204 No Content with Allow: GET, POST, PUT, DELETE, OPTIONS and CORS headers. | Blocking OPTIONS requests with 401 Unauthorized or omitting preflight headers. |
+| **Contract Stability** | Version and document `http-methods-options` formally in `@snp/shared` | Breaking `http-methods-options` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **URL format** within the domain of **Resources**.
+Canonical REST URL structure. Protocol (https) -> Host -> Base Path (/api) -> Version (/v1) -> Resource Collection (/students) -> Item (/STU-1).
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `resource-url-format` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `resource-url-format` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `resource-url-format` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `resource-url-format` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `resource-url-format` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+https://api.snp.edu.kh/api/v1/students/STU-001
+```
 
 ---
 
@@ -126,8 +131,8 @@ The following 15 organization guidelines explicitly specify standards for this t
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `resource-url-format` formally | Changing `resource-url-format` behavior without migration paths |
+| **Architectural Execution** | Strict structure: https://api.snp.edu.kh/api/v1/<collection>/<id>/<sub-collection>. | Inconsistent base paths (/v1/api vs /api/v1); omitting version numbers. |
+| **Contract Stability** | Version and document `resource-url-format` formally in `@snp/shared` | Breaking `resource-url-format` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

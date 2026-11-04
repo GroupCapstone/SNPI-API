@@ -14,14 +14,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **HEAD** within the domain of **HTTP Methods**.
+Header verification without body transfer. Server must return headers identical to a GET request (Content-Length, ETag, Last-Modified) but omit the response body.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-methods-head` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-methods-head` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-methods-head` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-methods-head` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-methods-head` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+HEAD /api/v1/students/STU-001 -> HTTP/1.1 200 OK (Content-Length: 450, no body)
+```
 
 ---
 
@@ -72,8 +77,8 @@ The following 7 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-methods-head` formally | Changing `http-methods-head` behavior without migration paths |
+| **Architectural Execution** | Implement HEAD on all GET endpoints; return matching headers with zero content length transfer. | Returning a body on HEAD requests or omitting cache validation headers. |
+| **Contract Stability** | Version and document `http-methods-head` formally in `@snp/shared` | Breaking `http-methods-head` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

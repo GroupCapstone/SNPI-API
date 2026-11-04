@@ -14,14 +14,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **303 See Other** within the domain of **HTTP Status Redirection**.
+Defines standard semantics, headers, and payload expectations for HTTP status code 303.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-status-303` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-status-303` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-status-303` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-status-303` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-status-303` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+HTTP/1.1 303
+```
 
 ---
 
@@ -50,8 +55,8 @@ The following 3 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-status-303` formally | Changing `http-status-303` behavior without migration paths |
+| **Architectural Execution** | Return status code 303 strictly when conditions specified by RFC 9110 and guidelines are met. | Misusing 303 for unrelated semantic conditions or masking errors with 200 OK. |
+| **Contract Stability** | Version and document `http-status-303` formally in `@snp/shared` | Breaking `http-status-303` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

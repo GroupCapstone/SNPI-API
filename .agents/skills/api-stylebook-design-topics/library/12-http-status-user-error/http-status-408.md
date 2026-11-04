@@ -14,14 +14,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **408 Request Timeout** within the domain of **HTTP Status User Error**.
+Defines standard semantics, headers, and payload expectations for HTTP status code 408.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `http-status-408` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `http-status-408` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `http-status-408` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `http-status-408` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `http-status-408` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+HTTP/1.1 408
+```
 
 ---
 
@@ -45,8 +50,8 @@ The following 2 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `http-status-408` formally | Changing `http-status-408` behavior without migration paths |
+| **Architectural Execution** | Return status code 408 strictly when conditions specified by RFC 9110 and guidelines are met. | Misusing 408 for unrelated semantic conditions or masking errors with 200 OK. |
+| **Contract Stability** | Version and document `http-status-408` formally in `@snp/shared` | Breaking `http-status-408` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

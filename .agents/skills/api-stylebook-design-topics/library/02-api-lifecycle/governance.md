@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Governance** within the domain of **API Lifecycle**.
+Ensures organization-wide consistency across distributed teams. Microsoft, Zalando, and Atlassian require automated style linters (Spectral), centralized API review boards, immutable versioning contracts, and searchable enterprise API catalogs to prevent API drift.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `governance` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `governance` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `governance` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `governance` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `governance` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+spectral lint openapi.yaml --ruleset .spectral.yaml
+```
 
 ---
 
@@ -89,8 +94,8 @@ The following 8 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `governance` formally | Changing `governance` behavior without migration paths |
+| **Architectural Execution** | Automate linting against style guidelines; enforce architecture review gates for schema changes. | Uncontrolled ad-hoc endpoint additions without centralized schema validation and documentation. |
+| **Contract Stability** | Version and document `governance` formally in `@snp/shared` | Breaking `governance` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

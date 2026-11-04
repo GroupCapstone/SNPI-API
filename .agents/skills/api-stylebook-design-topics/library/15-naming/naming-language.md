@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Language** within the domain of **Naming**.
+Universal API language specification. All API contracts, paths, parameters, schemas, and error messages must be authored in American English.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `naming-language` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `naming-language` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `naming-language` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `naming-language` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `naming-language` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+/enrollments (Standard American English)
+```
 
 ---
 
@@ -47,8 +52,8 @@ The following 2 organization guidelines explicitly specify standards for this to
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `naming-language` formally | Changing `naming-language` behavior without migration paths |
+| **Architectural Execution** | Standardize all API symbols in American English (enrollment, cancel, color). | Mixing multiple spoken languages or dialects in endpoint paths or JSON schemas. |
+| **Contract Stability** | Version and document `naming-language` formally in `@snp/shared` | Breaking `naming-language` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---

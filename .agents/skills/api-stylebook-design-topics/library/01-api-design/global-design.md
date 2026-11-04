@@ -13,14 +13,19 @@
 
 ---
 
-## 2. Architectural Principles Learned
+## 2. In-Depth Architectural Knowledge Learned
 
-This design topic governs **Global design** within the domain of **API Design**.
+Establishes core architectural philosophy. Industry leaders converge on Resource-Oriented Design (Google AIP), Pragmatic REST (Deliveroo: RESTful, Hypermedia, Fine-grained), and Contract-First API development (Adidas). Public standards (Italian AgID, EIF) emphasize loose coupling, decoupled client-server contracts, and protocol neutrality.
 
-### Key Considerations for Modern REST APIs:
-* **Consistency & Predictability**: APIs must treat `global-design` predictably across all endpoints, minimizing consumer surprise.
-* **Client Decoupling**: Contracts regarding `global-design` must decouple client implementation details from internal service models.
-* **Scalability & Performance**: Proper design of `global-design` prevents unneeded compute overhead, database contention, and network payloads.
+### Core Design Rules & Invariants:
+* **Consistency**: Every API endpoint handling `global-design` must adhere to identical semantic contracts.
+* **Client Decoupling**: Contracts must decouple client expectations from internal schema migrations.
+* **Security & Isolation**: Multi-tenant scoping and authorization checks must guard `global-design` operations.
+
+### Concrete HTTP Syntax / Representation:
+```http
+POST /api/v1/orders (Resource creation) vs /executeOrderRPC (Rejected RPC)
+```
 
 ---
 
@@ -113,8 +118,8 @@ RESTful, Hypermedia, Fine-grained"
 
 | Design Aspect | Standard Recommended Pattern | Anti-Pattern to Avoid |
 | :--- | :--- | :--- |
-| **Syntax / Representation** | Follow industry consensus documented above | Inventing non-standard proprietary solutions |
-| **Contract Stability** | Version and document `global-design` formally | Changing `global-design` behavior without migration paths |
+| **Architectural Execution** | Design resource-oriented APIs with contract-first OpenAPI schemas; maintain strict client decoupling. | Exposing internal database schemas or RPC-style function call endpoints in REST clothes. |
+| **Contract Stability** | Version and document `global-design` formally in `@snp/shared` | Breaking `global-design` behavior without migration paths |
 | **Error Feedback** | Return standard RFC 7807 problem details | Silent failures or generic 500 error envelopes |
 
 ---
