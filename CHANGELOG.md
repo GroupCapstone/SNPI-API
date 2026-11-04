@@ -2,6 +2,18 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `8c04e4d` (Developer: **史力爱卫**)
+
+- Record API Stylebook blog insights, Deliveroo in-depth critique, and AP Stylebook lineage
+
+### Version 0.2.17 (04.11.2026) - `499d7b4` (Developer: **史力爱卫**)
+
+- Standardize public fonts and images naming, connectivity, and catalog
+
+### Version 0.2.17 (04.11.2026) - `eed781f` (Developer: **史力爱卫**)
+
+- Record API Stylebook 16-guideline directory sync commit 35af91d
+
 ### Version 0.2.17 (04.11.2026) - `35af91d` (Developer: **史力爱卫**)
 
 - Record complete 16 enterprise API design guidelines directory and archetypes
@@ -89,16 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.21 (04.11.2026) - `29c1be3` (Developer: **史力爱卫**)
 
 - Perf(api): optimize resource reading speed and query serialization across feature modules
-
-### Version 0.2.21 (04.11.2026) - `00a8b53` (Developer: **史力爱卫**)
-
-- Perf(api-client): optimize header allocation, active branch caching, and query string compilation
-
-### Version 0.2.21 (04.11.2026) - `2e8b66a` (Developer: **史力爱卫**)
-
-- Add agent skill routing index, governance policies, and query parameters utility
-
-### Version 0.2.21 (03.11.2026) - `7e103eb` (Developer: **史力爱卫**)
-
-- Update stale action SHA pins & build shared before smoke
 
