@@ -305,7 +305,7 @@ export { LogoMarqueeDemo as MarqueeSectionDemo } from '../logo-marquee';
 // 5. FORMS
 // ==========================================
 
-// 5.1 Floating Label Form
+// 5.1 Floating Label Form (Redesigned with Standard Form Inputs & Placeholders)
 export function FloatingLabelFormDemo() {
   const [formData, setFormData] = React.useState({
     fullName: 'Dara Sok',
@@ -322,74 +322,77 @@ export function FloatingLabelFormDemo() {
   };
 
   return (
-    <div className="w-full max-w-xl space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+    <div className="w-full max-w-xl space-y-4 rounded-[4px] border border-[#CAD3F5] bg-white p-5 shadow-2xs sm:p-6">
+      <div className="flex items-center justify-between border-b border-[#CAD3F5]/60 pb-3">
         <div>
           <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">
             Candidate Registration Form
           </h4>
-          <p className="font-mono text-[10px] text-slate-500">
-            Material-Style Floating Labels · 44px Hit Target
+          <p className="font-sans text-[11px] text-[#334155]">
+            Standard Form Inputs · High-Contrast Precision
           </p>
         </div>
-        <span className="rounded-md border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
-          LIVE FORM
+        <span className="rounded-[2px] border border-[#CAD3F5] bg-[#EFF5FF] px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF]">
+          Verified Form
         </span>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-3.5">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Field 1: Full Name */}
-        <div className="relative">
-          <input
-            type="text"
-            id="floating-full-name"
-            value={formData.fullName}
-            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-            placeholder=" "
-            className="peer h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pt-4 pb-1 font-sans text-xs font-bold text-[#0A1A4A] transition-all outline-none focus:border-[#0056FF] focus:ring-2 focus:ring-[#0056FF]/20"
-          />
+        <div className="space-y-1.5">
           <label
-            htmlFor="floating-full-name"
-            className="pointer-events-none absolute top-1.5 left-4 font-mono text-[9px] font-bold text-[#0056FF] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-sans peer-placeholder-shown:text-xs peer-placeholder-shown:font-medium peer-placeholder-shown:text-slate-400 peer-focus:top-1.5 peer-focus:font-mono peer-focus:text-[9px] peer-focus:font-bold peer-focus:text-[#0056FF]"
+            htmlFor="std-full-name"
+            className="block font-sans text-xs font-semibold text-[#0A1A4A]"
           >
             Candidate Full Legal Name
           </label>
+          <input
+            type="text"
+            id="std-full-name"
+            required
+            value={formData.fullName}
+            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            placeholder="e.g. Dara Sok"
+            className="h-10 w-full rounded-[4px] border border-[#CAD3F5] bg-white px-3 font-sans text-xs text-[#0A1A4A] transition-colors placeholder:text-slate-400 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF]/20 focus:outline-none"
+          />
         </div>
 
         {/* Field 2: Email */}
-        <div className="relative">
-          <input
-            type="email"
-            id="floating-email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder=" "
-            className="peer h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pt-4 pb-1 font-sans text-xs font-bold text-[#0A1A4A] transition-all outline-none focus:border-[#0056FF] focus:ring-2 focus:ring-[#0056FF]/20"
-          />
+        <div className="space-y-1.5">
           <label
-            htmlFor="floating-email"
-            className="pointer-events-none absolute top-1.5 left-4 font-mono text-[9px] font-bold text-[#0056FF] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-sans peer-placeholder-shown:text-xs peer-placeholder-shown:font-medium peer-placeholder-shown:text-slate-400 peer-focus:top-1.5 peer-focus:font-mono peer-focus:text-[9px] peer-focus:font-bold peer-focus:text-[#0056FF]"
+            htmlFor="std-email"
+            className="block font-sans text-xs font-semibold text-[#0A1A4A]"
           >
             Institutional Campus Email Address
           </label>
+          <input
+            type="email"
+            id="std-email"
+            required
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="e.g. dara.sok@student.snpi.edu.kh"
+            className="h-10 w-full rounded-[4px] border border-[#CAD3F5] bg-white px-3 font-sans text-xs text-[#0A1A4A] transition-colors placeholder:text-slate-400 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF]/20 focus:outline-none"
+          />
         </div>
 
         {/* Field 3: Student ID */}
-        <div className="relative">
-          <input
-            type="text"
-            id="floating-student-id"
-            value={formData.studentId}
-            onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
-            placeholder=" "
-            className="peer h-12 w-full rounded-xl border border-slate-200 bg-white px-4 pt-4 pb-1 font-mono text-xs font-bold text-[#0A1A4A] transition-all outline-none focus:border-[#0056FF] focus:ring-2 focus:ring-[#0056FF]/20"
-          />
+        <div className="space-y-1.5">
           <label
-            htmlFor="floating-student-id"
-            className="pointer-events-none absolute top-1.5 left-4 font-mono text-[9px] font-bold text-[#0056FF] transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:font-sans peer-placeholder-shown:text-xs peer-placeholder-shown:font-medium peer-placeholder-shown:text-slate-400 peer-focus:top-1.5 peer-focus:font-mono peer-focus:text-[9px] peer-focus:font-bold peer-focus:text-[#0056FF]"
+            htmlFor="std-student-id"
+            className="block font-sans text-xs font-semibold text-[#0A1A4A]"
           >
             National Student ID (STU-XXXX-XXXX)
           </label>
+          <input
+            type="text"
+            id="std-student-id"
+            required
+            value={formData.studentId}
+            onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
+            placeholder="e.g. STU-2026-0891"
+            className="h-10 w-full rounded-[4px] border border-[#CAD3F5] bg-white px-3 font-mono text-xs text-[#0A1A4A] transition-colors placeholder:text-slate-400 focus:border-[#0056FF] focus:ring-1 focus:ring-[#0056FF]/20 focus:outline-none"
+          />
         </div>
 
         {/* Form Action Controls */}
@@ -397,19 +400,19 @@ export function FloatingLabelFormDemo() {
           <span className="font-mono text-[10px] text-slate-400">All fields validated via Zod</span>
           <button
             type="submit"
-            className="cursor-pointer rounded-xl border border-[#0056FF] bg-[#0056FF] px-4 py-2 font-sans text-xs font-bold text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95"
+            className="cursor-pointer rounded-[4px] bg-[#0056FF] px-4 py-2 font-sans text-xs font-semibold text-white shadow-2xs transition-colors hover:bg-[#2277FF] active:bg-[#0047D4]"
           >
-            {submitted ? 'Record Registered!' : 'Register Candidate'}
+            {submitted ? 'Record Registered' : 'Register Candidate'}
           </button>
         </div>
       </form>
 
       {submitted && (
-        <div className="animate-in fade-in flex items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-50 p-3 font-sans text-xs font-semibold text-emerald-800">
-          <Check className="size-4 text-emerald-600" />
+        <div className="animate-in fade-in flex items-center gap-2 rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF] p-3 font-sans text-xs font-medium text-[#0056FF]">
+          <Check className="size-4 stroke-[2.5]" />
           <span>
             Candidate record for {formData.fullName} ({formData.studentId}) successfully registered
-            into campus directory!
+            into campus directory.
           </span>
         </div>
       )}
