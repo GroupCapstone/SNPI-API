@@ -687,144 +687,294 @@ export function AnimatedCounterDemo() {
   );
 }
 
-// 7. Voice Note Audio Waveform Player (Tactile Dispatch Studio)
+// 7. Voice Note Audio Waveform Player (Real Web Audio Synthesis & Live Waveform Analyser)
 export function VoiceNoteDemo() {
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [speed, setSpeed] = React.useState<'1x' | '1.25x' | '1.5x' | '2x'>('1x');
-  const [currentTime, setCurrentTime] = React.useState(42);
-  const [showTranscript, setShowTranscript] = React.useState(false);
+  const [speed, setSpeed] = React.useState<number>(1);
+  const [currentTime, setCurrentTime] = React.useState(0);
+  const duration = 12; // 12-second voice memo
+  const [liveFrequencies, setLiveFrequencies] = React.useState<number[]>(() =>
+    new Array(32).fill(0),
+  );
 
-  // Dynamic waveform bars with natural frequencies
-  const baseBars = [
-    24, 48, 65, 92, 78, 45, 88, 100, 60, 52, 80, 95, 42, 35, 70, 55, 90, 68, 40, 85, 62, 45,
-  ];
+  const audioCtxRef = React.useRef<AudioContext | null>(null);
+  const sourceRef = React.useRef<AudioBufferSourceNode | null>(null);
+  const bufferRef = React.useRef<AudioBuffer | null>(null);
+  const analyserRef = React.useRef<AnalyserNode | null>(null);
+  const gainNodeRef = React.useRef<GainNode | null>(null);
+  const startTimeRef = React.useRef<number>(0);
+  const startOffsetRef = React.useRef<number>(0);
+  const animFrameRef = React.useRef<number | null>(null);
+
+  // Pre-computed authentic speech energy distribution across 32 bars
+  const baseProfile = React.useMemo(
+    () => [
+      26, 38, 54, 78, 92, 68, 44, 82, 96, 74, 52, 86, 60, 36, 68, 88, 76, 48, 80, 94, 62, 42, 70,
+      84, 58, 38, 64, 78, 52, 34, 28, 20,
+    ],
+    [],
+  );
+
+  // Synthesize realistic speech-cadence voice note buffer
+  const getOrCreateBuffer = (ctx: AudioContext): AudioBuffer => {
+    if (bufferRef.current) return bufferRef.current;
+    const sampleRate = ctx.sampleRate;
+    const buf = ctx.createBuffer(1, Math.floor(sampleRate * duration), sampleRate);
+    const channel = buf.getChannelData(0);
+
+    for (let i = 0; i < channel.length; i++) {
+      const t = i / sampleRate;
+
+      // Conversational speech cadence pauses (bursts of voice separated by natural pauses)
+      const cadence = Math.sin(t * 2.4) * Math.sin(t * 0.9);
+      const speechGate = cadence > -0.2 ? 1 : 0.06;
+
+      // Natural speech pitch contour (fundamental ~180-210 Hz with expressive inflection)
+      const pitch = 192 + Math.sin(t * 4.2) * 22 + Math.sin(t * 8.6) * 9;
+
+      // Vocal harmonics (resonant speech formants)
+      const f1 = Math.sin(2 * Math.PI * pitch * t);
+      const f2 = 0.45 * Math.sin(2 * Math.PI * (2 * pitch) * t);
+      const f3 = 0.22 * Math.sin(2 * Math.PI * (3 * pitch) * t);
+      const formant = 0.18 * Math.sin(2 * Math.PI * 720 * t) * Math.cos(2 * Math.PI * 1400 * t);
+
+      // Smooth attack/decay envelope
+      const env = Math.min(1, t * 6) * Math.min(1, (duration - t) * 3);
+      channel[i] = (f1 + f2 + f3 + formant) * speechGate * env * 0.14;
+    }
+
+    bufferRef.current = buf;
+    return buf;
+  };
+
+  const startPlayback = async (offsetSec: number) => {
+    try {
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioCtx();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === 'suspended') {
+        await ctx.resume();
+      }
+
+      if (sourceRef.current) {
+        sourceRef.current.onended = null;
+        try {
+          sourceRef.current.stop();
+        } catch {
+          // ignore
+        }
+      }
+
+      if (!analyserRef.current) {
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 64; // 32 frequency bins
+        analyser.smoothingTimeConstant = 0.75;
+        analyserRef.current = analyser;
+      }
+
+      if (!gainNodeRef.current) {
+        const gain = ctx.createGain();
+        gain.gain.value = 0.85;
+        gain.connect(ctx.destination);
+        gainNodeRef.current = gain;
+      }
+
+      const buffer = getOrCreateBuffer(ctx);
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.playbackRate.value = speed;
+
+      source.connect(analyserRef.current);
+      analyserRef.current.connect(gainNodeRef.current);
+
+      const clampedOffset = Math.max(0, Math.min(duration, offsetSec));
+      source.start(0, clampedOffset);
+      sourceRef.current = source;
+      startTimeRef.current = ctx.currentTime;
+      startOffsetRef.current = clampedOffset;
+      setIsPlaying(true);
+
+      source.onended = () => {
+        setIsPlaying(false);
+        setCurrentTime(0);
+        startOffsetRef.current = 0;
+        setLiveFrequencies(new Array(32).fill(0));
+      };
+
+      const updateLoop = () => {
+        if (!analyserRef.current || !audioCtxRef.current) return;
+        const elapsed = (ctx.currentTime - startTimeRef.current) * speed + startOffsetRef.current;
+        if (elapsed >= duration) {
+          setCurrentTime(duration);
+          setIsPlaying(false);
+          startOffsetRef.current = 0;
+          setLiveFrequencies(new Array(32).fill(0));
+          return;
+        }
+
+        setCurrentTime(elapsed);
+
+        // Read real-time frequency amplitude from AnalyserNode
+        const dataArr = new Uint8Array(analyserRef.current.frequencyBinCount);
+        analyserRef.current.getByteFrequencyData(dataArr);
+        setLiveFrequencies(Array.from(dataArr));
+
+        animFrameRef.current = requestAnimationFrame(updateLoop);
+      };
+
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = requestAnimationFrame(updateLoop);
+    } catch {
+      // Audio autoplay gracefully handled
+    }
+  };
+
+  const pausePlayback = () => {
+    if (sourceRef.current) {
+      sourceRef.current.onended = null;
+      try {
+        sourceRef.current.stop();
+      } catch {
+        // ignore
+      }
+      sourceRef.current = null;
+    }
+    if (animFrameRef.current) {
+      cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = null;
+    }
+    startOffsetRef.current = currentTime;
+    setIsPlaying(false);
+    setLiveFrequencies(new Array(32).fill(0));
+  };
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      pausePlayback();
+    } else {
+      startPlayback(currentTime >= duration ? 0 : currentTime);
+    }
+  };
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+    const targetTime = ratio * duration;
+    setCurrentTime(targetTime);
+    startOffsetRef.current = targetTime;
+
+    if (isPlaying) {
+      startPlayback(targetTime);
+    }
+  };
+
+  const handleToggleSpeed = () => {
+    const speeds = [1, 1.5, 2];
+    const nextIdx = (speeds.indexOf(speed) + 1) % speeds.length;
+    const nextSpeed = speeds[nextIdx];
+    setSpeed(nextSpeed);
+    if (sourceRef.current) {
+      sourceRef.current.playbackRate.value = nextSpeed;
+    }
+  };
 
   React.useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime((prev) => (prev >= 135 ? 0 : prev + 1));
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying]);
+    return () => {
+      if (sourceRef.current) {
+        try {
+          sourceRef.current.stop();
+        } catch {
+          // ignore
+        }
+      }
+      if (animFrameRef.current) {
+        cancelAnimationFrame(animFrameRef.current);
+      }
+      if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+        audioCtxRef.current.close().catch(() => {});
+      }
+    };
+  }, []);
 
   const formatTime = (secs: number) => {
     const mins = Math.floor(secs / 60);
-    const rem = secs % 60;
+    const rem = Math.floor(secs % 60);
     return `${mins}:${rem < 10 ? '0' : ''}${rem}`;
   };
 
-  const progressPercent = Math.min(100, (currentTime / 135) * 100);
+  const progressPercent = Math.min(100, (currentTime / duration) * 100);
 
   return (
-    <div className="w-full max-w-xl space-y-4 rounded-2xl border border-[#CAD3F5] bg-white p-5 shadow-xs sm:p-6">
-      {/* Header Info */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+    <div className="w-full max-w-md rounded-[4px] border border-[#CAD3F5] bg-white p-4 shadow-2xs">
+      {/* Clean Header: Icon, Title & Time */}
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-[#0056FF] text-white">
-            <Volume className="size-4" />
+          <div className="flex size-8 items-center justify-center rounded-[4px] border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF]">
+            <Volume className="size-4 stroke-[2]" />
           </div>
           <div>
-            <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">Faculty Voice Memo #089</h4>
-            <p className="font-mono text-[10px] text-slate-500">
-              Prof. Kimhorng Heng · Dean of ICT
-            </p>
+            <h4 className="font-sans text-xs font-bold text-[#0A1A4A]">Voice Note</h4>
+            <span className="font-mono text-[10px] text-slate-400">
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </span>
           </div>
         </div>
-        <div className="flex items-center gap-1.5 font-mono text-[10px]">
-          <span className="rounded border border-slate-200/60 bg-slate-100 px-2 py-0.5 font-bold text-slate-600">
-            48kHz Lossless
-          </span>
-          <span className="font-bold text-[#0056FF]">{formatTime(currentTime)} / 2:15</span>
-        </div>
-      </div>
 
-      {/* Main Interactive Audio Player Console */}
-      <div className="rounded-2xl border border-slate-200/90 bg-[#F8FAFC] p-4 transition-all hover:border-[#0056FF]/40">
-        <div className="flex items-center gap-3">
-          {/* Play/Pause Button */}
-          <button
-            type="button"
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-[#0056FF] text-white shadow-xs transition-all hover:bg-[#2277FF] active:scale-95"
-            aria-label={isPlaying ? 'Pause voice memo' : 'Play voice memo'}
-          >
-            {isPlaying ? <Pause className="size-5" /> : <Play className="ml-0.5 size-5" />}
-          </button>
-
-          {/* Interactive Scrubbable Waveform */}
-          <div
-            className="relative flex h-12 flex-1 cursor-pointer items-center gap-1 overflow-hidden px-1"
-            onClick={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const clickX = e.clientX - rect.left;
-              const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-              setCurrentTime(Math.round(ratio * 135));
-            }}
-          >
-            {baseBars.map((h, i) => {
-              const barProgress = (i / baseBars.length) * 100;
-              const isPast = barProgress <= progressPercent;
-              return (
-                <div
-                  key={i}
-                  className={cn(
-                    'w-1.5 rounded-full transition-all duration-200',
-                    isPast ? 'bg-[#0056FF]' : 'bg-slate-300 hover:bg-slate-400',
-                    isPlaying && isPast && 'animate-pulse',
-                  )}
-                  style={{
-                    height: isPlaying ? `${Math.max(25, h * (0.7 + (i % 3) * 0.15))}%` : `${h}%`,
-                  }}
-                />
-              );
-            })}
-          </div>
-
-          {/* Speed Multiplier Pill */}
-          <button
-            type="button"
-            onClick={() =>
-              setSpeed(
-                speed === '1x'
-                  ? '1.25x'
-                  : speed === '1.25x'
-                    ? '1.5x'
-                    : speed === '1.5x'
-                      ? '2x'
-                      : '1x',
-              )
-            }
-            className="cursor-pointer rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 font-mono text-[11px] font-bold text-slate-700 transition-all hover:border-[#CAD3F5] hover:bg-[#EFF5FF] hover:text-[#0056FF] active:scale-95"
-          >
-            {speed}
-          </button>
-        </div>
-      </div>
-
-      {/* Transcript Drawer Toggle */}
-      <div>
+        {/* Speed Multiplier Pill */}
         <button
           type="button"
-          onClick={() => setShowTranscript(!showTranscript)}
-          className="flex cursor-pointer items-center gap-1.5 font-mono text-[11px] font-bold text-[#0056FF] hover:underline"
+          onClick={handleToggleSpeed}
+          className="cursor-pointer rounded-[2px] border border-[#CAD3F5] bg-[#EFF5FF]/60 px-2 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] transition-colors hover:bg-[#E3E7FC]"
         >
-          <FileText className="size-3.5" />
-          <span>
-            {showTranscript ? 'Hide Audio Transcript' : 'Inspect Voice-to-Text Transcript'}
-          </span>
+          {speed}x
+        </button>
+      </div>
+
+      {/* Main Waveform Player Row */}
+      <div className="mt-3.5 flex items-center gap-3">
+        {/* Play/Pause Button */}
+        <button
+          type="button"
+          onClick={togglePlay}
+          className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-[4px] bg-[#0056FF] text-white shadow-2xs transition-colors hover:bg-[#2277FF] active:bg-[#0047D4]"
+          aria-label={isPlaying ? 'Pause voice memo' : 'Play voice memo'}
+        >
+          {isPlaying ? <Pause className="size-4.5" /> : <Play className="ml-0.5 size-4.5" />}
         </button>
 
-        {showTranscript && (
-          <div className="animate-in fade-in mt-2 rounded-xl border border-[#CAD3F5] bg-[#EFF5FF]/40 p-3.5 font-sans text-xs leading-relaxed text-[#0A1A4A]">
-            <p className="font-semibold italic">
-              &quot;Good morning faculty chairs. Please ensure all student semester exam matrices
-              for Term 1 are verified and signed off before Friday 17:00 UTC. Biometric turnstile
-              logs must be synchronized to the central campus database.&quot;
-            </p>
-          </div>
-        )}
+        {/* Real Interactive Waveform (Live Frequency Reactive & Scrubbable) */}
+        <div
+          onClick={handleSeek}
+          className="relative flex h-12 flex-1 cursor-pointer items-center justify-between gap-1 overflow-hidden px-1 select-none"
+          title="Click to seek"
+        >
+          {baseProfile.map((baseH, i) => {
+            const barProgress = (i / baseProfile.length) * 100;
+            const isPast = barProgress <= progressPercent;
+            // Real frequency amplitude from Web Audio AnalyserNode
+            const freqVal = liveFrequencies[i] || 0;
+            const dynamicScale = isPlaying ? 0.75 + (freqVal / 255) * 0.65 : 1;
+            const barHeight = Math.min(96, Math.max(16, Math.round(baseH * dynamicScale)));
+
+            return (
+              <div
+                key={i}
+                className={cn(
+                  'w-1.5 rounded-full transition-all duration-75',
+                  isPast ? 'bg-[#0056FF]' : 'bg-[#CAD3F5] hover:bg-[#2277FF]',
+                )}
+                style={{
+                  height: `${barHeight}%`,
+                }}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
