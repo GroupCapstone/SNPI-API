@@ -10,6 +10,48 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "9926aac",
+    "developer": "史力爱卫",
+    "description": "Redesign creative sidebar with liquid glass cards, tree guides, and status capsule"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "55754f9",
+    "developer": "史力爱卫",
+    "description": "Remove hero clutter text, add interactive ask kid mascot, and remove ai kit category"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "711c3f9",
+    "developer": "史力爱卫",
+    "description": "Restore visual style archetypes for status-page component"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "f257d7c",
+    "developer": "史力爱卫",
+    "description": "Redesign hero with pure brand tokens and remove text-effects category"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "e04db67",
+    "developer": "史力爱卫",
+    "description": "Unify parent group icons to royal blue with larger dimensions"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "f8285ad",
+    "developer": "史力爱卫",
+    "description": "Record API Stylebook manifesto deep-dive sync commit d7c691e"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "d7c691e",
     "developer": "史力爱卫",
     "description": "Enrich API Stylebook manifesto with 3 cardinal pillars, AP Stylebook lineage, and square-wheel defenses"
@@ -139,47 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "fc42d97",
     "developer": "史力爱卫",
     "description": "Redesign VoiceNote with real Web Audio synthesis and live reactive AnalyserNode waveform"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "f065b4a",
-    "developer": "史力爱卫",
-    "description": "Add animated connection loading lines and step-to-step transitions to StepPlayer"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "d58e20a",
-    "developer": "史力爱卫",
-    "description": "Format feedback-demos with prettier"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "8465821",
-    "developer": "史力爱卫",
-    "description": "Redesign status page with clean status code and title only, remove descriptions and style archetypes"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "3939f12",
-    "developer": "史力爱卫",
-    "description": "Redesign dropdown selector with clean brand tokens, white card surfaces, and zero indicator dots"
-  },
-  {
-    "version": "0.2.22",
-    "date": "04.11.2026",
-    "commitHash": "9702289",
-    "developer": "史力爱卫",
-    "description": "Checkpoint & live ci deploy verification [PASSED]"
-  },
-  {
-    "version": "0.2.22",
-    "date": "04.11.2026",
-    "commitHash": "2585f81",
-    "developer": "史力爱卫",
-    "description": "Add build:shared and liveness timeout check to e2e daemon"
   }
 ];

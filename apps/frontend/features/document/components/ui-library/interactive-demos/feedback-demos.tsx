@@ -373,7 +373,6 @@ export function NotificationBellDemo() {
                 SNPI Campus Alert Hub
               </span>
               <span className="flex items-center gap-1 font-mono text-[10px] text-slate-400">
-                <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
                 Live Notification Stream
               </span>
             </div>
@@ -404,12 +403,9 @@ export function NotificationBellDemo() {
                 )}
               />
               {unreadCount > 0 && (
-                <>
-                  <span className="absolute -top-1.5 -right-1.5 flex size-5.5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs ring-2 ring-white">
-                    {unreadCount > 9 ? '9+' : unreadCount}
-                  </span>
-                  <span className="absolute -top-1.5 -right-1.5 size-5.5 animate-ping rounded-full bg-[#0056FF] opacity-40" />
-                </>
+                <span className="absolute -top-1.5 -right-1.5 flex size-5.5 items-center justify-center rounded-full bg-[#0056FF] font-mono text-[10px] font-black text-white shadow-xs ring-2 ring-white">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
               )}
             </button>
 

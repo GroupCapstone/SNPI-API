@@ -2731,10 +2731,6 @@ export function AccessibleDesignPrinciples({
                     )}
                   >
                     <span>Confirm Enrollment</span>
-                    {/* Ripple overlay simulation for pressed */}
-                    {interactionState === 'pressed' && (
-                      <span className="pointer-events-none absolute inset-0 animate-ping rounded-xl bg-white/20" />
-                    )}
                   </button>
                   <div className="font-mono text-[10px] text-slate-500">
                     {interactionState === 'disabled' &&
@@ -2781,9 +2777,6 @@ export function AccessibleDesignPrinciples({
                         )}
                       >
                         <span>+</span>
-                        {interactionState === 'pressed' && (
-                          <span className="pointer-events-none absolute inset-0 animate-ping rounded-2xl bg-white/25" />
-                        )}
                       </div>
                       <div className="font-mono text-[10px] text-slate-500">
                         Standard 56&times;56dp Floating Action Button in{' '}
