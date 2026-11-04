@@ -93,22 +93,33 @@ export const createApp = (): express.Express => {
   app.use('/api/v1', apiRateLimiter);
   app.use('/api/v1', mutationRateLimiter);
 
-  // OpenAPI 3.1 Specification and Interactive REST API Explorer
-  const serveOpenApiJson = (_request: express.Request, response: express.Response) => {
-    response.setHeader('Content-Type', 'application/json');
-    response.sendFile(path.resolve(__dirname, 'docs/openapi.json'));
-  };
+  // OpenAPI 3.1 Specification and Interactive REST API Explorer (Local Development Only)
+  if (env.NODE_ENV !== 'production') {
+    const serveOpenApiJson = (_request: express.Request, response: express.Response) => {
+      response.setHeader('Content-Type', 'application/json');
+      response.sendFile(path.resolve(__dirname, 'docs/openapi.json'));
+    };
 
-  const serveDocsExplorer = (_request: express.Request, response: express.Response) => {
-    response.removeHeader('Content-Security-Policy');
-    response.setHeader('Content-Type', 'text/html; charset=utf-8');
-    response.sendFile(path.resolve(__dirname, 'docs/explorer.html'));
-  };
+    const serveDocsExplorer = (_request: express.Request, response: express.Response) => {
+      response.removeHeader('Content-Security-Policy');
+      response.setHeader('Content-Type', 'text/html; charset=utf-8');
+      response.sendFile(path.resolve(__dirname, 'docs/explorer.html'));
+    };
 
-  app.get(['/api/v1/docs/openapi.json', '/docs/openapi.json'], serveOpenApiJson);
-  app.get(['/api/v1/docs', '/docs', '/api-docs'], serveDocsExplorer);
+    app.get(['/api/v1/docs/openapi.json', '/docs/openapi.json'], serveOpenApiJson);
+    app.get(['/api/v1/docs', '/docs', '/api-docs'], serveDocsExplorer);
+  }
 
   app.get('/', (_request, response) => {
+    if (env.NODE_ENV === 'production') {
+      response.status(200).json({
+        success: true,
+        message: 'SNP-SMS API Service',
+        status: 'operational',
+      });
+      return;
+    }
+
     response.status(200).json({
       success: true,
       message: 'SNP-SMS Backend API',
