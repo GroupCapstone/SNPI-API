@@ -49,6 +49,7 @@ import {
   getNavIcon,
   getParentGroupIcon,
   getParentCategoryTheme,
+  getLiquidGlassCircle,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -251,14 +252,30 @@ export function UiLibraryView() {
   // Menu Category Filter: 'all' | 'ready' | 'coming'
   const [menuFilter, setMenuFilter] = React.useState<'all' | 'ready' | 'coming'>('all');
 
-  // Category group collapse state: default expanded (all open initially)
-  const [collapsedGroups, setCollapsedGroups] = React.useState<Record<string, boolean>>({});
+  // Category group collapse state: default collapsed (all lists closed until user dropdowns or scrolls to section)
+  const [collapsedGroups, setCollapsedGroups] = React.useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    COMPONENT_GROUPS_NAV.forEach((g) => {
+      initial[g.groupId] = true;
+    });
+    return initial;
+  });
 
   const toggleCategoryGroup = (groupId: string) => {
-    setCollapsedGroups((prev) => ({
-      ...prev,
-      [groupId]: !prev[groupId],
-    }));
+    setCollapsedGroups((prev) => {
+      const willBeOpen = Boolean(prev[groupId]);
+      const next: Record<string, boolean> = {};
+      COMPONENT_GROUPS_NAV.forEach((g) => {
+        next[g.groupId] = g.groupId === groupId ? !willBeOpen : true;
+      });
+      return next;
+    });
+
+    const targetGroup = COMPONENT_GROUPS_NAV.find((g) => g.groupId === groupId);
+    if (targetGroup) {
+      const catId = `cat-${targetGroup.group.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      scrollToSection(catId);
+    }
   };
 
   // Parent group expansion state: default collapsed (no child dropdown open initially)
@@ -338,23 +355,72 @@ export function UiLibraryView() {
     return PLATFORM_COMPONENTS_NAV.filter((item) => item.name.toLowerCase().includes(q));
   }, [searchQuery]);
 
-  // Auto-expand parent group on scroll when encountering child section
+  // Auto-expand and dropdown matching parent group on scroll when encountering section
   React.useEffect(() => {
-    if (!activeSectionId) return;
+    if (!activeSectionId || isManualScrollRef.current) return;
 
+    let matchingGroupId: string | null = null;
+    let matchingParentItemId: string | null = null;
+
+    // 1. Direct group matching
     for (const group of COMPONENT_GROUPS_NAV) {
+      const catSlug = `cat-${group.group.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      if (activeSectionId === catSlug) {
+        matchingGroupId = group.groupId;
+        break;
+      }
       for (const item of group.items) {
+        if (item.targetId === activeSectionId || `comp-${item.id}` === activeSectionId) {
+          matchingGroupId = group.groupId;
+          break;
+        }
         if (item.isParent && item.children) {
-          const isChildActive = item.children.some(
+          const isChild = item.children.some(
             (c) => c.targetId === activeSectionId || `comp-${c.id}` === activeSectionId,
           );
-          if (isChildActive) {
-            setExpandedParents((prev) => {
-              if (prev[item.id]) return prev;
-              return { ...prev, [item.id]: true };
-            });
+          if (isChild) {
+            matchingGroupId = group.groupId;
+            matchingParentItemId = item.id;
+            break;
           }
         }
+      }
+      if (matchingGroupId) break;
+    }
+
+    // 2. Registry fallback matching by component category
+    if (!matchingGroupId && activeSectionId.startsWith('comp-')) {
+      const compId = activeSectionId.replace(/^comp-/, '');
+      const comp = COMPONENT_LIBRARY_REGISTRY.find((c) => c.id === compId);
+      if (comp) {
+        const found = COMPONENT_GROUPS_NAV.find(
+          (g) =>
+            g.group.toLowerCase() === comp.category.toLowerCase() ||
+            comp.category.toLowerCase().includes(g.group.toLowerCase()) ||
+            g.group.toLowerCase().includes(comp.category.toLowerCase()),
+        );
+        if (found) matchingGroupId = found.groupId;
+      }
+    }
+
+    if (matchingGroupId) {
+      setCollapsedGroups((prev) => {
+        // If already open and only this group is open, return prev to prevent re-render
+        if (!prev[matchingGroupId!] && Object.keys(prev).filter((k) => !prev[k]).length === 1) {
+          return prev;
+        }
+        const next: Record<string, boolean> = {};
+        COMPONENT_GROUPS_NAV.forEach((g) => {
+          next[g.groupId] = g.groupId !== matchingGroupId;
+        });
+        return next;
+      });
+
+      if (matchingParentItemId) {
+        setExpandedParents((prev) => ({
+          ...prev,
+          [matchingParentItemId!]: true,
+        }));
       }
     }
   }, [activeSectionId]);
@@ -446,22 +512,32 @@ export function UiLibraryView() {
     };
   }, [scrollSectionIds]);
 
-  // Keep active item gently visible within Left Sticky Sidebar
+  // Auto-center active item smoothly in the Left Sticky Sidebar
   React.useEffect(() => {
     if (!sidebarContainerRef.current || isManualScrollRef.current) return;
     const container = sidebarContainerRef.current;
-    const activeEl = container.querySelector<HTMLElement>(`[data-section-id="${activeSectionId}"]`);
-    if (!activeEl) return;
 
-    const containerRect = container.getBoundingClientRect();
-    const elRect = activeEl.getBoundingClientRect();
+    const timer = setTimeout(() => {
+      const activeEl =
+        container.querySelector<HTMLElement>('[data-active="true"]') ||
+        container.querySelector<HTMLElement>(`[data-section-id="${activeSectionId}"]`);
+      if (!activeEl) return;
 
-    if (elRect.top < containerRect.top + 45) {
-      container.scrollTop += elRect.top - containerRect.top - 45;
-    } else if (elRect.bottom > containerRect.bottom - 45) {
-      container.scrollTop += elRect.bottom - containerRect.bottom + 45;
-    }
-  }, [activeSectionId]);
+      const containerRect = container.getBoundingClientRect();
+      const elRect = activeEl.getBoundingClientRect();
+
+      // Perfectly center activeEl in container
+      const relativeTop = elRect.top - containerRect.top + container.scrollTop;
+      const targetScrollTop = relativeTop - container.clientHeight / 2 + elRect.height / 2;
+
+      container.scrollTo({
+        top: Math.max(0, targetScrollTop),
+        behavior: 'smooth',
+      });
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [activeSectionId, collapsedGroups, expandedParents]);
 
   const handleCopyInstall = async (id: string, cmd: string) => {
     const success = await copyTextToClipboard(cmd);
@@ -576,23 +652,69 @@ export function UiLibraryView() {
                   filteredComponentGroups.map((group) => {
                     const ParentGroupIcon = getParentGroupIcon(group.groupId);
                     const isGroupCollapsed = Boolean(collapsedGroups[group.groupId]);
+                    const glassTheme = getLiquidGlassCircle(group.groupId);
+                    const groupCatSlug = `cat-${group.group.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+                    const isGroupActive =
+                      activeSectionId === groupCatSlug ||
+                      group.items.some((item) => {
+                        if (
+                          item.targetId === activeSectionId ||
+                          `comp-${item.id}` === activeSectionId
+                        )
+                          return true;
+                        if (item.isParent && item.children) {
+                          return item.children.some(
+                            (c) =>
+                              c.targetId === activeSectionId || `comp-${c.id}` === activeSectionId,
+                          );
+                        }
+                        return false;
+                      });
+
                     return (
                       <div key={group.groupId} className="space-y-1">
-                        {/* Parent Group Header (Collapsible Trigger with Blue Parent Icon) */}
+                        {/* Parent Group Header (Collapsible Trigger with Liquid Glass Color Circle) */}
                         <button
                           type="button"
+                          data-section-id={groupCatSlug}
+                          data-active={isGroupActive ? 'true' : undefined}
                           onClick={() => toggleCategoryGroup(group.groupId)}
-                          className="group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-bold text-slate-900 transition-colors select-none hover:bg-slate-100"
+                          className={cn(
+                            'group flex w-full cursor-pointer items-center justify-between rounded-lg px-2 py-1.5 text-left font-sans text-xs font-bold transition-all select-none hover:bg-slate-100',
+                            isGroupActive ? 'bg-[#EFF5FF]/60 text-[#0056FF]' : 'text-slate-900',
+                          )}
                         >
-                          <div className="flex items-center gap-2">
-                            <ParentGroupIcon className="size-3.5 shrink-0 text-[#0056FF]" />
-                            <span className="font-bold text-slate-900">{group.group}</span>
+                          <div className="flex items-center gap-2.5">
+                            {/* Liquid Glass Circular Icon Container */}
+                            <div
+                              className={cn(
+                                'relative flex size-7 shrink-0 items-center justify-center rounded-full transition-all duration-200',
+                                'border border-white/90 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),inset_0_-1px_1.5px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.08)] backdrop-blur-md',
+                                glassTheme.bg,
+                                glassTheme.text,
+                                isGroupActive || !isGroupCollapsed
+                                  ? cn('ring-2 ring-offset-1', glassTheme.ring, 'shadow-sm')
+                                  : 'opacity-90 group-hover:scale-105 group-hover:opacity-100',
+                              )}
+                            >
+                              {/* 360-degree Specular Reflection Sheen */}
+                              <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-white/70" />
+                              <ParentGroupIcon className="relative z-10 size-3.5 stroke-[2.2]" />
+                            </div>
+                            <span
+                              className={cn(
+                                'font-bold transition-colors',
+                                isGroupActive ? 'text-[#0056FF]' : 'text-slate-900',
+                              )}
+                            >
+                              {group.group}
+                            </span>
                           </div>
                           <div className="flex items-center">
                             {!isGroupCollapsed ? (
-                              <ChevronDown className="size-3 text-[#0056FF] transition-colors" />
+                              <ChevronDown className="size-3 text-[#0056FF] transition-transform duration-200" />
                             ) : (
-                              <ChevronRight className="size-3 text-[#0056FF] transition-colors" />
+                              <ChevronRight className="size-3 text-slate-400 transition-transform duration-200 group-hover:text-[#0056FF]" />
                             )}
                           </div>
                         </button>
@@ -628,7 +750,7 @@ export function UiLibraryView() {
                                       {isExpanded ? (
                                         <ChevronDown className="ml-1 size-3 shrink-0 text-[#0056FF]" />
                                       ) : (
-                                        <ChevronRight className="ml-1 size-3 shrink-0 text-[#0056FF]" />
+                                        <ChevronRight className="ml-1 size-3 shrink-0 text-slate-400 group-hover:text-[#0056FF]" />
                                       )}
                                     </button>
 
@@ -643,11 +765,13 @@ export function UiLibraryView() {
                                           return (
                                             <div
                                               key={child.id}
+                                              data-section-id={target}
+                                              data-active={isChildActive ? 'true' : undefined}
                                               onClick={() => scrollToSection(target)}
                                               className={cn(
                                                 'group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3.5 text-left transition-colors select-none',
                                                 isChildActive
-                                                  ? 'bg-slate-100/80 font-bold text-slate-950 before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-slate-950'
+                                                  ? 'bg-[#EFF5FF] font-bold text-[#0056FF] before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-[#0056FF]'
                                                   : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                                               )}
                                             >
@@ -681,11 +805,13 @@ export function UiLibraryView() {
                               return (
                                 <div
                                   key={item.id}
+                                  data-section-id={target}
+                                  data-active={isActive ? 'true' : undefined}
                                   onClick={() => scrollToSection(target)}
                                   className={cn(
                                     'group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3.5 text-left transition-colors select-none',
                                     isActive
-                                      ? 'bg-slate-100/80 font-bold text-slate-950 before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-slate-950'
+                                      ? 'bg-[#EFF5FF] font-bold text-[#0056FF] before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-[#0056FF]'
                                       : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                                   )}
                                 >
