@@ -69,13 +69,6 @@ const getActiveBranchId = (): string | null => {
   return _cachedBranchId;
 };
 
-// Perf: pre-build the read-only base headers object once; each request shallow-merges on top.
-const BASE_READ_HEADERS: Record<string, string> = { Accept: 'application/json' };
-const BASE_WRITE_HEADERS: Record<string, string> = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-};
-
 let refreshPromise: Promise<RefreshResponsePayload<{
   accessToken: string;
   user: unknown;
@@ -159,10 +152,14 @@ const baseRequest = async <T>(path: string, init?: RequestInit, isRetry = false)
   // Perf: skip Content-Type on GET/HEAD/DELETE — they carry no body. Avoids unnecessary header
   // negotiation overhead on the read-heavy hot path.
   const isBodyless = method === 'GET' || method === 'HEAD' || method === 'DELETE';
-  const headers: Record<string, string> = {
-    ...(isBodyless ? BASE_READ_HEADERS : BASE_WRITE_HEADERS),
-    ...(init?.headers as Record<string, string>),
-  };
+  // Perf: allocate directly with fixed shape to avoid spread-operator hidden-class deopts in V8.
+  const headers: Record<string, string> = isBodyless
+    ? { Accept: 'application/json' }
+    : { Accept: 'application/json', 'Content-Type': 'application/json' };
+
+  if (init?.headers) {
+    Object.assign(headers, init.headers);
+  }
 
   if (inMemoryAccessToken && !headers.Authorization) {
     headers.Authorization = `Bearer ${inMemoryAccessToken}`;

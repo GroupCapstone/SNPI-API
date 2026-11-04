@@ -1,4 +1,5 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 import type {
   CreateRolloverPlanInput,
@@ -12,17 +13,9 @@ import type {
 } from '../types';
 
 export const getRolloverPlans = async (filters: RolloverPlanFilters = {}) => {
-  const params = new URLSearchParams();
-  if (filters.branchId && filters.branchId !== 'all') params.append('branchId', filters.branchId);
-  if (filters.sourcePeriodId) params.append('sourcePeriodId', filters.sourcePeriodId);
-  if (filters.targetPeriodId) params.append('targetPeriodId', filters.targetPeriodId);
-  if (filters.status) params.append('status', filters.status);
-  if (filters.page) params.append('page', String(filters.page));
-  if (filters.limit) params.append('limit', String(filters.limit));
-
-  const queryString = params.toString();
-  const url = `/rollovers${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiPaginatedResponse<RolloverPlan>>(url);
+  return apiClient.get<ApiPaginatedResponse<RolloverPlan>>(
+    `/rollovers${buildQueryString(filters)}`,
+  );
 };
 
 export const getRolloverPlanById = async (id: string) => {
