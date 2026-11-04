@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `d7c691e` (Developer: **史力爱卫**)
+
+- Enrich API Stylebook manifesto with 3 cardinal pillars, AP Stylebook lineage, and square-wheel defenses
+
+### Version 0.2.17 (04.11.2026) - `2f52e8d` (Developer: **史力爱卫**)
+
+- Record Google API design guide deep-dive sync commit 5025c17
+
 ### Version 0.2.17 (04.11.2026) - `5025c17` (Developer: **史力爱卫**)
 
 - Enrich Google API Design Guide deep-dive with ROD methodology, 16 status codes, and AIP standards
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.22 (04.11.2026) - `2585f81` (Developer: **史力爱卫**)
 
 - Add build:shared and liveness timeout check to e2e daemon
-
-### Version 0.2.21 (04.11.2026) - `2a539c2` (Developer: **史力爱卫**)
-
-- Checkpoint & live ci deploy verification [PASSED]
-
-### Version 0.2.21 (04.11.2026) - `9a73765` (Developer: **史力爱卫**)
-
-- Synchronize real-time changelog and prettier formatting
 

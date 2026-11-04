@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "d7c691e",
+    "developer": "史力爱卫",
+    "description": "Enrich API Stylebook manifesto with 3 cardinal pillars, AP Stylebook lineage, and square-wheel defenses"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "2f52e8d",
+    "developer": "史力爱卫",
+    "description": "Record Google API design guide deep-dive sync commit 5025c17"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "5025c17",
     "developer": "史力爱卫",
     "description": "Enrich Google API Design Guide deep-dive with ROD methodology, 16 status codes, and AIP standards"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "2585f81",
     "developer": "史力爱卫",
     "description": "Add build:shared and liveness timeout check to e2e daemon"
-  },
-  {
-    "version": "0.2.21",
-    "date": "04.11.2026",
-    "commitHash": "2a539c2",
-    "developer": "史力爱卫",
-    "description": "Checkpoint & live ci deploy verification [PASSED]"
-  },
-  {
-    "version": "0.2.21",
-    "date": "04.11.2026",
-    "commitHash": "9a73765",
-    "developer": "史力爱卫",
-    "description": "Synchronize real-time changelog and prettier formatting"
   }
 ];
