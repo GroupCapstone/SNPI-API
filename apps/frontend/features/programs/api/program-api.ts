@@ -1,18 +1,11 @@
 import { apiClient } from '@/lib/api-client';
+import { buildQueryString } from '@/lib/query-params';
 import type { ApiPaginatedResponse, ApiSuccessResponse } from '@/types/api';
 import type { ProgramFormData } from '../schemas';
 import type { Program, ProgramFilters } from '../types';
 
 export const getPrograms = async (filters: ProgramFilters = {}) => {
-  const params = new URLSearchParams();
-  if (filters.search) params.append('search', filters.search);
-  if (filters.status) params.append('status', filters.status);
-  if (filters.page) params.append('page', String(filters.page));
-  if (filters.limit) params.append('limit', String(filters.limit));
-
-  const queryString = params.toString();
-  const url = `/programs${queryString ? `?${queryString}` : ''}`;
-  return apiClient.get<ApiPaginatedResponse<Program>>(url);
+  return apiClient.get<ApiPaginatedResponse<Program>>(`/programs${buildQueryString(filters)}`);
 };
 
 export const createProgram = async (data: ProgramFormData) => {
