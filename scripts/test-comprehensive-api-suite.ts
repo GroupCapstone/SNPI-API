@@ -14,7 +14,10 @@ function loadEnvFile(filePath: string): Record<string, string> {
     if (idx !== -1) {
       const key = trimmed.slice(0, idx).trim();
       let val = trimmed.slice(idx + 1).trim();
-      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      if (
+        (val.startsWith('"') && val.endsWith('"')) ||
+        (val.startsWith("'") && val.endsWith("'"))
+      ) {
         val = val.slice(1, -1);
       }
       env[key] = val;
@@ -40,7 +43,14 @@ interface TestRecord {
   statusCode: number;
   durationMs: number;
   statusText: string;
-  category: 'SUCCESS' | 'CLIENT_VALIDATION' | 'NOT_FOUND' | 'FORBIDDEN' | 'UNAUTHORIZED' | 'SERVER_ERROR' | 'UNREACHABLE';
+  category:
+    | 'SUCCESS'
+    | 'CLIENT_VALIDATION'
+    | 'NOT_FOUND'
+    | 'FORBIDDEN'
+    | 'UNAUTHORIZED'
+    | 'SERVER_ERROR'
+    | 'UNREACHABLE';
 }
 
 async function fetchToken(username: string, pass: string): Promise<string> {
@@ -61,7 +71,10 @@ async function runComprehensiveTest() {
 
   // 1. Authenticate
   const username = process.env.SUPER_ADMIN_USERNAME || env.SUPER_ADMIN_USERNAME || 'admin_local';
-  const password = process.env.SUPER_ADMIN_PASSWORD || env.SUPER_ADMIN_PASSWORD || 'AdminPasse7a049b8a2009c4c22be1e02';
+  const password =
+    process.env.SUPER_ADMIN_PASSWORD ||
+    env.SUPER_ADMIN_PASSWORD ||
+    'AdminPasse7a049b8a2009c4c22be1e02';
 
   console.log(`[Auth] Authenticating as Super Admin (${username})...`);
   let token = await fetchToken(username, password);
@@ -182,7 +195,9 @@ async function runComprehensiveTest() {
       });
 
       const tag = `[${res.status}]`.padEnd(6);
-      console.log(`${tag} ${ep.method.padEnd(6)} ${ep.path.padEnd(55)} -> ${durationMs}ms (${cat})`);
+      console.log(
+        `${tag} ${ep.method.padEnd(6)} ${ep.path.padEnd(55)} -> ${durationMs}ms (${cat})`,
+      );
     } catch (err) {
       const durationMs = Math.round(performance.now() - start);
       testRecords.push({
@@ -203,7 +218,9 @@ async function runComprehensiveTest() {
   const successCount = testRecords.filter((r) => r.category === 'SUCCESS').length;
   const validationCount = testRecords.filter((r) => r.category === 'CLIENT_VALIDATION').length;
   const notFoundCount = testRecords.filter((r) => r.category === 'NOT_FOUND').length;
-  const errorCount = testRecords.filter((r) => r.category === 'SERVER_ERROR' || r.category === 'UNREACHABLE').length;
+  const errorCount = testRecords.filter(
+    (r) => r.category === 'SERVER_ERROR' || r.category === 'UNREACHABLE',
+  ).length;
   const total = testRecords.length;
   const avgLatency = Math.round(testRecords.reduce((acc, r) => acc + r.durationMs, 0) / total);
 
@@ -217,7 +234,8 @@ async function runComprehensiveTest() {
   console.log('================================================================================\n');
 
   // Write artifact
-  const artifactDir = '/Users/Apple16/.gemini/antigravity/brain/859bb8a1-1d2a-4c7b-8eca-2e606e459928';
+  const artifactDir =
+    '/Users/Apple16/.gemini/antigravity/brain/859bb8a1-1d2a-4c7b-8eca-2e606e459928';
   let md = '# SNP-SMS Comprehensive REST API Endpoint Registry & Verification Report\n\n';
   md += `> **Audit Execution Date**: ${new Date().toISOString()}\n`;
   md += `> **Total Registered Endpoints**: ${total}\n`;

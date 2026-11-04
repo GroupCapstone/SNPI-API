@@ -13,7 +13,10 @@ export const sendSuccess = <T>(
   if (statusCode === 201 && !response.getHeader('Location')) {
     const resourceId =
       data && typeof data === 'object' && ('_id' in data || 'id' in data)
-        ? String((data as { id?: unknown; _id?: unknown }).id || (data as { id?: unknown; _id?: unknown })._id)
+        ? String(
+            (data as { id?: unknown; _id?: unknown }).id ||
+              (data as { id?: unknown; _id?: unknown })._id,
+          )
         : undefined;
     if (resourceId && response.req) {
       const basePath = response.req.baseUrl || response.req.originalUrl?.split('?')[0];
@@ -42,7 +45,10 @@ export const sendCreated = <T>(
   if (!response.getHeader('Location')) {
     const resourceId =
       data && typeof data === 'object' && ('_id' in data || 'id' in data)
-        ? String((data as { id?: unknown; _id?: unknown }).id || (data as { id?: unknown; _id?: unknown })._id)
+        ? String(
+            (data as { id?: unknown; _id?: unknown }).id ||
+              (data as { id?: unknown; _id?: unknown })._id,
+          )
         : undefined;
     if (resourceId && response.req) {
       const basePath = response.req.baseUrl || response.req.originalUrl?.split('?')[0];
