@@ -77,6 +77,10 @@ These rules apply to every AI coding agent and human contributor working in the 
   - **Never write outside `SNPI-API`**: Under no circumstances should files, code, scratch scripts, tests, configs, or build artifacts be written to the workspace root (`/Users/Apple16/Desktop/SNPI/`), sibling project (`SNPI-Web/`), Desktop (`/Users/Apple16/Desktop/`), home folder (`~/`), or `/tmp`.
   - **Build Output Isolation**: All build commands (`npm run build`, `npm run typecheck`, `tsc`) must strictly output within `SNPI-API` (e.g. `dist/`). No build script or compiler may emit artifacts outside `SNPI-API`.
   - **Zero Cross-Project Contamination**: Never write backend code, test scripts, or database utilities into `SNPI-Web`.
+- **Mandatory Differentiated Commit & Independent Tracking Rule — ABSOLUTE RULE**:
+  - All commits in `SNPI-API` must strictly use the `(api)` or `(api/<scope>)` prefix (e.g., `feat(api): ...`, `fix(api/auth): ...`, `docs(api): ...`).
+  - Never share generic or identical commit messages with `SNPI-Web`.
+  - Maintain an independent commit history, tag tracking (`api-vX.Y.Z`), and separate changelog.
 
 ---
 
