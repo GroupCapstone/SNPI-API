@@ -12,9 +12,7 @@ import type {
 export const getAttendanceListApi = async (
   filters?: AttendanceQueryFilters,
 ): Promise<ApiPaginatedResponse<Attendance>> => {
-  return apiClient.get<ApiPaginatedResponse<Attendance>>(
-    `/attendance${buildQueryString(filters)}`,
-  );
+  return apiClient.get<ApiPaginatedResponse<Attendance>>(`/attendance${buildQueryString(filters)}`);
 };
 
 export const getClassRosterAttendanceApi = async (

@@ -8,10 +8,32 @@ export interface ChangeLogEntry {
 
 export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
-    version: 'Unreleased',
-    date: '04.11.2026',
-    developer: 'Codex',
-    description: 'Optimize agent skill routing and task-scoped context loading while retaining all resources',
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "f79c40c",
+    "developer": "史力爱卫",
+    "description": "Remove card background tints, enforce clean white surface with 4px border radius"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "29c1be3",
+    "developer": "史力爱卫",
+    "description": "Perf(api): optimize resource reading speed and query serialization across feature modules"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "00a8b53",
+    "developer": "史力爱卫",
+    "description": "Perf(api-client): optimize header allocation, active branch caching, and query string compilation"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "2e8b66a",
+    "developer": "史力爱卫",
+    "description": "Add agent skill routing index, governance policies, and query parameters utility"
   },
   {
     "version": "0.2.17",
@@ -159,33 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "cca75ce",
     "developer": "史力爱卫",
     "description": "Record ARC and git lfs updates in AGENTS.md and agent specs"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "858d883",
-    "developer": "史力爱卫",
-    "description": "Record actions runner controller architecture guide"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "838f934",
-    "developer": "史力爱卫",
-    "description": "Sync changelog"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "3559b00",
-    "developer": "史力爱卫",
-    "description": "Add verify:arc script command"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "cf69ccd",
-    "developer": "史力爱卫",
-    "description": "Refine DinD privilege separation regex check in ARC verification script"
   }
 ];
