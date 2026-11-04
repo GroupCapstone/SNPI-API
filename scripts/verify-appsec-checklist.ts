@@ -576,7 +576,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
   // ==========================================
   const hasWorkspaces =
     (pkgJson.includes('workspaces') && pkgJson.includes('@snp/shared')) ||
-    (pkgJson.includes('"name": "snpi-api"') && fileExists('src/modules') && fileExists('src/contracts'));
+    (pkgJson.includes('"name": "snpi-api"') &&
+      fileExists('src/modules') &&
+      fileExists('src/contracts'));
   checks.push({
     id: 'SCA-01',
     domain: 'Scalability',
@@ -604,10 +606,9 @@ async function runApplicationSecurityAudit(): Promise<void> {
       : 'Missing labeler.yml',
   });
 
-  const modulesDir =
-    fs.existsSync(path.resolve(ROOT_DIR, 'apps/backend/src/modules'))
-      ? 'apps/backend/src/modules'
-      : 'src/modules';
+  const modulesDir = fs.existsSync(path.resolve(ROOT_DIR, 'apps/backend/src/modules'))
+    ? 'apps/backend/src/modules'
+    : 'src/modules';
   const backendModules = fs.existsSync(path.resolve(ROOT_DIR, modulesDir))
     ? fs.readdirSync(path.resolve(ROOT_DIR, modulesDir)).filter((f) => !f.startsWith('.')).length
     : 0;

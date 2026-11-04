@@ -45,13 +45,15 @@ async function verifyGlobalDesignCompliance(): Promise<void> {
     criterion: 'Contract-First Specifications & Schema Definitions',
     status: hasContracts && hasOpenApi ? 'PASSED' : 'FAILED',
     score: hasContracts && hasOpenApi ? 100 : 0,
-    evidence: hasContracts && hasOpenApi
-      ? 'Canonical contracts in src/contracts/ and formal OpenAPI 3.1 specification (src/docs/openapi.json)'
-      : 'Missing contracts or OpenAPI spec',
+    evidence:
+      hasContracts && hasOpenApi
+        ? 'Canonical contracts in src/contracts/ and formal OpenAPI 3.1 specification (src/docs/openapi.json)'
+        : 'Missing contracts or OpenAPI spec',
   });
 
   const apiResponse = readFileSafe('src/shared/http/api-response.ts');
-  const hasLooseCoupling = apiResponse.includes('sendSuccess') && apiResponse.includes('sendCreated');
+  const hasLooseCoupling =
+    apiResponse.includes('sendSuccess') && apiResponse.includes('sendCreated');
   checks.push({
     id: 'ADI-02',
     guideline: 'adidas',
@@ -133,8 +135,7 @@ async function verifyGlobalDesignCompliance(): Promise<void> {
 
   const securityMiddleware = readFileSafe('src/middleware/security.ts');
   const hasPublicSafety =
-    securityMiddleware.includes('corsOptions') &&
-    securityMiddleware.includes('Idempotency-Key');
+    securityMiddleware.includes('corsOptions') && securityMiddleware.includes('Idempotency-Key');
   checks.push({
     id: 'DEL-02',
     guideline: 'Deliveroo',
@@ -199,8 +200,7 @@ async function verifyGlobalDesignCompliance(): Promise<void> {
   // 5. HAUFE (3 Citations)
   // ==========================================
   const hasZodValidation =
-    fileExists('src/middleware/validate.ts') &&
-    fileExists('src/contracts/schemas/auth.ts');
+    fileExists('src/middleware/validate.ts') && fileExists('src/contracts/schemas/auth.ts');
   checks.push({
     id: 'HAU-01',
     guideline: 'Haufe',
@@ -262,8 +262,7 @@ async function verifyGlobalDesignCompliance(): Promise<void> {
   const authMiddleware = readFileSafe('src/middleware/authenticate.ts');
   const authorizeMiddleware = readFileSafe('src/middleware/authorize.ts');
   const hasServicePerimeter =
-    authMiddleware.includes('schoolId') &&
-    authorizeMiddleware.includes('authorize');
+    authMiddleware.includes('schoolId') && authorizeMiddleware.includes('authorize');
   checks.push({
     id: 'ITA-02',
     guideline: 'Italian AgID',
@@ -315,8 +314,12 @@ async function verifyGlobalDesignCompliance(): Promise<void> {
   // ==========================================
   // OUTPUT REPORT
   // ==========================================
-  console.log('| ID     | Guideline     | Section / Citation                  | Status   | Score | Evidence');
-  console.log('| :----- | :------------ | :---------------------------------- | :------- | :---- | :------------------------------------------------------------------');
+  console.log(
+    '| ID     | Guideline     | Section / Citation                  | Status   | Score | Evidence',
+  );
+  console.log(
+    '| :----- | :------------ | :---------------------------------- | :------- | :---- | :------------------------------------------------------------------',
+  );
 
   for (const c of checks) {
     const idPad = c.id.padEnd(6);
@@ -324,7 +327,9 @@ async function verifyGlobalDesignCompliance(): Promise<void> {
     const secPad = c.section.slice(0, 35).padEnd(35);
     const statusPad = `[${c.status}]`.padEnd(8);
     const scorePad = `${c.score}%`.padStart(5);
-    console.log(`| ${idPad} | ${guidePad} | ${secPad} | ${statusPad} | ${scorePad} | ${c.evidence}`);
+    console.log(
+      `| ${idPad} | ${guidePad} | ${secPad} | ${statusPad} | ${scorePad} | ${c.evidence}`,
+    );
   }
 
   const totalScore = checks.reduce((acc, c) => acc + c.score, 0) / checks.length;
@@ -332,7 +337,9 @@ async function verifyGlobalDesignCompliance(): Promise<void> {
 
   console.log('\n================================================================================');
   console.log(` GLOBAL DESIGN COMPLIANCE SCORE : ${totalScore.toFixed(2)}%`);
-  console.log(` TOTAL CHECKS AUDITED          : ${checks.length} criteria across all 9 benchmarked organizations`);
+  console.log(
+    ` TOTAL CHECKS AUDITED          : ${checks.length} criteria across all 9 benchmarked organizations`,
+  );
   console.log(` FAILED CHECKS                 : ${failed}`);
   console.log('================================================================================\n');
 
