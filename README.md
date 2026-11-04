@@ -6,14 +6,14 @@
 
 ## 1. Architectural Highlights
 
-* **Framework**: Express 5 (native `async/await` error handling).
-* **Language**: TypeScript 5 (Node16 / ESM module resolution).
-* **Database**: MongoDB Replica Set (`rs0`) with Mongoose ODM & ACID transaction sessions.
-* **Validation**: Zod runtime schema whitelisting.
-* **Security & Auth**: Dual-stack authentication supporting **Bearer JWT** (RFC 8725 compliant with refresh rotation) and **X-API-Key** service accounts, hardened with Helmet and rate-limiting.
-* **Architecture Pattern**: 7-Layer Modular Monolith:
+- **Framework**: Express 5 (native `async/await` error handling).
+- **Language**: TypeScript 5 (Node16 / ESM module resolution).
+- **Database**: MongoDB Replica Set (`rs0`) with Mongoose ODM & ACID transaction sessions.
+- **Validation**: Zod runtime schema whitelisting.
+- **Security & Auth**: Dual-stack authentication supporting **Bearer JWT** (RFC 8725 compliant with refresh rotation) and **X-API-Key** service accounts, hardened with Helmet and rate-limiting.
+- **Architecture Pattern**: 7-Layer Modular Monolith:
   `route -> controller -> service -> repository -> model -> validation -> types`
-* **Domain Organization**: 47 domain modules categorized into **5 Bounded Contexts**:
+- **Domain Organization**: 47 domain modules categorized into **5 Bounded Contexts**:
   1. `identity`: Authentication, user accounts, core roles, RBAC permissions, campus branches.
   2. `academic`: Academic years, terms, programs, departments, classes, subjects, schedules.
   3. `student`: Student profiles, admissions, enrollments, daily attendance, transfers.
@@ -25,10 +25,12 @@
 ## 2. Quick Start
 
 ### Prerequisites
-* Node.js >= 20.0.0
-* MongoDB >= 6.0 (Replica Set `rs0` enabled)
+
+- Node.js >= 20.0.0
+- MongoDB >= 6.0 (Replica Set `rs0` enabled)
 
 ### Installation & Run
+
 ```bash
 # 1. Install dependencies
 npm install

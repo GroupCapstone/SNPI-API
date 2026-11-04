@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - 'apps/backend/**'
+      - 'src/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - '.github/workflows/docker-build.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'apps/backend/**'
+      - 'src/**'
       - 'Dockerfile'
       - 'docker-compose.yml'
       - '.github/workflows/docker-build.yml'
@@ -39,8 +39,8 @@ jobs:
         uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v6.13.0
         with:
           context: .
-          file: ./apps/backend/Dockerfile
+          file: ./Dockerfile
           push: false
-          tags: snp-sms-backend:latest
+          tags: snpi-api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max

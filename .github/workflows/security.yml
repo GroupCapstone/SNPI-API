@@ -35,8 +35,8 @@ jobs:
       - name: Audit Production Dependencies
         run: npm audit --omit=dev --audit-level=high
 
-      - name: Build Shared Package
-        run: npm run build -w packages/shared
+      - name: Build SNPI-API Engine
+        run: npm run build
 
-      - name: Verify Monorepo Workspace Smoke Health
+      - name: Verify SNPI-API Smoke Health
         run: npm run smoke

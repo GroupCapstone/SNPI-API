@@ -25,7 +25,7 @@ function loadEnv(filePath: string): Record<string, string> {
   return env;
 }
 
-const env = loadEnv('apps/backend/.env');
+const env = { ...loadEnv('.env'), ...loadEnv('.env.local'), ...loadEnv('apps/backend/.env') };
 
 interface ApiTestResult {
   endpoint: string;

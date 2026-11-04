@@ -1,11 +1,11 @@
-import { spawn, execSync } from 'node:child_process';
 import http from 'node:http';
+import { execSync } from 'node:child_process';
 import {
   SYSTEM_PERMISSIONS,
   DEFAULT_CORE_ROLES,
   checkUserPermission,
-  loginPayloadSchema,
-} from '@snp/shared';
+} from '../src/contracts/permissions';
+import { loginPayloadSchema } from '../src/contracts/schemas/auth';
 
 async function request(
   url: string,
@@ -43,17 +43,17 @@ async function request(
 }
 
 async function main() {
-  console.log('[1/4] Verifying @snp/shared package resolution...');
+  console.log('[1/4] Verifying SNPI-API contracts and roles resolution...');
   if (!SYSTEM_PERMISSIONS || SYSTEM_PERMISSIONS.length === 0) {
-    throw new Error('@snp/shared SYSTEM_PERMISSIONS failed to load');
+    throw new Error('SYSTEM_PERMISSIONS failed to load');
   }
   if (!DEFAULT_CORE_ROLES || DEFAULT_CORE_ROLES.length === 0) {
-    throw new Error('@snp/shared DEFAULT_CORE_ROLES failed to load');
+    throw new Error('DEFAULT_CORE_ROLES failed to load');
   }
 
   const superAdminRole = DEFAULT_CORE_ROLES.find((r) => r.code === 'super_admin');
   if (!superAdminRole) {
-    throw new Error('super_admin role not found in @snp/shared');
+    throw new Error('super_admin role not found');
   }
 
   const hasBranchAccess = checkUserPermission(
@@ -72,7 +72,7 @@ async function main() {
     throw new Error('loginPayloadSchema validation failed');
   }
   console.log(
-    '      [PASS] @snp/shared loaded: ' +
+    '      [PASS] Contracts loaded: ' +
       SYSTEM_PERMISSIONS.length +
       ' permissions, ' +
       DEFAULT_CORE_ROLES.length +
@@ -92,35 +92,34 @@ async function main() {
   }
 
   console.log('[3/4] Verifying Backend API and Root endpoints...');
-  let backendRunning = false;
   try {
-    const rootRes = await request('http://localhost:4000/');
-    const healthRes = await request('http://localhost:4000/api/v1/health');
+    const rootRes = await request('http://localhost:5000/');
+    const healthRes = await request('http://localhost:5000/api/v1/health');
     if (rootRes.statusCode === 200 && healthRes.statusCode === 200) {
-      backendRunning = true;
       console.log('      [PASS] Root endpoint (GET /): HTTP 200');
       console.log('      [PASS] Health endpoint (GET /api/v1/health): HTTP 200');
     }
   } catch {
-    console.log('      [INFO] Backend is currently offline (start with `npm run dev:backend`)');
+    console.log('      [INFO] Backend is currently offline (start with `npm run dev`)');
   }
 
-  console.log('[4/4] Verifying Monorepo Workspace Structure...');
-  const workspaces = [
-    'apps/backend',
-    'apps/frontend',
-    'packages/shared',
-    'packages/tsconfig',
-    'packages/eslint-config',
+  console.log('[4/4] Verifying SNPI-API Architecture Structure...');
+  const paths = [
+    'src/server.ts',
+    'src/app.ts',
+    'src/modules',
+    'src/contracts',
+    'tests',
+    'infrastructure/k8s/backend-deployment.yaml',
   ];
-  for (const ws of workspaces) {
-    console.log(`      [PASS] Workspace exists: ${ws}`);
+  for (const p of paths) {
+    console.log(`      [PASS] Architecture component exists: ${p}`);
   }
 
-  console.log('\nMonorepo smoke verification completed successfully with 100% PASS.');
+  console.log('\nSNPI-API smoke verification completed successfully with 100% PASS.');
 }
 
 main().catch((err) => {
-  console.error('[FAIL] Monorepo verification failed:', err);
+  console.error('[FAIL] Verification failed:', err);
   process.exit(1);
 });

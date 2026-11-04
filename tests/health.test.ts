@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { APP_VERSION } from '@snp/shared';
+import { APP_VERSION } from '../src/contracts';
 
 import { createApp } from '../src/app';
 

@@ -2,34 +2,29 @@ FROM node:22-alpine AS base
 
 WORKDIR /app
 
-# Copy root workspace configuration, lockfile, and shared packages
+# Copy package files
 COPY package.json package-lock.json ./
-COPY packages/ ./packages/
-COPY apps/backend/package.json ./apps/backend/
 
-# Install dependencies including backend workspace
-RUN npm ci --workspace=apps/backend --include-workspace-root
+# Install all dependencies (including dev for building)
+RUN npm ci
 
-# Copy backend application source
-COPY apps/backend/ ./apps/backend/
+# Copy source and configuration
+COPY tsconfig.json ./
+COPY src/ ./src/
 
-# Build shared packages and backend TypeScript
-RUN npm run build --workspace=@snp/shared
-RUN npm run build --workspace=apps/backend
+# Compile TypeScript
+RUN npm run build
 
 FROM node:22-alpine AS production
 WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package.json package-lock.json ./
-COPY packages/ ./packages/
-COPY apps/backend/package.json ./apps/backend/
 
-RUN npm ci --omit=dev --ignore-scripts --workspace=apps/backend --include-workspace-root
+RUN npm ci --omit=dev --ignore-scripts
 
-COPY --from=base /app/packages/shared/dist ./packages/shared/dist
-COPY --from=base /app/apps/backend/dist ./apps/backend/dist
+COPY --from=base /app/dist ./dist
 
 USER node
 EXPOSE 4000
-CMD ["node", "apps/backend/dist/server.js"]
+CMD ["node", "dist/server.js"]

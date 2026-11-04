@@ -28,10 +28,8 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Install Dependencies & Build Shared
-        run: |
-          npm ci
-          npm run build:shared
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Spin Up MongoDB Replica Set (rs0)
         run: |
@@ -45,7 +43,6 @@ jobs:
 
       - name: Start Backend API Daemon
         run: |
-          cd apps/backend
           npx tsx src/server.ts > /tmp/backend.log 2>&1 &
           SERVER_PID=$!
           echo "Backend Daemon started with PID: $SERVER_PID"
@@ -68,7 +65,7 @@ jobs:
         env:
           NODE_ENV: development
           PORT: 4000
-          MONGODB_URI: 'mongodb://127.0.0.1:27017/snp_sms?replicaSet=rs0&directConnection=true'
+          MONGODB_URI: 'mongodb://127.0.0.1:27017/snpi_sms?replicaSet=rs0&directConnection=true'
           SUPER_ADMIN_USERNAME: admin_local
           SUPER_ADMIN_PASSWORD: ***REMOVED***
 
