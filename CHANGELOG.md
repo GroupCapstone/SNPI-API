@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `fb020b5` (Developer: **史力爱卫**)
+
+- Implement API Stylebook REST API design topics & cross-guideline standards
+
 ### Version 0.2.17 (04.11.2026) - `4c5628c` (Developer: **史力爱卫**)
 
 - Align feed sequence in lockstep with sidebar parent range and child lists
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.19 (03.11.2026) - `a59bce1` (Developer: **史力爱卫**)
 
 - Sync changelog for dependency supply chain defense
-
-### Version 0.2.19 (03.11.2026) - `9f14394` (Developer: **史力爱卫**)
-
-- Implement 6-layer dependency supply chain defense standard & automated verification
 
