@@ -16,7 +16,7 @@ import {
   ShieldCheck,
   Trash2,
 } from '@/components/icons';
-import { StatusPage404, type StatusCode } from '../status-page-404';
+import { StatusPage404, type StatusCode, type StatusMode } from '../status-page-404';
 
 // 1. Toast Notification Stack
 export function ToastDemo() {
@@ -622,9 +622,37 @@ export function NotificationBellDemo() {
   );
 }
 
-// 3. Status Page (Clean Status Code & Title Only)
+// 3. Status Page (Visual Archetype Engine & Multi-Status Codes)
 export function StatusPage404Demo() {
+  const [selectedMode, setSelectedMode] = React.useState<StatusMode>('radar');
   const [selectedCode, setSelectedCode] = React.useState<StatusCode>(404);
+
+  const archetypes: { id: StatusMode; label: string; desc: string; tag: string }[] = [
+    {
+      id: 'radar',
+      label: '01 Radar Explorer',
+      desc: 'Concentric spatial rings, rotating radar beam, floating 3D numbers, and coordinate tracking.',
+      tag: 'AEROSPACE',
+    },
+    {
+      id: 'barcode',
+      label: '02 Barcode Ledger',
+      desc: 'Cryptographic high-density barcode, editorial typography, hairline accents, and error hash.',
+      tag: 'EDITORIAL',
+    },
+    {
+      id: 'noise',
+      label: '03 CRT Phosphor',
+      desc: 'Synthesized procedural grid canvas, carrier frequency telemetry, and coordinate tracking.',
+      tag: 'COORDINATE',
+    },
+    {
+      id: 'gravity',
+      label: '04 Gravity Blocks',
+      desc: 'Kinetic architectural brand cards with spring physics tumbling and interactive re-alignment.',
+      tag: 'KINETIC MOTION',
+    },
+  ];
 
   const statusCodes: { code: StatusCode; label: string }[] = [
     { code: 404, label: '404 Not Found' },
@@ -635,11 +663,13 @@ export function StatusPage404Demo() {
   ];
 
   return (
-    <div className="w-full max-w-3xl space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-5 shadow-2xs sm:p-6">
+    <div className="w-full max-w-4xl space-y-3 rounded-[4px] border border-[#CAD3F5] bg-white p-5 shadow-2xs sm:p-6">
       {/* HTTP Status Code Selector */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#CAD3F5]/60 pb-3">
         <div className="flex items-center gap-2">
-          <span className="font-sans text-xs font-bold text-[#0A1A4A]">Status Page</span>
+          <span className="font-sans text-xs font-bold text-[#0A1A4A]">
+            Status Archetype Engine
+          </span>
           <span className="font-mono text-[10px] text-slate-400">Select Code:</span>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
@@ -650,7 +680,7 @@ export function StatusPage404Demo() {
               onClick={() => setSelectedCode(sc.code)}
               title={`Simulate HTTP ${sc.code} error state`}
               className={cn(
-                'cursor-pointer rounded-[2px] border px-2.5 py-1 font-mono text-xs font-bold transition-colors select-none',
+                'cursor-pointer rounded-[2px] border px-2.5 py-1 font-mono text-xs font-bold transition-colors select-none active:scale-95',
                 selectedCode === sc.code
                   ? 'border-[#0056FF] bg-[#0056FF] text-white'
                   : 'border-[#CAD3F5] bg-white text-[#0A1A4A] hover:bg-[#EFF5FF] hover:text-[#0056FF]',
@@ -662,9 +692,37 @@ export function StatusPage404Demo() {
         </div>
       </div>
 
+      {/* Visual Mode Picker Strip */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {archetypes.map((arch) => {
+          const isSelected = selectedMode === arch.id;
+          return (
+            <button
+              key={arch.id}
+              type="button"
+              onClick={() => setSelectedMode(arch.id)}
+              title={`Switch archetype to ${arch.label}: ${arch.desc}`}
+              className={cn(
+                'flex cursor-pointer flex-col justify-between rounded-[4px] border p-2.5 text-left transition-all select-none',
+                isSelected
+                  ? 'border-[#0056FF] bg-[#EFF5FF] ring-1 ring-[#0056FF]/30'
+                  : 'border-[#CAD3F5] bg-white hover:bg-[#EFF5FF]/50',
+              )}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[9px] font-bold text-[#0056FF]">{arch.tag}</span>
+                {isSelected && <span className="h-1.5 w-1.5 rounded-[1px] bg-[#0056FF]" />}
+              </div>
+              <div className="mt-1 font-sans text-xs font-bold text-[#0A1A4A]">{arch.label}</div>
+            </button>
+          );
+        })}
+      </div>
+
       {/* Live Component Preview */}
       <div className="overflow-hidden rounded-[4px] border border-[#CAD3F5] bg-white">
         <StatusPage404
+          mode={selectedMode}
           statusCode={selectedCode}
           homeLabel="Return to Dashboard"
           showControls={false}
