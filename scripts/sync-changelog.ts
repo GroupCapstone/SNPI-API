@@ -87,7 +87,7 @@ export const syncChangelog = (): void => {
     });
   }
 
-  // 4. Write TypeScript file for live frontend /document page
+  // 4. Write TypeScript file for live frontend /document page if directory exists
   const tsContent = `export interface ChangeLogEntry {
   version: string;
   date: string;
@@ -99,8 +99,10 @@ export const syncChangelog = (): void => {
 export const CHANGE_LOGS: ChangeLogEntry[] = ${JSON.stringify(items, null, 2)};
 `;
 
-  fs.writeFileSync(CHANGELOG_DATA_FILE, tsContent, 'utf-8');
-  console.log(`[Changelog] Successfully updated ${CHANGELOG_DATA_FILE} (${items.length} entries).`);
+  if (fs.existsSync(path.dirname(CHANGELOG_DATA_FILE))) {
+    fs.writeFileSync(CHANGELOG_DATA_FILE, tsContent, 'utf-8');
+    console.log(`[Changelog] Successfully updated ${CHANGELOG_DATA_FILE} (${items.length} entries).`);
+  }
 
   // 5. Write root CHANGELOG.md with clear developer attribution and readable summaries
   let mdContent = `# SNPI-SMS Changelog\n\nAll notable changes, commits, and skill updates are recorded here in real-time.\n\n`;
