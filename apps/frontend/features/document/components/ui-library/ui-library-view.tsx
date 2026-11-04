@@ -48,7 +48,6 @@ import {
   getNavIcon,
   getParentGroupIcon,
   getParentCategoryTheme,
-  getLiquidGlassCircle,
 } from '@/features/document/components/ui-library';
 import {
   Home,
@@ -282,44 +281,6 @@ export function UiLibraryView() {
       ...prev,
       [parentId]: !prev[parentId],
     }));
-  };
-
-  // Helper to count components inside a navigation group
-  const getGroupItemCount = React.useCallback((group: (typeof COMPONENT_GROUPS_NAV)[number]) => {
-    return group.items.reduce((total, item) => {
-      if (item.isParent && item.children) {
-        return total + item.children.length;
-      }
-      return total + 1;
-    }, 0);
-  }, []);
-
-  // Total components in the navigation registry
-  const totalComponentsCount = React.useMemo(() => {
-    return COMPONENT_GROUPS_NAV.reduce((sum, group) => sum + getGroupItemCount(group), 0);
-  }, [getGroupItemCount]);
-
-  // Check if any category group is currently expanded
-  const isAnyGroupOpen = React.useMemo(() => {
-    return Object.values(collapsedGroups).some((v) => !v);
-  }, [collapsedGroups]);
-
-  // Expand all groups action
-  const expandAllGroups = () => {
-    const next: Record<string, boolean> = {};
-    COMPONENT_GROUPS_NAV.forEach((g) => {
-      next[g.groupId] = false;
-    });
-    setCollapsedGroups(next);
-  };
-
-  // Collapse all groups action
-  const collapseAllGroups = () => {
-    const next: Record<string, boolean> = {};
-    COMPONENT_GROUPS_NAV.forEach((g) => {
-      next[g.groupId] = true;
-    });
-    setCollapsedGroups(next);
   };
 
   // Live Feed: strictly built components only (never render unbuilt future component stages until requested)
@@ -626,69 +587,22 @@ export function UiLibraryView() {
       {/* Main Grid Container */}
       <div className="mx-auto max-w-[1560px] px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 lg:flex-row">
-          {/* COLUMN 1: Left Sticky Sidebar Navigation (Creative Design System Panel) */}
-          <aside className="hidden lg:sticky lg:top-20 lg:z-30 lg:block lg:w-68 lg:shrink-0 lg:self-start xl:w-76">
+          {/* COLUMN 1: Left Sticky Sidebar Navigation (Clean, Simple, Easy General Concept) */}
+          <aside className="hidden lg:sticky lg:top-20 lg:z-30 lg:block lg:w-64 lg:shrink-0 lg:self-start xl:w-72">
             <div
               ref={sidebarContainerRef}
-              className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-3.5 overflow-y-auto rounded-3xl border border-[#CAD3F5] bg-gradient-to-b from-white via-[#FAFBFD] to-[#EFF5FF]/40 p-3.5 shadow-[0_10px_35px_rgba(0,86,255,0.04)] backdrop-blur-xl [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className="no-scrollbar max-h-[calc(100vh-5.5rem)] [scrollbar-width:none] space-y-4 overflow-y-auto pr-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
-              {/* Creative Header Identity Capsule */}
-              <div className="relative overflow-hidden rounded-2xl border border-[#CAD3F5] bg-gradient-to-br from-[#EFF5FF] via-white to-[#E3E7FC]/40 p-3 shadow-2xs">
-                {/* Ambient Brand Aura */}
-                <div className="pointer-events-none absolute -top-6 -right-6 size-20 rounded-full bg-gradient-to-br from-[#0056FF]/10 to-transparent blur-xl" />
-
-                <div className="relative flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    {/* Tactile Brand Icon Mark */}
-                    <div className="relative flex size-9 shrink-0 items-center justify-center rounded-xl border border-[#CAD3F5] bg-gradient-to-br from-[#0056FF] to-[#2277FF] text-white shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_2px_6px_rgba(0,86,255,0.25)]">
-                      <Layers className="size-4.5 stroke-[2.4]" />
-                    </div>
-
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[9px] font-black tracking-widest text-[#0056FF] uppercase">
-                          Web Core
-                        </span>
-                        <span className="py-0.2 rounded-[4px] border border-[#CAD3F5] bg-[#E3E7FC]/80 px-1 font-mono text-[8px] font-bold text-[#0056FF]">
-                          v2.8
-                        </span>
-                      </div>
-                      <span className="block font-sans text-[13px] font-black tracking-tight text-[#0A1A4A]">
-                        SNPI System
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Quick Expand / Collapse Micro Action */}
-                  <button
-                    type="button"
-                    onClick={isAnyGroupOpen ? collapseAllGroups : expandAllGroups}
-                    title={isAnyGroupOpen ? 'Collapse All Categories' : 'Expand All Categories'}
-                    className="group flex h-7 cursor-pointer items-center gap-1.5 rounded-xl border border-[#CAD3F5] bg-white px-2 text-[10px] font-bold text-[#0056FF] shadow-2xs transition-all hover:border-[#0056FF]/40 hover:bg-[#EFF5FF] active:scale-95"
-                  >
-                    <span className="font-mono text-[10px] font-extrabold text-[#0056FF]">
-                      {totalComponentsCount}
-                    </span>
-                    <ChevronDown
-                      className={cn(
-                        'size-3 stroke-[2.5] text-[#0056FF] transition-transform duration-200',
-                        isAnyGroupOpen && 'rotate-180',
-                      )}
-                    />
-                  </button>
-                </div>
-              </div>
-
-              {/* Modern Minimalist Search Bar */}
+              {/* Minimalist Search Bar */}
               <div className="group relative flex items-center">
-                <Search className="pointer-events-none absolute left-3 size-4 text-[#0056FF] transition-transform duration-150 group-focus-within:scale-110" />
+                <Search className="pointer-events-none absolute left-3 size-4 text-[#0056FF]" />
                 <input
                   ref={searchInputRef}
                   type="text"
                   placeholder="Search components..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-10 w-full rounded-2xl border border-[#CAD3F5] bg-white py-2 pr-14 pl-9.5 font-sans text-xs font-semibold text-[#0A1A4A] shadow-[inset_0_1.5px_2px_rgba(0,86,255,0.02)] transition-all placeholder:font-normal placeholder:text-slate-400 hover:border-slate-300 focus:border-[#0056FF] focus:bg-white focus:shadow-xs focus:ring-2 focus:ring-[#0056FF]/15 focus:outline-none"
+                  className="h-9.5 w-full rounded-xl border border-[#CAD3F5] bg-[#F8FAFC] py-2 pr-12 pl-9 font-sans text-xs font-medium text-[#0A1A4A] shadow-2xs transition-colors placeholder:font-normal placeholder:text-slate-400 hover:border-slate-300 hover:bg-white focus:border-[#0056FF] focus:bg-white focus:shadow-xs focus:ring-2 focus:ring-[#0056FF]/15 focus:outline-none"
                   style={{ outline: 'none' }}
                 />
                 {searchQuery ? (
@@ -699,29 +613,37 @@ export function UiLibraryView() {
                       searchInputRef.current?.focus();
                     }}
                     title="Clear search"
-                    className="absolute right-2.5 flex size-5 cursor-pointer items-center justify-center rounded-lg text-[#0056FF] transition-colors hover:bg-[#EFF5FF] active:scale-95"
+                    className="absolute right-2.5 flex size-5 cursor-pointer items-center justify-center rounded-md text-[#0056FF] transition-colors hover:bg-blue-50 active:scale-95"
                   >
                     <X className="size-3.5 stroke-[2.5]" />
                   </button>
                 ) : (
-                  <kbd className="pointer-events-none absolute right-2.5 inline-flex items-center gap-0.5 rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#0056FF] shadow-2xs select-none">
+                  <kbd className="pointer-events-none absolute right-2.5 inline-flex items-center gap-0.5 rounded-md border border-[#CAD3F5] bg-white px-1.5 py-0.5 font-mono text-[10px] font-semibold text-slate-400 shadow-2xs select-none">
                     <span className="font-sans text-[11px]">⌘</span>K
                   </kbd>
                 )}
               </div>
 
-              {/* COMPONENT GROUPS (Creative Liquid Glass Navigation) */}
-              <div className="space-y-2 font-sans text-xs">
+              {/* Hierarchy Identity Header */}
+              <div className="border-b border-[#CAD3F5] pb-2.5">
+                <span className="block font-sans text-[11px] font-bold tracking-wider text-[#0056FF] uppercase select-none">
+                  Web
+                </span>
+                <span className="block font-sans text-sm font-black tracking-tight text-[#0A1A4A] select-none">
+                  SNPI System
+                </span>
+              </div>
+
+              {/* COMPONENT GROUPS (Clean Typography, Zero Icon Circles, Zero Numbers) */}
+              <div className="space-y-1.5 font-sans text-xs">
                 {filteredComponentGroups.length === 0 ? (
-                  <div className="rounded-2xl border border-dashed border-[#CAD3F5] bg-white/70 px-3 py-6 text-center font-sans text-xs font-semibold text-slate-400">
+                  <div className="px-3 py-6 text-center font-sans text-xs text-slate-400">
                     No matching components found
                   </div>
                 ) : (
-                  filteredComponentGroups.map((group, groupIndex) => {
+                  filteredComponentGroups.map((group) => {
                     const ParentGroupIcon = getParentGroupIcon(group.groupId);
                     const isGroupCollapsed = Boolean(collapsedGroups[group.groupId]);
-                    const glassTheme = getLiquidGlassCircle(group.groupId);
-                    const itemCount = getGroupItemCount(group);
                     const groupCatSlug = `cat-${group.group.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
                     const isGroupActive =
                       activeSectionId === groupCatSlug ||
@@ -741,85 +663,42 @@ export function UiLibraryView() {
                       });
 
                     return (
-                      <div key={group.groupId} className="space-y-1">
-                        {/* Parent Group Header (Collapsible Trigger with Radiant Liquid Glass Circle) */}
+                      <div key={group.groupId} className="space-y-0.5">
+                        {/* Parent Group Header (Clean Direct Icon, No Circle Border, Zero Numbers) */}
                         <button
                           type="button"
                           data-section-id={groupCatSlug}
                           data-active={isGroupActive ? 'true' : undefined}
                           onClick={() => toggleCategoryGroup(group.groupId)}
                           className={cn(
-                            'group relative flex w-full cursor-pointer items-center justify-between rounded-2xl p-2 text-left font-sans transition-all duration-200 select-none',
+                            'group flex w-full cursor-pointer items-center justify-between rounded-xl px-2.5 py-2 text-left font-sans text-xs font-bold transition-all select-none',
                             isGroupActive
-                              ? 'border border-[#0056FF]/35 bg-gradient-to-r from-[#EFF5FF] via-white to-[#EFF5FF]/60 shadow-xs before:absolute before:top-2.5 before:bottom-2.5 before:left-0 before:w-1.5 before:rounded-r-full before:bg-[#0056FF]'
-                              : 'border border-transparent hover:border-[#CAD3F5] hover:bg-white hover:shadow-2xs',
+                              ? 'bg-[#EFF5FF] text-[#0056FF]'
+                              : 'text-[#0A1A4A] hover:bg-slate-100',
                           )}
                         >
                           <div className="flex items-center gap-2.5">
-                            {/* Blue Liquid Glass Circular Icon Container */}
-                            <div
-                              className={cn(
-                                'relative flex size-9.5 shrink-0 items-center justify-center rounded-2xl transition-all duration-200',
-                                'border border-[#CAD3F5] shadow-[inset_0_2px_3px_rgba(255,255,255,1),inset_0_-1.5px_2px_rgba(0,86,255,0.08),0_2px_6px_rgba(0,86,255,0.10)] backdrop-blur-md',
-                                glassTheme.bg,
-                                isGroupActive || !isGroupCollapsed
-                                  ? cn(
-                                      'ring-2 ring-offset-1',
-                                      glassTheme.ring,
-                                      'border-[#0056FF] shadow-sm',
-                                    )
-                                  : 'opacity-95 group-hover:scale-105 group-hover:opacity-100',
-                              )}
-                            >
-                              {/* Specular Light Reflection Arc */}
-                              <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-tr from-transparent via-white/50 to-white/90" />
-                              <ParentGroupIcon className="relative z-10 size-5 stroke-[2.4] text-[#0056FF]" />
-                            </div>
-
-                            <div className="flex flex-col">
-                              <span
-                                className={cn(
-                                  'text-[13px] font-black tracking-tight transition-colors',
-                                  isGroupActive ? 'text-[#0056FF]' : 'text-[#0A1A4A]',
-                                )}
-                              >
-                                {group.group}
-                              </span>
-                              <span className="font-mono text-[9px] font-semibold text-slate-400">
-                                0{groupIndex + 1} • {itemCount} items
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-1.5">
-                            {/* Count Badge */}
+                            <ParentGroupIcon className="size-4.5 shrink-0 stroke-[2.2] text-[#0056FF]" />
                             <span
                               className={cn(
-                                'rounded-full border px-2 py-0.5 font-mono text-[10px] font-bold shadow-2xs transition-colors',
-                                isGroupActive
-                                  ? 'border-[#0056FF]/30 bg-[#0056FF] text-white'
-                                  : 'border-[#CAD3F5] bg-white text-[#0056FF] group-hover:border-[#0056FF]/40',
+                                'text-[13px] font-bold transition-colors',
+                                isGroupActive ? 'text-[#0056FF]' : 'text-[#0A1A4A]',
                               )}
                             >
-                              {itemCount}
+                              {group.group}
                             </span>
-
-                            {/* Tactile Circular Chevron */}
-                            <div
-                              className={cn(
-                                'flex size-6.5 items-center justify-center rounded-full border border-[#CAD3F5] bg-white text-[#0056FF] shadow-2xs transition-all duration-200',
-                                !isGroupCollapsed &&
-                                  'rotate-90 border-[#0056FF]/40 bg-[#EFF5FF] text-[#0056FF]',
-                              )}
-                            >
-                              <ChevronRight className="size-3.5 stroke-[2.5]" />
-                            </div>
                           </div>
+                          <ChevronRight
+                            className={cn(
+                              'size-3.5 stroke-[2.2] text-slate-400 transition-transform duration-200 group-hover:text-[#0056FF]',
+                              !isGroupCollapsed && 'rotate-90 text-[#0056FF]',
+                            )}
+                          />
                         </button>
 
-                        {/* Group Items (Connecting Blueprint Tree Structure) */}
+                        {/* Group Items (Indented Simple Hierarchy, Zero Numbers) */}
                         {!isGroupCollapsed && (
-                          <div className="relative my-1.5 ml-5 space-y-1 border-l-2 border-[#CAD3F5] pl-3.5">
+                          <div className="space-y-0.5 pt-0.5 pl-6">
                             {group.items.map((item) => {
                               if (item.isParent && item.children) {
                                 const isExpanded = Boolean(expandedParents[item.id]);
@@ -830,35 +709,32 @@ export function UiLibraryView() {
                                 );
 
                                 return (
-                                  <div key={item.id} className="space-y-1">
+                                  <div key={item.id} className="space-y-0.5">
                                     {/* Parent Sub-Group Trigger */}
                                     <button
                                       type="button"
                                       onClick={() => toggleParentGroup(item.id)}
                                       className={cn(
-                                        'group relative flex w-full cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 text-left font-sans text-xs transition-all select-none',
+                                        'group flex w-full cursor-pointer items-center justify-between rounded-lg py-1.5 pr-2 pl-2 text-left font-sans text-xs transition-colors select-none',
                                         isParentActive
-                                          ? 'border border-[#CAD3F5] bg-white font-black text-[#0056FF] shadow-2xs'
-                                          : 'font-bold text-slate-700 hover:bg-white hover:text-[#0056FF]',
+                                          ? 'font-bold text-[#0056FF]'
+                                          : 'font-medium text-slate-700 hover:text-[#0056FF]',
                                       )}
                                     >
-                                      <div className="flex items-center gap-2">
-                                        <span className="size-1.5 rounded-full bg-[#0056FF]" />
-                                        <span className="text-left leading-snug break-words whitespace-normal">
-                                          {item.name}
-                                        </span>
-                                      </div>
-                                      <ChevronDown
+                                      <span className="text-left leading-snug break-words whitespace-normal">
+                                        {item.name}
+                                      </span>
+                                      <ChevronRight
                                         className={cn(
-                                          'size-3 shrink-0 stroke-[2.5] text-slate-400 transition-transform duration-200',
-                                          !isExpanded && '-rotate-90',
+                                          'ml-1 size-3 shrink-0 stroke-[2] text-slate-400 transition-transform duration-200',
+                                          isExpanded && 'rotate-90 text-[#0056FF]',
                                         )}
                                       />
                                     </button>
 
                                     {/* Sub-Group Child Items */}
                                     {isExpanded && (
-                                      <div className="space-y-1 py-0.5 pl-2">
+                                      <div className="space-y-0.5 pl-2.5">
                                         {item.children.map((child: M3NavItem) => {
                                           const freshness = getComponentFreshness(child);
                                           const target = child.targetId || `comp-${child.id}`;
@@ -871,22 +747,22 @@ export function UiLibraryView() {
                                               data-active={isChildActive ? 'true' : undefined}
                                               onClick={() => scrollToSection(target)}
                                               className={cn(
-                                                'group relative flex w-full cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 text-left transition-all select-none',
+                                                'group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3 text-left transition-colors select-none',
                                                 isChildActive
-                                                  ? 'border border-[#0056FF]/35 bg-[#EFF5FF] font-black text-[#0056FF] shadow-2xs'
-                                                  : 'font-medium text-slate-600 hover:border hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
+                                                  ? 'bg-[#EFF5FF] font-bold text-[#0056FF] before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-[#0056FF]'
+                                                  : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                                               )}
                                             >
                                               <span className="text-left font-sans text-xs leading-snug break-words whitespace-normal">
                                                 {child.name}
                                               </span>
                                               {freshness === 'new' && (
-                                                <span className="ml-1.5 shrink-0 rounded-full border border-emerald-300 bg-emerald-50 px-1.5 py-0.5 font-mono text-[9px] font-bold text-emerald-700 uppercase">
+                                                <span className="py-0.2 ml-1.5 shrink-0 rounded-full border border-emerald-300/80 bg-emerald-50 px-1.5 font-sans text-[9px] font-bold text-emerald-700 uppercase">
                                                   New
                                                 </span>
                                               )}
                                               {freshness === 'coming' && (
-                                                <span className="ml-1.5 shrink-0 rounded-md border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[8px] font-semibold tracking-wider text-slate-400 uppercase">
+                                                <span className="ml-1.5 shrink-0 rounded-[3px] border border-slate-200/90 bg-slate-100/70 px-1 py-0.5 font-mono text-[8px] font-semibold tracking-wider text-slate-400 uppercase">
                                                   Coming
                                                 </span>
                                               )}
@@ -911,22 +787,22 @@ export function UiLibraryView() {
                                   data-active={isActive ? 'true' : undefined}
                                   onClick={() => scrollToSection(target)}
                                   className={cn(
-                                    'group relative flex w-full cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 text-left transition-all select-none',
+                                    'group relative flex w-full cursor-pointer items-center justify-between rounded-md py-1.5 pr-2 pl-3 text-left transition-colors select-none',
                                     isActive
-                                      ? 'border border-[#0056FF]/35 bg-[#EFF5FF] font-black text-[#0056FF] shadow-2xs'
-                                      : 'font-medium text-slate-600 hover:border hover:border-[#CAD3F5] hover:bg-white hover:text-[#0056FF]',
+                                      ? 'bg-[#EFF5FF] font-bold text-[#0056FF] before:absolute before:top-1.5 before:bottom-1.5 before:left-0 before:w-[3px] before:rounded-full before:bg-[#0056FF]'
+                                      : 'font-normal text-slate-600 hover:bg-slate-50 hover:text-slate-950',
                                   )}
                                 >
                                   <span className="text-left font-sans text-xs leading-snug break-words whitespace-normal">
                                     {item.name}
                                   </span>
                                   {freshness === 'new' && (
-                                    <span className="ml-1.5 shrink-0 rounded-full border border-emerald-300 bg-emerald-50 px-1.5 py-0.5 font-mono text-[9px] font-bold text-emerald-700 uppercase">
+                                    <span className="py-0.2 ml-1.5 shrink-0 rounded-full border border-emerald-300/80 bg-emerald-50 px-1.5 font-sans text-[9px] font-bold text-emerald-700 uppercase">
                                       New
                                     </span>
                                   )}
                                   {freshness === 'coming' && (
-                                    <span className="ml-1.5 shrink-0 rounded-md border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[8px] font-semibold tracking-wider text-slate-400 uppercase">
+                                    <span className="ml-1.5 shrink-0 rounded-[3px] border border-slate-200/90 bg-slate-100/70 px-1 py-0.5 font-mono text-[8px] font-semibold tracking-wider text-slate-400 uppercase">
                                       Coming
                                     </span>
                                   )}
@@ -939,46 +815,6 @@ export function UiLibraryView() {
                     );
                   })
                 )}
-              </div>
-
-              {/* Bottom Architecture Specs Card */}
-              <div className="mt-4 rounded-2xl border border-[#CAD3F5] bg-gradient-to-br from-white via-[#FAFBFD] to-[#EFF5FF] p-3 shadow-2xs">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold text-[#0056FF]">
-                    <ShieldCheck className="size-3.5 stroke-[2.4]" />
-                    <span>AAA Standards</span>
-                  </div>
-                  <span className="font-mono text-[9px] font-semibold text-slate-400">
-                    7:1 Contrast
-                  </span>
-                </div>
-
-                {/* 5 Brand Color Tokens Spectrum Swatch */}
-                <div
-                  className="mt-2.5 flex items-center gap-1.5"
-                  title="Primary Brand Tokens: #0056FF, #2277FF, #E3E7FC, #FFFFFF, #EFF5FF"
-                >
-                  <div
-                    className="h-2 flex-1 rounded-full bg-[#0056FF]"
-                    title="Royal Blue #0056FF"
-                  />
-                  <div
-                    className="h-2 flex-1 rounded-full bg-[#2277FF]"
-                    title="Azure Blue #2277FF"
-                  />
-                  <div
-                    className="h-2 flex-1 rounded-full border border-[#CAD3F5] bg-[#E3E7FC]"
-                    title="Soft Lavender #E3E7FC"
-                  />
-                  <div
-                    className="h-2 flex-1 rounded-full border border-[#CAD3F5] bg-white"
-                    title="White #FFFFFF"
-                  />
-                  <div
-                    className="h-2 flex-1 rounded-full border border-[#CAD3F5] bg-[#EFF5FF]"
-                    title="Ice Tint #EFF5FF"
-                  />
-                </div>
               </div>
             </div>
           </aside>
