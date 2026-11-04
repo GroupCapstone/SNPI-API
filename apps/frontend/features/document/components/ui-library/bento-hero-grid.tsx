@@ -278,8 +278,13 @@ export function BentoHeroGrid({
         {/* LEFT COLUMN: Mascots (Card 1) + Radar Telemetry (Card 3) + Token Lab (Card 5) */}
         {/* ========================================================================= */}
         <div className="flex flex-col gap-3.5 sm:gap-4 lg:col-span-4 lg:gap-4.5">
-          {/* CARD 1: Mascots Trio (Clean Visual - Zero Text Clutter at Bottom) */}
-          <div className="relative flex h-36 flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-3.5 shadow-xs sm:h-40 sm:p-4">
+          {/* CARD 1: Mascots Trio (Fluid Liquid Tilt + Reference Colors: Royal Blue, Sunny Yellow, Mint Emerald) */}
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { rotate: 0, y: -4, scale: 1.015 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+            style={{ transform: shouldReduceMotion ? undefined : 'rotate(-1.2deg)' }}
+            className="relative flex h-36 flex-col justify-between overflow-hidden rounded-[22px] border border-[#CAD3F5]/80 bg-white p-3.5 shadow-xs transition-shadow hover:shadow-md sm:h-40 sm:p-4"
+          >
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] font-bold tracking-wider text-[#0056FF] uppercase">
                 SNPI Brand Companions
@@ -320,17 +325,17 @@ export function BentoHeroGrid({
                 </svg>
               </motion.div>
 
-              {/* Mascot 2: Soft Lavender Hexagon Shape (Inquisitive Expression) */}
+              {/* Mascot 2: Sunny Yellow Hexagon Shape (Inquisitive Expression - Reference Color) */}
               <motion.div
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}
                 className="relative flex size-18 cursor-pointer items-center justify-center sm:size-20"
-                title="SNPI Kinetic Mascot 02 · Soft Lavender"
+                title="SNPI Kinetic Mascot 02 · Sunny Yellow"
               >
                 <svg viewBox="0 0 277 301" className="size-full drop-shadow-xs">
                   <path
                     d="M108.103 8.24078C126.954 -2.64276 150.179 -2.64276 169.03 8.24078L246.169 52.7773C265.02 63.6609 276.633 83.7745 276.633 105.542V194.615C276.633 216.382 265.02 236.495 246.169 247.379L169.03 291.915C150.179 302.799 126.954 302.799 108.103 291.915L30.9635 247.379C12.1126 236.495 0.5 216.382 0.5 194.615V105.542C0.5 83.7745 12.1126 63.6609 30.9635 52.7773L108.103 8.24078Z"
-                    fill="#E3E7FC"
-                    stroke="#CAD3F5"
+                    fill="#FACC15"
+                    stroke="#EAB308"
                     strokeWidth="4"
                   />
                   <circle cx="108" cy="140" r="11" fill="#0A1A4A" />
@@ -347,18 +352,18 @@ export function BentoHeroGrid({
                 </svg>
               </motion.div>
 
-              {/* Mascot 3: Azure Blue Flower Shape (Joyful Wink) */}
+              {/* Mascot 3: Mint Emerald Flower Shape (Joyful Wink - Reference Color) */}
               <motion.div
                 whileTap={shouldReduceMotion ? undefined : { scale: 0.92 }}
                 className="relative flex size-18 cursor-pointer items-center justify-center sm:size-20"
-                title="SNPI Kinetic Mascot 03 · Azure Blue"
+                title="SNPI Kinetic Mascot 03 · Mint Emerald"
               >
                 <svg viewBox="0 0 282 281" className="size-full drop-shadow-xs">
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
                     d="M75.9469 280.078C91.5033 280.078 105.96 275.398 117.97 267.376C130.585 258.951 151.308 258.951 163.924 267.376C175.934 275.398 190.39 280.078 205.947 280.078C247.615 280.078 281.394 246.499 281.394 205.078C281.394 189.768 276.779 175.529 268.856 163.661C260.282 150.817 260.282 129.339 268.856 116.496C276.779 104.628 281.394 90.3887 281.394 75.0781C281.394 33.6568 247.615 0.078125 205.947 0.078125C190.39 0.078125 175.934 4.75843 163.924 12.7798C151.308 21.2056 130.585 21.2056 117.97 12.7798C105.96 4.75843 91.5033 0.078125 75.9469 0.078125C34.2787 0.078125 0.5 33.6568 0.5 75.0781C0.5 90.3887 5.11505 104.628 13.0377 116.496C21.6119 129.339 21.6119 150.817 13.0377 163.661C5.11505 175.529 0.5 189.768 0.5 205.078C0.5 246.499 34.2787 280.078 75.9469 280.078Z"
-                    fill="#2277FF"
+                    fill="#10B981"
                   />
                   <path
                     d="M96 134 L114 144 L96 154"
@@ -386,10 +391,15 @@ export function BentoHeroGrid({
                 </svg>
               </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* CARD 3: Distributed Campus Telemetry Radar (Clean Visual - Zero Top Text Clutter) */}
-          <div className="relative flex h-52 flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-3.5 shadow-xs sm:h-56">
+          {/* CARD 3: Distributed Campus Telemetry Radar (Fluid Liquid Tilt) */}
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { rotate: 0, y: -4, scale: 1.015 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+            style={{ transform: shouldReduceMotion ? undefined : 'rotate(0.8deg)' }}
+            className="relative flex h-52 flex-col justify-between overflow-hidden rounded-[22px] border border-[#CAD3F5]/80 bg-white p-3.5 shadow-xs transition-shadow hover:shadow-md sm:h-56"
+          >
             {/* Center: Vector Radar Coordinate Grid with Sweep Beam */}
             <div className="relative mx-auto my-auto flex size-38 items-center justify-center sm:size-42">
               <svg viewBox="0 0 160 160" className="size-full">
@@ -462,7 +472,11 @@ export function BentoHeroGrid({
                           'flex size-5 items-center justify-center rounded-full border text-[8px] font-black shadow-xs',
                           isSelected
                             ? 'border-white bg-[#0056FF] text-white'
-                            : 'border-[#CAD3F5] bg-white text-[#0A1A4A]',
+                            : node.key === 'sr'
+                              ? 'border-white bg-[#10B981] text-white'
+                              : node.key === 'bt'
+                                ? 'border-white bg-[#FACC15] text-[#0A1A4A]'
+                                : 'border-[#CAD3F5] bg-white text-[#0A1A4A]',
                         )}
                       >
                         {node.code.slice(0, 2)}
@@ -488,10 +502,15 @@ export function BentoHeroGrid({
                 <span>{activeNode.latency}</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* CARD 5: Design Token Laboratory (Zero Footer Text Clutter) */}
-          <div className="flex flex-col justify-between rounded-[20px] border border-[#CAD3F5]/80 bg-white p-4 shadow-xs sm:p-5">
+          {/* CARD 5: Design Token Laboratory (Fluid Liquid Tilt) */}
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { rotate: 0, y: -4, scale: 1.015 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+            style={{ transform: shouldReduceMotion ? undefined : 'rotate(-1deg)' }}
+            className="flex flex-col justify-between rounded-[22px] border border-[#CAD3F5]/80 bg-white p-4 shadow-xs transition-shadow hover:shadow-md sm:p-5"
+          >
             {/* Header: Title & Version Pill */}
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-1.5">
@@ -579,17 +598,20 @@ export function BentoHeroGrid({
                 <Copy className="size-3 opacity-70" />
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* ========================================================================= */}
         {/* CENTER COLUMN: Calendar (Card 2) + Kinetic Harmonic Core (Card 4) + Bulletin (Card 6) */}
         {/* ========================================================================= */}
         <div className="flex flex-col gap-3.5 sm:gap-4 lg:col-span-4 lg:gap-4.5">
-          {/* CARD 2: Tactile Semester Calendar (Zero TERM 02 Badge - Pure Blue Gradient) */}
-          <div
+          {/* CARD 2: Tactile Semester Calendar (Mint Emerald - From Reference Image LOCATIONS SPEC) */}
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { rotate: 0, y: -4, scale: 1.015 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+            style={{ transform: shouldReduceMotion ? undefined : 'rotate(1.2deg)' }}
             onClick={() => setCalendarView(calendarView === 'day' ? 'week' : 'day')}
-            className="relative flex h-36 cursor-pointer items-center justify-center overflow-hidden rounded-[20px] bg-gradient-to-br from-[#0056FF] to-[#2277FF] p-4 text-white shadow-xs sm:h-40"
+            className="relative flex h-36 cursor-pointer items-center justify-center overflow-hidden rounded-[22px] bg-gradient-to-br from-[#10B981] to-[#059669] p-4 text-white shadow-sm transition-shadow hover:shadow-md sm:h-40"
           >
             {/* Tactile Calendar Icon Body */}
             <div className="flex flex-col items-center">
@@ -625,16 +647,21 @@ export function BentoHeroGrid({
                   {calendarView === 'day' ? '17' : 'W04'}
                 </text>
               </svg>
-              <span className="mt-1 font-mono text-[11px] font-bold tracking-wider text-blue-100 uppercase">
+              <span className="mt-1 font-mono text-[11px] font-bold tracking-wider text-emerald-100 uppercase">
                 {calendarView === 'day'
                   ? 'Fall Admissions · Day 17'
                   : 'Curriculum Sprint · Week 04'}
               </span>
             </div>
-          </div>
+          </motion.div>
 
-          {/* CARD 4: Kinetic Harmonic Brand Core (Zero Hover Triggers / No Acceleration Badge) */}
-          <div className="relative flex h-64 items-center justify-center overflow-hidden rounded-[20px] bg-[#0056FF] p-4 shadow-xs sm:h-72">
+          {/* CARD 4: Kinetic Harmonic Brand Core (Fluid Liquid Flower Mask) */}
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { rotate: 0, y: -4, scale: 1.015 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+            style={{ transform: shouldReduceMotion ? undefined : 'rotate(-0.6deg)' }}
+            className="relative flex h-64 items-center justify-center overflow-hidden rounded-[22px] bg-[#0056FF] p-4 shadow-sm transition-shadow hover:shadow-md sm:h-72"
+          >
             {/* Background Radial Glow */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.22)_0%,transparent_75%)]" />
 
@@ -738,32 +765,35 @@ export function BentoHeroGrid({
                 />
               </svg>
             </div>
-          </div>
+          </motion.div>
 
-          {/* CARD 6: Azure Blue Bulletin (Clean Architectural Statement - Zero Cycling Clutter) */}
-          <div
+          {/* CARD 6: Sunny Yellow Bulletin (From Reference Image: ACADEMIC DATES Palette) */}
+          <motion.div
+            whileHover={shouldReduceMotion ? undefined : { rotate: 0, y: -4, scale: 1.015 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+            style={{ transform: shouldReduceMotion ? undefined : 'rotate(1.4deg)' }}
             onClick={onBulletinClick}
-            className="relative flex h-44 cursor-pointer flex-col justify-between overflow-hidden rounded-[20px] bg-gradient-to-br from-[#2277FF] to-[#0056FF] p-5 text-white shadow-xs sm:h-48"
+            className="relative flex h-44 cursor-pointer flex-col justify-between overflow-hidden rounded-[22px] bg-gradient-to-br from-[#FACC15] to-[#F59E0B] p-5 text-[#0A1A4A] shadow-sm transition-shadow hover:shadow-md sm:h-48"
           >
             <div>
               <div className="flex items-center justify-between">
-                <h3 className="font-sans text-2xl font-black tracking-tight text-white">
+                <h3 className="font-sans text-2xl font-black tracking-tight text-[#0A1A4A]">
                   Bulletin
                 </h3>
-                <span className="rounded-full border border-white/30 bg-white/15 px-2.5 py-0.5 font-mono text-[9px] font-bold text-white">
+                <span className="rounded-full border border-[#0A1A4A]/20 bg-white/70 px-2.5 py-0.5 font-mono text-[9px] font-black text-[#0A1A4A]">
                   Release v2.8
                 </span>
               </div>
-              <p className="mt-2 font-sans text-xs font-bold text-white">
+              <p className="mt-2 font-sans text-xs font-black text-[#0A1A4A]">
                 SNPI Autonomous Campus Engine
               </p>
-              <p className="mt-1 max-w-[220px] text-[11px] leading-relaxed text-blue-100/90 sm:max-w-[240px]">
+              <p className="mt-1 max-w-[220px] text-[11px] leading-relaxed font-semibold text-[#0A1A4A]/80 sm:max-w-[240px]">
                 Next.js 15 App Router Edge proxying directly to Express 5 backend services.
               </p>
             </div>
 
             {/* Bottom-Right Line-Art Speech Bubble with Pencil Icon */}
-            <div className="pointer-events-none absolute -right-2 -bottom-2 p-3 text-white/40">
+            <div className="pointer-events-none absolute -right-2 -bottom-2 p-3 text-[#0A1A4A]/20">
               <svg
                 width="64"
                 height="64"
@@ -778,17 +808,20 @@ export function BentoHeroGrid({
                 <path d="M28 35L41 22L45 26L32 39H28V35Z" />
               </svg>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT COLUMN: Interactive Kid-Friendly Snappy Companion Lab */}
+        {/* RIGHT COLUMN: Interactive Kid-Friendly Snappy Companion Lab (Fluid Liquid Tilt) */}
         {/* ========================================================================= */}
-        <div
+        <motion.div
           ref={rightCardRef}
+          whileHover={shouldReduceMotion ? undefined : { rotate: 0, y: -4, scale: 1.01 }}
+          transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+          style={{ transform: shouldReduceMotion ? undefined : 'rotate(-0.8deg)' }}
           onMouseMove={handleRightCardMouseMove}
           onMouseLeave={handleRightCardMouseLeave}
-          className="relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-5 shadow-xs sm:p-6 lg:col-span-4"
+          className="relative flex flex-col justify-between overflow-hidden rounded-[22px] border border-[#CAD3F5]/80 bg-white p-5 shadow-xs transition-shadow hover:shadow-md sm:p-6 lg:col-span-4"
         >
           {/* Top Section: Mascot Identity & Mood Selectors */}
           <div>
@@ -833,12 +866,12 @@ export function BentoHeroGrid({
               </div>
             </div>
 
-            {/* Happiness & Friendship Energy Meter */}
+            {/* Happiness & Friendship Energy Meter (Mint Emerald from reference) */}
             <div className="mt-3 flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5">
               <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#0A1A4A]">
-                <Zap className="size-3.5 text-[#0056FF]" />
+                <Zap className="size-3.5 text-[#F59E0B]" />
                 <span>Friendship:</span>
-                <span className="font-black text-[#0056FF]">{happinessLevel * 20}%</span>
+                <span className="font-black text-[#10B981]">{happinessLevel * 20}%</span>
               </div>
               <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((lvl) => (
@@ -846,7 +879,7 @@ export function BentoHeroGrid({
                     key={lvl}
                     className={cn(
                       'h-1.5 w-4 rounded-full transition-all duration-300',
-                      lvl <= happinessLevel ? 'bg-[#0056FF]' : 'bg-[#E3E7FC]',
+                      lvl <= happinessLevel ? 'bg-[#10B981]' : 'bg-[#E3E7FC]',
                     )}
                   />
                 ))}
@@ -948,9 +981,9 @@ export function BentoHeroGrid({
                   repeat: antennaWobble ? 0 : Infinity,
                   ease: 'easeInOut',
                 }}
-                className="group relative z-10 flex size-7 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-[#0056FF] text-white shadow-xs active:scale-90"
+                className="group relative z-10 flex size-7 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-[#FACC15] text-[#0A1A4A] shadow-xs active:scale-90"
               >
-                <Star className="size-3.5 fill-white stroke-none" />
+                <Star className="size-3.5 fill-[#0A1A4A] stroke-none" />
               </motion.button>
               <div className="h-4 w-1 rounded-full bg-[#2277FF]" />
             </div>
@@ -1182,7 +1215,7 @@ export function BentoHeroGrid({
               </div>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
