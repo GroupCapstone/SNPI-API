@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Sliders, Sparkles, Layers, Activity, Copy } from '@/components/icons';
+import { Sliders, Sparkles, Layers, Activity, Copy, Star, Zap, Heart } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 export interface BentoHeroGridProps {
@@ -12,7 +12,7 @@ export interface BentoHeroGridProps {
   onBulletinClick?: () => void;
 }
 
-type MascotMood = 'curious' | 'focus' | 'joyful' | 'sleepy';
+type MascotMood = 'curious' | 'joyful' | 'star' | 'sleepy';
 type CampusNodeKey = 'pp' | 'sr' | 'bt';
 type RadiusOption = '0px' | '8px' | '16px' | '9999px';
 type ElevationOption = 'flat' | 'bordered' | 'raised';
@@ -61,6 +61,45 @@ const CAMPUS_NODES: CampusNode[] = [
   },
 ];
 
+interface KidAction {
+  id: string;
+  label: string;
+  reply: string;
+  mood: MascotMood;
+  anim: 'tickle' | 'highfive' | 'dance' | 'feed';
+}
+
+const KID_ACTIONS: KidAction[] = [
+  {
+    id: 'tickle',
+    label: 'Tickle Belly',
+    reply: 'Hehe! That tickles so much! Look at me wiggle!',
+    mood: 'joyful',
+    anim: 'tickle',
+  },
+  {
+    id: 'highfive',
+    label: 'High Five',
+    reply: 'Slap! High five, rockstar!',
+    mood: 'joyful',
+    anim: 'highfive',
+  },
+  {
+    id: 'feed',
+    label: 'Feed Energy',
+    reply: 'Yum! Supercharged with Royal Energy!',
+    mood: 'star',
+    anim: 'feed',
+  },
+  {
+    id: 'dance',
+    label: 'Robot Dance',
+    reply: 'Beep boop! Look at my cyber groove!',
+    mood: 'star',
+    anim: 'dance',
+  },
+];
+
 interface KidQuestion {
   label: string;
   reply: string;
@@ -70,23 +109,23 @@ interface KidQuestion {
 const KID_QUESTIONS: KidQuestion[] = [
   {
     label: 'Who are you?',
-    reply: "I'm Snappy, your SNPI campus mascot!",
+    reply: "I'm Snappy, your SNPI campus cyber friend!",
     mood: 'joyful',
   },
   {
     label: 'Favorite color?',
-    reply: 'Royal Blue #0056FF & Soft Lavender!',
-    mood: 'focus',
+    reply: 'Royal Blue #0056FF and Soft Lavender #E3E7FC!',
+    mood: 'curious',
   },
   {
     label: 'Tell a joke!',
-    reply: 'Why do robots like coding? Because it has zero bugs!',
+    reply: 'Why do robots love code? Because it has zero bugs!',
     mood: 'joyful',
   },
   {
     label: 'Secret power?',
-    reply: 'I can do a backflip and compile code instantly!',
-    mood: 'curious',
+    reply: 'I compile bugs into stars at lightning speed!',
+    mood: 'star',
   },
 ];
 
@@ -132,12 +171,18 @@ export function BentoHeroGrid({
   const [selectedElevation, setSelectedElevation] = React.useState<ElevationOption>('raised');
   const [copiedSnippet, setCopiedSnippet] = React.useState<boolean>(false);
 
-  // Card 7: Kid Conversation & Mascot Interaction
+  // Card 7: Kid Companion & Mascot State
   const [activeMood, setActiveMood] = React.useState<MascotMood>('curious');
-  const [mascotPoked, setMascotPoked] = React.useState(false);
-  const [speechText, setSpeechText] = React.useState<string>('Tap a question or poke me!');
+  const [kidTab, setKidTab] = React.useState<'actions' | 'questions'>('actions');
+  const [mascotAnim, setMascotAnim] = React.useState<
+    'idle' | 'tickle' | 'highfive' | 'dance' | 'feed' | 'antenna' | 'poke'
+  >('idle');
+  const [antennaWobble, setAntennaWobble] = React.useState(false);
+  const [speechText, setSpeechText] = React.useState<string>(
+    'Hi friend! Tap to play or ask me anything!',
+  );
   const [showSpeechBubble, setShowSpeechBubble] = React.useState(true);
-  const [pokeIndex, setPokeIndex] = React.useState(0);
+  const [happinessLevel, setHappinessLevel] = React.useState(4);
   const rightCardRef = React.useRef<HTMLDivElement>(null);
   const [eyeOffset, setEyeOffset] = React.useState({ x: 0, y: 0 });
 
@@ -156,22 +201,55 @@ export function BentoHeroGrid({
     setEyeOffset({ x: 0, y: 0 });
   };
 
+  const boostHappiness = () => {
+    setHappinessLevel((prev) => (prev >= 5 ? 5 : prev + 1));
+  };
+
   const handleAskKidQuestion = (q: KidQuestion) => {
     setSpeechText(q.reply);
     setActiveMood(q.mood);
     setShowSpeechBubble(true);
-    setMascotPoked(true);
-    setTimeout(() => setMascotPoked(false), 500);
+    setMascotAnim('poke');
+    boostHappiness();
+    setTimeout(() => setMascotAnim('idle'), 600);
   };
 
-  const handlePokeMascot = () => {
-    const nextReply = POKE_REPLIES[pokeIndex % POKE_REPLIES.length];
-    setPokeIndex((i) => i + 1);
-    setSpeechText(nextReply);
-    setActiveMood(pokeIndex % 2 === 0 ? 'joyful' : 'curious');
+  const handleTriggerKidAction = (action: KidAction) => {
+    setSpeechText(action.reply);
+    setActiveMood(action.mood);
     setShowSpeechBubble(true);
-    setMascotPoked(true);
-    setTimeout(() => setMascotPoked(false), 500);
+    setMascotAnim(action.anim);
+    boostHappiness();
+    setTimeout(() => setMascotAnim('idle'), 900);
+  };
+
+  const handlePokeAntenna = () => {
+    setAntennaWobble(true);
+    setSpeechText('Bzzzt! Antenna tuned in to SNPI signal!');
+    setActiveMood('star');
+    setShowSpeechBubble(true);
+    boostHappiness();
+    setTimeout(() => setAntennaWobble(false), 700);
+  };
+
+  const handlePokeReactor = () => {
+    setMascotAnim('tickle');
+    setSpeechText('Giggle! You tapped my energy reactor!');
+    setActiveMood('joyful');
+    setShowSpeechBubble(true);
+    boostHappiness();
+    setTimeout(() => setMascotAnim('idle'), 600);
+  };
+
+  const handlePokePaw = (which: 'left' | 'right') => {
+    setMascotAnim('highfive');
+    setSpeechText(
+      which === 'right' ? 'Slap! High five from my right paw!' : 'Wave! Left paw wave to you!',
+    );
+    setActiveMood('joyful');
+    setShowSpeechBubble(true);
+    boostHappiness();
+    setTimeout(() => setMascotAnim('idle'), 700);
   };
 
   const handleCopyToken = () => {
@@ -704,7 +782,7 @@ export function BentoHeroGrid({
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT COLUMN: Interactive Kid-Friendly Mascot Lab ("Ask Kid" Conversation) */}
+        {/* RIGHT COLUMN: Interactive Kid-Friendly Snappy Companion Lab */}
         {/* ========================================================================= */}
         <div
           ref={rightCardRef}
@@ -712,194 +790,395 @@ export function BentoHeroGrid({
           onMouseLeave={handleRightCardMouseLeave}
           className="relative flex flex-col justify-between overflow-hidden rounded-[20px] border border-[#CAD3F5]/80 bg-white p-5 shadow-xs sm:p-6 lg:col-span-4"
         >
-          {/* Top Section: Brand Radar Disc */}
-          <div className="flex items-center justify-between">
-            <div className="relative flex size-14 items-center justify-center rounded-full bg-[#0056FF] shadow-xs sm:size-16">
-              <svg
-                viewBox="0 0 484 484"
-                className="pointer-events-none absolute inset-0 size-full opacity-40"
-              >
-                <circle
-                  cx="241.7"
-                  cy="241.7"
-                  r="240.2"
-                  stroke="white"
-                  strokeWidth="8"
-                  fill="none"
-                />
-                <circle cx="242.2" cy="241.2" r="62.5" stroke="white" strokeWidth="8" fill="none" />
-                <circle cx="241.7" cy="241.7" r="29.4" stroke="white" strokeWidth="8" fill="none" />
-                <line x1="70" y1="410" x2="195" y2="284" stroke="white" strokeWidth="8" />
-                <line x1="287" y1="195" x2="413" y2="70" stroke="white" strokeWidth="8" />
-              </svg>
-              <Sparkles className="relative z-10 size-6 text-white" />
+          {/* Top Section: Mascot Identity & Mood Selectors */}
+          <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="flex size-10 items-center justify-center rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] text-[#0056FF] shadow-xs">
+                  <Sparkles className="size-5" />
+                </div>
+                <div>
+                  <h2 className="font-sans text-sm font-black tracking-tight text-[#0A1A4A] sm:text-base">
+                    Snappy Companion
+                  </h2>
+                  <p className="text-[10px] font-semibold text-[#0056FF]">Campus AI Mascot</p>
+                </div>
+              </div>
+
+              {/* Mood Selector Pills */}
+              <div className="flex items-center gap-0.5 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-0.5">
+                {(['curious', 'joyful', 'star', 'sleepy'] as MascotMood[]).map((mood) => (
+                  <button
+                    key={mood}
+                    type="button"
+                    onClick={() => {
+                      setActiveMood(mood);
+                      if (mood === 'star') setSpeechText('Super energetic! Star power activated!');
+                      if (mood === 'curious')
+                        setSpeechText('Move your cursor around, I am watching!');
+                      if (mood === 'joyful')
+                        setSpeechText('Happy vibes today! Let us learn and code!');
+                      if (mood === 'sleepy') setSpeechText('Yawn... Taking a cozy micro-nap...');
+                    }}
+                    className={cn(
+                      'rounded-full px-2 py-0.5 text-[9px] font-bold capitalize transition-all select-none',
+                      activeMood === mood
+                        ? 'bg-[#0056FF] text-white shadow-xs'
+                        : 'text-[#0A1A4A] hover:bg-[#E3E7FC]/60',
+                    )}
+                  >
+                    {mood}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Mood Selector Tabs */}
-            <div className="flex items-center gap-1 rounded-full border border-[#CAD3F5] bg-[#EFF5FF] p-1">
-              {(['curious', 'focus', 'joyful', 'sleepy'] as MascotMood[]).map((mood) => (
+            {/* Happiness & Friendship Energy Meter */}
+            <div className="mt-3 flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5">
+              <div className="flex items-center gap-1.5 text-[10px] font-bold text-[#0A1A4A]">
+                <Zap className="size-3.5 text-[#0056FF]" />
+                <span>Friendship:</span>
+                <span className="font-black text-[#0056FF]">{happinessLevel * 20}%</span>
+              </div>
+              <div className="flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map((lvl) => (
+                  <div
+                    key={lvl}
+                    className={cn(
+                      'h-1.5 w-4 rounded-full transition-all duration-300',
+                      lvl <= happinessLevel ? 'bg-[#0056FF]' : 'bg-[#E3E7FC]',
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Interactive Deck Mode Switcher: Play vs Ask */}
+            <div className="mt-3">
+              <div className="flex rounded-lg border border-[#CAD3F5] bg-[#EFF5FF] p-0.5">
                 <button
-                  key={mood}
                   type="button"
-                  onClick={() => setActiveMood(mood)}
+                  onClick={() => setKidTab('actions')}
                   className={cn(
-                    'rounded-full px-2 py-0.5 text-[10px] font-bold capitalize transition-all select-none',
-                    activeMood === mood ? 'bg-[#0056FF] text-white shadow-xs' : 'text-[#0A1A4A]',
+                    'flex-1 rounded-md py-1 text-center text-[10px] font-bold transition-all',
+                    kidTab === 'actions'
+                      ? 'bg-[#0056FF] text-white shadow-xs'
+                      : 'text-[#0A1A4A] hover:text-[#0056FF]',
                   )}
                 >
-                  {mood}
+                  Play Actions
                 </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Middle Section: "Ask Kid" Interactive Question Lab */}
-          <div className="my-3 text-center">
-            <h2 className="font-sans text-xl font-black tracking-tight text-[#0A1A4A] sm:text-2xl">
-              Kinetic Mascot Lab
-            </h2>
-            <p className="mt-0.5 text-[11px] font-medium text-slate-500">
-              Ask the mascot or tap to poke!
-            </p>
-
-            {/* "Ask Kid" Interactive Questions Grid */}
-            <div className="mt-2.5 grid grid-cols-2 gap-1.5">
-              {KID_QUESTIONS.map((q) => (
                 <button
-                  key={q.label}
                   type="button"
-                  onClick={() => handleAskKidQuestion(q)}
-                  className="rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 text-left text-[11px] font-bold text-[#0056FF] active:scale-95"
+                  onClick={() => setKidTab('questions')}
+                  className={cn(
+                    'flex-1 rounded-md py-1 text-center text-[10px] font-bold transition-all',
+                    kidTab === 'questions'
+                      ? 'bg-[#0056FF] text-white shadow-xs'
+                      : 'text-[#0A1A4A] hover:text-[#0056FF]',
+                  )}
                 >
-                  {q.label}
+                  Ask Questions
                 </button>
-              ))}
+              </div>
+
+              {/* 2x2 Interactive Action / Question Buttons */}
+              <div className="mt-2 grid grid-cols-2 gap-1.5">
+                {kidTab === 'actions'
+                  ? KID_ACTIONS.map((action) => (
+                      <button
+                        key={action.id}
+                        type="button"
+                        onClick={() => handleTriggerKidAction(action)}
+                        className="group flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 text-left transition-all hover:border-[#2277FF] hover:bg-white active:scale-95"
+                      >
+                        <span className="text-[11px] font-bold text-[#0056FF]">{action.label}</span>
+                        <span className="size-1.5 rounded-full bg-[#2277FF] opacity-60 group-hover:opacity-100" />
+                      </button>
+                    ))
+                  : KID_QUESTIONS.map((q) => (
+                      <button
+                        key={q.label}
+                        type="button"
+                        onClick={() => handleAskKidQuestion(q)}
+                        className="group flex items-center justify-between rounded-xl border border-[#CAD3F5] bg-[#EFF5FF] px-2.5 py-1.5 text-left transition-all hover:border-[#2277FF] hover:bg-white active:scale-95"
+                      >
+                        <span className="text-[11px] font-bold text-[#0056FF]">{q.label}</span>
+                        <span className="size-1.5 rounded-full bg-[#2277FF] opacity-60 group-hover:opacity-100" />
+                      </button>
+                    ))}
+              </div>
             </div>
           </div>
 
-          {/* Bottom Section: Giant Peeking Mascot Dome with Expressive Reactive Eyes */}
-          <div className="relative mt-auto w-full pt-1">
-            {/* Dynamic Kid Speech Bubble */}
+          {/* Dynamic Speech Bubble */}
+          <div className="relative mt-3 mb-1">
             {showSpeechBubble && (
               <motion.div
                 key={speechText}
-                initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                initial={{ opacity: 0, y: 6, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                className="absolute -top-10 left-1/2 z-20 w-[92%] -translate-x-1/2 rounded-2xl border border-[#CAD3F5] bg-white px-3 py-1.5 text-center text-xs font-bold text-[#0056FF] shadow-sm"
+                transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+                className="relative mx-auto w-full max-w-[300px] rounded-2xl border border-[#CAD3F5] bg-white px-3.5 py-2 text-center shadow-xs"
               >
-                {speechText}
+                <p className="text-xs leading-snug font-bold text-[#0A1A4A]">{speechText}</p>
+                {/* Downward bubble arrow tail */}
+                <div className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rotate-45 border-r border-b border-[#CAD3F5] bg-white" />
               </motion.div>
             )}
+          </div>
 
-            {/* Mascot Arch Dome in Brand Royal Blue (Tap to Poke / Bounce) */}
+          {/* ========================================================================= */}
+          {/* The Brand New Mascot Character ("Snappy") */}
+          {/* ========================================================================= */}
+          <div className="relative mt-auto w-full pt-2">
+            {/* Spring Antenna */}
+            <div className="relative mx-auto flex w-12 flex-col items-center">
+              <motion.button
+                type="button"
+                title="Tap antenna!"
+                onClick={handlePokeAntenna}
+                animate={
+                  antennaWobble
+                    ? { rotate: [-24, 20, -14, 10, -5, 0], y: [-2, 1, 0] }
+                    : { y: [0, -2, 0] }
+                }
+                transition={{
+                  duration: antennaWobble ? 0.6 : 3,
+                  repeat: antennaWobble ? 0 : Infinity,
+                  ease: 'easeInOut',
+                }}
+                className="group relative z-10 flex size-7 cursor-pointer items-center justify-center rounded-full border-2 border-white bg-[#0056FF] text-white shadow-xs active:scale-90"
+              >
+                <Star className="size-3.5 fill-white stroke-none" />
+              </motion.button>
+              <div className="h-4 w-1 rounded-full bg-[#2277FF]" />
+            </div>
+
+            {/* Mascot Character Body */}
             <motion.div
               animate={
-                mascotPoked
-                  ? { y: [-16, 0], rotate: [0, -3, 3, 0] }
-                  : activeMood === 'sleepy'
-                    ? { y: [0, 4, 0] }
-                    : undefined
+                mascotAnim === 'tickle'
+                  ? { rotate: [-4, 4, -4, 4, 0], scale: [1, 1.05, 0.98, 1] }
+                  : mascotAnim === 'highfive'
+                    ? { y: [-10, 0], rotate: [0, 3, 0] }
+                    : mascotAnim === 'dance'
+                      ? { x: [-8, 8, -6, 6, 0], rotate: [-4, 4, -3, 3, 0] }
+                      : mascotAnim === 'feed'
+                        ? { scale: [1, 1.08, 0.98, 1], y: [-6, 0] }
+                        : mascotAnim === 'poke'
+                          ? { y: [-12, 0], rotate: [0, -3, 3, 0] }
+                          : activeMood === 'sleepy'
+                            ? { y: [0, 3, 0] }
+                            : undefined
               }
               transition={{
-                duration: activeMood === 'sleepy' ? 3 : 0.35,
+                duration: activeMood === 'sleepy' ? 3.2 : 0.45,
                 repeat: activeMood === 'sleepy' ? Infinity : 0,
+                type: 'spring',
+                stiffness: 300,
+                damping: 18,
               }}
-              onClick={handlePokeMascot}
-              className="relative mx-auto flex h-36 w-full max-w-[280px] cursor-pointer items-center justify-center gap-3 rounded-t-[120px] bg-[#0056FF] pt-4 shadow-inner sm:h-44"
-              title="Tap mascot to poke!"
+              className="relative mx-auto flex w-full max-w-[270px] flex-col items-center"
             >
-              {/* EYE 1 (Left) */}
-              <div className="relative flex h-24 w-20 items-center justify-center rounded-full bg-white shadow-md sm:h-28 sm:w-24">
-                {activeMood === 'curious' && (
-                  <div
-                    className="relative flex h-16 w-14 items-center justify-center rounded-full bg-[#0A1A4A] transition-transform duration-100 ease-out sm:h-20 sm:w-16"
-                    style={{
-                      transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
-                    }}
+              {/* Side Ear Pods */}
+              <button
+                type="button"
+                onClick={() => {
+                  setMascotAnim('dance');
+                  setSpeechText('Beep! Left earpod tuned to campus tunes!');
+                  setActiveMood('star');
+                  boostHappiness();
+                  setTimeout(() => setMascotAnim('idle'), 600);
+                }}
+                title="Tap left ear!"
+                className="absolute top-10 -left-2 z-10 h-10 w-3 cursor-pointer rounded-full border border-[#CAD3F5] bg-[#2277FF] shadow-xs hover:bg-[#0056FF] active:scale-90"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setMascotAnim('dance');
+                  setSpeechText('Boop! Right earpod tuned to high frequency!');
+                  setActiveMood('star');
+                  boostHappiness();
+                  setTimeout(() => setMascotAnim('idle'), 600);
+                }}
+                title="Tap right ear!"
+                className="absolute top-10 -right-2 z-10 h-10 w-3 cursor-pointer rounded-full border border-[#CAD3F5] bg-[#2277FF] shadow-xs hover:bg-[#0056FF] active:scale-90"
+              />
+
+              {/* Main Head Chassis */}
+              <div className="relative w-full rounded-[36px] border border-[#CAD3F5] bg-gradient-to-b from-[#2277FF] to-[#0056FF] p-3 shadow-sm sm:p-4">
+                {/* Soft specular highlight reflection */}
+                <div className="pointer-events-none absolute inset-x-6 top-1.5 h-3 rounded-full bg-white/20 blur-[1px]" />
+
+                {/* Visor Face Screen */}
+                <div className="relative flex flex-col items-center justify-center rounded-[24px] border border-[#CAD3F5]/80 bg-[#EFF5FF] px-4 py-3 shadow-inner">
+                  {/* Eyes Row */}
+                  <div className="flex w-full items-center justify-around">
+                    {/* EYE 1 (Left) */}
+                    <div className="relative flex size-12 items-center justify-center rounded-full border border-[#CAD3F5] bg-white shadow-xs sm:size-14">
+                      {activeMood === 'curious' && (
+                        <div
+                          className="relative flex size-7 items-center justify-center rounded-full bg-[#0A1A4A] transition-transform duration-100 ease-out sm:size-8"
+                          style={{
+                            transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
+                          }}
+                        >
+                          <div className="absolute top-1 right-1.5 size-2 rounded-full bg-white" />
+                          <div className="absolute bottom-1 left-1.5 size-1 rounded-full bg-white/70" />
+                        </div>
+                      )}
+
+                      {activeMood === 'joyful' && (
+                        <svg viewBox="0 0 32 24" className="size-7 sm:size-8">
+                          <path
+                            d="M 4 18 Q 16 4 28 18"
+                            stroke="#0A1A4A"
+                            strokeWidth="4.5"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                        </svg>
+                      )}
+
+                      {activeMood === 'star' && (
+                        <Star className="size-6 fill-[#0056FF] text-[#0056FF]" />
+                      )}
+
+                      {activeMood === 'sleepy' && (
+                        <svg viewBox="0 0 32 24" className="size-7 sm:size-8">
+                          <path
+                            d="M 4 8 Q 16 20 28 8"
+                            stroke="#0A1A4A"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                        </svg>
+                      )}
+                    </div>
+
+                    {/* EYE 2 (Right) */}
+                    <div className="relative flex size-12 items-center justify-center rounded-full border border-[#CAD3F5] bg-white shadow-xs sm:size-14">
+                      {activeMood === 'curious' && (
+                        <div
+                          className="relative flex size-7 items-center justify-center rounded-full bg-[#0A1A4A] transition-transform duration-100 ease-out sm:size-8"
+                          style={{
+                            transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
+                          }}
+                        >
+                          <div className="absolute top-1 right-1.5 size-2 rounded-full bg-white" />
+                          <div className="absolute bottom-1 left-1.5 size-1 rounded-full bg-white/70" />
+                        </div>
+                      )}
+
+                      {activeMood === 'joyful' && (
+                        <svg viewBox="0 0 32 24" className="size-7 sm:size-8">
+                          <path
+                            d="M 4 18 Q 16 4 28 18"
+                            stroke="#0A1A4A"
+                            strokeWidth="4.5"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                        </svg>
+                      )}
+
+                      {activeMood === 'star' && (
+                        <Star className="size-6 fill-[#0056FF] text-[#0056FF]" />
+                      )}
+
+                      {activeMood === 'sleepy' && (
+                        <svg viewBox="0 0 32 24" className="size-7 sm:size-8">
+                          <path
+                            d="M 4 8 Q 16 20 28 8"
+                            stroke="#0A1A4A"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                        </svg>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Cheeks & Animated Mouth Row */}
+                  <div className="mt-2 flex w-full items-center justify-between px-2">
+                    {/* Left Blush Pad */}
+                    <div className="h-2 w-5 rounded-full border border-[#CAD3F5]/60 bg-[#E3E7FC]" />
+
+                    {/* Mouth */}
+                    <div className="flex items-center justify-center">
+                      {activeMood === 'joyful' || mascotAnim === 'tickle' ? (
+                        <svg viewBox="0 0 32 18" className="h-3 w-7">
+                          <path d="M 4 4 Q 16 18 28 4 Z" fill="#0A1A4A" />
+                          <path d="M 10 10 Q 16 16 22 10 Z" fill="#0056FF" />
+                        </svg>
+                      ) : activeMood === 'star' ? (
+                        <div className="size-2.5 rounded-full bg-[#0056FF]" />
+                      ) : activeMood === 'sleepy' ? (
+                        <svg viewBox="0 0 20 10" className="h-2 w-5">
+                          <line
+                            x1="4"
+                            y1="5"
+                            x2="16"
+                            y2="5"
+                            stroke="#0A1A4A"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                      ) : (
+                        <svg viewBox="0 0 28 14" className="h-2.5 w-6">
+                          <path
+                            d="M 4 4 Q 14 14 24 4"
+                            stroke="#0A1A4A"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            fill="none"
+                          />
+                        </svg>
+                      )}
+                    </div>
+
+                    {/* Right Blush Pad */}
+                    <div className="h-2 w-5 rounded-full border border-[#CAD3F5]/60 bg-[#E3E7FC]" />
+                  </div>
+                </div>
+
+                {/* Center SNPI Energy Reactor & Interactive Paws */}
+                <div className="mt-2.5 flex items-center justify-between px-1">
+                  {/* Left Paw */}
+                  <button
+                    type="button"
+                    onClick={() => handlePokePaw('left')}
+                    className="flex items-center gap-1 rounded-full border border-[#CAD3F5] bg-white px-2.5 py-1 text-[10px] font-bold text-[#0056FF] shadow-xs transition-all hover:bg-[#EFF5FF] active:scale-95"
                   >
-                    <div
-                      className="absolute top-1.5 right-2 size-4 bg-white sm:top-2 sm:right-2.5 sm:size-5"
-                      style={{ clipPath: 'polygon(100% 0, 0 45%, 100% 90%)' }}
-                    />
-                  </div>
-                )}
+                    <span>Wave</span>
+                  </button>
 
-                {activeMood === 'focus' && (
-                  <div className="h-8 w-14 rounded-full bg-[#0A1A4A] sm:h-10 sm:w-16">
-                    <div className="mx-auto mt-1 size-2 rounded-full bg-[#7DD3FC]" />
-                  </div>
-                )}
-
-                {activeMood === 'joyful' && (
-                  <svg viewBox="0 0 40 30" className="size-10 sm:size-12">
-                    <path
-                      d="M6 22 Q20 4 34 22"
-                      stroke="#0A1A4A"
-                      strokeWidth="6"
-                      strokeLinecap="round"
-                      fill="none"
-                    />
-                  </svg>
-                )}
-
-                {activeMood === 'sleepy' && (
-                  <svg viewBox="0 0 40 30" className="size-10 sm:size-12">
-                    <path
-                      d="M6 10 Q20 24 34 10"
-                      stroke="#0A1A4A"
-                      strokeWidth="6"
-                      strokeLinecap="round"
-                      fill="none"
-                    />
-                  </svg>
-                )}
-              </div>
-
-              {/* EYE 2 (Right) */}
-              <div className="relative flex h-24 w-20 items-center justify-center rounded-full bg-white shadow-md sm:h-28 sm:w-24">
-                {activeMood === 'curious' && (
-                  <div
-                    className="relative flex h-16 w-14 items-center justify-center rounded-full bg-[#0A1A4A] transition-transform duration-100 ease-out sm:h-20 sm:w-16"
-                    style={{
-                      transform: `translate(${eyeOffset.x}px, ${eyeOffset.y}px)`,
-                    }}
+                  {/* Energy Reactor Center Button */}
+                  <button
+                    type="button"
+                    onClick={handlePokeReactor}
+                    title="Tap energy reactor to tickle!"
+                    className="group flex size-9 items-center justify-center rounded-full border-2 border-white bg-[#EFF5FF] shadow-xs transition-transform active:scale-90"
                   >
-                    <div
-                      className="absolute top-1.5 right-2 size-4 bg-white sm:top-2 sm:right-2.5 sm:size-5"
-                      style={{ clipPath: 'polygon(100% 0, 0 45%, 100% 90%)' }}
-                    />
-                  </div>
-                )}
+                    <div className="flex size-5 items-center justify-center rounded-full bg-[#0056FF] text-white">
+                      <Sparkles className="size-3" />
+                    </div>
+                  </button>
 
-                {activeMood === 'focus' && (
-                  <div className="h-8 w-14 rounded-full bg-[#0A1A4A] sm:h-10 sm:w-16">
-                    <div className="mx-auto mt-1 size-2 rounded-full bg-[#7DD3FC]" />
-                  </div>
-                )}
-
-                {activeMood === 'joyful' && (
-                  <svg viewBox="0 0 40 30" className="size-10 sm:size-12">
-                    <path
-                      d="M6 22 Q20 4 34 22"
-                      stroke="#0A1A4A"
-                      strokeWidth="6"
-                      strokeLinecap="round"
-                      fill="none"
-                    />
-                  </svg>
-                )}
-
-                {activeMood === 'sleepy' && (
-                  <svg viewBox="0 0 40 30" className="size-10 sm:size-12">
-                    <path
-                      d="M6 10 Q20 24 34 10"
-                      stroke="#0A1A4A"
-                      strokeWidth="6"
-                      strokeLinecap="round"
-                      fill="none"
-                    />
-                  </svg>
-                )}
+                  {/* Right Paw */}
+                  <button
+                    type="button"
+                    onClick={() => handlePokePaw('right')}
+                    className="flex items-center gap-1 rounded-full border border-[#CAD3F5] bg-white px-2.5 py-1 text-[10px] font-bold text-[#0056FF] shadow-xs transition-all hover:bg-[#EFF5FF] active:scale-95"
+                  >
+                    <span>High-5</span>
+                  </button>
+                </div>
               </div>
             </motion.div>
           </div>
