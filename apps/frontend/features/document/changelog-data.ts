@@ -10,6 +10,20 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "5025c17",
+    "developer": "史力爱卫",
+    "description": "Enrich Google API Design Guide deep-dive with ROD methodology, 16 status codes, and AIP standards"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "6d13f2d",
+    "developer": "史力爱卫",
+    "description": "Record API Stylebook insights synchronization commit 8c04e4d"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "8c04e4d",
     "developer": "史力爱卫",
     "description": "Record API Stylebook blog insights, Deliveroo in-depth critique, and AP Stylebook lineage"
@@ -167,19 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "9a73765",
     "developer": "史力爱卫",
     "description": "Synchronize real-time changelog and prettier formatting"
-  },
-  {
-    "version": "0.2.21",
-    "date": "04.11.2026",
-    "commitHash": "f79c40c",
-    "developer": "史力爱卫",
-    "description": "Remove card background tints, enforce clean white surface with 4px border radius"
-  },
-  {
-    "version": "0.2.21",
-    "date": "04.11.2026",
-    "commitHash": "29c1be3",
-    "developer": "史力爱卫",
-    "description": "Perf(api): optimize resource reading speed and query serialization across feature modules"
   }
 ];
