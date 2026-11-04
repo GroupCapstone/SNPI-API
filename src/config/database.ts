@@ -15,7 +15,7 @@ export const connectToDatabase = async (): Promise<void> => {
 
   await mongoose.connect(env.MONGODB_URI, {
     autoIndex: env.NODE_ENV !== 'production',
-    serverSelectionTimeoutMS: 10_000,
+    serverSelectionTimeoutMS: isServerless ? 4_000 : 10_000,
     maxPoolSize: isServerless ? 10 : 50,
     minPoolSize: isServerless ? 0 : 5,
   });

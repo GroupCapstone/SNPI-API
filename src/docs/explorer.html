@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SNP-SMS Enterprise REST API Explorer</title>
+    <style>
+      :root {
+        --color-royal-blue: #0056ff;
+        --color-azure-blue: #2277ff;
+        --color-soft-lavender: #e3e7fc;
+        --color-lavender-border: #cad3f5;
+        --color-white: #ffffff;
+        --color-ice-tint: #eff5ff;
+        --color-deep-navy: #0a1a4a;
+        --color-slate-900: #0f172a;
+        --color-slate-700: #334155;
+        --color-success-bg: #ecfdf5;
+        --color-success-text: #065f46;
+        --color-success-border: #a7f3d0;
+        --color-error-bg: #fef2f2;
+        --color-error-text: #991b1b;
+        --color-error-border: #fecaca;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: var(--color-white);
+        color: var(--color-deep-navy);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      header {
+        background: var(--color-white);
+        border-bottom: 2px solid var(--color-lavender-border);
+        padding: 2rem 2.5rem 1.5rem;
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .brand-title {
+        font-size: 1.85rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--color-deep-navy);
+      }
+
+      .brand-subtitle {
+        font-size: 0.95rem;
+        color: var(--color-slate-700);
+        margin-top: 0.35rem;
+      }
+
+      .header-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.3rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        border: 1px solid var(--color-lavender-border);
+        background: var(--color-ice-tint);
+        color: var(--color-royal-blue);
+      }
+
+      .pill-active {
+        background: var(--color-royal-blue);
+        color: var(--color-white);
+        border-color: var(--color-royal-blue);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.55rem 1.15rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+        border: 1px solid var(--color-royal-blue);
+        background: var(--color-royal-blue);
+        color: var(--color-white);
+        text-decoration: none;
+      }
+
+      .btn:hover {
+        background: var(--color-azure-blue);
+        border-color: var(--color-azure-blue);
+      }
+
+      .btn-secondary {
+        background: var(--color-ice-tint);
+        color: var(--color-royal-blue);
+        border-color: var(--color-lavender-border);
+      }
+
+      .btn-secondary:hover {
+        background: var(--color-soft-lavender);
+        border-color: var(--color-azure-blue);
+        color: var(--color-deep-navy);
+      }
+
+      .btn-sm {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.75rem;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 2.5rem;
+      }
+
+      /* Auth Drawer */
+      .auth-card {
+        background: var(--color-ice-tint);
+        border: 1.5px solid var(--color-lavender-border);
+        border-radius: 0.75rem;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .auth-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .auth-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-deep-navy);
+      }
+
+      .auth-controls {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .auth-input-group {
+        display: flex;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: 650px;
+      }
+
+      input[type='text'],
+      input[type='password'] {
+        flex: 1;
+        padding: 0.55rem 0.85rem;
+        font-size: 0.85rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        border: 1.5px solid var(--color-lavender-border);
+        border-radius: 0.5rem;
+        background: var(--color-white);
+        color: var(--color-deep-navy);
+        outline: none;
+      }
+
+      input[type='text']:focus,
+      input[type='password']:focus {
+        border-color: var(--color-royal-blue);
+        box-shadow: 0 0 0 3px rgba(0, 86, 255, 0.15);
+      }
+
+      /* Search & Filter Toolbar */
+      .toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .search-row {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .search-input {
+        flex: 1;
+        min-width: 280px;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        border: 1.5px solid var(--color-lavender-border);
+        border-radius: 0.5rem;
+        background: var(--color-white);
+        color: var(--color-deep-navy);
+      }
+
+      .tag-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .tag-chip {
+        padding: 0.35rem 0.85rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        border-radius: 9999px;
+        border: 1px solid var(--color-lavender-border);
+        background: var(--color-white);
+        color: var(--color-slate-700);
+        cursor: pointer;
+        transition: all 0.12s;
+      }
+
+      .tag-chip:hover {
+        background: var(--color-ice-tint);
+        color: var(--color-royal-blue);
+        border-color: var(--color-azure-blue);
+      }
+
+      .tag-chip.active {
+        background: var(--color-royal-blue);
+        color: var(--color-white);
+        border-color: var(--color-royal-blue);
+      }
+
+      /* Endpoints Grid */
+      .endpoints-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .endpoint-card {
+        background: var(--color-white);
+        border: 1.5px solid var(--color-lavender-border);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+
+      .endpoint-card:hover {
+        border-color: var(--color-azure-blue);
+        box-shadow: 0 4px 14px rgba(0, 86, 255, 0.08);
+      }
+
+      .endpoint-header {
+        padding: 1rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        cursor: pointer;
+        background: var(--color-white);
+        user-select: none;
+      }
+
+      .endpoint-header:hover {
+        background: var(--color-ice-tint);
+      }
+
+      .endpoint-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex: 1;
+        flex-wrap: wrap;
+      }
+
+      .method-badge {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.75rem;
+        font-weight: 800;
+        padding: 0.25rem 0.65rem;
+        border-radius: 0.35rem;
+        letter-spacing: 0.05em;
+      }
+
+      .method-get {
+        background: var(--color-ice-tint);
+        color: var(--color-royal-blue);
+        border: 1px solid var(--color-lavender-border);
+      }
+
+      .method-post {
+        background: #ebf5ff;
+        color: #1e40af;
+        border: 1px solid #bfdbfe;
+      }
+
+      .endpoint-path {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--color-deep-navy);
+      }
+
+      .endpoint-summary {
+        font-size: 0.85rem;
+        color: var(--color-slate-700);
+        margin-left: 0.5rem;
+      }
+
+      .endpoint-tag-pill {
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.55rem;
+        border-radius: 9999px;
+        background: var(--color-soft-lavender);
+        color: var(--color-deep-navy);
+        border: 1px solid var(--color-lavender-border);
+      }
+
+      .endpoint-body {
+        display: none;
+        padding: 1.25rem 1.5rem;
+        background: var(--color-ice-tint);
+        border-top: 1px solid var(--color-lavender-border);
+      }
+
+      .endpoint-body.open {
+        display: block;
+      }
+
+      .section-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-deep-navy);
+        margin-bottom: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .section-label:first-child {
+        margin-top: 0;
+      }
+
+      .params-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .param-box {
+        background: var(--color-white);
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--color-lavender-border);
+      }
+
+      .param-name {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--color-royal-blue);
+        margin-bottom: 0.25rem;
+      }
+
+      .param-desc {
+        font-size: 0.75rem;
+        color: var(--color-slate-700);
+        margin-bottom: 0.5rem;
+      }
+
+      .param-input {
+        width: 100%;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.8rem;
+        border: 1px solid var(--color-lavender-border);
+        border-radius: 0.35rem;
+        outline: none;
+      }
+
+      .payload-editor {
+        width: 100%;
+        min-height: 100px;
+        padding: 0.75rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.85rem;
+        border: 1px solid var(--color-lavender-border);
+        border-radius: 0.5rem;
+        background: var(--color-white);
+        color: var(--color-deep-navy);
+        resize: vertical;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+      }
+
+      .action-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
+
+      /* Live Response Box */
+      .response-container {
+        margin-top: 1.25rem;
+        padding: 1rem;
+        background: var(--color-white);
+        border: 1.5px solid var(--color-lavender-border);
+        border-radius: 0.5rem;
+        display: none;
+      }
+
+      .response-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.65rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border-radius: 0.35rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .status-2xx {
+        background: var(--color-success-bg);
+        color: var(--color-success-text);
+        border: 1px solid var(--color-success-border);
+      }
+
+      .status-4xx,
+      .status-5xx {
+        background: var(--color-error-bg);
+        color: var(--color-error-text);
+        border: 1px solid var(--color-error-border);
+      }
+
+      .latency-pill {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--color-slate-700);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      pre.response-body {
+        background: var(--color-ice-tint);
+        border: 1px solid var(--color-lavender-border);
+        border-radius: 0.4rem;
+        padding: 1rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.85rem;
+        color: var(--color-deep-navy);
+        max-height: 380px;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      /* Modal / Swagger UI View */
+      #swaggerContainer {
+        display: none;
+        margin-top: 1rem;
+        border: 2px solid var(--color-lavender-border);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        background: var(--color-white);
+      }
+
+      footer {
+        border-top: 1px solid var(--color-lavender-border);
+        padding: 2rem 2.5rem;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--color-slate-700);
+        margin-top: 4rem;
+        background: var(--color-ice-tint);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <div>
+          <h1 class="brand-title">SNP-SMS REST API Explorer</h1>
+          <p class="brand-subtitle">
+            Dedicated Headless REST API &middot; Express 5 &middot; MongoDB Replica Set (rs0)
+            &middot; 58 Verified Contracts
+          </p>
+          <div class="header-badges">
+            <span class="pill pill-active">[ONLINE]</span>
+            <span class="pill">OPENAPI 3.1</span>
+            <span class="pill">58 ENDPOINTS</span>
+            <span class="pill">47 MODULES</span>
+            <span class="pill">HMAC SHA-256</span>
+            <span class="pill">RFC 7807</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <button id="swaggerToggleBtn" class="btn btn-secondary" onclick="toggleSwaggerUi()">
+            Switch to Swagger UI
+          </button>
+          <a href="/api/v1/docs/openapi.json" target="_blank" class="btn btn-secondary"
+            >Raw OpenAPI JSON</a
+          >
+          <a href="/api/v1/health" target="_blank" class="btn">Health Check</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Authentication Card -->
+      <div class="auth-card">
+        <div class="auth-header">
+          <div>
+            <span class="auth-title">API Authentication & Authorization</span>
+            <span id="authStatusPill" class="pill" style="margin-left: 0.5rem">[PUBLIC ONLY]</span>
+          </div>
+          <div class="auth-controls">
+            <button class="btn btn-sm" onclick="autoLoginAdmin()">Auto-Login (Local Admin)</button>
+            <button class="btn btn-secondary btn-sm" onclick="clearToken()">Clear Token</button>
+          </div>
+        </div>
+        <div class="auth-input-group">
+          <input
+            type="text"
+            id="tokenInput"
+            placeholder="Bearer Token (<JWT_ACCESS_TOKEN_SAMPLE>)"
+            onchange="saveToken(this.value)"
+          />
+          <button
+            class="btn btn-secondary btn-sm"
+            onclick="saveToken(document.getElementById('tokenInput').value)"
+          >
+            Apply Token
+          </button>
+        </div>
+        <div style="font-size: 0.78rem; color: var(--color-slate-700); margin-top: 0.5rem">
+          Applies <code>Authorization: Bearer &lt;JWT_ACCESS_TOKEN_SAMPLE&gt;</code> to all
+          subsequent interactive requests.
+        </div>
+      </div>
+
+      <!-- Swagger UI Embed (Hidden by default) -->
+      <div id="swaggerContainer">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          "
+        >
+          <h3 style="color: var(--color-deep-navy)">Swagger UI Interactive Documentation</h3>
+          <button class="btn btn-secondary btn-sm" onclick="toggleSwaggerUi()">
+            Back to Native Explorer
+          </button>
+        </div>
+        <div id="swagger-ui"></div>
+      </div>
+
+      <!-- Native Explorer Toolbar -->
+      <div id="nativeExplorer">
+        <div class="toolbar">
+          <div class="search-row">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search by endpoint path, method, summary, or tag (e.g. /students, health, attendance)..."
+              oninput="filterEndpoints()"
+            />
+            <div style="display: flex; gap: 0.5rem">
+              <button class="btn btn-secondary btn-sm" onclick="expandAll()">Expand All</button>
+              <button class="btn btn-secondary btn-sm" onclick="collapseAll()">Collapse All</button>
+            </div>
+          </div>
+          <div class="tag-chips" id="tagChips"></div>
+        </div>
+
+        <!-- Endpoints Count -->
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          "
+        >
+          <div style="font-size: 0.9rem; font-weight: 700; color: var(--color-deep-navy)">
+            Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> Endpoints
+          </div>
+        </div>
+
+        <!-- Endpoints Grid -->
+        <div class="endpoints-list" id="endpointsList">
+          <div style="padding: 2rem; text-align: center; color: var(--color-slate-700)">
+            Loading API specification...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        SNP-SMS Full-Stack Monorepo &middot; Dedicated Headless REST API v1 &middot; Pure White &
+        Ice Tint High-Contrast Theme
+      </p>
+    </footer>
+
+    <script>
+      let specData = null;
+      let allEndpoints = [];
+      let currentTag = 'ALL';
+      let bearerToken = localStorage.getItem('snp_sms_jwt') || '';
+
+      // Initialize Token
+      if (bearerToken) {
+        document.getElementById('tokenInput').value = bearerToken;
+        updateAuthBadge(true);
+      }
+
+      function updateAuthBadge(isAuthenticated) {
+        const pill = document.getElementById('authStatusPill');
+        if (isAuthenticated) {
+          pill.textContent = '[AUTHENTICATED]';
+          pill.className = 'pill pill-active';
+        } else {
+          pill.textContent = '[PUBLIC ONLY]';
+          pill.className = 'pill';
+        }
+      }
+
+      function saveToken(token) {
+        bearerToken = token.trim();
+        localStorage.setItem('snp_sms_jwt', bearerToken);
+        updateAuthBadge(Boolean(bearerToken));
+      }
+
+      function clearToken() {
+        bearerToken = '';
+        localStorage.removeItem('snp_sms_jwt');
+        document.getElementById('tokenInput').value = '';
+        updateAuthBadge(false);
+      }
+
+      async function autoLoginAdmin() {
+        try {
+          const res = await fetch('/api/v1/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              identifier: 'admin_local',
+              password: 'AdminPasse7a049b8a2009c4c22be1e02',
+            }),
+          });
+
+          if (!res.ok) {
+            alert('Local admin login failed: ' + res.status + ' ' + (await res.text()));
+            return;
+          }
+
+          const data = await res.json();
+          const token = data.data?.accessToken;
+          if (token) {
+            saveToken(token);
+            document.getElementById('tokenInput').value = token;
+            alert('Successfully acquired Super Admin Access Token.');
+          }
+        } catch (err) {
+          alert('Authentication error: ' + err.message);
+        }
+      }
+
+      // Load OpenAPI Spec
+      async function loadSpec() {
+        try {
+          const res = await fetch('/api/v1/docs/openapi.json');
+          specData = await res.json();
+          parseEndpoints(specData);
+          renderTags();
+          renderEndpoints();
+        } catch (err) {
+          document.getElementById('endpointsList').innerHTML =
+            '<div style="color: var(--color-error-text); padding: 2rem; background: var(--color-error-bg); border-radius: 0.5rem;">' +
+            'Failed to load OpenAPI specification: ' +
+            err.message +
+            '</div>';
+        }
+      }
+
+      function parseEndpoints(spec) {
+        allEndpoints = [];
+        const paths = spec.paths || {};
+
+        for (const [pathStr, methods] of Object.entries(paths)) {
+          for (const [methodStr, op] of Object.entries(methods)) {
+            allEndpoints.push({
+              path: pathStr,
+              fullPath: '/api/v1' + pathStr,
+              method: methodStr.toUpperCase(),
+              tag: (op.tags && op.tags[0]) || 'General',
+              summary: op.summary || '',
+              description: op.description || '',
+              parameters: op.parameters || [],
+              requestBody: op.requestBody || null,
+              security: op.security || [],
+            });
+          }
+        }
+
+        document.getElementById('totalCount').textContent = allEndpoints.length;
+      }
+
+      function renderTags() {
+        const tags = ['ALL', ...new Set(allEndpoints.map((e) => e.tag))];
+        const container = document.getElementById('tagChips');
+        container.innerHTML = tags
+          .map(
+            (tag) =>
+              '<button class="tag-chip ' +
+              (tag === currentTag ? 'active' : '') +
+              '" onclick="filterByTag(\'' +
+              tag +
+              '\')">' +
+              tag +
+              '</button>',
+          )
+          .join('');
+      }
+
+      function filterByTag(tag) {
+        currentTag = tag;
+        renderTags();
+        filterEndpoints();
+      }
+
+      function filterEndpoints() {
+        const query = document.getElementById('searchInput').value.toLowerCase().trim();
+        let visible = 0;
+
+        allEndpoints.forEach((ep, idx) => {
+          const card = document.getElementById('ep-card-' + idx);
+          if (!card) return;
+
+          const matchTag = currentTag === 'ALL' || ep.tag === currentTag;
+          const matchQuery =
+            !query ||
+            ep.fullPath.toLowerCase().includes(query) ||
+            ep.method.toLowerCase().includes(query) ||
+            ep.summary.toLowerCase().includes(query) ||
+            ep.tag.toLowerCase().includes(query);
+
+          if (matchTag && matchQuery) {
+            card.style.display = 'block';
+            visible++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        document.getElementById('visibleCount').textContent = visible;
+      }
+
+      function renderEndpoints() {
+        const container = document.getElementById('endpointsList');
+        container.innerHTML = allEndpoints
+          .map((ep, idx) => {
+            const methodClass = ep.method === 'GET' ? 'method-get' : 'method-post';
+            const hasParams = ep.parameters && ep.parameters.length > 0;
+            const hasBody = Boolean(ep.requestBody);
+
+            let defaultBody = '';
+            if (hasBody && ep.requestBody.content && ep.requestBody.content['application/json']) {
+              const schema = ep.requestBody.content['application/json'].schema;
+              if (schema && schema.properties) {
+                const sample = {};
+                for (const [k, v] of Object.entries(schema.properties)) {
+                  sample[k] = v.example || '';
+                }
+                defaultBody = JSON.stringify(sample, null, 2);
+              }
+            }
+
+            return `
+          <div class="endpoint-card" id="ep-card-${idx}">
+            <div class="endpoint-header" onclick="toggleEndpoint(${idx})">
+              <div class="endpoint-info">
+                <span class="method-badge ${methodClass}">[${ep.method}]</span>
+                <span class="endpoint-path">${ep.fullPath}</span>
+                <span class="endpoint-summary">&mdash; ${ep.summary}</span>
+              </div>
+              <span class="endpoint-tag-pill">${ep.tag}</span>
+            </div>
+            <div class="endpoint-body" id="ep-body-${idx}">
+              ${
+                hasParams
+                  ? `
+                <div class="section-label">Parameters</div>
+                <div class="params-grid">
+                  ${ep.parameters
+                    .map(
+                      (p, pIdx) => `
+                    <div class="param-box">
+                      <div class="param-name">${p.name} <span style="font-size: 0.7rem; color: var(--color-slate-700);">(${p.in})</span></div>
+                      <div class="param-desc">${p.description || ''}</div>
+                      <input type="text" class="param-input" id="param-${idx}-${p.name}" placeholder="value" value="${p.schema?.default !== undefined ? p.schema.default : ''}" />
+                    </div>
+                  `,
+                    )
+                    .join('')}
+                </div>
+              `
+                  : ''
+              }
+
+              ${
+                hasBody
+                  ? `
+                <div class="section-label">Request Body (JSON)</div>
+                <textarea class="payload-editor" id="payload-${idx}">${defaultBody}</textarea>
+              `
+                  : ''
+              }
+
+              <div class="action-row">
+                <button class="btn btn-sm" onclick="sendRequest(${idx})">Send Request</button>
+                <button class="btn btn-secondary btn-sm" onclick="copyCurl(${idx})">Copy cURL</button>
+              </div>
+
+              <div class="response-container" id="response-container-${idx}">
+                <div class="response-meta">
+                  <div>
+                    <span class="status-badge" id="response-status-${idx}"></span>
+                    <span class="latency-pill" id="response-latency-${idx}"></span>
+                  </div>
+                  <button class="btn btn-secondary btn-sm" onclick="copyResponseJson(${idx})">Copy JSON</button>
+                </div>
+                <pre class="response-body" id="response-body-${idx}"></pre>
+              </div>
+            </div>
+          </div>
+        `;
+          })
+          .join('');
+
+        document.getElementById('visibleCount').textContent = allEndpoints.length;
+      }
+
+      function toggleEndpoint(idx) {
+        const body = document.getElementById('ep-body-' + idx);
+        body.classList.toggle('open');
+      }
+
+      function expandAll() {
+        document.querySelectorAll('.endpoint-body').forEach((b) => b.classList.add('open'));
+      }
+
+      function collapseAll() {
+        document.querySelectorAll('.endpoint-body').forEach((b) => b.classList.remove('open'));
+      }
+
+      async function sendRequest(idx) {
+        const ep = allEndpoints[idx];
+        let url = ep.fullPath;
+
+        // Handle path and query parameters
+        const queryParams = new URLSearchParams();
+        if (ep.parameters && ep.parameters.length > 0) {
+          for (const p of ep.parameters) {
+            const input = document.getElementById('param-' + idx + '-' + p.name);
+            const val = input ? input.value.trim() : '';
+            if (val) {
+              if (p.in === 'path') {
+                url = url.replace('{' + p.name + '}', encodeURIComponent(val));
+              } else if (p.in === 'query') {
+                queryParams.append(p.name, val);
+              }
+            }
+          }
+        }
+
+        const queryString = queryParams.toString();
+        if (queryString) {
+          url += '?' + queryString;
+        }
+
+        const headers = { Accept: 'application/json' };
+        if (bearerToken) {
+          headers['Authorization'] = 'Bearer ' + bearerToken;
+        }
+
+        let body = undefined;
+        if (ep.method !== 'GET' && ep.method !== 'HEAD') {
+          const textarea = document.getElementById('payload-' + idx);
+          if (textarea && textarea.value.trim()) {
+            headers['Content-Type'] = 'application/json';
+            body = textarea.value.trim();
+          }
+        }
+
+        const container = document.getElementById('response-container-' + idx);
+        const statusBadge = document.getElementById('response-status-' + idx);
+        const latencyPill = document.getElementById('response-latency-' + idx);
+        const bodyBox = document.getElementById('response-body-' + idx);
+
+        container.style.display = 'block';
+        statusBadge.textContent = 'SENDING...';
+        statusBadge.className = 'status-badge';
+        bodyBox.textContent = 'Executing HTTP request...';
+
+        const startTime = performance.now();
+        try {
+          const res = await fetch(url, {
+            method: ep.method,
+            headers,
+            body,
+          });
+          const duration = Math.round(performance.now() - startTime);
+          latencyPill.textContent = duration + ' ms';
+
+          statusBadge.textContent = '[' + res.status + ' ' + res.statusText + ']';
+          if (res.status >= 200 && res.status < 300) {
+            statusBadge.className = 'status-badge status-2xx';
+          } else {
+            statusBadge.className = 'status-badge status-4xx';
+          }
+
+          const text = await res.text();
+          try {
+            const json = JSON.parse(text);
+            bodyBox.textContent = JSON.stringify(json, null, 2);
+          } catch {
+            bodyBox.textContent = text;
+          }
+        } catch (err) {
+          statusBadge.textContent = '[NETWORK ERROR]';
+          statusBadge.className = 'status-badge status-4xx';
+          latencyPill.textContent = '0 ms';
+          bodyBox.textContent = err.message;
+        }
+      }
+
+      function copyCurl(idx) {
+        const ep = allEndpoints[idx];
+        let url = window.location.origin + ep.fullPath;
+        let curl = 'curl -X ' + ep.method + ' "' + url + '"';
+
+        if (bearerToken) {
+          curl += ' \\\n  -H "Authorization: Bearer ' + bearerToken + '"';
+        }
+        curl += ' \\\n  -H "Accept: application/json"';
+
+        if (ep.method !== 'GET') {
+          const textarea = document.getElementById('payload-' + idx);
+          if (textarea && textarea.value.trim()) {
+            curl += ' \\\n  -H "Content-Type: application/json"';
+            curl += " \\\n  -d '" + textarea.value.trim().replace(/'/g, "'\\''") + "'";
+          }
+        }
+
+        navigator.clipboard.writeText(curl).then(() => {
+          alert('cURL command copied to clipboard.');
+        });
+      }
+
+      function copyResponseJson(idx) {
+        const bodyBox = document.getElementById('response-body-' + idx);
+        navigator.clipboard.writeText(bodyBox.textContent).then(() => {
+          alert('Response JSON copied to clipboard.');
+        });
+      }
+
+      // Swagger UI Switch
+      let swaggerLoaded = false;
+      function toggleSwaggerUi() {
+        const nativeEl = document.getElementById('nativeExplorer');
+        const swaggerEl = document.getElementById('swaggerContainer');
+        const btn = document.getElementById('swaggerToggleBtn');
+
+        if (swaggerEl.style.display === 'block') {
+          swaggerEl.style.display = 'none';
+          nativeEl.style.display = 'block';
+          btn.textContent = 'Switch to Swagger UI';
+        } else {
+          swaggerEl.style.display = 'block';
+          nativeEl.style.display = 'none';
+          btn.textContent = 'Back to Native Explorer';
+
+          if (!swaggerLoaded) {
+            loadSwaggerBundle();
+            swaggerLoaded = true;
+          }
+        }
+      }
+
+      function loadSwaggerBundle() {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/swagger-ui-dist@5/swagger-ui.css';
+        document.head.appendChild(link);
+
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js';
+        script.onload = () => {
+          window.SwaggerUIBundle({
+            url: '/api/v1/docs/openapi.json',
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+              window.SwaggerUIBundle.presets.apis,
+              window.SwaggerUIBundle.SwaggerUIStandalonePreset,
+            ],
+            layout: 'BaseLayout',
+          });
+        };
+        document.body.appendChild(script);
+      }
+
+      // Initialize
+      loadSpec();
+    </script>
+  </body>
+</html>

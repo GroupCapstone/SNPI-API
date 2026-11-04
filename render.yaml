@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: snpi-api
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: FRONTEND_URL
+        value: '*'
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: COOKIE_SECRET
+        generateValue: true
+      - key: SUPER_ADMIN_USERNAME
+        value: admin_snpi
+      - key: SUPER_ADMIN_EMAIL
+        value: admin@snpi.edu.kh
+      - key: SUPER_ADMIN_PASSWORD
+        generateValue: true
