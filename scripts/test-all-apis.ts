@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = process.env.API_BASE_URL || 'http://localhost:4000';
 
 function loadEnv(filePath: string): Record<string, string> {
   const env: Record<string, string> = {};

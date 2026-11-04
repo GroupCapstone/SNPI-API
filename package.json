@@ -14,6 +14,7 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "test:api": "tsx scripts/test-all-apis.ts",
+    "test:api:prod": "API_BASE_URL=https://api.kesararamwithdigital.tech tsx scripts/test-all-apis.ts",
     "smoke": "tsx scripts/monorepo-smoke.ts",
     "deploy:verify": "tsx scripts/verify-deploy-gate.ts",
     "deploy:vercel": "npx vercel --prod",
