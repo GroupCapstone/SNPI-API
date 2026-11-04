@@ -1713,26 +1713,20 @@ export function Demo() {
   },
   {
     id: 'status-404',
-    name: 'Status Page & 404 Console',
+    name: 'Status Page',
     category: 'Feedback',
     builtAt: '2026-11-02',
-    paradigm: 'Aerospace Status & Error Console',
+    paradigm: 'Clean HTTP Status Code & Title Presentation',
     description:
-      'Multi-archetype brand status screen supporting 404, 403, 500, 503, and 401 with Radar, Barcode, Terminal, CRT Phosphor, and Gravity Blocks modes.',
+      'High-contrast, minimalist HTTP status screen presenting status code, title, and direct recovery action.',
     explanation:
-      'Provides five distinct brand visual archetypes to communicate missing routes, forbidden access, and cluster server errors. Features interactive spatial radar sweeping, brutalist cryptographic barcode ledger, live typing cyber terminal, CRT phosphor static grain, and tumbling kinetic gravity blocks.',
+      'Provides a clean, uncluttered status screen to communicate missing routes, forbidden access, and server errors. Focuses purely on status code and title with standard brand tokens and direct dashboard recovery.',
     props: [
-      {
-        name: 'mode',
-        type: "'radar' | 'barcode' | 'terminal' | 'noise' | 'gravity'",
-        default: "'radar'",
-        description: 'Visual archetype presentation mode.',
-      },
       {
         name: 'statusCode',
         type: '404 | 403 | 500 | 503 | 401',
         default: '404',
-        description: 'HTTP status code determining diagnostic messaging and technical telemetry.',
+        description: 'HTTP status code determining title and status badge.',
       },
       {
         name: 'title',
@@ -1740,27 +1734,22 @@ export function Demo() {
         description: 'Custom heading title override.',
       },
       {
-        name: 'description',
-        type: 'string',
-        description: 'Custom description explanation override.',
-      },
-      {
         name: 'homeHref',
         type: 'string',
-        default: "'/document/design-system'",
+        default: "'/dashboard'",
         description: 'Primary action button navigation link destination.',
       },
       {
         name: 'homeLabel',
         type: 'string',
-        default: "'Return to System Home'",
+        default: "'Return to Dashboard'",
         description: 'Primary action button label.',
       },
       {
         name: 'showControls',
         type: 'boolean',
         default: 'false',
-        description: 'Display interactive inline mode and status code switcher controls.',
+        description: 'Display interactive inline status code switcher controls.',
       },
     ],
     codeSnippet: `import { StatusPage404 } from '@/features/document/components/ui-library';
@@ -1769,11 +1758,10 @@ export function Demo() {
 export default function NotFound() {
   return (
     <StatusPage404
-      mode="radar"
       statusCode={404}
       homeHref="/dashboard"
       homeLabel="Return to Dashboard"
-      showControls={true}
+      showControls={false}
     />
   );
 }`,
