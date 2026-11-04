@@ -16,6 +16,7 @@ description: >-
 > **Primary Safe Folder**: `.agents/skills/api-stylebook-design-topics/`  
 > **Design Topics Library**: [`library/README.md`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/library/README.md) (17 categories, 100 topic files with original text & quotes)  
 > **Design Guidelines Library**: [`guidelines/README.md`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/guidelines/README.md) (16 enterprise guidelines with archetypes & section maps)  
+> **Editorial Insights & Analyses**: [`insights/README.md`](file:///Users/Apple16/Desktop/SNP-SMS/.agents/skills/api-stylebook-design-topics/insights/README.md) (Deliveroo critique, Google Cloud AIP review, AP Stylebook origins)  
 > **Unabridged Topics Catalog**: `references/api-stylebook-design-topics.md`  
 > **Cross-Guideline Matrix**: `references/guidelines-matrix.md`  
 > **Machine-Readable Taxonomy**: `references/api-stylebook-topics.yaml`  

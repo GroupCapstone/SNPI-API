@@ -3,7 +3,8 @@
 > **Status**: `[STANDBY_KNOWLEDGE]` - Recorded for reference; do not apply to project code until explicitly commanded.
 > **Organization**: **Deliveroo**
 > **Canonical Guideline URL**: [http://deliveroo.engineering/guidelines/api-design/](http://deliveroo.engineering/guidelines/api-design/)
-> **Parent Directory**: [Design Guidelines Index](./README.md)
+> **Parent Directory**: [Design Guidelines Index](./README.md)  
+> **API Stylebook Editorial Review**: [`deliveroo-api-design-styleguide-analysis.md`](../insights/deliveroo-api-design-styleguide-analysis.md) (Arnaud Lauret's in-depth critique)  
 > **Topics Covered**: 60 topics across 15 categories
 
 ---
