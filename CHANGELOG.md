@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 0.2.17 (04.11.2026) - `dc7de38` (Developer: **史力爱卫**)
+
+- Scaffold standalone Nextra official developer documentation portal
+
 ### Version 0.2.17 (04.11.2026) - `3a40132` (Developer: **史力爱卫**)
 
 - Redesign simple easy navigation sidebar with zero icon circles and zero count numbers
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.17 (04.11.2026) - `fb020b5` (Developer: **史力爱卫**)
 
 - Implement API Stylebook REST API design topics & cross-guideline standards
-
-### Version 0.2.17 (04.11.2026) - `4c5628c` (Developer: **史力爱卫**)
-
-- Align feed sequence in lockstep with sidebar parent range and child lists
 

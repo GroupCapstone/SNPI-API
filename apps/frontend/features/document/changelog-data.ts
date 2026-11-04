@@ -10,6 +10,13 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "dc7de38",
+    "developer": "史力爱卫",
+    "description": "Scaffold standalone Nextra official developer documentation portal"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
     "commitHash": "3a40132",
     "developer": "史力爱卫",
     "description": "Redesign simple easy navigation sidebar with zero icon circles and zero count numbers"
@@ -174,12 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "fb020b5",
     "developer": "史力爱卫",
     "description": "Implement API Stylebook REST API design topics & cross-guideline standards"
-  },
-  {
-    "version": "0.2.17",
-    "date": "04.11.2026",
-    "commitHash": "4c5628c",
-    "developer": "史力爱卫",
-    "description": "Align feed sequence in lockstep with sidebar parent range and child lists"
   }
 ];
