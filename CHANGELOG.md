@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 1.0.0 (05.11.2026) - `e3cc294` (Developer: **史力爱卫**)
+
+- Format codebase and registries with prettier
+
+### Version 1.0.0 (05.11.2026) - `41bde25` (Developer: **史力爱卫**)
+
+- Synchronize changelog for api stylebook redesign
+
 ### Version 1.0.0 (05.11.2026) - `5b3f11d` (Developer: **史力爱卫**)
 
 - Implement api stylebook 17 design categories and appsec verification suite
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.23 (04.11.2026) - `d87b1a7` (Developer: **史力爱卫**)
 
 - Apply fluid liquid tilted placement and multi-color card palette to bento hero grid
-
-### Version 0.2.23 (04.11.2026) - `5a3d08b` (Developer: **史力爱卫**)
-
-- Redesign snappy mascot companion with interactive play actions, antenna twang, and brand colors
-
-### Version 0.2.23 (04.11.2026) - `05bfb65` (Developer: **史力爱卫**)
-
-- Record SWR Stale-While-Revalidate client caching and backend ETag integration architecture
 
