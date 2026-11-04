@@ -70,3 +70,5 @@ Use this file only to resolve a task to its exact skill source and user-facing c
 | `SKILL-LIFECYCLE` | `.agents/skills/snp-sms-component-lifecycle/SKILL.md` | Component freshness, collapsed navigation, and scroll extraction | `apply skill lifecycle` |
 | `SKILL-WELL-ARCH` | `.agents/skills/github-well-architected-framework/SKILL.md` | GitHub Well-Architected Framework across productivity, security, governance, and architecture | `apply skill well-architected` |
 | `SKILL-RESILIENT-CICD` | `.agents/skills/resilient-cicd-github-actions/SKILL.md` | Resilient GitHub Actions and deployment continuity | `apply skill resilient-cicd` |
+| `SKILL-STYLEBOOK` | `.agents/skills/api-stylebook-design-topics/SKILL.md` (and `.github/knowledge/architecture/api-stylebook-design-topics.md`) | Authoritative API Stylebook REST API Design Topics & Cross-Guideline Standards (17 categories, 100 topics, 16 enterprise guidelines) | `apply skill stylebook` |
+| `SKILL-REST-API` | `.agents/skills/api-stylebook-design-topics/SKILL.md` | Authoritative REST API Design, HTTP Semantics & RFC 7807 Error Formatting | `apply skill rest-api` |

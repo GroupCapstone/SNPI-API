@@ -10,6 +10,69 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
   {
     "version": "0.2.17",
     "date": "04.11.2026",
+    "commitHash": "4c5628c",
+    "developer": "史力爱卫",
+    "description": "Align feed sequence in lockstep with sidebar parent range and child lists"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "d007ade",
+    "developer": "史力爱卫",
+    "description": "Add liquid glass parent icon circles, auto-dropdown accordion on scroll, and auto-centering in sidebar"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "e9710dd",
+    "developer": "史力爱卫",
+    "description": "Redesign floating label form and multi-step wizard with fluid water progress and brand dropdowns"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "fc42d97",
+    "developer": "史力爱卫",
+    "description": "Redesign VoiceNote with real Web Audio synthesis and live reactive AnalyserNode waveform"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "f065b4a",
+    "developer": "史力爱卫",
+    "description": "Add animated connection loading lines and step-to-step transitions to StepPlayer"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "d58e20a",
+    "developer": "史力爱卫",
+    "description": "Format feedback-demos with prettier"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "8465821",
+    "developer": "史力爱卫",
+    "description": "Redesign status page with clean status code and title only, remove descriptions and style archetypes"
+  },
+  {
+    "version": "0.2.17",
+    "date": "04.11.2026",
+    "commitHash": "3939f12",
+    "developer": "史力爱卫",
+    "description": "Redesign dropdown selector with clean brand tokens, white card surfaces, and zero indicator dots"
+  },
+  {
+    "version": "0.2.22",
+    "date": "04.11.2026",
+    "commitHash": "9702289",
+    "developer": "史力爱卫",
+    "description": "Checkpoint & live ci deploy verification [PASSED]"
+  },
+  {
+    "version": "0.2.22",
+    "date": "04.11.2026",
     "commitHash": "2585f81",
     "developer": "史力爱卫",
     "description": "Add build:shared and liveness timeout check to e2e daemon"
@@ -118,68 +181,5 @@ export const CHANGE_LOGS: ChangeLogEntry[] = [
     "commitHash": "9f14394",
     "developer": "史力爱卫",
     "description": "Implement 6-layer dependency supply chain defense standard & automated verification"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "485f0b0",
-    "developer": "史力爱卫",
-    "description": "Add unified verify:all-standards command for all enterprise standards"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "eb81feb",
-    "developer": "史力爱卫",
-    "description": "Implement github repository threat model (T-01 to T-08), danger zone governance & ruleset defenses"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "63a9dcf",
-    "developer": "史力爱卫",
-    "description": "Wire private networking into pre-push quality gates, deploy workflows & internal endpoints"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "f4f0003",
-    "developer": "史力爱卫",
-    "description": "Implement actions private networking, azure vnet injection & firewall fqdn standards"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "4225b26",
-    "developer": "史力爱卫",
-    "description": "Real-time changelog sync for primary appsec skill"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "febce6b",
-    "developer": "史力爱卫",
-    "description": "Establish primary Application Security Design Principles skill & agent bindings"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "c9e1343",
-    "developer": "史力爱卫",
-    "description": "Sync resilience mirroring changelog entry"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "e4f59ac",
-    "developer": "史力爱卫",
-    "description": "Record application security principles commit"
-  },
-  {
-    "version": "0.2.19",
-    "date": "03.11.2026",
-    "commitHash": "0e6083f",
-    "developer": "史力爱卫",
-    "description": "Record enterprise application security design principles & maturity framework"
   }
 ];
