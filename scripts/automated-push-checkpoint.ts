@@ -1,5 +1,8 @@
 import { execSync } from 'node:child_process';
 import { waitForCIStatus } from './verify-ci-status';
+import { checkAndReconcileGitHubPRs } from './check-github-prs';
+import { runSecurityQualityAudit } from './verify-security-quality';
+import { verifyVercelDeployment } from './verify-vercel-deployment';
 
 function run(cmd: string, echo = false): string {
   if (echo) {
@@ -55,8 +58,13 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
   console.log('SNP-SMS Automated Push, Checkpoint & CI Verification Gate');
   console.log('======================================================\n');
 
-  // Step 1: Code Formatting Audit & Auto-Fix
-  console.log('[1/9] Verifying code formatting (Prettier)...');
+  // Step 1: Pre-Push GitHub PR Inspection & Reconcile Gate
+  console.log('[1/11] Pre-push GitHub PR inspection & reconcile gate...');
+  const autoMergePRs = args.includes('--merge-open');
+  checkAndReconcileGitHubPRs({ autoMerge: autoMergePRs });
+
+  // Step 2: Code Formatting Audit & Auto-Fix
+  console.log('\n[2/11] Verifying code formatting (Prettier)...');
   try {
     run('npm run format:check');
     console.log('      [PASS] Code formatting is 100% compliant.');
@@ -66,8 +74,8 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
     console.log('      [PASS] Code formatted successfully.');
   }
 
-  // Step 2: Full ESLint Quality Gate
-  console.log('\n[2/9] Running ESLint Quality Gate across all workspaces...');
+  // Step 3: Full ESLint Quality Gate
+  console.log('\n[3/11] Running ESLint Quality Gate across all workspaces...');
   try {
     run('npm run lint');
     console.log('      [PASS] ESLint passed with 0 errors.');
@@ -78,8 +86,8 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
     throw new Error('Push blocked by ESLint Quality Gate.');
   }
 
-  // Step 3: TypeScript Static Analysis
-  console.log('\n[3/9] Running TypeScript static typechecking...');
+  // Step 4: TypeScript Static Analysis
+  console.log('\n[4/11] Running TypeScript static typechecking...');
   try {
     run('npm run typecheck');
     console.log('      [PASS] TypeScript static analysis passed with 0 errors.');
@@ -90,8 +98,16 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
     throw new Error('Push blocked by TypeScript Quality Gate.');
   }
 
-  // Step 4: Monorepo Smoke Tests
-  console.log('\n[4/9] Executing monorepo smoke verification...');
+  // Step 5: Security & Quality Audit Workflow
+  console.log('\n[5/11] Running Comprehensive Security & Quality Audit Workflow...');
+  const secAudit = runSecurityQualityAudit();
+  if (!secAudit.success) {
+    throw new Error('Push blocked by Security & Quality Audit Gate.');
+  }
+  console.log('      [PASS] Security & Quality Audit verified.');
+
+  // Step 6: Monorepo Smoke Tests
+  console.log('\n[6/11] Executing monorepo smoke verification...');
   try {
     run('npm run smoke');
     console.log('      [PASS] Monorepo smoke tests passed.');
@@ -102,8 +118,8 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
     throw new Error('Push blocked by Smoke Verification Gate.');
   }
 
-  // Step 5: Pre-Push Deployment Manifests & Build Gate
-  console.log('\n[5/9] Verifying deployment manifests, bundles & remote CI state on main...');
+  // Step 7: Pre-Push Deployment Manifests & Build Gate
+  console.log('\n[7/11] Verifying deployment manifests, bundles & remote CI state on main...');
   try {
     run('npm run deploy:verify');
     console.log('      [PASS] Deployment verification gate passed.');
@@ -114,8 +130,8 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
     throw new Error('Push blocked by Pre-Push Deployment Quality Gate.');
   }
 
-  // Step 6: Dual-Developer Git Reconciliation & Merge Gate
-  console.log('\n[6/9] Dual-developer git reconciliation & merge gate...');
+  // Step 8: Dual-Developer Git Reconciliation & Merge Gate (NEVER SKIP GIT SYNC)
+  console.log('\n[8/11] Dual-developer git reconciliation & merge gate (npm run git:sync)...');
   try {
     run('npm run git:sync');
     console.log('      [PASS] Local branch synchronized with remote collaborator commits.');
@@ -126,8 +142,8 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
     throw new Error('Push blocked by Dual-Developer Reconciliation Gate.');
   }
 
-  // Step 7: Real-Time Changelog Synchronization
-  console.log('\n[7/9] Synchronizing real-time changelog to developer portal...');
+  // Step 9: Real-Time Changelog Synchronization
+  console.log('\n[9/11] Synchronizing real-time changelog to developer portal...');
   try {
     run('npm run changelog:sync');
     console.log('      [PASS] Real-time changelog synchronized.');
@@ -205,24 +221,20 @@ export async function runAutomatedPushCheckpoint(): Promise<void> {
     minWorkflows: 8,
   });
 
-  // Step 10: Deploy to Vercel Production ONLY AFTER CI 100% Green
-  console.log('\n[10/10] Deploying to Vercel Production after 100% Green CI verification...');
+  // Step 11: Deploy to Vercel Production ONLY AFTER CI 100% Green
+  console.log('\n[11/12] Deploying to Vercel Production after 100% Green CI verification...');
   run('npx vercel --prod', true);
   console.log('      [PASS] Vercel Production deployment complete.');
 
+  // Step 12: Vercel Blue Status & Live Health Verification
   console.log(
-    '\nProbing live production domain: https://api.kesararamwithdigital.tech/api/v1/health...',
+    '\n[12/12] Verifying Vercel deployment status is READY [Blue] & probing live health endpoint...',
   );
-  try {
-    const healthProbe = run('curl -sI https://api.kesararamwithdigital.tech/api/v1/health');
-    const firstLine = healthProbe.split('\n')[0] || '';
-    console.log(`      [PASS] Live endpoint responded: ${firstLine}`);
-  } catch (err: unknown) {
-    console.warn(`      [WARN] Live health probe notice: ${(err as Error).message}`);
-  }
+  await verifyVercelDeployment({ expectedTarget: 'production' });
 
   console.log('\n======================================================');
-  console.log('[COMPLETED] Push to GitHub, CI 100% Green, and Vercel Deployment Verified!');
+  console.log('[COMPLETED] Push to GitHub, CI 100% Green, and Vercel READY [Blue] Verified!');
+  console.log('Conversation conclusion criteria fulfilled.');
   console.log('======================================================\n');
 }
 

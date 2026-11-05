@@ -2,27 +2,35 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
-### Version 1.0.0 (06.11.2026) - `c00b21b` (Developer: **史力爱卫**)
+### Version 1.0.0 (06.11.2026) - `7599df4` (Developer: **史力爱卫**)
+
+- Add 100% green ci gate, pre-push pr reconcile, security audit, and vercel blue verification
+
+### Version 0.2.25 (06.11.2026) - `d1eace0` (Developer: **史力爱卫**)
+
+- Checkpoint & live ci deploy verification [PASSED]
+
+### Version 0.2.25 (06.11.2026) - `c00b21b` (Developer: **史力爱卫**)
 
 - Activate dependabot version updates for npm, github-actions, and docker [PASSED]
 
-### Version 1.0.0 (06.11.2026) - `1fe6c16` (Developer: **史力爱卫**)
+### Version 0.2.25 (06.11.2026) - `1fe6c16` (Developer: **史力爱卫**)
 
 - Implement telegram fallback otp and emergency recovery flows for 2fa [PASSED]
 
-### Version 1.0.0 (06.11.2026) - `566351d` (Developer: **史力爱卫**)
+### Version 0.2.25 (06.11.2026) - `566351d` (Developer: **史力爱卫**)
 
 - Implement totp rfc 6238 two-factor authentication and single-use backup recovery codes [PASSED]
 
-### Version 1.0.0 (06.11.2026) - `3688555` (Developer: **史力爱卫**)
+### Version 0.2.25 (06.11.2026) - `3688555` (Developer: **史力爱卫**)
 
 - Implement unified contextual abac scope filter and idor defense [PASSED]
 
-### Version 1.0.0 (06.11.2026) - `31afea2` (Developer: **史力爱卫**)
+### Version 0.2.25 (06.11.2026) - `31afea2` (Developer: **史力爱卫**)
 
 - Record modern iam and rbac-abac-rebac authorization skill [PASSED]
 
-### Version 1.0.0 (05.11.2026) - `3db5102` (Developer: **史力爱卫**)
+### Version 0.2.25 (05.11.2026) - `3db5102` (Developer: **史力爱卫**)
 
 - Optimize push workflow to push github first, wait for ci green, then deploy vercel [PASSED]
 
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.24 (05.11.2026) - `f7bbdf4` (Developer: **史力爱卫**)
 
 - Enforce single testing subdomain and slug-only routing standard
-
-### Version 0.2.24 (05.11.2026) - `db9d767` (Developer: **史力爱卫**)
-
-- Add dedicated push:github and deploy:prod script aliases
-
-### Version 0.2.24 (05.11.2026) - `d73557d` (Developer: **史力爱卫**)
-
-- Implement interactive api explorer, standalone vercel deployment, and zero-bridge release pipeline
 

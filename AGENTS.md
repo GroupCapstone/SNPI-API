@@ -126,24 +126,42 @@ Never run an unrelated full suite solely because it is listed here; report which
 
 - **Mandatory GitHub-First Push, CI Watch & Subsequent Vercel Release Rule (ABSOLUTE RULE)**:
   - Whenever the user commands to push (`push`, `git push`, `release it all`, `publish`):
-    1. **Fast Pre-Flight Gates & Reconciliation**: Run Prettier format check, ESLint (`npm run lint`), TypeScript static analysis (`npm run typecheck`), build compilation (`npm run build`), and dual-developer git reconciliation (`npm run git:sync`).
-    2. **Push to GitHub FIRST**: Immediately push commits and annotated release tags to GitHub remote `origin/main` (`git push origin main --tags`).
-    3. **Watch & Check GitHub Actions CI Until 100% Green (Optimized Fast Polling)**: Actively monitor all triggered GitHub Actions CI runs for the pushed commit SHA via `gh run list --commit <SHA>` using fast 3.5s polling. Continue monitoring until all workflows achieve completed `[PASSED]` status. If any workflow fails, abort immediately, fetch failed logs (`gh run view <ID> --log-failed`), resolve the failure locally, and NEVER proceed to Vercel.
-    4. **Deploy to Vercel Production AFTER CI Green**: ONLY AFTER all GitHub Actions CI workflows are 100% green and successful, deploy directly to Vercel production via Vercel CLI (`npx vercel --prod`).
-    5. **Live Health Check**: Probe `https://api.kesararamwithdigital.tech/api/v1/health` to confirm `HTTP/2 200 OK`.
+    1. **Pre-Push GitHub PR Check & Reconciliation Gate**: Before attempting any git push or skipping sync, check open GitHub PRs (`npm run pr:check`). If open PRs exist, inspect them, merge mergeable PRs into `main` (`gh pr merge <ID> --merge --auto`), and reconcile local tracking.
+    2. **Dual-Developer Git Reconciliation & Merge Gate (NEVER SKIP GIT SYNC)**: Always run `npm run git:sync` (or fetch and merge `origin/main --no-edit`). Never skip sync or push over unmerged collaborator commits or PRs.
+    3. **Comprehensive Security & Quality Audit Workflow**: Run `npm run audit:security-quality` to verify Overview Findings, Code Quality, Dependabot Malware & Vulnerabilities, Reporting, and Security Policy compliance.
+    4. **Fast Pre-Flight Gates & Compilation**: Run Prettier format check (`npm run format:check`), ESLint (`npm run lint`), TypeScript static analysis (`npm run typecheck`), and build compilation (`npm run build`).
+    5. **Push to GitHub FIRST**: Immediately push commits and annotated release tags to GitHub remote `origin/main` (`git push origin main --tags`).
+    6. **Watch & Check GitHub Actions CI Until 100% Green (Optimized Fast Polling)**: Actively monitor all triggered GitHub Actions CI runs for the pushed commit SHA via `gh run list --commit <SHA>` using fast 3.5s polling. Continue monitoring until 100% of workflows achieve completed `[PASSED]` status. If any workflow fails, abort immediately, fetch failed logs (`gh run view <ID> --log-failed`), resolve the failure locally, and NEVER proceed to Vercel.
+    7. **Deploy to Vercel Production AFTER CI Green**: ONLY AFTER all GitHub Actions CI workflows are 100% green and successful, deploy directly to Vercel production via Vercel CLI (`npx vercel --prod`).
+    8. **Vercel Blue Success & Live Health Verification (Conversation Break Gate)**: Inspect Vercel deployment status via `npm run deploy:vercel:verify`. Confirm deployment state is `READY` (blue success) and probe `https://api.kesararamwithdigital.tech/api/v1/health` for `HTTP/2 200 OK`. The conversation turn may only conclude once Vercel production is confirmed blue and healthy.
+- **Mandatory Pre-Push PR Check & Auto-Merge Gate (`npm run pr:check`)**:
+  - Before pushing code, inspect all open PRs on GitHub (`gh pr list --state open`).
+  - Never push over unmerged open PRs without review or auto-reconciliation. When `--merge-open` is specified, mergeable PRs are merged into `main` and synchronized into the working tree.
+- **Mandatory Security & Quality Audit Workflow (`npm run audit:security-quality`)**:
+  - **Overview Findings**: Audit GitHub Advanced Security, Secret Scanning alerts, and Code Scanning findings.
+  - **Code Quality**: ESLint (0 errors), TypeScript strict analysis (0 errors), Prettier format compliance, and fast unit & architecture smoke tests.
+  - **Dependabot Malware & Vulnerabilities**: Scan for critical/high open Dependabot alerts via GitHub API, execute `npm audit --audit-level=high`, and ensure zero malicious piped scripts in dependency lifecycles.
+  - **Reporting**: Output structured findings summary table with explicit `[PASSED]`, `[WARNING]`, `[FAILED]` status badges.
+  - **Security Policy Compliance**: Verify `SECURITY.md` vulnerability disclosure procedures, immutable numeric maintainer IDs (`70220432`, `216975960`) in `.github/maintainers.json`, and all required GitHub security workflows (`security.yml`, `codeql.yml`, `secret-scan.yml`, `ci.yml`).
+- **Mandatory Watch All GitHub Actions CI to 100% Green Before Vercel Deploy (ABSOLUTE RULE)**:
+  - Vercel production deployment is strictly forbidden while any GitHub Actions workflow is running, pending, or failed.
+  - All workflows (CI, lint, tests, build, docker, codeql, secret scan, license compliance, blockchain integrity) must pass with 100% green before invoking Vercel CLI.
+- **Mandatory Vercel Blue Status Verification Before Ending Conversation (`npm run deploy:vercel:verify`)**:
+  - Deployment must be verified as `state: "READY"` (blue indicator) in Vercel CLI JSON output.
+  - Live production domain `https://api.kesararamwithdigital.tech/api/v1/health` must return `HTTP/2 200 OK` with status `healthy` and database `connected`.
 - **One-Command Automated Push & Checkpoint (`npm run push:checkpoint` / `npm run release:all`)**:
-  - Both commands execute the complete optimized sequence: pre-flight checks -> git sync -> GitHub push first -> watch CI until green -> Vercel production deploy -> live health probe.
+  - Both commands execute the complete optimized sequence: PR check -> git sync -> security & quality audit -> pre-flight compile -> GitHub push first -> watch CI until green -> Vercel production deploy -> Vercel blue & live health verification.
 - **Mandatory Pre-Push ESLint Quality Gate (`npm run lint`)**:
   - `npm run lint` MUST be executed and pass with 0 errors before any commit or push. JSX text node violations, unescaped entities, and typing errors must never reach remote CI.
 - **Mandatory Dual-Developer Git Reconciliation & Merge Gate (`npm run git:sync`)**:
   - Two developers actively collaborate on this repository. Before attempting any commit push or release checkpoint, the system must **ALWAYS run `npm run git:sync`** (or `git fetch origin` followed by `git merge origin/<branch> --no-edit`).
-  - If remote has incoming commits from the other developer, merge them immediately into the working tree. Never overwrite or force-push over collaborator code.
+  - If remote has incoming commits from the other developer, merge them immediately into the working tree. Never overwrite or force-push over collaborator code. Never skip git sync.
   - If conflicts occur, resolve them cleanly, run the full verification pipeline (`npm run typecheck`, `npm run lint`, `npm run deploy:verify`), and commit the merged result before pushing.
 - **Zero Push on Failed Deploy or CI**: Never run `git push`, push release tags, or publish checkpoints if any GitHub deployment, build, test, or CI workflow is failed or failing on `main`.
 - **Pre-Push Deployment Gate (`npm run deploy:verify`)**: Always execute `npm run deploy:verify` prior to pushing to ensure all deployment manifests exist (`vercel.json`, `apps/backend/vercel.json`, `apps/frontend/vercel.json`, Kubernetes manifests), production builds compile with zero errors, and recent GitHub Actions workflows on `main` are green.
 - **Mandatory Post-Push Live CI Monitoring Until 100% Green (`npm run push:verify`)**:
   - Every remote push MUST actively monitor GitHub Actions runs for the pushed commit SHA (`gh run list --commit <SHA>`) until all triggered workflows reach completed `[PASSED]` status.
-  - The agent must NOT end the turn or claim completion until all remote checks are green.
+  - The agent must NOT end the turn or claim completion until all remote checks are green and Vercel is blue/healthy.
   - If any workflow fails, the agent must immediately fetch the failed logs (`gh run view <ID> --log-failed`), diagnose the error, resolve it locally, and push the fix.
 
 ---

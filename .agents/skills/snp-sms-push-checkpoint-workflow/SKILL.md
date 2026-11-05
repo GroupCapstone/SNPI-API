@@ -101,24 +101,40 @@ git push origin main
 
 ---
 
-## 6. Mandatory Post-Push GitHub Actions & Vercel Verification Gate (100% Green)
+## 6. Mandatory Post-Push GitHub Actions & Vercel Verification Gate (100% Green & Vercel Blue)
 
-Every remote push MUST follow the strict sequential pipeline: **Push to GitHub First -> Watch CI Until 100% Green -> Deploy to Vercel Production**:
+Every remote push MUST follow the strict sequential pipeline: **PR Inspection -> Dual-Dev Git Sync -> Security & Quality Audit -> Push to GitHub First -> Watch CI Until 100% Green -> Deploy to Vercel Production -> Verify Vercel Blue Success & Live Health**:
 
-1. **Pre-Push Fast Quality Gate Enforcement**:
+1. **Pre-Push GitHub PR Inspection & Reconcile Gate (`npm run pr:check`)**:
+   - Inspect open Pull Requests on GitHub (`gh pr list --state open`).
+   - If open PRs exist (e.g. Dependabot, feature PRs), inspect or merge mergeable PRs into `main` (`gh pr merge <ID> --merge --auto`).
+   - Never skip git sync or push over unmerged open PRs.
+
+2. **Dual-Developer Git Reconciliation & Merge Gate (`npm run git:sync`) (NEVER SKIP GIT SYNC)**:
+   - Fetch latest commits from `origin/main` and merge into local branch (`--no-edit`).
+   - Guarantee local HEAD contains all remote commits and merged PRs before proceeding.
+
+3. **Security & Quality Comprehensive Audit Workflow (`npm run audit:security-quality`)**:
+   - **Overview Findings**: Audit Secret Scanning and Code Scanning alerts.
+   - **Code Quality**: Prettier format (`npm run format:check`), ESLint (`npm run lint`), TypeScript strict check (`npm run typecheck`), and unit/smoke tests.
+   - **Dependabot Malware & Vulnerability Detection**: Check open Dependabot alerts, execute `npm audit --audit-level=high`, and ensure clean lifecycle scripts.
+   - **Reporting**: Structured audit report output table with `[PASSED]`, `[WARNING]`, `[FAILED]` status.
+   - **Security Policy Compliance**: Verify `SECURITY.md`, `.github/maintainers.json` numeric account IDs, and required security workflows.
+
+4. **Pre-Push Fast Quality Gate Enforcement**:
    - `npm run format:check` (Prettier code style compliance).
    - `npm run lint` (ESLint 0 errors).
    - `npm run typecheck` (TypeScript 0 errors).
    - `npm run build` (Production compilation 0 errors).
-   - `npm run git:sync` (Dual-developer reconciliation).
 
-2. **Push to GitHub FIRST**:
+5. **Push to GitHub FIRST**:
    - Push commits and release tags to GitHub remote `origin/main`:
      ```bash
+     git config http.postBuffer 524288000
      git push origin main --tags
      ```
 
-3. **Active Remote CI Monitoring Until 100% Green (Optimized Fast Polling)**:
+6. **Active Remote CI Monitoring Until 100% Green (Optimized Fast Polling)**:
    - Actively query GitHub Actions runs for the pushed commit SHA using fast 3.5s polling:
      ```bash
      gh run list -R GroupCapstone/SNPI-API --commit <HEAD_SHA>
@@ -126,19 +142,21 @@ Every remote push MUST follow the strict sequential pipeline: **Push to GitHub F
    - All triggered workflows (Code Quality & Lint, Monorepo CI, Automated Test Suites, Test Coverage, CodeQL Analysis, Deployment Verification, Docker Container Build, Blockchain & Ledger Integrity, Secret Scanning, License Compliance, etc.) must reach completed `[success / PASSED]`.
    - Never proceed to Vercel deployment if any workflow fails.
 
-4. **Deploy to Vercel Production AFTER CI Green**:
+7. **Deploy to Vercel Production AFTER CI Green**:
    - ONLY after GitHub Actions CI is 100% green and successful, deploy directly to Vercel production:
      ```bash
      npx vercel --prod
      ```
 
-5. **Automated Failure Diagnosis & Self-Healing**:
+8. **Vercel Blue Status & Live Health Verification (`npm run deploy:vercel:verify`) (Conversation Break Criteria)**:
+   - Inspect Vercel deployment state via CLI: state MUST be `READY` (blue indicator in Vercel UI).
+   - Probe live production domain (`https://api.kesararamwithdigital.tech/api/v1/health`) to confirm `HTTP/2 200 OK` and healthy status.
+   - The conversation turn may only conclude once Vercel production is confirmed blue and healthy.
+
+9. **Automated Failure Diagnosis & Self-Healing**:
    - If any workflow fails, immediately inspect the failure logs:
      ```bash
      gh run view <RUN_ID> -R GroupCapstone/SNPI-API --log-failed
      ```
    - Diagnose the root cause, apply the fix locally, re-run format/lint/typecheck, commit with differentiated prefix, push, and resume monitoring until 100% green.
-
-6. **Live Production Smoke Verification**:
-   - Probe live production domain (`https://api.kesararamwithdigital.tech/api/v1/health`) to confirm that the deployed build is active and serving traffic.
 
