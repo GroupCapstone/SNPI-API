@@ -1,16 +1,35 @@
 version: 2
 updates:
+  # ---------------------------------------------------------------------------
+  # 1. NPM Workspaces & Root Dependencies
+  # ---------------------------------------------------------------------------
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
-    # Security alerts remain active in GitHub Security Overview; routine version bump PRs disabled
-    open-pull-requests-limit: 0
+      day: 'monday'
+      time: '09:00'
+      timezone: 'Asia/Phnom_Penh'
+    open-pull-requests-limit: 10
+    target-branch: 'main'
+    commit-message:
+      prefix: 'chore(api/deps)'
+    labels:
+      - 'dependencies'
+      - 'automated'
     groups:
-      dependencies:
-        patterns:
-          - '*'
+      production-dependencies:
+        dependency-type: 'production'
+        update-types:
+          - 'minor'
+          - 'patch'
+      development-dependencies:
+        dependency-type: 'development'
+        update-types:
+          - 'minor'
+          - 'patch'
     ignore:
+      # Block breaking major bumps to preserve runtime stability and framework compatibility
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major']
       - dependency-name: 'eslint'
@@ -20,16 +39,43 @@ updates:
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
 
+  # ---------------------------------------------------------------------------
+  # 2. GitHub Actions CI/CD Workflows
+  # ---------------------------------------------------------------------------
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
-    # Security alerts remain active in GitHub Security Overview, but automated PRs
-    # are limited to 0 to prevent violating immutable full-commit SHA pinning policy.
-    open-pull-requests-limit: 0
+      day: 'monday'
+      time: '09:30'
+      timezone: 'Asia/Phnom_Penh'
+    open-pull-requests-limit: 5
+    target-branch: 'main'
+    commit-message:
+      prefix: 'chore(api/ci)'
+    labels:
+      - 'ci'
+      - 'github-actions'
+      - 'automated'
+    groups:
+      actions:
+        patterns:
+          - '*'
 
+  # ---------------------------------------------------------------------------
+  # 3. Docker Container Base Images
+  # ---------------------------------------------------------------------------
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
       interval: 'weekly'
-    open-pull-requests-limit: 0
+      day: 'monday'
+      time: '10:00'
+      timezone: 'Asia/Phnom_Penh'
+    open-pull-requests-limit: 5
+    target-branch: 'main'
+    commit-message:
+      prefix: 'chore(api/docker)'
+    labels:
+      - 'docker'
+      - 'automated'
