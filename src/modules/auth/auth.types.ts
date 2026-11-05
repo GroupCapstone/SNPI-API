@@ -39,6 +39,7 @@ export interface SanitizedUser {
   defaultBranch: string | null;
   isSuperAdmin: boolean;
   status: string;
+  twoFactorEnabled?: boolean;
   lastLoginAt?: Date;
   mustChangePassword: boolean;
 }
@@ -47,6 +48,34 @@ export interface LoginResult {
   user: SanitizedUser;
   accessToken: string;
   refreshToken: string;
+}
+
+export interface LoginMfaPendingResult {
+  mfaRequired: true;
+  mfaToken: string;
+}
+
+export type LoginResponse = LoginResult | LoginMfaPendingResult;
+
+export interface Verify2FaDto {
+  mfaToken: string;
+  code: string;
+}
+
+export interface Setup2FaResult {
+  secret: string;
+  otpauthUri: string;
+  qrCodeDataUrl: string;
+  backupCodes: string[];
+}
+
+export interface Enable2FaDto {
+  code: string;
+}
+
+export interface Disable2FaDto {
+  password: string;
+  code: string;
 }
 
 export interface RefreshResult {

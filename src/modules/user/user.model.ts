@@ -3,6 +3,20 @@ import { model, Schema } from 'mongoose';
 
 export type UserStatus = 'active' | 'inactive' | 'locked' | 'suspended';
 
+export interface IUserBackupCode {
+  codeHash: string;
+  usedAt: Date | null;
+}
+
+export interface IUserTwoFactor {
+  enabled: boolean;
+  secret?: string;
+  confirmedAt?: Date | null;
+  tempSecret?: string;
+  tempBackupCodes?: IUserBackupCode[];
+  backupCodes: IUserBackupCode[];
+}
+
 export interface IUser extends Document {
   schoolId: Types.ObjectId;
   employeeId?: Types.ObjectId;
@@ -20,6 +34,7 @@ export interface IUser extends Document {
   lockedUntil?: Date;
   mustChangePassword: boolean;
   tokenVersion: number;
+  twoFactor?: IUserTwoFactor;
   refreshTokenHash?: string;
   previousRefreshTokenHash?: string;
   tokenRotatedAt?: Date;
@@ -114,6 +129,36 @@ const userSchema = new Schema<IUser>(
       required: true,
       select: true,
     },
+    twoFactor: {
+      enabled: {
+        type: Boolean,
+        default: false,
+        required: true,
+      },
+      secret: {
+        type: String,
+        select: false,
+      },
+      confirmedAt: {
+        type: Date,
+      },
+      tempSecret: {
+        type: String,
+        select: false,
+      },
+      tempBackupCodes: [
+        {
+          codeHash: { type: String, required: true },
+          usedAt: { type: Date, default: null },
+        },
+      ],
+      backupCodes: [
+        {
+          codeHash: { type: String, required: true },
+          usedAt: { type: Date, default: null },
+        },
+      ],
+    },
     refreshTokenHash: {
       type: String,
       select: false,
@@ -152,6 +197,12 @@ const userSchema = new Schema<IUser>(
         delete sanitized.refreshTokenHash;
         delete sanitized.previousRefreshTokenHash;
         delete sanitized.tokenRotatedAt;
+        if (sanitized.twoFactor && typeof sanitized.twoFactor === 'object') {
+          const tf = sanitized.twoFactor as Record<string, unknown>;
+          delete tf.secret;
+          delete tf.tempSecret;
+          delete tf.tempBackupCodes;
+        }
         return returnedObject;
       },
     },
@@ -162,6 +213,12 @@ const userSchema = new Schema<IUser>(
         delete sanitized.refreshTokenHash;
         delete sanitized.previousRefreshTokenHash;
         delete sanitized.tokenRotatedAt;
+        if (sanitized.twoFactor && typeof sanitized.twoFactor === 'object') {
+          const tf = sanitized.twoFactor as Record<string, unknown>;
+          delete tf.secret;
+          delete tf.tempSecret;
+          delete tf.tempBackupCodes;
+        }
         return returnedObject;
       },
     },

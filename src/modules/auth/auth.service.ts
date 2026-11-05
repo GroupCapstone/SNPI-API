@@ -1,9 +1,22 @@
 import { Types } from 'mongoose';
 
 import { ALL_PERMISSION_CODES } from '../../constants/permissions';
-import { ForbiddenError, NotFoundError, UnauthorizedError } from '../../shared/errors/app-error';
+import {
+  BadRequestError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../../shared/errors/app-error';
 import { PasswordUtil } from '../../utils/password';
 import { TokenUtil } from '../../utils/token';
+import {
+  generateBackupCodes,
+  generateTotpQrDataUrl,
+  generateTotpSecret,
+  generateTotpUri,
+  verifyBackupCode,
+  verifyTotpCode,
+} from '../../utils/totp';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { EmployeeModel } from '../employee/employee.model';
 import { RoleService } from '../role/role.service';
@@ -12,10 +25,14 @@ import type { IUser } from '../user/user.model';
 import { UserRepository } from '../user/user.repository';
 import type {
   ChangePasswordDto,
+  Disable2FaDto,
   LoginDto,
+  LoginResponse,
   LoginResult,
   RefreshResult,
   SanitizedUser,
+  Setup2FaResult,
+  Verify2FaDto,
 } from './auth.types';
 
 export class AuthService {
@@ -115,7 +132,7 @@ export class AuthService {
   public async login(
     dto: LoginDto,
     metadata: { ipAddress?: string; userAgent?: string } = {},
-  ): Promise<LoginResult> {
+  ): Promise<LoginResponse> {
     const user = await this.userRepository.findByIdentifier(dto.identifier);
 
     if (!user) {
@@ -202,12 +219,45 @@ export class AuthService {
       throw new UnauthorizedError('Incorrect username/email or password');
     }
 
-    // Reset failed attempts upon successful login
+    // Reset failed attempts upon successful password verification
     user.failedLoginAttempts = 0;
     user.lockedUntil = undefined;
     if (user.status === 'locked') {
       user.status = 'active';
     }
+
+    if (PasswordUtil.needsRehash(user.passwordHash)) {
+      user.passwordHash = PasswordUtil.hash(dto.password);
+    }
+
+    // If Two-Factor Authentication is enabled, issue short-lived MFA challenge token
+    if (user.twoFactor?.enabled) {
+      await user.save();
+
+      const mfaToken = TokenUtil.generateMfaToken({ userId: user._id.toString() });
+
+      await AuditLogService.log({
+        userId: user._id.toString(),
+        schoolId: (user.schoolId as unknown as { _id: string })?._id
+          ? (user.schoolId as unknown as { _id: string })._id.toString()
+          : user.schoolId.toString(),
+        module: 'auth',
+        action: 'MFA_CHALLENGE_ISSUED',
+        entityType: 'User',
+        entityId: user._id.toString(),
+        newValue: {
+          username: user.username,
+        },
+        ipAddress: metadata.ipAddress,
+        userAgent: metadata.userAgent,
+      });
+
+      return {
+        mfaRequired: true,
+        mfaToken,
+      };
+    }
+
     user.lastLoginAt = new Date();
 
     // Generate tokens
@@ -396,6 +446,325 @@ export class AuthService {
     });
   }
 
+  public async setup2Fa(userId: string): Promise<Setup2FaResult> {
+    const user = await this.userRepository.findByIdWithSecrets(userId);
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    const secret = generateTotpSecret(20);
+    const otpauthUri = generateTotpUri(secret, user.username, 'SNPI-SMS');
+    const qrCodeDataUrl = await generateTotpQrDataUrl(otpauthUri);
+    const { plainCodes, hashedCodes } = generateBackupCodes(8);
+
+    user.twoFactor = {
+      enabled: user.twoFactor?.enabled ?? false,
+      secret: user.twoFactor?.secret,
+      confirmedAt: user.twoFactor?.confirmedAt ?? null,
+      tempSecret: secret,
+      tempBackupCodes: hashedCodes,
+      backupCodes: user.twoFactor?.backupCodes ?? [],
+    };
+
+    await user.save();
+
+    return {
+      secret,
+      otpauthUri,
+      qrCodeDataUrl,
+      backupCodes: plainCodes,
+    };
+  }
+
+  public async enable2Fa(
+    userId: string,
+    code: string,
+    metadata: { ipAddress?: string; userAgent?: string } = {},
+  ): Promise<{ success: boolean; message: string }> {
+    const user = await this.userRepository.findByIdWithSecrets(userId);
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    if (!user.twoFactor?.tempSecret) {
+      throw new BadRequestError('2FA setup has not been initiated. Please call setup first.');
+    }
+
+    const isValid = verifyTotpCode(code, user.twoFactor.tempSecret);
+    if (!isValid) {
+      throw new UnauthorizedError(
+        'Invalid 2FA verification code. Please check your authenticator app.',
+      );
+    }
+
+    user.twoFactor = {
+      enabled: true,
+      secret: user.twoFactor.tempSecret,
+      confirmedAt: new Date(),
+      tempSecret: undefined,
+      tempBackupCodes: undefined,
+      backupCodes: user.twoFactor.tempBackupCodes ?? [],
+    };
+
+    await user.save();
+
+    await AuditLogService.log({
+      userId: user._id.toString(),
+      schoolId: (user.schoolId as unknown as { _id: string })?._id
+        ? (user.schoolId as unknown as { _id: string })._id.toString()
+        : user.schoolId.toString(),
+      module: 'auth',
+      action: 'TWO_FACTOR_ENABLED',
+      entityType: 'User',
+      entityId: user._id.toString(),
+      newValue: {
+        username: user.username,
+        confirmedAt: user.twoFactor.confirmedAt,
+      },
+      ipAddress: metadata.ipAddress,
+      userAgent: metadata.userAgent,
+    });
+
+    return {
+      success: true,
+      message: 'Two-factor authentication enabled successfully.',
+    };
+  }
+
+  public async verify2Fa(
+    dto: Verify2FaDto,
+    metadata: { ipAddress?: string; userAgent?: string } = {},
+  ): Promise<LoginResult> {
+    let payload: { userId: string };
+    try {
+      payload = TokenUtil.verifyMfaToken(dto.mfaToken);
+    } catch {
+      throw new UnauthorizedError('Invalid or expired MFA token');
+    }
+
+    const user = await this.userRepository.findByIdWithSecrets(payload.userId);
+    if (!user || user.isDeleted || user.status !== 'active') {
+      throw new UnauthorizedError('User session expired or user account is not active');
+    }
+
+    if (!user.twoFactor?.enabled || !user.twoFactor.secret) {
+      throw new UnauthorizedError('Two-factor authentication is not active for this account');
+    }
+
+    // Check account lockout
+    if (user.lockedUntil && user.lockedUntil > new Date()) {
+      const remainingMinutes = Math.ceil((user.lockedUntil.getTime() - Date.now()) / (60 * 1000));
+      throw new ForbiddenError(
+        `Account is temporarily locked due to multiple failed login attempts. Please try again in ${remainingMinutes} minute(s).`,
+      );
+    }
+
+    let isValid = verifyTotpCode(dto.code, user.twoFactor.secret);
+    let usedBackupCodeIndex = -1;
+
+    if (!isValid && user.twoFactor.backupCodes && user.twoFactor.backupCodes.length > 0) {
+      usedBackupCodeIndex = verifyBackupCode(dto.code, user.twoFactor.backupCodes);
+      if (usedBackupCodeIndex !== -1) {
+        isValid = true;
+      }
+    }
+
+    if (!isValid) {
+      user.failedLoginAttempts = (user.failedLoginAttempts || 0) + 1;
+      if (user.failedLoginAttempts >= 5) {
+        user.lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+        user.status = 'locked';
+      }
+      await user.save();
+
+      await AuditLogService.log({
+        userId: user._id.toString(),
+        schoolId: (user.schoolId as unknown as { _id: string })?._id
+          ? (user.schoolId as unknown as { _id: string })._id.toString()
+          : user.schoolId.toString(),
+        module: 'auth',
+        action: 'MFA_FAILED',
+        entityType: 'User',
+        entityId: user._id.toString(),
+        newValue: {
+          username: user.username,
+          failedLoginAttempts: user.failedLoginAttempts,
+        },
+        ipAddress: metadata.ipAddress,
+        userAgent: metadata.userAgent,
+      });
+
+      throw new UnauthorizedError('Invalid 2FA verification code or backup code');
+    }
+
+    // If backup code used, mark it as spent
+    if (usedBackupCodeIndex !== -1 && user.twoFactor.backupCodes) {
+      user.twoFactor.backupCodes[usedBackupCodeIndex]!.usedAt = new Date();
+      user.markModified('twoFactor.backupCodes');
+    }
+
+    // Reset failed attempts upon successful MFA verification
+    user.failedLoginAttempts = 0;
+    user.lockedUntil = undefined;
+    user.lastLoginAt = new Date();
+
+    const accessToken = TokenUtil.generateAccessToken({
+      userId: user._id.toString(),
+      username: user.username,
+      email: user.email,
+      tokenVersion: user.tokenVersion ?? 0,
+    });
+
+    const refreshToken = TokenUtil.generateRefreshToken({
+      userId: user._id.toString(),
+      tokenVersion: user.tokenVersion ?? 0,
+    });
+
+    user.refreshTokenHash = TokenUtil.hashToken(refreshToken);
+    await user.save();
+
+    await AuditLogService.log({
+      userId: user._id.toString(),
+      schoolId: (user.schoolId as unknown as { _id: string })?._id
+        ? (user.schoolId as unknown as { _id: string })._id.toString()
+        : user.schoolId.toString(),
+      module: 'auth',
+      action: 'LOGIN_SUCCESS',
+      entityType: 'User',
+      entityId: user._id.toString(),
+      newValue: {
+        username: user.username,
+        roles: user.roles,
+        lastLoginAt: user.lastLoginAt,
+        mfaMethod: usedBackupCodeIndex !== -1 ? 'backup_code' : 'totp',
+      },
+      ipAddress: metadata.ipAddress,
+      userAgent: metadata.userAgent,
+    });
+
+    const sanitizedUser = await this.buildAuthorizationContext(user);
+
+    return {
+      user: sanitizedUser,
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  public async disable2Fa(
+    userId: string,
+    dto: Disable2FaDto,
+    metadata: { ipAddress?: string; userAgent?: string } = {},
+  ): Promise<{ success: boolean; message: string }> {
+    const user = await this.userRepository.findByIdWithSecrets(userId);
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    if (!user.twoFactor?.enabled || !user.twoFactor.secret) {
+      throw new BadRequestError('Two-factor authentication is not enabled for this account');
+    }
+
+    const isPasswordValid = PasswordUtil.compare(dto.password, user.passwordHash);
+    if (!isPasswordValid) {
+      throw new UnauthorizedError('Current password is incorrect');
+    }
+
+    let isValid = verifyTotpCode(dto.code, user.twoFactor.secret);
+    if (!isValid && user.twoFactor.backupCodes) {
+      const backupIdx = verifyBackupCode(dto.code, user.twoFactor.backupCodes);
+      if (backupIdx !== -1) {
+        isValid = true;
+      }
+    }
+
+    if (!isValid) {
+      throw new UnauthorizedError('Invalid 2FA verification code or backup code');
+    }
+
+    user.twoFactor = {
+      enabled: false,
+      secret: undefined,
+      confirmedAt: null,
+      tempSecret: undefined,
+      tempBackupCodes: undefined,
+      backupCodes: [],
+    };
+
+    await user.save();
+
+    await AuditLogService.log({
+      userId: user._id.toString(),
+      schoolId: (user.schoolId as unknown as { _id: string })?._id
+        ? (user.schoolId as unknown as { _id: string })._id.toString()
+        : user.schoolId.toString(),
+      module: 'auth',
+      action: 'TWO_FACTOR_DISABLED',
+      entityType: 'User',
+      entityId: user._id.toString(),
+      newValue: {
+        username: user.username,
+      },
+      ipAddress: metadata.ipAddress,
+      userAgent: metadata.userAgent,
+    });
+
+    return {
+      success: true,
+      message: 'Two-factor authentication disabled successfully.',
+    };
+  }
+
+  public async resetUser2Fa(
+    targetUserId: string,
+    adminUserId: string,
+    metadata: { ipAddress?: string; userAgent?: string } = {},
+  ): Promise<{ success: boolean; message: string }> {
+    const targetUser = await this.userRepository.findByIdWithSecrets(targetUserId);
+    if (!targetUser) {
+      throw new NotFoundError('Target user not found');
+    }
+
+    targetUser.twoFactor = {
+      enabled: false,
+      secret: undefined,
+      confirmedAt: null,
+      tempSecret: undefined,
+      tempBackupCodes: undefined,
+      backupCodes: [],
+    };
+
+    // Increment tokenVersion to invalidate any active sessions
+    targetUser.tokenVersion = (targetUser.tokenVersion ?? 0) + 1;
+    targetUser.refreshTokenHash = undefined;
+    targetUser.previousRefreshTokenHash = undefined;
+    targetUser.tokenRotatedAt = undefined;
+
+    await targetUser.save();
+
+    await AuditLogService.log({
+      userId: adminUserId,
+      schoolId: (targetUser.schoolId as unknown as { _id: string })?._id
+        ? (targetUser.schoolId as unknown as { _id: string })._id.toString()
+        : targetUser.schoolId.toString(),
+      module: 'auth',
+      action: 'ADMIN_TWO_FACTOR_RESET',
+      entityType: 'User',
+      entityId: targetUser._id.toString(),
+      newValue: {
+        targetUsername: targetUser.username,
+        resetBy: adminUserId,
+      },
+      ipAddress: metadata.ipAddress,
+      userAgent: metadata.userAgent,
+    });
+
+    return {
+      success: true,
+      message: 'User two-factor authentication has been reset successfully.',
+    };
+  }
+
   private sanitizeUser(
     user: IUser,
     permissions: string[],
@@ -415,6 +784,7 @@ export class AuthService {
       branchAccess: user.branchAccess,
       ...authorization,
       status: user.status,
+      twoFactorEnabled: Boolean(user.twoFactor?.enabled),
       lastLoginAt: user.lastLoginAt,
       mustChangePassword: Boolean(user.mustChangePassword),
     };

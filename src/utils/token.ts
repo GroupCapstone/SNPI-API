@@ -7,7 +7,7 @@ export interface JwtTokenPayload {
   userId: string;
   username?: string;
   email?: string;
-  type: 'access' | 'refresh';
+  type: 'access' | 'refresh' | 'mfa_pending';
   tokenVersion?: number;
 }
 
@@ -62,6 +62,25 @@ export class TokenUtil {
       throw new Error('Invalid refresh token type');
     }
     return payload;
+  }
+
+  public static generateMfaToken(payload: { userId: string }): string {
+    return jwt.sign(
+      {
+        userId: payload.userId,
+        type: 'mfa_pending',
+      },
+      env.JWT_ACCESS_SECRET,
+      { expiresIn: '5m' },
+    );
+  }
+
+  public static verifyMfaToken(token: string): { userId: string } {
+    const decoded = jwt.verify(token, env.JWT_ACCESS_SECRET) as JwtTokenPayload;
+    if (decoded.type !== 'mfa_pending') {
+      throw new Error('Invalid MFA token type');
+    }
+    return { userId: decoded.userId };
   }
 
   public static hashToken(token: string): string {

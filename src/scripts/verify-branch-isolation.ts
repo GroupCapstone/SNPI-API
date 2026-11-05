@@ -61,6 +61,7 @@ async function verifyBranchIsolation() {
     identifier: 'manager.mb',
     password: devSeedPassword,
   });
+  if ('mfaToken' in mbLogin) throw new Error('Unexpected MFA challenge for manager.mb');
   const mbUser = mbLogin.user;
   console.log(`[PASS] Logged in as: ${mbUser.username}`);
   console.log(`[PASS] Branch Access: ${JSON.stringify(mbUser.branchAccess)}`);
@@ -135,6 +136,7 @@ async function verifyBranchIsolation() {
     identifier: 'manager.tk',
     password: devSeedPassword,
   });
+  if ('mfaToken' in tkLogin) throw new Error('Unexpected MFA challenge for manager.tk');
   const tkUser = tkLogin.user;
   console.log(`[PASS] Logged in as: ${tkUser.username}`);
   console.log(`[PASS] Branch Access: ${JSON.stringify(tkUser.branchAccess)}`);
@@ -220,6 +222,7 @@ async function verifyBranchIsolation() {
     identifier: 'director.sok',
     password: 'Director@123456',
   });
+  if ('mfaToken' in directorLogin) throw new Error('Unexpected MFA challenge for director.sok');
   const directorUser = directorLogin.user;
   console.log(`[PASS] Logged in as: ${directorUser.username} with branchAccess: "all"`);
 
