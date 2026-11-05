@@ -35,6 +35,8 @@ export const corsOptions: CorsOptions = {
     'Idempotency-Key',
     'Accept',
     'X-Requested-With',
+    'X-Client-Api-Key',
+    'X-Signature-SHA256',
   ],
   exposedHeaders: [
     'RateLimit',

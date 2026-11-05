@@ -49,6 +49,8 @@ export const environmentSchema = z
       .string()
       .min(32)
       .default('***REMOVED***'),
+    CLIENT_API_KEY: z.string().min(16).default('***REMOVED***'),
+    ENFORCE_CLIENT_AUTH: z.enum(['true', 'false']).default('false'),
   })
   .superRefine((configuration, context) => {
     const secrets = [
