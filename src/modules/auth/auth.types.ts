@@ -40,6 +40,7 @@ export interface SanitizedUser {
   isSuperAdmin: boolean;
   status: string;
   twoFactorEnabled?: boolean;
+  twoFactorTelegramLinked?: boolean;
   lastLoginAt?: Date;
   mustChangePassword: boolean;
 }
@@ -53,6 +54,13 @@ export interface LoginResult {
 export interface LoginMfaPendingResult {
   mfaRequired: true;
   mfaToken: string;
+  telegramAvailable: boolean;
+}
+
+export interface LoginResponseMfa {
+  mfaRequired: true;
+  mfaToken: string;
+  telegramAvailable: boolean;
 }
 
 export type LoginResponse = LoginResult | LoginMfaPendingResult;
@@ -60,6 +68,14 @@ export type LoginResponse = LoginResult | LoginMfaPendingResult;
 export interface Verify2FaDto {
   mfaToken: string;
   code: string;
+}
+
+export interface RequestTelegramOtpDto {
+  mfaToken: string;
+}
+
+export interface LinkTelegramDto {
+  telegramChatId: string;
 }
 
 export interface Setup2FaResult {

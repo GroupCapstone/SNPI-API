@@ -111,6 +111,7 @@ const publicEndpoints = new Set([
   'post /api/v1/auth/login',
   'post /api/v1/auth/refresh',
   'post /api/v1/auth/2fa/verify',
+  'post /api/v1/auth/2fa/telegram/request-otp',
   'get /api/v1/reports/certificates/verify/:code',
 ]);
 const sessionEndpoints = new Set([
@@ -120,6 +121,8 @@ const sessionEndpoints = new Set([
   'post /api/v1/auth/2fa/setup',
   'post /api/v1/auth/2fa/enable',
   'post /api/v1/auth/2fa/disable',
+  'post /api/v1/auth/2fa/telegram/link',
+  'post /api/v1/auth/2fa/telegram/unlink',
   'get /api/v1/dashboard/action-items',
 ]);
 const protectedEndpoints = endpoints.filter(

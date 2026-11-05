@@ -72,3 +72,19 @@ export const resetUser2FaSchema = z.object({
   }),
   query: z.object({}).passthrough(),
 });
+
+export const requestTelegramOtpSchema = z.object({
+  body: z.object({
+    mfaToken: z.string().min(1, 'MFA token is required'),
+  }),
+  params: z.object({}).passthrough(),
+  query: z.object({}).passthrough(),
+});
+
+export const linkTelegramSchema = z.object({
+  body: z.object({
+    telegramChatId: z.string().min(1, 'Telegram Chat ID is required'),
+  }),
+  params: z.object({}).passthrough(),
+  query: z.object({}).passthrough(),
+});

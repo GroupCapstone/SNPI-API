@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { Types } from 'mongoose';
 
 import { ALL_PERMISSION_CODES } from '../../constants/permissions';
@@ -19,6 +20,7 @@ import {
 } from '../../utils/totp';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { EmployeeModel } from '../employee/employee.model';
+import { NotificationService } from '../notification/notification.service';
 import { RoleService } from '../role/role.service';
 import { TeacherAssignmentModel } from '../teacher-assignment/teacher-assignment.model';
 import type { IUser } from '../user/user.model';
@@ -30,6 +32,7 @@ import type {
   LoginResponse,
   LoginResult,
   RefreshResult,
+  RequestTelegramOtpDto,
   SanitizedUser,
   Setup2FaResult,
   Verify2FaDto,
@@ -255,6 +258,7 @@ export class AuthService {
       return {
         mfaRequired: true,
         mfaToken,
+        telegramAvailable: Boolean(user.twoFactor?.telegramChatId),
       };
     }
 
@@ -561,11 +565,35 @@ export class AuthService {
 
     let isValid = verifyTotpCode(dto.code, user.twoFactor.secret);
     let usedBackupCodeIndex = -1;
+    let mfaMethod = 'totp';
 
     if (!isValid && user.twoFactor.backupCodes && user.twoFactor.backupCodes.length > 0) {
       usedBackupCodeIndex = verifyBackupCode(dto.code, user.twoFactor.backupCodes);
       if (usedBackupCodeIndex !== -1) {
         isValid = true;
+        mfaMethod = 'backup_code';
+      }
+    }
+
+    if (
+      !isValid &&
+      user.twoFactor.telegramOtpHash &&
+      user.twoFactor.telegramOtpExpiresAt &&
+      user.twoFactor.telegramOtpExpiresAt > new Date()
+    ) {
+      const inputHash = crypto.createHash('sha256').update(dto.code.trim()).digest('hex');
+      const inputBuffer = Buffer.from(inputHash, 'hex');
+      const storedBuffer = Buffer.from(user.twoFactor.telegramOtpHash, 'hex');
+
+      if (
+        inputBuffer.length === storedBuffer.length &&
+        crypto.timingSafeEqual(inputBuffer, storedBuffer)
+      ) {
+        isValid = true;
+        mfaMethod = 'telegram_otp';
+        // Burn single-use Telegram OTP
+        user.twoFactor.telegramOtpHash = undefined;
+        user.twoFactor.telegramOtpExpiresAt = null;
       }
     }
 
@@ -636,7 +664,7 @@ export class AuthService {
         username: user.username,
         roles: user.roles,
         lastLoginAt: user.lastLoginAt,
-        mfaMethod: usedBackupCodeIndex !== -1 ? 'backup_code' : 'totp',
+        mfaMethod,
       },
       ipAddress: metadata.ipAddress,
       userAgent: metadata.userAgent,
@@ -765,6 +793,112 @@ export class AuthService {
     };
   }
 
+  public async requestTelegram2FaOtp(
+    dto: RequestTelegramOtpDto,
+    metadata: { ipAddress?: string; userAgent?: string } = {},
+  ): Promise<{ success: boolean; message: string }> {
+    let payload: { userId: string };
+    try {
+      payload = TokenUtil.verifyMfaToken(dto.mfaToken);
+    } catch {
+      throw new UnauthorizedError('Invalid or expired MFA token');
+    }
+
+    const user = await this.userRepository.findByIdWithSecrets(payload.userId);
+    if (!user || user.isDeleted || user.status !== 'active') {
+      throw new UnauthorizedError('User session expired or user account is not active');
+    }
+
+    if (!user.twoFactor?.enabled) {
+      throw new BadRequestError('Two-factor authentication is not active for this account');
+    }
+
+    if (!user.twoFactor.telegramChatId) {
+      throw new BadRequestError(
+        'Telegram account is not linked to this user. Use a backup recovery code or contact your administrator.',
+      );
+    }
+
+    // Generate cryptographically secure 6-digit numeric OTP
+    const otpCode = crypto.randomInt(100000, 999999).toString();
+    const otpHash = crypto.createHash('sha256').update(otpCode).digest('hex');
+
+    user.twoFactor.telegramOtpHash = otpHash;
+    user.twoFactor.telegramOtpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 min TTL
+    await user.save();
+
+    const notificationService = new NotificationService();
+    const message = `SNPI-SMS Authentication Security Alert\n\nYour 2FA login verification code is:\n\n${otpCode}\n\nThis code expires in 5 minutes. If you did not attempt this login, notify your administrator immediately.`;
+
+    await notificationService.dispatchTelegramMessage(user.twoFactor.telegramChatId, message);
+
+    await AuditLogService.log({
+      userId: user._id.toString(),
+      schoolId: (user.schoolId as unknown as { _id: string })?._id
+        ? (user.schoolId as unknown as { _id: string })._id.toString()
+        : user.schoolId.toString(),
+      module: 'auth',
+      action: 'MFA_CHALLENGE_ISSUED',
+      entityType: 'User',
+      entityId: user._id.toString(),
+      newValue: {
+        username: user.username,
+        channel: 'telegram',
+      },
+      ipAddress: metadata.ipAddress,
+      userAgent: metadata.userAgent,
+    });
+
+    return {
+      success: true,
+      message: 'One-time login verification code dispatched to your linked Telegram account.',
+    };
+  }
+
+  public async linkTelegram(
+    userId: string,
+    telegramChatId: string,
+  ): Promise<{ success: boolean; message: string }> {
+    const user = await this.userRepository.findByIdWithSecrets(userId);
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    if (!user.twoFactor) {
+      user.twoFactor = {
+        enabled: false,
+        backupCodes: [],
+      };
+    }
+
+    user.twoFactor.telegramChatId = telegramChatId.trim();
+    await user.save();
+
+    return {
+      success: true,
+      message: 'Telegram account linked successfully for 2FA verification fallback.',
+    };
+  }
+
+  public async unlinkTelegram(userId: string): Promise<{ success: boolean; message: string }> {
+    const user = await this.userRepository.findByIdWithSecrets(userId);
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    if (user.twoFactor) {
+      user.twoFactor.telegramChatId = null;
+      user.twoFactor.telegramOtpHash = undefined;
+      user.twoFactor.telegramOtpExpiresAt = null;
+      await user.save();
+    }
+
+    return {
+      success: true,
+      message: 'Telegram account unlinked from 2FA.',
+    };
+  }
+
   private sanitizeUser(
     user: IUser,
     permissions: string[],
@@ -785,6 +919,7 @@ export class AuthService {
       ...authorization,
       status: user.status,
       twoFactorEnabled: Boolean(user.twoFactor?.enabled),
+      twoFactorTelegramLinked: Boolean(user.twoFactor?.telegramChatId),
       lastLoginAt: user.lastLoginAt,
       mustChangePassword: Boolean(user.mustChangePassword),
     };

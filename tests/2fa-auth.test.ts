@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import request from 'supertest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -504,6 +505,126 @@ describe('Two-Factor Authentication (2FA) & Recovery API Tests', () => {
       expect(mockUserDoc.twoFactor.secret).toBeUndefined();
       expect(mockUserDoc.twoFactor.backupCodes).toHaveLength(0);
       expect(mockUserDoc.tokenVersion).toBe(1); // Revokes active tokens
+    });
+  });
+
+  describe('Telegram Fallback 2FA (Solution 2)', () => {
+    it('allows authenticated user to link their Telegram account', async () => {
+      const accessToken = TokenUtil.generateAccessToken({
+        userId: mockUserId,
+        username: 'testuser',
+        email: 'user@snp.edu.kh',
+      });
+
+      const mockQuery = {
+        select: vi.fn().mockReturnThis(),
+        populate: vi.fn().mockReturnThis(),
+        exec: vi.fn().mockResolvedValue(mockUserDoc),
+      };
+      vi.mocked(UserModel.findOne).mockReturnValue(mockQuery as never);
+
+      const response = await request(app)
+        .post('/api/v1/auth/2fa/telegram/link')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({ telegramChatId: '987654321' });
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(mockUserDoc.twoFactor.telegramChatId).toBe('987654321');
+      expect(mockUserDoc.save).toHaveBeenCalled();
+    });
+
+    it('dispatches a 6-digit OTP to Telegram when requested with mfaToken', async () => {
+      mockUserDoc.twoFactor = {
+        enabled: true,
+        secret: totpSecret,
+        confirmedAt: new Date(),
+        tempSecret: undefined,
+        tempBackupCodes: undefined,
+        backupCodes: backupCodesData.hashedCodes,
+        telegramChatId: '987654321',
+      };
+
+      const mockQuery = {
+        select: vi.fn().mockReturnThis(),
+        populate: vi.fn().mockReturnThis(),
+        exec: vi.fn().mockResolvedValue(mockUserDoc),
+      };
+      vi.mocked(UserModel.findOne).mockReturnValue(mockQuery as never);
+
+      const mfaToken = TokenUtil.generateMfaToken({ userId: mockUserId });
+
+      const response = await request(app)
+        .post('/api/v1/auth/2fa/telegram/request-otp')
+        .send({ mfaToken });
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(mockUserDoc.twoFactor.telegramOtpHash).toBeDefined();
+      expect(mockUserDoc.twoFactor.telegramOtpExpiresAt).toBeInstanceOf(Date);
+    });
+
+    it('successfully verifies login using the Telegram OTP code', async () => {
+      const telegramOtpCode = '582914';
+      const telegramOtpHash = createHash('sha256').update(telegramOtpCode).digest('hex');
+
+      mockUserDoc.twoFactor = {
+        enabled: true,
+        secret: totpSecret,
+        confirmedAt: new Date(),
+        tempSecret: undefined,
+        tempBackupCodes: undefined,
+        backupCodes: backupCodesData.hashedCodes,
+        telegramChatId: '987654321',
+        telegramOtpHash,
+        telegramOtpExpiresAt: new Date(Date.now() + 5 * 60 * 1000),
+      };
+
+      const mockQuery = {
+        select: vi.fn().mockReturnThis(),
+        populate: vi.fn().mockReturnThis(),
+        exec: vi.fn().mockResolvedValue(mockUserDoc),
+      };
+      vi.mocked(UserModel.findOne).mockReturnValue(mockQuery as never);
+
+      const mfaToken = TokenUtil.generateMfaToken({ userId: mockUserId });
+
+      const response = await request(app)
+        .post('/api/v1/auth/2fa/verify')
+        .send({ mfaToken, code: telegramOtpCode });
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(response.body.data.accessToken).toBeDefined();
+      // Verifies OTP was burned
+      expect(mockUserDoc.twoFactor.telegramOtpHash).toBeUndefined();
+      expect(mockUserDoc.twoFactor.telegramOtpExpiresAt).toBeNull();
+    });
+
+    it('allows authenticated user to unlink their Telegram account', async () => {
+      const accessToken = TokenUtil.generateAccessToken({
+        userId: mockUserId,
+        username: 'testuser',
+        email: 'user@snp.edu.kh',
+      });
+
+      mockUserDoc.twoFactor.telegramChatId = '987654321';
+
+      const mockQuery = {
+        select: vi.fn().mockReturnThis(),
+        populate: vi.fn().mockReturnThis(),
+        exec: vi.fn().mockResolvedValue(mockUserDoc),
+      };
+      vi.mocked(UserModel.findOne).mockReturnValue(mockQuery as never);
+
+      const response = await request(app)
+        .post('/api/v1/auth/2fa/telegram/unlink')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({});
+
+      expect(response.status).toBe(200);
+      expect(response.body.success).toBe(true);
+      expect(mockUserDoc.twoFactor.telegramChatId).toBeNull();
     });
   });
 });

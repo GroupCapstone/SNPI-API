@@ -15,6 +15,9 @@ export interface IUserTwoFactor {
   tempSecret?: string;
   tempBackupCodes?: IUserBackupCode[];
   backupCodes: IUserBackupCode[];
+  telegramChatId?: string | null;
+  telegramOtpHash?: string;
+  telegramOtpExpiresAt?: Date | null;
 }
 
 export interface IUser extends Document {
@@ -158,6 +161,18 @@ const userSchema = new Schema<IUser>(
           usedAt: { type: Date, default: null },
         },
       ],
+      telegramChatId: {
+        type: String,
+        default: null,
+      },
+      telegramOtpHash: {
+        type: String,
+        select: false,
+      },
+      telegramOtpExpiresAt: {
+        type: Date,
+        default: null,
+      },
     },
     refreshTokenHash: {
       type: String,
@@ -202,6 +217,7 @@ const userSchema = new Schema<IUser>(
           delete tf.secret;
           delete tf.tempSecret;
           delete tf.tempBackupCodes;
+          delete tf.telegramOtpHash;
         }
         return returnedObject;
       },
@@ -218,6 +234,7 @@ const userSchema = new Schema<IUser>(
           delete tf.secret;
           delete tf.tempSecret;
           delete tf.tempBackupCodes;
+          delete tf.telegramOtpHash;
         }
         return returnedObject;
       },

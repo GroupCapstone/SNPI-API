@@ -9,8 +9,10 @@ import {
   changePasswordSchema,
   disable2FaSchema,
   enable2FaSchema,
+  linkTelegramSchema,
   loginSchema,
   refreshTokenSchema,
+  requestTelegramOtpSchema,
   resetUser2FaSchema,
   verify2FaSchema,
 } from './auth.validation';
@@ -64,4 +66,27 @@ authRouter.post(
   authorize('user.edit.own_branch', 'user.edit.all_branches'),
   validate(resetUser2FaSchema),
   controller.resetUser2Fa,
+);
+
+// Telegram Fallback 2FA Routes
+authRouter.post(
+  '/2fa/telegram/request-otp',
+  createLoginRateLimiter(),
+  validate(requestTelegramOtpSchema),
+  controller.requestTelegramOtp,
+);
+authRouter.post(
+  '/2fa/telegram/link',
+  authRateLimiter,
+  authenticate,
+  requireAuth,
+  validate(linkTelegramSchema),
+  controller.linkTelegram,
+);
+authRouter.post(
+  '/2fa/telegram/unlink',
+  authRateLimiter,
+  authenticate,
+  requireAuth,
+  controller.unlinkTelegram,
 );
