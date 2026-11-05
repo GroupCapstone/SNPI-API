@@ -109,7 +109,7 @@ export class UserRepository {
   public async findByIdWithSecrets(id: string): Promise<IUser | null> {
     return UserModel.findOne({ _id: id, isDeleted: false })
       .select(
-        '+passwordHash +refreshTokenHash +previousRefreshTokenHash +tokenRotatedAt +twoFactor.secret +twoFactor.tempSecret',
+        '+passwordHash +refreshTokenHash +previousRefreshTokenHash +tokenRotatedAt +twoFactor.secret +twoFactor.tempSecret +twoFactor.telegramOtpHash',
       )
       .populate('schoolId', 'code nameEn nameKh')
       .populate('employeeId', 'employeeId firstName lastName khmerName')

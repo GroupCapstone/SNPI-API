@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 1.0.0 (06.11.2026) - `566351d` (Developer: **史力爱卫**)
+
+- Implement totp rfc 6238 two-factor authentication and single-use backup recovery codes [PASSED]
+
 ### Version 1.0.0 (06.11.2026) - `3688555` (Developer: **史力爱卫**)
 
 - Implement unified contextual abac scope filter and idor defense [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.24 (04.11.2026) - `b213710` (Developer: **史力爱卫**)
 
 - Add check deploy push green standard pipeline
-
-### Version 0.2.24 (04.11.2026) - `6fa9f2b` (Developer: **史力爱卫**)
-
-- Resolve monorepo path assumptions and standardize CI workflows for dedicated API
 

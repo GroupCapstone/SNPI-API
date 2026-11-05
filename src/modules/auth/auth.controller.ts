@@ -49,7 +49,9 @@ import type {
   changePasswordSchema,
   disable2FaSchema,
   enable2FaSchema,
+  linkTelegramSchema,
   loginSchema,
+  requestTelegramOtpSchema,
   verify2FaSchema,
 } from './auth.validation';
 
@@ -73,6 +75,7 @@ export class AuthController {
           data: {
             mfaRequired: true,
             mfaToken: result.mfaToken,
+            telegramAvailable: result.telegramAvailable,
           },
         });
         return;
@@ -297,6 +300,66 @@ export class AuthController {
         ipAddress: req.ip,
         userAgent: req.get('user-agent'),
       });
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public requestTelegramOtp = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const result = await this.service.requestTelegram2FaOtp(
+        getValidatedInput<z.infer<typeof requestTelegramOtpSchema>>(res).body,
+        {
+          ipAddress: req.ip,
+          userAgent: req.get('user-agent'),
+        },
+      );
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public linkTelegram = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const result = await this.service.linkTelegram(
+        req.user!.userId,
+        getValidatedInput<z.infer<typeof linkTelegramSchema>>(res).body.telegramChatId,
+      );
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public unlinkTelegram = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const result = await this.service.unlinkTelegram(req.user!.userId);
 
       res.status(200).json({
         success: true,
