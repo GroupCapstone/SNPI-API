@@ -2,6 +2,10 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 1.0.0 (06.11.2026) - `31afea2` (Developer: **史力爱卫**)
+
+- Record modern iam and rbac-abac-rebac authorization skill [PASSED]
+
 ### Version 1.0.0 (05.11.2026) - `3db5102` (Developer: **史力爱卫**)
 
 - Optimize push workflow to push github first, wait for ci green, then deploy vercel [PASSED]
@@ -97,8 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.24 (04.11.2026) - `ab1c8db` (Developer: **史力爱卫**)
 
 - Update push skill and ytivargitna organization remotes
-
-### Version 0.2.24 (04.11.2026) - `7db3d29` (Developer: **史力爱卫**)
-
-- Enforce differentiated commit message and tracking rule
 

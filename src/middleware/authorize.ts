@@ -1,9 +1,9 @@
 import type { NextFunction, Response } from 'express';
 
 import { ForbiddenError, UnauthorizedError } from '../shared/errors/app-error';
-import type { AuthenticatedRequest, PermissionCode } from '../types/auth';
+import type { AuthenticatedRequest, PermissionCode, PermissionScope } from '../types/auth';
 
-const IMPLIED_SCOPES: Record<string, ReadonlySet<string>> = {
+export const IMPLIED_SCOPES: Record<string, ReadonlySet<string>> = {
   all_branches: new Set([
     'all_branches',
     'selected_branches',
@@ -35,6 +35,39 @@ const IMPLIED_SCOPES: Record<string, ReadonlySet<string>> = {
   assigned_subject: new Set(['assigned_subject', 'own_record']),
   own_record: new Set(['own_record']),
 };
+
+/**
+ * Resolves the highest effective scope a user holds for a specific module and action.
+ */
+export function resolveEffectiveScope(
+  userPermissions: string[],
+  moduleName: string,
+  action: string,
+): PermissionScope | null {
+  if (userPermissions.includes('*')) {
+    return 'all_branches';
+  }
+
+  const priorityOrder: PermissionScope[] = [
+    'all_branches',
+    'selected_branches',
+    'own_branch',
+    'selected_departments',
+    'own_department',
+    'assigned_class',
+    'assigned_subject',
+    'own_record',
+  ];
+
+  for (const candidateScope of priorityOrder) {
+    const requiredPermission = `${moduleName}.${action}.${candidateScope}`;
+    if (checkUserPermission(userPermissions, requiredPermission)) {
+      return candidateScope;
+    }
+  }
+
+  return null;
+}
 
 /**
  * Evaluates whether a user's permissions satisfy a required permission using
