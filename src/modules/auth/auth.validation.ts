@@ -38,3 +38,37 @@ export const refreshTokenSchema = z.object({
   params: z.object({}).passthrough(),
   query: z.object({}).passthrough(),
 });
+
+export const verify2FaSchema = z.object({
+  body: z.object({
+    mfaToken: z.string().min(1, 'MFA token is required'),
+    code: z.string().min(6, 'Verification code or backup code is required'),
+  }),
+  params: z.object({}).passthrough(),
+  query: z.object({}).passthrough(),
+});
+
+export const enable2FaSchema = z.object({
+  body: z.object({
+    code: z.string().length(6, '6-digit TOTP verification code is required'),
+  }),
+  params: z.object({}).passthrough(),
+  query: z.object({}).passthrough(),
+});
+
+export const disable2FaSchema = z.object({
+  body: z.object({
+    password: z.string().min(1, 'Password is required to disable 2FA'),
+    code: z.string().min(6, 'Current 2FA code or backup code is required'),
+  }),
+  params: z.object({}).passthrough(),
+  query: z.object({}).passthrough(),
+});
+
+export const resetUser2FaSchema = z.object({
+  body: z.object({}).passthrough(),
+  params: z.object({
+    id: z.string().min(1, 'Target user ID is required'),
+  }),
+  query: z.object({}).passthrough(),
+});

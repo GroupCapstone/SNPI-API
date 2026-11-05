@@ -45,7 +45,13 @@ const getRefreshCookieOptions = (): CookieOptions => ({
   path: '/',
 });
 
-import type { changePasswordSchema, loginSchema } from './auth.validation';
+import type {
+  changePasswordSchema,
+  disable2FaSchema,
+  enable2FaSchema,
+  loginSchema,
+  verify2FaSchema,
+} from './auth.validation';
 
 export class AuthController {
   public constructor(private readonly service = new AuthService()) {}
@@ -59,6 +65,18 @@ export class AuthController {
           userAgent: req.get('user-agent'),
         },
       );
+
+      if ('mfaToken' in result) {
+        res.status(200).json({
+          success: true,
+          message: 'Two-factor authentication required',
+          data: {
+            mfaRequired: true,
+            mfaToken: result.mfaToken,
+          },
+        });
+        return;
+      }
 
       res.cookie(REFRESH_COOKIE_NAME, result.refreshToken, getRefreshCookieOptions());
 
@@ -171,6 +189,118 @@ export class AuthController {
       res.status(200).json({
         success: true,
         message: 'Password changed successfully. Please sign in with your new password.',
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public setup2Fa = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const result = await this.service.setup2Fa(req.user!.userId);
+
+      res.status(200).json({
+        success: true,
+        message: 'Two-factor authentication setup initialized',
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public enable2Fa = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const result = await this.service.enable2Fa(
+        req.user!.userId,
+        getValidatedInput<z.infer<typeof enable2FaSchema>>(res).body.code,
+        {
+          ipAddress: req.ip,
+          userAgent: req.get('user-agent'),
+        },
+      );
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public verify2Fa = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = await this.service.verify2Fa(
+        getValidatedInput<z.infer<typeof verify2FaSchema>>(res).body,
+        {
+          ipAddress: req.ip,
+          userAgent: req.get('user-agent'),
+        },
+      );
+
+      res.cookie(REFRESH_COOKIE_NAME, result.refreshToken, getRefreshCookieOptions());
+
+      res.status(200).json({
+        success: true,
+        message: 'Two-factor verification successful',
+        data: {
+          user: result.user,
+          accessToken: result.accessToken,
+        },
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public disable2Fa = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const result = await this.service.disable2Fa(
+        req.user!.userId,
+        getValidatedInput<z.infer<typeof disable2FaSchema>>(res).body,
+        {
+          ipAddress: req.ip,
+          userAgent: req.get('user-agent'),
+        },
+      );
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public resetUser2Fa = async (
+    req: AuthenticatedRequest,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const targetUserId = req.params.id as string;
+      const result = await this.service.resetUser2Fa(targetUserId, req.user!.userId, {
+        ipAddress: req.ip,
+        userAgent: req.get('user-agent'),
+      });
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
       });
     } catch (error) {
       next(error);

@@ -108,7 +108,9 @@ export class UserRepository {
 
   public async findByIdWithSecrets(id: string): Promise<IUser | null> {
     return UserModel.findOne({ _id: id, isDeleted: false })
-      .select('+passwordHash +refreshTokenHash +previousRefreshTokenHash +tokenRotatedAt')
+      .select(
+        '+passwordHash +refreshTokenHash +previousRefreshTokenHash +tokenRotatedAt +twoFactor.secret +twoFactor.tempSecret',
+      )
       .populate('schoolId', 'code nameEn nameKh')
       .populate('employeeId', 'employeeId firstName lastName khmerName')
       .exec();

@@ -110,12 +110,16 @@ const publicEndpoints = new Set([
   'get /api/v1/health/readiness',
   'post /api/v1/auth/login',
   'post /api/v1/auth/refresh',
+  'post /api/v1/auth/2fa/verify',
   'get /api/v1/reports/certificates/verify/:code',
 ]);
 const sessionEndpoints = new Set([
   'post /api/v1/auth/logout',
   'get /api/v1/auth/me',
   'patch /api/v1/auth/change-password',
+  'post /api/v1/auth/2fa/setup',
+  'post /api/v1/auth/2fa/enable',
+  'post /api/v1/auth/2fa/disable',
   'get /api/v1/dashboard/action-items',
 ]);
 const protectedEndpoints = endpoints.filter(
