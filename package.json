@@ -39,6 +39,7 @@
     "verify:threat-model": "tsx scripts/verify-repository-threat-model.ts infrastructure/security/threat-model/repository-threat-model.yaml",
     "verify:workflows": "tsx scripts/verify-workflow-security.ts",
     "verify:ghas": "tsx scripts/verify-ghas-enforcement.ts",
+    "verify:supply-chain": "tsx scripts/verify-supply-chain-defense.ts",
     "verify:repo-strategy": "tsx scripts/verify-repo-architecture.ts",
     "verify:large-repo": "tsx scripts/verify-large-repo-management.ts",
     "seed": "tsx src/scripts/seed.ts",

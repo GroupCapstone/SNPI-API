@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 1.0.0 (06.11.2026) - `d7d3851` (Developer: **史力爱卫**)
+
+- Activate dependabot version updates for npm, github-actions, and docker [PASSED]
+
+### Version 1.0.0 (06.11.2026) - `1fe6c16` (Developer: **史力爱卫**)
+
+- Implement telegram fallback otp and emergency recovery flows for 2fa [PASSED]
+
 ### Version 1.0.0 (06.11.2026) - `566351d` (Developer: **史力爱卫**)
 
 - Implement totp rfc 6238 two-factor authentication and single-use backup recovery codes [PASSED]
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 0.2.24 (05.11.2026) - `d73557d` (Developer: **史力爱卫**)
 
 - Implement interactive api explorer, standalone vercel deployment, and zero-bridge release pipeline
-
-### Version 0.2.24 (04.11.2026) - `1921f8a` (Developer: **史力爱卫**)
-
-- Automated checkpoint and quality gate pass
-
-### Version 0.2.24 (04.11.2026) - `b213710` (Developer: **史力爱卫**)
-
-- Add check deploy push green standard pipeline
 
