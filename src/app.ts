@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { APP_VERSION } from './contracts';
 
 import { env } from './config/env';
+import { verifyTrustedClient } from './middleware/client-auth';
 import { etagMiddleware } from './middleware/etag';
 import { errorHandler, notFoundHandler } from './middleware/error-handler';
 import { createHttpsOnlyMiddleware } from './middleware/https-only';
@@ -93,6 +94,7 @@ export const createApp = (): express.Express => {
   app.use('/api/v1', etagMiddleware);
   app.use('/api/v1', apiRateLimiter);
   app.use('/api/v1', mutationRateLimiter);
+  app.use('/api/v1', verifyTrustedClient);
 
   // OpenAPI 3.1 Specification and Interactive REST API Explorer (Local Development Only)
   if (env.NODE_ENV !== 'production') {

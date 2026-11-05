@@ -2,6 +2,14 @@
 
 All notable changes, commits, and skill updates are recorded here in real-time.
 
+### Version 1.0.0 (05.11.2026) - `e07b3fb` (Developer: **史力爱卫**)
+
+- Add mandatory frontend impact alert and implementation prompt rule
+
+### Version 1.0.0 (05.11.2026) - `19b9c79` (Developer: **史力爱卫**)
+
+- Synchronize changelog for dependabot hardening and atlas release
+
 ### Version 1.0.0 (05.11.2026) - `0b64763` (Developer: **史力爱卫**)
 
 - Resolve minimatch advisory with override and harden dependabot ci gate
@@ -93,12 +101,4 @@ All notable changes, commits, and skill updates are recorded here in real-time.
 ### Version 1.0.0 (04.11.2026) - `34748e3` (Developer: **史力爱卫**)
 
 - Prune frontend-only UI skills, focusing SNPI-API strictly on backend API domain skills
-
-### Version 1.0.0 (04.11.2026) - `08fd344` (Developer: **史力爱卫**)
-
-- Copy complete smart school domain skills, packages, and nextra docs into SNPI-API
-
-### Version 1.0.0 (04.11.2026) - `edcd07e` (Developer: **史力爱卫**)
-
-- Sync complete skills, workflows, scripts, and architecture docs from monorepo
 

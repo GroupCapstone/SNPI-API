@@ -49,6 +49,8 @@ export const environmentSchema = z
       .string()
       .min(32)
       .default('43ab5e6f97d48758a5e07a47a367d994c17ef76f32a374f15d8e805e7e887fb1'),
+    CLIENT_API_KEY: z.string().min(16).default('snpi_m2m_trusted_client_key_2026_sec'),
+    ENFORCE_CLIENT_AUTH: z.enum(['true', 'false']).default('false'),
   })
   .superRefine((configuration, context) => {
     const secrets = [
