@@ -103,34 +103,42 @@ git push origin main
 
 ## 6. Mandatory Post-Push GitHub Actions & Vercel Verification Gate (100% Green)
 
-Every remote push MUST be actively tracked and verified until all remote CI/CD workflows and production deployments achieve `100% [GREEN / PASSED]` status before completion can be reported:
+Every remote push MUST follow the strict sequential pipeline: **Push to GitHub First -> Watch CI Until 100% Green -> Deploy to Vercel Production**:
 
-1. **Pre-Push Quality Gate Enforcement**:
+1. **Pre-Push Fast Quality Gate Enforcement**:
    - `npm run format:check` (Prettier code style compliance).
    - `npm run lint` (ESLint 0 errors).
    - `npm run typecheck` (TypeScript 0 errors).
    - `npm run build` (Production compilation 0 errors).
    - `npm run git:sync` (Dual-developer reconciliation).
 
-2. **Synchronized Deployment & Push**:
-   - Push to GitHub origin (`git push origin main`).
-   - Deploy directly to Vercel production (`npx vercel --prod`).
+2. **Push to GitHub FIRST**:
+   - Push commits and release tags to GitHub remote `origin/main`:
+     ```bash
+     git push origin main --tags
+     ```
 
-3. **Active Remote CI Monitoring (`npm run push:verify`)**:
-   - Actively query GitHub Actions runs for the pushed commit SHA:
+3. **Active Remote CI Monitoring Until 100% Green (Optimized Fast Polling)**:
+   - Actively query GitHub Actions runs for the pushed commit SHA using fast 3.5s polling:
      ```bash
      gh run list -R GroupCapstone/SNPI-API --commit <HEAD_SHA>
      ```
    - All triggered workflows (Code Quality & Lint, Monorepo CI, Automated Test Suites, Test Coverage, CodeQL Analysis, Deployment Verification, Docker Container Build, Blockchain & Ledger Integrity, Secret Scanning, License Compliance, etc.) must reach completed `[success / PASSED]`.
-   - Never end the task or report completion if any workflow is failing or failed.
+   - Never proceed to Vercel deployment if any workflow fails.
 
-4. **Automated Failure Diagnosis & Self-Healing**:
+4. **Deploy to Vercel Production AFTER CI Green**:
+   - ONLY after GitHub Actions CI is 100% green and successful, deploy directly to Vercel production:
+     ```bash
+     npx vercel --prod
+     ```
+
+5. **Automated Failure Diagnosis & Self-Healing**:
    - If any workflow fails, immediately inspect the failure logs:
      ```bash
      gh run view <RUN_ID> -R GroupCapstone/SNPI-API --log-failed
      ```
    - Diagnose the root cause, apply the fix locally, re-run format/lint/typecheck, commit with differentiated prefix, push, and resume monitoring until 100% green.
 
-5. **Live Production Smoke Verification**:
+6. **Live Production Smoke Verification**:
    - Probe live production domain (`https://api.kesararamwithdigital.tech/api/v1/health`) to confirm that the deployed build is active and serving traffic.
 

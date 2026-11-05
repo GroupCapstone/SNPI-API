@@ -124,8 +124,15 @@ Never run an unrelated full suite solely because it is listed here; report which
 
 ## 5. Mandatory Pre-Push CI, Dual-Developer Sync & Deployment Quality Gate Rule
 
-- **One-Command Automated Push & Checkpoint (`npm run push:checkpoint`)**:
-  - Whenever the user explicitly commands to push (`push`, `git push`, `publish`), always run `npm run push:checkpoint` (or the complete 10-step sequence: format, lint, typecheck, smoke, deploy:verify, git:sync, changelog:sync, commit, tag, push, and live CI status verification).
+- **Mandatory GitHub-First Push, CI Watch & Subsequent Vercel Release Rule (ABSOLUTE RULE)**:
+  - Whenever the user commands to push (`push`, `git push`, `release it all`, `publish`):
+    1. **Fast Pre-Flight Gates & Reconciliation**: Run Prettier format check, ESLint (`npm run lint`), TypeScript static analysis (`npm run typecheck`), build compilation (`npm run build`), and dual-developer git reconciliation (`npm run git:sync`).
+    2. **Push to GitHub FIRST**: Immediately push commits and annotated release tags to GitHub remote `origin/main` (`git push origin main --tags`).
+    3. **Watch & Check GitHub Actions CI Until 100% Green (Optimized Fast Polling)**: Actively monitor all triggered GitHub Actions CI runs for the pushed commit SHA via `gh run list --commit <SHA>` using fast 3.5s polling. Continue monitoring until all workflows achieve completed `[PASSED]` status. If any workflow fails, abort immediately, fetch failed logs (`gh run view <ID> --log-failed`), resolve the failure locally, and NEVER proceed to Vercel.
+    4. **Deploy to Vercel Production AFTER CI Green**: ONLY AFTER all GitHub Actions CI workflows are 100% green and successful, deploy directly to Vercel production via Vercel CLI (`npx vercel --prod`).
+    5. **Live Health Check**: Probe `https://api.kesararamwithdigital.tech/api/v1/health` to confirm `HTTP/2 200 OK`.
+- **One-Command Automated Push & Checkpoint (`npm run push:checkpoint` / `npm run release:all`)**:
+  - Both commands execute the complete optimized sequence: pre-flight checks -> git sync -> GitHub push first -> watch CI until green -> Vercel production deploy -> live health probe.
 - **Mandatory Pre-Push ESLint Quality Gate (`npm run lint`)**:
   - `npm run lint` MUST be executed and pass with 0 errors before any commit or push. JSX text node violations, unescaped entities, and typing errors must never reach remote CI.
 - **Mandatory Dual-Developer Git Reconciliation & Merge Gate (`npm run git:sync`)**:
@@ -158,9 +165,9 @@ Never run an unrelated full suite solely because it is listed here; report which
 - **Equal Organization Admin Permissions**:
   - Both repositories (`SNPI-API` and `SNPI-Web`) are hosted under the `GroupCapstone` organization, granting equal Admin rights to `shiliaiwei` and `Tan-Saphea`.
 - **Mandatory Synchronized Release Rule — Vercel Must Always Update When GitHub Updates (ABSOLUTE RULE)**:
-  - Whenever code is updated or pushed to GitHub (`GroupCapstone/SNPI-API`), Vercel production (`https://api.kesararamwithdigital.tech`) must also be deployed via Vercel CLI (`npm run deploy:prod` / `npx vercel --prod`).
+  - Whenever code is updated or pushed to GitHub (`GroupCapstone/SNPI-API`), the release pipeline MUST push to GitHub first, monitor GitHub Actions CI until 100% green, and then deploy to Vercel production (`https://api.kesararamwithdigital.tech`) via Vercel CLI (`npm run deploy:prod` / `npx vercel --prod`).
   - Zero code drift is permitted: live production code running on `api.kesararamwithdigital.tech` must always match the latest code pushed to GitHub.
-  - Standard synchronized release command: `npm run release:all` (verifies pre-flight quality gates, syncs git, pushes to GitHub `origin/main`, and deploys directly to Vercel production via Vercel CLI in lockstep).
+  - Standard synchronized release command: `npm run release:all` (verifies pre-flight quality gates, syncs git, pushes to GitHub `origin/main --tags` first, verifies CI is 100% green, and deploys directly to Vercel production in lockstep).
 - **Push Quality Gate**:
   - Before pushing, always run `npm run typecheck` and `npm run build` in `SNPI-API/`.
 

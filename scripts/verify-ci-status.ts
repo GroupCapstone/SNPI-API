@@ -37,7 +37,7 @@ export async function waitForCIStatus(options?: {
   const commitSha = options?.commitSha || run('git rev-parse HEAD');
   const repo = options?.repo || getRemoteRepo('origin') || getRemoteRepo('groupcapstone');
   const timeoutMs = (options?.timeoutMinutes || 15) * 60 * 1000;
-  const pollIntervalMs = options?.pollIntervalMs || 10000;
+  const pollIntervalMs = options?.pollIntervalMs || 3500;
   const minWorkflows = options?.minWorkflows || 1;
   const repoFlag = repo ? `-R ${repo}` : '';
 

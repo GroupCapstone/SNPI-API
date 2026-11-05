@@ -37,25 +37,26 @@ async function main() {
   console.log('      [PASS] Dual-developer sync complete.\n');
 
   // Step 3: GitHub Push (Source Code Storage Only - Zero Vercel Bridge)
-  console.log('[3/6] Pushing changes to GitHub origin (Team Code Repository)...');
+  console.log('[3/6] Pushing changes to GitHub origin FIRST (Team Code Repository)...');
   run('git push origin main --tags');
   const headSha = runCapture('git rev-parse HEAD');
   console.log(`      [PASS] GitHub updated successfully at commit: ${headSha}\n`);
 
-  // Step 4: Direct Local-to-Vercel CLI Deployment (Domain: api.kesararamwithdigital.tech)
-  console.log('[4/6] Deploying directly from local terminal to Vercel Production...');
-  console.log('      Target Domain: https://api.kesararamwithdigital.tech');
-  run('npx vercel --prod');
-  console.log('      [PASS] Vercel Production deployment complete.\n');
-
-  // Step 5: Real-time GitHub Actions CI/CD Verification Until 100% Green
-  console.log('[5/6] Actively monitoring GitHub Actions CI runs until 100% GREEN [PASSED]...');
+  // Step 4: Real-time GitHub Actions CI/CD Verification Until 100% Green
+  console.log('[4/6] Actively watching GitHub Actions CI runs until 100% GREEN [PASSED]...');
   await waitForCIStatus({
     commitSha: headSha,
     timeoutMinutes: 15,
     minWorkflows: 8,
+    pollIntervalMs: 3500,
   });
-  console.log('      [PASS] All GitHub Actions workflows are 100% GREEN.\n');
+  console.log('      [PASS] All GitHub Actions workflows are 100% GREEN and verified.\n');
+
+  // Step 5: Direct Local-to-Vercel CLI Deployment (ONLY AFTER CI IS 100% GREEN)
+  console.log('[5/6] CI green verified! Deploying directly to Vercel Production...');
+  console.log('      Target Domain: https://api.kesararamwithdigital.tech');
+  run('npx vercel --prod');
+  console.log('      [PASS] Vercel Production deployment complete.\n');
 
   // Step 6: Live Production Health Verification Probe
   console.log(
