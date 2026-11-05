@@ -38,7 +38,7 @@ async function main() {
 
   // Step 3: GitHub Push (Source Code Storage Only - Zero Vercel Bridge)
   console.log('[3/6] Pushing changes to GitHub origin (Team Code Repository)...');
-  run('git push origin main');
+  run('git push origin main --tags');
   const headSha = runCapture('git rev-parse HEAD');
   console.log(`      [PASS] GitHub updated successfully at commit: ${headSha}\n`);
 
