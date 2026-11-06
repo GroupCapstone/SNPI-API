@@ -93,9 +93,7 @@ export const environmentSchema = z
       });
     }
 
-    const frontendOrigins = configuration.FRONTEND_URL.split(',').map((origin) =>
-      origin.trim(),
-    );
+    const frontendOrigins = configuration.FRONTEND_URL.split(',').map((origin) => origin.trim());
     for (const origin of frontendOrigins) {
       if (origin === '*') continue;
       try {
@@ -128,6 +126,7 @@ export const environmentSchema = z
         mongoUrl.protocol === 'mongodb+srv:'
           ? !tlsDisabled
           : tlsOption === 'true' || tlsOption === '1' || sslOption === 'true' || sslOption === '1';
+
       if (!['mongodb:', 'mongodb+srv:'].includes(mongoUrl.protocol) || !tlsEnabled) {
         throw new Error('TLS is required');
       }
@@ -141,14 +140,17 @@ export const environmentSchema = z
   });
 
 const parsedEnvironment = environmentSchema.safeParse(process.env);
+
 if (!parsedEnvironment.success) {
   const issues = parsedEnvironment.error.issues
     .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
     .join(', ');
+
   throw new Error(`Invalid environment configuration: ${issues}`);
 }
 
 export const env = parsedEnvironment.data;
+
 export const allowedFrontendOrigins = env.FRONTEND_URL.split(',')
   .map((origin) => origin.trim())
   .filter(Boolean);
