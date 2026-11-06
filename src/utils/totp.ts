@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import QRCode from 'qrcode';
+import { decryptTotpSecret } from './secret-crypto';
 
 const BASE32_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
@@ -122,7 +123,7 @@ export function verifyTotpCode(
 
   for (let step = -window; step <= window; step++) {
     const checkTime = timeMs + step * stepSec * 1000;
-    const generated = generateTotpCode(secret, checkTime, stepSec);
+    const generated = generateTotpCode(decryptTotpSecret(secret), checkTime, stepSec);
 
     // Constant-time string comparison
     if (
