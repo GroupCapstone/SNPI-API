@@ -93,7 +93,17 @@ export async function seedCompleteTestData(): Promise<void> {
   logger.info('[Seeder] Connecting to database...');
   await connectToDatabase();
 
-  const devSeedPassword = process.env.DEV_SEED_PASSWORD || 'TestSeedPass#2026!SecureKey';
+  const devSeedPassword = process.env.DEV_SEED_PASSWORD;
+  if (
+    !devSeedPassword ||
+    devSeedPassword.length < 16 ||
+    /(?:replace[-_]with|change[-_]me|placeholder|example|generated|secure_random|minimum\d+|your[-_])/i
+      .test(devSeedPassword),
+    ) {
+    throw new Error(
+      'Set DEV_SEED_PASSWORD to a private value of at least 16 characters before seeding.',
+      );
+  }
   const defaultPasswordHash = PasswordUtil.hash(devSeedPassword);
 
   // 1. Verify Primary School and Ensure >= 3 Schools exist
