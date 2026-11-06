@@ -3,6 +3,7 @@ import request from 'supertest';
 import { describe, expect, it } from 'vitest';
 
 import { errorHandler } from '../src/middleware/error-handler';
+import { apiRateLimiter } from '../src/middleware/security';
 import {
   computeHmacSha256,
   createSignatureVerificationMiddleware,
@@ -15,6 +16,7 @@ describe('HMAC-SHA256 Payload Signature Middleware', () => {
   const createTestApp = () => {
     const app = express();
     app.use(express.json());
+    app.use(apiRateLimiter);
     app.use(
       '/webhooks/ledger',
       createSignatureVerificationMiddleware({ secret, headerName: 'x-signature-sha256' }),

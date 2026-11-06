@@ -1,0 +1,7 @@
+name: 'SNPI-API CodeQL configuration'
+
+# One-off developer/operations scripts in scripts/ are not part of the shipped
+# API surface (they run locally or in maintenance workflows with trusted
+# inputs), so code scanning focuses on the application and its test suites.
+paths-ignore:
+  - 'scripts/**'

@@ -9,6 +9,7 @@ import {
   verifyTrustedClient,
 } from '../src/middleware/client-auth';
 import { errorHandler } from '../src/middleware/error-handler';
+import { apiRateLimiter } from '../src/middleware/security';
 import { computeHmacSha256 } from '../src/middleware/signature';
 
 describe('Zero-Trust Client Authentication Middleware', () => {
@@ -24,6 +25,7 @@ describe('Zero-Trust Client Authentication Middleware', () => {
   const createTestApp = () => {
     const app = express();
     app.use(express.json());
+    app.use(apiRateLimiter);
     app.use('/api/v1', verifyTrustedClient);
     app.get('/api/v1/health', (_req, res) => {
       res.status(200).json({ status: 'ok' });

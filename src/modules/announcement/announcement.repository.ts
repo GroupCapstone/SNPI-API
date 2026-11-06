@@ -1,5 +1,6 @@
 import type { Types } from 'mongoose';
 
+import { createSafeSearchRegex } from '../../utils/search';
 import type { AnnouncementQueryFilters, PaginatedAnnouncements } from './announcement.types';
 import { AnnouncementModel } from './announcement.model';
 import type { IAnnouncement } from './announcement.model';
@@ -22,10 +23,8 @@ export class AnnouncementRepository {
     if (filters.isPublished !== undefined) query.isPublished = filters.isPublished;
 
     if (filters.search) {
-      query.$or = [
-        { title: { $regex: filters.search, $options: 'i' } },
-        { content: { $regex: filters.search, $options: 'i' } },
-      ];
+      const searchRegex = createSafeSearchRegex(filters.search);
+      query.$or = [{ title: { $regex: searchRegex } }, { content: { $regex: searchRegex } }];
     }
 
     const page = Math.max(1, Number(filters.page || 1));

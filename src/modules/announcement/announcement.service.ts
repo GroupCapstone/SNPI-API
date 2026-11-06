@@ -64,7 +64,10 @@ export class AnnouncementService {
     }
 
     const schoolId = dto.schoolId || user.schoolId;
-    const school = await SchoolModel.findOne({ _id: schoolId, isDeleted: false }).exec();
+    const school = await SchoolModel.findOne({
+      _id: new Types.ObjectId(schoolId),
+      isDeleted: false,
+    }).exec();
     if (!school) {
       throw new NotFoundError('School not found');
     }
@@ -75,8 +78,8 @@ export class AnnouncementService {
       }
 
       const branch = await BranchModel.findOne({
-        _id: dto.branchId,
-        schoolId,
+        _id: new Types.ObjectId(dto.branchId),
+        schoolId: new Types.ObjectId(schoolId),
         isDeleted: false,
       }).exec();
       if (!branch) {
