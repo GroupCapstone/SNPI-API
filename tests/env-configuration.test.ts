@@ -11,6 +11,7 @@ const productionEnvironment = (overrides: Record<string, string> = {}) => ({
   JWT_ACCESS_SECRET: privateValue(),
   JWT_REFRESH_SECRET: privateValue(),
   COOKIE_SECRET: privateValue(),
+  CLIENT_API_KEY: privateValue(),
   SUPER_ADMIN_USERNAME: 'bootstrap-admin',
   SUPER_ADMIN_EMAIL: 'bootstrap@example.test',
   SUPER_ADMIN_PASSWORD: privateValue(),
