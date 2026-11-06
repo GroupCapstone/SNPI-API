@@ -12,6 +12,7 @@ process.env.TWILIO_FROM_NUMBER = '';
 process.env.JWT_ACCESS_SECRET = randomBytes(48).toString('base64url');
 process.env.JWT_REFRESH_SECRET = randomBytes(48).toString('base64url');
 process.env.COOKIE_SECRET = randomBytes(48).toString('base64url');
+process.env.CLIENT_API_KEY = randomBytes(32).toString('base64url');
 process.env.SUPER_ADMIN_USERNAME = 'test-admin';
 process.env.SUPER_ADMIN_EMAIL = 'test-admin@example.invalid';
 process.env.SUPER_ADMIN_PASSWORD = randomBytes(32).toString('base64url');
