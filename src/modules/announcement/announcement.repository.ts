@@ -1,4 +1,4 @@
-import type { Types } from 'mongoose';
+import { Types } from 'mongoose';
 
 import { createSafeSearchRegex } from '../../utils/search';
 import type { AnnouncementQueryFilters, PaginatedAnnouncements } from './announcement.types';
@@ -16,13 +16,30 @@ export class AnnouncementRepository {
   public async findMany(filters: AnnouncementQueryFilters = {}): Promise<PaginatedAnnouncements> {
     const query: Record<string, unknown> = { isDeleted: false, ...(filters.branchFilter ?? {}) };
 
-    if (filters.schoolId) query.schoolId = filters.schoolId;
-    if (filters.branchId) query.branchId = filters.branchId;
-    if (filters.category) query.category = filters.category;
-    if (filters.audience) query.audience = filters.audience;
-    if (filters.isPublished !== undefined) query.isPublished = filters.isPublished;
+    // Filters arrive from the query string, so coerce every value to a safe
+    // scalar before it reaches the query: ids must be valid ObjectIds,
+    // category/audience must be on the allowlist, and isPublished a boolean.
+    // This keeps operator objects (e.g. ?schoolId[$gt]=) out of the query.
+    if (typeof filters.schoolId === 'string' && Types.ObjectId.isValid(filters.schoolId)) {
+      query.schoolId = new Types.ObjectId(filters.schoolId);
+    }
+    if (typeof filters.branchId === 'string' && Types.ObjectId.isValid(filters.branchId)) {
+      query.branchId = new Types.ObjectId(filters.branchId);
+    }
+    const categories = ['general', 'academic', 'finance', 'attendance', 'event', 'urgent'];
+    if (filters.category && categories.includes(filters.category)) {
+      query.category = filters.category;
+    }
+    const audiences = ['all', 'students', 'parents', 'staff', 'teachers'];
+    if (filters.audience && audiences.includes(filters.audience)) {
+      query.audience = filters.audience;
+    }
+    if (filters.isPublished !== undefined) {
+      query.isPublished =
+        filters.isPublished === true || (filters.isPublished as unknown) === 'true';
+    }
 
-    if (filters.search) {
+    if (typeof filters.search === 'string' && filters.search) {
       const searchRegex = createSafeSearchRegex(filters.search);
       query.$or = [{ title: { $regex: searchRegex } }, { content: { $regex: searchRegex } }];
     }
