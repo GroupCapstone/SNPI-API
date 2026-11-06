@@ -71,10 +71,7 @@ async function runComprehensiveTest() {
 
   // 1. Authenticate
   const username = process.env.SUPER_ADMIN_USERNAME || env.SUPER_ADMIN_USERNAME || 'admin_local';
-  const password =
-    process.env.SUPER_ADMIN_PASSWORD ||
-    env.SUPER_ADMIN_PASSWORD ||
-    '***REMOVED***';
+  const password = process.env.SUPER_ADMIN_PASSWORD || env.SUPER_ADMIN_PASSWORD || '';
 
   console.log(`[Auth] Authenticating as Super Admin (${username})...`);
   let token = await fetchToken(username, password);

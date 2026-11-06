@@ -67,10 +67,22 @@ jobs:
           PORT: 4000
           MONGODB_URI: 'mongodb://127.0.0.1:27017/snpi_sms?replicaSet=rs0&directConnection=true'
           SUPER_ADMIN_USERNAME: admin_local
-          SUPER_ADMIN_PASSWORD: ***REMOVED***
+          # CI-only throwaway values for the ephemeral test database.
+          # They protect no real system and are never used in any deployment.
+          JWT_ACCESS_SECRET: 'ci_access_7f3a9c1e5b8d2046a1f7c9e3b5d708192a4c6e8f0d2b'
+          JWT_REFRESH_SECRET: 'ci_refresh_2e6b8d0a4f1c3957e0a2b4c6d8f0a1b3c5e709182a4c6e'
+          COOKIE_SECRET: 'ci_cookie_9a1f3c5e7b0d2846f1a3c5e7b9d0f2a4c6e8b0d1f3a5c7'
+          CLIENT_API_KEY: 'ci_client_key_5d2f8a1c9e7046b3a5c7'
+          SUPER_ADMIN_PASSWORD: 'CiAdmin9248xkQp7zWm'
 
       - name: Execute Comprehensive E2E API Test Suite
         run: npm run test:api
         env:
           SUPER_ADMIN_USERNAME: admin_local
-          SUPER_ADMIN_PASSWORD: ***REMOVED***
+          # CI-only throwaway values for the ephemeral test database.
+          # They protect no real system and are never used in any deployment.
+          JWT_ACCESS_SECRET: 'ci_access_7f3a9c1e5b8d2046a1f7c9e3b5d708192a4c6e8f0d2b'
+          JWT_REFRESH_SECRET: 'ci_refresh_2e6b8d0a4f1c3957e0a2b4c6d8f0a1b3c5e709182a4c6e'
+          COOKIE_SECRET: 'ci_cookie_9a1f3c5e7b0d2846f1a3c5e7b9d0f2a4c6e8b0d1f3a5c7'
+          CLIENT_API_KEY: 'ci_client_key_5d2f8a1c9e7046b3a5c7'
+          SUPER_ADMIN_PASSWORD: 'CiAdmin9248xkQp7zWm'

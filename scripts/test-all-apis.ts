@@ -43,10 +43,7 @@ async function run() {
   console.log('[Auth] Authenticating as Super Admin (admin_local)...');
   const authPayload = {
     identifier: process.env.SUPER_ADMIN_USERNAME || env.SUPER_ADMIN_USERNAME || 'admin_local',
-    password:
-      process.env.SUPER_ADMIN_PASSWORD ||
-      env.SUPER_ADMIN_PASSWORD ||
-      '***REMOVED***',
+    password: process.env.SUPER_ADMIN_PASSWORD || env.SUPER_ADMIN_PASSWORD || '',
   };
 
   const loginRes = await fetch(`${BASE_URL}/api/v1/auth/login`, {

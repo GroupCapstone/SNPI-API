@@ -97,12 +97,13 @@ export async function seedCompleteTestData(): Promise<void> {
   if (
     !devSeedPassword ||
     devSeedPassword.length < 16 ||
-    /(?:replace[-_]with|change[-_]me|placeholder|example|generated|secure_random|minimum\d+|your[-_])/i
-      .test(devSeedPassword),
-    ) {
+    /(?:replace[-_]with|change[-_]me|placeholder|example|generated|secure_random|minimum\d+|your[-_])/i.test(
+      devSeedPassword,
+    )
+  ) {
     throw new Error(
       'Set DEV_SEED_PASSWORD to a private value of at least 16 characters before seeding.',
-      );
+    );
   }
   const defaultPasswordHash = PasswordUtil.hash(devSeedPassword);
 

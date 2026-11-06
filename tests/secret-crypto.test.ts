@@ -21,7 +21,8 @@ describe('secret-crypto', () => {
 
   it('rejects tampered ciphertext', () => {
     const encrypted = encryptTotpSecret('JBSWY3DPEHPK3PXP');
-    const tampered = `${encrypted.slice(0, -1)}${encrypted.endsWith('A') ? 'B' : 'A'}`;
+    const mid = Math.floor(encrypted.length / 2);
+    const tampered = `${encrypted.slice(0, mid)}${encrypted[mid] === 'A' ? 'B' : 'A'}${encrypted.slice(mid + 1)}`;
     expect(() => decryptTotpSecret(tampered)).toThrow();
   });
 });

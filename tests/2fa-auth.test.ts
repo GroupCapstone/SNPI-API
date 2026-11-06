@@ -318,9 +318,9 @@ describe('Two-Factor Authentication (2FA) & Recovery API Tests', () => {
 
       expect(mockUserDoc.twoFactor.tempSecret).toBeDefined();
       expect(mockUserDoc.twoFactor.tempSecret).not.toBe(response.body.data.secret);
-      expect(decryptTotpSecret(mockUserDoc.twoFactor.tempSecret ?? '').toBe(
+      expect(decryptTotpSecret(mockUserDoc.twoFactor.tempSecret ?? '')).toBe(
         response.body.data.secret,
-        );
+      );
       expect(mockUserDoc.twoFactor.tempBackupCodes).toHaveLength(8);
       expect(mockUserDoc.save).toHaveBeenCalled();
     });
