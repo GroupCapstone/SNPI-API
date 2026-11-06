@@ -73,3 +73,5 @@ npm run typecheck
 # Unit & integration tests
 npm test
 ```
+
+Hello, this is MUSE AI
