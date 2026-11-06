@@ -9,6 +9,7 @@ import {
   UnauthorizedError,
 } from '../../shared/errors/app-error';
 import { PasswordUtil } from '../../utils/password';
+import { encryptTotpSecret } from '../../utils/secret-crypto';
 import { TokenUtil } from '../../utils/token';
 import {
   generateBackupCodes,
@@ -465,7 +466,7 @@ export class AuthService {
       enabled: user.twoFactor?.enabled ?? false,
       secret: user.twoFactor?.secret,
       confirmedAt: user.twoFactor?.confirmedAt ?? null,
-      tempSecret: secret,
+      tempSecret: encryptTotpSecret(secret),
       tempBackupCodes: hashedCodes,
       backupCodes: user.twoFactor?.backupCodes ?? [],
     };
