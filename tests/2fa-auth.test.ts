@@ -6,6 +6,7 @@ import { createApp } from '../src/app';
 import { RoleModel } from '../src/modules/role/role.model';
 import { UserModel } from '../src/modules/user/user.model';
 import { PasswordUtil } from '../src/utils/password';
+import { decryptTotpSecret } from '../src/utils/secret-crypto';
 import { TokenUtil } from '../src/utils/token';
 import { generateBackupCodes, generateTotpCode, generateTotpSecret } from '../src/utils/totp';
 import { TEST_PASSWORD } from './fixtures/test-credentials';
@@ -316,6 +317,10 @@ describe('Two-Factor Authentication (2FA) & Recovery API Tests', () => {
       expect(response.body.data.backupCodes).toHaveLength(8);
 
       expect(mockUserDoc.twoFactor.tempSecret).toBeDefined();
+      expect(mockUserDoc.twoFactor.tempSecret).not.toBe(response.body.data.secret);
+      expect(decryptTotpSecret(mockUserDoc.twoFactor.tempSecret ?? '').toBe(
+        response.body.data.secret,
+        );
       expect(mockUserDoc.twoFactor.tempBackupCodes).toHaveLength(8);
       expect(mockUserDoc.save).toHaveBeenCalled();
     });
