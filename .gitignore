@@ -25,3 +25,14 @@ coverage/
 .vercel
 .next
 .env*
+
+# Keys, credentials and database dumps
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+*.dump
+*.bak
+*.sql.gz
