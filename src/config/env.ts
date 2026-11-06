@@ -32,24 +32,16 @@ export const environmentSchema = z
     RATE_LIMIT_MAX: z.coerce.number().int().positive().default(200),
     LOGIN_RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(60_000),
     LOGIN_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(10),
-    JWT_ACCESS_SECRET: z
-      .string()
-      .min(32)
-      .default('***REMOVED***'),
-    JWT_REFRESH_SECRET: z
-      .string()
-      .min(32)
-      .default('***REMOVED***'),
+    // Secrets have no defaults and must be supplied through the environment.
+    JWT_ACCESS_SECRET: z.string().min(32),
+    JWT_REFRESH_SECRET: z.string().min(32),
     JWT_ACCESS_EXPIRES_IN: z.string().min(1).default('15m'),
     JWT_REFRESH_EXPIRES_IN: z.string().min(1).default('7d'),
     SUPER_ADMIN_USERNAME: z.string().min(1).default('admin_local'),
     SUPER_ADMIN_EMAIL: z.string().email().default('admin@snpsms.local'),
-    SUPER_ADMIN_PASSWORD: z.string().min(12).default('***REMOVED***'),
-    COOKIE_SECRET: z
-      .string()
-      .min(32)
-      .default('***REMOVED***'),
-    CLIENT_API_KEY: z.string().min(16).default('***REMOVED***'),
+    SUPER_ADMIN_PASSWORD: z.string().min(12),
+    COOKIE_SECRET: z.string().min(32),
+    CLIENT_API_KEY: z.string().min(16),
     ENFORCE_CLIENT_AUTH: z.enum(['true', 'false']).default('false'),
   })
   .superRefine((configuration, context) => {
@@ -101,7 +93,9 @@ export const environmentSchema = z
       });
     }
 
-    const frontendOrigins = configuration.FRONTEND_URL.split(',').map((origin) => origin.trim());
+    const frontendOrigins = configuration.FRONTEND_URL.split(',').map((origin) =>
+      origin.trim(),
+    );
     for (const origin of frontendOrigins) {
       if (origin === '*') continue;
       try {
@@ -134,7 +128,6 @@ export const environmentSchema = z
         mongoUrl.protocol === 'mongodb+srv:'
           ? !tlsDisabled
           : tlsOption === 'true' || tlsOption === '1' || sslOption === 'true' || sslOption === '1';
-
       if (!['mongodb:', 'mongodb+srv:'].includes(mongoUrl.protocol) || !tlsEnabled) {
         throw new Error('TLS is required');
       }
@@ -148,17 +141,14 @@ export const environmentSchema = z
   });
 
 const parsedEnvironment = environmentSchema.safeParse(process.env);
-
 if (!parsedEnvironment.success) {
   const issues = parsedEnvironment.error.issues
     .map((issue) => `${issue.path.join('.')}: ${issue.message}`)
     .join(', ');
-
   throw new Error(`Invalid environment configuration: ${issues}`);
 }
 
 export const env = parsedEnvironment.data;
-
 export const allowedFrontendOrigins = env.FRONTEND_URL.split(',')
   .map((origin) => origin.trim())
   .filter(Boolean);
