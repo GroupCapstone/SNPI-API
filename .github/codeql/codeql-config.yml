@@ -5,3 +5,14 @@ name: 'SNPI-API CodeQL configuration'
 # inputs), so code scanning focuses on the application and its test suites.
 paths-ignore:
   - 'scripts/**'
+
+# The app does not use cookie-based form authentication: the refresh cookie is
+# SameSite=strict and API clients authenticate with Bearer tokens / API keys, so
+# the missing-token-validation (CSRF) query only produces one app-wide alert
+# with more related locations than GitHub stores. It is excluded here, matching
+# the documented dismissal of that alert; all other security-extended queries
+# still run.
+query-filters:
+  - exclude:
+      id:
+        - js/missing-token-validation
