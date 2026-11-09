@@ -110,27 +110,22 @@ export const createApp = (): express.Express => {
     };
 
     app.get(['/api/v1/docs/openapi.json', '/docs/openapi.json'], serveOpenApiJson);
-    app.get(['/api/v1/docs', '/docs', '/api-docs'], serveDocsExplorer);
+    app.get(['/api/v1/docs', '/docs', '/api-docs', '/document'], serveDocsExplorer);
   }
 
-  app.get('/', (_request, response) => {
-    if (env.NODE_ENV === 'production') {
-      response.status(200).json({
-        success: true,
-        message: 'SNP-SMS API Service',
-        status: 'online',
-      });
-      return;
-    }
+  app.get('/', (request, response) => {
+    const baseUrl = `${request.protocol}://${request.get('host') ?? 'localhost'}`;
 
     response.status(200).json({
       success: true,
-      message: 'SNP-SMS Backend API',
+      message: 'SNPI API',
+      status: 'online',
+      code: 200,
       version: APP_VERSION,
       apiBase: '/api/v1',
-      health: '/api/v1/health',
-      docs: '/docs',
-      openapi: '/api/v1/docs/openapi.json',
+      health_url: `${baseUrl}/api/v1/health`,
+      repository_url: 'https://github.com/GroupCapstone/SNPI-API',
+      documentation_url: `${baseUrl}/document`,
     });
   });
 

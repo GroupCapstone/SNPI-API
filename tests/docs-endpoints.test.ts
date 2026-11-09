@@ -36,7 +36,12 @@ describe('API Documentation & OpenAPI Endpoints', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
-    expect(res.body.docs).toBe('/docs');
-    expect(res.body.openapi).toBe('/api/v1/docs/openapi.json');
+    expect(res.body.message).toBe('SNPI API');
+    expect(res.body.status).toBe('online');
+    expect(res.body.code).toBe(200);
+    expect(res.body.apiBase).toBe('/api/v1');
+    expect(res.body.health_url).toContain('/api/v1/health');
+    expect(res.body.repository_url).toBe('https://github.com/GroupCapstone/SNPI-API');
+    expect(res.body.documentation_url).toContain('/document');
   });
 });

@@ -28,6 +28,7 @@ export const isExemptClientPath = (pathname: string): boolean => {
     normalized === '' ||
     normalized === '/health' ||
     normalized === '/docs' ||
+    normalized === '/document' ||
     normalized === '/docs/openapi.json' ||
     normalized === '/openapi.json'
   );
