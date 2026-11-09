@@ -114,9 +114,11 @@ export const createApp = (): express.Express => {
   }
 
   app.get('/', (request, response) => {
-    const baseUrl = `${request.protocol}://${request.get('host') ?? 'localhost'}`;
+    const host = request.get('host') ?? 'localhost';
+    const baseUrl = `${request.protocol}://${host}`;
+    const docsHost = host.startsWith('api.') ? `snpis.${host.slice('api.'.length)}` : host;
 
-    response.status(200).json({
+    const payload = {
       success: true,
       message: 'SNPI API',
       status: 'online',
@@ -126,8 +128,17 @@ export const createApp = (): express.Express => {
       health_url: `${baseUrl}/api/v1/health`,
       repository_url: 'https://github.com/GroupCapstone/SNPI-API',
       credits: 'shiliaiwei, Tan-Saphea, madeincambodia',
-      documentation_url: `${baseUrl}/document`,
-    });
+      documentation_url: `${request.protocol}://${docsHost}/document`,
+    };
+
+    // Browsers get pretty-printed JSON for easy viewing;
+    // API clients and the terminal keep the standard compact form.
+    const body =
+      request.accepts(['json', 'html']) === 'html'
+        ? JSON.stringify(payload, null, 2)
+        : JSON.stringify(payload);
+
+    response.status(200).type('application/json').send(body);
   });
 
   app.use('/api/v1/health', healthRouter);
