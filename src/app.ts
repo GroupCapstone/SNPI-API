@@ -125,6 +125,7 @@ export const createApp = (): express.Express => {
       apiBase: '/api/v1',
       health_url: `${baseUrl}/api/v1/health`,
       repository_url: 'https://github.com/GroupCapstone/SNPI-API',
+      credits: 'shiliaiwei, Tan-Saphea, madeincambodia',
       documentation_url: `${baseUrl}/document`,
     });
   });
